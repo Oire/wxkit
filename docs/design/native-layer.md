@@ -103,6 +103,10 @@ Only the virtual methods a binding tweak lists get directors. Most wxWidgets vir
 
 Two directors are written by hand. `ManagedAccessible`, in `native/shim/src/accessible.cpp`, is the accessible object `Accessible` gives a window. Its callbacks return a `wxAccStatus`, and fill in their result when they answer, and it answers "not implemented" for what .NET leaves to Windows. The window owns it, and its destructor frees the `GCHandle` that reaches the managed object. The other is `ManagedValidator`, in `native/shim/src/validator.cpp`, which `CustomValidator` creates. A validator is copied, since a window clones the one it is given, so the copies share their table and userdata, a weak `GCHandle`, through a `shared_ptr`. Each clone a window holds asks .NET to make the handle strong while it lives, so the managed validator lives as long as a window uses it, and the last copy to go frees the handle. Its methods call into .NET without a base implementation to fall back on, since `wxValidator`'s own checks only return true.
 
+## One file for each class
+
+A linker loads an object file of a static library whole, with every wxWidgets object file any of its functions refers to, even functions it then leaves out because nothing calls them. A shim in one file would bring the wxWidgets code of every class WxKit binds into every application. So the generator writes a file for each class, and the hand-written shim keeps features apart the same way, such as a file for each image format. An application that never creates a data view links no data view code.
+
 ## Platform-specific functions
 
 Some wxWidgets functions exist on only one port. For example, `wxWindow::MSWGetBgBrush`. The shim exports every function on every platform. On a platform that lacks the function, the export is a stub that stores an error and returns a default value. This matters for static linking: if a symbol were missing on one platform, every Native AOT application that references it would fail to link there, even if it never calls it.

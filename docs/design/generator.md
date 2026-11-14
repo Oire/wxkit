@@ -48,7 +48,7 @@ The generator runs in four stages:
 2. Filter. It drops what WxKit does not bind: the non-GUI classes listed in the overview's non-goals, deprecated methods, and anything a tweak ignores. It also drops methods whose types it does not know how to convert, and lists them in a report, so the gaps are visible.
 3. Shape. It applies naming rules and tweaks, groups getters and setters into properties, picks overload suffixes, and turns style tables and event tables into enums and events.
 4. Emit. It writes three sets of files from the shaped model:
-   - The shim's declarations in `native/shim/include/wxkit_generated.h`, which `wxkit.h` includes, and their C++ in `native/shim/generated/generated.cpp`.
+   - The shim's declarations in `native/shim/include/wxkit_generated.h`, which `wxkit.h` includes, and their C++ in `native/shim/generated`: a file for each class, a file for each header's event types, and `checks.cpp`, which checks the enum values. They share `includes.h`, which includes every header and is precompiled, and `directors.h`.
    - `LibraryImport` declarations in `src/WxKit/Interop/WxKitNative.g.cs`.
    - Managed partial classes, the event types, the style enums, and the table `ObjectRegistry` uses to wrap native objects, in `src/WxKit/Generated`.
 

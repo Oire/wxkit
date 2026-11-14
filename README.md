@@ -2,7 +2,7 @@
 
 .NET bindings to [wxWidgets](https://wxwidgets.org), for native desktop applications on Windows, macOS, and Linux. WxKit works with Native AOT, and links wxWidgets into the executable so that an application ships as one file.
 
-WxKit is in early development, and is not usable for applications yet. So far it runs on Windows only, and covers a small hand-written slice of wxWidgets: frames, panels, buttons, labels, text boxes, box sizers, menus, message dialogs, and timers, with events and async support. The [Hello sample](samples/Hello/Program.cs) publishes with Native AOT as a single executable of about 5 MB. To see what it will look like and how it will work, start with the [design overview](docs/design/overview.md). Decisions made so far, and the ones still open, are in [Open questions](docs/design/open-questions.md).
+WxKit is in early development, and is not usable for applications yet. So far it runs on Windows only. The bindings are generated from wxWidgets's own headers, and cover 112 classes: windows and the common controls, list, tree, and data view controls, toolbars, sizers, menus, the standard dialogs, drawing, images, validators, and the clipboard, with events, async support, and accessibility for controls that draw themselves. The [Hello sample](samples/Hello/Program.cs) publishes with Native AOT as a single executable of about 5 MB, and an application only links the classes it uses. To see what it will look like and how it will work, start with the [design overview](docs/design/overview.md). Decisions made so far, and the ones still open, are in [Open questions](docs/design/open-questions.md).
 
 ## Building
 

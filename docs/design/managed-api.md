@@ -206,7 +206,9 @@ A member that is not overridden does what wxWidgets does. Only the members a bin
 
 WxKit has no switches for optional features, as wxDragon has Cargo features. Native AOT only compiles the methods an application can reach, so a shim function nothing calls is never referenced, and the linker leaves out its object file and the libraries behind it. Opting in is calling the API.
 
-Image file formats work this way. An image can always load and save BMP files, and an application adds the others it uses, such as with `Image.AddPngHandler()`, before it loads images. Each format is a function in a file of its own in the shim, so only the formats an application adds are linked. `Image.AddAllHandlers()` adds every format, which makes a published application about 1.1 MB larger, mostly for JPEG, TIFF, and WebP. PNG costs nothing extra, since wxMSW uses it itself.
+Each class works this way. A linker loads an object file of a static library whole, along with every wxWidgets object file any of its functions refers to, even functions it then leaves out. So the generated shim has a file for each class, and an application only links the wxWidgets code of the classes it uses. The Hello sample, which uses no list, tree, or data view, is about 5.2 MB. Each event type is made the first time it is used, so an event type an application never uses references nothing either.
+
+Image file formats work this way too. An image can always load and save BMP files, and an application adds the others it uses, such as with `Image.AddPngHandler()`, before it loads images. Each format is a function in a file of its own in the shim, so only the formats an application adds are linked. `Image.AddAllHandlers()` adds every format, which makes a published application about 1.1 MB larger, mostly for JPEG, TIFF, and WebP. PNG costs nothing extra, since wxMSW uses it itself.
 
 Without Native AOT, the shared library has every format in it either way, and the calls only decide which ones images can use.
 

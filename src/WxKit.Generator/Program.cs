@@ -29,7 +29,12 @@ BindingResult result = new Binder(api, tweaks).Bind();
 string shim = Path.Combine(root, "native", "shim");
 string managed = Path.Combine(root, "src", "WxKit", "Generated");
 Write(Path.Combine(shim, "include", "wxkit_generated.h"), ShimEmitter.Header(result));
-Write(Path.Combine(shim, "generated", "generated.cpp"), ShimEmitter.Source(result));
+// As with the managed files, a shim file for a class no longer bound must not linger.
+string generated = Path.Combine(shim, "generated");
+if (Directory.Exists(generated)) {
+	foreach (string stale in Directory.GetFiles(generated)) File.Delete(stale);
+}
+foreach ((string fileName, string text) in ShimEmitter.Files(result)) Write(Path.Combine(generated, fileName), text);
 Write(Path.Combine(root, "src", "WxKit", "Interop", "WxKitNative.g.cs"), InteropEmitter.Source(result));
 // Every generated class file is rewritten, so one for a class no longer bound must not linger.
 if (Directory.Exists(managed)) {
