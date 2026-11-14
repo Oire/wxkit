@@ -2,7 +2,7 @@
 
 WxKit is a set of .NET bindings to [wxWidgets](https://wxwidgets.org), the C++ library for native desktop user interfaces. This document describes what WxKit is for, how its parts fit together, and the order in which they get built. The other documents in this folder cover each part in detail.
 
-Status: draft. The first milestone is done on Windows, and the generator now produces the slice its bindings started as. Decisions made so far, and the ones still open, are in [Open questions](open-questions.md).
+Status: draft. The first two milestones are done on Windows, and the third, breadth, is under way: the generator binds 98 classes. Decisions made so far, and the ones still open, are in [Open questions](open-questions.md).
 
 ## Goals
 

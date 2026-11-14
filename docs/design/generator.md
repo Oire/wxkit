@@ -56,21 +56,56 @@ It also writes a report of everything it skipped, with the reason, to `artifacts
 
 ## Rules the generator applies
 
-These are the decisions it makes without a tweak:
+These are the decisions it makes without a tweak.
 
-- A class's handle depends on its ancestry: windows cross as `wxk_Window`, sizers as `wxk_Sizer`, menus as `wxk_Menu`, events as `wxk_Event`, and other event handlers as `wxk_EvtHandler`. A class's managed base is its nearest ancestor that is also bound.
-- Members of a secondary base, such as `wxTextEntry` under `wxTextCtrl`, are bound on the class itself, and called through it.
-- A window's constructor with no parameters is left out, since two-step creation is not exposed. So are copy constructors, destructors, operators, static members, and deprecated members.
-- A trailing parameter the generator cannot convert, or whose default it cannot write, is left out with the parameters after it, so the C++ default applies. That is how a constructor's validator and window name are left out for now. A parameter without a default that it cannot convert makes the whole function unbound.
-- A window id without a default gets `StandardId.Any`, and moves after the label or title, before the position. A top-level window's parent can be null.
-- A `style` parameter of a class with a style table takes that class's style enum, such as `ButtonStyle`. A default made of constants the enum has is written with its members, such as `MessageDialogStyle.Ok | MessageDialogStyle.Center`.
-- `GetX` with no parameters becomes the property `X`, and `IsX`, `HasX`, and `CanX` returning `bool` stay as they are. A `SetX` with one parameter of the same type becomes its setter.
-- A style enum's members drop the `wx` prefix and the prefix most of the class's styles share, such as `TE_` for text controls. `wxDEFAULT_FRAME_STYLE` becomes `Default`. Every style enum has `None`.
-- An event the table lists without its `wxEVT_` constant uses the convention that `EVT_X` sends `wxEVT_X`. An event class WxKit does not bind is delivered as its nearest bound ancestor, such as `wxTimerEvent` as `Event`.
+### Classes
+
+- A class's handle depends on its ancestry. Windows cross as `wxk_Window`, sizers as `wxk_Sizer`, menus as `wxk_Menu`, events as `wxk_Event`, and other event handlers as `wxk_EvtHandler`. Value objects, which are `wxGDIObject`s and `wxImage`, and drawing contexts, which are `wxDC`s, cross as `wxk_Object`. A class a tweak marks static-only, such as `wxSystemSettings`, becomes a C# static class.
+- A class's managed base is its nearest ancestor that is also bound. Value objects and drawing contexts that have none derive from the hand-written `NativeObject`.
+- The members of a secondary base, such as `wxTextEntry` under `wxTextCtrl`, are bound on the class itself, with the secondary base's own bases, as `wxItemContainer` brings `wxItemContainerImmutable`. The shim calls them through a cast to that base, which picks the right one when two bases both have a member, and still calls overrides.
+- A class that declares a pure virtual member gets no constructors.
+
+### Members
+
+- A window's constructor with no parameters is left out, since two-step creation is not exposed, and so is the `Create` that completes it. So are copy constructors, destructors, operators, and deprecated members.
+- A member the interface headers repeat in a derived class, as they do with every override, is bound once, in the base. A static member is the exception: the derived one stays, with the `new` modifier, since it does something else there.
+- Two members with the same managed signature are bound once, such as `CentreOnParent` and `CenterOnParent`, and so are two constructors.
+- A trailing parameter the generator cannot convert, or whose default it cannot write, is left out with the parameters after it, so the C++ default applies. An array cut off this way takes its count with it. A parameter without a default that it cannot convert makes the whole function unbound.
+- A static member checks the thread before it calls the shim, since it has no handle that would.
+- A property and a method with the same name fail the generator, until a tweak renames one, since which to rename is a choice.
+
+### Constructors
+
+- A window id without a default gets `StandardId.Any`, and moves after the label or title, before the position.
+- A window constructor's position and size can always be left out, since the overloads that require them mean the same by the default.
+- A window's name is always left to its default.
+- A top-level window's parent can be null.
+- Required parameters move ahead of optional ones, keeping their order, so `new Choice(parent, items)` works.
+
+### Types and defaults
+
+- A `style` parameter of a class with a style table takes that class's style enum, such as `ButtonStyle`, and so does a getter named for the style, such as `GetMessageDialogStyle`. A default made of constants the enum has is written with its members, such as `MessageDialogStyle.Ok | MessageDialogStyle.Center`.
+- A number whose default is `wxBOTH`, `wxHORIZONTAL`, or `wxVERTICAL` is an `Orientation`.
+- A C++ enum becomes a C# enum, with the prefix all its members share dropped. `wxOrientation`, `wxDirection`, and `wxItemKind` map to WxKit's hand-written enums instead.
+- A pointer default of `nullptr`, `NULL`, or `0` is null, and so is `wxDefaultPosition`, `wxDefaultSize`, `wxNullColour`, and the empty object of a value class, such as `wxNullFont`.
+- A few constants the interface headers use are only defined in the real headers, from the same pinned wxWidgets: the deprecated GUI constants in `wx/defs.h`, such as `wxDEFAULT`, and the art provider's ids in `wx/artprov.h`. The art ids are written as the `ArtId` and `ArtClient` constants.
+
+### Names
+
+- `GetX` with no parameters becomes the property `X`, and `IsX`, `HasX`, and `CanX` returning `bool` stay as they are. A `SetX` with one parameter of the same type, and the same staticness, becomes its setter.
+- British spellings become American ones, a leading digit is spelled out, as in `ThreeStateValue`, and a few terse parameter names become words, such as `pos` to `position` and `n` to `index`.
+- A style enum's members drop the `wx` prefix, and the short prefix at least two of the class's styles share, such as `TE_` for text controls, unless that prefix is a constant itself, as `YES` is in `wxYES_NO`. `wxDEFAULT_FRAME_STYLE` becomes `Default`. Every style enum has `None`. Extra styles, whose names have `_EX_`, are not bound yet.
+- Events have .NET names: a table names the common ones, such as `SizeChanged`, `GotFocus`, `SelectionChanged`, and `ValueChanged`, and others are named after their macro, as `EVT_TEXT_ENTER` becomes `TextEnter`. An event that would clash with a member or its class gets an `Event` suffix.
+
+### Events
+
+- Only event types the headers declare are bound, which leaves out group entries such as `EVT_MOUSE_EVENTS` and `EVT_JOY_*`. An entry without its `wxEVT_` constant uses the convention that `EVT_X` sends `wxEVT_X`, if the headers declare it. The shim includes each event type's header.
+- An event class WxKit does not bind is delivered as its nearest bound ancestor.
+- An event class's own table gives event types, but no .NET events, and a derived class does not repeat its base's events.
 
 ## Current coverage
 
-For now, each bound class lists the members to bind with `Only`, and the output is exactly the first milestone's slice: 14 classes and 41 functions. The tweaks are in `src/WxKit.Generator/Tweaks/Slice.cs`. The next step is to bind every supported member of these classes and many more, and to add conversions for the types the report shows are most often missing.
+98 classes bind 1513 functions and 123 event types. They are windows and top-level windows, the common controls, sizers, menus, the standard dialogs, the event classes the core and those controls send, fonts, pens, brushes, bitmaps, icons, cursors, images, drawing contexts, system settings, and the art provider. The tweaks are in `src/WxKit.Generator/Tweaks/Core.cs`. The report lists about 390 members the generator still cannot bind, most often because of output pointer parameters, list classes such as `wxWindowList`, and classes not bound yet, such as toolbars and validators.
 
 ## Type conversions
 

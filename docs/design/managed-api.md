@@ -81,9 +81,30 @@ A sizer that is never given an owner is freed when its proxy is finalized. The f
 
 ### Reference-counted objects
 
-Bitmaps, fonts, pens, brushes, images, icons, and cursors are reference counted in wxWidgets, and copying one is cheap. In WxKit, each of these holds a `SafeHandle` that owns one reference, and implements `IDisposable`. Each wrapper holds a lease on its handle across every native call, so the object cannot be freed by `Dispose` on another thread, or by the finalizer, while the call is still using it.
+Bitmaps, fonts, pens, brushes, images, icons, and cursors are reference counted in wxWidgets, and copying one is cheap. In WxKit, each of these owns a heap copy of the wxWidgets object, which holds one reference to its data, through a `SafeHandle` in the hand-written `NativeObject` base. They implement `IDisposable`.
 
-wxWidgets reference counting is not thread safe, and these objects must only be freed on the GUI thread. A finalizer runs on the finalizer thread, so when a handle is released there, WxKit queues the release and the GUI thread performs it the next time it is idle. Calling `Dispose` on the GUI thread releases at once.
+wxWidgets reference counting is not thread safe, so a reference is only ever released on the GUI thread. `Dispose` on the GUI thread releases at once. A release anywhere else, as by the finalizer, is posted to the GUI thread. That also covers a native call still using the object when the collector finds it: the GUI thread is busy with that call, so the posted release only runs once it returns. Once the application has ended, wxWidgets is gone, and the reference goes with the process.
+
+An object going in can be null, which stands for the class's empty object, as null for a font is `wxNullFont`. Setting a window's font or cursor to null restores its default. An object coming back empty is null rather than an object that cannot be used. An object passed by a reference that can change, such as the bitmap a `MemoryDC` draws into, is the managed object's own copy, so the change shows there.
+
+A parameter that takes a bitmap or icon bundle, which wxWidgets 3.3 uses for every resolution, takes a `Bitmap` or `Icon`, the way C++ converts one.
+
+### Drawing contexts
+
+`DC` and its window, client, paint, memory, and screen classes are objects the application creates, uses, and disposes, which a paint handler needs to do before it returns:
+
+```csharp
+panel.Paint += (sender, e) => {
+	using PaintDC dc = new(panel);
+	dc.DrawLine(0, 0, 50, 50);
+};
+```
+
+They derive from `NativeObject` too, and their finalizers post the delete to the GUI thread, but a drawing context should not wait for the collector. A context that wxWidgets hands back, such as an erase event's, is not WxKit's to delete, so members that return one are not bound yet.
+
+## Static members
+
+A static member of a wxWidgets class is a static member of its managed class, such as `Window.FindFocus()`. A class with only static members, such as `wxSystemSettings`, is a static class. Static members check the thread first, as instance members do through their handle.
 
 ## Events
 
