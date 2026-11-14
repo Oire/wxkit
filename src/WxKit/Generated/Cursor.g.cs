@@ -5,7 +5,7 @@ using WxKit.Interop;
 namespace WxKit;
 
 /// <summary>A cursor is a small bitmap used for denoting where the mouse pointer is, with a picture that indicates the point of a mouse click. Wraps wxCursor.</summary>
-public unsafe partial class Cursor : NativeValue {
+public unsafe partial class Cursor : NativeObject {
 	/// <summary>Default constructor.</summary>
 	public Cursor() : this(CreateNative()) {
 	}

@@ -127,6 +127,12 @@ const T& ValueOf(const wxk_Object* object) {
 	return object != nullptr ? *static_cast<const T*>(reinterpret_cast<const wxObject*>(object)) : none;
 }
 
+// The managed side's own copy of a value object, which a function can change, as a wxMemoryDC draws into its bitmap.
+template <typename T>
+T& ValueRef(wxk_Object* object) {
+	return *static_cast<T*>(reinterpret_cast<wxObject*>(object));
+}
+
 // Copies a value object out, which only adds a reference to its data. An empty one is null.
 template <typename T>
 wxk_Object* CopyValue(const T& value) {

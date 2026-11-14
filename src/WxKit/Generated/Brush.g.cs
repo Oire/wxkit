@@ -5,7 +5,7 @@ using WxKit.Interop;
 namespace WxKit;
 
 /// <summary>A brush is a drawing tool for filling in areas. Wraps wxBrush.</summary>
-public unsafe partial class Brush : NativeValue {
+public unsafe partial class Brush : NativeObject {
 	/// <summary>Default constructor.</summary>
 	public Brush() : this(CreateNative()) {
 	}
@@ -27,7 +27,7 @@ public unsafe partial class Brush : NativeValue {
 	/// <summary>Returns a reference to the brush colour.</summary>
 	public Color? Color {
 		get => global::WxKit.Color.FromNative(WxKitNative.BrushGetColour(Native));
-		set => WxKitNative.BrushSetColour(Native, global::WxKit.Color.ToNative(value));
+		set => WxKitNative.BrushSetColourColor(Native, global::WxKit.Color.ToNative(value));
 	}
 
 	/// <summary>Returns true if the style of the brush is any of hatched fills.</summary>
@@ -47,6 +47,9 @@ public unsafe partial class Brush : NativeValue {
 		get => (BrushStyle)WxKitNative.BrushGetStyle(Native);
 		set => WxKitNative.BrushSetStyle(Native, (int)value);
 	}
+
+	/// <summary>Sets the brush colour using red, green and blue values.</summary>
+	public void SetColor(byte red, byte green, byte blue) => WxKitNative.BrushSetColourByteByteByte(Native, red, green, blue);
 
 	/// <summary>Sets the stipple bitmap.</summary>
 	public void SetStipple(Bitmap bitmap) {

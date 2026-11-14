@@ -18,19 +18,26 @@ internal sealed record BoundEnum(string Name, string CppName, IReadOnlyList<Boun
 /// <param name="CppBase">The wxWidgets class the handle points at, such as wxWindow.</param>
 /// <param name="InteropType">The handle's C# struct, such as WxkWindow.</param>
 /// <param name="Accessor">The managed member that gives a wrapper's handle.</param>
-internal sealed record HandleKind(string CType, string CppBase, string InteropType, string Accessor) {
-	public static HandleKind Window { get; } = new("wxk_Window", "wxWindow", "WxkWindow", "Native");
+/// <param name="Kind">The kind's name, which keeps kinds with the same handle, such as values and owned objects, apart.</param>
+internal sealed record HandleKind(string CType, string CppBase, string InteropType, string Accessor, string Kind) {
+	public static HandleKind Window { get; } = new("wxk_Window", "wxWindow", "WxkWindow", "Native", "Window");
 
-	public static HandleKind Sizer { get; } = new("wxk_Sizer", "wxSizer", "WxkSizer", "Native");
+	public static HandleKind Sizer { get; } = new("wxk_Sizer", "wxSizer", "WxkSizer", "Native", "Sizer");
 
-	public static HandleKind Menu { get; } = new("wxk_Menu", "wxMenu", "WxkMenu", "Native");
+	public static HandleKind Menu { get; } = new("wxk_Menu", "wxMenu", "WxkMenu", "Native", "Menu");
 
-	public static HandleKind Event { get; } = new("wxk_Event", "wxEvent", "WxkEvent", "Handle");
+	public static HandleKind Event { get; } = new("wxk_Event", "wxEvent", "WxkEvent", "Handle", "Event");
 
-	public static HandleKind EvtHandler { get; } = new("wxk_EvtHandler", "wxEvtHandler", "WxkEvtHandler", "NativeHandler");
+	public static HandleKind EvtHandler { get; } = new("wxk_EvtHandler", "wxEvtHandler", "WxkEvtHandler", "NativeHandler", "EvtHandler");
 
 	/// <summary>A value object, such as a font or a bitmap, which the managed side owns a copy of.</summary>
-	public static HandleKind Value { get; } = new("wxk_Object", "wxObject", "WxkObject", "Native");
+	public static HandleKind Value { get; } = new("wxk_Object", "wxObject", "WxkObject", "Native", "Value");
+
+	/// <summary>An object the managed side creates and deletes, such as a drawing context.</summary>
+	public static HandleKind Owned { get; } = new("wxk_Object", "wxObject", "WxkObject", "Native", "Owned");
+
+	/// <summary>Whether the managed side owns the object, and deletes it when it is disposed.</summary>
+	public bool IsOwned => this == Value || this == Owned;
 
 	public bool IsEvtHandler => this == Window || this == Menu || this == EvtHandler;
 }

@@ -30,14 +30,17 @@ WXK_FUNCTION(void) wxk_AnyButton_SetBitmapMargins_Size(wxk_Window* self, wxk_Siz
 WXK_FUNCTION(wxk_Object*) wxk_Bitmap_new_Default(void) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Bitmap_new_IntIntInt(int32_t width, int32_t height, int32_t depth) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Bitmap_new_SizeInt(wxk_Size size, int32_t depth) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_Bitmap_new_IntIntDC(int32_t width, int32_t height, wxk_Object* dc) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Bitmap_new_String(const char16_t* name, size_t nameLength) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Bitmap_new_ImageInt(const wxk_Object* image, int32_t depth) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_Bitmap_new_ImageDC(const wxk_Object* image, wxk_Object* dc) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Bitmap_new_Cursor(const wxk_Object* cursor) WXK_NOEXCEPT;
-WXK_FUNCTION(wxk_Object*) wxk_Bitmap_ConvertToDisabled(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_Bitmap_ConvertToDisabled(wxk_Object* self, uint8_t brightness) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Bitmap_ConvertToImage(wxk_Object* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Bitmap_CopyFromIcon(wxk_Object* self, const wxk_Object* icon) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Bitmap_Create_IntIntInt(wxk_Object* self, int32_t width, int32_t height, int32_t depth) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Bitmap_Create_SizeInt(wxk_Object* self, wxk_Size size, int32_t depth) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Bitmap_Create_IntIntDC(wxk_Object* self, int32_t width, int32_t height, wxk_Object* dc) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Bitmap_CreateWithDIPSize_SizeDoubleInt(wxk_Object* self, wxk_Size size, double scale, int32_t depth) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Bitmap_CreateWithDIPSize_IntIntDoubleInt(wxk_Object* self, int32_t width, int32_t height, double scale, int32_t depth) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Bitmap_CreateWithLogicalSize_SizeDoubleInt(wxk_Object* self, wxk_Size size, double scale, int32_t depth) WXK_NOEXCEPT;
@@ -106,9 +109,10 @@ WXK_FUNCTION(void) wxk_BoxSizer_SetOrientation(wxk_Sizer* self, int32_t orientat
 WXK_FUNCTION(wxk_Object*) wxk_Brush_new_Default(void) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Brush_new_ColorBrushStyle(wxk_Colour color, int32_t style) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Brush_new_Bitmap(const wxk_Object* stippleBitmap) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Brush_SetColour_ByteByteByte(wxk_Object* self, uint8_t red, uint8_t green, uint8_t blue) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Brush_SetStipple(wxk_Object* self, const wxk_Object* bitmap) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Colour) wxk_Brush_GetColour(wxk_Object* self) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_Brush_SetColour(wxk_Object* self, wxk_Colour color) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Brush_SetColour_Color(wxk_Object* self, wxk_Colour color) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_Brush_GetStyle(wxk_Object* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Brush_SetStyle(wxk_Object* self, int32_t style) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Brush_IsHatch(wxk_Object* self) WXK_NOEXCEPT;
@@ -174,6 +178,10 @@ WXK_FUNCTION(uint8_t) wxk_Choice_IsEmpty(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_StringArray*) wxk_Choice_GetStrings(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_String*) wxk_Choice_GetStringSelection(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Choice_SetStringSelection(wxk_Window* self, const char16_t* text, size_t textLength) WXK_NOEXCEPT;
+
+// wxClientDC
+
+WXK_FUNCTION(wxk_Object*) wxk_ClientDC_new(wxk_Window* window) WXK_NOEXCEPT;
 
 // wxCloseEvent
 
@@ -326,6 +334,83 @@ WXK_FUNCTION(wxk_Object*) wxk_Cursor_new_StockCursor(int32_t cursorId) WXK_NOEXC
 WXK_FUNCTION(wxk_Object*) wxk_Cursor_new_Image(const wxk_Object* image) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Cursor_IsOk(wxk_Object* self) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Point) wxk_Cursor_GetHotSpot(wxk_Object* self) WXK_NOEXCEPT;
+
+// wxDC
+
+WXK_FUNCTION(void) wxk_DC_Clear(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DrawArc_IntIntIntIntIntInt(wxk_Object* self, int32_t xStart, int32_t yStart, int32_t xEnd, int32_t yEnd, int32_t xc, int32_t yc) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DrawArc_PointPointPoint(wxk_Object* self, wxk_Point ptStart, wxk_Point ptEnd, wxk_Point center) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DrawBitmap_BitmapIntIntBool(wxk_Object* self, const wxk_Object* bitmap, int32_t x, int32_t y, uint8_t useMask) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DrawBitmap_BitmapPointBool(wxk_Object* self, const wxk_Object* bitmap, wxk_Point point, uint8_t useMask) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DrawCheckMark_IntIntIntInt(wxk_Object* self, int32_t x, int32_t y, int32_t width, int32_t height) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DrawCheckMark_Rect(wxk_Object* self, wxk_Rect rect) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DrawCircle_IntIntInt(wxk_Object* self, int32_t x, int32_t y, int32_t radius) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DrawCircle_PointInt(wxk_Object* self, wxk_Point point, int32_t radius) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DrawEllipse_IntIntIntInt(wxk_Object* self, int32_t x, int32_t y, int32_t width, int32_t height) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DrawEllipse_PointSize(wxk_Object* self, wxk_Point point, wxk_Size size) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DrawEllipse_Rect(wxk_Object* self, wxk_Rect rect) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DrawEllipticArc_IntIntIntIntDoubleDouble(wxk_Object* self, int32_t x, int32_t y, int32_t width, int32_t height, double start, double end) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DrawEllipticArc_PointSizeDoubleDouble(wxk_Object* self, wxk_Point point, wxk_Size size, double sa, double ea) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DrawIcon_IconIntInt(wxk_Object* self, const wxk_Object* icon, int32_t x, int32_t y) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DrawIcon_IconPoint(wxk_Object* self, const wxk_Object* icon, wxk_Point point) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DrawLabel_StringBitmapRectIntInt(wxk_Object* self, const char16_t* text, size_t textLength, const wxk_Object* bitmap, wxk_Rect rect, int32_t alignment, int32_t indexAccel) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DrawLabel_StringRectIntInt(wxk_Object* self, const char16_t* text, size_t textLength, wxk_Rect rect, int32_t alignment, int32_t indexAccel) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DrawLine_IntIntIntInt(wxk_Object* self, int32_t x1, int32_t y1, int32_t x2, int32_t y2) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DrawLine_PointPoint(wxk_Object* self, wxk_Point pt1, wxk_Point pt2) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DrawPoint_IntInt(wxk_Object* self, int32_t x, int32_t y) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DrawPoint_Point(wxk_Object* self, wxk_Point point) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DrawRectangle_IntIntIntInt(wxk_Object* self, int32_t x, int32_t y, int32_t width, int32_t height) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DrawRectangle_PointSize(wxk_Object* self, wxk_Point point, wxk_Size size) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DrawRectangle_Rect(wxk_Object* self, wxk_Rect rect) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DrawRotatedText_StringIntIntDouble(wxk_Object* self, const char16_t* text, size_t textLength, int32_t x, int32_t y, double angle) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DrawRotatedText_StringPointDouble(wxk_Object* self, const char16_t* text, size_t textLength, wxk_Point point, double angle) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DrawRoundedRectangle_IntIntIntIntDouble(wxk_Object* self, int32_t x, int32_t y, int32_t width, int32_t height, double radius) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DrawRoundedRectangle_PointSizeDouble(wxk_Object* self, wxk_Point point, wxk_Size size, double radius) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DrawRoundedRectangle_RectDouble(wxk_Object* self, wxk_Rect rect, double radius) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DrawSpline(wxk_Object* self, int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DrawText_StringIntInt(wxk_Object* self, const char16_t* text, size_t textLength, int32_t x, int32_t y) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DrawText_StringPoint(wxk_Object* self, const char16_t* text, size_t textLength, wxk_Point point) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_GradientFillConcentric_RectColorColor(wxk_Object* self, wxk_Rect rect, wxk_Colour initialColor, wxk_Colour destColor) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_GradientFillConcentric_RectColorColorPoint(wxk_Object* self, wxk_Rect rect, wxk_Colour initialColor, wxk_Colour destColor, wxk_Point circleCenter) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_GradientFillLinear(wxk_Object* self, wxk_Rect rect, wxk_Colour initialColor, wxk_Colour destColor, int32_t nDirection) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_DC_FloodFill_IntIntColorFloodFillStyle(wxk_Object* self, int32_t x, int32_t y, wxk_Colour color, int32_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_DC_FloodFill_PointColorFloodFillStyle(wxk_Object* self, wxk_Point point, wxk_Colour col, int32_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_CrossHair_IntInt(wxk_Object* self, int32_t x, int32_t y) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_CrossHair_Point(wxk_Object* self, wxk_Point point) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DestroyClippingRegion(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_SetClippingRegion_IntIntIntInt(wxk_Object* self, int32_t x, int32_t y, int32_t width, int32_t height) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_SetClippingRegion_PointSize(wxk_Object* self, wxk_Point point, wxk_Size size) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_SetClippingRegion_Rect(wxk_Object* self, wxk_Rect rect) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_DisableAutomaticBoundingBoxUpdates(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_DC_AreAutomaticBoundingBoxUpdatesEnabled(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_CalcBoundingBox(wxk_Object* self, int32_t x, int32_t y) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_DC_MaxX(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_DC_MaxY(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_DC_MinX(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_DC_MinY(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_ResetBoundingBox(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_DC_StartDoc(wxk_Object* self, const char16_t* message, size_t messageLength) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_StartPage(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_EndDoc(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_EndPage(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_DC_Blit(wxk_Object* self, int32_t xdest, int32_t ydest, int32_t width, int32_t height, wxk_Object* source, int32_t xsrc, int32_t ysrc, int32_t logicalFunc, uint8_t useMask) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_DC_StretchBlit(wxk_Object* self, int32_t xdest, int32_t ydest, int32_t dstWidth, int32_t dstHeight, wxk_Object* source, int32_t xsrc, int32_t ysrc, int32_t srcWidth, int32_t srcHeight, int32_t logicalFunc, uint8_t useMask) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_CopyAttributes(wxk_Object* self, wxk_Object* dc) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_DC_GetBackgroundMode(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_SetBackgroundMode(wxk_Object* self, int32_t mode) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Colour) wxk_DC_GetTextBackground(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_SetTextBackground(wxk_Object* self, wxk_Colour color) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Colour) wxk_DC_GetTextForeground(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_SetTextForeground(wxk_Object* self, wxk_Colour color) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_DC_GetBackground(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_SetBackground(wxk_Object* self, const wxk_Object* brush) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_DC_GetBrush(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_SetBrush(wxk_Object* self, const wxk_Object* brush) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_DC_GetPen(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_SetPen(wxk_Object* self, const wxk_Object* pen) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_DC_GetLogicalFunction(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DC_SetLogicalFunction(wxk_Object* self, int32_t function) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_DC_GetAsBitmap(wxk_Object* self) WXK_NOEXCEPT;
 
 // wxDPIChangedEvent
 
@@ -584,7 +669,7 @@ WXK_FUNCTION(wxk_Object*) wxk_Image_new_StringStringInt(const char16_t* name, si
 WXK_FUNCTION(wxk_Object*) wxk_Image_Copy(wxk_Object* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Image_Create_IntIntBool(wxk_Object* self, int32_t width, int32_t height, uint8_t clear) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Image_Create_SizeBool(wxk_Object* self, wxk_Size size, uint8_t clear) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_Image_Clear(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Image_Clear(wxk_Object* self, uint8_t value) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Image_Destroy(wxk_Object* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Image_InitAlpha(wxk_Object* self) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Image_Blur(wxk_Object* self, int32_t blurRadius) WXK_NOEXCEPT;
@@ -592,6 +677,7 @@ WXK_FUNCTION(wxk_Object*) wxk_Image_BlurHorizontal(wxk_Object* self, int32_t blu
 WXK_FUNCTION(wxk_Object*) wxk_Image_BlurVertical(wxk_Object* self, int32_t blurRadius) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Image_Mirror(wxk_Object* self, uint8_t horizontally) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Image_Paste(wxk_Object* self, const wxk_Object* image, int32_t x, int32_t y, int32_t alphaBlend) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Image_Replace(wxk_Object* self, uint8_t r1, uint8_t g1, uint8_t b1, uint8_t r2, uint8_t g2, uint8_t b2) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Image_Rotate(wxk_Object* self, double angle, wxk_Point rotationCenter, uint8_t interpolating) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Image_Rotate90(wxk_Object* self, uint8_t clockwise) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Image_Rotate180(wxk_Object* self) WXK_NOEXCEPT;
@@ -602,11 +688,17 @@ WXK_FUNCTION(void) wxk_Image_ChangeHSV(wxk_Object* self, double angleH, double f
 WXK_FUNCTION(wxk_Object*) wxk_Image_Scale_IntIntImageResizeQuality(wxk_Object* self, int32_t width, int32_t height, int32_t quality) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Image_Scale_SizeImageResizeQuality(wxk_Object* self, wxk_Size size, int32_t quality) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Image_Size(wxk_Object* self, wxk_Size size, wxk_Point position, int32_t red, int32_t green, int32_t blue) WXK_NOEXCEPT;
-WXK_FUNCTION(uint8_t) wxk_Image_ConvertAlphaToMask(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Image_ConvertAlphaToMask_Default(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Image_ConvertAlphaToMask_ByteByteByte(wxk_Object* self, uint8_t mr, uint8_t mg, uint8_t mb) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Image_ConvertToGreyscale_DoubleDoubleDouble(wxk_Object* self, double weight_r, double weight_g, double weight_b) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Image_ConvertToGreyscale_Default(wxk_Object* self) WXK_NOEXCEPT;
-WXK_FUNCTION(wxk_Object*) wxk_Image_ConvertToDisabled(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_Image_ConvertToMono(wxk_Object* self, uint8_t r, uint8_t g, uint8_t b) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_Image_ConvertToDisabled(wxk_Object* self, uint8_t brightness) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Image_ChangeLightness(wxk_Object* self, int32_t alpha) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Image_GetAlpha(wxk_Object* self, int32_t x, int32_t y) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Image_GetRed(wxk_Object* self, int32_t x, int32_t y) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Image_GetGreen(wxk_Object* self, int32_t x, int32_t y) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Image_GetBlue(wxk_Object* self, int32_t x, int32_t y) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_String*) wxk_Image_GetOption(wxk_Object* self, const char16_t* name, size_t nameLength) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_Image_GetOptionInt(wxk_Object* self, const char16_t* name, size_t nameLength) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Image_GetSubImage(wxk_Object* self, wxk_Rect rect) WXK_NOEXCEPT;
@@ -617,11 +709,19 @@ WXK_FUNCTION(uint8_t) wxk_Image_LoadFile_StringStringInt(wxk_Object* self, const
 WXK_FUNCTION(uint8_t) wxk_Image_SaveFile_StringBitmapType(wxk_Object* self, const char16_t* name, size_t nameLength, int32_t type) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Image_SaveFile_StringString(wxk_Object* self, const char16_t* name, size_t nameLength, const char16_t* mimetype, size_t mimetypeLength) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Image_SaveFile_String(wxk_Object* self, const char16_t* name, size_t nameLength) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_Image_SetAlpha(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Image_SetAlpha_Default(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Image_SetAlpha_IntIntByte(wxk_Object* self, int32_t x, int32_t y, uint8_t alpha) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Image_ClearAlpha(wxk_Object* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Image_SetMask(wxk_Object* self, uint8_t hasMask) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Image_SetMaskColour(wxk_Object* self, uint8_t red, uint8_t green, uint8_t blue) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Image_SetMaskFromImage(wxk_Object* self, const wxk_Object* mask, uint8_t mr, uint8_t mg, uint8_t mb) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Image_SetOption_StringString(wxk_Object* self, const char16_t* name, size_t nameLength, const char16_t* value, size_t valueLength) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Image_SetOption_StringInt(wxk_Object* self, const char16_t* name, size_t nameLength, int32_t value) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Image_SetRGB_IntIntByteByteByte(wxk_Object* self, int32_t x, int32_t y, uint8_t r, uint8_t g, uint8_t b) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Image_SetRGB_RectByteByteByte(wxk_Object* self, wxk_Rect rect, uint8_t red, uint8_t green, uint8_t blue) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Image_GetMaskRed(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Image_GetMaskGreen(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Image_GetMaskBlue(wxk_Object* self) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_Image_GetWidth(wxk_Object* self) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_Image_GetHeight(wxk_Object* self) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Size) wxk_Image_GetSize(wxk_Object* self) WXK_NOEXCEPT;
@@ -695,6 +795,15 @@ WXK_FUNCTION(wxk_StringArray*) wxk_ListBox_GetStrings(wxk_Window* self) WXK_NOEX
 WXK_FUNCTION(wxk_String*) wxk_ListBox_GetStringSelection(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_ListBox_SetStringSelection_String(wxk_Window* self, const char16_t* s, size_t sLength) WXK_NOEXCEPT;
 
+// wxMemoryDC
+
+WXK_FUNCTION(wxk_Object*) wxk_MemoryDC_new_Default(void) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_MemoryDC_new_DC(wxk_Object* dc) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_MemoryDC_new_Bitmap(wxk_Object* bitmap) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_MemoryDC_SelectObject(wxk_Object* self, wxk_Object* bitmap) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_MemoryDC_SelectObjectAsSource(wxk_Object* self, const wxk_Object* bitmap) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_MemoryDC_GetSelectedBitmap(wxk_Object* self) WXK_NOEXCEPT;
+
 // wxMenuBar
 
 WXK_FUNCTION(wxk_Window*) wxk_MenuBar_new(int64_t style) WXK_NOEXCEPT;
@@ -767,6 +876,7 @@ WXK_FUNCTION(uint8_t) wxk_MouseEvent_ButtonDown(wxk_Event* self, int32_t but) WX
 WXK_FUNCTION(uint8_t) wxk_MouseEvent_ButtonUp(wxk_Event* self, int32_t but) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_MouseEvent_Dragging(wxk_Event* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_MouseEvent_Entering(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Point) wxk_MouseEvent_GetLogicalPosition(wxk_Event* self, wxk_Object* dc) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_MouseEvent_Leaving(wxk_Event* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_MouseEvent_LeftDClick(wxk_Event* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_MouseEvent_LeftDown(wxk_Event* self) WXK_NOEXCEPT;
@@ -860,6 +970,10 @@ WXK_FUNCTION(void) wxk_NotifyEvent_Allow(wxk_Event* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_NotifyEvent_Veto(wxk_Event* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_NotifyEvent_IsAllowed(wxk_Event* self) WXK_NOEXCEPT;
 
+// wxPaintDC
+
+WXK_FUNCTION(wxk_Object*) wxk_PaintDC_new(wxk_Window* window) WXK_NOEXCEPT;
+
 // wxPanel
 
 WXK_FUNCTION(wxk_Window*) wxk_Panel_new(wxk_Window* parent, int32_t id, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
@@ -874,6 +988,7 @@ WXK_FUNCTION(wxk_Window*) wxk_PasswordEntryDialog_new(wxk_Window* parent, const 
 WXK_FUNCTION(wxk_Object*) wxk_Pen_new_Default(void) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Pen_new_ColorIntPenStyle(wxk_Colour color, int32_t width, int32_t style) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Pen_new_BitmapInt(const wxk_Object* stipple, int32_t width) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Pen_SetColour(wxk_Object* self, uint8_t red, uint8_t green, uint8_t blue) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Pen_SetStipple(wxk_Object* self, const wxk_Object* stipple) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_Pen_GetCap(wxk_Object* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Pen_SetCap(wxk_Object* self, int32_t capStyle) WXK_NOEXCEPT;
@@ -929,6 +1044,10 @@ WXK_FUNCTION(wxk_Window*) wxk_RadioButton_GetFirstInGroup(wxk_Window* self) WXK_
 WXK_FUNCTION(wxk_Window*) wxk_RadioButton_GetLastInGroup(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Window*) wxk_RadioButton_GetPreviousInGroup(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Window*) wxk_RadioButton_GetNextInGroup(wxk_Window* self) WXK_NOEXCEPT;
+
+// wxScreenDC
+
+WXK_FUNCTION(wxk_Object*) wxk_ScreenDC_new(void) WXK_NOEXCEPT;
 
 // wxScrollBar
 
@@ -1437,6 +1556,7 @@ WXK_FUNCTION(void) wxk_Window_SetOwnForegroundColour(wxk_Window* self, wxk_Colou
 WXK_FUNCTION(uint8_t) wxk_Window_UseForegroundColour(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Window_InheritsForegroundColour(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Window_ShouldInheritColours(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Window_SetTransparent(wxk_Window* self, uint8_t alpha) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_EvtHandler*) wxk_Window_PopEventHandler(wxk_Window* self, uint8_t deleteHandler) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Window_PushEventHandler(wxk_Window* self, wxk_EvtHandler* handler) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Window_RemoveEventHandler(wxk_Window* self, wxk_EvtHandler* handler) WXK_NOEXCEPT;
@@ -1583,6 +1703,10 @@ WXK_FUNCTION(void) wxk_Window_SetDoubleBuffered(wxk_Window* self, uint8_t on) WX
 WXK_FUNCTION(uint8_t) wxk_Window_IsRetained(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Window_IsThisEnabled(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Window_IsTopLevel(wxk_Window* self) WXK_NOEXCEPT;
+
+// wxWindowDC
+
+WXK_FUNCTION(wxk_Object*) wxk_WindowDC_new(wxk_Window* window) WXK_NOEXCEPT;
 
 // Event types
 

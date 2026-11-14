@@ -58,6 +58,10 @@ internal static class Core {
 		tweaks.Class("wxIcon").Ignore("ConvertToDisabled");
 		// Underlined and Strikethrough return changed copies, beside the properties of the same names.
 		tweaks.Class("wxFont").Rename("Underlined", "WithUnderline").Rename("Strikethrough", "WithStrikethrough");
+		// Drawing contexts.
+		foreach (string dc in (string[])["wxDC", "wxWindowDC", "wxClientDC", "wxPaintDC", "wxMemoryDC", "wxScreenDC"]) {
+			tweaks.Class(dc);
+		}
 		// The standard dialogs.
 		foreach (string dialog in (string[])["wxTextEntryDialog", "wxPasswordEntryDialog", "wxFileDialog", "wxDirDialog", "wxProgressDialog", "wxSingleChoiceDialog", "wxMultiChoiceDialog"]) {
 			tweaks.Class(dialog);

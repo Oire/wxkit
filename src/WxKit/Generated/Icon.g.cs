@@ -5,7 +5,7 @@ using WxKit.Interop;
 namespace WxKit;
 
 /// <summary>An icon is a small rectangular bitmap usually used for denoting a minimized application. Wraps wxIcon.</summary>
-public unsafe partial class Icon : NativeValue {
+public unsafe partial class Icon : NativeObject {
 	/// <summary>Default ctor.</summary>
 	public Icon() : this(CreateNative()) {
 	}

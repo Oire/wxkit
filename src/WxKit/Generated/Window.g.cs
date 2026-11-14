@@ -866,6 +866,9 @@ public unsafe partial class Window : EvtHandler {
 		}
 	}
 
+	/// <summary>Set the transparency of the window.</summary>
+	public bool SetTransparent(byte alpha) => WxKitNative.WindowSetTransparent(Native, alpha) != 0;
+
 	/// <summary>Sets the virtual size of the window in pixels.</summary>
 	public void SetVirtualSize(int width, int height) => WxKitNative.WindowSetVirtualSizeIntInt(Native, width, height);
 

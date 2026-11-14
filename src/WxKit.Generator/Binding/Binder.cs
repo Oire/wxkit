@@ -69,6 +69,8 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		if (ancestors.Contains("wxEvent")) return HandleKind.Event;
 		// Fonts, pens, brushes, bitmaps, icons, and cursors are wxGDIObjects; images are copied the same way.
 		if (ancestors.Contains("wxGDIObject") || ancestors.Contains("wxImage")) return HandleKind.Value;
+		// Drawing contexts are made, used, and deleted, as a wxPaintDC is in a paint handler.
+		if (ancestors.Contains("wxDC")) return HandleKind.Owned;
 		if (ancestors.Contains(EventObjectClass)) return HandleKind.EvtHandler;
 		throw new InvalidOperationException($"{name} is not a kind of class WxKit can bind yet.");
 	}
@@ -220,6 +222,10 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 	}
 
 	private Conversion? Map(CppType type, BoundClass owner, string member, string? parameter, bool isReturn) {
+		if (!isReturn && _classes.TryGetValue(type.Name, out BoundClass? owned) && owned.Handle == HandleKind.Owned && (type.IsReference || type.Pointers == 1)) return new OwnedConversion(owned, type.IsReference);
+		// A value object passed by a reference that can change, such as the bitmap a wxMemoryDC
+		// draws into, is the managed object's own copy, so the change shows there.
+		if (!isReturn && type.IsReference && !type.IsConst && _classes.TryGetValue(type.Name, out BoundClass? changed) && changed.Handle == HandleKind.Value) return new ValueConversion(changed, mutable: true);
 		if (parameter is not null && owner.Tweak.ParameterEnums.TryGetValue((member, parameter), out string? enumName)) return new EnumConversion(enumName, type.Name == "long" ? NumberConversion.Long : NumberConversion.Int);
 		if (parameter == "style" && type.Name == "long" && type.Pointers == 0 && owner.Styles is BoundStyles styles && member == owner.CppName) return new EnumConversion(styles.Name, NumberConversion.Long);
 		// A getter of the style, such as GetMessageDialogStyle, returns the class's style enum.
@@ -244,6 +250,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 			"long" => NumberConversion.Long,
 			"double" => NumberConversion.Double,
 			"float" => NumberConversion.Float,
+			"unsigned char" or "wxByte" => NumberConversion.Byte,
 			// A wxMessageDialog button label converts from a string, which is how WxKit gives it.
 			"wxString" or "ButtonLabel" => StringConversion.Instance,
 			"size_t" => CountConversion.Size,

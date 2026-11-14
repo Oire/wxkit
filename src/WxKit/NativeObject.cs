@@ -4,14 +4,15 @@ using WxKit.Interop;
 namespace WxKit;
 
 /// <summary>
-/// A wxWidgets object that is copied like a value and shares its data by reference counting, such
-/// as a font, a bitmap, or an image. Each one owns its own reference. Dispose it when you are done
-/// with it, or let the garbage collector free it, which happens on the GUI thread.
+/// A wxWidgets object WxKit owns, rather than a window wxWidgets owns: a value such as a font, a
+/// bitmap, or an image, which shares its data by reference counting, or a drawing context. Dispose
+/// it when you are done with it, which a drawing context needs promptly, or let the garbage
+/// collector free it, which happens on the GUI thread.
 /// </summary>
-public abstract unsafe class NativeValue : IDisposable {
+public abstract unsafe class NativeObject : IDisposable {
 	private readonly ValueHandle _handle;
 
-	private protected NativeValue(WxkObject* native) {
+	private protected NativeObject(WxkObject* native) {
 		if (native is null) throw new InvalidOperationException($"wxWidgets could not create the {GetType().Name}.");
 		_handle = new ValueHandle(native);
 	}

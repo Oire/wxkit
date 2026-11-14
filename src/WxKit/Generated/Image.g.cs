@@ -5,7 +5,7 @@ using WxKit.Interop;
 namespace WxKit;
 
 /// <summary>This class encapsulates a platform-independent image. Wraps wxImage.</summary>
-public unsafe partial class Image : NativeValue {
+public unsafe partial class Image : NativeObject {
 	/// <summary>Creates an empty wxImage object without an alpha channel.</summary>
 	public Image() : this(CreateNative()) {
 	}
@@ -50,6 +50,15 @@ public unsafe partial class Image : NativeValue {
 		set => WxKitNative.ImageSetLoadFlags(Native, value);
 	}
 
+	/// <summary>Gets the blue value of the mask colour.</summary>
+	public byte MaskBlue => WxKitNative.ImageGetMaskBlue(Native);
+
+	/// <summary>Gets the green value of the mask colour.</summary>
+	public byte MaskGreen => WxKitNative.ImageGetMaskGreen(Native);
+
+	/// <summary>Gets the red value of the mask colour.</summary>
+	public byte MaskRed => WxKitNative.ImageGetMaskRed(Native);
+
 	/// <summary>Returns the size of the image in pixels.</summary>
 	public Size Size => WxKitNative.ImageGetSize(Native);
 
@@ -84,22 +93,28 @@ public unsafe partial class Image : NativeValue {
 	public void ChangeSaturation(double factor) => WxKitNative.ImageChangeSaturation(Native, factor);
 
 	/// <summary>Initialize the image data with zeroes (the default) or with the byte value given as value.</summary>
-	public void Clear() => WxKitNative.ImageClear(Native);
+	public void Clear(byte value = 0) => WxKitNative.ImageClear(Native, value);
 
 	/// <summary>Removes the alpha channel from the image.</summary>
 	public void ClearAlpha() => WxKitNative.ImageClearAlpha(Native);
 
 	/// <summary>If the image has alpha channel, this method converts it to mask.</summary>
-	public bool ConvertAlphaToMask() => WxKitNative.ImageConvertAlphaToMask(Native) != 0;
+	public bool ConvertAlphaToMask() => WxKitNative.ImageConvertAlphaToMaskDefault(Native) != 0;
+
+	/// <summary>If the image has alpha channel, this method converts it to mask using the specified colour as the mask colour.</summary>
+	public bool ConvertAlphaToMask(byte mr, byte mg, byte mb) => WxKitNative.ImageConvertAlphaToMaskByteByteByte(Native, mr, mg, mb) != 0;
 
 	/// <summary>Returns disabled (dimmed) version of the image.</summary>
-	public Image? ConvertToDisabled() => global::WxKit.Image.Take(WxKitNative.ImageConvertToDisabled(Native));
+	public Image? ConvertToDisabled(byte brightness = 255) => global::WxKit.Image.Take(WxKitNative.ImageConvertToDisabled(Native, brightness));
 
 	/// <summary>Returns a greyscale version of the image.</summary>
 	public Image? ConvertToGreyscale(double weight_r, double weight_g, double weight_b) => global::WxKit.Image.Take(WxKitNative.ImageConvertToGreyscaleDoubleDoubleDouble(Native, weight_r, weight_g, weight_b));
 
 	/// <summary>Returns a greyscale version of the image.</summary>
 	public Image? ConvertToGreyscale() => global::WxKit.Image.Take(WxKitNative.ImageConvertToGreyscaleDefault(Native));
+
+	/// <summary>Returns monochromatic version of the image.</summary>
+	public Image? ConvertToMono(byte r, byte g, byte b) => global::WxKit.Image.Take(WxKitNative.ImageConvertToMono(Native, r, g, b));
 
 	/// <summary>Returns an identical copy of this image.</summary>
 	public Image? Copy() => global::WxKit.Image.Take(WxKitNative.ImageCopy(Native));
@@ -112,6 +127,15 @@ public unsafe partial class Image : NativeValue {
 
 	/// <summary>Destroys the image data.</summary>
 	public void Destroy() => WxKitNative.ImageDestroy(Native);
+
+	/// <summary>Return alpha value at given pixel location.</summary>
+	public byte GetAlpha(int x, int y) => WxKitNative.ImageGetAlpha(Native, x, y);
+
+	/// <summary>Returns the blue intensity at the given coordinate.</summary>
+	public byte GetBlue(int x, int y) => WxKitNative.ImageGetBlue(Native, x, y);
+
+	/// <summary>Returns the green intensity at the given coordinate.</summary>
+	public byte GetGreen(int x, int y) => WxKitNative.ImageGetGreen(Native, x, y);
 
 	/// <summary>Gets a user-defined string-valued option.</summary>
 	public string GetOption(string name) {
@@ -128,6 +152,9 @@ public unsafe partial class Image : NativeValue {
 			return WxKitNative.ImageGetOptionInt(Native, nameText, NativeString.Length(name));
 		}
 	}
+
+	/// <summary>Returns the red intensity at the given coordinate.</summary>
+	public byte GetRed(int x, int y) => WxKitNative.ImageGetRed(Native, x, y);
 
 	/// <summary>Returns a sub image of the current one as long as the rect belongs entirely to the image.</summary>
 	public Image? GetSubImage(Rect rect) => global::WxKit.Image.Take(WxKitNative.ImageGetSubImage(Native, rect));
@@ -172,6 +199,9 @@ public unsafe partial class Image : NativeValue {
 		ArgumentNullException.ThrowIfNull(image);
 		WxKitNative.ImagePaste(Native, image.Native, x, y, (int)alphaBlend);
 	}
+
+	/// <summary>Replaces the colour specified by r1,g1,b1 by the colour r2,g2,b2.</summary>
+	public void Replace(byte r1, byte g1, byte b1, byte r2, byte g2, byte b2) => WxKitNative.ImageReplace(Native, r1, g1, b1, r2, g2, b2);
 
 	/// <summary>Returns a resized version of this image without scaling it by adding either a border with the given colour or cropping as necessary.</summary>
 	public Image? Resized(Size size, Point position, int red = -1, int green = -1, int blue = -1) => global::WxKit.Image.Take(WxKitNative.ImageSize(Native, size, position, red, green, blue));
@@ -221,10 +251,22 @@ public unsafe partial class Image : NativeValue {
 	public Image? Scale(Size size, ImageResizeQuality quality = ImageResizeQuality.Normal) => global::WxKit.Image.Take(WxKitNative.ImageScaleSizeImageResizeQuality(Native, size, (int)quality));
 
 	/// <summary>This function is similar to SetData() and has similar restrictions.</summary>
-	public void SetAlpha() => WxKitNative.ImageSetAlpha(Native);
+	public void SetAlpha() => WxKitNative.ImageSetAlphaDefault(Native);
+
+	/// <summary>Sets the alpha value for the given pixel.</summary>
+	public void SetAlpha(int x, int y, byte alpha) => WxKitNative.ImageSetAlphaIntIntByte(Native, x, y, alpha);
 
 	/// <summary>Specifies whether there is a mask or not.</summary>
 	public void SetMask(bool hasMask = true) => WxKitNative.ImageSetMask(Native, hasMask ? (byte)1 : (byte)0);
+
+	/// <summary>Sets the mask colour for this image (and tells the image to use the mask).</summary>
+	public void SetMaskColor(byte red, byte green, byte blue) => WxKitNative.ImageSetMaskColour(Native, red, green, blue);
+
+	/// <summary>Sets image's mask so that the pixels that have RGB value of mr,mg,mb in mask will be masked in the image.</summary>
+	public bool SetMaskFromImage(Image mask, byte mr, byte mg, byte mb) {
+		ArgumentNullException.ThrowIfNull(mask);
+		return WxKitNative.ImageSetMaskFromImage(Native, mask.Native, mr, mg, mb) != 0;
+	}
 
 	/// <summary>Sets a user-defined option.</summary>
 	public void SetOption(string name, string value) {
@@ -243,6 +285,12 @@ public unsafe partial class Image : NativeValue {
 			WxKitNative.ImageSetOptionStringInt(Native, nameText, NativeString.Length(name), value);
 		}
 	}
+
+	/// <summary>Set the color of the pixel at the given x and y coordinate.</summary>
+	public void SetRGB(int x, int y, byte r, byte g, byte b) => WxKitNative.ImageSetRGBIntIntByteByteByte(Native, x, y, r, g, b);
+
+	/// <summary>Sets the colour of the pixels within the given rectangle.</summary>
+	public void SetRGB(Rect rect, byte red, byte green, byte blue) => WxKitNative.ImageSetRGBRectByteByteByte(Native, rect, red, green, blue);
 
 	private static WxkObject* CreateNative() {
 		Application.VerifyAccess();

@@ -5,7 +5,7 @@ using WxKit.Interop;
 namespace WxKit;
 
 /// <summary>This class encapsulates the concept of a platform-dependent bitmap, either monochrome or colour or colour with alpha channel support. Wraps wxBitmap.</summary>
-public unsafe partial class Bitmap : NativeValue {
+public unsafe partial class Bitmap : NativeObject {
 	/// <summary>Default constructor.</summary>
 	public Bitmap() : this(CreateNative()) {
 	}
@@ -18,12 +18,20 @@ public unsafe partial class Bitmap : NativeValue {
 	public Bitmap(Size size, int depth = -1) : this(CreateNative(size, depth)) {
 	}
 
+	/// <summary>Create a bitmap compatible with the given DC, inheriting its magnification factor.</summary>
+	public Bitmap(int width, int height, DC dc) : this(CreateNative(width, height, dc)) {
+	}
+
 	/// <summary>Loads a bitmap from a file or resource.</summary>
 	public Bitmap(string name) : this(CreateNative(name)) {
 	}
 
 	/// <summary>Creates this bitmap object from the given image.</summary>
 	public Bitmap(Image image, int depth = -1) : this(CreateNative(image, depth)) {
+	}
+
+	/// <summary>Creates a bitmap compatible with the given DC from the given image.</summary>
+	public Bitmap(Image image, DC dc) : this(CreateNative(image, dc)) {
 	}
 
 	/// <summary>Creates bitmap corresponding to the given cursor.</summary>
@@ -82,7 +90,7 @@ public unsafe partial class Bitmap : NativeValue {
 	public int Width => WxKitNative.BitmapGetWidth(Native);
 
 	/// <summary>Returns disabled (dimmed) version of the bitmap.</summary>
-	public Bitmap? ConvertToDisabled() => global::WxKit.Bitmap.Take(WxKitNative.BitmapConvertToDisabled(Native));
+	public Bitmap? ConvertToDisabled(byte brightness = 255) => global::WxKit.Bitmap.Take(WxKitNative.BitmapConvertToDisabled(Native, brightness));
 
 	/// <summary>Creates an image from a platform-dependent bitmap.</summary>
 	public Image? ConvertToImage() => global::WxKit.Image.Take(WxKitNative.BitmapConvertToImage(Native));
@@ -98,6 +106,12 @@ public unsafe partial class Bitmap : NativeValue {
 
 	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
 	public bool Create(Size size, int depth = -1) => WxKitNative.BitmapCreateSizeInt(Native, size, depth) != 0;
+
+	/// <summary>Create a bitmap compatible with the given DC, inheriting its magnification factor.</summary>
+	public bool Create(int width, int height, DC dc) {
+		ArgumentNullException.ThrowIfNull(dc);
+		return WxKitNative.BitmapCreateIntIntDC(Native, width, height, dc.Native) != 0;
+	}
 
 	/// <summary>Create a bitmap with a scale factor.</summary>
 	public bool CreateScaled(int width, int height, int depth, double logicalScale) => WxKitNative.BitmapCreateScaled(Native, width, height, depth, logicalScale) != 0;
@@ -154,6 +168,12 @@ public unsafe partial class Bitmap : NativeValue {
 		return WxKitNative.BitmapNewSizeInt(size, depth);
 	}
 
+	private static WxkObject* CreateNative(int width, int height, DC dc) {
+		Application.VerifyAccess();
+		ArgumentNullException.ThrowIfNull(dc);
+		return WxKitNative.BitmapNewIntIntDC(width, height, dc.Native);
+	}
+
 	private static WxkObject* CreateNative(string name) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(name);
@@ -166,6 +186,13 @@ public unsafe partial class Bitmap : NativeValue {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(image);
 		return WxKitNative.BitmapNewImageInt(image.Native, depth);
+	}
+
+	private static WxkObject* CreateNative(Image image, DC dc) {
+		Application.VerifyAccess();
+		ArgumentNullException.ThrowIfNull(image);
+		ArgumentNullException.ThrowIfNull(dc);
+		return WxKitNative.BitmapNewImageDC(image.Native, dc.Native);
 	}
 
 	private static WxkObject* CreateNative(Cursor cursor) {

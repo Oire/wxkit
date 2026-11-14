@@ -5,7 +5,7 @@ using WxKit.Interop;
 namespace WxKit;
 
 /// <summary>A pen is a tool for drawing outlines. Wraps wxPen.</summary>
-public unsafe partial class Pen : NativeValue {
+public unsafe partial class Pen : NativeObject {
 	/// <summary>Default constructor.</summary>
 	public Pen() : this(CreateNative()) {
 	}
@@ -65,6 +65,9 @@ public unsafe partial class Pen : NativeValue {
 		get => WxKitNative.PenGetWidth(Native);
 		set => WxKitNative.PenSetWidth(Native, value);
 	}
+
+	/// <summary>The pen's colour is changed to the given colour.</summary>
+	public void SetColor(byte red, byte green, byte blue) => WxKitNative.PenSetColour(Native, red, green, blue);
 
 	/// <summary>Sets the bitmap for stippling.</summary>
 	public void SetStipple(Bitmap stipple) {

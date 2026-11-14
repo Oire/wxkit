@@ -205,6 +205,14 @@ public enum FlexSizerGrowMode {
 	All = 2,
 }
 
+/// <summary>Wraps wxFloodFillStyle.</summary>
+public enum FloodFillStyle {
+	/// <summary>The flooding occurs until a colour other than the given colour is encountered. Wraps wxFLOOD_SURFACE.</summary>
+	Surface = 1,
+	/// <summary>The area to be flooded is bounded by the given colour. Wraps wxFLOOD_BORDER.</summary>
+	Border = 2,
+}
+
 /// <summary>Wraps wxFontEncoding.</summary>
 public enum FontEncoding {
 	/// <summary>Default system encoding. Wraps wxFONTENCODING_SYSTEM.</summary>
@@ -675,6 +683,42 @@ public enum PenStyle {
 	FirstHatch = 14,
 	/// <summary>Last of the hatch styles (inclusive). Wraps wxPENSTYLE_LAST_HATCH.</summary>
 	LastHatch = 15,
+}
+
+/// <summary>Wraps wxRasterOperationMode.</summary>
+public enum RasterOperationMode {
+	/// <summary>0. Wraps wxCLEAR.</summary>
+	Clear = 0,
+	/// <summary>src XOR dst. Wraps wxXOR.</summary>
+	Xor = 1,
+	/// <summary>NOT dst. Wraps wxINVERT.</summary>
+	Invert = 2,
+	/// <summary>src OR (NOT dst). Wraps wxOR_REVERSE.</summary>
+	OrReverse = 3,
+	/// <summary>src AND (NOT dst). Wraps wxAND_REVERSE.</summary>
+	AndReverse = 4,
+	/// <summary>src. Wraps wxCOPY.</summary>
+	Copy = 5,
+	/// <summary>src AND dst. Wraps wxAND.</summary>
+	And = 6,
+	/// <summary>(NOT src) AND dst. Wraps wxAND_INVERT.</summary>
+	AndInvert = 7,
+	/// <summary>dst. Wraps wxNO_OP.</summary>
+	NoOp = 8,
+	/// <summary>(NOT src) AND (NOT dst). Wraps wxNOR.</summary>
+	Nor = 9,
+	/// <summary>(NOT src) XOR dst. Wraps wxEQUIV.</summary>
+	Equiv = 10,
+	/// <summary>(NOT src). Wraps wxSRC_INVERT.</summary>
+	SrcInvert = 11,
+	/// <summary>(NOT src) OR dst. Wraps wxOR_INVERT.</summary>
+	OrInvert = 12,
+	/// <summary>(NOT src) OR (NOT dst). Wraps wxNAND.</summary>
+	Nand = 13,
+	/// <summary>src OR dst. Wraps wxOR.</summary>
+	Or = 14,
+	/// <summary>1. Wraps wxSET.</summary>
+	Set = 15,
 }
 
 /// <summary>Wraps Reason.</summary>

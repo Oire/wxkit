@@ -22,7 +22,7 @@ internal static class ManagedEmitter {
 	private static string Class(BoundClass bound) {
 		CodeWriter writer = Start();
 		Summary(writer, $"{Sentence(bound.Source.Brief)}Wraps {bound.CppName}.");
-		string baseList = bound.Base is not null ? " : " + bound.Base.Name : bound.Handle == HandleKind.Value ? " : NativeValue" : string.Empty;
+		string baseList = bound.Base is not null ? " : " + bound.Base.Name : bound.Handle.IsOwned ? " : NativeObject" : string.Empty;
 		writer.Open($"public unsafe partial class {bound.Name}{baseList}");
 		bool first = true;
 		void Gap() {
@@ -35,7 +35,10 @@ internal static class ManagedEmitter {
 			string arguments = string.Join(", ", constructor.ManagedParameters.Select(static parameter => parameter.Name));
 			writer.Open($"public {bound.Name}({ParameterList(constructor.ManagedParameters, withDefaults: true)}) : this(CreateNative({arguments}))").Close();
 		}
-		if (bound.Handle == HandleKind.Value) {
+		if (bound.Handle == HandleKind.Owned) {
+			Gap();
+			writer.Open($"internal {bound.Name}(WxkObject* native) : base(native)").Close();
+		} else if (bound.Handle == HandleKind.Value) {
 			Gap();
 			writer.Open($"internal {bound.Name}(WxkObject* native) : base(native)").Close();
 			writer.Line();

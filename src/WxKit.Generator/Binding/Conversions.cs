@@ -112,6 +112,8 @@ internal sealed class NumberConversion(string suffix, string cType, string cppTy
 
 	public static NumberConversion Float { get; } = new("Float", "float", "float", "float");
 
+	public static NumberConversion Byte { get; } = new("Byte", "uint8_t", "unsigned char", "byte");
+
 	public override string Suffix => suffix;
 
 	public override string CReturnType => cType;
@@ -421,7 +423,7 @@ internal sealed class StringArrayConversion : Conversion {
 // A value object, such as a font, crosses as a handle to a heap copy the managed side owns. One
 // going in can be null, for the class's empty object; one coming back empty is null. A bundle of
 // bitmaps or icons is made from one, as C++ would convert it.
-internal sealed class ValueConversion(BoundClass target, string? wrapper = null) : Conversion {
+internal sealed class ValueConversion(BoundClass target, string? wrapper = null, bool mutable = false) : Conversion {
 	public BoundClass Target { get; } = target;
 
 	public override string Suffix => Target.Name;
@@ -432,9 +434,9 @@ internal sealed class ValueConversion(BoundClass target, string? wrapper = null)
 
 	public override string InteropReturnType => "WxkObject*";
 
-	public override IEnumerable<string> CParameters(string name) => [$"const wxk_Object* {name}"];
+	public override IEnumerable<string> CParameters(string name) => [mutable ? $"wxk_Object* {name}" : $"const wxk_Object* {name}"];
 
-	public override string ToCpp(string name) => wrapper is null ? $"wxk::ValueOf<{Target.CppName}>({name})" : $"{wrapper}(wxk::ValueOf<{Target.CppName}>({name}))";
+	public override string ToCpp(string name) => mutable ? $"wxk::ValueRef<{Target.CppName}>({name})" : wrapper is null ? $"wxk::ValueOf<{Target.CppName}>({name})" : $"{wrapper}(wxk::ValueOf<{Target.CppName}>({name}))";
 
 	public override string FromCpp(string expression) => $"wxk::CopyValue<{Target.CppName}>({expression})";
 
@@ -444,11 +446,40 @@ internal sealed class ValueConversion(BoundClass target, string? wrapper = null)
 
 	public override string ManagedReturnType(bool nullable) => Target.Name + "?";
 
-	public override string? Check(string name, bool nullable) => nullable ? null : $"ArgumentNullException.ThrowIfNull({name});";
+	public override string? Check(string name, bool nullable) => nullable && !mutable ? null : $"ArgumentNullException.ThrowIfNull({name});";
 
-	public override IEnumerable<string> InteropArguments(string name, bool nullable) => [nullable ? $"{name} is null ? null : {name}.Native" : $"{name}.Native"];
+	public override IEnumerable<string> InteropArguments(string name, bool nullable) => [nullable && !mutable ? $"{name} is null ? null : {name}.Native" : $"{name}.Native"];
 
 	public override string ManagedReturn(string expression) => $"global::WxKit.{Target.Name}.Take({expression})";
 
 	public override bool AcceptsNull => true;
+}
+
+// An object the managed side owns, such as a drawing context, passed by reference or pointer.
+internal sealed class OwnedConversion(BoundClass target, bool byReference) : Conversion {
+	public override string Suffix => target.Name;
+
+	public override string CReturnType => throw new InvalidOperationException("Owned objects are only bound as parameters.");
+
+	public override string Fallback => "nullptr";
+
+	public override string InteropReturnType => throw new InvalidOperationException("Owned objects are only bound as parameters.");
+
+	public override IEnumerable<string> CParameters(string name) => [$"wxk_Object* {name}"];
+
+	public override string ToCpp(string name) => byReference ? $"*static_cast<{target.CppName}*>(wxk::Unwrap({name}))" : $"static_cast<{target.CppName}*>(wxk::Unwrap({name}))";
+
+	public override string FromCpp(string expression) => throw new InvalidOperationException("Owned objects are only bound as parameters.");
+
+	public override IEnumerable<string> InteropParameters(string name) => [$"WxkObject* {name}"];
+
+	public override string ManagedType(bool nullable) => nullable ? target.Name + "?" : target.Name;
+
+	public override string? Check(string name, bool nullable) => nullable ? null : $"ArgumentNullException.ThrowIfNull({name});";
+
+	public override IEnumerable<string> InteropArguments(string name, bool nullable) => [nullable ? $"{name} is null ? null : {name}.Native" : $"{name}.Native"];
+
+	public override string ManagedReturn(string expression) => throw new InvalidOperationException("Owned objects are only bound as parameters.");
+
+	public override bool AcceptsNull => !byReference;
 }

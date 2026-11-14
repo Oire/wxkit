@@ -5,7 +5,7 @@ using WxKit.Interop;
 namespace WxKit;
 
 /// <summary>A font is an object which determines the appearance of text. Wraps wxFont.</summary>
-public unsafe partial class Font : NativeValue {
+public unsafe partial class Font : NativeObject {
 	/// <summary>Default ctor.</summary>
 	public Font() : this(CreateNative()) {
 	}
