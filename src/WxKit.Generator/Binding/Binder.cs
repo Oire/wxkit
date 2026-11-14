@@ -238,6 +238,20 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		// A getter of the style, such as GetMessageDialogStyle, returns the class's style enum.
 		if (isReturn && type.Name == "long" && type.Pointers == 0 && member.EndsWith("Style", StringComparison.Ordinal) && owner.Styles is BoundStyles ownStyles) return new EnumConversion(ownStyles.Name, NumberConversion.Long);
 		if (type.IsVoid) return isReturn ? VoidConversion.Instance : null;
+		// Numbers a function writes through a pointer become out parameters.
+		if (!isReturn && type.Pointers == 1 && !type.IsConst && !type.IsReference) {
+			switch (type.Name) {
+				case "int" or "wxCoord":
+					return OutConversion.Int;
+				case "long":
+					return OutConversion.Long;
+				case "double":
+					return OutConversion.Double;
+			}
+		}
+		// A function that changes its object and returns it, as wxFont::MakeBold does.
+		if (isReturn && type.IsReference && !type.IsConst && type.Pointers == 0 && type.Name == owner.CppName && owner.Handle.IsOwned) return new SelfConversion(owner);
+		if (isReturn && type.Name is "wxWindowList" && type.Pointers == 0) return WindowListConversion.Instance;
 		if (type.Pointers == 1 && !type.IsReference) {
 			if (type.Name == "wxObject" && isReturn) return AnyObjectConversion.Instance;
 			// Events are only received, and a static class has no objects to pass.

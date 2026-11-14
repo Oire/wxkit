@@ -6,6 +6,7 @@
 #include <string>
 #include <type_traits>
 #include <utility>
+#include <vector>
 
 #include "wxkit.h"
 
@@ -119,6 +120,24 @@ inline const wxk_ClassInfo* Wrap(const wxClassInfo* value) {
 	return reinterpret_cast<const wxk_ClassInfo*>(value);
 }
 
+// A long output parameter, which the shim gives as int64_t since a C long is 32 bits on Windows.
+// The temporary lives until the call returns, and writes the value back as it goes.
+struct OutLong {
+	int64_t* target;
+	long value = 0;
+
+	operator long*() { return &value; }
+
+	~OutLong() {
+		if (target != nullptr) *target = value;
+	}
+};
+
+// A list of windows the shim hands out, such as a window's children.
+struct WindowList {
+	std::vector<wxWindow*> windows;
+};
+
 // A value object, such as a font, crosses as a handle to a heap copy of it. Null stands for the
 // class's empty object, as wxNullFont is wxFont().
 template <typename T>
@@ -139,6 +158,14 @@ wxk_Object* CopyValue(const T& value) {
 	if (!value.IsOk()) return nullptr;
 	wxObject* copy = new T(value);
 	return reinterpret_cast<wxk_Object*>(copy);
+}
+
+// Copies a wxWidgets list of windows, which the shim hands out as a wxk_WindowList.
+template <typename List>
+wxk_WindowList* ToWindowList(const List& list) {
+	auto* copy = new WindowList();
+	for (wxWindow* window : list) copy->windows.push_back(window);
+	return reinterpret_cast<wxk_WindowList*>(copy);
 }
 
 template <typename T>

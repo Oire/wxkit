@@ -238,6 +238,20 @@ public unsafe partial class DC : NativeObject {
 	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
 	public bool FloodFill(Point point, Color? col, FloodFillStyle style = FloodFillStyle.Surface) => WxKitNative.DCFloodFillPointColorFloodFillStyle(Native, point, global::WxKit.Color.ToNative(col), (int)style) != 0;
 
+	/// <summary>Gets the rectangle surrounding the current clipping region.</summary>
+	public bool GetClippingBox(out int x, out int y, out int width, out int height) {
+		x = 0;
+		y = 0;
+		width = 0;
+		height = 0;
+		fixed (int* xPointer = &x)
+		fixed (int* yPointer = &y)
+		fixed (int* widthPointer = &width)
+		fixed (int* heightPointer = &height) {
+			return WxKitNative.DCGetClippingBox(Native, xPointer, yPointer, widthPointer, heightPointer) != 0;
+		}
+	}
+
 	/// <summary>Fill the area specified by rect with a radial gradient, starting from initialColour at the centre of the circle and fading to destColour on the circle outside.</summary>
 	public void GradientFillConcentric(Rect rect, Color? initialColor, Color? destColor) => WxKitNative.DCGradientFillConcentricRectColorColor(Native, rect, global::WxKit.Color.ToNative(initialColor), global::WxKit.Color.ToNative(destColor));
 

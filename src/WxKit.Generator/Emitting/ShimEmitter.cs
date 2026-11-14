@@ -80,7 +80,7 @@ internal static class ShimEmitter {
 			string target = $"static_cast<{owner.CppName}*>(wxk::Unwrap(self))";
 			if (function.Source.Mixin is string mixin) target = $"static_cast<{mixin}*>({target})";
 			string call = function.IsStatic ? $"{function.Source.Mixin ?? owner.CppName}::{function.Source.Name}({arguments})" : $"{target}->{function.Source.Name}({arguments})";
-			if (function.Returns is VoidConversion) {
+			if (function.Returns is VoidConversion or SelfConversion) {
 				writer.Line($"wxk::Guard([&] {{ {call}; }});");
 			} else {
 				writer.Line($"return wxk::Guard<{returns}>({fallback}, [&]() -> {returns} {{ return {function.Returns.FromCpp(call)}; }});");

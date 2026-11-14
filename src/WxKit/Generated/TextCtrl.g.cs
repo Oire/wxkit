@@ -194,6 +194,24 @@ public unsafe partial class TextCtrl : Control {
 	/// <summary>Returns the string containing the text starting in the positions from and up to to in the control.</summary>
 	public string GetRange(long from, long to) => NativeString.Take(WxKitNative.TextCtrlGetRange(Native, from, to));
 
+	/// <summary>Gets the current selection span.</summary>
+	public void GetSelection(out long from, out long to) {
+		from = 0;
+		to = 0;
+		fixed (long* fromPointer = &from)
+		fixed (long* toPointer = &to) {
+			WxKitNative.TextCtrlGetSelection(Native, fromPointer, toPointer);
+		}
+	}
+
+	/// <summary>Finds the position of the character at the specified point.</summary>
+	public TextCtrlHitTestResult HitTest(Point point, out long position) {
+		position = 0;
+		fixed (long* positionPointer = &position) {
+			return (TextCtrlHitTestResult)WxKitNative.TextCtrlHitTest(Native, point, positionPointer);
+		}
+	}
+
 	/// <summary>Loads and displays the named file, if it exists.</summary>
 	public bool LoadFile(string filename, int fileType = 0) {
 		ArgumentNullException.ThrowIfNull(filename);
@@ -222,6 +240,16 @@ public unsafe partial class TextCtrl : Control {
 
 	/// <summary>Converts given text position to client coordinates in pixels.</summary>
 	public Point PositionToCoords(long position) => WxKitNative.TextCtrlPositionToCoords(Native, position);
+
+	/// <summary>Converts given position to a zero-based column, line number pair.</summary>
+	public bool PositionToXY(long position, out long x, out long y) {
+		x = 0;
+		y = 0;
+		fixed (long* xPointer = &x)
+		fixed (long* yPointer = &y) {
+			return WxKitNative.TextCtrlPositionToXY(Native, position, xPointer, yPointer) != 0;
+		}
+	}
 
 	/// <summary>If there is a redo facility and the last operation can be redone, redoes the last operation.</summary>
 	public void Redo() => WxKitNative.TextCtrlRedo(Native);

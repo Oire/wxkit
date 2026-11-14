@@ -836,6 +836,10 @@ WXK_FUNCTION(void) wxk_ComboBox_Dismiss(wxk_Window* self) noexcept {
 	wxk::Guard([&] { static_cast<wxComboBox*>(wxk::Unwrap(self))->Dismiss(); });
 }
 
+WXK_FUNCTION(void) wxk_ComboBox_GetSelection_OutLongOutLong(wxk_Window* self, int64_t* from, int64_t* to) noexcept {
+	wxk::Guard([&] { static_cast<wxComboBox*>(wxk::Unwrap(self))->GetSelection(wxk::OutLong{from}, wxk::OutLong{to}); });
+}
+
 WXK_FUNCTION(int32_t) wxk_ComboBox_FindString(wxk_Window* self, const char16_t* text, size_t textLength, uint8_t caseSensitive) noexcept {
 	return wxk::Guard<int32_t>(0, [&]() -> int32_t { return static_cast<int32_t>(static_cast<wxComboBox*>(wxk::Unwrap(self))->FindString(wxk::FromUtf16(text, textLength), caseSensitive != 0)); });
 }
@@ -976,7 +980,7 @@ WXK_FUNCTION(uint8_t) wxk_ComboBox_IsTextEmpty(wxk_Window* self) noexcept {
 	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxComboBox*>(wxk::Unwrap(self))->IsTextEmpty()) ? 1 : 0; });
 }
 
-WXK_FUNCTION(int32_t) wxk_ComboBox_GetSelection(wxk_Window* self) noexcept {
+WXK_FUNCTION(int32_t) wxk_ComboBox_GetSelection_Default(wxk_Window* self) noexcept {
 	return wxk::Guard<int32_t>(0, [&]() -> int32_t { return static_cast<int32_t>(static_cast<wxComboBox*>(wxk::Unwrap(self))->GetSelection()); });
 }
 
@@ -1462,6 +1466,10 @@ WXK_FUNCTION(void) wxk_DC_CrossHair_Point(wxk_Object* self, wxk_Point point) noe
 
 WXK_FUNCTION(void) wxk_DC_DestroyClippingRegion(wxk_Object* self) noexcept {
 	wxk::Guard([&] { static_cast<wxDC*>(wxk::Unwrap(self))->DestroyClippingRegion(); });
+}
+
+WXK_FUNCTION(uint8_t) wxk_DC_GetClippingBox(wxk_Object* self, int32_t* x, int32_t* y, int32_t* width, int32_t* height) noexcept {
+	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxDC*>(wxk::Unwrap(self))->GetClippingBox(x, y, width, height)) ? 1 : 0; });
 }
 
 WXK_FUNCTION(void) wxk_DC_SetClippingRegion_IntIntIntInt(wxk_Object* self, int32_t x, int32_t y, int32_t width, int32_t height) noexcept {
@@ -2011,6 +2019,34 @@ WXK_FUNCTION(wxk_Object*) wxk_Font_Strikethrough(wxk_Object* self) noexcept {
 	return wxk::Guard<wxk_Object*>(nullptr, [&]() -> wxk_Object* { return wxk::CopyValue<wxFont>(static_cast<wxFont*>(wxk::Unwrap(self))->Strikethrough()); });
 }
 
+WXK_FUNCTION(void) wxk_Font_MakeBold(wxk_Object* self) noexcept {
+	wxk::Guard([&] { static_cast<wxFont*>(wxk::Unwrap(self))->MakeBold(); });
+}
+
+WXK_FUNCTION(void) wxk_Font_MakeItalic(wxk_Object* self) noexcept {
+	wxk::Guard([&] { static_cast<wxFont*>(wxk::Unwrap(self))->MakeItalic(); });
+}
+
+WXK_FUNCTION(void) wxk_Font_MakeLarger(wxk_Object* self) noexcept {
+	wxk::Guard([&] { static_cast<wxFont*>(wxk::Unwrap(self))->MakeLarger(); });
+}
+
+WXK_FUNCTION(void) wxk_Font_MakeSmaller(wxk_Object* self) noexcept {
+	wxk::Guard([&] { static_cast<wxFont*>(wxk::Unwrap(self))->MakeSmaller(); });
+}
+
+WXK_FUNCTION(void) wxk_Font_MakeUnderlined(wxk_Object* self) noexcept {
+	wxk::Guard([&] { static_cast<wxFont*>(wxk::Unwrap(self))->MakeUnderlined(); });
+}
+
+WXK_FUNCTION(void) wxk_Font_MakeStrikethrough(wxk_Object* self) noexcept {
+	wxk::Guard([&] { static_cast<wxFont*>(wxk::Unwrap(self))->MakeStrikethrough(); });
+}
+
+WXK_FUNCTION(void) wxk_Font_Scale(wxk_Object* self, float x) noexcept {
+	wxk::Guard([&] { static_cast<wxFont*>(wxk::Unwrap(self))->Scale(static_cast<float>(x)); });
+}
+
 WXK_FUNCTION(wxk_Object*) wxk_Font_Scaled(wxk_Object* self, float x) noexcept {
 	return wxk::Guard<wxk_Object*>(nullptr, [&]() -> wxk_Object* { return wxk::CopyValue<wxFont>(static_cast<wxFont*>(wxk::Unwrap(self))->Scaled(static_cast<float>(x))); });
 }
@@ -2549,6 +2585,18 @@ WXK_FUNCTION(void) wxk_Image_Replace(wxk_Object* self, uint8_t r1, uint8_t g1, u
 	wxk::Guard([&] { static_cast<wxImage*>(wxk::Unwrap(self))->Replace(static_cast<unsigned char>(r1), static_cast<unsigned char>(g1), static_cast<unsigned char>(b1), static_cast<unsigned char>(r2), static_cast<unsigned char>(g2), static_cast<unsigned char>(b2)); });
 }
 
+WXK_FUNCTION(void) wxk_Image_Rescale_IntIntImageResizeQuality(wxk_Object* self, int32_t width, int32_t height, int32_t quality) noexcept {
+	wxk::Guard([&] { static_cast<wxImage*>(wxk::Unwrap(self))->Rescale(static_cast<int>(width), static_cast<int>(height), static_cast<wxImageResizeQuality>(quality)); });
+}
+
+WXK_FUNCTION(void) wxk_Image_Rescale_SizeImageResizeQuality(wxk_Object* self, wxk_Size size, int32_t quality) noexcept {
+	wxk::Guard([&] { static_cast<wxImage*>(wxk::Unwrap(self))->Rescale(wxk::FromSize(size), static_cast<wxImageResizeQuality>(quality)); });
+}
+
+WXK_FUNCTION(void) wxk_Image_Resize(wxk_Object* self, wxk_Size size, wxk_Point position, int32_t red, int32_t green, int32_t blue) noexcept {
+	wxk::Guard([&] { static_cast<wxImage*>(wxk::Unwrap(self))->Resize(wxk::FromSize(size), wxk::FromPoint(position), static_cast<int>(red), static_cast<int>(green), static_cast<int>(blue)); });
+}
+
 WXK_FUNCTION(wxk_Object*) wxk_Image_Rotate(wxk_Object* self, double angle, wxk_Point rotationCenter, uint8_t interpolating) noexcept {
 	return wxk::Guard<wxk_Object*>(nullptr, [&]() -> wxk_Object* { return wxk::CopyValue<wxImage>(static_cast<wxImage*>(wxk::Unwrap(self))->Rotate(static_cast<double>(angle), wxk::FromPoint(rotationCenter), interpolating != 0)); });
 }
@@ -2797,6 +2845,10 @@ WXK_FUNCTION(wxk_String*) wxk_Image_GetImageExtWildcard(void) noexcept {
 	return wxk::Guard<wxk_String*>(nullptr, [&]() -> wxk_String* { return wxk::ToUtf16(wxImage::GetImageExtWildcard()); });
 }
 
+WXK_FUNCTION(void) wxk_KeyEvent_GetPosition_OutIntOutInt(wxk_Event* self, int32_t* x, int32_t* y) noexcept {
+	wxk::Guard([&] { static_cast<wxKeyEvent*>(wxk::Unwrap(self))->GetPosition(x, y); });
+}
+
 WXK_FUNCTION(uint8_t) wxk_KeyEvent_IsKeyInCategory(wxk_Event* self, int32_t category) noexcept {
 	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxKeyEvent*>(wxk::Unwrap(self))->IsKeyInCategory(static_cast<int>(category))) ? 1 : 0; });
 }
@@ -2849,7 +2901,7 @@ WXK_FUNCTION(void) wxk_KeyEvent_SetMetaDown(wxk_Event* self, uint8_t down) noexc
 	wxk::Guard([&] { static_cast<wxKeyboardState*>(static_cast<wxKeyEvent*>(wxk::Unwrap(self)))->SetMetaDown(down != 0); });
 }
 
-WXK_FUNCTION(wxk_Point) wxk_KeyEvent_GetPosition(wxk_Event* self) noexcept {
+WXK_FUNCTION(wxk_Point) wxk_KeyEvent_GetPosition_Default(wxk_Event* self) noexcept {
 	return wxk::Guard<wxk_Point>(wxk_Point{-1, -1}, [&]() -> wxk_Point { return wxk::ToPoint(static_cast<wxKeyEvent*>(wxk::Unwrap(self))->GetPosition()); });
 }
 
@@ -3392,6 +3444,10 @@ WXK_FUNCTION(uint8_t) wxk_MouseEvent_RightUp(wxk_Event* self) noexcept {
 	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxMouseEvent*>(wxk::Unwrap(self))->RightUp()) ? 1 : 0; });
 }
 
+WXK_FUNCTION(void) wxk_MouseEvent_GetPosition_OutIntOutInt(wxk_Event* self, int32_t* x, int32_t* y) noexcept {
+	wxk::Guard([&] { static_cast<wxMouseState*>(static_cast<wxMouseEvent*>(wxk::Unwrap(self)))->GetPosition(x, y); });
+}
+
 WXK_FUNCTION(uint8_t) wxk_MouseEvent_LeftIsDown(wxk_Event* self) noexcept {
 	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxMouseState*>(static_cast<wxMouseEvent*>(wxk::Unwrap(self)))->LeftIsDown()) ? 1 : 0; });
 }
@@ -3520,7 +3576,7 @@ WXK_FUNCTION(uint8_t) wxk_MouseEvent_IsSynthesized(wxk_Event* self) noexcept {
 	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxMouseEvent*>(wxk::Unwrap(self))->IsSynthesized()) ? 1 : 0; });
 }
 
-WXK_FUNCTION(wxk_Point) wxk_MouseEvent_GetPosition(wxk_Event* self) noexcept {
+WXK_FUNCTION(wxk_Point) wxk_MouseEvent_GetPosition_Default(wxk_Event* self) noexcept {
 	return wxk::Guard<wxk_Point>(wxk_Point{-1, -1}, [&]() -> wxk_Point { return wxk::ToPoint(static_cast<wxMouseState*>(static_cast<wxMouseEvent*>(wxk::Unwrap(self)))->GetPosition()); });
 }
 
@@ -4049,6 +4105,10 @@ WXK_FUNCTION(void) wxk_SearchCtrl_ForceUpper(wxk_Window* self) noexcept {
 
 WXK_FUNCTION(wxk_String*) wxk_SearchCtrl_GetRange(wxk_Window* self, int64_t from, int64_t to) noexcept {
 	return wxk::Guard<wxk_String*>(nullptr, [&]() -> wxk_String* { return wxk::ToUtf16(static_cast<wxTextEntry*>(static_cast<wxSearchCtrl*>(wxk::Unwrap(self)))->GetRange(static_cast<long>(from), static_cast<long>(to))); });
+}
+
+WXK_FUNCTION(void) wxk_SearchCtrl_GetSelection(wxk_Window* self, int64_t* from, int64_t* to) noexcept {
+	wxk::Guard([&] { static_cast<wxTextEntry*>(static_cast<wxSearchCtrl*>(wxk::Unwrap(self)))->GetSelection(wxk::OutLong{from}, wxk::OutLong{to}); });
 }
 
 WXK_FUNCTION(void) wxk_SearchCtrl_Paste(wxk_Window* self) noexcept {
@@ -4935,12 +4995,20 @@ WXK_FUNCTION(wxk_String*) wxk_TextCtrl_GetLineText(wxk_Window* self, int64_t lin
 	return wxk::Guard<wxk_String*>(nullptr, [&]() -> wxk_String* { return wxk::ToUtf16(static_cast<wxTextCtrl*>(wxk::Unwrap(self))->GetLineText(static_cast<long>(lineNo))); });
 }
 
+WXK_FUNCTION(int32_t) wxk_TextCtrl_HitTest(wxk_Window* self, wxk_Point point, int64_t* position) noexcept {
+	return wxk::Guard<int32_t>(0, [&]() -> int32_t { return static_cast<int32_t>(static_cast<wxTextCtrl*>(wxk::Unwrap(self))->HitTest(wxk::FromPoint(point), wxk::OutLong{position})); });
+}
+
 WXK_FUNCTION(uint8_t) wxk_TextCtrl_LoadFile(wxk_Window* self, const char16_t* filename, size_t filenameLength, int32_t fileType) noexcept {
 	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxTextCtrl*>(wxk::Unwrap(self))->LoadFile(wxk::FromUtf16(filename, filenameLength), static_cast<int>(fileType))) ? 1 : 0; });
 }
 
 WXK_FUNCTION(void) wxk_TextCtrl_MarkDirty(wxk_Window* self) noexcept {
 	wxk::Guard([&] { static_cast<wxTextCtrl*>(wxk::Unwrap(self))->MarkDirty(); });
+}
+
+WXK_FUNCTION(uint8_t) wxk_TextCtrl_PositionToXY(wxk_Window* self, int64_t position, int64_t* x, int64_t* y) noexcept {
+	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxTextCtrl*>(wxk::Unwrap(self))->PositionToXY(static_cast<long>(position), wxk::OutLong{x}, wxk::OutLong{y})) ? 1 : 0; });
 }
 
 WXK_FUNCTION(wxk_Point) wxk_TextCtrl_PositionToCoords(wxk_Window* self, int64_t position) noexcept {
@@ -5007,6 +5075,10 @@ WXK_FUNCTION(void) wxk_TextCtrl_ForceUpper(wxk_Window* self) noexcept {
 
 WXK_FUNCTION(wxk_String*) wxk_TextCtrl_GetRange(wxk_Window* self, int64_t from, int64_t to) noexcept {
 	return wxk::Guard<wxk_String*>(nullptr, [&]() -> wxk_String* { return wxk::ToUtf16(static_cast<wxTextEntry*>(static_cast<wxTextCtrl*>(wxk::Unwrap(self)))->GetRange(static_cast<long>(from), static_cast<long>(to))); });
+}
+
+WXK_FUNCTION(void) wxk_TextCtrl_GetSelection(wxk_Window* self, int64_t* from, int64_t* to) noexcept {
+	wxk::Guard([&] { static_cast<wxTextEntry*>(static_cast<wxTextCtrl*>(wxk::Unwrap(self)))->GetSelection(wxk::OutLong{from}, wxk::OutLong{to}); });
 }
 
 WXK_FUNCTION(void) wxk_TextCtrl_Paste(wxk_Window* self) noexcept {
@@ -5653,8 +5725,20 @@ WXK_FUNCTION(int32_t) wxk_Window_GetBestWidth(wxk_Window* self, int32_t height) 
 	return wxk::Guard<int32_t>(0, [&]() -> int32_t { return static_cast<int32_t>(static_cast<wxWindow*>(wxk::Unwrap(self))->GetBestWidth(static_cast<int>(height))); });
 }
 
+WXK_FUNCTION(void) wxk_Window_GetClientSize_OutIntOutInt(wxk_Window* self, int32_t* width, int32_t* height) noexcept {
+	wxk::Guard([&] { static_cast<wxWindow*>(wxk::Unwrap(self))->GetClientSize(width, height); });
+}
+
 WXK_FUNCTION(wxk_Size) wxk_Window_GetMinSizeFromKnownDirection(wxk_Window* self, int32_t direction, int32_t size, int32_t availableOtherDir) noexcept {
 	return wxk::Guard<wxk_Size>(wxk_Size{-1, -1}, [&]() -> wxk_Size { return wxk::ToSize(static_cast<wxWindow*>(wxk::Unwrap(self))->GetMinSizeFromKnownDirection(static_cast<int>(direction), static_cast<int>(size), static_cast<int>(availableOtherDir))); });
+}
+
+WXK_FUNCTION(void) wxk_Window_GetSize_OutIntOutInt(wxk_Window* self, int32_t* width, int32_t* height) noexcept {
+	wxk::Guard([&] { static_cast<wxWindow*>(wxk::Unwrap(self))->GetSize(width, height); });
+}
+
+WXK_FUNCTION(void) wxk_Window_GetVirtualSize_OutIntOutInt(wxk_Window* self, int32_t* width, int32_t* height) noexcept {
+	wxk::Guard([&] { static_cast<wxWindow*>(wxk::Unwrap(self))->GetVirtualSize(width, height); });
 }
 
 WXK_FUNCTION(uint8_t) wxk_Window_InformFirstDirection(wxk_Window* self, int32_t direction, int32_t size, int32_t availableOtherDir) noexcept {
@@ -5777,6 +5861,14 @@ WXK_FUNCTION(void) wxk_Window_CenterOnParent(wxk_Window* self, int32_t direction
 	wxk::Guard([&] { static_cast<wxWindow*>(wxk::Unwrap(self))->CenterOnParent(static_cast<int>(direction)); });
 }
 
+WXK_FUNCTION(void) wxk_Window_GetPosition_OutIntOutInt(wxk_Window* self, int32_t* x, int32_t* y) noexcept {
+	wxk::Guard([&] { static_cast<wxWindow*>(wxk::Unwrap(self))->GetPosition(x, y); });
+}
+
+WXK_FUNCTION(void) wxk_Window_GetScreenPosition_OutIntOutInt(wxk_Window* self, int32_t* x, int32_t* y) noexcept {
+	wxk::Guard([&] { static_cast<wxWindow*>(wxk::Unwrap(self))->GetScreenPosition(x, y); });
+}
+
 WXK_FUNCTION(void) wxk_Window_Move_IntIntInt(wxk_Window* self, int32_t x, int32_t y, int32_t flags) noexcept {
 	wxk::Guard([&] { static_cast<wxWindow*>(wxk::Unwrap(self))->Move(static_cast<int>(x), static_cast<int>(y), static_cast<int>(flags)); });
 }
@@ -5785,7 +5877,11 @@ WXK_FUNCTION(void) wxk_Window_Move_PointInt(wxk_Window* self, wxk_Point point, i
 	wxk::Guard([&] { static_cast<wxWindow*>(wxk::Unwrap(self))->Move(wxk::FromPoint(point), static_cast<int>(flags)); });
 }
 
-WXK_FUNCTION(wxk_Point) wxk_Window_ClientToScreen(wxk_Window* self, wxk_Point point) noexcept {
+WXK_FUNCTION(void) wxk_Window_ClientToScreen_OutIntOutInt(wxk_Window* self, int32_t* x, int32_t* y) noexcept {
+	wxk::Guard([&] { static_cast<wxWindow*>(wxk::Unwrap(self))->ClientToScreen(x, y); });
+}
+
+WXK_FUNCTION(wxk_Point) wxk_Window_ClientToScreen_Point(wxk_Window* self, wxk_Point point) noexcept {
 	return wxk::Guard<wxk_Point>(wxk_Point{-1, -1}, [&]() -> wxk_Point { return wxk::ToPoint(static_cast<wxWindow*>(wxk::Unwrap(self))->ClientToScreen(wxk::FromPoint(point))); });
 }
 
@@ -5805,7 +5901,11 @@ WXK_FUNCTION(wxk_Size) wxk_Window_ConvertPixelsToDialog_Size(wxk_Window* self, w
 	return wxk::Guard<wxk_Size>(wxk_Size{-1, -1}, [&]() -> wxk_Size { return wxk::ToSize(static_cast<wxWindow*>(wxk::Unwrap(self))->ConvertPixelsToDialog(wxk::FromSize(size))); });
 }
 
-WXK_FUNCTION(wxk_Point) wxk_Window_ScreenToClient(wxk_Window* self, wxk_Point point) noexcept {
+WXK_FUNCTION(void) wxk_Window_ScreenToClient_OutIntOutInt(wxk_Window* self, int32_t* x, int32_t* y) noexcept {
+	wxk::Guard([&] { static_cast<wxWindow*>(wxk::Unwrap(self))->ScreenToClient(x, y); });
+}
+
+WXK_FUNCTION(wxk_Point) wxk_Window_ScreenToClient_Point(wxk_Window* self, wxk_Point point) noexcept {
 	return wxk::Guard<wxk_Point>(wxk_Point{-1, -1}, [&]() -> wxk_Point { return wxk::ToPoint(static_cast<wxWindow*>(wxk::Unwrap(self))->ScreenToClient(wxk::FromPoint(point))); });
 }
 
@@ -5821,7 +5921,11 @@ WXK_FUNCTION(void) wxk_Window_Thaw(wxk_Window* self) noexcept {
 	wxk::Guard([&] { static_cast<wxWindow*>(wxk::Unwrap(self))->Thaw(); });
 }
 
-WXK_FUNCTION(wxk_Size) wxk_Window_GetTextExtent(wxk_Window* self, const char16_t* text, size_t textLength) noexcept {
+WXK_FUNCTION(void) wxk_Window_GetTextExtent_StringOutIntOutInt(wxk_Window* self, const char16_t* text, size_t textLength, int32_t* w, int32_t* h) noexcept {
+	wxk::Guard([&] { static_cast<wxWindow*>(wxk::Unwrap(self))->GetTextExtent(wxk::FromUtf16(text, textLength), w, h); });
+}
+
+WXK_FUNCTION(wxk_Size) wxk_Window_GetTextExtent_String(wxk_Window* self, const char16_t* text, size_t textLength) noexcept {
 	return wxk::Guard<wxk_Size>(wxk_Size{-1, -1}, [&]() -> wxk_Size { return wxk::ToSize(static_cast<wxWindow*>(wxk::Unwrap(self))->GetTextExtent(wxk::FromUtf16(text, textLength))); });
 }
 
@@ -6137,6 +6241,10 @@ WXK_FUNCTION(wxk_Rect) wxk_Window_GetInputMethodCursorRect(wxk_Window* self) noe
 	return wxk::Guard<wxk_Rect>(wxk_Rect{0, 0, 0, 0}, [&]() -> wxk_Rect { return wxk::ToRect(static_cast<wxWindow*>(wxk::Unwrap(self))->GetInputMethodCursorRect()); });
 }
 
+WXK_FUNCTION(wxk_WindowList*) wxk_Window_GetChildren(wxk_Window* self) noexcept {
+	return wxk::Guard<wxk_WindowList*>(nullptr, [&]() -> wxk_WindowList* { return wxk::ToWindowList(static_cast<wxWindow*>(wxk::Unwrap(self))->GetChildren()); });
+}
+
 WXK_FUNCTION(wxk_Window*) wxk_Window_GetGrandParent(wxk_Window* self) noexcept {
 	return wxk::Guard<wxk_Window*>(nullptr, [&]() -> wxk_Window* { return wxk::Wrap(static_cast<wxWindow*>(static_cast<wxWindow*>(wxk::Unwrap(self))->GetGrandParent())); });
 }
@@ -6157,7 +6265,7 @@ WXK_FUNCTION(wxk_Size) wxk_Window_GetBestSize(wxk_Window* self) noexcept {
 	return wxk::Guard<wxk_Size>(wxk_Size{-1, -1}, [&]() -> wxk_Size { return wxk::ToSize(static_cast<wxWindow*>(wxk::Unwrap(self))->GetBestSize()); });
 }
 
-WXK_FUNCTION(wxk_Size) wxk_Window_GetClientSize(wxk_Window* self) noexcept {
+WXK_FUNCTION(wxk_Size) wxk_Window_GetClientSize_Default(wxk_Window* self) noexcept {
 	return wxk::Guard<wxk_Size>(wxk_Size{-1, -1}, [&]() -> wxk_Size { return wxk::ToSize(static_cast<wxWindow*>(wxk::Unwrap(self))->GetClientSize()); });
 }
 
@@ -6217,7 +6325,7 @@ WXK_FUNCTION(int32_t) wxk_Window_GetMaxHeight(wxk_Window* self) noexcept {
 	return wxk::Guard<int32_t>(0, [&]() -> int32_t { return static_cast<int32_t>(static_cast<wxWindow*>(wxk::Unwrap(self))->GetMaxHeight()); });
 }
 
-WXK_FUNCTION(wxk_Size) wxk_Window_GetSize(wxk_Window* self) noexcept {
+WXK_FUNCTION(wxk_Size) wxk_Window_GetSize_Default(wxk_Window* self) noexcept {
 	return wxk::Guard<wxk_Size>(wxk_Size{-1, -1}, [&]() -> wxk_Size { return wxk::ToSize(static_cast<wxWindow*>(wxk::Unwrap(self))->GetSize()); });
 }
 
@@ -6225,7 +6333,7 @@ WXK_FUNCTION(void) wxk_Window_SetSize_Size(wxk_Window* self, wxk_Size size) noex
 	wxk::Guard([&] { static_cast<wxWindow*>(wxk::Unwrap(self))->SetSize(wxk::FromSize(size)); });
 }
 
-WXK_FUNCTION(wxk_Size) wxk_Window_GetVirtualSize(wxk_Window* self) noexcept {
+WXK_FUNCTION(wxk_Size) wxk_Window_GetVirtualSize_Default(wxk_Window* self) noexcept {
 	return wxk::Guard<wxk_Size>(wxk_Size{-1, -1}, [&]() -> wxk_Size { return wxk::ToSize(static_cast<wxWindow*>(wxk::Unwrap(self))->GetVirtualSize()); });
 }
 
@@ -6249,7 +6357,7 @@ WXK_FUNCTION(wxk_Size) wxk_Window_GetWindowBorderSize(wxk_Window* self) noexcept
 	return wxk::Guard<wxk_Size>(wxk_Size{-1, -1}, [&]() -> wxk_Size { return wxk::ToSize(static_cast<wxWindow*>(wxk::Unwrap(self))->GetWindowBorderSize()); });
 }
 
-WXK_FUNCTION(wxk_Point) wxk_Window_GetPosition(wxk_Window* self) noexcept {
+WXK_FUNCTION(wxk_Point) wxk_Window_GetPosition_Default(wxk_Window* self) noexcept {
 	return wxk::Guard<wxk_Point>(wxk_Point{-1, -1}, [&]() -> wxk_Point { return wxk::ToPoint(static_cast<wxWindow*>(wxk::Unwrap(self))->GetPosition()); });
 }
 
@@ -6261,7 +6369,7 @@ WXK_FUNCTION(wxk_Rect) wxk_Window_GetRect(wxk_Window* self) noexcept {
 	return wxk::Guard<wxk_Rect>(wxk_Rect{0, 0, 0, 0}, [&]() -> wxk_Rect { return wxk::ToRect(static_cast<wxWindow*>(wxk::Unwrap(self))->GetRect()); });
 }
 
-WXK_FUNCTION(wxk_Point) wxk_Window_GetScreenPosition(wxk_Window* self) noexcept {
+WXK_FUNCTION(wxk_Point) wxk_Window_GetScreenPosition_Default(wxk_Window* self) noexcept {
 	return wxk::Guard<wxk_Point>(wxk_Point{-1, -1}, [&]() -> wxk_Point { return wxk::ToPoint(static_cast<wxWindow*>(wxk::Unwrap(self))->GetScreenPosition()); });
 }
 

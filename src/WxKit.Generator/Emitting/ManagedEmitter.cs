@@ -117,6 +117,13 @@ internal static class ManagedEmitter {
 		string returns = function.Returns.ManagedReturnType(nullable: function.Returns is ObjectConversion or AnyObjectConversion);
 		string signature = $"{Modifiers(function, method.Hides)} {returns} {method.Name}({ParameterList(function.ManagedParameters, withDefaults: true)})";
 		bool isVoid = function.Returns is VoidConversion;
+		if (function.Returns is SelfConversion) {
+			writer.Open(signature);
+			WriteCall(writer, function, Self(bound, function), static result => $"{result};");
+			writer.Line("return this;");
+			writer.Close();
+			return;
+		}
 		if (IsSimple(function)) {
 			writer.Line($"{signature} => {Call(bound, function, function.Returns.ManagedReturn)};");
 			return;

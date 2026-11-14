@@ -38,3 +38,6 @@ public readonly record struct WxkColor(byte Red, byte Green, byte Blue, byte Alp
 
 /// <summary>A wxArrayString, freed with <see cref="WxKitNative.StringArrayFree"/>.</summary>
 public struct WxkStringArray;
+
+/// <summary>A list of windows, freed with <see cref="WxKitNative.WindowListFree"/>.</summary>
+public struct WxkWindowList;

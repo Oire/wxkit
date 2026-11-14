@@ -156,6 +156,16 @@ public unsafe partial class SearchCtrl : Control {
 	/// <summary>Returns the string containing the text starting in the positions from and up to to in the control.</summary>
 	public string GetRange(long from, long to) => NativeString.Take(WxKitNative.SearchCtrlGetRange(Native, from, to));
 
+	/// <summary>Gets the current selection span.</summary>
+	public void GetSelection(out long from, out long to) {
+		from = 0;
+		to = 0;
+		fixed (long* fromPointer = &from)
+		fixed (long* toPointer = &to) {
+			WxKitNative.SearchCtrlGetSelection(Native, fromPointer, toPointer);
+		}
+	}
+
 	/// <summary>Pastes text from the clipboard to the text item.</summary>
 	public void Paste() => WxKitNative.SearchCtrlPaste(Native);
 

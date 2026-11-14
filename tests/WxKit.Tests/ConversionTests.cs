@@ -38,6 +38,30 @@ public class ConversionTests {
 	});
 
 	[Fact]
+	public Task GivesOutputParametersAsOut() => Gui.WithFrame(frame => {
+		TextCtrl text = new(frame, "hello world");
+		text.SetSelection(2, 7);
+		text.GetSelection(out long from, out long to);
+		Assert.Equal((2L, 7L), (from, to));
+	});
+
+	[Fact]
+	public Task ReturnsTheSameObjectFromAnInPlaceChange() => Gui.Run(() => {
+		using Font font = new(11, FontFamily.Default, FontStyle.Normal, FontWeight.Normal);
+		Assert.Same(font, font.MakeBold().MakeItalic());
+		Assert.Equal(FontWeight.Bold, font.Weight);
+		Assert.Equal(FontStyle.Italic, font.Style);
+	});
+
+	[Fact]
+	public Task GivesAWindowsChildren() => Gui.WithFrame(frame => {
+		Panel panel = new(frame);
+		Button first = new(panel, "&First");
+		Button second = new(panel, "&Second");
+		Assert.Equal([first, second], panel.Children);
+	});
+
+	[Fact]
 	public Task RoundTripsEnums() => Gui.WithFrame(frame => {
 		Button button = new(frame, "&Small");
 		button.WindowVariant = WindowVariant.Small;

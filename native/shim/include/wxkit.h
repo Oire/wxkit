@@ -42,6 +42,9 @@ typedef struct wxk_String wxk_String;
 // A wxArrayString, which the caller frees with wxk_StringArray_Free.
 typedef struct wxk_StringArray wxk_StringArray;
 
+// A list of windows, such as a window's children, which the caller frees with wxk_WindowList_Free.
+typedef struct wxk_WindowList wxk_WindowList;
+
 typedef struct wxk_Point {
 	int32_t x;
 	int32_t y;
@@ -97,6 +100,10 @@ WXK_FUNCTION(void) wxk_StringArray_Add(wxk_StringArray* array, const char16_t* t
 WXK_FUNCTION(size_t) wxk_StringArray_GetCount(const wxk_StringArray* array) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_String*) wxk_StringArray_Item(const wxk_StringArray* array, size_t index) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_StringArray_Free(wxk_StringArray* array) WXK_NOEXCEPT;
+
+WXK_FUNCTION(size_t) wxk_WindowList_GetCount(const wxk_WindowList* list) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Window*) wxk_WindowList_Item(const wxk_WindowList* list, size_t index) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_WindowList_Free(wxk_WindowList* list) WXK_NOEXCEPT;
 
 // Objects
 

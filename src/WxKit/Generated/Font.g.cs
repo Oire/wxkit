@@ -158,6 +158,48 @@ public unsafe partial class Font : NativeObject {
 	/// <summary>Returns a larger version of this font.</summary>
 	public Font? Larger() => global::WxKit.Font.Take(WxKitNative.FontLarger(Native));
 
+	/// <summary>Changes this font to be bold.</summary>
+	public Font MakeBold() {
+		WxKitNative.FontMakeBold(Native);
+		return this;
+	}
+
+	/// <summary>Changes this font to be italic.</summary>
+	public Font MakeItalic() {
+		WxKitNative.FontMakeItalic(Native);
+		return this;
+	}
+
+	/// <summary>Changes this font to be larger.</summary>
+	public Font MakeLarger() {
+		WxKitNative.FontMakeLarger(Native);
+		return this;
+	}
+
+	/// <summary>Changes this font to be smaller.</summary>
+	public Font MakeSmaller() {
+		WxKitNative.FontMakeSmaller(Native);
+		return this;
+	}
+
+	/// <summary>Changes this font to be stricken-through.</summary>
+	public Font MakeStrikethrough() {
+		WxKitNative.FontMakeStrikethrough(Native);
+		return this;
+	}
+
+	/// <summary>Changes this font to be underlined.</summary>
+	public Font MakeUnderlined() {
+		WxKitNative.FontMakeUnderlined(Native);
+		return this;
+	}
+
+	/// <summary>Changes the size of this font.</summary>
+	public Font Scale(float x) {
+		WxKitNative.FontScale(Native, x);
+		return this;
+	}
+
 	/// <summary>Returns a scaled version of this font.</summary>
 	public Font? Scaled(float x) => global::WxKit.Font.Take(WxKitNative.FontScaled(Native, x));
 

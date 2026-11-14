@@ -87,7 +87,7 @@ public unsafe partial class ComboBox : Control {
 
 	/// <summary>Returns the index of the selected item or wxNOT_FOUND if no item is selected.</summary>
 	public int Selection {
-		get => WxKitNative.ComboBoxGetSelection(Native);
+		get => WxKitNative.ComboBoxGetSelectionDefault(Native);
 		set => WxKitNative.ComboBoxSetSelectionInt(Native, value);
 	}
 
@@ -218,6 +218,16 @@ public unsafe partial class ComboBox : Control {
 
 	/// <summary>Returns the string containing the text starting in the positions from and up to to in the control.</summary>
 	public string GetRange(long from, long to) => NativeString.Take(WxKitNative.ComboBoxGetRange(Native, from, to));
+
+	/// <summary>Gets the current selection span.</summary>
+	public void GetSelection(out long from, out long to) {
+		from = 0;
+		to = 0;
+		fixed (long* fromPointer = &from)
+		fixed (long* toPointer = &to) {
+			WxKitNative.ComboBoxGetSelectionOutLongOutLong(Native, fromPointer, toPointer);
+		}
+	}
 
 	/// <summary>Returns the label of the item with the given index.</summary>
 	public string GetString(int index) => NativeString.Take(WxKitNative.ComboBoxGetString(Native, checked((uint)index)));

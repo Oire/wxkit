@@ -483,3 +483,96 @@ internal sealed class OwnedConversion(BoundClass target, bool byReference) : Con
 
 	public override bool AcceptsNull => !byReference;
 }
+
+// A number a function writes through a pointer, such as GetSelection's from and to, which the
+// managed API gives as an out parameter. A long goes through the shim's OutLong, since a C long is
+// 32 bits on Windows.
+internal sealed class OutConversion(string suffix, string cType, string csharpType, bool isLong) : Conversion {
+	public static OutConversion Int { get; } = new("OutInt", "int32_t", "int", isLong: false);
+
+	public static OutConversion Long { get; } = new("OutLong", "int64_t", "long", isLong: true);
+
+	public static OutConversion Double { get; } = new("OutDouble", "double", "double", isLong: false);
+
+	public override string Suffix => suffix;
+
+	public override string CReturnType => throw new InvalidOperationException("Output pointers are only parameters.");
+
+	public override string Fallback => "0";
+
+	public override string InteropReturnType => throw new InvalidOperationException("Output pointers are only parameters.");
+
+	public override IEnumerable<string> CParameters(string name) => [$"{cType}* {name}"];
+
+	public override string ToCpp(string name) => isLong ? $"wxk::OutLong{{{name}}}" : name;
+
+	public override string FromCpp(string expression) => throw new InvalidOperationException("Output pointers are only parameters.");
+
+	public override IEnumerable<string> InteropParameters(string name) => [$"{csharpType}* {name}"];
+
+	public override string ManagedType(bool nullable) => "out " + csharpType;
+
+	// An out parameter has to be assigned before its address is taken.
+	public override string? Prepare(string name) => $"{name} = 0;";
+
+	public override string? Fixed(string name) => $"fixed ({csharpType}* {Pointer(name)} = &{name})";
+
+	public override IEnumerable<string> InteropArguments(string name, bool nullable) => [Pointer(name)];
+
+	public override string ManagedReturn(string expression) => throw new InvalidOperationException("Output pointers are only parameters.");
+
+	private static string Pointer(string name) => name.TrimStart('@') + "Pointer";
+}
+
+// A function that changes its object and returns it, such as wxFont::MakeBold, returns the same
+// managed object, so calls chain.
+internal sealed class SelfConversion(BoundClass owner) : Conversion {
+	public override string Suffix => "Self";
+
+	public override string CReturnType => "void";
+
+	public override string Fallback => string.Empty;
+
+	public override string InteropReturnType => "void";
+
+	public override IEnumerable<string> CParameters(string name) => throw new InvalidOperationException("Self is only a return type.");
+
+	public override string ToCpp(string name) => throw new InvalidOperationException("Self is only a return type.");
+
+	public override string FromCpp(string expression) => expression;
+
+	public override IEnumerable<string> InteropParameters(string name) => throw new InvalidOperationException("Self is only a return type.");
+
+	public override string ManagedType(bool nullable) => owner.Name;
+
+	public override IEnumerable<string> InteropArguments(string name, bool nullable) => throw new InvalidOperationException("Self is only a return type.");
+
+	public override string ManagedReturn(string expression) => expression;
+}
+
+// A list of windows, such as a window's children, which comes back as an array of their managed objects.
+internal sealed class WindowListConversion : Conversion {
+	public static WindowListConversion Instance { get; } = new();
+
+	public override string Suffix => "Windows";
+
+	public override string CReturnType => "wxk_WindowList*";
+
+	public override string Fallback => "nullptr";
+
+	public override string InteropReturnType => "WxkWindowList*";
+
+	public override IEnumerable<string> CParameters(string name) => throw new InvalidOperationException("Window lists are only return types.");
+
+	public override string ToCpp(string name) => throw new InvalidOperationException("Window lists are only return types.");
+
+	public override string FromCpp(string expression) => $"wxk::ToWindowList({expression})";
+
+	public override IEnumerable<string> InteropParameters(string name) => throw new InvalidOperationException("Window lists are only return types.");
+
+	public override string ManagedType(bool nullable) => "Window[]";
+
+	public override IEnumerable<string> InteropArguments(string name, bool nullable) => throw new InvalidOperationException("Window lists are only return types.");
+
+	public override string ManagedReturn(string expression) => $"global::WxKit.NativeWindowList.Take({expression})";
+}

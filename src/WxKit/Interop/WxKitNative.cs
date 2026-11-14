@@ -58,6 +58,18 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void StringArrayFree(WxkStringArray* array);
 
+	[LibraryImport(Library, EntryPoint = "wxk_WindowList_GetCount")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial nuint WindowListGetCount(WxkWindowList* list);
+
+	[LibraryImport(Library, EntryPoint = "wxk_WindowList_Item")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* WindowListItem(WxkWindowList* list, nuint index);
+
+	[LibraryImport(Library, EntryPoint = "wxk_WindowList_Free")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void WindowListFree(WxkWindowList* list);
+
 	// Objects
 
 	[LibraryImport(Library, EntryPoint = "wxk_EvtHandler_Track")]
