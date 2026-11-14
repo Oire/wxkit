@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net10.0</TargetFramework>
+		<RootNamespace>WxKit.Generator</RootNamespace>
+		<IsPackable>false</IsPackable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="WxKit.Generator.Tests" />
+	</ItemGroup>
+
+</Project>

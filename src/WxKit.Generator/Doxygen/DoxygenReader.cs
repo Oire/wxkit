@@ -1,0 +1,144 @@
+using System.Text.RegularExpressions;
+using System.Xml.Linq;
+
+namespace WxKit.Generator.Doxygen;
+
+// Reads Doxygen's XML of the wxWidgets interface headers. The style and event tables are not
+// Doxygen constructs: wxWidgets writes them with aliases that come out as a heading followed by a
+// list, so they are read from each class's description in document order.
+internal static partial class DoxygenReader {
+	private const string StylesHeading = "Styles";
+	private const string EventsHeadingPrefix = "Events ";
+
+	public static DoxygenApi Read(string directory) {
+		XElement index = XDocument.Load(Path.Combine(directory, "index.xml")).Root!;
+		Dictionary<string, DoxygenClass> classes = new(StringComparer.Ordinal);
+		Dictionary<string, string> constants = new(StringComparer.Ordinal);
+		foreach (XElement compound in index.Elements("compound")) {
+			string kind = (string)compound.Attribute("kind")!;
+			if (kind is not ("class" or "struct" or "file")) continue;
+			XElement definition = XDocument.Load(Path.Combine(directory, (string)compound.Attribute("refid")! + ".xml")).Root!.Element("compounddef")!;
+			ReadConstants(definition, constants);
+			if (kind == "file") continue;
+			DoxygenClass read = ReadClass(definition);
+			// A class documented twice, which wxWidgets does for a few platform-specific ones, keeps its first entry.
+			classes.TryAdd(read.Name, read);
+		}
+		return new DoxygenApi(classes, constants);
+	}
+
+	internal static DoxygenClass ReadClass(XElement definition) {
+		string name = (string)definition.Element("compoundname")!;
+		List<string> bases = [.. definition.Elements("basecompoundref").Select(static element => Normalize(element.Value))];
+		List<DoxygenMember> members = [];
+		foreach (XElement section in definition.Elements("sectiondef")) {
+			foreach (XElement member in section.Elements("memberdef")) {
+				if ((string?)member.Attribute("kind") == "function") members.Add(ReadMember(member));
+			}
+		}
+		(List<DoxygenStyle> styles, List<DoxygenEvent> events) = ReadTables(definition.Element("detaileddescription"));
+		return new DoxygenClass(name, bases, Text(definition.Element("briefdescription")), members, styles, events);
+	}
+
+	private static DoxygenMember ReadMember(XElement member) {
+		List<DoxygenParameter> parameters = [];
+		foreach (XElement parameter in member.Elements("param")) {
+			string type = Text(parameter.Element("type"));
+			// A parameter list of just "void" has no parameters.
+			if (type == "void" && parameter.Element("declname") is null) continue;
+			XElement? defaultValue = parameter.Element("defval");
+			parameters.Add(new DoxygenParameter(type, (string?)parameter.Element("declname") ?? $"arg{parameters.Count}", defaultValue is null ? null : Text(defaultValue)));
+		}
+		XElement? details = member.Element("detaileddescription");
+		List<string> onlyFor = details is null ? [] : [.. details.Descendants("onlyfor").SelectMany(static element => element.Value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))];
+		bool deprecated = details is not null && details.Descendants("xrefsect").Any(static element => ((string?)element.Attribute("id") ?? string.Empty).StartsWith("deprecated", StringComparison.Ordinal));
+		return new DoxygenMember(
+			(string)member.Element("name")!,
+			Text(member.Element("type")),
+			parameters,
+			(string?)member.Attribute("const") == "yes",
+			(string?)member.Attribute("static") == "yes",
+			(string?)member.Attribute("virt") is "virtual" or "pure-virtual",
+			(string?)member.Attribute("prot") == "public",
+			deprecated,
+			onlyFor,
+			Text(member.Element("briefdescription")));
+	}
+
+	private static (List<DoxygenStyle> Styles, List<DoxygenEvent> Events) ReadTables(XElement? description) {
+		List<DoxygenStyle> styles = [];
+		List<DoxygenEvent> events = [];
+		if (description is null) return (styles, events);
+		string section = string.Empty;
+		string? eventClass = null;
+		bool inList = false;
+		foreach (XElement element in description.Descendants()) {
+			switch (element.Name.LocalName) {
+				case "heading":
+					section = Normalize(element.Value);
+					eventClass = null;
+					inList = false;
+					break;
+				// The sentence before an event list names the class its handlers receive, when they
+				// all receive the same one. An entry can name its own, which the entry itself reads.
+				case "ref" when !inList && section.StartsWith(EventsHeadingPrefix, StringComparison.Ordinal) && eventClass is null && EventClassPattern().IsMatch(element.Value):
+					eventClass = element.Value;
+					break;
+				case "itemizedlist":
+					inList = true;
+					break;
+				case "listitem" when section == StylesHeading:
+					if (ReadEntry(element) is (string name, string text) && StyleNamePattern().IsMatch(name)) styles.Add(new DoxygenStyle(name, text));
+					break;
+				case "listitem" when section.StartsWith(EventsHeadingPrefix, StringComparison.Ordinal):
+					if (ReadEntry(element) is (string macro, string about)) {
+						string? eventType = element.Descendants("computeroutput").Select(static code => Normalize(code.Value)).FirstOrDefault(static code => code.StartsWith("wxEVT_", StringComparison.Ordinal));
+						string? ownClass = element.Descendants("ref").Select(static reference => reference.Value).FirstOrDefault(static text => EventClassPattern().IsMatch(text));
+						events.Add(new DoxygenEvent(macro.Split('(')[0].Trim(), eventType, ownClass ?? eventClass, about));
+					}
+					break;
+			}
+		}
+		return (styles, events);
+	}
+
+	// A table entry reads "NAME: what it does", or "EVT_NAME(id, func): what it does".
+	private static (string Name, string Text)? ReadEntry(XElement item) {
+		string text = Text(item);
+		int colon = text.IndexOf("):", StringComparison.Ordinal) is int call and >= 0 ? call + 1 : text.IndexOf(':');
+		if (colon <= 0) return null;
+		return (text[..colon].Trim(), text[(colon + 1)..].Trim());
+	}
+
+	private static void ReadConstants(XElement definition, Dictionary<string, string> constants) {
+		foreach (XElement member in definition.Descendants("memberdef")) {
+			string? kind = (string?)member.Attribute("kind");
+			if (kind == "define" && member.Element("initializer") is XElement initializer) {
+				constants.TryAdd((string)member.Element("name")!, Normalize(initializer.Value));
+			} else if (kind == "enum") {
+				// Values without an initializer follow the one before, as in C.
+				string previous = "-1";
+				foreach (XElement value in member.Elements("enumvalue")) {
+					string name = (string)value.Element("name")!;
+					string given = Normalize((string?)value.Element("initializer") ?? string.Empty).TrimStart('=').Trim();
+					string expression = given.Length > 0 ? given : $"({previous}) + 1";
+					constants.TryAdd(name, expression);
+					previous = name;
+				}
+			}
+		}
+	}
+
+	internal static string Text(XElement? element) => element is null ? string.Empty : Normalize(string.Concat(element.DescendantNodes().OfType<XText>().Select(static node => node.Value)));
+
+	private static string Normalize(string text) => WhitespacePattern().Replace(text, " ").Trim();
+
+	[GeneratedRegex(@"\s+")]
+	private static partial Regex WhitespacePattern();
+
+	[GeneratedRegex(@"^wx\w*Event$")]
+	private static partial Regex EventClassPattern();
+
+	[GeneratedRegex(@"^wx[A-Z0-9_]+$")]
+	private static partial Regex StyleNamePattern();
+}
