@@ -26,6 +26,7 @@ public unsafe class MessageDialog : Dialog {
 	}
 
 	private static WxkWindow* Create(Window? parent, string message, string caption, MessageDialogStyle style) {
+		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(message);
 		ArgumentNullException.ThrowIfNull(caption);
 		fixed (char* messageText = message)

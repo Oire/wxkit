@@ -16,6 +16,12 @@ public unsafe class Window : EvtHandler {
 	/// <summary>The window's id, which its command events carry.</summary>
 	public int Id => WxKitNative.WindowGetId(Native);
 
+	/// <summary>
+	/// The platform's own handle for the window, for calling native APIs: an HWND on Windows, an
+	/// NSView* on macOS, and a GtkWidget* on Linux. It is only valid until the window is destroyed.
+	/// </summary>
+	public nint NativeHandle => (nint)WxKitNative.WindowGetHandle(Native);
+
 	/// <summary>The window's parent, or null for a top-level window without one.</summary>
 	public Window? Parent => ObjectRegistry.Wrap<Window>(WxKitNative.WindowGetParent(Native));
 
@@ -141,6 +147,7 @@ public unsafe class Frame : TopLevelWindow {
 	}
 
 	private static WxkWindow* Create(Window? parent, string title, Point? position, Size? size, FrameStyle style, int id) {
+		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(title);
 		fixed (char* text = title) return WxKitNative.FrameNew(NativeOf(parent), id, text, Text.Length(title), position ?? Point.Default, size ?? Size.Default, (long)style);
 	}

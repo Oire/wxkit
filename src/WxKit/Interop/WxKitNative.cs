@@ -136,6 +136,10 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int WindowGetId(WxkWindow* window);
 
+	[LibraryImport(Library, EntryPoint = "wxk_Window_GetHandle")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void* WindowGetHandle(WxkWindow* window);
+
 	[LibraryImport(Library, EntryPoint = "wxk_Window_GetParent")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkWindow* WindowGetParent(WxkWindow* window);

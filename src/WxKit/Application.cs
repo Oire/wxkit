@@ -45,6 +45,15 @@ public unsafe class Application {
 	}
 
 	/// <summary>
+	/// Ends the event loop once it has finished the event it is handling, so <see cref="Run()"/>
+	/// returns, even if top-level windows are still open. Must be called on the GUI thread.
+	/// </summary>
+	public static void Exit() {
+		VerifyAccess();
+		WxKitNative.AppExitMainLoop();
+	}
+
+	/// <summary>
 	/// Starts wxWidgets, calls <see cref="OnInit"/>, and runs the event loop. Returns the exit code.
 	/// On Windows, the GUI needs a single-threaded apartment. Mark Main with <see cref="STAThreadAttribute"/>
 	/// to run it on the calling thread; otherwise it runs on a thread of its own, and this call waits for it.
@@ -100,7 +109,9 @@ public unsafe class Application {
 				failure = ExceptionDispatchInfo.Capture(error);
 			}
 		}) {
-			Name = "WxKit GUI"
+			Name = "WxKit GUI",
+			// The calling thread waits for this one, so this one must not also keep the process alive.
+			IsBackground = true
 		};
 		thread.SetApartmentState(ApartmentState.STA);
 		thread.Start();

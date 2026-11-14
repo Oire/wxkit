@@ -75,7 +75,12 @@ public abstract unsafe class Sizer {
 
 /// <summary>Lays items out in a row or a column. Wraps wxBoxSizer.</summary>
 public sealed unsafe class BoxSizer : Sizer {
-	public BoxSizer(Orientation orientation) : base(WxKitNative.BoxSizerNew((int)orientation)) {
+	public BoxSizer(Orientation orientation) : base(Create(orientation)) {
+	}
+
+	private static WxkSizer* Create(Orientation orientation) {
+		Application.VerifyAccess();
+		return WxKitNative.BoxSizerNew((int)orientation);
 	}
 }
 

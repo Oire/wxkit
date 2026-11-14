@@ -7,7 +7,7 @@ namespace WxKit;
 /// Dispose it when you are done with it; wxWidgets does not free timers on its own.
 /// </summary>
 public sealed unsafe class Timer : EvtHandler, IDisposable {
-	public Timer() : base((WxkEvtHandler*)WxKitNative.TimerNew()) {
+	public Timer() : base(Create()) {
 	}
 
 	public bool IsRunning => WxKitNative.TimerIsRunning(Native) != 0;
@@ -29,5 +29,10 @@ public sealed unsafe class Timer : EvtHandler, IDisposable {
 
 	public void Dispose() {
 		if (!IsDestroyed) WxKitNative.TimerFree(Native);
+	}
+
+	private static WxkEvtHandler* Create() {
+		Application.VerifyAccess();
+		return (WxkEvtHandler*)WxKitNative.TimerNew();
 	}
 }

@@ -116,6 +116,8 @@ WXK_FUNCTION(uint8_t) wxk_CloseEvent_GetVeto(wxk_Event* event) WXK_NOEXCEPT;
 // Windows
 
 WXK_FUNCTION(int32_t) wxk_Window_GetId(wxk_Window* window) WXK_NOEXCEPT;
+// The platform's own handle: an HWND on Windows, an NSView* on macOS, and a GtkWidget* on Linux.
+WXK_FUNCTION(void*) wxk_Window_GetHandle(wxk_Window* window) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Window*) wxk_Window_GetParent(wxk_Window* window) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_String*) wxk_Window_GetLabel(wxk_Window* window) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Window_SetLabel(wxk_Window* window, const char16_t* label, size_t labelLength) WXK_NOEXCEPT;

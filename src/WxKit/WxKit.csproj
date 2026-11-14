@@ -22,6 +22,10 @@
 		<None Include="build/WxKit.targets;build/wxkit.manifest;build/WxKitMergeResources.cs" Pack="true" PackagePath="buildTransitive/" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<InternalsVisibleTo Include="WxKit.Tests" />
+	</ItemGroup>
+
 	<!-- The merge task is compiled by MSBuild in the consuming build, not as part of WxKit. -->
 	<ItemGroup>
 		<Compile Remove="build/**" />

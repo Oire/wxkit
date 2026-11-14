@@ -13,6 +13,8 @@ public abstract unsafe class EvtHandler {
 	private WxkEvtHandler* _native;
 	private Dictionary<(int Type, int Id, int LastId), EventSlot>? _slots;
 
+	// Every constructor that creates a native object checks the thread before it does, not here,
+	// since by the time this runs the object would already exist on the wrong thread.
 	private protected EvtHandler(WxkEvtHandler* native) {
 		Application.VerifyAccess();
 		if (native is null) throw new InvalidOperationException($"wxWidgets could not create the {GetType().Name}.");

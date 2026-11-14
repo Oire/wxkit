@@ -4,7 +4,7 @@ namespace WxKit;
 
 /// <summary>The bar of menus across the top of a frame. Wraps wxMenuBar. Set it as a frame's <see cref="Frame.MenuBar"/>.</summary>
 public sealed unsafe class MenuBar : Window {
-	public MenuBar() : base(WxKitNative.MenuBarNew(0)) {
+	public MenuBar() : base(Create()) {
 	}
 
 	internal MenuBar(WxkWindow* native) : base(native) {
@@ -18,6 +18,11 @@ public sealed unsafe class MenuBar : Window {
 			if (WxKitNative.MenuBarAppend(Native, menu.Native, text, Text.Length(title)) == 0) throw new InvalidOperationException("wxWidgets could not add the menu.");
 		}
 	}
+
+	private static WxkWindow* Create() {
+		Application.VerifyAccess();
+		return WxKitNative.MenuBarNew(0);
+	}
 }
 
 /// <summary>
@@ -25,7 +30,7 @@ public sealed unsafe class MenuBar : Window {
 /// menu bar owns it. A menu that is never appended is not freed yet.
 /// </summary>
 public sealed unsafe class Menu : EvtHandler {
-	public Menu() : base((WxkEvtHandler*)WxKitNative.MenuNew()) {
+	public Menu() : base(Create()) {
 	}
 
 	internal Menu(WxkMenu* native) : base((WxkEvtHandler*)native) {
@@ -48,6 +53,11 @@ public sealed unsafe class Menu : EvtHandler {
 	}
 
 	public MenuItem AppendSeparator() => MenuItem.Wrap(this, WxKitNative.MenuAppendSeparator(Native));
+
+	private static WxkEvtHandler* Create() {
+		Application.VerifyAccess();
+		return (WxkEvtHandler*)WxKitNative.MenuNew();
+	}
 }
 
 /// <summary>An item on a menu. Wraps wxMenuItem. Its menu owns it.</summary>

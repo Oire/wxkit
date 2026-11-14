@@ -7,6 +7,10 @@ WXK_FUNCTION(int32_t) wxk_Window_GetId(wxk_Window* window) noexcept {
 	return Unwrap(window)->GetId();
 }
 
+WXK_FUNCTION(void*) wxk_Window_GetHandle(wxk_Window* window) noexcept {
+	return reinterpret_cast<void*>(Unwrap(window)->GetHandle());
+}
+
 WXK_FUNCTION(wxk_Window*) wxk_Window_GetParent(wxk_Window* window) noexcept {
 	return wxk::Wrap(Unwrap(window)->GetParent());
 }
