@@ -1,0 +1,117 @@
+using WxKit.Generator.Binding;
+using WxKit.Generator.Doxygen;
+
+namespace WxKit.Generator.Tests;
+
+public class BinderTests {
+	private static DoxygenMember Function(string name, string type = "void", params DoxygenParameter[] parameters) => new(name, type, parameters, IsConst: false, IsStatic: false, IsVirtual: false, IsPublic: true, IsDeprecated: false, OnlyFor: [], Brief: string.Empty);
+
+	private static DoxygenParameter Parameter(string type, string name, string? defaultValue = null) => new(type, name, defaultValue);
+
+	private static DoxygenClass Class(string name, string? baseName, DoxygenMember[]? members = null, DoxygenStyle[]? styles = null, DoxygenEvent[]? events = null) =>
+		new(name, baseName is null ? [] : [baseName], $"wx/{name}.h", string.Empty, members ?? [], styles ?? [], events ?? []);
+
+	// A small hierarchy shaped like wxWidgets's: a window, a button, and the events they send.
+	private static DoxygenApi Api() {
+		DoxygenClass[] classes = [
+			Class("wxObject", null),
+			Class("wxEvtHandler", "wxObject"),
+			Class("wxWindow", "wxEvtHandler", [
+				Function("GetLabel", "wxString"),
+				Function("SetLabel", "void", Parameter("const wxString &", "label")),
+				Function("IsEnabled", "bool"),
+				Function("Enable", "bool", Parameter("bool", "enable", "true")),
+				Function("Centre", "void", Parameter("int", "direction", "wxBOTH")),
+				Function("GetValidator", "wxValidator *"),
+			]),
+			Class("wxButton", "wxWindow",
+				[
+					Function("wxButton"),
+					Function("wxButton", "", Parameter("wxWindow *", "parent"), Parameter("wxWindowID", "id"), Parameter("const wxString &", "label", "wxEmptyString"), Parameter("const wxPoint &", "pos", "wxDefaultPosition"), Parameter("long", "style", "0"), Parameter("const wxValidator &", "validator", "wxDefaultValidator")),
+				],
+				[new DoxygenStyle("wxBU_LEFT", "Left-justifies the label."), new DoxygenStyle("wxBU_TOP", "Aligns the label to the top.")],
+				[new DoxygenEvent("EVT_BUTTON", "wxEVT_BUTTON", "wxCommandEvent", "Clicked.")]),
+			Class("wxEvent", "wxObject"),
+			Class("wxCommandEvent", "wxEvent", [Function("GetString", "wxString")]),
+		];
+		Dictionary<string, string> constants = new() { ["wxBU_LEFT"] = "0x0040", ["wxBU_TOP"] = "0x0080", ["wxBOTH"] = "0x000C" };
+		return new DoxygenApi(classes.ToDictionary(static found => found.Name), constants);
+	}
+
+	private static BindingResult Bind(Action<Binding.Tweaks>? configure = null) {
+		Binding.Tweaks tweaks = new();
+		tweaks.Class("wxEvtHandler").Handwritten();
+		tweaks.Class("wxWindow", window => window.NoConstructors().Property("IsEnabled", "IsEnabled", "Enable").ParameterEnum("Centre", "direction", "Orientation"));
+		tweaks.Class("wxButton", button => button.Event("EVT_BUTTON", "Click"));
+		tweaks.Class("wxEvent");
+		tweaks.Class("wxCommandEvent");
+		configure?.Invoke(tweaks);
+		return new Binder(Api(), tweaks).Bind();
+	}
+
+	private static BoundClass Bound(BindingResult result, string name) => result.Classes.Single(bound => bound.CppName == name);
+
+	[Fact]
+	public void FindsEachClassesHandleAndNearestBoundBase() {
+		BindingResult result = Bind();
+		Assert.Same(HandleKind.Window, Bound(result, "wxButton").Handle);
+		Assert.Same(Bound(result, "wxWindow"), Bound(result, "wxButton").Base);
+		Assert.Same(HandleKind.Event, Bound(result, "wxCommandEvent").Handle);
+	}
+
+	[Fact]
+	public void PairsGettersAndSettersIntoProperties() {
+		BoundClass window = Bound(Bind(), "wxWindow");
+		BoundProperty label = window.Properties.Single(static property => property.Name == "Label");
+		Assert.Equal("SetLabel", label.Setter?.Source.Name);
+		BoundProperty enabled = window.Properties.Single(static property => property.Name == "IsEnabled");
+		Assert.Equal("Enable", enabled.Setter?.Source.Name);
+	}
+
+	[Fact]
+	public void RespellsMethodsAndGivesNumbersTheirEnum() {
+		BoundMethod center = Bound(Bind(), "wxWindow").Methods.Single(static method => method.Name == "Center");
+		BoundParameter direction = Assert.Single(center.Function.Parameters);
+		Assert.Equal("Orientation", Assert.IsType<EnumConversion>(direction.Conversion).EnumName);
+		Assert.Equal("Orientation.Both", direction.Default);
+	}
+
+	[Fact]
+	public void SkipsWhatItCannotConvert() {
+		BindingResult result = Bind();
+		Assert.DoesNotContain(Bound(result, "wxWindow").Methods, static method => method.Name == "GetValidator");
+		Assert.Contains(result.Skipped, static reason => reason.StartsWith("wxWindow::GetValidator", StringComparison.Ordinal));
+	}
+
+	[Fact]
+	public void BindsOneStepConstructorsWithIdsMovedAfterTheLabel() {
+		BoundFunction constructor = Assert.Single(Bound(Bind(), "wxButton").Constructors);
+		// The validator, which WxKit cannot convert yet, is left to its C++ default.
+		Assert.Equal(["parent", "id", "label", "pos", "style"], constructor.Parameters.Select(static parameter => parameter.CppName));
+		Assert.Equal(["parent", "label", "id", "position", "style"], constructor.ManagedParameters.Select(static parameter => parameter.Name));
+		Assert.Equal([null, "\"\"", "StandardId.Any", "null", "ButtonStyle.None"], constructor.ManagedParameters.Select(static parameter => parameter.Default));
+	}
+
+	[Fact]
+	public void MakesAStyleEnumFromTheStyleTable() {
+		BoundStyles styles = Bound(Bind(), "wxButton").Styles!;
+		Assert.Equal("ButtonStyle", styles.Name);
+		Assert.Equal([("None", 0L), ("Left", 0x40L), ("Top", 0x80L)], styles.Members.Select(static style => (style.Name, style.Value)));
+	}
+
+	[Fact]
+	public void BindsEventsWithTheirEventClass() {
+		BindingResult result = Bind();
+		BoundEvent click = Assert.Single(Bound(result, "wxButton").Events);
+		Assert.Equal("Click", click.Name);
+		Assert.Equal("Button", click.Type.Name);
+		Assert.Same(Bound(result, "wxCommandEvent"), click.Type.EventClass);
+	}
+
+	[Fact]
+	public void RefusesTweaksThatNameNothing() {
+		Assert.Throws<InvalidOperationException>(() => Bind(static tweaks => tweaks.Class("wxNoSuchClass")));
+		Assert.Throws<InvalidOperationException>(() => Bind(static tweaks => tweaks.Class("wxButton").Only("NoSuchMember")));
+		Assert.Throws<InvalidOperationException>(() => Bind(static tweaks => tweaks.Class("wxButton").Event("EVT_NO_SUCH", "Nothing")));
+	}
+}

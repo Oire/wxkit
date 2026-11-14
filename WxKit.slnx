@@ -4,6 +4,7 @@
 		<Project Path="src/WxKit.Generator/WxKit.Generator.csproj" />
 	</Folder>
 	<Folder Name="/tests/">
+		<Project Path="tests/WxKit.Generator.Tests/WxKit.Generator.Tests.csproj" />
 		<Project Path="tests/WxKit.Tests/WxKit.Tests.csproj" />
 	</Folder>
 	<Folder Name="/samples/">
