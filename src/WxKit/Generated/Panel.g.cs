@@ -7,13 +7,22 @@ namespace WxKit;
 /// <summary>A panel is a window on which controls are placed. Wraps wxPanel.</summary>
 public unsafe partial class Panel : Window {
 	/// <summary>Constructor.</summary>
-	public Panel(Window parent, int id = StandardId.Any, Point? position = null, Size? size = null, long style = 524288) : this(Create(parent, id, position, size, style)) {
+	public Panel(Window parent, int id = StandardId.Any, Point? position = null, Size? size = null, long style = 524288) : this(CreateNative(parent, id, position, size, style)) {
 	}
 
 	internal Panel(WxkWindow* native) : base(native) {
 	}
 
-	private static WxkWindow* Create(Window parent, int id, Point? position, Size? size, long style) {
+	/// <summary>Process a navigation key event.</summary>
+	public event EventHandler<Event>? NavigationKey {
+		add => AddHandler(EventType.NavigationKey, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.NavigationKey, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>In contrast to SetFocus() (see above) this will set the focus to the panel even if there are child windows in the panel.</summary>
+	public void SetFocusIgnoringChildren() => WxKitNative.PanelSetFocusIgnoringChildren(Native);
+
+	private static WxkWindow* CreateNative(Window parent, int id, Point? position, Size? size, long style) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(parent);
 		return WxKitNative.PanelNew((WxkWindow*)parent.Native, id, position ?? Point.Default, size ?? Size.Default, style);

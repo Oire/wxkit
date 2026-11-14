@@ -9,12 +9,36 @@ public unsafe partial class Event {
 	/// <summary>Returns the object (usually a window) associated with the event, if any.</summary>
 	public EvtHandler? EventObject => ObjectRegistry.Wrap<EvtHandler>(WxKitNative.EventGetEventObject(Handle));
 
+	/// <summary>Return the user data associated with a dynamically connected event handler.</summary>
+	public EvtHandler? EventUserData => ObjectRegistry.Wrap<EvtHandler>(WxKitNative.EventGetEventUserData(Handle));
+
 	/// <summary>Returns the identifier associated with this event, such as a button command id.</summary>
-	public int Id => WxKitNative.EventGetId(Handle);
+	public int Id {
+		get => WxKitNative.EventGetId(Handle);
+		set => WxKitNative.EventSetId(Handle, value);
+	}
+
+	/// <summary>Returns true if the event is or is derived from wxCommandEvent else it returns false.</summary>
+	public bool IsCommandEvent => WxKitNative.EventIsCommandEvent(Handle) != 0;
 
 	/// <summary>Returns true if the event handler should be skipped, false otherwise.</summary>
 	public bool IsSkipped => WxKitNative.EventGetSkipped(Handle) != 0;
 
+	/// <summary>Gets the timestamp for the event.</summary>
+	public long Timestamp {
+		get => WxKitNative.EventGetTimestamp(Handle);
+		set => WxKitNative.EventSetTimestamp(Handle, value);
+	}
+
+	/// <summary>Sets the propagation level to the given value (for example returned from an earlier call to wxEvent::StopPropagation).</summary>
+	public void ResumePropagation(int propagationLevel) => WxKitNative.EventResumePropagation(Handle, propagationLevel);
+
+	/// <summary>Test if this event should be propagated or not, i.e. if the propagation level is currently greater than 0.</summary>
+	public bool ShouldPropagate() => WxKitNative.EventShouldPropagate(Handle) != 0;
+
 	/// <summary>This method can be used inside an event handler to control whether further event handlers bound to this event will be called after the current one returns.</summary>
 	public void Skip(bool skip = true) => WxKitNative.EventSkip(Handle, skip ? (byte)1 : (byte)0);
+
+	/// <summary>Stop the event from propagating to its parent window.</summary>
+	public int StopPropagation() => WxKitNative.EventStopPropagation(Handle);
 }

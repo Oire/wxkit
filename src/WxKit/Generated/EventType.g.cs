@@ -5,18 +5,186 @@ using WxKit.Interop;
 namespace WxKit;
 
 public static unsafe partial class EventType {
+	/// <summary>Wraps wxEVT_ACTIVATE.</summary>
+	public static EventType<Event> Activate { get; } = new(WxKitNative.EventTypeActivate, static native => new Event((WxkEvent*)native));
+
 	/// <summary>Wraps wxEVT_BUTTON.</summary>
 	public static EventType<CommandEvent> Button { get; } = new(WxKitNative.EventTypeButton, static native => new CommandEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_CHAR.</summary>
+	public static EventType<Event> Char { get; } = new(WxKitNative.EventTypeChar, static native => new Event((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_CHAR_HOOK.</summary>
+	public static EventType<Event> CharHook { get; } = new(WxKitNative.EventTypeCharHook, static native => new Event((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_CHECKBOX.</summary>
+	public static EventType<CommandEvent> Checkbox { get; } = new(WxKitNative.EventTypeCheckbox, static native => new CommandEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_CHECKLISTBOX.</summary>
+	public static EventType<CommandEvent> Checklistbox { get; } = new(WxKitNative.EventTypeChecklistbox, static native => new CommandEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_CHILD_FOCUS.</summary>
+	public static EventType<CommandEvent> ChildFocus { get; } = new(WxKitNative.EventTypeChildFocus, static native => new CommandEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_CHOICE.</summary>
+	public static EventType<CommandEvent> Choice { get; } = new(WxKitNative.EventTypeChoice, static native => new CommandEvent((WxkEvent*)native));
 
 	/// <summary>Wraps wxEVT_CLOSE_WINDOW.</summary>
 	public static EventType<CloseEvent> CloseWindow { get; } = new(WxKitNative.EventTypeCloseWindow, static native => new CloseEvent((WxkEvent*)native));
 
+	/// <summary>Wraps wxEVT_COMBOBOX.</summary>
+	public static EventType<CommandEvent> Combobox { get; } = new(WxKitNative.EventTypeCombobox, static native => new CommandEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_COMMAND_ENTER.</summary>
+	public static EventType<CommandEvent> CommandEnter { get; } = new(WxKitNative.EventTypeCommandEnter, static native => new CommandEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_COMMAND_KILL_FOCUS.</summary>
+	public static EventType<CommandEvent> CommandKillFocus { get; } = new(WxKitNative.EventTypeCommandKillFocus, static native => new CommandEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_COMMAND_LEFT_CLICK.</summary>
+	public static EventType<CommandEvent> CommandLeftClick { get; } = new(WxKitNative.EventTypeCommandLeftClick, static native => new CommandEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_COMMAND_LEFT_DCLICK.</summary>
+	public static EventType<CommandEvent> CommandLeftDclick { get; } = new(WxKitNative.EventTypeCommandLeftDclick, static native => new CommandEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_COMMAND_RIGHT_CLICK.</summary>
+	public static EventType<CommandEvent> CommandRightClick { get; } = new(WxKitNative.EventTypeCommandRightClick, static native => new CommandEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_COMMAND_SET_FOCUS.</summary>
+	public static EventType<CommandEvent> CommandSetFocus { get; } = new(WxKitNative.EventTypeCommandSetFocus, static native => new CommandEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_CONTEXT_MENU.</summary>
+	public static EventType<CommandEvent> ContextMenu { get; } = new(WxKitNative.EventTypeContextMenu, static native => new CommandEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_DROP_FILES.</summary>
+	public static EventType<Event> DropFiles { get; } = new(WxKitNative.EventTypeDropFiles, static native => new Event((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_END_SESSION.</summary>
+	public static EventType<CloseEvent> EndSession { get; } = new(WxKitNative.EventTypeEndSession, static native => new CloseEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_ERASE_BACKGROUND.</summary>
+	public static EventType<Event> EraseBackground { get; } = new(WxKitNative.EventTypeEraseBackground, static native => new Event((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_FULLSCREEN.</summary>
+	public static EventType<Event> Fullscreen { get; } = new(WxKitNative.EventTypeFullscreen, static native => new Event((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_HELP.</summary>
+	public static EventType<CommandEvent> Help { get; } = new(WxKitNative.EventTypeHelp, static native => new CommandEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_ICONIZE.</summary>
+	public static EventType<Event> Iconize { get; } = new(WxKitNative.EventTypeIconize, static native => new Event((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_IDLE.</summary>
+	public static EventType<Event> Idle { get; } = new(WxKitNative.EventTypeIdle, static native => new Event((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_INIT_DIALOG.</summary>
+	public static EventType<Event> InitDialog { get; } = new(WxKitNative.EventTypeInitDialog, static native => new Event((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_KEY_DOWN.</summary>
+	public static EventType<Event> KeyDown { get; } = new(WxKitNative.EventTypeKeyDown, static native => new Event((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_KEY_UP.</summary>
+	public static EventType<Event> KeyUp { get; } = new(WxKitNative.EventTypeKeyUp, static native => new Event((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_KILL_FOCUS.</summary>
+	public static EventType<Event> KillFocus { get; } = new(WxKitNative.EventTypeKillFocus, static native => new Event((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_LISTBOX.</summary>
+	public static EventType<CommandEvent> Listbox { get; } = new(WxKitNative.EventTypeListbox, static native => new CommandEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_LISTBOX_DCLICK.</summary>
+	public static EventType<CommandEvent> ListboxDclick { get; } = new(WxKitNative.EventTypeListboxDclick, static native => new CommandEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_MAXIMIZE.</summary>
+	public static EventType<Event> Maximize { get; } = new(WxKitNative.EventTypeMaximize, static native => new Event((WxkEvent*)native));
+
 	/// <summary>Wraps wxEVT_MENU.</summary>
 	public static EventType<CommandEvent> Menu { get; } = new(WxKitNative.EventTypeMenu, static native => new CommandEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_MENU_CLOSE.</summary>
+	public static EventType<Event> MenuClose { get; } = new(WxKitNative.EventTypeMenuClose, static native => new Event((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_MENU_HIGHLIGHT.</summary>
+	public static EventType<Event> MenuHighlight { get; } = new(WxKitNative.EventTypeMenuHighlight, static native => new Event((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_MENU_OPEN.</summary>
+	public static EventType<Event> MenuOpen { get; } = new(WxKitNative.EventTypeMenuOpen, static native => new Event((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_MOUSE_CAPTURE_CHANGED.</summary>
+	public static EventType<Event> MouseCaptureChanged { get; } = new(WxKitNative.EventTypeMouseCaptureChanged, static native => new Event((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_MOUSE_CAPTURE_LOST.</summary>
+	public static EventType<Event> MouseCaptureLost { get; } = new(WxKitNative.EventTypeMouseCaptureLost, static native => new Event((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_MOVE.</summary>
+	public static EventType<Event> Move { get; } = new(WxKitNative.EventTypeMove, static native => new Event((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_MOVE_END.</summary>
+	public static EventType<Event> MoveEnd { get; } = new(WxKitNative.EventTypeMoveEnd, static native => new Event((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_MOVE_START.</summary>
+	public static EventType<Event> MoveStart { get; } = new(WxKitNative.EventTypeMoveStart, static native => new Event((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_NAVIGATION_KEY.</summary>
+	public static EventType<Event> NavigationKey { get; } = new(WxKitNative.EventTypeNavigationKey, static native => new Event((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_PAINT.</summary>
+	public static EventType<Event> Paint { get; } = new(WxKitNative.EventTypePaint, static native => new Event((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_QUERY_END_SESSION.</summary>
+	public static EventType<CloseEvent> QueryEndSession { get; } = new(WxKitNative.EventTypeQueryEndSession, static native => new CloseEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_RADIOBOX.</summary>
+	public static EventType<CommandEvent> Radiobox { get; } = new(WxKitNative.EventTypeRadiobox, static native => new CommandEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_RADIOBUTTON.</summary>
+	public static EventType<CommandEvent> Radiobutton { get; } = new(WxKitNative.EventTypeRadiobutton, static native => new CommandEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_SCROLLBAR.</summary>
+	public static EventType<CommandEvent> Scrollbar { get; } = new(WxKitNative.EventTypeScrollbar, static native => new CommandEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_SET_CURSOR.</summary>
+	public static EventType<Event> SetCursor { get; } = new(WxKitNative.EventTypeSetCursor, static native => new Event((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_SET_FOCUS.</summary>
+	public static EventType<Event> SetFocus { get; } = new(WxKitNative.EventTypeSetFocus, static native => new Event((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_SHOW.</summary>
+	public static EventType<Event> Show { get; } = new(WxKitNative.EventTypeShow, static native => new Event((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_SIZE.</summary>
+	public static EventType<Event> Size { get; } = new(WxKitNative.EventTypeSize, static native => new Event((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_SLIDER.</summary>
+	public static EventType<CommandEvent> Slider { get; } = new(WxKitNative.EventTypeSlider, static native => new CommandEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_SYS_COLOUR_CHANGED.</summary>
+	public static EventType<Event> SysColorChanged { get; } = new(WxKitNative.EventTypeSysColorChanged, static native => new Event((WxkEvent*)native));
 
 	/// <summary>Wraps wxEVT_TEXT.</summary>
 	public static EventType<CommandEvent> Text { get; } = new(WxKitNative.EventTypeText, static native => new CommandEvent((WxkEvent*)native));
 
+	/// <summary>Wraps wxEVT_TEXT_ENTER.</summary>
+	public static EventType<CommandEvent> TextEnter { get; } = new(WxKitNative.EventTypeTextEnter, static native => new CommandEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_TEXT_MAXLEN.</summary>
+	public static EventType<CommandEvent> TextMaxlen { get; } = new(WxKitNative.EventTypeTextMaxlen, static native => new CommandEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_TEXT_URL.</summary>
+	public static EventType<CommandEvent> TextUrl { get; } = new(WxKitNative.EventTypeTextUrl, static native => new CommandEvent((WxkEvent*)native));
+
 	/// <summary>Wraps wxEVT_TIMER.</summary>
 	public static EventType<Event> Timer { get; } = new(WxKitNative.EventTypeTimer, static native => new Event((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_TOGGLEBUTTON.</summary>
+	public static EventType<CommandEvent> Togglebutton { get; } = new(WxKitNative.EventTypeTogglebutton, static native => new CommandEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_TOOL.</summary>
+	public static EventType<CommandEvent> Tool { get; } = new(WxKitNative.EventTypeTool, static native => new CommandEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_TOOL_ENTER.</summary>
+	public static EventType<CommandEvent> ToolEnter { get; } = new(WxKitNative.EventTypeToolEnter, static native => new CommandEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_TOOL_RCLICKED.</summary>
+	public static EventType<CommandEvent> ToolRclicked { get; } = new(WxKitNative.EventTypeToolRclicked, static native => new CommandEvent((WxkEvent*)native));
 }

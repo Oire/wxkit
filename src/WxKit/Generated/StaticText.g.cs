@@ -7,13 +7,27 @@ namespace WxKit;
 /// <summary>A static text control displays one or more lines of read-only text. Wraps wxStaticText.</summary>
 public unsafe partial class StaticText : Window {
 	/// <summary>Constructor, creating and showing a text control.</summary>
-	public StaticText(Window parent, string label, int id = StandardId.Any, Point? position = null, Size? size = null, StaticTextStyle style = StaticTextStyle.None) : this(Create(parent, label, id, position, size, style)) {
+	public StaticText(Window parent, string label, int id = StandardId.Any, Point? position = null, Size? size = null, StaticTextStyle style = StaticTextStyle.None) : this(CreateNative(parent, label, id, position, size, style)) {
 	}
 
 	internal StaticText(WxkWindow* native) : base(native) {
 	}
 
-	private static WxkWindow* Create(Window parent, string label, int id, Point? position, Size? size, StaticTextStyle style) {
+	/// <summary>Returns true if the window styles for this control contains one of the wxST_ELLIPSIZE_START, wxST_ELLIPSIZE_MIDDLE or wxST_ELLIPSIZE_END styles.</summary>
+	public bool IsEllipsized => WxKitNative.StaticTextIsEllipsized(Native) != 0;
+
+	/// <summary>Change the label shown in the control.</summary>
+	public void SetLabel(string label) {
+		ArgumentNullException.ThrowIfNull(label);
+		fixed (char* labelText = label) {
+			WxKitNative.StaticTextSetLabel(Native, labelText, Text.Length(label));
+		}
+	}
+
+	/// <summary>This functions wraps the controls label so that each of its lines becomes at most width pixels wide if possible (the lines are broken at words boundaries so it might not be the case if words are too long).</summary>
+	public void Wrap(int width) => WxKitNative.StaticTextWrap(Native, width);
+
+	private static WxkWindow* CreateNative(Window parent, string label, int id, Point? position, Size? size, StaticTextStyle style) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(parent);
 		ArgumentNullException.ThrowIfNull(label);

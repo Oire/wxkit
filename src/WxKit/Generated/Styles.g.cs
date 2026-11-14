@@ -47,10 +47,6 @@ public enum DialogStyle : long {
 	StayOnTop = 0x8000,
 	/// <summary>By default, a dialog created with a nullptr parent window will be given the application's top level window as parent. Use this style to prevent this from happening and create an orphan dialog. This is not recommended for modal dialogs. Wraps wxDIALOG_NO_PARENT.</summary>
 	NoParent = 0x20,
-	/// <summary>Under Windows, puts a query button on the caption. When pressed, Windows will go into a context-sensitive help mode and wxWidgets will send a wxEVT_HELP event if the user clicked on an application window. Note that this is an extended style and must be set by calling SetExtraStyle() before Create is called (two-step construction). Wraps wxDIALOG_EX_CONTEXTHELP.</summary>
-	ExContexthelp = 0x80,
-	/// <summary>On macOS, frames with this style will be shown with a metallic look. This is an extra style. Wraps wxDIALOG_EX_METAL.</summary>
-	ExMetal = 0x40,
 }
 
 /// <summary>Styles for <see cref="Frame"/>.</summary>

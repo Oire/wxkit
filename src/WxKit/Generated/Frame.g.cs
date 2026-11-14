@@ -7,13 +7,71 @@ namespace WxKit;
 /// <summary>A frame is a window whose size and position can (usually) be changed by the user. Wraps wxFrame.</summary>
 public unsafe partial class Frame : TopLevelWindow {
 	/// <summary>Constructor, creating the window.</summary>
-	public Frame(Window? parent, string title, int id = StandardId.Any, Point? position = null, Size? size = null, FrameStyle style = FrameStyle.Default) : this(Create(parent, title, id, position, size, style)) {
+	public Frame(Window? parent, string title, int id = StandardId.Any, Point? position = null, Size? size = null, FrameStyle style = FrameStyle.Default) : this(CreateNative(parent, title, id, position, size, style)) {
 	}
 
 	internal Frame(WxkWindow* native) : base(native) {
 	}
 
-	private static WxkWindow* Create(Window? parent, string title, int id, Point? position, Size? size, FrameStyle style) {
+	/// <summary>Returns the status bar pane used to display menu and toolbar help.</summary>
+	public int StatusBarPane {
+		get => WxKitNative.FrameGetStatusBarPane(Native);
+		set => WxKitNative.FrameSetStatusBarPane(Native, value);
+	}
+
+	/// <summary>Process a wxEVT_ICONIZE event. See wxIconizeEvent.</summary>
+	public event EventHandler<Event>? Iconized {
+		add => AddHandler(EventType.Iconize, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.Iconize, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>A menu has been just closed. See wxMenuEvent.</summary>
+	public event EventHandler<Event>? MenuClosed {
+		add => AddHandler(EventType.MenuClose, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.MenuClose, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>The menu item with the specified id has been highlighted: used to show help prompts in the status bar by wxFrame. See wxMenuEvent.</summary>
+	public event EventHandler<Event>? MenuHighlighted {
+		add => AddHandler(EventType.MenuHighlight, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.MenuHighlight, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>A menu is about to be opened. See wxMenuEvent.</summary>
+	public event EventHandler<Event>? MenuOpened {
+		add => AddHandler(EventType.MenuOpen, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.MenuOpen, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>Method used to show help string of the selected menu toolbar item.</summary>
+	public void DoGiveHelp(string text, bool show) {
+		ArgumentNullException.ThrowIfNull(text);
+		fixed (char* textText = text) {
+			WxKitNative.FrameDoGiveHelp(Native, textText, Text.Length(text), show ? (byte)1 : (byte)0);
+		}
+	}
+
+	public void PopStatusText(int number = 0) => WxKitNative.FramePopStatusText(Native, number);
+
+	/// <summary>Simulate a menu command.</summary>
+	public bool ProcessCommand(int id = StandardId.Any) => WxKitNative.FrameProcessCommand(Native, id) != 0;
+
+	public void PushStatusText(string text, int number = 0) {
+		ArgumentNullException.ThrowIfNull(text);
+		fixed (char* textText = text) {
+			WxKitNative.FramePushStatusText(Native, textText, Text.Length(text), number);
+		}
+	}
+
+	/// <summary>Sets the status bar text and updates the status bar display.</summary>
+	public void SetStatusText(string text, int number = 0) {
+		ArgumentNullException.ThrowIfNull(text);
+		fixed (char* textText = text) {
+			WxKitNative.FrameSetStatusText(Native, textText, Text.Length(text), number);
+		}
+	}
+
+	private static WxkWindow* CreateNative(Window? parent, string title, int id, Point? position, Size? size, FrameStyle style) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(title);
 		fixed (char* titleText = title) {

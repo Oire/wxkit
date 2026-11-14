@@ -7,11 +7,90 @@ namespace WxKit;
 /// <summary>A text control allows text to be displayed and edited. Wraps wxTextCtrl.</summary>
 public unsafe partial class TextCtrl : Window {
 	/// <summary>Constructor, creating and showing a text control.</summary>
-	public TextCtrl(Window parent, string value = "", int id = StandardId.Any, Point? position = null, Size? size = null, TextCtrlStyle style = TextCtrlStyle.None) : this(Create(parent, value, id, position, size, style)) {
+	public TextCtrl(Window parent, string value = "", int id = StandardId.Any, Point? position = null, Size? size = null, TextCtrlStyle style = TextCtrlStyle.None) : this(CreateNative(parent, value, id, position, size, style)) {
 	}
 
 	internal TextCtrl(WxkWindow* native) : base(native) {
 	}
+
+	/// <summary>Returns true if the selection can be copied to the clipboard.</summary>
+	public bool CanCopy => WxKitNative.TextCtrlCanCopy(Native) != 0;
+
+	/// <summary>Returns true if the selection can be cut to the clipboard.</summary>
+	public bool CanCut => WxKitNative.TextCtrlCanCut(Native) != 0;
+
+	/// <summary>Returns true if the contents of the clipboard can be pasted into the text control.</summary>
+	public bool CanPaste => WxKitNative.TextCtrlCanPaste(Native) != 0;
+
+	/// <summary>Returns true if there is a redo facility available and the last operation can be redone.</summary>
+	public bool CanRedo => WxKitNative.TextCtrlCanRedo(Native) != 0;
+
+	/// <summary>Returns true if there is an undo facility available and the last operation can be undone.</summary>
+	public bool CanUndo => WxKitNative.TextCtrlCanUndo(Native) != 0;
+
+	/// <summary>Returns the current hint string.</summary>
+	public string Hint {
+		get => Text.Take(WxKitNative.TextCtrlGetHint(Native));
+		set {
+			ArgumentNullException.ThrowIfNull(value);
+			fixed (char* valueText = value) {
+				WxKitNative.TextCtrlSetHint(Native, valueText, Text.Length(value));
+			}
+		}
+	}
+
+	/// <summary>Returns the insertion point, or cursor, position.</summary>
+	public long InsertionPoint {
+		get => WxKitNative.TextCtrlGetInsertionPoint(Native);
+		set => WxKitNative.TextCtrlSetInsertionPoint(Native, value);
+	}
+
+	/// <summary>Returns true if the controls contents may be edited by user (note that it always can be changed by the program).</summary>
+	public bool IsEditable {
+		get => WxKitNative.TextCtrlIsEditable(Native) != 0;
+		set => WxKitNative.TextCtrlSetEditable(Native, value ? (byte)1 : (byte)0);
+	}
+
+	/// <summary>Returns true if the control is currently empty.</summary>
+	public bool IsEmpty => WxKitNative.TextCtrlIsEmpty(Native) != 0;
+
+	/// <summary>Returns true if the text has been modified by user.</summary>
+	public bool IsModified {
+		get => WxKitNative.TextCtrlIsModified(Native) != 0;
+		set => WxKitNative.TextCtrlSetModified(Native, value ? (byte)1 : (byte)0);
+	}
+
+	/// <summary>Returns true if this is a multi line edit control and false otherwise.</summary>
+	public bool IsMultiLine => WxKitNative.TextCtrlIsMultiLine(Native) != 0;
+
+	/// <summary>Returns true if text controls support reading and writing RTF (Rich Text Format).</summary>
+	public bool IsRTFSupported => WxKitNative.TextCtrlIsRTFSupported(Native) != 0;
+
+	/// <summary>Returns true if this is a single line edit control and false otherwise.</summary>
+	public bool IsSingleLine => WxKitNative.TextCtrlIsSingleLine(Native) != 0;
+
+	/// <summary>Returns the margins used by the control.</summary>
+	public Point Margins {
+		get => WxKitNative.TextCtrlGetMargins(Native);
+		set => WxKitNative.TextCtrlSetMarginsPoint(Native, value);
+	}
+
+	/// <summary>Returns the number of lines in the text control buffer.</summary>
+	public int NumberOfLines => WxKitNative.TextCtrlGetNumberOfLines(Native);
+
+	/// <summary>Returns the content of a multiline text control as RTF (Rich Text Formatted) text.</summary>
+	public string RTFValue {
+		get => Text.Take(WxKitNative.TextCtrlGetRTFValue(Native));
+		set {
+			ArgumentNullException.ThrowIfNull(value);
+			fixed (char* valueText = value) {
+				WxKitNative.TextCtrlSetRTFValue(Native, valueText, Text.Length(value));
+			}
+		}
+	}
+
+	/// <summary>Gets the text currently selected in the control.</summary>
+	public string StringSelection => Text.Take(WxKitNative.TextCtrlGetStringSelection(Native));
 
 	/// <summary>Gets the contents of the control.</summary>
 	public string Value {
@@ -24,11 +103,43 @@ public unsafe partial class TextCtrl : Window {
 		}
 	}
 
+	/// <summary>This event is generated when the user tries to enter more text into the control than the limit set by wxTextCtrl::SetMaxLength(), see its description.</summary>
+	public event EventHandler<CommandEvent>? MaxLengthReached {
+		add => AddHandler(EventType.TextMaxlen, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.TextMaxlen, StandardId.Any, StandardId.Any, value);
+	}
+
 	/// <summary>Respond to a wxEVT_TEXT event, generated when the text changes. Notice that this event will be sent when the text controls contents changes whether this is due to user input or comes from the program itself (for example, if wxTextCtrl::SetValue() is called); see wxTextCtrl::ChangeValue() for a function which does not send this event. This event is however not sent during the control creation.</summary>
 	public event EventHandler<CommandEvent>? TextChanged {
 		add => AddHandler(EventType.Text, StandardId.Any, StandardId.Any, value, this);
 		remove => RemoveHandler(EventType.Text, StandardId.Any, StandardId.Any, value);
 	}
+
+	/// <summary>Respond to a wxEVT_TEXT_ENTER event, generated when enter is pressed in a text control which must have wxTE_PROCESS_ENTER style for this event to be generated.</summary>
+	public event EventHandler<CommandEvent>? TextEnter {
+		add => AddHandler(EventType.TextEnter, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.TextEnter, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>A mouse event occurred over an URL in the text control.</summary>
+	public event EventHandler<CommandEvent>? UrlClicked {
+		add => AddHandler(EventType.TextUrl, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.TextUrl, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>Appends the text to the end of the text control.</summary>
+	public void AppendText(string text) {
+		ArgumentNullException.ThrowIfNull(text);
+		fixed (char* textText = text) {
+			WxKitNative.TextCtrlAppendText(Native, textText, Text.Length(text));
+		}
+	}
+
+	/// <summary>Call this function to enable auto-completion of the text using the file system directories.</summary>
+	public bool AutoCompleteDirectories() => WxKitNative.TextCtrlAutoCompleteDirectories(Native) != 0;
+
+	/// <summary>Call this function to enable auto-completion of the text typed in a single-line text control using all valid file system paths.</summary>
+	public bool AutoCompleteFileNames() => WxKitNative.TextCtrlAutoCompleteFileNames(Native) != 0;
 
 	/// <summary>Sets the new text control value.</summary>
 	public void ChangeValue(string value) {
@@ -38,7 +149,128 @@ public unsafe partial class TextCtrl : Window {
 		}
 	}
 
-	private static WxkWindow* Create(Window parent, string value, int id, Point? position, Size? size, TextCtrlStyle style) {
+	/// <summary>Clears the text in the control.</summary>
+	public void Clear() => WxKitNative.TextCtrlClear(Native);
+
+	/// <summary>Copies the selected text to the clipboard.</summary>
+	public void Copy() => WxKitNative.TextCtrlCopy(Native);
+
+	/// <summary>Copies the selected text to the clipboard and removes it from the control.</summary>
+	public void Cut() => WxKitNative.TextCtrlCut(Native);
+
+	/// <summary>Resets the internal modified flag as if the current changes had been saved.</summary>
+	public void DiscardEdits() => WxKitNative.TextCtrlDiscardEdits(Native);
+
+	/// <summary>Delete the undo history.</summary>
+	public void EmptyUndoBuffer() => WxKitNative.TextCtrlEmptyUndoBuffer(Native);
+
+	/// <summary>Enable or disable native spell checking on this text control if it is available on the current platform.</summary>
+	public bool EnableProofCheck() => WxKitNative.TextCtrlEnableProofCheck(Native) != 0;
+
+	/// <summary>Convert all text entered into the control to upper case.</summary>
+	public void ForceUpper() => WxKitNative.TextCtrlForceUpper(Native);
+
+	/// <summary>Sets the content of a multiline text control from a Pango markup buffer.</summary>
+	public bool GTKSetPangoMarkup(string text) {
+		ArgumentNullException.ThrowIfNull(text);
+		fixed (char* textText = text) {
+			return WxKitNative.TextCtrlGTKSetPangoMarkup(Native, textText, Text.Length(text)) != 0;
+		}
+	}
+
+	/// <summary>Gets the length of the specified line, not including any trailing newline character(s).</summary>
+	public int GetLineLength(long lineNo) => WxKitNative.TextCtrlGetLineLength(Native, lineNo);
+
+	/// <summary>Returns the contents of a given line in the text control, not including any trailing newline character(s).</summary>
+	public string GetLineText(long lineNo) => Text.Take(WxKitNative.TextCtrlGetLineText(Native, lineNo));
+
+	/// <summary>Returns the string containing the text starting in the positions from and up to to in the control.</summary>
+	public string GetRange(long from, long to) => Text.Take(WxKitNative.TextCtrlGetRange(Native, from, to));
+
+	/// <summary>Loads and displays the named file, if it exists.</summary>
+	public bool LoadFile(string filename, int fileType = 0) {
+		ArgumentNullException.ThrowIfNull(filename);
+		fixed (char* filenameText = filename) {
+			return WxKitNative.TextCtrlLoadFile(Native, filenameText, Text.Length(filename), fileType) != 0;
+		}
+	}
+
+	/// <summary>Mark text as modified (dirty).</summary>
+	public void MarkDirty() => WxKitNative.TextCtrlMarkDirty(Native);
+
+	/// <summary>Disables all automatic character substitutions.</summary>
+	public void OSXDisableAllSmartSubstitutions() => WxKitNative.TextCtrlOSXDisableAllSmartSubstitutions(Native);
+
+	/// <summary>Enables the automatic conversion of two ASCII hyphens into an em dash.</summary>
+	public void OSXEnableAutomaticDashSubstitution(bool enable) => WxKitNative.TextCtrlOSXEnableAutomaticDashSubstitution(Native, enable ? (byte)1 : (byte)0);
+
+	/// <summary>Enables the automatic replacement of straight (ASCII) quotation marks and apostrophes with smart ("curly") quotes.</summary>
+	public void OSXEnableAutomaticQuoteSubstitution(bool enable) => WxKitNative.TextCtrlOSXEnableAutomaticQuoteSubstitution(Native, enable ? (byte)1 : (byte)0);
+
+	/// <summary>Enables the automatic replacement of new lines characters in a single-line text field with spaces under macOS.</summary>
+	public void OSXEnableNewLineReplacement(bool enable) => WxKitNative.TextCtrlOSXEnableNewLineReplacement(Native, enable ? (byte)1 : (byte)0);
+
+	/// <summary>Pastes text from the clipboard to the text item.</summary>
+	public void Paste() => WxKitNative.TextCtrlPaste(Native);
+
+	/// <summary>Converts given text position to client coordinates in pixels.</summary>
+	public Point PositionToCoords(long position) => WxKitNative.TextCtrlPositionToCoords(Native, position);
+
+	/// <summary>If there is a redo facility and the last operation can be redone, redoes the last operation.</summary>
+	public void Redo() => WxKitNative.TextCtrlRedo(Native);
+
+	/// <summary>Removes the text starting at the first given position up to (but not including) the character at the last position.</summary>
+	public void Remove(long from, long to) => WxKitNative.TextCtrlRemove(Native, from, to);
+
+	/// <summary>Replaces the text starting at the first position up to (but not including) the character at the last position with the given text.</summary>
+	public void Replace(long from, long to, string value) {
+		ArgumentNullException.ThrowIfNull(value);
+		fixed (char* valueText = value) {
+			WxKitNative.TextCtrlReplace(Native, from, to, valueText, Text.Length(value));
+		}
+	}
+
+	/// <summary>Saves the contents of the control in a text file.</summary>
+	public bool SaveFile(string filename = "", int fileType = 0) {
+		ArgumentNullException.ThrowIfNull(filename);
+		fixed (char* filenameText = filename) {
+			return WxKitNative.TextCtrlSaveFile(Native, filenameText, Text.Length(filename), fileType) != 0;
+		}
+	}
+
+	/// <summary>Selects all text in the control.</summary>
+	public void SelectAll() => WxKitNative.TextCtrlSelectAll(Native);
+
+	/// <summary>Deselects selected text in the control.</summary>
+	public void SelectNone() => WxKitNative.TextCtrlSelectNone(Native);
+
+	/// <summary>Sets the insertion point at the end of the text control.</summary>
+	public void SetInsertionPointEnd() => WxKitNative.TextCtrlSetInsertionPointEnd(Native);
+
+	/// <summary>Attempts to set the control margins.</summary>
+	public bool SetMargins(int left, int top = -1) => WxKitNative.TextCtrlSetMarginsIntInt(Native, left, top) != 0;
+
+	/// <summary>Selects the text starting at the first position up to (but not including) the character at the last position.</summary>
+	public void SetSelection(long from, long to) => WxKitNative.TextCtrlSetSelection(Native, from, to);
+
+	/// <summary>Makes the line containing the given position visible.</summary>
+	public void ShowPosition(long position) => WxKitNative.TextCtrlShowPosition(Native, position);
+
+	/// <summary>If there is an undo facility and the last operation can be undone, undoes the last operation.</summary>
+	public void Undo() => WxKitNative.TextCtrlUndo(Native);
+
+	/// <summary>Writes the text into the text control at the current insertion position.</summary>
+	public void WriteText(string text) {
+		ArgumentNullException.ThrowIfNull(text);
+		fixed (char* textText = text) {
+			WxKitNative.TextCtrlWriteText(Native, textText, Text.Length(text));
+		}
+	}
+
+	/// <summary>Converts the given zero based column and line number to a position.</summary>
+	public long XYToPosition(long x, long y) => WxKitNative.TextCtrlXYToPosition(Native, x, y);
+
+	private static WxkWindow* CreateNative(Window parent, string value, int id, Point? position, Size? size, TextCtrlStyle style) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(parent);
 		ArgumentNullException.ThrowIfNull(value);

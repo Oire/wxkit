@@ -7,13 +7,51 @@ namespace WxKit;
 /// <summary>This class represents a dialog that shows a single or multi-line message, with a choice of OK, Yes, No and Cancel buttons. Wraps wxMessageDialog.</summary>
 public unsafe partial class MessageDialog : Dialog {
 	/// <summary>Constructor specifying the message box properties.</summary>
-	public MessageDialog(Window? parent, string message, string caption = "Message", MessageDialogStyle style = MessageDialogStyle.Ok | MessageDialogStyle.Center, Point? position = null) : this(Create(parent, message, caption, style, position)) {
+	public MessageDialog(Window? parent, string message, string caption = "Message", MessageDialogStyle style = MessageDialogStyle.Ok | MessageDialogStyle.Center, Point? position = null) : this(CreateNative(parent, message, caption, style, position)) {
 	}
 
 	internal MessageDialog(WxkWindow* native) : base(native) {
 	}
 
-	private static WxkWindow* Create(Window? parent, string message, string caption, MessageDialogStyle style, Point? position) {
+	public string CancelLabel => Text.Take(WxKitNative.MessageDialogGetCancelLabel(Native));
+
+	public string Caption => Text.Take(WxKitNative.MessageDialogGetCaption(Native));
+
+	public long EffectiveIcon => WxKitNative.MessageDialogGetEffectiveIcon(Native);
+
+	public string ExtendedMessage {
+		get => Text.Take(WxKitNative.MessageDialogGetExtendedMessage(Native));
+		set {
+			ArgumentNullException.ThrowIfNull(value);
+			fixed (char* valueText = value) {
+				WxKitNative.MessageDialogSetExtendedMessage(Native, valueText, Text.Length(value));
+			}
+		}
+	}
+
+	public bool HasCustomLabels => WxKitNative.MessageDialogHasCustomLabels(Native) != 0;
+
+	public string HelpLabel => Text.Take(WxKitNative.MessageDialogGetHelpLabel(Native));
+
+	public string Message {
+		get => Text.Take(WxKitNative.MessageDialogGetMessage(Native));
+		set {
+			ArgumentNullException.ThrowIfNull(value);
+			fixed (char* valueText = value) {
+				WxKitNative.MessageDialogSetMessage(Native, valueText, Text.Length(value));
+			}
+		}
+	}
+
+	public MessageDialogStyle MessageDialogStyle => (MessageDialogStyle)WxKitNative.MessageDialogGetMessageDialogStyle(Native);
+
+	public string NoLabel => Text.Take(WxKitNative.MessageDialogGetNoLabel(Native));
+
+	public string OKLabel => Text.Take(WxKitNative.MessageDialogGetOKLabel(Native));
+
+	public string YesLabel => Text.Take(WxKitNative.MessageDialogGetYesLabel(Native));
+
+	private static WxkWindow* CreateNative(Window? parent, string message, string caption, MessageDialogStyle style, Point? position) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(message);
 		ArgumentNullException.ThrowIfNull(caption);

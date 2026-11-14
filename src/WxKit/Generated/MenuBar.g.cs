@@ -7,11 +7,15 @@ namespace WxKit;
 /// <summary>A menu bar is a series of menus accessible from the top of a frame. Wraps wxMenuBar.</summary>
 public unsafe partial class MenuBar : Window {
 	/// <summary>Construct an empty menu bar.</summary>
-	public MenuBar(long style = 0) : this(Create(style)) {
+	public MenuBar(long style = 0) : this(CreateNative(style)) {
 	}
 
 	internal MenuBar(WxkWindow* native) : base(native) {
 	}
+
+	public Frame? Frame => ObjectRegistry.Wrap<Frame>(WxKitNative.MenuBarGetFrame(Native));
+
+	public bool IsAttached => WxKitNative.MenuBarIsAttached(Native) != 0;
 
 	/// <summary>Adds the item to the end of the menu bar.</summary>
 	public bool Append(Menu menu, string title) {
@@ -22,7 +26,69 @@ public unsafe partial class MenuBar : Window {
 		}
 	}
 
-	private static WxkWindow* Create(long style) {
+	public void Attach(Frame frame) {
+		ArgumentNullException.ThrowIfNull(frame);
+		WxKitNative.MenuBarAttach(Native, (WxkWindow*)frame.Native);
+	}
+
+	/// <summary>Checks or unchecks a menu item.</summary>
+	public void Check(bool check, int id = StandardId.Any) => WxKitNative.MenuBarCheck(Native, id, check ? (byte)1 : (byte)0);
+
+	public void Detach() => WxKitNative.MenuBarDetach(Native);
+
+	/// <summary>Enables or disables (greys out) a menu item.</summary>
+	public void EnableItem(bool enable, int id = StandardId.Any) => WxKitNative.MenuBarEnable(Native, id, enable ? (byte)1 : (byte)0);
+
+	/// <summary>Returns the index of the menu with the given title or wxNOT_FOUND if no such menu exists in this menubar.</summary>
+	public int FindMenu(string title) {
+		ArgumentNullException.ThrowIfNull(title);
+		fixed (char* titleText = title) {
+			return WxKitNative.MenuBarFindMenu(Native, titleText, Text.Length(title));
+		}
+	}
+
+	/// <summary>Finds the menu item id for a menu name/menu item string pair.</summary>
+	public int FindMenuItem(string menuString, string itemString) {
+		ArgumentNullException.ThrowIfNull(menuString);
+		ArgumentNullException.ThrowIfNull(itemString);
+		fixed (char* menuStringText = menuString)
+		fixed (char* itemStringText = itemString) {
+			return WxKitNative.MenuBarFindMenuItem(Native, menuStringText, Text.Length(menuString), itemStringText, Text.Length(itemString));
+		}
+	}
+
+	/// <summary>Gets the help string associated with the menu item identifier.</summary>
+	public string GetHelpString(int id = StandardId.Any) => Text.Take(WxKitNative.MenuBarGetHelpString(Native, id));
+
+	/// <summary>Gets the label associated with a menu item.</summary>
+	public string GetLabel(int id = StandardId.Any) => Text.Take(WxKitNative.MenuBarGetLabel(Native, id));
+
+	/// <summary>Determines whether an item is checked.</summary>
+	public bool IsChecked(int id = StandardId.Any) => WxKitNative.MenuBarIsChecked(Native, id) != 0;
+
+	/// <summary>Determines whether an item is enabled.</summary>
+	public bool IsItemEnabled(int id = StandardId.Any) => WxKitNative.MenuBarIsEnabled(Native, id) != 0;
+
+	/// <summary>Returns the Apple menu.</summary>
+	public Menu? OSXGetAppleMenu() => ObjectRegistry.Wrap<Menu>(WxKitNative.MenuBarOSXGetAppleMenu(Native));
+
+	/// <summary>Sets the help string associated with a menu item.</summary>
+	public void SetHelpString(string helpString, int id = StandardId.Any) {
+		ArgumentNullException.ThrowIfNull(helpString);
+		fixed (char* helpStringText = helpString) {
+			WxKitNative.MenuBarSetHelpString(Native, id, helpStringText, Text.Length(helpString));
+		}
+	}
+
+	/// <summary>Sets the label of a menu item.</summary>
+	public void SetLabel(string label, int id = StandardId.Any) {
+		ArgumentNullException.ThrowIfNull(label);
+		fixed (char* labelText = label) {
+			WxKitNative.MenuBarSetLabel(Native, id, labelText, Text.Length(label));
+		}
+	}
+
+	private static WxkWindow* CreateNative(long style) {
 		Application.VerifyAccess();
 		return WxKitNative.MenuBarNew(style);
 	}

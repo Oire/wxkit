@@ -9,6 +9,30 @@ public unsafe partial class TopLevelWindow : Window {
 	internal TopLevelWindow(WxkWindow* native) : base(native) {
 	}
 
+	/// <summary>Returns a pointer to the button which is the default for this window, or nullptr.</summary>
+	public Window? DefaultItem {
+		get => ObjectRegistry.Wrap<Window>(WxKitNative.TopLevelWindowGetDefaultItem(Native));
+		set {
+			ArgumentNullException.ThrowIfNull(value);
+			WxKitNative.TopLevelWindowSetDefaultItem(Native, (WxkWindow*)value.Native);
+		}
+	}
+
+	/// <summary>Returns true if this window is currently active, i.e. if the user is currently working with it.</summary>
+	public bool IsActive => WxKitNative.TopLevelWindowIsActive(Native) != 0;
+
+	/// <summary>Returns true if this window is expected to be always maximized, either due to platform policy or due to local policy regarding particular class.</summary>
+	public bool IsAlwaysMaximized => WxKitNative.TopLevelWindowIsAlwaysMaximized(Native) != 0;
+
+	/// <summary>Returns true if the window is in fullscreen mode.</summary>
+	public bool IsFullScreen => WxKitNative.TopLevelWindowIsFullScreen(Native) != 0;
+
+	/// <summary>Returns true if the window is iconized.</summary>
+	public bool IsIconized => WxKitNative.TopLevelWindowIsIconized(Native) != 0;
+
+	/// <summary>Returns true if the window is maximized.</summary>
+	public bool IsMaximized => WxKitNative.TopLevelWindowIsMaximized(Native) != 0;
+
 	/// <summary>Gets a string containing the window title.</summary>
 	public string Title {
 		get => Text.Take(WxKitNative.TopLevelWindowGetTitle(Native));
@@ -20,8 +44,111 @@ public unsafe partial class TopLevelWindow : Window {
 		}
 	}
 
+	public Window? TmpDefaultItem {
+		get => ObjectRegistry.Wrap<Window>(WxKitNative.TopLevelWindowGetTmpDefaultItem(Native));
+		set {
+			ArgumentNullException.ThrowIfNull(value);
+			WxKitNative.TopLevelWindowSetTmpDefaultItem(Native, (WxkWindow*)value.Native);
+		}
+	}
+
 	public event EventHandler<CloseEvent>? Closing {
 		add => AddHandler(EventType.CloseWindow, StandardId.Any, StandardId.Any, value, this);
 		remove => RemoveHandler(EventType.CloseWindow, StandardId.Any, StandardId.Any, value);
 	}
+
+	/// <summary>Process a wxEVT_FULLSCREEN event. See wxFullScreenEvent.</summary>
+	public event EventHandler<Event>? FullScreenChanged {
+		add => AddHandler(EventType.Fullscreen, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.Fullscreen, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>Process a wxEVT_MAXIMIZE event. See wxMaximizeEvent.</summary>
+	public event EventHandler<Event>? Maximized {
+		add => AddHandler(EventType.Maximize, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.Maximize, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>Process a wxEVT_MOVE_END event, which is generated when the user stops moving or sizing a window. wxMSW only. See wxMoveEvent.</summary>
+	public event EventHandler<Event>? MoveEnded {
+		add => AddHandler(EventType.MoveEnd, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.MoveEnd, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>Process a wxEVT_MOVE_START event, which is generated when the user starts to move or size a window. wxMSW only. See wxMoveEvent.</summary>
+	public event EventHandler<Event>? MoveStarted {
+		add => AddHandler(EventType.MoveStart, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.MoveStart, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>Process a wxEVT_MOVE event, which is generated when a window is moved. See wxMoveEvent.</summary>
+	public event EventHandler<Event>? Moved {
+		add => AddHandler(EventType.Move, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.Move, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>Process a wxEVT_SHOW event. See wxShowEvent.</summary>
+	public event EventHandler<Event>? VisibilityChanged {
+		add => AddHandler(EventType.Show, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.Show, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>A synonym for CentreOnScreen().</summary>
+	public void CenterOnScreen(Orientation direction = Orientation.Both) => WxKitNative.TopLevelWindowCenterOnScreen(Native, (int)direction);
+
+	/// <summary>Enables or disables the Close button (most often in the right upper corner of a dialog) and the Close entry of the system menu (most often in the left upper corner of the dialog).</summary>
+	public bool EnableCloseButton(bool enable = true) => WxKitNative.TopLevelWindowEnableCloseButton(Native, enable ? (byte)1 : (byte)0) != 0;
+
+	/// <summary>Enables the zoom button to toggle full screen mode.</summary>
+	public bool EnableFullScreenView(bool enable = true, long style = 31) => WxKitNative.TopLevelWindowEnableFullScreenView(Native, enable ? (byte)1 : (byte)0, style) != 0;
+
+	/// <summary>Enables or disables the Maximize button (in the right or left upper corner of a frame or dialog).</summary>
+	public bool EnableMaximizeButton(bool enable = true) => WxKitNative.TopLevelWindowEnableMaximizeButton(Native, enable ? (byte)1 : (byte)0) != 0;
+
+	/// <summary>Enables or disables the Minimize button (in the right or left upper corner of a frame or dialog).</summary>
+	public bool EnableMinimizeButton(bool enable = true) => WxKitNative.TopLevelWindowEnableMinimizeButton(Native, enable ? (byte)1 : (byte)0) != 0;
+
+	/// <summary>Iconizes or restores the window.</summary>
+	public void Iconize(bool iconize = true) => WxKitNative.TopLevelWindowIconize(Native, iconize ? (byte)1 : (byte)0);
+
+	/// <summary>MSW-specific function for accessing the system menu.</summary>
+	public Menu? MSWGetSystemMenu() => ObjectRegistry.Wrap<Menu>(WxKitNative.TopLevelWindowMSWGetSystemMenu(Native));
+
+	/// <summary>Maximizes or restores the window.</summary>
+	public void Maximize(bool maximize = true) => WxKitNative.TopLevelWindowMaximize(Native, maximize ? (byte)1 : (byte)0);
+
+	/// <summary>Returns the current modified state of the wxTopLevelWindow on macOS.</summary>
+	public bool OSXIsModified() => WxKitNative.TopLevelWindowOSXIsModified(Native) != 0;
+
+	/// <summary>This function sets the wxTopLevelWindow's modified state on macOS, which currently draws a black dot in the wxTopLevelWindow's close button.</summary>
+	public void OSXSetModified(bool modified) => WxKitNative.TopLevelWindowOSXSetModified(Native, modified ? (byte)1 : (byte)0);
+
+	/// <summary>Use a system-dependent way to attract users attention to the window when it is in background.</summary>
+	public void RequestUserAttention(int flags = 1) => WxKitNative.TopLevelWindowRequestUserAttention(Native, flags);
+
+	/// <summary>Restore a previously iconized or maximized window to its normal state.</summary>
+	public void Restore() => WxKitNative.TopLevelWindowRestore(Native);
+
+	/// <summary>A simpler interface for setting the size hints than SetSizeHints().</summary>
+	public void SetMaxSize(Size size) => WxKitNative.TopLevelWindowSetMaxSize(Native, size);
+
+	/// <summary>A simpler interface for setting the size hints than SetSizeHints().</summary>
+	public void SetMinSize(Size size) => WxKitNative.TopLevelWindowSetMinSize(Native, size);
+
+	/// <summary>Sets the file name represented by this wxTopLevelWindow.</summary>
+	public void SetRepresentedFilename(string filename) {
+		ArgumentNullException.ThrowIfNull(filename);
+		fixed (char* filenameText = filename) {
+			WxKitNative.TopLevelWindowSetRepresentedFilename(Native, filenameText, Text.Length(filename));
+		}
+	}
+
+	/// <summary>This virtual function is not meant to be called directly but can be overridden to return false (it returns true by default) to allow the application to close even if this, presumably not very important, window is still opened.</summary>
+	public bool ShouldPreventAppExit() => WxKitNative.TopLevelWindowShouldPreventAppExit(Native) != 0;
+
+	/// <summary>Depending on the value of show parameter the window is either shown full screen or restored to its normal state.</summary>
+	public bool ShowFullScreen(bool show, long style = 31) => WxKitNative.TopLevelWindowShowFullScreen(Native, show ? (byte)1 : (byte)0, style) != 0;
+
+	/// <summary>Show the wxTopLevelWindow, but do not give it keyboard focus.</summary>
+	public void ShowWithoutActivating() => WxKitNative.TopLevelWindowShowWithoutActivating(Native);
 }

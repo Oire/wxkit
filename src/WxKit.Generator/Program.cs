@@ -12,7 +12,7 @@ string root = args[1];
 
 DoxygenApi api = DoxygenReader.Read(xml);
 Tweaks tweaks = new();
-WxKit.Generator.Tweaks.Slice.Apply(tweaks);
+WxKit.Generator.Tweaks.Core.Apply(tweaks);
 BindingResult result = new Binder(api, tweaks).Bind();
 
 string shim = Path.Combine(root, "native", "shim");

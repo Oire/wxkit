@@ -25,6 +25,9 @@ public abstract unsafe class EvtHandler {
 	/// <summary>Whether wxWidgets has destroyed the object, after which nothing else on it can be used.</summary>
 	public bool IsDestroyed => _native is null;
 
+	// The same handle, for code that passes another object's to the shim, which Handle cannot give.
+	internal WxkEvtHandler* NativeHandler => Handle;
+
 	private protected WxkEvtHandler* Handle {
 		get {
 			Application.VerifyAccess();

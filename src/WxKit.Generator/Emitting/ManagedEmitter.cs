@@ -31,7 +31,7 @@ internal static class ManagedEmitter {
 			Gap();
 			Summary(writer, constructor.Source.Brief);
 			string arguments = string.Join(", ", constructor.ManagedParameters.Select(static parameter => parameter.Name));
-			writer.Open($"public {bound.Name}({ParameterList(constructor.ManagedParameters, withDefaults: true)}) : this(Create({arguments}))").Close();
+			writer.Open($"public {bound.Name}({ParameterList(constructor.ManagedParameters, withDefaults: true)}) : this(CreateNative({arguments}))").Close();
 		}
 		if (bound.Base is not null) {
 			Gap();
@@ -58,7 +58,7 @@ internal static class ManagedEmitter {
 		}
 		foreach (BoundFunction constructor in bound.Constructors) {
 			Gap();
-			writer.Open($"private static {bound.Handle.InteropType}* Create({ParameterList(constructor.ManagedParameters, withDefaults: false)})");
+			writer.Open($"private static {bound.Handle.InteropType}* CreateNative({ParameterList(constructor.ManagedParameters, withDefaults: false)})");
 			// The thread is checked before anything is created, so a call on the wrong thread leaves nothing behind.
 			writer.Line("Application.VerifyAccess();");
 			WriteCall(writer, constructor, self: null, result => $"return {result};");

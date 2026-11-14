@@ -14,17 +14,27 @@ internal static partial class DoxygenReader {
 		XElement index = XDocument.Load(Path.Combine(directory, "index.xml")).Root!;
 		Dictionary<string, DoxygenClass> classes = new(StringComparer.Ordinal);
 		Dictionary<string, string> constants = new(StringComparer.Ordinal);
+		Dictionary<string, string> eventTypes = new(StringComparer.Ordinal);
 		foreach (XElement compound in index.Elements("compound")) {
 			string kind = (string)compound.Attribute("kind")!;
-			if (kind is not ("class" or "struct" or "file")) continue;
+			if (kind is not ("class" or "struct" or "file" or "group")) continue;
 			XElement definition = XDocument.Load(Path.Combine(directory, (string)compound.Attribute("refid")! + ".xml")).Root!.Element("compounddef")!;
+			// Event types are variables: the common ones in a group of their own, and a control's in
+			// its own header, such as wxEVT_TEXT in textctrl.h. Each is kept with the header that
+			// declares it, which the shim has to include to use it.
+			foreach (XElement variable in definition.Descendants("memberdef").Where(static member => (string?)member.Attribute("kind") == "variable")) {
+				string name = (string)variable.Element("name")!;
+				string? file = (string?)variable.Element("location")?.Attribute("file");
+				if (name.StartsWith("wxEVT_", StringComparison.Ordinal) && file is not null && file.StartsWith("interface/", StringComparison.Ordinal)) eventTypes.TryAdd(name, file["interface/".Length..]);
+			}
+			if (kind == "group") continue;
 			ReadConstants(definition, constants);
 			if (kind == "file") continue;
 			DoxygenClass read = ReadClass(definition);
 			// A class documented twice, which wxWidgets does for a few platform-specific ones, keeps its first entry.
 			classes.TryAdd(read.Name, read);
 		}
-		return new DoxygenApi(classes, constants);
+		return new DoxygenApi(classes, constants, eventTypes);
 	}
 
 	internal static DoxygenClass ReadClass(XElement definition) {

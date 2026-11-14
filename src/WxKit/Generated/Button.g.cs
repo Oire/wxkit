@@ -7,10 +7,16 @@ namespace WxKit;
 /// <summary>A button is a control that contains a text string, and is one of the most common elements of a GUI. Wraps wxButton.</summary>
 public unsafe partial class Button : Window {
 	/// <summary>Constructor, creating and showing a button.</summary>
-	public Button(Window parent, string label = "", int id = StandardId.Any, Point? position = null, Size? size = null, ButtonStyle style = ButtonStyle.None) : this(Create(parent, label, id, position, size, style)) {
+	public Button(Window parent, string label = "", int id = StandardId.Any, Point? position = null, Size? size = null, ButtonStyle style = ButtonStyle.None) : this(CreateNative(parent, label, id, position, size, style)) {
 	}
 
 	internal Button(WxkWindow* native) : base(native) {
+	}
+
+	/// <summary>Returns true if an authentication needed symbol is displayed on the button.</summary>
+	public bool AuthNeeded {
+		get => WxKitNative.ButtonGetAuthNeeded(Native) != 0;
+		set => WxKitNative.ButtonSetAuthNeeded(Native, value ? (byte)1 : (byte)0);
 	}
 
 	/// <summary>Process a wxEVT_BUTTON event, when the button is clicked.</summary>
@@ -19,7 +25,10 @@ public unsafe partial class Button : Window {
 		remove => RemoveHandler(EventType.Button, StandardId.Any, StandardId.Any, value);
 	}
 
-	private static WxkWindow* Create(Window parent, string label, int id, Point? position, Size? size, ButtonStyle style) {
+	/// <summary>This sets the button to be the default item in its top-level window (e.g.</summary>
+	public Window? SetDefault() => ObjectRegistry.Wrap<Window>(WxKitNative.ButtonSetDefault(Native));
+
+	private static WxkWindow* CreateNative(Window parent, string label, int id, Point? position, Size? size, ButtonStyle style) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(parent);
 		ArgumentNullException.ThrowIfNull(label);

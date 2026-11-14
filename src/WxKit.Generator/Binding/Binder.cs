@@ -31,7 +31,9 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 			bound.Base = ancestors.Skip(1).Select(name => _classes.GetValueOrDefault(name)).FirstOrDefault(static candidate => candidate is not null);
 			bound.IsTopLevel = ancestors.Contains("wxTopLevelWindow");
 		}
-		foreach (BoundClass bound in _classes.Values.Where(static bound => !bound.Tweak.IsHandwritten).OrderBy(static bound => bound.CppName, StringComparer.Ordinal)) {
+		// Bases are bound before the classes derived from them, so a class can leave out the
+		// members its bases already bind.
+		foreach (BoundClass bound in _classes.Values.Where(static bound => !bound.Tweak.IsHandwritten).OrderBy(bound => Ancestors(bound.CppName).Count).ThenBy(static bound => bound.CppName, StringComparer.Ordinal)) {
 			bound.Styles = BindStyles(bound);
 			BindMembers(bound);
 			BindEvents(bound);
@@ -89,6 +91,9 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 				if (member.Parameters.Count == 1 && CppType.Parse(member.Parameters[0].Type).Name == shortName) continue;
 			} else if (tweak.OnlyMembers is not null && !tweak.OnlyMembers.Contains(member.Name)) {
 				continue;
+			} else if (member.Name == "Create" && bound.Handle == HandleKind.Window) {
+				// Two-step creation is not exposed, so the Create that completes it is not either.
+				continue;
 			}
 			if (member.IsDeprecated) {
 				Skip(bound, member, "it is deprecated");
@@ -103,7 +108,25 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		NameOverloads(functions);
 		bound.Constructors.AddRange(functions.Where(static function => function.IsConstructor));
 		PairProperties(bound, [.. functions.Where(static function => !function.IsConstructor)]);
+		RemoveRedeclarations(bound);
 	}
+
+	// The interface headers repeat a virtual function in each class that overrides it, such as
+	// Show in wxTopLevelWindow. Binding it again would only hide the base's, which already reaches
+	// the override, so a member that a base binds with the same signature is left out. So is a
+	// second member with the same managed signature, such as CenterOnParent beside CentreOnParent.
+	private static void RemoveRedeclarations(BoundClass bound) {
+		HashSet<string> inherited = [];
+		for (BoundClass? ancestor = bound.Base; ancestor is not null; ancestor = ancestor.Base) {
+			inherited.UnionWith(ancestor.Properties.Select(static property => property.Name));
+			inherited.UnionWith(ancestor.Methods.Select(Signature));
+		}
+		HashSet<string> seen = [];
+		bound.Properties.RemoveAll(property => inherited.Contains(property.Name) || !seen.Add(property.Name));
+		bound.Methods.RemoveAll(method => inherited.Contains(Signature(method)) || !seen.Add(Signature(method)));
+	}
+
+	private static string Signature(BoundMethod method) => $"{method.Name}({string.Join(",", method.Function.ManagedParameters.Select(static parameter => parameter.Conversion.Suffix))})";
 
 	private BoundFunction? BindFunction(BoundClass owner, DoxygenMember member, bool isConstructor) {
 		Conversion returns = VoidConversion.Instance;
@@ -118,6 +141,8 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		List<BoundParameter> parameters = [];
 		foreach (DoxygenParameter parameter in member.Parameters) {
 			Conversion? conversion = Map(CppType.Parse(parameter.Type), owner, member.Name, parameter.Name, isReturn: false);
+			// A number that defaults to wxBOTH, wxHORIZONTAL, or wxVERTICAL is an orientation.
+			if (conversion == NumberConversion.Int && parameter.Default is string orientation && OrientationPattern().IsMatch(orientation)) conversion = new EnumConversion("Orientation", NumberConversion.Int);
 			bool nullable = parameter.Name == "parent" && isConstructor && owner.IsTopLevel;
 			string? managedDefault = null;
 			bool resolved = true;
@@ -159,10 +184,14 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 	private Conversion? Map(CppType type, BoundClass owner, string member, string? parameter, bool isReturn) {
 		if (parameter is not null && owner.Tweak.ParameterEnums.TryGetValue((member, parameter), out string? enumName)) return new EnumConversion(enumName, type.Name == "long" ? NumberConversion.Long : NumberConversion.Int);
 		if (parameter == "style" && type.Name == "long" && type.Pointers == 0 && owner.Styles is BoundStyles styles && member == owner.CppName) return new EnumConversion(styles.Name, NumberConversion.Long);
+		// A getter of the style, such as GetMessageDialogStyle, returns the class's style enum.
+		if (isReturn && type.Name == "long" && type.Pointers == 0 && member.EndsWith("Style", StringComparison.Ordinal) && owner.Styles is BoundStyles ownStyles) return new EnumConversion(ownStyles.Name, NumberConversion.Long);
 		if (type.IsVoid) return isReturn ? VoidConversion.Instance : null;
 		if (type.Pointers == 1 && !type.IsReference) {
 			if (type.Name == "wxObject" && isReturn) return AnyObjectConversion.Instance;
-			return _classes.TryGetValue(type.Name, out BoundClass? target) && target.Handle != HandleKind.Event ? new ObjectConversion(target) : null;
+			if (!_classes.TryGetValue(type.Name, out BoundClass? target) || target.Handle == HandleKind.Event) return null;
+			// Only event handlers are tracked, so only they can be wrapped when wxWidgets hands one back.
+			return isReturn && !target.Handle.IsEvtHandler ? null : new ObjectConversion(target);
 		}
 		if (!type.IsValueOrConstReference) return null;
 		return type.Name switch {
@@ -291,13 +320,41 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 			// With a list of members to bind, events are bound only when a tweak names them too.
 			if (!tweak.EventNames.TryGetValue(found.Macro, out string? name)) {
 				if (tweak.OnlyMembers is not null) continue;
-				name = Naming.Words(found.Macro["EVT_".Length..]);
+				name = Naming.Event(found.Macro);
 			}
 			// An entry that leaves out its event type follows the convention that EVT_X sends wxEVT_X.
+			// Entries for groups of events, such as EVT_MOUSE_EVENTS or EVT_JOY_*, send no one type, so
+			// only an event type the headers declare is bound.
 			string constant = found.EventType ?? "wx" + found.Macro;
+			if (!MacroPattern().IsMatch(found.Macro) || !api.EventTypes.ContainsKey(constant)) {
+				_skipped.Add($"{bound.CppName} event {found.Macro}: it is not one event type the headers declare");
+				continue;
+			}
+			BoundEventType type = EventTypeFor(constant, found.EventClass ?? "wxEvent");
+			// An event class's own table only says which event types it carries, and a class
+			// re-lists the events it inherits, so neither gets a .NET event.
+			if (!bound.Handle.IsEvtHandler || HasEvent(bound.Base, name)) continue;
+			if (HasMember(bound, name)) {
+				_skipped.Add($"{bound.CppName} event {found.Macro}: named {name}Event, since {name} is a member");
+				name += "Event";
+			}
 			if (bound.Events.Any(existing => existing.Name == name)) continue;
-			bound.Events.Add(new BoundEvent(name, EventTypeFor(constant, found.EventClass ?? "wxEvent"), found.Description));
+			bound.Events.Add(new BoundEvent(name, type, found.Description));
 		}
+	}
+
+	private static bool HasEvent(BoundClass? bound, string name) {
+		for (BoundClass? current = bound; current is not null; current = current.Base) {
+			if (current.Events.Any(boundEvent => boundEvent.Name == name)) return true;
+		}
+		return false;
+	}
+
+	private static bool HasMember(BoundClass bound, string name) {
+		for (BoundClass? current = bound; current is not null; current = current.Base) {
+			if (current.Properties.Any(property => property.Name == name) || current.Methods.Any(method => method.Name == name)) return true;
+		}
+		return false;
 	}
 
 	private BoundEventType EventTypeFor(string constant, string eventClass) {
@@ -305,7 +362,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		// An event class WxKit does not bind is delivered as its nearest bound ancestor.
 		BoundClass wrapper = Ancestors(eventClass).Select(name => _classes.GetValueOrDefault(name)).FirstOrDefault(static candidate => candidate?.Handle == HandleKind.Event)
 			?? throw new InvalidOperationException($"No bound event class can carry {constant}, a {eventClass}.");
-		BoundEventType type = new(constant, Naming.EventType(constant), wrapper);
+		BoundEventType type = new(constant, Naming.EventType(constant), wrapper, api.EventTypes.GetValueOrDefault(constant));
 		_eventTypes[constant] = type;
 		return type;
 	}
@@ -315,6 +372,12 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		string? prefix = Naming.SharedStylePrefix(bound.Source.Styles.Select(static style => style.Name));
 		List<BoundStyle> members = [];
 		foreach (DoxygenStyle style in bound.Source.Styles) {
+			// Extra styles, such as wxDIALOG_EX_CONTEXTHELP, are set with SetExtraStyle rather than
+			// passed with the others, though some classes list them in the same table.
+			if (style.Name.Contains("_EX_", StringComparison.Ordinal)) {
+				_skipped.Add($"{bound.CppName} style {style.Name}: extra styles are not bound yet");
+				continue;
+			}
 			if (_constants.Value(style.Name) is not long value) {
 				_skipped.Add($"{bound.CppName} style {style.Name}: its value is unknown");
 				continue;
@@ -329,6 +392,12 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 	}
 
 	private void Skip(BoundClass bound, DoxygenMember member, string reason) => _skipped.Add($"{bound.CppName}::{member.Name}({string.Join(", ", member.Parameters.Select(static parameter => parameter.Type))}): {reason}");
+
+	[GeneratedRegex(@"^wx(HORIZONTAL|VERTICAL|BOTH)$")]
+	private static partial Regex OrientationPattern();
+
+	[GeneratedRegex(@"^EVT_[A-Z0-9_]+$")]
+	private static partial Regex MacroPattern();
 
 	[GeneratedRegex("^\".*\"$")]
 	private static partial Regex StringLiteralPattern();

@@ -23,7 +23,7 @@ internal sealed record HandleKind(string CType, string CppBase, string InteropTy
 
 	public static HandleKind Event { get; } = new("wxk_Event", "wxEvent", "WxkEvent", "Handle");
 
-	public static HandleKind EvtHandler { get; } = new("wxk_EvtHandler", "wxEvtHandler", "WxkEvtHandler", "Handle");
+	public static HandleKind EvtHandler { get; } = new("wxk_EvtHandler", "wxEvtHandler", "WxkEvtHandler", "NativeHandler");
 
 	public bool IsEvtHandler => this == Window || this == Menu || this == EvtHandler;
 }
@@ -91,7 +91,8 @@ internal sealed record BoundProperty(string Name, BoundFunction Getter, BoundFun
 
 internal sealed record BoundEvent(string Name, BoundEventType Type, string Description);
 
-internal sealed record BoundEventType(string Constant, string Name, BoundClass EventClass);
+/// <param name="Header">The header that declares the constant, such as wx/textctrl.h.</param>
+internal sealed record BoundEventType(string Constant, string Name, BoundClass EventClass, string? Header);
 
 internal sealed record BoundStyles(string Name, IReadOnlyList<BoundStyle> Members);
 

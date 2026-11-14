@@ -9,8 +9,106 @@ public unsafe partial class Window : EvtHandler {
 	internal Window(WxkWindow* native) : base((WxkEvtHandler*)native) {
 	}
 
+	/// <summary>Returns true if Layout() is called automatically when the window is resized.</summary>
+	public bool AutoLayout {
+		get => WxKitNative.WindowGetAutoLayout(Native) != 0;
+		set => WxKitNative.WindowSetAutoLayout(Native, value ? (byte)1 : (byte)0);
+	}
+
+	/// <summary>This functions returns the best acceptable minimal size for the window.</summary>
+	public Size BestSize => WxKitNative.WindowGetBestSize(Native);
+
+	/// <summary>Return the largest of ClientSize and BestSize (as determined by a sizer, interior children, or other means).</summary>
+	public Size BestVirtualSize => WxKitNative.WindowGetBestVirtualSize(Native);
+
+	/// <summary>Can this window have focus right now?</summary>
+	public bool CanAcceptFocus => WxKitNative.WindowCanAcceptFocus(Native) != 0;
+
+	/// <summary>Can this window be assigned focus from keyboard right now?</summary>
+	public bool CanAcceptFocusFromKeyboard => WxKitNative.WindowCanAcceptFocusFromKeyboard(Native) != 0;
+
+	/// <summary>Returns true if the system supports transparent windows and calling SetTransparent() may succeed.</summary>
+	public bool CanSetTransparent => WxKitNative.WindowCanSetTransparent(Native) != 0;
+
+	/// <summary>Returns the character height for this window.</summary>
+	public int CharHeight => WxKitNative.WindowGetCharHeight(Native);
+
+	/// <summary>Returns the average character width for this window.</summary>
+	public int CharWidth => WxKitNative.WindowGetCharWidth(Native);
+
+	/// <summary>Get the origin of the client area of the window relative to the window top left corner (the client area may be shifted because of the borders, scrollbars, other decorations...).</summary>
+	public Point ClientAreaOrigin => WxKitNative.WindowGetClientAreaOrigin(Native);
+
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public Size ClientSize {
+		get => WxKitNative.WindowGetClientSize(Native);
+		set => WxKitNative.WindowSetClientSizeSize(Native, value);
+	}
+
+	/// <summary>Returns the factor mapping logical pixels of this window to physical pixels.</summary>
+	public double ContentScaleFactor => WxKitNative.WindowGetContentScaleFactor(Native);
+
+	/// <summary>Return the DPI of the display used by this window.</summary>
+	public Size DPI => WxKitNative.WindowGetDPI(Native);
+
+	/// <summary>Returns the ratio of the DPI used by this window to the standard DPI.</summary>
+	public double DPIScaleFactor => WxKitNative.WindowGetDPIScaleFactor(Native);
+
+	/// <summary>Merges the window's best size into the min size and returns the result.</summary>
+	public Size EffectiveMinSize => WxKitNative.WindowGetEffectiveMinSize(Native);
+
+	/// <summary>Returns the event handler for this window.</summary>
+	public EvtHandler? EventHandler {
+		get => ObjectRegistry.Wrap<EvtHandler>(WxKitNative.WindowGetEventHandler(Native));
+		set {
+			ArgumentNullException.ThrowIfNull(value);
+			WxKitNative.WindowSetEventHandler(Native, (WxkEvtHandler*)value.NativeHandler);
+		}
+	}
+
+	/// <summary>Returns the extra style bits for the window.</summary>
+	public WindowStyle ExtraStyle => (WindowStyle)WxKitNative.WindowGetExtraStyle(Native);
+
+	/// <summary>Returns the grandparent of a window, or nullptr if there isn't one.</summary>
+	public Window? GrandParent => ObjectRegistry.Wrap<Window>(WxKitNative.WindowGetGrandParent(Native));
+
+	/// <summary>Returns true if this window has the current mouse capture.</summary>
+	public bool HasCapture => WxKitNative.WindowHasCapture(Native) != 0;
+
+	/// <summary>Returns true if the window (or in case of composite controls, its main child window) has focus.</summary>
+	public bool HasFocus => WxKitNative.WindowHasFocus(Native) != 0;
+
+	/// <summary>This method should be overridden to return true if this window has multiple pages.</summary>
+	public bool HasMultiplePages => WxKitNative.WindowHasMultiplePages(Native) != 0;
+
+	/// <summary>Returns true if this window background is transparent (as, for example, for wxStaticText) and should show the parent window background.</summary>
+	public bool HasTransparentBackground => WxKitNative.WindowHasTransparentBackground(Native) != 0;
+
+	/// <summary>Gets the help text to be used as context-sensitive help for this window.</summary>
+	public string HelpText {
+		get => Text.Take(WxKitNative.WindowGetHelpText(Native));
+		set {
+			ArgumentNullException.ThrowIfNull(value);
+			fixed (char* valueText = value) {
+				WxKitNative.WindowSetHelpText(Native, valueText, Text.Length(value));
+			}
+		}
+	}
+
 	/// <summary>Returns the identifier of the window.</summary>
-	public int Id => WxKitNative.WindowGetId(Native);
+	public int Id {
+		get => WxKitNative.WindowGetId(Native);
+		set => WxKitNative.WindowSetId(Native, value);
+	}
+
+	/// <summary>Returns true if this window is in process of being destroyed.</summary>
+	public bool IsBeingDeleted => WxKitNative.WindowIsBeingDeleted(Native) != 0;
+
+	/// <summary>Returns true if the window contents is double-buffered by the system, i.e. if any drawing done on the window is really done on a temporary backing surface and transferred to the screen all at once later.</summary>
+	public bool IsDoubleBuffered {
+		get => WxKitNative.WindowIsDoubleBuffered(Native) != 0;
+		set => WxKitNative.WindowSetDoubleBuffered(Native, value ? (byte)1 : (byte)0);
+	}
 
 	/// <summary>Returns true if the window is enabled, i.e. if it accepts user input, false otherwise.</summary>
 	public bool IsEnabled {
@@ -18,8 +116,32 @@ public unsafe partial class Window : EvtHandler {
 		set => WxKitNative.WindowEnable(Native, value ? (byte)1 : (byte)0);
 	}
 
+	/// <summary>Can this window itself have focus?</summary>
+	public bool IsFocusable => WxKitNative.WindowIsFocusable(Native) != 0;
+
+	/// <summary>Returns true if the window is currently frozen by a call to Freeze().</summary>
+	public bool IsFrozen => WxKitNative.WindowIsFrozen(Native) != 0;
+
+	/// <summary>Return true if input method is enabled for this window.</summary>
+	public bool IsInputMethodEnabled => WxKitNative.WindowIsInputMethodEnabled(Native) != 0;
+
+	/// <summary>Returns true if the window is retained, false otherwise.</summary>
+	public bool IsRetained => WxKitNative.WindowIsRetained(Native) != 0;
+
 	/// <summary>Returns true if the window is shown, false if it has been hidden.</summary>
 	public bool IsShown => WxKitNative.WindowIsShown(Native) != 0;
+
+	/// <summary>Returns true if the window is physically visible on the screen, i.e. it is shown and all its parents up to the toplevel window are shown as well.</summary>
+	public bool IsShownOnScreen => WxKitNative.WindowIsShownOnScreen(Native) != 0;
+
+	/// <summary>Returns true if this window is intrinsically enabled, false otherwise, i.e. if Enable() Enable(false) had been called.</summary>
+	public bool IsThisEnabled => WxKitNative.WindowIsThisEnabled(Native) != 0;
+
+	/// <summary>Returns true if the given window is a top-level one.</summary>
+	public bool IsTopLevel => WxKitNative.WindowIsTopLevel(Native) != 0;
+
+	/// <summary>Checks whether using transparent background might work.</summary>
+	public bool IsTransparentBackgroundSupported => WxKitNative.WindowIsTransparentBackgroundSupported(Native) != 0;
 
 	/// <summary>Generic way of getting a label from any window, for identification purposes.</summary>
 	public string Label {
@@ -32,30 +154,691 @@ public unsafe partial class Window : EvtHandler {
 		}
 	}
 
+	/// <summary>Returns the maximum size of window's client area.</summary>
+	public Size MaxClientSize {
+		get => WxKitNative.WindowGetMaxClientSize(Native);
+		set => WxKitNative.WindowSetMaxClientSize(Native, value);
+	}
+
+	/// <summary>Returns the vertical component of window maximal size.</summary>
+	public int MaxHeight => WxKitNative.WindowGetMaxHeight(Native);
+
+	/// <summary>Returns the maximum size of the window.</summary>
+	public Size MaxSize {
+		get => WxKitNative.WindowGetMaxSize(Native);
+		set => WxKitNative.WindowSetMaxSize(Native, value);
+	}
+
+	/// <summary>Returns the horizontal component of window maximal size.</summary>
+	public int MaxWidth => WxKitNative.WindowGetMaxWidth(Native);
+
+	/// <summary>Returns the minimum size of window's client area, an indication to the sizer layout mechanism that this is the minimum required size of its client area.</summary>
+	public Size MinClientSize {
+		get => WxKitNative.WindowGetMinClientSize(Native);
+		set => WxKitNative.WindowSetMinClientSize(Native, value);
+	}
+
+	/// <summary>Returns the vertical component of window minimal size.</summary>
+	public int MinHeight => WxKitNative.WindowGetMinHeight(Native);
+
+	/// <summary>Returns the minimum size of the window, an indication to the sizer layout mechanism that this is the minimum required size.</summary>
+	public Size MinSize {
+		get => WxKitNative.WindowGetMinSize(Native);
+		set => WxKitNative.WindowSetMinSize(Native, value);
+	}
+
+	/// <summary>Returns the horizontal component of window minimal size.</summary>
+	public int MinWidth => WxKitNative.WindowGetMinWidth(Native);
+
+	/// <summary>Returns the window's name.</summary>
+	public string Name {
+		get => Text.Take(WxKitNative.WindowGetName(Native));
+		set {
+			ArgumentNullException.ThrowIfNull(value);
+			fixed (char* valueText = value) {
+				WxKitNative.WindowSetName(Native, valueText, Text.Length(value));
+			}
+		}
+	}
+
+	/// <summary>Returns the next window after this one among the parent's children or nullptr if this window is the last child.</summary>
+	public Window? NextSibling => ObjectRegistry.Wrap<Window>(WxKitNative.WindowGetNextSibling(Native));
+
 	/// <summary>Returns the parent of the window, or nullptr if there is no parent.</summary>
 	public Window? Parent => ObjectRegistry.Wrap<Window>(WxKitNative.WindowGetParent(Native));
 
-	/// <summary>Centres the window.</summary>
-	public void Center(Orientation direction = Orientation.Both) => WxKitNative.WindowCentre(Native, (int)direction);
+	/// <summary>This gets the position of the window in pixels, relative to the parent window for the child windows or relative to the display origin for the top level windows.</summary>
+	public Point Position {
+		get => WxKitNative.WindowGetPosition(Native);
+		set => WxKitNative.WindowSetPosition(Native, value);
+	}
+
+	/// <summary>Returns the previous window before this one among the parent's children or nullptr if this window is the first child.</summary>
+	public Window? PrevSibling => ObjectRegistry.Wrap<Window>(WxKitNative.WindowGetPrevSibling(Native));
+
+	/// <summary>Returns the window position in screen coordinates, whether the window is a child window or a top level one.</summary>
+	public Point ScreenPosition => WxKitNative.WindowGetScreenPosition(Native);
+
+	/// <summary>See the GetSize(int*,int*) overload for more info.</summary>
+	public Size Size {
+		get => WxKitNative.WindowGetSize(Native);
+		set => WxKitNative.WindowSetSizeSize(Native, value);
+	}
+
+	/// <summary>Returns true if the window uses the system theme for drawing its background.</summary>
+	public bool ThemeEnabled {
+		get => WxKitNative.WindowGetThemeEnabled(Native) != 0;
+		set => WxKitNative.WindowSetThemeEnabled(Native, value ? (byte)1 : (byte)0);
+	}
+
+	/// <summary>Get the text of the associated tooltip or empty string if none.</summary>
+	public string ToolTipText => Text.Take(WxKitNative.WindowGetToolTipText(Native));
+
+	/// <summary>This gets the virtual size of the window in pixels.</summary>
+	public Size VirtualSize {
+		get => WxKitNative.WindowGetVirtualSize(Native);
+		set => WxKitNative.WindowSetVirtualSizeSize(Native, value);
+	}
+
+	/// <summary>Returns the size of the left/right and top/bottom borders of this window in x and y components of the result respectively.</summary>
+	public Size WindowBorderSize => WxKitNative.WindowGetWindowBorderSize(Native);
+
+	/// <summary>See GetWindowStyleFlag() for more info.</summary>
+	public WindowStyle WindowStyle => (WindowStyle)WxKitNative.WindowGetWindowStyle(Native);
+
+	/// <summary>Gets the window style that was passed to the constructor or Create() method.</summary>
+	public long WindowStyleFlag {
+		get => WxKitNative.WindowGetWindowStyleFlag(Native);
+		set => WxKitNative.WindowSetWindowStyleFlag(Native, value);
+	}
+
+	/// <summary>Process a wxEVT_ACTIVATE event. See wxActivateEvent.</summary>
+	public event EventHandler<Event>? Activated {
+		add => AddHandler(EventType.Activate, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.Activate, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>Process a wxEVT_CHAR event. See wxKeyEvent.</summary>
+	public event EventHandler<Event>? Char {
+		add => AddHandler(EventType.Char, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.Char, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>Process a wxEVT_CHAR_HOOK event. See wxKeyEvent.</summary>
+	public event EventHandler<Event>? CharHook {
+		add => AddHandler(EventType.CharHook, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.CharHook, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>Process a wxEVT_CHILD_FOCUS event. See wxChildFocusEvent.</summary>
+	public event EventHandler<CommandEvent>? ChildFocused {
+		add => AddHandler(EventType.ChildFocus, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.ChildFocus, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>A right click (or other context menu command depending on platform) has been detected. See wxContextMenuEvent.</summary>
+	public event EventHandler<CommandEvent>? ContextMenu {
+		add => AddHandler(EventType.ContextMenu, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.ContextMenu, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>Process a wxEVT_DROP_FILES event. See wxDropFilesEvent.</summary>
+	public event EventHandler<Event>? DropFiles {
+		add => AddHandler(EventType.DropFiles, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.DropFiles, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>Process a wxEVT_ERASE_BACKGROUND event. See wxEraseEvent.</summary>
+	public event EventHandler<Event>? EraseBackground {
+		add => AddHandler(EventType.EraseBackground, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.EraseBackground, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>Process a wxEVT_SET_FOCUS event. See wxFocusEvent.</summary>
+	public event EventHandler<Event>? GotFocus {
+		add => AddHandler(EventType.SetFocus, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.SetFocus, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>Process a wxEVT_HELP event for a range of ids. See wxHelpEvent.</summary>
+	public event EventHandler<CommandEvent>? HelpRange {
+		add => AddHandler(EventType.Help, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.Help, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>Process a wxEVT_HELP event. See wxHelpEvent.</summary>
+	public event EventHandler<CommandEvent>? HelpRequested {
+		add => AddHandler(EventType.Help, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.Help, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>Process a wxEVT_IDLE event. See wxIdleEvent.</summary>
+	public event EventHandler<Event>? Idle {
+		add => AddHandler(EventType.Idle, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.Idle, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>Process a wxEVT_KEY_DOWN event (any key has been pressed). See wxKeyEvent.</summary>
+	public event EventHandler<Event>? KeyDown {
+		add => AddHandler(EventType.KeyDown, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.KeyDown, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>Process a wxEVT_KEY_UP event (any key has been released). See wxKeyEvent.</summary>
+	public event EventHandler<Event>? KeyUp {
+		add => AddHandler(EventType.KeyUp, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.KeyUp, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>Process a wxEVT_KILL_FOCUS event. See wxFocusEvent.</summary>
+	public event EventHandler<Event>? LostFocus {
+		add => AddHandler(EventType.KillFocus, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.KillFocus, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>Process a wxEVT_MOUSE_CAPTURE_CHANGED event. See wxMouseCaptureChangedEvent.</summary>
+	public event EventHandler<Event>? MouseCaptureChanged {
+		add => AddHandler(EventType.MouseCaptureChanged, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.MouseCaptureChanged, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>Process a wxEVT_MOUSE_CAPTURE_LOST event. See wxMouseCaptureLostEvent.</summary>
+	public event EventHandler<Event>? MouseCaptureLost {
+		add => AddHandler(EventType.MouseCaptureLost, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.MouseCaptureLost, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>Process a wxEVT_PAINT event. See wxPaintEvent.</summary>
+	public event EventHandler<Event>? Paint {
+		add => AddHandler(EventType.Paint, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.Paint, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>Process a wxEVT_SET_CURSOR event. See wxSetCursorEvent.</summary>
+	public event EventHandler<Event>? SetCursor {
+		add => AddHandler(EventType.SetCursor, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.SetCursor, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>Process a wxEVT_SIZE event. See wxSizeEvent.</summary>
+	public event EventHandler<Event>? SizeChanged {
+		add => AddHandler(EventType.Size, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.Size, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>Process a wxEVT_SYS_COLOUR_CHANGED event. See wxSysColourChangedEvent.</summary>
+	public event EventHandler<Event>? SystemColorsChanged {
+		add => AddHandler(EventType.SysColorChanged, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.SysColorChanged, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>This method may be overridden in the derived classes to return false to indicate that this control doesn't accept input at all (i.e. behaves like e.g. wxStaticText) and so doesn't need focus.</summary>
+	public bool AcceptsFocus() => WxKitNative.WindowAcceptsFocus(Native) != 0;
+
+	/// <summary>This method may be overridden in the derived classes to return false to indicate that while this control can, in principle, have focus if the user clicks it with the mouse, it shouldn't be included in the TAB traversal chain when using the keyboard.</summary>
+	public bool AcceptsFocusFromKeyboard() => WxKitNative.WindowAcceptsFocusFromKeyboard(Native) != 0;
+
+	/// <summary>Overridden to indicate whether this window or one of its children accepts focus.</summary>
+	public bool AcceptsFocusRecursively() => WxKitNative.WindowAcceptsFocusRecursively(Native) != 0;
+
+	/// <summary>Adds a child window.</summary>
+	public void AddChild(Window child) {
+		ArgumentNullException.ThrowIfNull(child);
+		WxKitNative.WindowAddChild(Native, (WxkWindow*)child.Native);
+	}
+
+	/// <summary>Mirror coordinates for RTL layout if this window uses it and if the mirroring is not done automatically like Win32.</summary>
+	public int AdjustForLayoutDirection(int x, int width, int widthTotal) => WxKitNative.WindowAdjustForLayoutDirection(Native, x, width, widthTotal);
+
+	/// <summary>Call this function to force one or both scrollbars to be always shown, even if the window is big enough to show its entire contents without scrolling.</summary>
+	public void AlwaysShowScrollbars(bool hflag = true, bool vflag = true) => WxKitNative.WindowAlwaysShowScrollbars(Native, hflag ? (byte)1 : (byte)0, vflag ? (byte)1 : (byte)0);
+
+	/// <summary>Prepare for changing positions of multiple child windows.</summary>
+	public bool BeginRepositioningChildren() => WxKitNative.WindowBeginRepositioningChildren(Native) != 0;
+
+	/// <summary>Sets the cached best size value.</summary>
+	public void CacheBestSize(Size size) => WxKitNative.WindowCacheBestSize(Native, size);
+
+	/// <summary>Returns true if this window can have a scroll bar in this orientation.</summary>
+	public bool CanScroll(int orientation) => WxKitNative.WindowCanScroll(Native, orientation) != 0;
+
+	/// <summary>Directs all mouse input to this window.</summary>
+	public void CaptureMouse() => WxKitNative.WindowCaptureMouse(Native);
+
+	/// <summary>A synonym for Centre().</summary>
+	public void Center(Orientation direction = Orientation.Both) => WxKitNative.WindowCenter(Native, (int)direction);
+
+	/// <summary>A synonym for CentreOnParent().</summary>
+	public void CenterOnParent(Orientation direction = Orientation.Both) => WxKitNative.WindowCenterOnParent(Native, (int)direction);
+
+	/// <summary>Clears the window by filling it with the current background colour.</summary>
+	public void ClearBackground() => WxKitNative.WindowClearBackground(Native);
+
+	/// <summary>Converts to screen coordinates from coordinates relative to this window.</summary>
+	public Point ClientToScreen(Point point) => WxKitNative.WindowClientToScreen(Native, point);
+
+	/// <summary>Converts client area size size to corresponding window size.</summary>
+	public Size ClientToWindowSize(Size size) => WxKitNative.WindowClientToWindowSize(Native, size);
 
 	/// <summary>This function simply generates a wxCloseEvent whose handler usually tries to close the window.</summary>
 	public bool Close(bool force = false) => WxKitNative.WindowClose(Native, force ? (byte)1 : (byte)0) != 0;
 
+	/// <summary>Converts a point or size from dialog units to pixels.</summary>
+	public Point ConvertDialogToPixels(Point point) => WxKitNative.WindowConvertDialogToPixelsPoint(Native, point);
+
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public Size ConvertDialogToPixels(Size size) => WxKitNative.WindowConvertDialogToPixelsSize(Native, size);
+
+	/// <summary>Converts a point or size from pixels to dialog units.</summary>
+	public Point ConvertPixelsToDialog(Point point) => WxKitNative.WindowConvertPixelsToDialogPoint(Native, point);
+
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public Size ConvertPixelsToDialog(Size size) => WxKitNative.WindowConvertPixelsToDialogSize(Native, size);
+
 	/// <summary>Destroys the window safely.</summary>
 	public bool Destroy() => WxKitNative.WindowDestroy(Native) != 0;
+
+	/// <summary>Destroys all children of a window.</summary>
+	public bool DestroyChildren() => WxKitNative.WindowDestroyChildren(Native) != 0;
+
+	/// <summary>Disables the window.</summary>
+	public bool Disable() => WxKitNative.WindowDisable(Native) != 0;
+
+	/// <summary>Disable giving focus to this window using the keyboard navigation keys.</summary>
+	public void DisableFocusFromKeyboard() => WxKitNative.WindowDisableFocusFromKeyboard(Native);
+
+	/// <summary>Enables or disables eligibility for drop file events (OnDropFiles).</summary>
+	public void DragAcceptFiles(bool accept) => WxKitNative.WindowDragAcceptFiles(Native, accept ? (byte)1 : (byte)0);
+
+	/// <summary>Allow giving focus to this window using the keyboard navigation keys.</summary>
+	public void EnableFocusFromKeyboard() => WxKitNative.WindowEnableFocusFromKeyboard(Native);
+
+	/// <summary>Enable or disable input method for this window.</summary>
+	public void EnableInputMethod(bool enable = true) => WxKitNative.WindowEnableInputMethod(Native, enable ? (byte)1 : (byte)0);
+
+	/// <summary>Request generation of touch events for this window.</summary>
+	public bool EnableTouchEvents(int eventsMask) => WxKitNative.WindowEnableTouchEvents(Native, eventsMask) != 0;
+
+	/// <summary>Enables or disables visible indication of keyboard focus.</summary>
+	public void EnableVisibleFocus(bool enable) => WxKitNative.WindowEnableVisibleFocus(Native, enable ? (byte)1 : (byte)0);
+
+	/// <summary>Fix child window positions after setting all of them at once.</summary>
+	public void EndRepositioningChildren() => WxKitNative.WindowEndRepositioningChildren(Native);
+
+	/// <summary>Find a child of this window, by id.</summary>
+	public Window? FindWindow(long id) => ObjectRegistry.Wrap<Window>(WxKitNative.WindowFindWindowLong(Native, id));
+
+	/// <summary>Find a child of this window, by name.</summary>
+	public Window? FindWindow(string name) {
+		ArgumentNullException.ThrowIfNull(name);
+		fixed (char* nameText = name) {
+			return ObjectRegistry.Wrap<Window>(WxKitNative.WindowFindWindowString(Native, nameText, Text.Length(name)));
+		}
+	}
 
 	/// <summary>Sizes the window to fit its best size.</summary>
 	public void Fit() => WxKitNative.WindowFit(Native);
 
+	/// <summary>Similar to Fit(), but sizes the interior (virtual) size of a window.</summary>
+	public void FitInside() => WxKitNative.WindowFitInside(Native);
+
+	/// <summary>Freezes the window or, in other words, prevents any updates from taking place on screen, the window is not redrawn at all.</summary>
+	public void Freeze() => WxKitNative.WindowFreeze(Native);
+
+	/// <summary>Convert DPI-independent pixel values to the value in pixels appropriate for the current toolkit.</summary>
+	public Size FromDIP(Size size) => WxKitNative.WindowFromDIPSize(Native, size);
+
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public Point FromDIP(Point point) => WxKitNative.WindowFromDIPPoint(Native, point);
+
+	/// <summary>Convert DPI-independent distance in pixels to the value in pixels appropriate for the current toolkit.</summary>
+	public int FromDIP(int d) => WxKitNative.WindowFromDIPInt(Native, d);
+
+	/// <summary>Convert from physical pixels to logical pixels.</summary>
+	public Size FromPhys(Size size) => WxKitNative.WindowFromPhysSize(Native, size);
+
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public Point FromPhys(Point point) => WxKitNative.WindowFromPhysPoint(Native, point);
+
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public int FromPhys(int d) => WxKitNative.WindowFromPhysInt(Native, d);
+
+	/// <summary>Returns the best height needed by this window if it had the given width.</summary>
+	public int GetBestHeight(int width) => WxKitNative.WindowGetBestHeight(Native, width);
+
+	/// <summary>Returns the best width needed by this window if it had the given height.</summary>
+	public int GetBestWidth(int height) => WxKitNative.WindowGetBestWidth(Native, height);
+
+	/// <summary>Get the ID to be used for help events generated at the given point.</summary>
+	public int GetHelpIdAtPoint(Point point) => WxKitNative.WindowGetHelpIdAtPoint(Native, point);
+
+	/// <summary>May be overridden if the control minimal size depends on the layout direction.</summary>
+	public Size GetMinSizeFromKnownDirection(int direction, int size, int availableOtherDir) => WxKitNative.WindowGetMinSizeFromKnownDirection(Native, direction, size, availableOtherDir);
+
+	/// <summary>Returns the built-in scrollbar position.</summary>
+	public int GetScrollPos(int orientation) => WxKitNative.WindowGetScrollPos(Native, orientation);
+
+	/// <summary>Returns the built-in scrollbar range.</summary>
+	public int GetScrollRange(int orientation) => WxKitNative.WindowGetScrollRange(Native, orientation);
+
+	/// <summary>Returns the built-in scrollbar thumb size.</summary>
+	public int GetScrollThumb(int orientation) => WxKitNative.WindowGetScrollThumb(Native, orientation);
+
+	/// <summary>Returns the space taken by the scrollbar of the given orientation when it is shown in this window.</summary>
+	public int GetScrollbarSize(int orientation) => WxKitNative.WindowGetScrollbarSize(Native, orientation);
+
+	/// <summary>Gets the dimensions of the string as it would be drawn on the window with the currently selected font.</summary>
+	public Size GetTextExtent(string text) {
+		ArgumentNullException.ThrowIfNull(text);
+		fixed (char* textText = text) {
+			return WxKitNative.WindowGetTextExtent(Native, textText, Text.Length(text));
+		}
+	}
+
+	/// <summary>Returns true if the window has the given exFlag bit set in its extra styles.</summary>
+	public bool HasExtraStyle(int exFlag) => WxKitNative.WindowHasExtraStyle(Native, exFlag) != 0;
+
+	/// <summary>Returns true if the window has the given flag bit set.</summary>
+	public bool HasFlag(int flag) => WxKitNative.WindowHasFlag(Native, flag) != 0;
+
+	/// <summary>Returns true if this window currently has a scroll bar for this orientation.</summary>
+	public bool HasScrollbar(int orientation) => WxKitNative.WindowHasScrollbar(Native, orientation) != 0;
+
 	/// <summary>Equivalent to calling wxWindow::Show(false).</summary>
 	public bool Hide() => WxKitNative.WindowHide(Native) != 0;
+
+	/// <summary>Compatibility function called by GetMinSizeFromKnownDirection().</summary>
+	public bool InformFirstDirection(int direction, int size, int availableOtherDir) => WxKitNative.WindowInformFirstDirection(Native, direction, size, availableOtherDir) != 0;
+
+	/// <summary>This function is (or should be, in case of custom controls) called during window creation to intelligently set up the window visual attributes, that is the font and the foreground and background colours.</summary>
+	public void InheritAttributes() => WxKitNative.WindowInheritAttributes(Native);
+
+	/// <summary>Return true if this window inherits the background colour from its parent.</summary>
+	public bool InheritsBackgroundColor() => WxKitNative.WindowInheritsBackgroundColour(Native) != 0;
+
+	/// <summary>Return true if this window inherits the foreground colour from its parent.</summary>
+	public bool InheritsForegroundColor() => WxKitNative.WindowInheritsForegroundColour(Native) != 0;
+
+	/// <summary>Sends an wxEVT_INIT_DIALOG event, whose handler usually transfers data to the dialog via validators.</summary>
+	public void InitDialog() => WxKitNative.WindowInitDialog(Native);
+
+	/// <summary>Resets the cached best size value so it will be recalculated the next time it is needed.</summary>
+	public void InvalidateBestSize() => WxKitNative.WindowInvalidateBestSize(Native);
+
+	/// <summary>Check if the specified window is a descendant of this one.</summary>
+	public bool IsDescendant(Window window) {
+		ArgumentNullException.ThrowIfNull(window);
+		return WxKitNative.WindowIsDescendant(Native, (WxkWindow*)window.Native) != 0;
+	}
+
+	/// <summary>Returns true if the given point or rectangle area has been exposed since the last repaint.</summary>
+	public bool IsExposed(int x, int y) => WxKitNative.WindowIsExposedIntInt(Native, x, y) != 0;
+
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public bool IsExposed(int x, int y, int w, int h) => WxKitNative.WindowIsExposedIntIntIntInt(Native, x, y, w, h) != 0;
+
+	/// <summary>Return whether a scrollbar is always shown.</summary>
+	public bool IsScrollbarAlwaysShown(int orientation) => WxKitNative.WindowIsScrollbarAlwaysShown(Native, orientation) != 0;
 
 	/// <summary>Lays out the children of this window using the associated sizer.</summary>
 	public bool Layout() => WxKitNative.WindowLayout(Native) != 0;
 
+	/// <summary>Same as ScrollLines (1).</summary>
+	public bool LineDown() => WxKitNative.WindowLineDown(Native) != 0;
+
+	/// <summary>Same as ScrollLines (-1).</summary>
+	public bool LineUp() => WxKitNative.WindowLineUp(Native) != 0;
+
+	/// <summary>Lowers the window to the bottom of the window hierarchy (Z-order).</summary>
+	public void Lower() => WxKitNative.WindowLower(Native);
+
+	/// <summary>Moves the window to the given position.</summary>
+	public void Move(int x, int y, int flags = 0) => WxKitNative.WindowMoveIntIntInt(Native, x, y, flags);
+
+	/// <summary>Moves the window to the given position.</summary>
+	public void Move(Point point, int flags = 0) => WxKitNative.WindowMovePointInt(Native, point, flags);
+
+	/// <summary>Moves this window in the tab navigation order after the specified win.</summary>
+	public void MoveAfterInTabOrder(Window window) {
+		ArgumentNullException.ThrowIfNull(window);
+		WxKitNative.WindowMoveAfterInTabOrder(Native, (WxkWindow*)window.Native);
+	}
+
+	/// <summary>Same as MoveAfterInTabOrder() except that it inserts this window just before win instead of putting it right after it.</summary>
+	public void MoveBeforeInTabOrder(Window window) {
+		ArgumentNullException.ThrowIfNull(window);
+		WxKitNative.WindowMoveBeforeInTabOrder(Native, (WxkWindow*)window.Native);
+	}
+
+	/// <summary>Performs a keyboard navigation action starting from this window.</summary>
+	public bool Navigate() => WxKitNative.WindowNavigate(Native) != 0;
+
+	/// <summary>Performs a keyboard navigation action inside this window.</summary>
+	public bool NavigateIn() => WxKitNative.WindowNavigateIn(Native) != 0;
+
+	/// <summary>This virtual function is normally only used internally, but sometimes an application may need it to implement functionality that should not be disabled by an application defining an OnIdle handler in a derived class.</summary>
+	public void OnInternalIdle() => WxKitNative.WindowOnInternalIdle(Native);
+
+	/// <summary>Same as ScrollPages (1).</summary>
+	public bool PageDown() => WxKitNative.WindowPageDown(Native) != 0;
+
+	/// <summary>Same as ScrollPages (-1).</summary>
+	public bool PageUp() => WxKitNative.WindowPageUp(Native) != 0;
+
+	/// <summary>Removes and returns the top-most event handler on the event handler stack.</summary>
+	public EvtHandler? PopEventHandler(bool deleteHandler = false) => ObjectRegistry.Wrap<EvtHandler>(WxKitNative.WindowPopEventHandler(Native, deleteHandler ? (byte)1 : (byte)0));
+
+	/// <summary>Pops up the given menu at the specified coordinates, relative to this window, and returns control when the user has dismissed the menu.</summary>
+	public bool PopupMenu(Menu menu, Point? position = null) {
+		ArgumentNullException.ThrowIfNull(menu);
+		return WxKitNative.WindowPopupMenuMenuPoint(Native, (WxkMenu*)menu.Native, position ?? Point.Default) != 0;
+	}
+
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public bool PopupMenu(Menu menu, int x, int y) {
+		ArgumentNullException.ThrowIfNull(menu);
+		return WxKitNative.WindowPopupMenuMenuIntInt(Native, (WxkMenu*)menu.Native, x, y) != 0;
+	}
+
+	/// <summary>Posts a size event to the window.</summary>
+	public void PostSizeEvent() => WxKitNative.WindowPostSizeEvent(Native);
+
+	/// <summary>Posts a size event to the parent of this window.</summary>
+	public void PostSizeEventToParent() => WxKitNative.WindowPostSizeEventToParent(Native);
+
+	/// <summary>Pushes this event handler onto the event stack for the window.</summary>
+	public void PushEventHandler(EvtHandler handler) {
+		ArgumentNullException.ThrowIfNull(handler);
+		WxKitNative.WindowPushEventHandler(Native, (WxkEvtHandler*)handler.NativeHandler);
+	}
+
+	/// <summary>Raises the window to the top of the window hierarchy (Z-order).</summary>
+	public void Raise() => WxKitNative.WindowRaise(Native);
+
+	/// <summary>Causes this window, and all of its children recursively, to be repainted.</summary>
+	public void Refresh(bool eraseBackground = true) => WxKitNative.WindowRefresh(Native, eraseBackground ? (byte)1 : (byte)0);
+
+	/// <summary>Registers a system wide hotkey.</summary>
+	public bool RegisterHotKey(int hotkeyId, int modifiers, int virtualKeyCode) => WxKitNative.WindowRegisterHotKey(Native, hotkeyId, modifiers, virtualKeyCode) != 0;
+
+	/// <summary>Releases mouse input captured with CaptureMouse().</summary>
+	public void ReleaseMouse() => WxKitNative.WindowReleaseMouse(Native);
+
+	/// <summary>Removes a child window.</summary>
+	public void RemoveChild(Window child) {
+		ArgumentNullException.ThrowIfNull(child);
+		WxKitNative.WindowRemoveChild(Native, (WxkWindow*)child.Native);
+	}
+
+	/// <summary>Find the given handler in the windows event handler stack and removes (but does not delete) it from the stack.</summary>
+	public bool RemoveEventHandler(EvtHandler handler) {
+		ArgumentNullException.ThrowIfNull(handler);
+		return WxKitNative.WindowRemoveEventHandler(Native, (WxkEvtHandler*)handler.NativeHandler) != 0;
+	}
+
+	/// <summary>Reparents the window, i.e. the window will be removed from its current parent window (e.g.</summary>
+	public bool Reparent(Window newParent) {
+		ArgumentNullException.ThrowIfNull(newParent);
+		return WxKitNative.WindowReparent(Native, (WxkWindow*)newParent.Native) != 0;
+	}
+
+	/// <summary>Converts from screen to client window coordinates.</summary>
+	public Point ScreenToClient(Point point) => WxKitNative.WindowScreenToClient(Native, point);
+
+	/// <summary>Scrolls the window by the given number of lines down (if lines is positive) or up.</summary>
+	public bool ScrollLines(int lines) => WxKitNative.WindowScrollLines(Native, lines) != 0;
+
+	/// <summary>Scrolls the window by the given number of pages down (if pages is positive) or up.</summary>
+	public bool ScrollPages(int pages) => WxKitNative.WindowScrollPages(Native, pages) != 0;
+
+	/// <summary>Physically scrolls the pixels in the window and move child windows accordingly.</summary>
+	public void ScrollWindow(int dx, int dy) => WxKitNative.WindowScrollWindow(Native, dx, dy);
+
+	/// <summary>This function sends a dummy size event to the window allowing it to re-layout its children positions.</summary>
+	public void SendSizeEvent(int flags = 0) => WxKitNative.WindowSendSizeEvent(Native, flags);
+
+	/// <summary>Safe wrapper for GetParent()-&gt;SendSizeEvent().</summary>
+	public void SendSizeEventToParent(int flags = 0) => WxKitNative.WindowSendSizeEventToParent(Native, flags);
+
+	/// <summary>Sets the name used by screen readers for this window.</summary>
+	public void SetAccessibleName(string name) {
+		ArgumentNullException.ThrowIfNull(name);
+		fixed (char* nameText = name) {
+			WxKitNative.WindowSetAccessibleName(Native, nameText, Text.Length(name));
+		}
+	}
+
+	/// <summary>This method is only implemented by ports which have support for native TAB traversal (such as GTK+ 2.0).</summary>
+	public void SetCanFocus(bool canFocus) => WxKitNative.WindowSetCanFocus(Native, canFocus ? (byte)1 : (byte)0);
+
+	/// <summary>This sets the size of the window client area in pixels.</summary>
+	public void SetClientSize(int width, int height) => WxKitNative.WindowSetClientSizeIntInt(Native, width, height);
+
+	/// <summary>Used by wxSizer internally to notify the window about being managed by the given sizer.</summary>
+	public void SetContainingSizer(Sizer sizer) {
+		ArgumentNullException.ThrowIfNull(sizer);
+		WxKitNative.WindowSetContainingSizer(Native, (WxkSizer*)sizer.Native);
+	}
+
+	/// <summary>Sets the extra style bits for the window.</summary>
+	public void SetExtraStyle(long exStyle) => WxKitNative.WindowSetExtraStyle(Native, exStyle);
+
 	/// <summary>This sets the window to receive keyboard input.</summary>
 	public void SetFocus() => WxKitNative.WindowSetFocus(Native);
 
+	/// <summary>This function is called by wxWidgets keyboard navigation code when the user gives the focus to this window from keyboard (e.g. using TAB key).</summary>
+	public void SetFocusFromKbd() => WxKitNative.WindowSetFocusFromKbd(Native);
+
+	/// <summary>A smart SetSize that will fill in default size components with the window's best size values.</summary>
+	public bool SetInitialSize(Size? size = null) => WxKitNative.WindowSetInitialSize(Native, size ?? Size.Default) != 0;
+
+	/// <summary>wxWindows cannot be used to form event handler chains; this function thus will assert when called.</summary>
+	public void SetNextHandler(EvtHandler handler) {
+		ArgumentNullException.ThrowIfNull(handler);
+		WxKitNative.WindowSetNextHandler(Native, (WxkEvtHandler*)handler.NativeHandler);
+	}
+
+	/// <summary>wxWindows cannot be used to form event handler chains; this function thus will assert when called.</summary>
+	public void SetPreviousHandler(EvtHandler handler) {
+		ArgumentNullException.ThrowIfNull(handler);
+		WxKitNative.WindowSetPreviousHandler(Native, (WxkEvtHandler*)handler.NativeHandler);
+	}
+
+	/// <summary>Sets the position of one of the built-in scrollbars.</summary>
+	public void SetScrollPos(int orientation, int position, bool refresh = true) => WxKitNative.WindowSetScrollPos(Native, orientation, position, refresh ? (byte)1 : (byte)0);
+
+	/// <summary>Sets the scrollbar properties of a built-in scrollbar.</summary>
+	public void SetScrollbar(int orientation, int position, int thumbSize, int range, bool refresh = true) => WxKitNative.WindowSetScrollbar(Native, orientation, position, thumbSize, range, refresh ? (byte)1 : (byte)0);
+
+	/// <summary>Sets the size of the window in pixels.</summary>
+	public void SetSize(int x, int y, int width, int height, int sizeFlags = 3) => WxKitNative.WindowSetSizeIntIntIntIntInt(Native, x, y, width, height, sizeFlags);
+
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public void SetSize(int width, int height) => WxKitNative.WindowSetSizeIntInt(Native, width, height);
+
+	/// <summary>Use of this function for windows which are not toplevel windows (such as wxDialog or wxFrame) is discouraged.</summary>
+	public void SetSizeHints(Size minSize, Size? maxSize = null, Size? incSize = null) => WxKitNative.WindowSetSizeHintsSizeSizeSize(Native, minSize, maxSize ?? Size.Default, incSize ?? Size.Default);
+
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public void SetSizeHints(int minW, int minH, int maxW = -1, int maxH = -1, int incW = -1, int incH = -1) => WxKitNative.WindowSetSizeHintsIntIntIntIntIntInt(Native, minW, minH, maxW, maxH, incW, incH);
+
+	/// <summary>Attach a tooltip to the window.</summary>
+	public void SetToolTip(string tipString) {
+		ArgumentNullException.ThrowIfNull(tipString);
+		fixed (char* tipStringText = tipString) {
+			WxKitNative.WindowSetToolTip(Native, tipStringText, Text.Length(tipString));
+		}
+	}
+
+	/// <summary>Sets the virtual size of the window in pixels.</summary>
+	public void SetVirtualSize(int width, int height) => WxKitNative.WindowSetVirtualSizeIntInt(Native, width, height);
+
+	/// <summary>See SetWindowStyleFlag() for more info.</summary>
+	public void SetWindowStyle(long style) => WxKitNative.WindowSetWindowStyle(Native, style);
+
+	/// <summary>Return true from here to allow the colours of this window to be changed by InheritAttributes().</summary>
+	public bool ShouldInheritColors() => WxKitNative.WindowShouldInheritColours(Native) != 0;
+
 	/// <summary>Shows or hides the window.</summary>
 	public bool Show(bool show = true) => WxKitNative.WindowShow(Native, show ? (byte)1 : (byte)0) != 0;
+
+	/// <summary>Re-enables window updating after a previous call to Freeze().</summary>
+	public void Thaw() => WxKitNative.WindowThaw(Native);
+
+	/// <summary>Convert pixel values of the current toolkit to DPI-independent pixel values.</summary>
+	public Size ToDIP(Size size) => WxKitNative.WindowToDIPSize(Native, size);
+
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public Point ToDIP(Point point) => WxKitNative.WindowToDIPPoint(Native, point);
+
+	/// <summary>Convert pixel values of the current toolkit to DPI-independent pixel values.</summary>
+	public int ToDIP(int d) => WxKitNative.WindowToDIPInt(Native, d);
+
+	/// <summary>Convert from logical pixels to physical pixels.</summary>
+	public Size ToPhys(Size size) => WxKitNative.WindowToPhysSize(Native, size);
+
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public Point ToPhys(Point point) => WxKitNative.WindowToPhysPoint(Native, point);
+
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public int ToPhys(int d) => WxKitNative.WindowToPhysInt(Native, d);
+
+	/// <summary>Turns the given flag on if it's currently turned off and vice versa.</summary>
+	public bool ToggleWindowStyle(int flag) => WxKitNative.WindowToggleWindowStyle(Native, flag) != 0;
+
+	/// <summary>Transfers values from child controls to data areas specified by their validators.</summary>
+	public bool TransferDataFromWindow() => WxKitNative.WindowTransferDataFromWindow(Native) != 0;
+
+	/// <summary>Transfers values to child controls from data areas specified by their validators.</summary>
+	public bool TransferDataToWindow() => WxKitNative.WindowTransferDataToWindow(Native) != 0;
+
+	/// <summary>Unregisters a system wide hotkey.</summary>
+	public bool UnregisterHotKey(int hotkeyId) => WxKitNative.WindowUnregisterHotKey(Native, hotkeyId) != 0;
+
+	/// <summary>Unset any existing tooltip.</summary>
+	public void UnsetToolTip() => WxKitNative.WindowUnsetToolTip(Native);
+
+	/// <summary>Immediately repaints the invalidated area of the window and all of its children recursively.</summary>
+	public void Update() => WxKitNative.WindowUpdate(Native);
+
+	/// <summary>This function sends one or more wxUpdateUIEvent to the window.</summary>
+	public void UpdateWindowUI(long flags = 0) => WxKitNative.WindowUpdateWindowUI(Native, flags);
+
+	/// <summary>Return true if a background colour has been set for this window.</summary>
+	public bool UseBackgroundColor() => WxKitNative.WindowUseBackgroundColour(Native) != 0;
+
+	/// <summary>Return true if a background colour has been set for this window.</summary>
+	public bool UseBgCol() => WxKitNative.WindowUseBgCol(Native) != 0;
+
+	/// <summary>Return true if a foreground colour has been set for this window.</summary>
+	public bool UseForegroundColor() => WxKitNative.WindowUseForegroundColour(Native) != 0;
+
+	/// <summary>Validates the current values of the child controls using their validators.</summary>
+	public bool Validate() => WxKitNative.WindowValidate(Native) != 0;
+
+	/// <summary>Moves the pointer to the given position on the window.</summary>
+	public void WarpPointer(int x, int y) => WxKitNative.WindowWarpPointer(Native, x, y);
+
+	/// <summary>Converts window size size to corresponding client area size In other words, the returned value is what would GetClientSize() return if this window had given window size.</summary>
+	public Size WindowToClientSize(Size size) => WxKitNative.WindowWindowToClientSize(Native, size);
 }

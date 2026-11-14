@@ -7,13 +7,28 @@ namespace WxKit;
 /// <summary>The basic idea behind a box sizer is that windows will most often be laid out in rather simple basic geometry, typically in a row or a column or several hierarchies of either. Wraps wxBoxSizer.</summary>
 public unsafe partial class BoxSizer : Sizer {
 	/// <summary>Constructor for a wxBoxSizer.</summary>
-	public BoxSizer(Orientation orientation) : this(Create(orientation)) {
+	public BoxSizer(Orientation orientation) : this(CreateNative(orientation)) {
 	}
 
 	internal BoxSizer(WxkSizer* native) : base(native) {
 	}
 
-	private static WxkSizer* Create(Orientation orientation) {
+	/// <summary>Returns the orientation of the box sizer, either wxVERTICAL or wxHORIZONTAL.</summary>
+	public int Orientation {
+		get => WxKitNative.BoxSizerGetOrientation(Native);
+		set => WxKitNative.BoxSizerSetOrientation(Native, value);
+	}
+
+	/// <summary>Implements the calculation of a box sizer's minimal.</summary>
+	public Size CalcMin() => WxKitNative.BoxSizerCalcMin(Native);
+
+	/// <summary>Inform sizer about the first direction that has been decided (by parent item).</summary>
+	public bool InformFirstDirection(int direction, int size, int availableOtherDir) => WxKitNative.BoxSizerInformFirstDirection(Native, direction, size, availableOtherDir) != 0;
+
+	/// <summary>Method which must be overridden in the derived sizer classes.</summary>
+	public void RepositionChildren(Size minSize) => WxKitNative.BoxSizerRepositionChildren(Native, minSize);
+
+	private static WxkSizer* CreateNative(Orientation orientation) {
 		Application.VerifyAccess();
 		return WxKitNative.BoxSizerNew((int)orientation);
 	}

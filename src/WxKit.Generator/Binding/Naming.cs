@@ -37,6 +37,41 @@ internal static class Naming {
 		["pos"] = "position",
 		["orient"] = "orientation",
 		["winid"] = "id",
+		["dir"] = "direction",
+		["sz"] = "size",
+		["pt"] = "point",
+		["win"] = "window",
+		["string"] = "text",
+		["str"] = "text",
+	};
+
+	// What the common events are called, in the way .NET names events. An event the table leaves
+	// out is named after its macro, as EVT_TEXT_ENTER becomes TextEnter.
+	private static readonly Dictionary<string, string> EventNames = new(StringComparer.Ordinal) {
+		["EVT_ACTIVATE"] = "Activated",
+		["EVT_CHILD_FOCUS"] = "ChildFocused",
+		["EVT_CLOSE"] = "Closing",
+		["EVT_DPI_CHANGED"] = "DpiChanged",
+		["EVT_ENTER_WINDOW"] = "MouseEnter",
+		["EVT_FULLSCREEN"] = "FullScreenChanged",
+		["EVT_HELP"] = "HelpRequested",
+		["EVT_ICONIZE"] = "Iconized",
+		["EVT_KILL_FOCUS"] = "LostFocus",
+		["EVT_LEAVE_WINDOW"] = "MouseLeave",
+		["EVT_MAXIMIZE"] = "Maximized",
+		["EVT_MENU_CLOSE"] = "MenuClosed",
+		["EVT_MENU_HIGHLIGHT"] = "MenuHighlighted",
+		["EVT_MENU_OPEN"] = "MenuOpened",
+		["EVT_MOUSEWHEEL"] = "MouseWheel",
+		["EVT_MOVE"] = "Moved",
+		["EVT_MOVE_END"] = "MoveEnded",
+		["EVT_MOVE_START"] = "MoveStarted",
+		["EVT_SET_FOCUS"] = "GotFocus",
+		["EVT_SHOW"] = "VisibilityChanged",
+		["EVT_SIZE"] = "SizeChanged",
+		["EVT_SYS_COLOUR_CHANGED"] = "SystemColorsChanged",
+		["EVT_TEXT_MAXLEN"] = "MaxLengthReached",
+		["EVT_TEXT_URL"] = "UrlClicked",
 	};
 
 	private static readonly HashSet<string> Keywords = ["base", "checked", "class", "default", "event", "fixed", "lock", "object", "operator", "out", "params", "ref", "string", "this"];
@@ -52,6 +87,9 @@ internal static class Naming {
 		string camel = char.ToLowerInvariant(renamed[0]) + Respell(char.ToUpperInvariant(renamed[0]) + renamed[1..])[1..];
 		return Keywords.Contains(camel) ? "@" + camel : camel;
 	}
+
+	/// <summary>The name of the event a macro such as EVT_SIZE handles, such as SizeChanged.</summary>
+	public static string Event(string macro) => EventNames.TryGetValue(macro, out string? name) ? name : Words(macro["EVT_".Length..]);
 
 	/// <summary>wxEVT_CLOSE_WINDOW to CloseWindow.</summary>
 	public static string EventType(string constant) => Words(constant["wxEVT_".Length..]);

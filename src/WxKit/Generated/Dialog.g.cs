@@ -7,16 +7,76 @@ namespace WxKit;
 /// <summary>A dialog box is a window with a title bar and sometimes a system menu, which can be moved around the screen. Wraps wxDialog.</summary>
 public unsafe partial class Dialog : TopLevelWindow {
 	/// <summary>Constructor.</summary>
-	public Dialog(Window? parent, string title, int id = StandardId.Any, Point? position = null, Size? size = null, DialogStyle style = DialogStyle.Default) : this(Create(parent, title, id, position, size, style)) {
+	public Dialog(Window? parent, string title, int id = StandardId.Any, Point? position = null, Size? size = null, DialogStyle style = DialogStyle.Default) : this(CreateNative(parent, title, id, position, size, style)) {
 	}
 
 	internal Dialog(WxkWindow* native) : base(native) {
 	}
 
+	/// <summary>Gets the identifier of the button which works like standard OK button in this dialog.</summary>
+	public int AffirmativeId {
+		get => WxKitNative.DialogGetAffirmativeId(Native);
+		set => WxKitNative.DialogSetAffirmativeId(Native, value);
+	}
+
+	/// <summary>Returns true if this dialog can and should perform layout adaptation using DoLayoutAdaptation(), usually if the dialog is too large to fit on the display.</summary>
+	public bool CanDoLayoutAdaptation => WxKitNative.DialogCanDoLayoutAdaptation(Native) != 0;
+
+	/// <summary>Override this to return a window containing the main content of the dialog.</summary>
+	public Window? ContentWindow => ObjectRegistry.Wrap<Window>(WxKitNative.DialogGetContentWindow(Native));
+
+	/// <summary>Gets the identifier of the button to map presses of ESC button to.</summary>
+	public int EscapeId {
+		get => WxKitNative.DialogGetEscapeId(Native);
+		set => WxKitNative.DialogSetEscapeId(Native, value);
+	}
+
+	/// <summary>Returns true if the dialog box is modal, false otherwise.</summary>
+	public bool IsModal => WxKitNative.DialogIsModal(Native) != 0;
+
+	/// <summary>Returns true if the dialog has been adapted, usually by making it scrollable to work with a small display.</summary>
+	public bool LayoutAdaptationDone {
+		get => WxKitNative.DialogGetLayoutAdaptationDone(Native) != 0;
+		set => WxKitNative.DialogSetLayoutAdaptationDone(Native, value ? (byte)1 : (byte)0);
+	}
+
+	/// <summary>Gets a value representing the aggressiveness of search for buttons and sizers to be in the non-scrolling part of a layout-adapted dialog.</summary>
+	public int LayoutAdaptationLevel {
+		get => WxKitNative.DialogGetLayoutAdaptationLevel(Native);
+		set => WxKitNative.DialogSetLayoutAdaptationLevel(Native, value);
+	}
+
+	/// <summary>Gets the return code for this window.</summary>
+	public int ReturnCode {
+		get => WxKitNative.DialogGetReturnCode(Native);
+		set => WxKitNative.DialogSetReturnCode(Native, value);
+	}
+
+	/// <summary>Process a wxEVT_INIT_DIALOG event. See wxInitDialogEvent.</summary>
+	public event EventHandler<Event>? InitDialogEvent {
+		add => AddHandler(EventType.InitDialog, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.InitDialog, StandardId.Any, StandardId.Any, value);
+	}
+
+	/// <summary>Adds an identifier to be regarded as a main button for the non-scrolling area of a dialog.</summary>
+	public void AddMainButtonId(int id = StandardId.Any) => WxKitNative.DialogAddMainButtonId(Native, id);
+
+	/// <summary>Performs layout adaptation, usually if the dialog is too large to fit on the display.</summary>
+	public bool DoLayoutAdaptation() => WxKitNative.DialogDoLayoutAdaptation(Native) != 0;
+
+	/// <summary>Ends a modal dialog, passing a value to be returned from the ShowModal() invocation.</summary>
+	public void EndModal(int retCode) => WxKitNative.DialogEndModal(Native, retCode);
+
+	/// <summary>Returns true if id is in the array of identifiers to be regarded as the main buttons for the non-scrolling area of a dialog.</summary>
+	public bool IsMainButtonId(int id = StandardId.Any) => WxKitNative.DialogIsMainButtonId(Native, id) != 0;
+
 	/// <summary>Shows an application-modal dialog.</summary>
 	public int ShowModal() => WxKitNative.DialogShowModal(Native);
 
-	private static WxkWindow* Create(Window? parent, string title, int id, Point? position, Size? size, DialogStyle style) {
+	/// <summary>Shows a dialog modal to the parent top level window only.</summary>
+	public void ShowWindowModal() => WxKitNative.DialogShowWindowModal(Native);
+
+	private static WxkWindow* CreateNative(Window? parent, string title, int id, Point? position, Size? size, DialogStyle style) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(title);
 		fixed (char* titleText = title) {

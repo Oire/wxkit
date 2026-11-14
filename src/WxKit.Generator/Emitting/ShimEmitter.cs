@@ -35,7 +35,8 @@ internal static class ShimEmitter {
 	public static string Source(BindingResult result) {
 		CodeWriter writer = new();
 		writer.Line(Banner).Line("#include \"../src/shim.h\"").Line();
-		foreach (string header in result.Classes.Select(static bound => bound.Source.Header).OfType<string>().Distinct().Order(StringComparer.Ordinal)) writer.Line($"#include <{header}>");
+		IEnumerable<string?> headers = result.Classes.Select(static bound => bound.Source.Header).Concat(result.EventTypes.Select(static type => type.Header));
+		foreach (string header in headers.OfType<string>().Distinct().Order(StringComparer.Ordinal)) writer.Line($"#include <{header}>");
 		writer.Line();
 		foreach (BoundClass bound in result.Classes.Where(static bound => !bound.Tweak.IsHandwritten)) {
 			foreach (BoundFunction function in bound.Functions) {
