@@ -18,6 +18,14 @@ This document lists the design decisions made so far, and the ones still open. E
 
 ## Open
 
+### The Timer name
+
+Implicit usings, which new projects turn on, import `System.Threading`, so `Timer` is ambiguous between `WxKit.Timer` and `System.Threading.Timer` in nearly every WxKit application. The choices are:
+
+- Keep `Timer`, and have WxKit's MSBuild targets add `global using Timer = WxKit.Timer;` when implicit usings are on. An alias wins over imported namespaces, so the bare name works. This is the recommendation, with a property to turn it off.
+- Keep `Timer`, and leave it to applications, as Windows Forms does with its own `Timer`.
+- Rename it, for example to `GuiTimer`, which breaks the rule of keeping wxWidgets names.
+
 ### Order of the optional libraries
 
 Beyond the core libraries, wxWidgets has AUI docking, the styled text control, the property grid, the web view, rich text, the ribbon, OpenGL, the media control, and HTML help. Recommendation: the styled text control and AUI first, since editors and tool windows use them most, then the web view and the property grid.

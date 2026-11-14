@@ -10,10 +10,21 @@ namespace WxKit;
 /// closes. Derive from it to override its startup, or call <see cref="Run(Action)"/>.
 /// </summary>
 public unsafe class Application {
+	private static int _guiThreadId;
 	private ExceptionDispatchInfo? _failure;
+
+	/// <summary>
+	/// Raised on the GUI thread when an event handler, a posted action, or an <c>await</c>
+	/// continuation throws. Set <see cref="ApplicationExceptionEventArgs.Handled"/> to keep the
+	/// application running; otherwise the event loop ends and <see cref="Run()"/> rethrows the exception.
+	/// </summary>
+	public static event EventHandler<ApplicationExceptionEventArgs>? UnhandledException;
 
 	/// <summary>The running application, or null when none is running.</summary>
 	public static Application? Current { get; private set; }
+
+	/// <summary>Whether the calling thread is the one running the event loop.</summary>
+	public static bool IsGuiThread => _guiThreadId != 0 && _guiThreadId == Environment.CurrentManagedThreadId;
 
 	/// <summary>The version of wxWidgets that WxKit is built with, such as "wxWidgets 3.3.4".</summary>
 	public static string WxWidgetsVersion => Text.Take(WxKitNative.VersionGetString());
@@ -30,11 +41,7 @@ public unsafe class Application {
 	/// </summary>
 	public static void Post(Action action) {
 		ArgumentNullException.ThrowIfNull(action);
-		GCHandle handle = GCHandle.Alloc(action);
-		if (WxKitNative.AppCallAfter(&RunPosted, (void*)GCHandle.ToIntPtr(handle)) == 0) {
-			handle.Free();
-			throw new InvalidOperationException("No application is running.");
-		}
+		if (!TryPost(action)) throw new InvalidOperationException("No application is running.");
 	}
 
 	/// <summary>
@@ -49,6 +56,34 @@ public unsafe class Application {
 
 	/// <summary>Creates the first windows. Returning false ends the application without running the event loop.</summary>
 	protected virtual bool OnInit() => true;
+
+	internal static bool TryPost(Action action) {
+		GCHandle handle = GCHandle.Alloc(action);
+		if (WxKitNative.AppCallAfter(&RunPosted, (void*)GCHandle.ToIntPtr(handle)) != 0) return true;
+		handle.Free();
+		return false;
+	}
+
+	internal static void VerifyAccess() {
+		if (_guiThreadId == Environment.CurrentManagedThreadId) return;
+		throw new InvalidOperationException(_guiThreadId == 0
+			? "WxKit objects can only be used while Application.Run is running."
+			: "WxKit objects can only be used on the GUI thread. Use Application.Post, or await, to get back to it.");
+	}
+
+	// An exception cannot unwind back through wxWidgets, so every callback from it catches what it
+	// can and reports it here.
+	internal static void ReportException(Exception error) {
+		Application? application = Current;
+		try {
+			ApplicationExceptionEventArgs args = new(error);
+			UnhandledException?.Invoke(application, args);
+			if (args.Handled) return;
+		} catch (Exception handlerError) {
+			error = handlerError;
+		}
+		application?.Fail(error);
+	}
 
 	// OLE, which the clipboard, drag and drop and accessibility use, only works in a single-threaded
 	// apartment. .NET starts Main in the multithreaded one unless it is marked [STAThread], which top-level
@@ -77,20 +112,25 @@ public unsafe class Application {
 	private int RunHere() {
 		if (Current is not null) throw new InvalidOperationException("An application is already running.");
 		Current = this;
+		_guiThreadId = Environment.CurrentManagedThreadId;
+		SynchronizationContext? previousContext = SynchronizationContext.Current;
+		SynchronizationContext.SetSynchronizationContext(new GuiSynchronizationContext());
 		GCHandle self = GCHandle.Alloc(this);
 		try {
 			int exitCode = WxKitNative.AppRun(&OnInitCore, (void*)GCHandle.ToIntPtr(self));
 			_failure?.Throw();
 			return exitCode;
 		} finally {
+			ObjectRegistry.Clear();
 			self.Free();
+			SynchronizationContext.SetSynchronizationContext(previousContext);
+			_guiThreadId = 0;
 			Current = null;
 		}
 	}
 
-	// An exception cannot unwind back through wxWidgets, so the first one ends the event loop and is
-	// rethrown from Run on the thread that called it.
-	internal void Fail(Exception error) {
+	// The first failure ends the event loop, and is rethrown from Run on the thread that called it.
+	private void Fail(Exception error) {
 		if (_failure is not null) return;
 		_failure = ExceptionDispatchInfo.Capture(error);
 		WxKitNative.AppExitMainLoop();
@@ -115,7 +155,7 @@ public unsafe class Application {
 		try {
 			action();
 		} catch (Exception error) {
-			Current?.Fail(error);
+			ReportException(error);
 		}
 	}
 
@@ -125,4 +165,43 @@ public unsafe class Application {
 			return true;
 		}
 	}
+
+	// Makes await resume on the GUI thread, as it does in Windows Forms and WPF.
+	private sealed class GuiSynchronizationContext : SynchronizationContext {
+		public override void Post(SendOrPostCallback callback, object? state) {
+			// Once the event loop has ended there is nothing left to run the continuation on.
+			TryPost(() => callback(state));
+		}
+
+		public override void Send(SendOrPostCallback callback, object? state) {
+			if (IsGuiThread) {
+				callback(state);
+				return;
+			}
+			using ManualResetEventSlim done = new();
+			ExceptionDispatchInfo? failure = null;
+			bool posted = TryPost(() => {
+				try {
+					callback(state);
+				} catch (Exception error) {
+					failure = ExceptionDispatchInfo.Capture(error);
+				} finally {
+					done.Set();
+				}
+			});
+			if (!posted) throw new InvalidOperationException("No application is running.");
+			done.Wait();
+			failure?.Throw();
+		}
+
+		public override SynchronizationContext CreateCopy() => this;
+	}
+}
+
+/// <summary>An exception that escaped an event handler. See <see cref="Application.UnhandledException"/>.</summary>
+public sealed class ApplicationExceptionEventArgs(Exception exception) : EventArgs {
+	public Exception Exception { get; } = exception;
+
+	/// <summary>Set to true to keep the application running.</summary>
+	public bool Handled { get; set; }
 }

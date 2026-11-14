@@ -4,6 +4,8 @@
 #include <wx/wx.h>
 
 #include <string>
+#include <type_traits>
+#include <utility>
 
 #include "wxkit.h"
 
@@ -12,6 +14,25 @@ struct wxk_String {
 };
 
 namespace wxk {
+
+// Every exported function runs its body through Guard, because a C++ exception that reached .NET
+// would end the process. A failure returns the fallback, which is the function's "nothing" value.
+template <typename R, typename F>
+R Guard(R fallback, F&& body) noexcept {
+	try {
+		return std::forward<F>(body)();
+	} catch (...) {
+		return fallback;
+	}
+}
+
+template <typename F>
+void Guard(F&& body) noexcept {
+	try {
+		std::forward<F>(body)();
+	} catch (...) {
+	}
+}
 
 // .NET passes text as UTF-16 with a length, which is what wxString holds on Windows already.
 inline wxString FromUtf16(const char16_t* text, size_t length) {
@@ -35,12 +56,51 @@ inline wxk_String* ToUtf16(const wxString& text) {
 	return result;
 }
 
-inline wxWindow* AsWindow(wxk_Window* window) {
-	return reinterpret_cast<wxWindow*>(window);
+inline wxPoint FromPoint(wxk_Point point) {
+	return wxPoint(point.x, point.y);
 }
 
-inline wxk_Window* FromWindow(wxWindow* window) {
-	return reinterpret_cast<wxk_Window*>(window);
+inline wxSize FromSize(wxk_Size size) {
+	return wxSize(size.width, size.height);
+}
+
+// Each handle type converts to and from the wxWidgets class it names. A pointer to a derived
+// class is first converted to that class, so the handle always points where the C interface says.
+#define WXK_HANDLE(handle, type) \
+	inline type* Unwrap(handle* value) { return reinterpret_cast<type*>(value); } \
+	inline handle* Wrap(type* value) { return reinterpret_cast<handle*>(value); }
+
+WXK_HANDLE(wxk_Object, wxObject)
+WXK_HANDLE(wxk_EvtHandler, wxEvtHandler)
+WXK_HANDLE(wxk_Window, wxWindow)
+WXK_HANDLE(wxk_Sizer, wxSizer)
+WXK_HANDLE(wxk_Menu, wxMenu)
+WXK_HANDLE(wxk_MenuItem, wxMenuItem)
+WXK_HANDLE(wxk_Timer, wxTimer)
+WXK_HANDLE(wxk_Event, wxEvent)
+
+#undef WXK_HANDLE
+
+inline const wxClassInfo* Unwrap(const wxk_ClassInfo* value) {
+	return reinterpret_cast<const wxClassInfo*>(value);
+}
+
+inline const wxk_ClassInfo* Wrap(const wxClassInfo* value) {
+	return reinterpret_cast<const wxk_ClassInfo*>(value);
+}
+
+template <typename T>
+T* As(wxk_Window* window) {
+	return static_cast<T*>(Unwrap(window));
+}
+
+template <typename T>
+T* As(wxk_Event* event) {
+	return static_cast<T*>(Unwrap(event));
+}
+
+inline wxk_Window* WrapWindow(wxWindow* window) {
+	return Wrap(window);
 }
 
 } // namespace wxk

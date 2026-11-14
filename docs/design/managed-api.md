@@ -34,12 +34,12 @@ WxKit uses the wxWidgets names, adjusted to .NET conventions:
 - The `wx` prefix is dropped from types. `wxFrame` becomes `Frame`, and `wxBoxSizer` becomes `BoxSizer`. The `WxKit` namespace keeps them apart from other libraries' types.
 - Methods keep their names, which wxWidgets already writes in Pascal case. `wxWindow::Refresh` becomes `Window.Refresh`.
 - A getter and setter pair becomes a property. `GetLabel` and `SetLabel` become `Label`. `IsEnabled` and `Enable` become `IsEnabled`, with a setter. A getter without a setter becomes a read-only property, unless it is expensive or has parameters, in which case it stays a method.
-- Constants become enums. Style flags become `[Flags]` enums, one per class, such as `ButtonStyle` and `FrameStyle`, holding the styles that wxWidgets documents for that class plus the shared window styles. Standard ids, such as `wxID_OK`, become members of a `StandardId` enum.
+- Constants become enums. Style flags become `[Flags]` enums, one per class, such as `ButtonStyle` and `FrameStyle`, holding the styles that wxWidgets documents for that class plus the shared window styles. Standard ids, such as `wxID_OK`, become `int` constants on a static `StandardId` class, such as `StandardId.Ok`. They are not an enum, because ids are plain numbers in wxWidgets, and an application's own ids sit beside the standard ones, so an enum would need a cast everywhere an id is passed.
 - Parameters keep their wxWidgets names, converted to camel case, so that named arguments read naturally.
 
 - Names use the American spellings that .NET uses, not the British ones that wxWidgets uses. `wxColour` becomes `Color`, `Centre` becomes `Center`, and `wxEVT_COLOUR_CHANGED` becomes `ColorChanged`. The generator applies a fixed list of these respellings, so a search of the wxWidgets documentation for a WxKit name only needs the British spelling put back. Each type's documentation comment names its wxWidgets class, so the original is always one step away.
 
-Type names that collide with common .NET types, such as `Timer`, `Font`, `Image`, and `Menu`, are kept. The `WxKit` namespace separates them, and code that also imports a colliding namespace, such as `System.Threading`, can use an alias.
+Type names that collide with common .NET types, such as `Timer`, `Font`, `Image`, and `Menu`, are kept. The `WxKit` namespace separates them. `Timer` needs care: implicit usings import `System.Threading` into every new project, so a bare `Timer` is ambiguous there, and code has to write `WxKit.Timer` or add an alias. How to handle this is an open question.
 
 ## Construction
 
@@ -75,7 +75,9 @@ When wxWidgets hands WxKit a window it did not create, such as the result of `Fi
 
 ### Sizers
 
-A sizer belongs to the window it is set on, and is destroyed with that window. Sizers are not trackable in wxWidgets, so WxKit tracks them through their window: when a window is destroyed, the proxies of its sizers are marked as destroyed too. A sizer that is never set on a window is deleted when its proxy is finalized. Whether this needs more care, such as for sizers removed from a window, is something the first milestone will find out.
+A sizer belongs to the window it is set on, or to the sizer it is added to, and is destroyed with it. Setting a window's sizer again destroys the one it had. Sizers are not trackable in wxWidgets, so WxKit tracks them through their owner: when a window is destroyed, its sizer and every sizer inside it are marked as destroyed too. A sizer can only have one owner, and giving it a second throws `InvalidOperationException`.
+
+A sizer that is never given an owner is freed when its proxy is finalized. The finalizer runs on the finalizer thread, so it posts the free to the GUI thread. Removing or detaching an item from a sizer is not bound yet, and will need the same care.
 
 ### Reference-counted objects
 
@@ -97,7 +99,7 @@ textCtrl.TextChanged += (sender, e) => UpdateTitle();
 
 Each event uses `EventHandler<T>`, where `T` is the WxKit class for the wxWidgets event, such as `CommandEvent` or `CloseEvent`. These classes derive from `EventArgs`, which keeps the pattern familiar and lets Visual Basic's `Handles` clause work.
 
-Every `+=` is a separate `Bind` call in the shim, and every `-=` unbinds the matching handler. Event names come from the wxWidgets event macros, converted to .NET style. `EVT_BUTTON` becomes `Click`, `EVT_CLOSE_WINDOW` becomes `Closing`, and so on. A binding tweak sets the name when the conversion reads badly.
+The first `+=` for an event type and id range binds one functor in the shim, and later handlers for the same event are added to that functor's list on the managed side. `-=` removes a handler from the list. The functor itself is never unbound: once its list is empty, it skips each event, which leaves wxWidgets to process it as if nothing were bound. The functor is released, and the list with it, when wxWidgets destroys the object. This avoids having to match functors when unbinding, and costs at most one idle functor per event a program ever handled. Event names come from the wxWidgets event macros, converted to .NET style. `EVT_BUTTON` becomes `Click`, `EVT_CLOSE_WINDOW` becomes `Closing`, and so on. A binding tweak sets the name when the conversion reads badly.
 
 For the rare event that a class does not expose, or for an event type the application defines itself, there is a generic method:
 
@@ -111,9 +113,13 @@ A wxWidgets event object only exists while its handlers run. WxKit's event objec
 
 By default, a handler consumes its event, as in wxWidgets. Call `e.Skip()` to let wxWidgets keep processing it, which some events need. For example, a key-down handler that does not call `Skip` stops the text control from receiving the key.
 
+The close event is the exception. In wxWidgets, a window only closes if its close handler destroys it or skips the event, which is easy to forget. In WxKit, `Closing` works like `FormClosing` in Windows Forms: the window closes once the handlers return, unless one of them calls `e.Veto()`.
+
+A menu item's `Click` is bound on the item's menu, with the item's id. wxWidgets sends a menu event to the menu first, so the handler runs whether or not the menu is on a frame's menu bar, and the sender is the `MenuItem`.
+
 ### Exceptions in handlers
 
-An exception cannot unwind through wxWidgets, so WxKit catches every exception a handler throws and raises `Application.UnhandledException`. A handler of that event can mark the exception handled, and the application keeps running. If nothing does, WxKit exits the event loop and rethrows the exception from `Application.Run`, with its original stack trace. This keeps an exception from being lost and keeps a broken application from limping on.
+An exception cannot unwind through wxWidgets, so WxKit catches every exception a handler throws and raises `Application.UnhandledException`, whose arguments are an `ApplicationExceptionEventArgs`. The same goes for actions posted with `Application.Post` and for `await` continuations. A handler of that event can mark the exception handled, and the application keeps running. If nothing does, WxKit exits the event loop and rethrows the exception from `Application.Run`, with its original stack trace. This keeps an exception from being lost and keeps a broken application from limping on.
 
 ## Threading
 

@@ -1,7 +1,34 @@
 namespace WxKit.Interop;
 
-/// <summary>A wxWindow, or any class derived from it. Only ever used through a pointer.</summary>
+// Each handle type is only ever used through a pointer. As in the shim, every handle points at the
+// start of the wxWidgets object, so a pointer to a derived class's handle can be cast to a base's.
+
+/// <summary>Any wxObject.</summary>
+public struct WxkObject;
+
+/// <summary>A wxEvtHandler, or any class derived from it.</summary>
+public struct WxkEvtHandler;
+
+/// <summary>A wxWindow, or any class derived from it.</summary>
 public struct WxkWindow;
+
+/// <summary>A wxSizer, or any class derived from it.</summary>
+public struct WxkSizer;
+
+/// <summary>A wxMenu.</summary>
+public struct WxkMenu;
+
+/// <summary>A wxMenuItem.</summary>
+public struct WxkMenuItem;
+
+/// <summary>A wxTimer.</summary>
+public struct WxkTimer;
+
+/// <summary>A wxEvent, or any class derived from it. Only valid while its handlers run.</summary>
+public struct WxkEvent;
+
+/// <summary>A wxClassInfo, which lives as long as the program.</summary>
+public struct WxkClassInfo;
 
 /// <summary>Text the shim hands out, freed with <see cref="WxKitNative.StringFree"/>.</summary>
 public struct WxkString;

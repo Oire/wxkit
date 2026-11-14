@@ -14,4 +14,6 @@ internal static unsafe class Text {
 			WxKitNative.StringFree(text);
 		}
 	}
+
+	internal static nuint Length(string text) => (nuint)text.Length;
 }

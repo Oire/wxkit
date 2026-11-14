@@ -1,0 +1,127 @@
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using WxKit.Interop;
+
+namespace WxKit;
+
+/// <summary>
+/// Anything that receives events: windows, menus, and timers. Wraps wxEvtHandler. Every member
+/// must be used on the GUI thread, and throws <see cref="ObjectDisposedException"/> once wxWidgets
+/// has destroyed the object, except <see cref="IsDestroyed"/>.
+/// </summary>
+public abstract unsafe class EvtHandler {
+	private WxkEvtHandler* _native;
+	private Dictionary<(int Type, int Id, int LastId), EventSlot>? _slots;
+
+	private protected EvtHandler(WxkEvtHandler* native) {
+		Application.VerifyAccess();
+		if (native is null) throw new InvalidOperationException($"wxWidgets could not create the {GetType().Name}.");
+		_native = native;
+		ObjectRegistry.Register(this, native);
+	}
+
+	/// <summary>Whether wxWidgets has destroyed the object, after which nothing else on it can be used.</summary>
+	public bool IsDestroyed => _native is null;
+
+	private protected WxkEvtHandler* Handle {
+		get {
+			Application.VerifyAccess();
+			return _native is not null ? _native : throw new ObjectDisposedException(GetType().Name, $"wxWidgets has destroyed this {GetType().Name}.");
+		}
+	}
+
+	/// <summary>Calls <paramref name="handler"/> for every event of <paramref name="type"/> this object receives.</summary>
+	public void Bind<TEvent>(EventType<TEvent> type, EventHandler<TEvent> handler) where TEvent : Event => Bind(type, StandardId.Any, StandardId.Any, handler);
+
+	/// <summary>Calls <paramref name="handler"/> for events of <paramref name="type"/> from the window or menu item with <paramref name="id"/>.</summary>
+	public void Bind<TEvent>(EventType<TEvent> type, int id, EventHandler<TEvent> handler) where TEvent : Event => Bind(type, id, id, handler);
+
+	/// <summary>Calls <paramref name="handler"/> for events of <paramref name="type"/> from ids <paramref name="id"/> to <paramref name="lastId"/>, inclusive.</summary>
+	public void Bind<TEvent>(EventType<TEvent> type, int id, int lastId, EventHandler<TEvent> handler) where TEvent : Event {
+		ArgumentNullException.ThrowIfNull(type);
+		ArgumentNullException.ThrowIfNull(handler);
+		AddHandler(type, id, lastId, handler, this);
+	}
+
+	public void Unbind<TEvent>(EventType<TEvent> type, EventHandler<TEvent> handler) where TEvent : Event => Unbind(type, StandardId.Any, StandardId.Any, handler);
+
+	public void Unbind<TEvent>(EventType<TEvent> type, int id, EventHandler<TEvent> handler) where TEvent : Event => Unbind(type, id, id, handler);
+
+	public void Unbind<TEvent>(EventType<TEvent> type, int id, int lastId, EventHandler<TEvent> handler) where TEvent : Event {
+		ArgumentNullException.ThrowIfNull(type);
+		RemoveHandler(type, id, lastId, handler);
+	}
+
+	// wxWidgets binds one functor per event type and id range, the first time a handler is added,
+	// and never unbinds it: once the last handler is removed, the functor skips the event, which
+	// leaves wxWidgets to handle it as if nothing were bound. The functor is released, and the
+	// slot with it, when wxWidgets destroys this object.
+	internal void AddHandler<TEvent>(EventType<TEvent> type, int id, int lastId, EventHandler<TEvent>? handler, object sender) where TEvent : Event {
+		if (handler is null) return;
+		WxkEvtHandler* native = Handle;
+		(int, int, int) key = (type.Value, id, lastId);
+		_slots ??= [];
+		if (!_slots.TryGetValue(key, out EventSlot? slot)) {
+			slot = new EventSlot<TEvent>(type, sender);
+			GCHandle handle = GCHandle.Alloc(slot);
+			if (WxKitNative.EvtHandlerBind(native, key.Item1, id, lastId, &Dispatch, (void*)GCHandle.ToIntPtr(handle), &Release) == 0) {
+				handle.Free();
+				throw new InvalidOperationException("wxWidgets could not bind the event.");
+			}
+			_slots.Add(key, slot);
+		}
+		((EventSlot<TEvent>)slot).Handlers += handler;
+	}
+
+	internal void RemoveHandler<TEvent>(EventType<TEvent> type, int id, int lastId, EventHandler<TEvent>? handler) where TEvent : Event {
+		if (handler is null || _native is null) return;
+		Application.VerifyAccess();
+		if (_slots is not null && _slots.TryGetValue((type.Value, id, lastId), out EventSlot? slot)) ((EventSlot<TEvent>)slot).Handlers -= handler;
+	}
+
+	internal void OnNativeDestroyed() {
+		_native = null;
+		_slots = null;
+		OnDestroyed();
+	}
+
+	/// <summary>Runs once wxWidgets has destroyed the object, so derived classes can mark what it owned as gone too.</summary>
+	private protected virtual void OnDestroyed() {
+	}
+
+	[UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+	private static void Dispatch(void* userdata, WxkEvent* native) {
+		EventSlot slot = (EventSlot)GCHandle.FromIntPtr((nint)userdata).Target!;
+		try {
+			slot.Dispatch(native);
+		} catch (Exception error) {
+			Application.ReportException(error);
+		}
+	}
+
+	[UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+	private static void Release(void* userdata) => GCHandle.FromIntPtr((nint)userdata).Free();
+
+	private abstract class EventSlot {
+		public abstract void Dispatch(WxkEvent* native);
+	}
+
+	private sealed class EventSlot<TEvent>(EventType<TEvent> type, object sender) : EventSlot where TEvent : Event {
+		public EventHandler<TEvent>? Handlers { get; set; }
+
+		public override void Dispatch(WxkEvent* native) {
+			TEvent e = type.Create(native);
+			try {
+				EventHandler<TEvent>? handlers = Handlers;
+				if (handlers is null) {
+					e.Skip();
+					return;
+				}
+				handlers(sender, e);
+				e.OnHandled();
+			} finally {
+				e.Invalidate();
+			}
+		}
+	}
+}

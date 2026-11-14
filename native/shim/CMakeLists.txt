@@ -29,7 +29,12 @@ add_subdirectory(../wxWidgets wx EXCLUDE_FROM_ALL)
 
 set(WXK_SOURCES
 	src/app.cpp
+	src/event.cpp
+	src/menu.cpp
+	src/object.cpp
+	src/sizer.cpp
 	src/string.cpp
+	src/timer.cpp
 	src/window.cpp
 )
 
