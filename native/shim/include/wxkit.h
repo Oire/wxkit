@@ -121,6 +121,14 @@ WXK_FUNCTION(wxk_String*) wxk_ClassInfo_GetClassName(const wxk_ClassInfo* info) 
 // The first base class, or null for wxObject.
 WXK_FUNCTION(const wxk_ClassInfo*) wxk_ClassInfo_GetBaseClass(const wxk_ClassInfo* info) WXK_NOEXCEPT;
 
+// The clipboard's text. Each call opens the clipboard and closes it again.
+
+WXK_FUNCTION(uint8_t) wxk_Clipboard_SetText(const char16_t* text, size_t textLength) WXK_NOEXCEPT;
+// Null when the clipboard holds no text.
+WXK_FUNCTION(wxk_String*) wxk_Clipboard_GetText(void) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Clipboard_HasText(void) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Clipboard_Clear(void) WXK_NOEXCEPT;
+
 // Events
 
 // Binds callback to events of eventType from ids in [id, lastId], where -1 means any. When

@@ -51,6 +51,7 @@ internal static unsafe partial class ObjectRegistry {
 		["wxTextCtrl"] = static native => new TextCtrl((WxkWindow*)native),
 		["wxTextEntryDialog"] = static native => new TextEntryDialog((WxkWindow*)native),
 		["wxToggleButton"] = static native => new ToggleButton((WxkWindow*)native),
+		["wxToolBar"] = static native => new ToolBar((WxkWindow*)native),
 		["wxTopLevelWindow"] = static native => new TopLevelWindow((WxkWindow*)native),
 		["wxTreeCtrl"] = static native => new TreeCtrl((WxkWindow*)native),
 		["wxWindow"] = static native => new Window((WxkWindow*)native),

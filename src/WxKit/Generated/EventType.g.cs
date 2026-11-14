@@ -431,6 +431,9 @@ public static unsafe partial class EventType {
 	/// <summary>Wraps wxEVT_TOOL.</summary>
 	public static EventType<CommandEvent> Tool { get; } = new(WxKitNative.EventTypeTool, static native => new CommandEvent((WxkEvent*)native));
 
+	/// <summary>Wraps wxEVT_TOOL_DROPDOWN.</summary>
+	public static EventType<CommandEvent> ToolDropdown { get; } = new(WxKitNative.EventTypeToolDropdown, static native => new CommandEvent((WxkEvent*)native));
+
 	/// <summary>Wraps wxEVT_TOOL_ENTER.</summary>
 	public static EventType<CommandEvent> ToolEnter { get; } = new(WxKitNative.EventTypeToolEnter, static native => new CommandEvent((WxkEvent*)native));
 

@@ -70,6 +70,22 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void WindowListFree(WxkWindowList* list);
 
+	[LibraryImport(Library, EntryPoint = "wxk_Clipboard_SetText")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ClipboardSetText(char* text, nuint textLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Clipboard_GetText")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkString* ClipboardGetText();
+
+	[LibraryImport(Library, EntryPoint = "wxk_Clipboard_HasText")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ClipboardHasText();
+
+	[LibraryImport(Library, EntryPoint = "wxk_Clipboard_Clear")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ClipboardClear();
+
 	// Objects
 
 	[LibraryImport(Library, EntryPoint = "wxk_EvtHandler_Track")]

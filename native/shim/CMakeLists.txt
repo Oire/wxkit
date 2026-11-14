@@ -30,6 +30,7 @@ add_subdirectory(../wxWidgets wx EXCLUDE_FROM_ALL)
 set(WXK_SOURCES
 	generated/generated.cpp
 	src/app.cpp
+	src/clipboard.cpp
 	src/event.cpp
 	src/menu.cpp
 	src/object.cpp

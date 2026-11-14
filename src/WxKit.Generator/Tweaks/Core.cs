@@ -22,8 +22,9 @@ internal static class Core {
 			.Ignore("UseNativeDecorations", "UseNativeDecorationsByDefault", "IsUsingNativeDecorations")
 			.AddEvent("EVT_CLOSE", "wxEVT_CLOSE_WINDOW", "wxCloseEvent", "Closing"));
 		// WxKit keeps the menu bar a frame owns.
-		tweaks.Class("wxFrame", frame => frame.Ignore("SetMenuBar", "GetMenuBar"));
-		tweaks.Class("wxDialog");
+		tweaks.Class("wxFrame", frame => frame.Ignore("SetMenuBar", "GetMenuBar").ParameterEnum("CreateToolBar", "style", "ToolBarStyle"));
+		// wxMSW's wxDialog has no GetToolBar, though the documentation gives it one.
+		tweaks.Class("wxDialog").Ignore("GetToolBar");
 		tweaks.Class("wxMessageDialog");
 		tweaks.Class("wxPanel");
 		tweaks.Class("wxButton", button => button.Event("EVT_BUTTON", "Click"));
@@ -46,6 +47,8 @@ internal static class Core {
 		]) {
 			tweaks.Class(control);
 		}
+		// Toolbars. The tools they return are not bound, so adding one gives nothing back; its id names it.
+		tweaks.Class("wxToolBar").DiscardUnboundReturns();
 		// Lists and trees, and what they hold.
 		tweaks.Class("wxListCtrl", list => list.ParameterEnum("InsertColumn", "format", "wxListColumnFormat"));
 		tweaks.Class("wxListView");

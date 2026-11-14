@@ -105,7 +105,7 @@ These are the decisions it makes without a tweak.
 
 ## Current coverage
 
-98 classes bind 1513 functions and 123 event types. They are windows and top-level windows, the common controls, sizers, menus, the standard dialogs, the event classes the core and those controls send, fonts, pens, brushes, bitmaps, icons, cursors, images, drawing contexts, system settings, and the art provider. The tweaks are in `src/WxKit.Generator/Tweaks/Core.cs`. The report lists about 390 members the generator still cannot bind, most often because of output pointer parameters, list classes such as `wxWindowList`, and classes not bound yet, such as toolbars and validators.
+105 classes bind 1806 functions and 167 event types. They are windows and top-level windows, the common controls, list and tree controls, toolbars, sizers, menus, the standard dialogs, the event classes the core and those controls send, fonts, pens, brushes, bitmaps, icons, cursors, images, drawing contexts, system settings, and the art provider. The tweaks are in `src/WxKit.Generator/Tweaks/Core.cs`. The clipboard's text is written by hand, in `Clipboard`, since `wxClipboard` hands data objects over in ways the generator cannot express. The report lists about 400 members the generator still cannot bind, most often because of C arrays, per-item client data, raw image buffers, and classes not bound yet, such as validators and the objects a toolbar's tools are.
 
 ## Type conversions
 

@@ -74,6 +74,14 @@ internal sealed class ClassTweak(string name) {
 		return this;
 	}
 
+	/// <summary>Members whose return type cannot be converted are bound without one, as a toolbar's AddTool is without the tool it returns.</summary>
+	public bool DiscardsUnboundReturns { get; private set; }
+
+	public ClassTweak DiscardUnboundReturns() {
+		DiscardsUnboundReturns = true;
+		return this;
+	}
+
 	public ClassTweak StaticOnly() {
 		IsStaticOnly = true;
 		return this;

@@ -623,6 +623,41 @@ public enum TextCtrlStyle : long {
 	BestWrap = 0x0,
 }
 
+/// <summary>Styles for <see cref="ToolBar"/>.</summary>
+[Flags]
+public enum ToolBarStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Gives the toolbar a flat look (Windows and GTK only). Wraps wxTB_FLAT.</summary>
+	Flat = 0x9,
+	/// <summary>Makes the toolbar floatable and dockable (GTK only). Wraps wxTB_DOCKABLE.</summary>
+	Dockable = 0xA,
+	/// <summary>Specifies horizontal layout (default). Wraps wxTB_HORIZONTAL.</summary>
+	Horizontal = 0x4,
+	/// <summary>Specifies vertical layout. Wraps wxTB_VERTICAL.</summary>
+	Vertical = 0x8,
+	/// <summary>Shows the text in the toolbar buttons; by default only icons are shown. Wraps wxTB_TEXT.</summary>
+	Text = 0xC,
+	/// <summary>Specifies no icons in the toolbar buttons; by default they are shown. Wraps wxTB_NOICONS.</summary>
+	Noicons = 0xB,
+	/// <summary>Specifies no divider (border) above the toolbar (Windows only). Wraps wxTB_NODIVIDER.</summary>
+	Nodivider = 0xD,
+	/// <summary>Specifies no alignment with the parent window (Windows only, not very useful). Wraps wxTB_NOALIGN.</summary>
+	Noalign = 0xE,
+	/// <summary>Shows the text and the icons alongside, not vertically stacked (Windows and GTK 2 only). This style must be used with wxTB_TEXT. Wraps wxTB_HORZ_LAYOUT.</summary>
+	HorzLayout = 0xF,
+	/// <summary>Combination of wxTB_HORZ_LAYOUT and wxTB_TEXT. Wraps wxTB_HORZ_TEXT.</summary>
+	HorzText = 0xF,
+	/// <summary>Don't show the short help tooltips for the tools when the mouse hovers over them. Wraps wxTB_NO_TOOLTIPS.</summary>
+	NoTooltips = 0x10,
+	/// <summary>Align the toolbar at the bottom of parent window. Wraps wxTB_BOTTOM.</summary>
+	Bottom = 0x11,
+	/// <summary>Align the toolbar at the right side of parent window. Wraps wxTB_RIGHT.</summary>
+	Right = 0x12,
+	/// <summary>The wxTB_HORIZONTAL style. This style is new since wxWidgets 2.9.5. Wraps wxTB_DEFAULT_STYLE.</summary>
+	Default = 0x4,
+}
+
 /// <summary>Styles for <see cref="TreeCtrl"/>.</summary>
 [Flags]
 public enum TreeCtrlStyle : long {

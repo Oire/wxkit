@@ -28,6 +28,15 @@ public unsafe partial class Frame : TopLevelWindow {
 		set => WxKitNative.FrameSetStatusBarPane(Native, value);
 	}
 
+	/// <summary>Returns a pointer to the toolbar currently associated with the frame (if any).</summary>
+	public ToolBar? ToolBar {
+		get => ObjectRegistry.Wrap<ToolBar>(WxKitNative.FrameGetToolBar(Native));
+		set {
+			ArgumentNullException.ThrowIfNull(value);
+			WxKitNative.FrameSetToolBar(Native, (WxkWindow*)value.Native);
+		}
+	}
+
 	/// <summary>Process a wxEVT_ICONIZE event. See wxIconizeEvent.</summary>
 	public event EventHandler<IconizeEvent>? Iconized {
 		add => AddHandler(EventType.Iconize, StandardId.Any, StandardId.Any, value, this);
@@ -55,6 +64,9 @@ public unsafe partial class Frame : TopLevelWindow {
 	/// <summary>Creates a status bar at the bottom of the frame.</summary>
 	public StatusBar? CreateStatusBar(int number = 1, long style = 65840, int id = StandardId.Any) => ObjectRegistry.Wrap<StatusBar>(WxKitNative.FrameCreateStatusBar(Native, number, style, id));
 
+	/// <summary>Creates a toolbar at the top or left of the frame.</summary>
+	public ToolBar? CreateToolBar(ToolBarStyle style = ToolBarStyle.Default, int id = StandardId.Any) => ObjectRegistry.Wrap<ToolBar>(WxKitNative.FrameCreateToolBar(Native, (long)style, id));
+
 	/// <summary>Method used to show help string of the selected menu toolbar item.</summary>
 	public void DoGiveHelp(string text, bool show) {
 		ArgumentNullException.ThrowIfNull(text);
@@ -68,6 +80,14 @@ public unsafe partial class Frame : TopLevelWindow {
 		ArgumentNullException.ThrowIfNull(name);
 		fixed (char* nameText = name) {
 			return ObjectRegistry.Wrap<StatusBar>(WxKitNative.FrameOnCreateStatusBar(Native, number, style, id, nameText, NativeString.Length(name)));
+		}
+	}
+
+	/// <summary>Virtual function called when a toolbar is requested by CreateToolBar().</summary>
+	public ToolBar? OnCreateToolBar(long style, string name, int id = StandardId.Any) {
+		ArgumentNullException.ThrowIfNull(name);
+		fixed (char* nameText = name) {
+			return ObjectRegistry.Wrap<ToolBar>(WxKitNative.FrameOnCreateToolBar(Native, style, id, nameText, NativeString.Length(name)));
 		}
 	}
 

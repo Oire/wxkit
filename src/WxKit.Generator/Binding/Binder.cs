@@ -168,6 +168,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		Conversion returns = VoidConversion.Instance;
 		if (!isConstructor) {
 			Conversion? mapped = Map(CppType.Parse(member.Type), owner, member.Name, null, isReturn: true);
+			if (mapped is null && owner.Tweak.DiscardsUnboundReturns && CppType.Parse(member.Type).Pointers == 1) mapped = VoidConversion.Instance;
 			if (mapped is null) {
 				Skip(owner, member, $"WxKit cannot convert its return type, {member.Type}");
 				return null;
@@ -345,10 +346,11 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 			?? _enums.Values.OfType<BoundEnum>().Where(found => found.Name == enumeration.EnumName).Select(static found => new BoundStyles(found.Name, found.Members)).FirstOrDefault();
 		string[] parts = [.. value.Split('|', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)];
 		List<string> members = [];
+		int shared = enumeration.CppType is string cppEnum && api.Enums.TryGetValue(cppEnum, out DoxygenEnum? source) ? SharedWords(source) : 0;
 		foreach (string part in parts) {
 			string? member = styles is not null
 				? styles.Members.FirstOrDefault(style => style.Constant == part)?.Name
-				: ConstantPattern().IsMatch(part) ? Naming.Words(part[2..]) : null;
+				: ConstantPattern().IsMatch(part) ? MemberName(part, shared) : null;
 			if (member is null) {
 				members.Clear();
 				break;
@@ -493,16 +495,14 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		if (_enums.TryGetValue(cppName, out BoundEnum? cached)) return cached;
 		_enums[cppName] = null;
 		if (!api.Enums.TryGetValue(cppName, out DoxygenEnum? source) || source.Values.Count == 0) return null;
-		List<string[]> words = [.. source.Values.Select(static value => value.Name.StartsWith("wx", StringComparison.Ordinal) ? value.Name[2..].Split('_') : value.Name.Split('_'))];
-		int shared = 0;
-		while (words.All(found => found.Length > shared + 1 && found[shared] == words[0][shared])) shared++;
+		int shared = SharedWords(source);
 		List<BoundStyle> members = [];
-		foreach ((DoxygenEnumValue value, string[] parts) in source.Values.Zip(words)) {
+		foreach (DoxygenEnumValue value in source.Values) {
 			if (_constants.Value(value.Name) is not long number) {
 				_skipped.Add($"enum {cppName}: the value of {value.Name} is unknown");
 				return null;
 			}
-			string name = Naming.Words(string.Join('_', parts[shared..]));
+			string name = MemberName(value.Name, shared);
 			if (char.IsDigit(name[0])) name = "Value" + name;
 			if (members.All(existing => existing.Name != name)) members.Add(new BoundStyle(name, value.Name, number, value.Brief));
 		}
@@ -511,6 +511,18 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		_enums[cppName] = bound;
 		return bound;
 	}
+
+	// How many leading words all of an enum's members share, such as SHOW_EFFECT in wxSHOW_EFFECT_NONE.
+	private static int SharedWords(DoxygenEnum source) {
+		List<string[]> words = [.. source.Values.Select(static value => Words(value.Name))];
+		int shared = 0;
+		while (words.All(found => found.Length > shared + 1 && found[shared] == words[0][shared])) shared++;
+		return shared;
+	}
+
+	private static string MemberName(string constant, int shared) => Naming.Words(string.Join('_', Words(constant)[shared..]));
+
+	private static string[] Words(string constant) => (constant.StartsWith("wx", StringComparison.Ordinal) ? constant[2..] : constant).Split('_');
 
 	private void Skip(BoundClass bound, DoxygenMember member, string reason) => _skipped.Add($"{bound.CppName}::{member.Name}({string.Join(", ", member.Parameters.Select(static parameter => parameter.Type))}): {reason}");
 

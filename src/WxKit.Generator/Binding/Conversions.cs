@@ -144,6 +144,9 @@ internal sealed class NumberConversion(string suffix, string cType, string cppTy
 internal sealed class EnumConversion(string enumName, NumberConversion number, string? cppType = null) : Conversion {
 	public string EnumName { get; } = enumName;
 
+	/// <summary>The C++ enum, when the parameter is one, such as wxItemKind.</summary>
+	public string? CppType { get; } = cppType;
+
 	public override string Suffix => EnumName;
 
 	public override string CReturnType => number.CReturnType;
