@@ -45,6 +45,17 @@ typedef struct wxk_StringArray wxk_StringArray;
 // A list of windows, such as a window's children, which the caller frees with wxk_WindowList_Free.
 typedef struct wxk_WindowList wxk_WindowList;
 
+// Clipboard content in several formats, which wxk_Clipboard_SetContent takes ownership of.
+typedef struct wxk_ClipboardContent wxk_ClipboardContent;
+
+// The standard clipboard formats.
+typedef enum wxk_ClipboardFormat {
+	WXK_CLIPBOARD_TEXT = 0,
+	WXK_CLIPBOARD_BITMAP = 1,
+	WXK_CLIPBOARD_FILES = 2,
+	WXK_CLIPBOARD_HTML = 3
+} wxk_ClipboardFormat;
+
 typedef struct wxk_Point {
 	int32_t x;
 	int32_t y;
@@ -123,13 +134,33 @@ WXK_FUNCTION(wxk_String*) wxk_ClassInfo_GetClassName(const wxk_ClassInfo* info) 
 // The first base class, or null for wxObject.
 WXK_FUNCTION(const wxk_ClassInfo*) wxk_ClassInfo_GetBaseClass(const wxk_ClassInfo* info) WXK_NOEXCEPT;
 
-// The clipboard's text. Each call opens the clipboard and closes it again.
+// The clipboard. Each call opens the clipboard and closes it again. The getters return null when
+// the clipboard does not have their format.
 
 WXK_FUNCTION(uint8_t) wxk_Clipboard_SetText(const char16_t* text, size_t textLength) WXK_NOEXCEPT;
-// Null when the clipboard holds no text.
 WXK_FUNCTION(wxk_String*) wxk_Clipboard_GetText(void) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Clipboard_HasText(void) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Clipboard_Clear(void) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_ClipboardContent*) wxk_ClipboardContent_new(void) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ClipboardContent_Free(wxk_ClipboardContent* content) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ClipboardContent_AddText(wxk_ClipboardContent* content, const char16_t* text, size_t textLength) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ClipboardContent_AddHtml(wxk_ClipboardContent* content, const char16_t* html, size_t htmlLength) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ClipboardContent_AddBitmap(wxk_ClipboardContent* content, wxk_Object* bitmap) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ClipboardContent_AddFiles(wxk_ClipboardContent* content, const wxk_StringArray* files) WXK_NOEXCEPT;
+// Data in a format the application names, such as "MyApp.Shape", which the system registers.
+WXK_FUNCTION(void) wxk_ClipboardContent_AddData(wxk_ClipboardContent* content, const char16_t* format, size_t formatLength, const uint8_t* data, size_t size) WXK_NOEXCEPT;
+// Takes ownership of the content, whether or not it succeeds.
+WXK_FUNCTION(uint8_t) wxk_Clipboard_SetContent(wxk_ClipboardContent* content) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Clipboard_Has(wxk_ClipboardFormat format) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Clipboard_HasData(const char16_t* format, size_t formatLength) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_String*) wxk_Clipboard_GetHtml(void) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_Clipboard_GetBitmap(void) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_StringArray*) wxk_Clipboard_GetFiles(void) WXK_NOEXCEPT;
+// The caller frees the data with wxk_Bytes_Free.
+WXK_FUNCTION(uint8_t*) wxk_Clipboard_GetData(const char16_t* format, size_t formatLength, size_t* size) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Bytes_Free(uint8_t* bytes) WXK_NOEXCEPT;
+// Keeps the clipboard's content after the application exits.
+WXK_FUNCTION(uint8_t) wxk_Clipboard_Flush(void) WXK_NOEXCEPT;
 
 // Image file formats. Each is in a file of its own, so a statically linked application only
 // links the formats it adds. BMP is always there.

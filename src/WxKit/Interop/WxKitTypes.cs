@@ -41,3 +41,14 @@ public struct WxkStringArray;
 
 /// <summary>A list of windows, freed with <see cref="WxKitNative.WindowListFree"/>.</summary>
 public struct WxkWindowList;
+
+/// <summary>Clipboard content in several formats, which <see cref="WxKitNative.ClipboardSetContent"/> takes ownership of.</summary>
+public struct WxkClipboardContent;
+
+/// <summary>The standard clipboard formats, as the shim numbers them.</summary>
+public enum WxkClipboardFormat {
+	Text = 0,
+	Bitmap = 1,
+	Files = 2,
+	Html = 3,
+}

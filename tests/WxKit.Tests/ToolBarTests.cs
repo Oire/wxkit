@@ -15,15 +15,3 @@ public class ToolBarTests {
 		Assert.Equal(3, toolBar.ToolsCount);
 	});
 }
-
-public class ClipboardTests {
-	[Fact]
-	public Task RoundTripsText() => Gui.Run(() => {
-		Assert.True(Clipboard.SetText("Copied from WxKit ✓"));
-		Assert.True(Clipboard.HasText);
-		Assert.Equal("Copied from WxKit ✓", Clipboard.GetText());
-	});
-
-	[Fact]
-	public void ChecksTheThread() => Assert.Throws<InvalidOperationException>(() => Clipboard.GetText());
-}

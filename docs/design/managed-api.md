@@ -128,6 +128,23 @@ Image file formats work this way. An image can always load and save BMP files, a
 
 Without Native AOT, the shared library has every format in it either way, and the calls only decide which ones images can use.
 
+## The clipboard
+
+`Clipboard` is a static class with a getter, a setter, and a check for each format: text, bitmaps, lists of files, HTML, and formats the application names, which hold bytes:
+
+```csharp
+Clipboard.SetFiles([path]);
+if (Clipboard.GetData("MyApp.Shape") is byte[] shape) Paste(shape);
+```
+
+Each setter replaces everything on the clipboard. To offer one thing in several formats, so that each application takes the one it understands, set a `ClipboardContent`:
+
+```csharp
+Clipboard.SetContent(new ClipboardContent { Text = "Bold text", Html = "<b>Bold</b> text" });
+```
+
+Each call opens the clipboard and closes it again, so another application can use it in between, and a setter returns false when another application has it open. A getter returns null when the clipboard does not have its format. On Windows, what an application puts on the clipboard goes when the application exits, unless it calls `Clipboard.Flush`.
+
 ## Static members
 
 A static member of a wxWidgets class is a static member of its managed class, such as `Window.FindFocus()`. A class with only static members, such as `wxSystemSettings`, is a static class. Static members check the thread first, as instance members do through their handle.

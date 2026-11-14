@@ -86,6 +86,70 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void ClipboardClear();
 
+	[LibraryImport(Library, EntryPoint = "wxk_ClipboardContent_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkClipboardContent* ClipboardContentNew();
+
+	[LibraryImport(Library, EntryPoint = "wxk_ClipboardContent_Free")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ClipboardContentFree(WxkClipboardContent* content);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ClipboardContent_AddText")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ClipboardContentAddText(WxkClipboardContent* content, char* text, nuint textLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ClipboardContent_AddHtml")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ClipboardContentAddHtml(WxkClipboardContent* content, char* html, nuint htmlLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ClipboardContent_AddBitmap")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ClipboardContentAddBitmap(WxkClipboardContent* content, WxkObject* bitmap);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ClipboardContent_AddFiles")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ClipboardContentAddFiles(WxkClipboardContent* content, WxkStringArray* files);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ClipboardContent_AddData")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ClipboardContentAddData(WxkClipboardContent* content, char* format, nuint formatLength, byte* data, nuint size);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Clipboard_SetContent")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ClipboardSetContent(WxkClipboardContent* content);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Clipboard_Has")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ClipboardHas(WxkClipboardFormat format);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Clipboard_HasData")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ClipboardHasData(char* format, nuint formatLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Clipboard_GetHtml")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkString* ClipboardGetHtml();
+
+	[LibraryImport(Library, EntryPoint = "wxk_Clipboard_GetBitmap")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* ClipboardGetBitmap();
+
+	[LibraryImport(Library, EntryPoint = "wxk_Clipboard_GetFiles")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkStringArray* ClipboardGetFiles();
+
+	[LibraryImport(Library, EntryPoint = "wxk_Clipboard_GetData")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte* ClipboardGetData(char* format, nuint formatLength, nuint* size);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bytes_Free")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void BytesFree(byte* bytes);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Clipboard_Flush")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ClipboardFlush();
+
 	[LibraryImport(Library, EntryPoint = "wxk_Image_AddPngHandler")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void ImageAddPngHandler();
