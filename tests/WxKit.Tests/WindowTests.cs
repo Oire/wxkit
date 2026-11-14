@@ -110,7 +110,6 @@ public class WindowTests {
 		Assert.Equal("kept", frame.Note);
 		frame.Destroy();
 		await Gui.WaitUntil(() => frame.IsDestroyed);
-
 		static WeakReference<LabeledFrame> Create() => new(new LabeledFrame { Note = "kept" });
 	});
 

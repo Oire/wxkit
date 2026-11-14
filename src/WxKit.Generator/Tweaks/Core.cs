@@ -10,7 +10,6 @@ internal static class Core {
 		tweaks.Class("wxEvtHandler").Handwritten();
 		tweaks.Class("wxSizer").Handwritten();
 		tweaks.Class("wxMenu").Handwritten().Wrappable();
-
 		tweaks.Class("wxWindow", window => window
 			.NoConstructors()
 			// WxKit tracks the sizer a window owns, and gives the native handle as NativeHandle.
@@ -33,7 +32,6 @@ internal static class Core {
 		// wxMenuBar's Enable and IsEnabled take an item's id, so they would hide Window.IsEnabled.
 		tweaks.Class("wxMenuBar", menuBar => menuBar.Rename("IsEnabled", "IsItemEnabled").Rename("Enable", "EnableItem"));
 		tweaks.Class("wxBoxSizer", sizer => sizer.ParameterEnum("wxBoxSizer", "orient", "Orientation"));
-
 		tweaks.Class("wxEvent", e => e.NoConstructors().Rename("GetSkipped", "IsSkipped"));
 		tweaks.Class("wxCommandEvent");
 		// Veto is written by hand, since it refuses when the close cannot be vetoed.
@@ -50,7 +48,6 @@ internal static class Core {
 		]) {
 			tweaks.Class(eventClass);
 		}
-
 		// Bound by hand-written classes: menu items' clicks and timers' ticks.
 		tweaks.EventType("wxEVT_MENU", "wxCommandEvent");
 		tweaks.EventType("wxEVT_TIMER", "wxTimerEvent");

@@ -58,7 +58,6 @@ public class SizerTests {
 		GC.WaitForPendingFinalizers();
 		// The finalizer posts the free to the GUI thread, which runs it once this yields.
 		await Task.Delay(20);
-
 		static void Abandon() => _ = new BoxSizer(Orientation.Vertical);
 	});
 

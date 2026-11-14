@@ -52,12 +52,10 @@ foreach ($runtime in $Runtimes) {
 	Invoke-Checked "Configuring $runtime"
 	cmake --build $build --config $Configuration --parallel --target wxkitnative_static wxkitnative wxkit_resources
 	Invoke-Checked "Building $runtime"
-
 	$static = Join-Path $output "static"
 	$shared = Join-Path $output "shared"
 	Remove-Item -Recurse -Force $static, $shared -ErrorAction SilentlyContinue
 	New-Item -ItemType Directory -Force $static, $shared | Out-Null
-
 	# wxWidgets puts its libraries in a directory named after the compiler and architecture, such as vc_x64_lib.
 	$libraries = @(Get-ChildItem (Join-Path $build "wx/lib") -Recurse -Filter *.lib | Where-Object { $_.Directory.Name -like "vc*_lib" })
 	if ($libraries.Count -eq 0) { throw "The build did not produce any wxWidgets libraries." }
@@ -66,14 +64,12 @@ foreach ($runtime in $Runtimes) {
 	if (-not $resources) { throw "The build did not produce wxkit.res." }
 	foreach ($library in $libraries) { Copy-Item $library.FullName $static }
 	Copy-Item $resources.FullName $static
-
 	# A CMake build of wxWidgets does not name the Windows libraries it uses in its objects, so they
 	# are listed here. They are all part of Windows, and a library nothing uses costs nothing.
 	$items = @($libraries | Sort-Object Name | ForEach-Object { "<NativeLibrary Include=`"`$(MSBuildThisFileDirectory)$($_.Name)`" />" })
 	$items += '<NativeLibrary Include="' + ($windowsLibraries -join ";") + '" />'
 	$items += '<WxKitResource Include="$(MSBuildThisFileDirectory)wxkit.res" />'
 	Write-Targets $static $items
-
 	Copy-Item (Join-Path $build "shared/wxkitnative.dll") $shared
 	$symbols = Join-Path $build "shared/wxkitnative.pdb"
 	if (Test-Path $symbols) { Copy-Item $symbols $shared }

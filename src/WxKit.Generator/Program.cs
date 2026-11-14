@@ -9,12 +9,10 @@ if (args.Length != 2) {
 }
 string xml = args[0];
 string root = args[1];
-
 DoxygenApi api = DoxygenReader.Read(xml);
 Tweaks tweaks = new();
 WxKit.Generator.Tweaks.Core.Apply(tweaks);
 BindingResult result = new Binder(api, tweaks).Bind();
-
 string shim = Path.Combine(root, "native", "shim");
 string managed = Path.Combine(root, "src", "WxKit", "Generated");
 Write(Path.Combine(shim, "include", "wxkit_generated.h"), ShimEmitter.Header(result));
@@ -25,7 +23,6 @@ if (Directory.Exists(managed)) {
 	foreach (string stale in Directory.GetFiles(managed, "*.g.cs")) File.Delete(stale);
 }
 foreach ((string fileName, string text) in ManagedEmitter.Files(result)) Write(Path.Combine(managed, fileName), text);
-
 int functions = result.Classes.Sum(static bound => bound.Functions.Count());
 Console.WriteLine($"Bound {result.Classes.Count(static bound => !bound.Tweak.IsHandwritten)} classes, {functions} functions, and {result.EventTypes.Count} event types.");
 string report = Path.Combine(root, "artifacts", "generator-report.txt");
