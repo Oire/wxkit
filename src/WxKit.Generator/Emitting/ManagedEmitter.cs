@@ -71,7 +71,7 @@ internal static class ManagedEmitter {
 
 	private static void WriteProperty(CodeWriter writer, BoundClass bound, BoundProperty property) {
 		Summary(writer, property.Getter.Source.Brief);
-		string type = property.Getter.Returns.ManagedType(nullable: property.Getter.Returns is ObjectConversion or AnyObjectConversion);
+		string type = property.Getter.Returns.ManagedReturnType(nullable: property.Getter.Returns is ObjectConversion or AnyObjectConversion);
 		if (property.Setter is null && IsSimple(property.Getter)) {
 			writer.Line($"public {type} {property.Name} => {Call(bound, property.Getter, property.Getter.Returns.ManagedReturn)};");
 			return;
@@ -101,7 +101,7 @@ internal static class ManagedEmitter {
 	private static void WriteMethod(CodeWriter writer, BoundClass bound, BoundMethod method) {
 		BoundFunction function = method.Function;
 		Summary(writer, function.Source.Brief);
-		string returns = function.Returns.ManagedType(nullable: function.Returns is ObjectConversion or AnyObjectConversion);
+		string returns = function.Returns.ManagedReturnType(nullable: function.Returns is ObjectConversion or AnyObjectConversion);
 		string signature = $"public {returns} {method.Name}({ParameterList(function.ManagedParameters, withDefaults: true)})";
 		bool isVoid = function.Returns is VoidConversion;
 		if (IsSimple(function)) {
@@ -114,7 +114,7 @@ internal static class ManagedEmitter {
 	}
 
 	// A call needs a block when a parameter has to be checked for null or pinned first.
-	private static bool IsSimple(BoundFunction function) => function.Parameters.All(static parameter => parameter.Conversion.Check(parameter.Name, parameter.Nullable) is null && parameter.Conversion.Fixed(parameter.Name) is null);
+	private static bool IsSimple(BoundFunction function) => function.Parameters.All(static parameter => parameter.Conversion.Check(parameter.Name, parameter.Nullable) is null && parameter.Conversion.Fixed(parameter.Name) is null && parameter.Conversion.Prepare(parameter.Name) is null);
 
 	private static string Call(BoundClass bound, BoundFunction function, Func<string, string> finish) => finish(InteropCall(function, bound.Handle.Accessor));
 
@@ -127,6 +127,9 @@ internal static class ManagedEmitter {
 	private static void WriteCall(CodeWriter writer, BoundFunction function, string? self, Func<string, string> statement) {
 		foreach (BoundParameter parameter in function.ManagedParameters) {
 			if (parameter.Conversion.Check(parameter.Name, parameter.Nullable) is string check) writer.Line(check);
+		}
+		foreach (BoundParameter parameter in function.Parameters) {
+			if (parameter.Conversion.Prepare(parameter.Name) is string prepare) writer.Line(prepare);
 		}
 		List<string> pins = [.. function.Parameters.Select(static parameter => parameter.Conversion.Fixed(parameter.Name)).OfType<string>()];
 		string call = statement(InteropCall(function, self));

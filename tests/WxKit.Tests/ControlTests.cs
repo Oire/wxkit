@@ -1,0 +1,67 @@
+namespace WxKit.Tests;
+
+// The common controls, through their generated bindings.
+public class ControlTests {
+	[Fact]
+	public Task FillsAChoiceFromAList() => Gui.WithFrame(frame => {
+		Choice choice = new(frame, ["Red", "Green", "Blue"]);
+		Assert.Equal(3, choice.Count);
+		choice.Selection = 1;
+		Assert.Equal(1, choice.Selection);
+		Assert.Equal("Green", choice.GetString(1));
+		Assert.Equal(3, choice.Append("Cyan"));
+		Assert.Equal(["Red", "Green", "Blue", "Cyan"], choice.Strings);
+	});
+
+	[Fact]
+	public Task ReplacesAListBoxesItems() => Gui.WithFrame(frame => {
+		ListBox list = new(frame);
+		list.Set(["One", "Two"]);
+		Assert.Equal(2, list.Count);
+		list.Append(["Three", "Four"]);
+		Assert.Equal("Four", list.GetString(3));
+	});
+
+	[Fact]
+	public Task RoundTripsValues() => Gui.WithFrame(frame => {
+		CheckBox check = new(frame, "&Check");
+		check.Value = true;
+		Assert.True(check.Value);
+		SpinCtrl spin = new(frame, max: 50);
+		spin.Value = 42;
+		Assert.Equal(42, spin.Value);
+		Slider slider = new(frame, 10, 0, 100);
+		Assert.Equal(10, slider.Value);
+		Gauge gauge = new(frame, 200);
+		gauge.Value = 150;
+		Assert.Equal(150, gauge.Value);
+		Assert.Equal(200, gauge.Range);
+	});
+
+	[Fact]
+	public Task AddsNotebookPages() => Gui.WithFrame(frame => {
+		Notebook notebook = new(frame);
+		Assert.True(notebook.AddPage(new Panel(notebook), "&First"));
+		Assert.True(notebook.AddPage(new Panel(notebook), "&Second", select: true));
+		Assert.Equal(2, notebook.PageCount);
+		Assert.Equal(1, notebook.Selection);
+	});
+
+	[Fact]
+	public Task LaysOutWithAFlexGridSizer() => Gui.WithFrame(frame => {
+		Panel panel = new(frame);
+		FlexGridSizer grid = new(2, 5, 5);
+		grid.AddGrowableCol(1, 1);
+		grid.Add(new StaticText(panel, "&Name:"));
+		grid.Add(new TextCtrl(panel), SizerFlags.Default.Expand());
+		panel.Sizer = grid;
+		panel.Layout();
+	});
+
+	[Fact]
+	public Task CutsAnArraysCountWithIt() => Gui.WithFrame(frame => {
+		// wxChoice(parent, id, pos, size, int n, const wxString choices[]) is bound without n.
+		Choice empty = new(frame);
+		Assert.Equal(0, empty.Count);
+	});
+}

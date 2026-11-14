@@ -28,11 +28,17 @@ internal abstract class Conversion {
 	// The managed side.
 	public abstract string ManagedType(bool nullable);
 
+	/// <summary>The managed type of a value coming back, which can be more specific than the type going in.</summary>
+	public virtual string ManagedReturnType(bool nullable) => ManagedType(nullable);
+
 	/// <summary>A null check, for parameters that cannot be null.</summary>
 	public virtual string? Check(string name, bool nullable) => null;
 
 	/// <summary>A fixed statement the call needs, such as pinning a string.</summary>
 	public virtual string? Fixed(string name) => null;
+
+	/// <summary>A statement the call needs before it, such as building a native copy of a list.</summary>
+	public virtual string? Prepare(string name) => null;
 
 	public abstract IEnumerable<string> InteropArguments(string name, bool nullable);
 
@@ -373,4 +379,40 @@ internal sealed class ColorConversion : Conversion {
 	public override string ManagedReturn(string expression) => $"Color.FromNative({expression})";
 
 	public override bool AcceptsNull => true;
+}
+
+// A wxArrayString goes in as a native copy of any sequence of strings, made for the call, and
+// comes out as a string array.
+internal sealed class StringArrayConversion : Conversion {
+	public static StringArrayConversion Instance { get; } = new();
+
+	public override string Suffix => "Strings";
+
+	public override string CReturnType => "wxk_StringArray*";
+
+	public override string Fallback => "nullptr";
+
+	public override string InteropReturnType => "WxkStringArray*";
+
+	public override IEnumerable<string> CParameters(string name) => [$"const wxk_StringArray* {name}"];
+
+	public override string ToCpp(string name) => $"*wxk::Unwrap({name})";
+
+	public override string FromCpp(string expression) => $"wxk::Wrap(new wxArrayString({expression}))";
+
+	public override IEnumerable<string> InteropParameters(string name) => [$"WxkStringArray* {name}"];
+
+	public override string ManagedType(bool nullable) => "IEnumerable<string>";
+
+	public override string ManagedReturnType(bool nullable) => "string[]";
+
+	public override string? Check(string name, bool nullable) => $"ArgumentNullException.ThrowIfNull({name});";
+
+	public override string? Prepare(string name) => $"using NativeStringArray {Native(name)} = new({name});";
+
+	public override IEnumerable<string> InteropArguments(string name, bool nullable) => [$"{Native(name)}.Handle"];
+
+	public override string ManagedReturn(string expression) => $"NativeStringArray.Take({expression})";
+
+	private static string Native(string name) => name.TrimStart('@') + "Native";
 }

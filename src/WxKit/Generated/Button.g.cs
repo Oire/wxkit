@@ -5,7 +5,7 @@ using WxKit.Interop;
 namespace WxKit;
 
 /// <summary>A button is a control that contains a text string, and is one of the most common elements of a GUI. Wraps wxButton.</summary>
-public unsafe partial class Button : Window {
+public unsafe partial class Button : AnyButton {
 	/// <summary>Constructor, creating and showing a button.</summary>
 	public Button(Window parent, string label = "", int id = StandardId.Any, Point? position = null, Size? size = null, ButtonStyle style = ButtonStyle.None) : this(CreateNative(parent, label, id, position, size, style)) {
 	}

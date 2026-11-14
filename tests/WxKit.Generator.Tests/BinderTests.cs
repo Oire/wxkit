@@ -89,6 +89,7 @@ public class BinderTests {
 		// The validator, which WxKit cannot convert yet, is left to its C++ default.
 		Assert.Equal(["parent", "id", "label", "pos", "style"], constructor.Parameters.Select(static parameter => parameter.CppName));
 		Assert.Equal(["parent", "label", "id", "position", "style"], constructor.ManagedParameters.Select(static parameter => parameter.Name));
+		// The id has a default now, so it is optional like the parameters around it.
 		Assert.Equal([null, "\"\"", "StandardId.Any", "null", "ButtonStyle.None"], constructor.ManagedParameters.Select(static parameter => parameter.Default));
 	}
 

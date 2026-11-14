@@ -13,6 +13,15 @@ public unsafe partial class Frame : TopLevelWindow {
 	internal Frame(WxkWindow* native) : base(native) {
 	}
 
+	/// <summary>Returns a pointer to the status bar currently associated with the frame (if any).</summary>
+	public StatusBar? StatusBar {
+		get => ObjectRegistry.Wrap<StatusBar>(WxKitNative.FrameGetStatusBar(Native));
+		set {
+			ArgumentNullException.ThrowIfNull(value);
+			WxKitNative.FrameSetStatusBar(Native, (WxkWindow*)value.Native);
+		}
+	}
+
 	/// <summary>Returns the status bar pane used to display menu and toolbar help.</summary>
 	public int StatusBarPane {
 		get => WxKitNative.FrameGetStatusBarPane(Native);
@@ -43,11 +52,22 @@ public unsafe partial class Frame : TopLevelWindow {
 		remove => RemoveHandler(EventType.MenuOpen, StandardId.Any, StandardId.Any, value);
 	}
 
+	/// <summary>Creates a status bar at the bottom of the frame.</summary>
+	public StatusBar? CreateStatusBar(int number = 1, long style = 65840, int id = StandardId.Any) => ObjectRegistry.Wrap<StatusBar>(WxKitNative.FrameCreateStatusBar(Native, number, style, id));
+
 	/// <summary>Method used to show help string of the selected menu toolbar item.</summary>
 	public void DoGiveHelp(string text, bool show) {
 		ArgumentNullException.ThrowIfNull(text);
 		fixed (char* textText = text) {
 			WxKitNative.FrameDoGiveHelp(Native, textText, NativeString.Length(text), show ? (byte)1 : (byte)0);
+		}
+	}
+
+	/// <summary>Virtual function called when a status bar is requested by CreateStatusBar().</summary>
+	public StatusBar? OnCreateStatusBar(int number, long style, string name, int id = StandardId.Any) {
+		ArgumentNullException.ThrowIfNull(name);
+		fixed (char* nameText = name) {
+			return ObjectRegistry.Wrap<StatusBar>(WxKitNative.FrameOnCreateStatusBar(Native, number, style, id, nameText, NativeString.Length(name)));
 		}
 	}
 

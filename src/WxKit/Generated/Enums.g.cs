@@ -83,6 +83,16 @@ public enum EventCategory {
 	All = 31,
 }
 
+/// <summary>Wraps wxFlexSizerGrowMode.</summary>
+public enum FlexSizerGrowMode {
+	/// <summary>Don't resize the cells in non-flexible direction at all. Wraps wxFLEX_GROWMODE_NONE.</summary>
+	None = 0,
+	/// <summary>Uniformly resize only the specified ones (default). Wraps wxFLEX_GROWMODE_SPECIFIED.</summary>
+	Specified = 1,
+	/// <summary>Uniformly resize all cells. Wraps wxFLEX_GROWMODE_ALL.</summary>
+	All = 2,
+}
+
 /// <summary>Wraps wxHitTest.</summary>
 public enum HitTest {
 	/// <summary>Wraps wxHT_NOWHERE.</summary>
@@ -90,19 +100,19 @@ public enum HitTest {
 	/// <summary>Wraps wxHT_SCROLLBAR_FIRST.</summary>
 	ScrollbarFirst = 0,
 	/// <summary>left or upper arrow to scroll by line. Wraps wxHT_SCROLLBAR_ARROW_LINE_1.</summary>
-	ScrollbarArrowLine1 = 1,
+	ScrollbarArrowLineOne = 1,
 	/// <summary>right or down. Wraps wxHT_SCROLLBAR_ARROW_LINE_2.</summary>
-	ScrollbarArrowLine2 = 2,
+	ScrollbarArrowLineTwo = 2,
 	/// <summary>left or upper arrow to scroll by page. Wraps wxHT_SCROLLBAR_ARROW_PAGE_1.</summary>
-	ScrollbarArrowPage1 = 3,
+	ScrollbarArrowPageOne = 3,
 	/// <summary>right or down. Wraps wxHT_SCROLLBAR_ARROW_PAGE_2.</summary>
-	ScrollbarArrowPage2 = 4,
+	ScrollbarArrowPageTwo = 4,
 	/// <summary>on the thumb. Wraps wxHT_SCROLLBAR_THUMB.</summary>
 	ScrollbarThumb = 5,
 	/// <summary>bar to the left/above the thumb. Wraps wxHT_SCROLLBAR_BAR_1.</summary>
-	ScrollbarBar1 = 6,
+	ScrollbarBarOne = 6,
 	/// <summary>bar to the right/below the thumb. Wraps wxHT_SCROLLBAR_BAR_2.</summary>
-	ScrollbarBar2 = 7,
+	ScrollbarBarTwo = 7,
 	/// <summary>Wraps wxHT_SCROLLBAR_LAST.</summary>
 	ScrollbarLast = 8,
 	/// <summary>not in this window at all. Wraps wxHT_WINDOW_OUTSIDE.</summary>
@@ -203,6 +213,14 @@ public enum ShowEffect {
 	Max = 11,
 }
 
+/// <summary>Wraps wxSplitMode.</summary>
+public enum SplitMode {
+	/// <summary>Wraps wxSPLIT_HORIZONTAL.</summary>
+	Horizontal = 1,
+	/// <summary>Wraps wxSPLIT_VERTICAL.</summary>
+	Vertical = 2,
+}
+
 /// <summary>Wraps wxTextCtrlHitTestResult.</summary>
 public enum TextCtrlHitTestResult {
 	/// <summary>Indicates that wxTextCtrl::HitTest() is not implemented on this platform. Wraps wxTE_HT_UNKNOWN.</summary>
@@ -215,6 +233,36 @@ public enum TextCtrlHitTestResult {
 	Below = 1,
 	/// <summary>The point is beyond the end of line containing the character returned. Wraps wxTE_HT_BEYOND.</summary>
 	Beyond = 2,
+}
+
+/// <summary>Wraps wxTextValidatorStyle.</summary>
+public enum TextValidatorStyle {
+	/// <summary>No filtering takes place. Wraps wxFILTER_NONE.</summary>
+	None = 0,
+	/// <summary>Empty strings are filtered out. Wraps wxFILTER_EMPTY.</summary>
+	Empty = 1,
+	/// <summary>Non-ASCII characters are filtered out. See wxString::IsAscii. Wraps wxFILTER_ASCII.</summary>
+	Ascii = 2,
+	/// <summary>Non-alpha characters are filtered out. Wraps wxFILTER_ALPHA.</summary>
+	Alpha = 3,
+	/// <summary>Non-alphanumeric characters are filtered out. Wraps wxFILTER_ALPHANUMERIC.</summary>
+	Alphanumeric = 4,
+	/// <summary>Non-digit characters are filtered out. Wraps wxFILTER_DIGITS.</summary>
+	Digits = 5,
+	/// <summary>Non-numeric characters are filtered out. Wraps wxFILTER_NUMERIC.</summary>
+	Numeric = 6,
+	/// <summary>Use an include list. Wraps wxFILTER_INCLUDE_LIST.</summary>
+	IncludeList = 7,
+	/// <summary>Use an include char list. Wraps wxFILTER_INCLUDE_CHAR_LIST.</summary>
+	IncludeCharList = 8,
+	/// <summary>Use an exclude list. Wraps wxFILTER_EXCLUDE_LIST.</summary>
+	ExcludeList = 9,
+	/// <summary>Use an exclude char list. Wraps wxFILTER_EXCLUDE_CHAR_LIST.</summary>
+	ExcludeCharList = 10,
+	/// <summary>Non-hexadecimal characters are filtered out. Wraps wxFILTER_XDIGITS.</summary>
+	Xdigits = 11,
+	/// <summary>A convenience flag for use with the other flags. Wraps wxFILTER_SPACE.</summary>
+	Space = 12,
 }
 
 /// <summary>Wraps wxWindowMode.</summary>

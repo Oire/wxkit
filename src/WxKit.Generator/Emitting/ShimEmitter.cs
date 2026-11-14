@@ -75,7 +75,11 @@ internal static class ShimEmitter {
 			writer.Line("return wxk::Wrap(created);");
 			writer.Close("});");
 		} else {
-			string call = $"static_cast<{owner.CppName}*>(wxk::Unwrap(self))->{function.Source.Name}({arguments})";
+			// A mixin's member is called through the mixin, which picks it out when two mixins both
+			// have one, as wxTextEntry and wxItemContainer both have IsEmpty, and still calls overrides.
+			string target = $"static_cast<{owner.CppName}*>(wxk::Unwrap(self))";
+			if (function.Source.Mixin is string mixin) target = $"static_cast<{mixin}*>({target})";
+			string call = $"{target}->{function.Source.Name}({arguments})";
 			if (function.Returns is VoidConversion) {
 				writer.Line($"wxk::Guard([&] {{ {call}; }});");
 			} else {

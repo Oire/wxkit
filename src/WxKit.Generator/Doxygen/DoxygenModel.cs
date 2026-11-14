@@ -29,7 +29,12 @@ internal sealed record DoxygenMember(
 	bool IsPublic,
 	bool IsDeprecated,
 	IReadOnlyList<string> OnlyFor,
-	string Brief);
+	string Brief) {
+	public bool IsPureVirtual { get; init; }
+
+	/// <summary>The mixin a member came from, such as wxTextEntry for wxTextCtrl's GetValue, or null for the class's own.</summary>
+	public string? Mixin { get; init; }
+}
 
 internal sealed record DoxygenParameter(string Type, string Name, string? Default);
 

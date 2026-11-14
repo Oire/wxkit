@@ -5,7 +5,7 @@ using WxKit.Interop;
 namespace WxKit;
 
 /// <summary>A static text control displays one or more lines of read-only text. Wraps wxStaticText.</summary>
-public unsafe partial class StaticText : Window {
+public unsafe partial class StaticText : Control {
 	/// <summary>Constructor, creating and showing a text control.</summary>
 	public StaticText(Window parent, string label, int id = StandardId.Any, Point? position = null, Size? size = null, StaticTextStyle style = StaticTextStyle.None) : this(CreateNative(parent, label, id, position, size, style)) {
 	}

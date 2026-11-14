@@ -76,7 +76,9 @@ internal static partial class DoxygenReader {
 			(string?)member.Attribute("prot") == "public",
 			deprecated,
 			onlyFor,
-			Text(member.Element("briefdescription")));
+			Text(member.Element("briefdescription"))) {
+			IsPureVirtual = (string?)member.Attribute("virt") == "pure-virtual",
+		};
 	}
 
 	private static (List<DoxygenStyle> Styles, List<DoxygenEvent> Events) ReadTables(XElement? description) {

@@ -39,6 +39,9 @@ typedef struct wxk_ClassInfo wxk_ClassInfo;
 // Text that the shim hands out, which the caller frees with wxk_String_Free.
 typedef struct wxk_String wxk_String;
 
+// A wxArrayString, which the caller frees with wxk_StringArray_Free.
+typedef struct wxk_StringArray wxk_StringArray;
+
 typedef struct wxk_Point {
 	int32_t x;
 	int32_t y;
@@ -88,6 +91,12 @@ WXK_FUNCTION(wxk_String*) wxk_Version_GetString(void) WXK_NOEXCEPT;
 WXK_FUNCTION(const char16_t*) wxk_String_GetData(const wxk_String* text, size_t* length) WXK_NOEXCEPT;
 
 WXK_FUNCTION(void) wxk_String_Free(wxk_String* text) WXK_NOEXCEPT;
+
+WXK_FUNCTION(wxk_StringArray*) wxk_StringArray_new(void) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_StringArray_Add(wxk_StringArray* array, const char16_t* text, size_t textLength) WXK_NOEXCEPT;
+WXK_FUNCTION(size_t) wxk_StringArray_GetCount(const wxk_StringArray* array) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_String*) wxk_StringArray_Item(const wxk_StringArray* array, size_t index) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_StringArray_Free(wxk_StringArray* array) WXK_NOEXCEPT;
 
 // Objects
 

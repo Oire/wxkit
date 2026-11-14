@@ -24,6 +24,58 @@ public enum ButtonStyle : long {
 	BorderNone = 0x200000,
 }
 
+/// <summary>Styles for <see cref="CheckBox"/>.</summary>
+[Flags]
+public enum CheckBoxStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Create a 2-state checkbox. This is the default. Wraps wxCHK_2STATE.</summary>
+	TwoState = 0x4000,
+	/// <summary>Create a 3-state checkbox. Wraps wxCHK_3STATE.</summary>
+	ThreeState = 0x1000,
+	/// <summary>By default a user can't set a 3-state checkbox to the third state. It can only be done from code. Using this flags allows the user to set the checkbox to the third state by clicking. Wraps wxCHK_ALLOW_3RD_STATE_FOR_USER.</summary>
+	AllowThreeRdStateForUser = 0x2000,
+	/// <summary>Makes the text appear on the left of the checkbox. Wraps wxALIGN_RIGHT.</summary>
+	AlignRight = 0x200,
+}
+
+/// <summary>Styles for <see cref="Choice"/>.</summary>
+[Flags]
+public enum ChoiceStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Sorts the entries alphabetically. Wraps wxCB_SORT.</summary>
+	CbSort = 0x8,
+}
+
+/// <summary>Styles for <see cref="CollapsiblePane"/>.</summary>
+[Flags]
+public enum CollapsiblePaneStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>The default style. It includes wxTAB_TRAVERSAL and wxBORDER_NONE. Wraps wxCP_DEFAULT_STYLE.</summary>
+	DefaultStyle = 0x280000,
+	/// <summary>By default wxCollapsiblePane resizes the top level window containing it when its own size changes. This allows easily implementing dialogs containing an optionally shown part, for example, and so is the default behaviour but can be inconvenient in some specific cases use this flag to disable this automatic parent resizing then. Wraps wxCP_NO_TLW_RESIZE.</summary>
+	NoTlwResize = 0x2,
+}
+
+/// <summary>Styles for <see cref="ComboBox"/>.</summary>
+[Flags]
+public enum ComboBoxStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Creates a combobox with a permanently displayed list. Windows only. Wraps wxCB_SIMPLE.</summary>
+	Simple = 0x4,
+	/// <summary>Creates a combobox with a drop-down list. MSW only. Wraps wxCB_DROPDOWN.</summary>
+	Dropdown = 0x20,
+	/// <summary>A combobox with this style behaves like a wxChoice (and may look in the same way as well, although this is platform-dependent), i.e. it allows the user to choose from the list of options but doesn't allow to enter a value not present in the list. Wraps wxCB_READONLY.</summary>
+	ReadOnly = 0x10,
+	/// <summary>Sorts the entries in the list alphabetically. Wraps wxCB_SORT.</summary>
+	Sort = 0x8,
+	/// <summary>The control will generate the event wxEVT_TEXT_ENTER that can be handled by the program. Otherwise, i.e. either if this style not specified at all, or it is used, but there is no event handler for this event or the event handler called wxEvent::Skip() to avoid overriding the default handling, pressing Enter key is either processed internally by the control or used to activate the default button of the dialog, if any. Wraps wxTE_PROCESS_ENTER.</summary>
+	TeProcessEnter = 0x400,
+}
+
 /// <summary>Styles for <see cref="Dialog"/>.</summary>
 [Flags]
 public enum DialogStyle : long {
@@ -47,6 +99,50 @@ public enum DialogStyle : long {
 	StayOnTop = 0x8000,
 	/// <summary>By default, a dialog created with a nullptr parent window will be given the application's top level window as parent. Use this style to prevent this from happening and create an orphan dialog. This is not recommended for modal dialogs. Wraps wxDIALOG_NO_PARENT.</summary>
 	NoParent = 0x20,
+}
+
+/// <summary>Styles for <see cref="DirDialog"/>.</summary>
+[Flags]
+public enum DirDialogStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Equivalent to a combination of wxDEFAULT_DIALOG_STYLE and wxRESIZE_BORDER. Wraps wxDD_DEFAULT_STYLE.</summary>
+	DefaultStyle = 0x20001840,
+	/// <summary>The dialog will allow the user to choose only an existing folder. When this style is not given, a "Create new directory" button is added to the dialog or some other way is provided to the user to type the name of a new folder. Wraps wxDD_DIR_MUST_EXIST.</summary>
+	DirMustExist = 0x200,
+	/// <summary>Change the current working directory to the directory chosen by the user. This flag cannot be used with the wxDD_MULTIPLE style. Wraps wxDD_CHANGE_DIR.</summary>
+	ChangeDir = 0x100,
+	/// <summary>Allow the user to select multiple directories. This flag is only available since wxWidgets 3.1.4. Wraps wxDD_MULTIPLE.</summary>
+	Multiple = 0x400,
+	/// <summary>Show hidden and system folders. This flag is only available since wxWidgets 3.1.4. Wraps wxDD_SHOW_HIDDEN.</summary>
+	ShowHidden = 0x1,
+}
+
+/// <summary>Styles for <see cref="FileDialog"/>.</summary>
+[Flags]
+public enum FileDialogStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Equivalent to wxFD_OPEN. Wraps wxFD_DEFAULT_STYLE.</summary>
+	DefaultStyle = 0x1,
+	/// <summary>This is an open dialog; usually this means that the default button's label of the dialog is "Open". Cannot be combined with wxFD_SAVE. Wraps wxFD_OPEN.</summary>
+	Open = 0x1,
+	/// <summary>This is a save dialog; usually this means that the default button's label of the dialog is "Save". Cannot be combined with wxFD_OPEN. Wraps wxFD_SAVE.</summary>
+	Save = 0x2,
+	/// <summary>For save dialog only: prompt for a confirmation if a file will be overwritten. This style is always enabled on wxOSX and cannot be disabled. Wraps wxFD_OVERWRITE_PROMPT.</summary>
+	OverwritePrompt = 0x4,
+	/// <summary>Directs the dialog to return the path and file name of the selected shortcut file, not its target as it does by default. Currently this flag is only implemented in wxMSW and wxOSX (where it prevents aliases from being resolved). The non-dereferenced link path is always returned, even without this flag, under Unix and so using it there doesn't do anything. This flag was added in wxWidgets 3.1.0. Wraps wxFD_NO_FOLLOW.</summary>
+	NoFollow = 0x8,
+	/// <summary>For open dialog only: the user may only select files that actually exist. Notice that under macOS the file dialog with wxFD_OPEN style always behaves as if this style was specified, because it is impossible to choose a file that doesn't exist from a standard macOS file dialog. Wraps wxFD_FILE_MUST_EXIST.</summary>
+	FileMustExist = 0x10,
+	/// <summary>For open dialog only: allows selecting multiple files. Wraps wxFD_MULTIPLE.</summary>
+	Multiple = 0x200,
+	/// <summary>Change the current working directory (when the dialog is dismissed) to the directory where the file(s) chosen by the user are. Wraps wxFD_CHANGE_DIR.</summary>
+	ChangeDir = 0x80,
+	/// <summary>Show the preview of the selected files (currently only supported by wxGTK). Wraps wxFD_PREVIEW.</summary>
+	Preview = 0x100,
+	/// <summary>Show hidden files. This flag was added in wxWidgets 3.1.3. Wraps wxFD_SHOW_HIDDEN.</summary>
+	ShowHidden = 0x400,
 }
 
 /// <summary>Styles for <see cref="Frame"/>.</summary>
@@ -84,6 +180,63 @@ public enum FrameStyle : long {
 	FloatOnParent = 0x8,
 	/// <summary>Windows with this style are allowed to have their shape changed with the SetShape() method. Wraps wxFRAME_SHAPED.</summary>
 	Shaped = 0x10,
+}
+
+/// <summary>Styles for <see cref="Gauge"/>.</summary>
+[Flags]
+public enum GaugeStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Creates a horizontal gauge. Wraps wxGA_HORIZONTAL.</summary>
+	Horizontal = 0x4,
+	/// <summary>Creates a vertical gauge. Wraps wxGA_VERTICAL.</summary>
+	Vertical = 0x8,
+	/// <summary>Creates smooth progress bar with one pixel wide update step (not supported by all platforms). Wraps wxGA_SMOOTH.</summary>
+	Smooth = 0x20,
+	/// <summary>Display the current value in percents in the gauge itself. This style is only supported in wxQt and ignored under the other platforms. This flag is only available in wxWidgets 3.1.0 and later. Wraps wxGA_TEXT.</summary>
+	Text = 0x40,
+	/// <summary>Reflect the value of gauge in the application taskbar button under Windows 7 and later and the dock icon under macOS, ignored under the other platforms. This flag is only available in wxWidgets 3.1.0 and later. Wraps wxGA_PROGRESS.</summary>
+	Progress = 0x10,
+}
+
+/// <summary>Styles for <see cref="HyperlinkCtrl"/>.</summary>
+[Flags]
+public enum HyperlinkCtrlStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Align the text to the left. Wraps wxHL_ALIGN_LEFT.</summary>
+	AlignLeft = 0x2,
+	/// <summary>Align the text to the right. This style is not supported under Windows. Wraps wxHL_ALIGN_RIGHT.</summary>
+	AlignRight = 0x4,
+	/// <summary>Center the text (horizontally). This style is not supported under Windows. Wraps wxHL_ALIGN_CENTRE.</summary>
+	AlignCenter = 0x8,
+	/// <summary>Pop up a context menu when the hyperlink is right-clicked. The context menu contains a "Copy URL" menu item which is automatically handled by the hyperlink and which just copies in the clipboard the URL (not the label) of the control. Wraps wxHL_CONTEXTMENU.</summary>
+	Contextmenu = 0x1,
+	/// <summary>The default style for wxHyperlinkCtrl: wxBORDER_NONE|wxHL_CONTEXTMENU|wxHL_ALIGN_CENTRE. Wraps wxHL_DEFAULT_STYLE.</summary>
+	DefaultStyle = 0x200009,
+}
+
+/// <summary>Styles for <see cref="ListBox"/>.</summary>
+[Flags]
+public enum ListBoxStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Single-selection list. Wraps wxLB_SINGLE.</summary>
+	Single = 0x20,
+	/// <summary>Multiple-selection list: the user can toggle multiple items on and off. This is the same as wxLB_EXTENDED in wxGTK2 port. Wraps wxLB_MULTIPLE.</summary>
+	Multiple = 0x40,
+	/// <summary>Extended-selection list: the user can extend the selection by using SHIFT or CTRL keys together with the cursor movement keys or the mouse. Wraps wxLB_EXTENDED.</summary>
+	Extended = 0x80,
+	/// <summary>Create horizontal scrollbar if contents are too wide (Windows only). Wraps wxLB_HSCROLL.</summary>
+	Hscroll = 0x40000000,
+	/// <summary>Always show a vertical scrollbar. Wraps wxLB_ALWAYS_SB.</summary>
+	AlwaysSb = 0x200,
+	/// <summary>Only create a vertical scrollbar if needed. Wraps wxLB_NEEDED_SB.</summary>
+	NeededSb = 0x0,
+	/// <summary>Don't create vertical scrollbar (wxMSW and wxGTK only). Wraps wxLB_NO_SB.</summary>
+	NoSb = 0x400,
+	/// <summary>The listbox contents are sorted in alphabetical order. Wraps wxLB_SORT.</summary>
+	Sort = 0x10,
 }
 
 /// <summary>Styles for <see cref="MessageDialog"/>.</summary>
@@ -129,6 +282,225 @@ public enum MessageDialogStyle : long {
 	Center = 0x1,
 }
 
+/// <summary>Styles for <see cref="MultiChoiceDialog"/>.</summary>
+[Flags]
+public enum MultiChoiceDialogStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Show an OK button. Wraps wxOK.</summary>
+	Ok = 0x4,
+	/// <summary>Show a Cancel button. Wraps wxCANCEL.</summary>
+	Cancel = 0x10,
+	/// <summary>Centre the message. Wraps wxCENTRE.</summary>
+	Center = 0x1,
+}
+
+/// <summary>Styles for <see cref="Notebook"/>.</summary>
+[Flags]
+public enum NotebookStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Place tabs on the top side. Wraps wxNB_TOP.</summary>
+	Top = 0x10,
+	/// <summary>Place tabs on the left side. Wraps wxNB_LEFT.</summary>
+	Left = 0x40,
+	/// <summary>Place tabs on the right side. Wraps wxNB_RIGHT.</summary>
+	Right = 0x80,
+	/// <summary>Place tabs under instead of above the notebook pages. Wraps wxNB_BOTTOM.</summary>
+	Bottom = 0x20,
+	/// <summary>(Windows only) All tabs will have same width. Wraps wxNB_FIXEDWIDTH.</summary>
+	Fixedwidth = 0x100,
+	/// <summary>(Windows only) There can be several rows of tabs. Wraps wxNB_MULTILINE.</summary>
+	MultiLine = 0x200,
+	/// <summary>(Windows only) Display a solid colour on notebook pages, and not a gradient, which can reduce performance. Wraps wxNB_NOPAGETHEME.</summary>
+	Nopagetheme = 0x400,
+}
+
+/// <summary>Styles for <see cref="RadioBox"/>.</summary>
+[Flags]
+public enum RadioBoxStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>The major dimension parameter refers to the maximum number of rows. Wraps wxRA_SPECIFY_ROWS.</summary>
+	SpecifyRows = 0x8,
+	/// <summary>The major dimension parameter refers to the maximum number of columns. Wraps wxRA_SPECIFY_COLS.</summary>
+	SpecifyCols = 0x4,
+}
+
+/// <summary>Styles for <see cref="RadioButton"/>.</summary>
+[Flags]
+public enum RadioButtonStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Marks the beginning of a new group of radio buttons. Wraps wxRB_GROUP.</summary>
+	Group = 0x4,
+	/// <summary>Creates a radio button which is not part of any radio button group. When this style is used, no other radio buttons will be turned off automatically when this button is turned on and such behaviour will need to be implemented manually, in the event handler for this button. This style is currently only supported in wxMSW and wxGTK (since version 3.3.0). In the other ports it can be specified, but single radio buttons can't be turned off, making them not very useful. Wraps wxRB_SINGLE.</summary>
+	Single = 0x8,
+}
+
+/// <summary>Styles for <see cref="ScrollBar"/>.</summary>
+[Flags]
+public enum ScrollBarStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Specifies a horizontal scrollbar. Wraps wxSB_HORIZONTAL.</summary>
+	Horizontal = 0x4,
+	/// <summary>Specifies a vertical scrollbar. Wraps wxSB_VERTICAL.</summary>
+	Vertical = 0x8,
+}
+
+/// <summary>Styles for <see cref="SearchCtrl"/>.</summary>
+[Flags]
+public enum SearchCtrlStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>The control will receive wxEVT_CHAR events for TAB pressed - normally, TAB is used for passing to the next control in a dialog instead. For the control created with this style, you can still use Ctrl-Enter to pass to the next control from the keyboard. Wraps wxTE_PROCESS_TAB.</summary>
+	ProcessTab = 0x40,
+	/// <summary>By default, the Windows text control doesn't show the selection when it doesn't have focus - use this style to force it to always show it. It doesn't do anything under other platforms. Wraps wxTE_NOHIDESEL.</summary>
+	NoHideSelection = 0x2000,
+	/// <summary>The text in the control will be left-justified (default). Wraps wxTE_LEFT.</summary>
+	Left = 0x0,
+	/// <summary>The text in the control will be centered (currently wxMSW and wxGTK2 only). Wraps wxTE_CENTRE.</summary>
+	Center = 0x100,
+	/// <summary>The text in the control will be right-justified (currently wxMSW and wxGTK2 only). Wraps wxTE_RIGHT.</summary>
+	Right = 0x200,
+}
+
+/// <summary>Styles for <see cref="SingleChoiceDialog"/>.</summary>
+[Flags]
+public enum SingleChoiceDialogStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Show an OK button. Wraps wxOK.</summary>
+	Ok = 0x4,
+	/// <summary>Show a Cancel button. Wraps wxCANCEL.</summary>
+	Cancel = 0x10,
+	/// <summary>Centre the message. Wraps wxCENTRE.</summary>
+	Center = 0x1,
+}
+
+/// <summary>Styles for <see cref="Slider"/>.</summary>
+[Flags]
+public enum SliderStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Displays the slider horizontally (this is the default). Wraps wxSL_HORIZONTAL.</summary>
+	Horizontal = 0x4,
+	/// <summary>Displays the slider vertically. Wraps wxSL_VERTICAL.</summary>
+	Vertical = 0x8,
+	/// <summary>Displays tick marks (Windows, GTK+ 2.16 and later). Wraps wxSL_AUTOTICKS.</summary>
+	Autoticks = 0x10,
+	/// <summary>Displays minimum, maximum labels (new since wxWidgets 2.9.1). Wraps wxSL_MIN_MAX_LABELS.</summary>
+	MinMaxLabels = 0x2000,
+	/// <summary>Displays value label (new since wxWidgets 2.9.1). Wraps wxSL_VALUE_LABEL.</summary>
+	ValueLabel = 0x4000,
+	/// <summary>Displays minimum, maximum and value labels (same as wxSL_VALUE_LABEL and wxSL_MIN_MAX_LABELS together). Wraps wxSL_LABELS.</summary>
+	Labels = 0x6000,
+	/// <summary>Displays ticks on the left and forces the slider to be vertical (Windows and GTK+ 3 only). Wraps wxSL_LEFT.</summary>
+	Left = 0x40,
+	/// <summary>Displays ticks on the right and forces the slider to be vertical. Wraps wxSL_RIGHT.</summary>
+	Right = 0x100,
+	/// <summary>Displays ticks on the top (Windows and GTK+ 3 only). Wraps wxSL_TOP.</summary>
+	Top = 0x80,
+	/// <summary>Displays ticks on the bottom (this is the default). Wraps wxSL_BOTTOM.</summary>
+	Bottom = 0x200,
+	/// <summary>Displays ticks on both sides of the slider. Windows only. Wraps wxSL_BOTH.</summary>
+	Both = 0x400,
+	/// <summary>Displays a highlighted selection range. Windows only. Wraps wxSL_SELRANGE.</summary>
+	Selrange = 0x800,
+	/// <summary>Inverses the minimum and maximum endpoints on the slider. Not compatible with wxSL_SELRANGE. Wraps wxSL_INVERSE.</summary>
+	Inverse = 0x1000,
+}
+
+/// <summary>Styles for <see cref="SpinButton"/>.</summary>
+[Flags]
+public enum SpinButtonStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Specifies a horizontal spin button (note that this style is not supported in wxGTK). Wraps wxSP_HORIZONTAL.</summary>
+	Horizontal = 0x4,
+	/// <summary>Specifies a vertical spin button. Wraps wxSP_VERTICAL.</summary>
+	Vertical = 0x8,
+	/// <summary>The user can use arrow keys to change the value. Wraps wxSP_ARROW_KEYS.</summary>
+	ArrowKeys = 0x4000,
+	/// <summary>The value wraps at the minimum and maximum. Wraps wxSP_WRAP.</summary>
+	Wrap = 0x8000,
+}
+
+/// <summary>Styles for <see cref="SpinCtrl"/>.</summary>
+[Flags]
+public enum SpinCtrlStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>The user can use arrow keys to change the value. Wraps wxSP_ARROW_KEYS.</summary>
+	ArrowKeys = 0x4000,
+	/// <summary>The value wraps at the minimum and maximum. Wraps wxSP_WRAP.</summary>
+	Wrap = 0x8000,
+	/// <summary>Indicates that the control should generate wxEVT_TEXT_ENTER events. Using this style will prevent the user from using the Enter key for dialog navigation (e.g. activating the default button in the dialog) under MSW. Wraps wxTE_PROCESS_ENTER.</summary>
+	TeProcessEnter = 0x400,
+	/// <summary>Same as wxTE_LEFT for wxTextCtrl: the text is left aligned (this is the default). Wraps wxALIGN_LEFT.</summary>
+	AlignLeft = 0x0,
+	/// <summary>Same as wxTE_CENTRE for wxTextCtrl: the text is centered. Wraps wxALIGN_CENTRE_HORIZONTAL.</summary>
+	AlignCenterHorizontal = 0x100,
+	/// <summary>Same as wxTE_RIGHT for wxTextCtrl: the text is right aligned. Wraps wxALIGN_RIGHT.</summary>
+	AlignRight = 0x200,
+}
+
+/// <summary>Styles for <see cref="SpinCtrlDouble"/>.</summary>
+[Flags]
+public enum SpinCtrlDoubleStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>The user can use arrow keys to change the value. Wraps wxSP_ARROW_KEYS.</summary>
+	ArrowKeys = 0x4000,
+	/// <summary>The value wraps at the minimum and maximum. Wraps wxSP_WRAP.</summary>
+	Wrap = 0x8000,
+	/// <summary>Indicates that the control should generate wxEVT_TEXT_ENTER events. Using this style will prevent the user from using the Enter key for dialog navigation (e.g. activating the default button in the dialog) under MSW. Wraps wxTE_PROCESS_ENTER.</summary>
+	TeProcessEnter = 0x400,
+	/// <summary>Same as wxTE_LEFT for wxTextCtrl: the text is left aligned (this is the default). Wraps wxALIGN_LEFT.</summary>
+	AlignLeft = 0x0,
+	/// <summary>Same as wxTE_CENTRE for wxTextCtrl: the text is centered. Wraps wxALIGN_CENTRE_HORIZONTAL.</summary>
+	AlignCenterHorizontal = 0x100,
+	/// <summary>Same as wxTE_RIGHT for wxTextCtrl: the text is right aligned. Wraps wxALIGN_RIGHT.</summary>
+	AlignRight = 0x200,
+}
+
+/// <summary>Styles for <see cref="SplitterWindow"/>.</summary>
+[Flags]
+public enum SplitterWindowStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Draws a 3D effect border and sash. Wraps wxSP_3D.</summary>
+	ThreeD = 0x300,
+	/// <summary>Draws a thin sash. Wraps wxSP_THIN_SASH.</summary>
+	ThinSash = 0x0,
+	/// <summary>Draws a 3D effect sash (part of default style). Wraps wxSP_3DSASH.</summary>
+	ThreeDSash = 0x100,
+	/// <summary>Synonym for wxSP_BORDER. Wraps wxSP_3DBORDER.</summary>
+	ThreeDBorder = 0x200,
+	/// <summary>Draws a standard border. Wraps wxSP_BORDER.</summary>
+	Border = 0x200,
+	/// <summary>No border (default). Wraps wxSP_NOBORDER.</summary>
+	Noborder = 0x0,
+	/// <summary>Under Windows, switches off the attempt to draw the splitter using Windows theming, so the borders and sash will take on the pre-XP look. Wraps wxSP_NO_XP_THEME.</summary>
+	NoXpTheme = 0x400,
+	/// <summary>Always allow to unsplit, even with the minimum pane size other than zero. Wraps wxSP_PERMIT_UNSPLIT.</summary>
+	PermitUnsplit = 0x40,
+	/// <summary>Don't draw XOR line but resize the child windows immediately. Wraps wxSP_LIVE_UPDATE.</summary>
+	LiveUpdate = 0x80,
+}
+
+/// <summary>Styles for <see cref="StaticLine"/>.</summary>
+[Flags]
+public enum StaticLineStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Creates a horizontal line. Wraps wxLI_HORIZONTAL.</summary>
+	Horizontal = 0x4,
+	/// <summary>Creates a vertical line. Wraps wxLI_VERTICAL.</summary>
+	Vertical = 0x8,
+}
+
 /// <summary>Styles for <see cref="StaticText"/>.</summary>
 [Flags]
 public enum StaticTextStyle : long {
@@ -150,6 +522,25 @@ public enum StaticTextStyle : long {
 	EllipsizeEnd = 0x10,
 	/// <summary>Wrap label text on multiple lines if necessary, using the available horizontal space. This style only works when the control is used inside a sizer. It is available since wxWidgets 3.3.2. Wraps wxST_WRAP.</summary>
 	Wrap = 0x2,
+}
+
+/// <summary>Styles for <see cref="StatusBar"/>.</summary>
+[Flags]
+public enum StatusBarStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Displays a gripper at the right-hand side of the status bar which can be used to resize the parent window. Wraps wxSTB_SIZEGRIP.</summary>
+	Sizegrip = 0x10,
+	/// <summary>Displays tooltips for those panes whose status text has been ellipsized/truncated because the status text doesn't fit the pane width. Note that this style has effect only on wxGTK (with GTK+ &gt;= 2.12) currently. Wraps wxSTB_SHOW_TIPS.</summary>
+	ShowTips = 0x20,
+	/// <summary>Replace the beginning of the status texts with an ellipsis when the status text widths exceed the status bar pane's widths (uses wxControl::Ellipsize). Wraps wxSTB_ELLIPSIZE_START.</summary>
+	EllipsizeStart = 0x40,
+	/// <summary>Replace the middle of the status texts with an ellipsis when the status text widths exceed the status bar pane's widths (uses wxControl::Ellipsize). Wraps wxSTB_ELLIPSIZE_MIDDLE.</summary>
+	EllipsizeMiddle = 0x80,
+	/// <summary>Replace the end of the status texts with an ellipsis when the status text widths exceed the status bar pane's widths (uses wxControl::Ellipsize). Wraps wxSTB_ELLIPSIZE_END.</summary>
+	EllipsizeEnd = 0x100,
+	/// <summary>The default style: includes wxSTB_SIZEGRIP|wxSTB_SHOW_TIPS|wxSTB_ELLIPSIZE_END|wxFULL_REPAINT_ON_RESIZE. Wraps wxSTB_DEFAULT_STYLE.</summary>
+	DefaultStyle = 0x10130,
 }
 
 /// <summary>Styles for <see cref="TextCtrl"/>.</summary>

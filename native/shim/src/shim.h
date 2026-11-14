@@ -103,8 +103,13 @@ WXK_HANDLE(wxk_Menu, wxMenu)
 WXK_HANDLE(wxk_MenuItem, wxMenuItem)
 WXK_HANDLE(wxk_Timer, wxTimer)
 WXK_HANDLE(wxk_Event, wxEvent)
+WXK_HANDLE(wxk_StringArray, wxArrayString)
 
 #undef WXK_HANDLE
+
+inline const wxArrayString* Unwrap(const wxk_StringArray* value) {
+	return reinterpret_cast<const wxArrayString*>(value);
+}
 
 inline const wxClassInfo* Unwrap(const wxk_ClassInfo* value) {
 	return reinterpret_cast<const wxClassInfo*>(value);

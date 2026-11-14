@@ -38,6 +38,26 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void StringFree(WxkString* text);
 
+	[LibraryImport(Library, EntryPoint = "wxk_StringArray_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkStringArray* StringArrayNew();
+
+	[LibraryImport(Library, EntryPoint = "wxk_StringArray_Add")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void StringArrayAdd(WxkStringArray* array, char* text, nuint textLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_StringArray_GetCount")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial nuint StringArrayGetCount(WxkStringArray* array);
+
+	[LibraryImport(Library, EntryPoint = "wxk_StringArray_Item")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkString* StringArrayItem(WxkStringArray* array, nuint index);
+
+	[LibraryImport(Library, EntryPoint = "wxk_StringArray_Free")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void StringArrayFree(WxkStringArray* array);
+
 	// Objects
 
 	[LibraryImport(Library, EntryPoint = "wxk_EvtHandler_Track")]

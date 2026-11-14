@@ -32,6 +32,26 @@ internal static class Core {
 		// wxMenuBar's Enable and IsEnabled take an item's id, so they would hide Window.IsEnabled.
 		tweaks.Class("wxMenuBar", menuBar => menuBar.Rename("IsEnabled", "IsItemEnabled").Rename("Enable", "EnableItem"));
 		tweaks.Class("wxBoxSizer", sizer => sizer.ParameterEnum("wxBoxSizer", "orient", "Orientation"));
+		tweaks.Class("wxStaticBoxSizer", sizer => sizer.ParameterEnum("wxStaticBoxSizer", "orient", "Orientation"));
+		tweaks.Class("wxGridSizer");
+		tweaks.Class("wxFlexGridSizer");
+		tweaks.Class("wxStdDialogButtonSizer");
+		// The controls most applications use.
+		foreach (string control in (string[])[
+			"wxControl", "wxAnyButton", "wxControlWithItems", "wxCheckBox", "wxRadioButton", "wxRadioBox",
+			"wxChoice", "wxComboBox", "wxListBox", "wxCheckListBox", "wxSpinCtrl", "wxSpinCtrlDouble",
+			"wxSpinButton", "wxSlider", "wxGauge", "wxStaticBox", "wxStaticLine", "wxToggleButton",
+			"wxHyperlinkCtrl", "wxScrollBar", "wxCollapsiblePane", "wxSearchCtrl", "wxStatusBar",
+			"wxBookCtrlBase", "wxNotebook", "wxSplitterWindow",
+		]) {
+			tweaks.Class(control);
+		}
+		// IsEmpty is ambiguous on purpose, between the list and the text. IsListEmpty and IsTextEmpty say which.
+		tweaks.Class("wxComboBox").Ignore("IsEmpty");
+		// The standard dialogs.
+		foreach (string dialog in (string[])["wxTextEntryDialog", "wxPasswordEntryDialog", "wxFileDialog", "wxDirDialog", "wxProgressDialog", "wxSingleChoiceDialog", "wxMultiChoiceDialog"]) {
+			tweaks.Class(dialog);
+		}
 		tweaks.Class("wxEvent", e => e.NoConstructors().Rename("GetSkipped", "IsSkipped"));
 		tweaks.Class("wxCommandEvent");
 		// Veto is written by hand, since it refuses when the close cannot be vetoed.
@@ -45,6 +65,8 @@ internal static class Core {
 			"wxActivateEvent", "wxIdleEvent", "wxUpdateUIEvent", "wxContextMenuEvent", "wxHelpEvent",
 			"wxSysColourChangedEvent", "wxDPIChangedEvent", "wxInitDialogEvent", "wxMenuEvent",
 			"wxFullScreenEvent", "wxNavigationKeyEvent", "wxTimerEvent", "wxScrollWinEvent", "wxEraseEvent",
+			"wxSpinEvent", "wxSpinDoubleEvent", "wxScrollEvent", "wxHyperlinkEvent", "wxBookCtrlEvent",
+			"wxSplitterEvent", "wxCollapsiblePaneEvent",
 		]) {
 			tweaks.Class(eventClass);
 		}

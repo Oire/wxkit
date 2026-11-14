@@ -5,7 +5,7 @@ using WxKit.Interop;
 namespace WxKit;
 
 /// <summary>A text control allows text to be displayed and edited. Wraps wxTextCtrl.</summary>
-public unsafe partial class TextCtrl : Window {
+public unsafe partial class TextCtrl : Control {
 	/// <summary>Constructor, creating and showing a text control.</summary>
 	public TextCtrl(Window parent, string value = "", int id = StandardId.Any, Point? position = null, Size? size = null, TextCtrlStyle style = TextCtrlStyle.None) : this(CreateNative(parent, value, id, position, size, style)) {
 	}
@@ -133,6 +133,13 @@ public unsafe partial class TextCtrl : Window {
 		fixed (char* textText = text) {
 			WxKitNative.TextCtrlAppendText(Native, textText, NativeString.Length(text));
 		}
+	}
+
+	/// <summary>Call this function to enable auto-completion of the text typed in a single-line text control using the given choices.</summary>
+	public bool AutoComplete(IEnumerable<string> choices) {
+		ArgumentNullException.ThrowIfNull(choices);
+		using NativeStringArray choicesNative = new(choices);
+		return WxKitNative.TextCtrlAutoComplete(Native, choicesNative.Handle) != 0;
 	}
 
 	/// <summary>Call this function to enable auto-completion of the text using the file system directories.</summary>

@@ -76,8 +76,12 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 	private IEnumerable<DoxygenMember> MembersOf(DoxygenClass source) {
 		IEnumerable<DoxygenMember> members = source.Members;
 		foreach (string mixin in source.Bases.Skip(1)) {
-			// A mixin's own constructors and destructor are not members of the class it is mixed into.
-			if (api.Classes.TryGetValue(mixin, out DoxygenClass? mixed) && !_classes.ContainsKey(mixin)) members = members.Concat(MembersOf(mixed).Where(member => member.Name != mixin && member.Name != "~" + mixin));
+			// A mixin brings its own bases with it, as wxItemContainer brings wxItemContainerImmutable.
+			// Their constructors and destructors are not members of the class they are mixed into.
+			foreach (string ancestor in Ancestors(mixin).Where(name => !_classes.ContainsKey(name))) {
+				DoxygenClass mixed = api.Classes[ancestor];
+				members = members.Concat(MembersOf(mixed).Where(member => member.Name != ancestor && member.Name != "~" + ancestor).Select(member => member with { Mixin = member.Mixin ?? ancestor }));
+			}
 		}
 		return members;
 	}
@@ -95,7 +99,8 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 			bool isConstructor = member.Name == shortName;
 			if (tweak.IgnoredMembers.Contains(member.Name)) continue;
 			if (isConstructor) {
-				if (!tweak.HasConstructors || bound.Handle == HandleKind.Event) continue;
+				// A class with pure virtual members, such as wxBookCtrlBase, cannot be created.
+				if (!tweak.HasConstructors || bound.Handle == HandleKind.Event || bound.Source.Members.Any(static own => own.IsPureVirtual)) continue;
 				// Two-step creation is not exposed, so a window's default constructor is not bound.
 				if (member.Parameters.Count == 0 && bound.Handle == HandleKind.Window) continue;
 				if (member.Parameters.Count == 1 && CppType.Parse(member.Parameters[0].Type).Name == shortName) continue;
@@ -115,6 +120,9 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 			}
 			if (BindFunction(bound, member, isConstructor) is BoundFunction function) functions.Add(function);
 		}
+		// A mixin can declare a member the class declares too, such as SetValue in both wxComboBox
+		// and wxTextEntry. The class's own, which comes first, is kept.
+		functions = [.. functions.DistinctBy(static function => $"{function.Source.Name}({string.Join(",", function.Source.Parameters.Select(static parameter => parameter.Type))})")];
 		NameOverloads(functions);
 		bound.Constructors.AddRange(functions.Where(static function => function.IsConstructor));
 		PairProperties(bound, [.. functions.Where(static function => !function.IsConstructor)]);
@@ -154,6 +162,9 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		}
 		List<BoundParameter> parameters = [];
 		foreach (DoxygenParameter parameter in member.Parameters) {
+			// A window's name, which few applications set, is left to its default, so every
+			// constructor ends the same way.
+			if (isConstructor && owner.Handle == HandleKind.Window && parameter.Name == "name" && parameter.Default is not null) break;
 			Conversion? conversion = Map(CppType.Parse(parameter.Type), owner, member.Name, parameter.Name, isReturn: false);
 			// A number that defaults to wxBOTH, wxHORIZONTAL, or wxVERTICAL is an orientation.
 			if (conversion == NumberConversion.Int && parameter.Default is string orientation && OrientationPattern().IsMatch(orientation)) conversion = new EnumConversion("Orientation", NumberConversion.Int);
@@ -167,9 +178,19 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 			// A trailing parameter with a default that WxKit cannot convert is left out, and the
 			// rest after it, so the C++ default applies. Anything else makes the function unbindable.
 			if (conversion is null || !resolved) {
-				if (parameter.Default is not null) break;
+				if (parameter.Default is not null) {
+					// An array cut off this way takes its count with it, as in wxChoice(..., int n, const wxString choices[]).
+					if (parameter.Type.EndsWith(']') && parameters.Count > 0 && parameters[^1].CppName is "n" or "count") parameters.RemoveAt(parameters.Count - 1);
+					break;
+				}
 				Skip(owner, member, conversion is null ? $"WxKit cannot convert {parameter.Name}, a {parameter.Type}" : $"WxKit cannot write the default of {parameter.Name}, {parameter.Default}");
 				return null;
+			}
+			// A constructor's position or size can always be left to wxWidgets: the overloads that
+			// require one, such as the one of wxChoice that takes a list, mean the same by the default.
+			if (isConstructor && managedDefault is null && conversion is GeometryConversion) {
+				managedDefault = "null";
+				nullable = true;
 			}
 			parameters.Add(new BoundParameter(parameter.Name, Naming.Parameter(parameter.Name), conversion, nullable, managedDefault));
 		}
@@ -182,17 +203,16 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 	// without a default gets wxID_ANY and moves after the label or title, before the position.
 	private static List<BoundParameter> ManagedOrder(List<BoundParameter> parameters) {
 		List<BoundParameter> ordered = [.. parameters];
-		int id = ordered.FindIndex(static parameter => parameter.CppName is "id" or "winid" && parameter.Default is null && parameter.Conversion == NumberConversion.Int);
+		int id = ordered.FindIndex(static parameter => parameter.CppName is "id" or "winid" && parameter.Conversion == NumberConversion.Int);
 		if (id >= 0) {
 			BoundParameter moved = ordered[id] with { Default = "StandardId.Any" };
 			ordered.RemoveAt(id);
 			int position = ordered.FindIndex(id, static parameter => parameter.CppName == "pos");
 			ordered.Insert(position >= 0 ? position : ordered.Count, moved);
 		}
-		// C# needs every parameter after an optional one to be optional too.
-		int lastRequired = ordered.FindLastIndex(static parameter => parameter.Default is null);
-		for (int index = 0; index < lastRequired; index++) ordered[index] = ordered[index] with { Default = null };
-		return ordered;
+		// C# needs every parameter after an optional one to be optional too, so the required ones
+		// move first, keeping their order, as wxChoice's list moves ahead of its id and position.
+		return [.. ordered.Where(static parameter => parameter.Default is null), .. ordered.Where(static parameter => parameter.Default is not null)];
 	}
 
 	private Conversion? Map(CppType type, BoundClass owner, string member, string? parameter, bool isReturn) {
@@ -221,6 +241,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 			"size_t" => CountConversion.Size,
 			"unsigned" or "unsigned int" => CountConversion.Unsigned,
 			"wxRect" => RectConversion.Instance,
+			"wxArrayString" => StringArrayConversion.Instance,
 			"wxColour" => ColorConversion.Instance,
 			"wxPoint" => GeometryConversion.Point,
 			"wxSize" => GeometryConversion.Size,
@@ -356,8 +377,9 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 			// An event class's own table only says which event types it carries, and a class
 			// re-lists the events it inherits, so neither gets a .NET event.
 			if (!bound.Handle.IsEvtHandler || HasEvent(bound.Base, name)) continue;
-			if (HasMember(bound, name)) {
-				_skipped.Add($"{bound.CppName} event {found.Macro}: named {name}Event, since {name} is a member");
+			// C# allows no member named after its class, and none named after another member.
+			if (HasMember(bound, name) || name == bound.Name) {
+				_skipped.Add($"{bound.CppName} event {found.Macro}: named {name}Event, since {name} is taken");
 				name += "Event";
 			}
 			if (bound.Events.Any(existing => existing.Name == name)) continue;
@@ -391,7 +413,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 
 	private BoundStyles? BindStyles(BoundClass bound) {
 		if (bound.Source.Styles.Count == 0) return null;
-		string? prefix = Naming.SharedStylePrefix(bound.Source.Styles.Select(static style => style.Name));
+		string? prefix = Naming.SharedStylePrefix(bound.Source.Styles.Select(static style => style.Name), api.Constants.ContainsKey);
 		List<BoundStyle> members = [];
 		foreach (DoxygenStyle style in bound.Source.Styles) {
 			// Extra styles, such as wxDIALOG_EX_CONTEXTHELP, are set with SetExtraStyle rather than

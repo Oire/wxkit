@@ -31,6 +31,11 @@ internal static class Naming {
 		["EXACTFIT"] = "ExactFit",
 		["NOTEXT"] = "NoText",
 		["ICONIZE"] = "Iconize",
+		["2STATE"] = "TwoState",
+		["3STATE"] = "ThreeState",
+		["3D"] = "ThreeD",
+		["3DSASH"] = "ThreeDSash",
+		["3DBORDER"] = "ThreeDBorder",
 	};
 
 	private static readonly Dictionary<string, string> ParameterNames = new(StringComparer.Ordinal) {
@@ -43,6 +48,8 @@ internal static class Naming {
 		["win"] = "window",
 		["string"] = "text",
 		["str"] = "text",
+		["n"] = "index",
+		["idx"] = "index",
 	};
 
 	// What the common events are called, in the way .NET names events. An event the table leaves
@@ -72,6 +79,34 @@ internal static class Naming {
 		["EVT_SYS_COLOUR_CHANGED"] = "SystemColorsChanged",
 		["EVT_TEXT_MAXLEN"] = "MaxLengthReached",
 		["EVT_TEXT_URL"] = "UrlClicked",
+		// The controls' own events.
+		["EVT_BOOKCTRL_PAGE_CHANGED"] = "PageChanged",
+		["EVT_BOOKCTRL_PAGE_CHANGING"] = "PageChanging",
+		["EVT_CHECKBOX"] = "CheckedChanged",
+		["EVT_CHECKLISTBOX"] = "ItemCheckedChanged",
+		["EVT_CHOICE"] = "SelectionChanged",
+		["EVT_COLLAPSIBLEPANE_CHANGED"] = "CollapsedChanged",
+		["EVT_COMBOBOX"] = "SelectionChanged",
+		["EVT_COMBOBOX_CLOSEUP"] = "DropDownClosed",
+		["EVT_COMBOBOX_DROPDOWN"] = "DropDownOpened",
+		["EVT_HYPERLINK"] = "Click",
+		["EVT_LISTBOX"] = "SelectionChanged",
+		["EVT_LISTBOX_DCLICK"] = "ItemDoubleClicked",
+		["EVT_NOTEBOOK_PAGE_CHANGED"] = "PageChanged",
+		["EVT_NOTEBOOK_PAGE_CHANGING"] = "PageChanging",
+		["EVT_RADIOBOX"] = "SelectionChanged",
+		["EVT_RADIOBUTTON"] = "Selected",
+		["EVT_SEARCH"] = "SearchRequested",
+		["EVT_SEARCH_CANCEL"] = "SearchCanceled",
+		["EVT_SLIDER"] = "ValueChanged",
+		["EVT_SPINCTRL"] = "ValueChanged",
+		["EVT_SPINCTRLDOUBLE"] = "ValueChanged",
+		["EVT_SPLITTER_DCLICK"] = "SashDoubleClicked",
+		["EVT_SPLITTER_SASH_POS_CHANGED"] = "SashPositionChanged",
+		["EVT_SPLITTER_SASH_POS_CHANGING"] = "SashPositionChanging",
+		["EVT_SPLITTER_SASH_POS_RESIZE"] = "SashPositionResizing",
+		["EVT_SPLITTER_UNSPLIT"] = "Unsplit",
+		["EVT_TOGGLEBUTTON"] = "Toggled",
 	};
 
 	private static readonly HashSet<string> Keywords = ["base", "checked", "class", "default", "event", "fixed", "lock", "object", "operator", "out", "params", "ref", "string", "this"];
@@ -109,12 +144,16 @@ internal static class Naming {
 		return Words(string.Join('_', words));
 	}
 
-	/// <summary>The prefix most of a class's style names share, such as TE for wxTE_MULTILINE.</summary>
-	public static string? SharedStylePrefix(IEnumerable<string> constants) {
-		List<string> prefixes = [.. constants.Select(static name => name[2..].Split('_')).Where(static words => words.Length > 1).Select(static words => words[0])];
+	/// <summary>
+	/// The short prefix a class's own styles share, such as TE for wxTE_MULTILINE or SP for
+	/// wxSP_ARROW_KEYS. Longer words, such as ICON in wxICON_ERROR, are part of the name, and so is a
+	/// word that is a constant itself, such as YES in wxYES_NO, since wxYES exists.
+	/// </summary>
+	public static string? SharedStylePrefix(IEnumerable<string> constants, Func<string, bool>? isConstant = null) {
+		List<string> prefixes = [.. constants.Select(static name => name[2..].Split('_')).Where(words => words.Length > 1 && words[0].Length <= 3 && isConstant?.Invoke("wx" + words[0]) != true).Select(static words => words[0])];
 		if (prefixes.Count == 0) return null;
 		IGrouping<string, string> common = prefixes.GroupBy(static prefix => prefix).OrderByDescending(static group => group.Count()).First();
-		return common.Key.Length <= 3 && common.Count() * 2 > prefixes.Count ? common.Key : null;
+		return common.Count() >= 2 ? common.Key : null;
 	}
 
 	/// <summary>UPPER_CASE_WORDS to PascalCase, respelled.</summary>
@@ -125,8 +164,14 @@ internal static class Naming {
 				result.Append(compound);
 				continue;
 			}
-			// A word already in mixed case, such as RightToLeft in wxLayout_RightToLeft, keeps its own casing.
+			// A word already in mixed case, such as RightToLeft in wxLayout_RightToLeft, keeps its own
+			// casing. A leading digit is spelled out, since an identifier cannot start with one.
 			string rest = word.Any(char.IsLower) ? word[1..] : word[1..].ToLower(CultureInfo.InvariantCulture);
+			if (char.IsDigit(word[0])) {
+				result.Append(Digits[word[0] - '0']);
+				if (rest.Length > 0) result.Append(char.ToUpperInvariant(rest[0])).Append(rest[1..]);
+				continue;
+			}
 			result.Append(char.ToUpperInvariant(word[0])).Append(rest);
 		}
 		return Respell(result.ToString());

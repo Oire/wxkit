@@ -37,6 +37,8 @@ public class NamingTests {
 	public void FindsThePrefixMostStylesShare() {
 		Assert.Equal("TE", Naming.SharedStylePrefix(["wxTE_MULTILINE", "wxTE_READONLY", "wxHSCROLL"]));
 		Assert.Null(Naming.SharedStylePrefix(["wxOK", "wxCANCEL", "wxICON_ERROR", "wxICON_WARNING", "wxYES_NO", "wxCENTRE"]));
+		Assert.Equal("SP", Naming.SharedStylePrefix(["wxSP_ARROW_KEYS", "wxSP_WRAP", "wxTE_PROCESS_ENTER", "wxALIGN_LEFT"]));
+		Assert.Null(Naming.SharedStylePrefix(["wxYES_NO", "wxYES_DEFAULT", "wxOK"], static name => name == "wxYES"));
 	}
 
 	[Theory]
