@@ -32,6 +32,18 @@ set(WXK_SOURCES
 	src/app.cpp
 	src/clipboard.cpp
 	src/event.cpp
+	src/handlers/all.cpp
+	src/handlers/png.cpp
+	src/handlers/jpeg.cpp
+	src/handlers/tiff.cpp
+	src/handlers/gif.cpp
+	src/handlers/webp.cpp
+	src/handlers/pnm.cpp
+	src/handlers/pcx.cpp
+	src/handlers/iff.cpp
+	src/handlers/tga.cpp
+	src/handlers/xpm.cpp
+	src/handlers/icon.cpp
 	src/menu.cpp
 	src/object.cpp
 	src/sizer.cpp

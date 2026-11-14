@@ -44,6 +44,23 @@ public class ValueTests {
 	});
 
 	[Fact]
+	public Task SavesAndLoadsAPngOnceItsHandlerIsAdded() => Gui.Run(() => {
+		Image.AddPngHandler();
+		Image.AddPngHandler();
+		string path = Path.Combine(Path.GetTempPath(), $"wxkit-{Guid.NewGuid():N}.png");
+		try {
+			using Image image = new(4, 4);
+			image.SetRGB(1, 2, 10, 20, 30);
+			Assert.True(image.SaveFile(path, BitmapType.Png));
+			using Image loaded = new();
+			Assert.True(loaded.LoadFile(path, BitmapType.Png));
+			Assert.Equal((byte)20, loaded.GetGreen(1, 2));
+		} finally {
+			File.Delete(path);
+		}
+	});
+
+	[Fact]
 	public Task GivesAnEmptyValueAsNull() => Gui.Run(() => {
 		using Image empty = new();
 		Assert.False(empty.IsOk);

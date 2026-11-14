@@ -171,6 +171,12 @@ wxk_WindowList* ToWindowList(const List& list) {
 	return reinterpret_cast<wxk_WindowList*>(copy);
 }
 
+// Adds an image file format, unless it is already added, so calling twice does nothing.
+template <typename Handler>
+void AddImageHandler(wxBitmapType type) {
+	if (wxImage::FindHandler(type) == nullptr) wxImage::AddHandler(new Handler());
+}
+
 template <typename T>
 T* As(wxk_Window* window) {
 	return static_cast<T*>(Unwrap(window));

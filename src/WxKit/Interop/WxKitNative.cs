@@ -86,6 +86,54 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void ClipboardClear();
 
+	[LibraryImport(Library, EntryPoint = "wxk_Image_AddPngHandler")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ImageAddPngHandler();
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_AddJpegHandler")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ImageAddJpegHandler();
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_AddTiffHandler")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ImageAddTiffHandler();
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_AddGifHandler")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ImageAddGifHandler();
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_AddWebpHandler")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ImageAddWebpHandler();
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_AddPnmHandler")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ImageAddPnmHandler();
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_AddPcxHandler")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ImageAddPcxHandler();
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_AddIffHandler")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ImageAddIffHandler();
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_AddTgaHandler")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ImageAddTgaHandler();
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_AddXpmHandler")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ImageAddXpmHandler();
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_AddIconHandler")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ImageAddIconHandler();
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_AddAllHandlers")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ImageAddAllHandlers();
+
 	// Objects
 
 	[LibraryImport(Library, EntryPoint = "wxk_EvtHandler_Track")]

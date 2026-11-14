@@ -129,6 +129,22 @@ WXK_FUNCTION(wxk_String*) wxk_Clipboard_GetText(void) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Clipboard_HasText(void) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Clipboard_Clear(void) WXK_NOEXCEPT;
 
+// Image file formats. Each is in a file of its own, so a statically linked application only
+// links the formats it adds. BMP is always there.
+
+WXK_FUNCTION(void) wxk_Image_AddPngHandler(void) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Image_AddJpegHandler(void) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Image_AddTiffHandler(void) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Image_AddGifHandler(void) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Image_AddWebpHandler(void) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Image_AddPnmHandler(void) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Image_AddPcxHandler(void) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Image_AddIffHandler(void) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Image_AddTgaHandler(void) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Image_AddXpmHandler(void) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Image_AddIconHandler(void) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Image_AddAllHandlers(void) WXK_NOEXCEPT;
+
 // Events
 
 // Binds callback to events of eventType from ids in [id, lastId], where -1 means any. When
