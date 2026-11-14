@@ -5,10 +5,12 @@ on:
     branches: [master]
   pull_request:
 
-# A newer push to the same branch or pull request makes an older run moot, so only the newest runs.
+# A newer push to a pull request makes an older run moot, so only the newest runs. On master, a
+# run is left to finish, and newer pushes wait for it, since a cold wxWidgets build takes longer
+# than the gap between pushes and its cache is only saved once it ends.
 concurrency:
   group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   windows:
@@ -34,8 +36,9 @@ jobs:
       # The build folder is cached, so a change to the shim rebuilds only the shim. The key starts
       # with the wxWidgets commit and the build script, so a cache from another wxWidgets or other
       # build options is never restored.
-      - name: Cache the native build
-        uses: actions/cache@v4
+      - name: Restore the native build
+        id: native-cache
+        uses: actions/cache/restore@v4
         with:
           path: artifacts/native-build/win-x64
           key: native-win-x64-${{ steps.wx.outputs.commit }}-${{ hashFiles('scripts/build-native.ps1') }}-${{ hashFiles('native/shim/**') }}
@@ -51,6 +54,14 @@ jobs:
       - name: Build wxWidgets and the shim
         shell: pwsh
         run: ./scripts/build-native.ps1 -Runtimes win-x64
+
+      # Saved as soon as the build is done, so a failing test does not throw the build away.
+      - name: Save the native build
+        if: steps.native-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: artifacts/native-build/win-x64
+          key: ${{ steps.native-cache.outputs.cache-primary-key }}
 
       - name: Check formatting
         run: dotnet format WxKit.slnx --verify-no-changes
