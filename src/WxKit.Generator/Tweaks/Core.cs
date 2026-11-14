@@ -12,9 +12,10 @@ internal static class Core {
 		tweaks.Class("wxMenu").Handwritten().Wrappable();
 		tweaks.Class("wxWindow", window => window
 			.NoConstructors()
-			// WxKit tracks the sizer a window owns, gives the native handle as NativeHandle, and
-			// keeps the validator it was given, since the window holds a copy.
-			.Ignore("SetSizer", "SetSizerAndFit", "GetSizer", "GetHandle", "SetValidator", "GetValidator")
+			// WxKit tracks the sizer a window owns, gives the native handle as NativeHandle, keeps
+			// the validator it was given, since the window holds a copy, and gives a window its
+			// accessible object through the hand-written Accessible.
+			.Ignore("SetSizer", "SetSizerAndFit", "GetSizer", "GetHandle", "SetValidator", "GetValidator", "GetAccessible", "SetAccessible", "CreateAccessible", "GetOrCreateAccessible")
 			.Property("IsEnabled", "IsEnabled", "Enable")
 			.ParameterEnum("Centre", "direction", "Orientation"));
 		tweaks.Class("wxTopLevelWindow", window => window
@@ -59,6 +60,13 @@ internal static class Core {
 		// Toolbars. The tools they return are not bound, so adding one gives nothing back; its id names it.
 		tweaks.Class("wxToolBar").DiscardUnboundReturns();
 		// Lists and trees, and what they hold.
+		// Accessibility, for the hand-written Accessible, which describes a custom control to screen readers.
+		tweaks.Enum("wxAccRole", "AccessibleRole", memberPrefix: "wxROLE_SYSTEM_");
+		tweaks.Enum("wxAccObject", "AccessibleObject");
+		tweaks.Enum("wxNavDir", "NavigationDirection");
+		tweaks.Enum("wxAccSelectionFlags", "AccessibleSelection", isFlags: true);
+		tweaks.ConstantEnum("AccessibleStates", "wxACC_STATE_SYSTEM_", isFlags: true);
+		tweaks.ConstantEnum("AccessibleEvent", "wxACC_EVENT_");
 		// A virtual list asks for each row as it shows it, through members C# overrides.
 		tweaks.Class("wxListCtrl", list => list
 			.ParameterEnum("InsertColumn", "format", "wxListColumnFormat")

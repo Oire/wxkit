@@ -7410,17 +7410,17 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeCollapsiblepaneChanged();
 
-	[LibraryImport(Library, EntryPoint = "wxk_EventType_Combobox")]
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_ComboBox")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial int EventTypeCombobox();
+	public static partial int EventTypeComboBox();
 
-	[LibraryImport(Library, EntryPoint = "wxk_EventType_ComboboxCloseup")]
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_ComboBoxCloseup")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial int EventTypeComboboxCloseup();
+	public static partial int EventTypeComboBoxCloseup();
 
-	[LibraryImport(Library, EntryPoint = "wxk_EventType_ComboboxDropdown")]
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_ComboBoxDropdown")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial int EventTypeComboboxDropdown();
+	public static partial int EventTypeComboBoxDropdown();
 
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_CommandEnter")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -7706,13 +7706,13 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeQueryEndSession();
 
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_RadioButton")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeRadioButton();
+
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_Radiobox")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeRadiobox();
-
-	[LibraryImport(Library, EntryPoint = "wxk_EventType_Radiobutton")]
-	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial int EventTypeRadiobutton();
 
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_RightDclick")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -7725,6 +7725,10 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_RightUp")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeRightUp();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollBar")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeScrollBar();
 
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollBottom")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -7761,10 +7765,6 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollTop")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeScrollTop();
-
-	[LibraryImport(Library, EntryPoint = "wxk_EventType_Scrollbar")]
-	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial int EventTypeScrollbar();
 
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollwinBottom")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

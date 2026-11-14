@@ -6,7 +6,7 @@ public class ToolBarTests {
 		ToolBar? toolBar = frame.CreateToolBar();
 		Assert.NotNull(toolBar);
 		Assert.Same(toolBar, frame.ToolBar);
-		using Bitmap? open = ArtProvider.GetBitmap(ArtId.FileOpen, ArtClient.Toolbar);
+		using Bitmap? open = ArtProvider.GetBitmap(ArtId.FileOpen, ArtClient.ToolBar);
 		Assert.NotNull(open);
 		toolBar.AddTool(StandardId.Open, "Open", open, "Open a file");
 		toolBar.AddSeparator();

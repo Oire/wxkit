@@ -50,6 +50,10 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 			BindEvents(bound);
 		}
 		foreach ((string constant, string eventClass) in tweaks.ExtraEventTypes) EventTypeFor(constant, eventClass);
+		foreach (string cppName in tweaks.Enums.Keys) {
+			if (EnumFor(cppName) is null) throw new InvalidOperationException($"A tweak binds the enum {cppName}, which the interface headers do not have.");
+		}
+		foreach (ConstantEnumTweak group in tweaks.ConstantEnums) BindConstantEnum(group);
 		return new BindingResult(
 			[.. _classes.Values.OrderBy(static bound => bound.CppName, StringComparer.Ordinal)],
 			[.. _eventTypes.Values.OrderBy(static type => type.Name, StringComparer.Ordinal)],
@@ -524,22 +528,38 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		if (_enums.TryGetValue(cppName, out BoundEnum? cached)) return cached;
 		_enums[cppName] = null;
 		if (!api.Enums.TryGetValue(cppName, out DoxygenEnum? source) || source.Values.Count == 0) return null;
+		EnumTweak? tweak = tweaks.Enums.GetValueOrDefault(cppName);
+		string managed = tweak?.Name ?? Naming.Type(cppName.Contains("::", StringComparison.Ordinal) ? cppName[(cppName.LastIndexOf(':') + 1)..] : cppName);
+		BoundEnum bound = new(managed, cppName, EnumMembers(cppName, source, tweak?.MemberPrefix)) { IsFlags = tweak?.IsFlags ?? false };
+		_enums[cppName] = bound;
+		return bound;
+	}
+
+	private List<BoundStyle> EnumMembers(string owner, DoxygenEnum source, string? memberPrefix) {
 		int shared = SharedWords(source);
 		List<BoundStyle> members = [];
 		foreach (DoxygenEnumValue value in source.Values) {
 			// A value that is unknown, or depends on the platform, such as wxCURSOR_ARROWWAIT, is left out.
 			if (_constants.Value(value.Name) is not long number) {
-				_skipped.Add($"enum {cppName}: the value of {value.Name} is unknown or depends on the platform");
+				_skipped.Add($"enum {owner}: the value of {value.Name} is unknown or depends on the platform");
 				continue;
 			}
-			string name = MemberName(value.Name, shared);
+			string name = memberPrefix is not null && value.Name.StartsWith(memberPrefix, StringComparison.Ordinal) ? Naming.Words(value.Name[memberPrefix.Length..]) : MemberName(value.Name, shared);
 			if (char.IsDigit(name[0])) name = "Value" + name;
 			if (members.All(existing => existing.Name != name)) members.Add(new BoundStyle(name, value.Name, number, value.Brief));
 		}
-		string managed = Naming.Type(cppName.Contains("::", StringComparison.Ordinal) ? cppName[(cppName.LastIndexOf(':') + 1)..] : cppName);
-		BoundEnum bound = new(managed, cppName, members);
-		_enums[cppName] = bound;
-		return bound;
+		return members;
+	}
+
+	// Constants wxWidgets defines one by one, such as wxACC_STATE_SYSTEM_FOCUSED, as one enum in
+	// the order of their values. Flags get None, for none of them.
+	private void BindConstantEnum(ConstantEnumTweak group) {
+		List<string> names = [.. api.Constants.Keys.Where(name => name.StartsWith(group.Prefix, StringComparison.Ordinal)).Order(StringComparer.Ordinal)];
+		if (names.Count == 0) throw new InvalidOperationException($"A tweak binds the constants named {group.Prefix}*, which the interface headers do not have.");
+		DoxygenEnum source = new($"{group.Prefix}*", [.. names.Select(static name => new DoxygenEnumValue(name, string.Empty))]);
+		List<BoundStyle> members = [.. EnumMembers(source.Name, source, memberPrefix: null).OrderBy(static member => member.Value)];
+		if (group.IsFlags && members.All(static member => member.Value != 0)) members.Insert(0, new BoundStyle("None", "0", 0, "None of the flags."));
+		_enums[group.Name] = new BoundEnum(group.Name, source.Name, members) { IsFlags = group.IsFlags };
 	}
 
 	// How many leading words all of an enum's members share, such as SHOW_EFFECT in wxSHOW_EFFECT_NONE.

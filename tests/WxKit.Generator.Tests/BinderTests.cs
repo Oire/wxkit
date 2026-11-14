@@ -40,7 +40,7 @@ public class BinderTests {
 			Class("wxEvent", "wxObject"),
 			Class("wxCommandEvent", "wxEvent", [Function("GetString", "wxString")]),
 		];
-		Dictionary<string, string> constants = new() { ["wxBU_LEFT"] = "0x0040", ["wxBU_TOP"] = "0x0080", ["wxBOTH"] = "0x000C" };
+		Dictionary<string, string> constants = new() { ["wxBU_LEFT"] = "0x0040", ["wxBU_TOP"] = "0x0080", ["wxBOTH"] = "0x000C", ["wxACC_STATE_SYSTEM_FOCUSED"] = "0x1000", ["wxACC_STATE_SYSTEM_BUSY"] = "0x0010" };
 		return new DoxygenApi(classes.ToDictionary(static found => found.Name), constants, new Dictionary<string, string> { ["wxEVT_BUTTON"] = "wx/button.h" }, new Dictionary<string, DoxygenEnum>());
 	}
 
@@ -138,4 +138,13 @@ public class BinderTests {
 
 	[Fact]
 	public void RefusesToOverrideWhatADirectorCannotConvert() => Assert.Throws<InvalidOperationException>(() => Bind(tweaks => tweaks.Class("wxButton").Director("OnGetNamed")));
+
+	[Fact]
+	public void BindsDefinedConstantsAsOneEnum() {
+		BindingResult result = Bind(static tweaks => tweaks.ConstantEnum("AccessibleStates", "wxACC_STATE_SYSTEM_", isFlags: true));
+		BoundEnum states = result.Enums.Single(static bound => bound.Name == "AccessibleStates");
+		Assert.True(states.IsFlags);
+		Assert.Equal(["None", "Busy", "Focused"], states.Members.Select(static member => member.Name));
+		Assert.Equal(0x1000, states.Members[^1].Value);
+	}
 }

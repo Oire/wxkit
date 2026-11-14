@@ -33,8 +33,8 @@ public unsafe partial class RadioButton : Control {
 
 	/// <summary>Process a wxEVT_RADIOBUTTON event, when the radiobutton is clicked.</summary>
 	public event EventHandler<CommandEvent>? Selected {
-		add => AddHandler(EventType.Radiobutton, StandardId.Any, StandardId.Any, value, this);
-		remove => RemoveHandler(EventType.Radiobutton, StandardId.Any, StandardId.Any, value);
+		add => AddHandler(EventType.RadioButton, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.RadioButton, StandardId.Any, StandardId.Any, value);
 	}
 
 	private static WxkWindow* CreateNative(Window parent, string label, int id, Point? position, Size? size, RadioButtonStyle style) {

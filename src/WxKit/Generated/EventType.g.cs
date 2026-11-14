@@ -57,13 +57,13 @@ public static unsafe partial class EventType {
 	public static EventType<CollapsiblePaneEvent> CollapsiblepaneChanged { get; } = new(WxKitNative.EventTypeCollapsiblepaneChanged, static native => new CollapsiblePaneEvent((WxkEvent*)native));
 
 	/// <summary>Wraps wxEVT_COMBOBOX.</summary>
-	public static EventType<CommandEvent> Combobox { get; } = new(WxKitNative.EventTypeCombobox, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> ComboBox { get; } = new(WxKitNative.EventTypeComboBox, static native => new CommandEvent((WxkEvent*)native));
 
 	/// <summary>Wraps wxEVT_COMBOBOX_CLOSEUP.</summary>
-	public static EventType<CommandEvent> ComboboxCloseup { get; } = new(WxKitNative.EventTypeComboboxCloseup, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> ComboBoxCloseup { get; } = new(WxKitNative.EventTypeComboBoxCloseup, static native => new CommandEvent((WxkEvent*)native));
 
 	/// <summary>Wraps wxEVT_COMBOBOX_DROPDOWN.</summary>
-	public static EventType<CommandEvent> ComboboxDropdown { get; } = new(WxKitNative.EventTypeComboboxDropdown, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> ComboBoxDropdown { get; } = new(WxKitNative.EventTypeComboBoxDropdown, static native => new CommandEvent((WxkEvent*)native));
 
 	/// <summary>Wraps wxEVT_COMMAND_ENTER.</summary>
 	public static EventType<CommandEvent> CommandEnter { get; } = new(WxKitNative.EventTypeCommandEnter, static native => new CommandEvent((WxkEvent*)native));
@@ -278,11 +278,11 @@ public static unsafe partial class EventType {
 	/// <summary>Wraps wxEVT_QUERY_END_SESSION.</summary>
 	public static EventType<CloseEvent> QueryEndSession { get; } = new(WxKitNative.EventTypeQueryEndSession, static native => new CloseEvent((WxkEvent*)native));
 
+	/// <summary>Wraps wxEVT_RADIOBUTTON.</summary>
+	public static EventType<CommandEvent> RadioButton { get; } = new(WxKitNative.EventTypeRadioButton, static native => new CommandEvent((WxkEvent*)native));
+
 	/// <summary>Wraps wxEVT_RADIOBOX.</summary>
 	public static EventType<CommandEvent> Radiobox { get; } = new(WxKitNative.EventTypeRadiobox, static native => new CommandEvent((WxkEvent*)native));
-
-	/// <summary>Wraps wxEVT_RADIOBUTTON.</summary>
-	public static EventType<CommandEvent> Radiobutton { get; } = new(WxKitNative.EventTypeRadiobutton, static native => new CommandEvent((WxkEvent*)native));
 
 	/// <summary>Wraps wxEVT_RIGHT_DCLICK.</summary>
 	public static EventType<MouseEvent> RightDclick { get; } = new(WxKitNative.EventTypeRightDclick, static native => new MouseEvent((WxkEvent*)native));
@@ -292,6 +292,9 @@ public static unsafe partial class EventType {
 
 	/// <summary>Wraps wxEVT_RIGHT_UP.</summary>
 	public static EventType<MouseEvent> RightUp { get; } = new(WxKitNative.EventTypeRightUp, static native => new MouseEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_SCROLLBAR.</summary>
+	public static EventType<ScrollEvent> ScrollBar { get; } = new(WxKitNative.EventTypeScrollBar, static native => new ScrollEvent((WxkEvent*)native));
 
 	/// <summary>Wraps wxEVT_SCROLL_BOTTOM.</summary>
 	public static EventType<ScrollEvent> ScrollBottom { get; } = new(WxKitNative.EventTypeScrollBottom, static native => new ScrollEvent((WxkEvent*)native));
@@ -319,9 +322,6 @@ public static unsafe partial class EventType {
 
 	/// <summary>Wraps wxEVT_SCROLL_TOP.</summary>
 	public static EventType<ScrollEvent> ScrollTop { get; } = new(WxKitNative.EventTypeScrollTop, static native => new ScrollEvent((WxkEvent*)native));
-
-	/// <summary>Wraps wxEVT_SCROLLBAR.</summary>
-	public static EventType<ScrollEvent> Scrollbar { get; } = new(WxKitNative.EventTypeScrollbar, static native => new ScrollEvent((WxkEvent*)native));
 
 	/// <summary>Wraps wxEVT_SCROLLWIN_BOTTOM.</summary>
 	public static EventType<ScrollWinEvent> ScrollwinBottom { get; } = new(WxKitNative.EventTypeScrollwinBottom, static native => new ScrollWinEvent((WxkEvent*)native));

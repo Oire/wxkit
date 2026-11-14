@@ -102,6 +102,34 @@ panel.Paint += (sender, e) => {
 
 They derive from `NativeObject` too, and their finalizers post the delete to the GUI thread, but a drawing context should not wait for the collector. A context that wxWidgets hands back, such as an erase event's, is not WxKit's to delete, so members that return one are not bound yet.
 
+### Accessibility
+
+Standard controls are accessible already, since Windows describes them to screen readers itself. A control that draws itself, such as a grid or a game board, is one window to Windows, which cannot see its parts. A class derived from `Accessible` describes it, through Microsoft Active Accessibility:
+
+```csharp
+sealed class BoardAccessible : Accessible {
+	private readonly Board _board;
+
+	public BoardAccessible(Board board) : base(board) => _board = board;
+
+	protected override string? GetName(int childId) => childId == 0 ? "Board" : _board.CellName(childId);
+
+	protected override AccessibleRole? GetRole(int childId) => childId == 0 ? AccessibleRole.Table : AccessibleRole.Cell;
+
+	protected override int? GetChildCount() => _board.CellCount;
+
+	protected override AccessibleElement? GetFocus() => AccessibleElement.Child(_board.FocusedCell);
+}
+```
+
+Each member answers for the window, when the id is 0, or for one of its parts, numbered from 1. A member that returns null has no answer, and Windows answers from the window's standard accessible object, so a class only overrides what its control needs. The elements that `GetChild`, `GetFocus`, `HitTest`, and `Navigate` return are an `AccessibleElement`: the window itself, a part, an element with an accessible object of its own, or none, such as for a point outside the window.
+
+A member that throws `ArgumentOutOfRangeException` tells the screen reader that the part does not exist, which is its to handle. Any other exception goes to `Application.UnhandledException`, and the screen reader is told that the question failed. Nothing is swallowed: a missing answer, a missing part, and a bug are each told apart.
+
+Creating the object gives it to the window, which keeps it until the window is destroyed or given another, and `Window.AccessibleObject` is the one it has. When something in the control changes, such as the focus moving to another cell, `Accessible.NotifyEvent` tells screen readers, which then ask again.
+
+`wxAccessible` is written by hand, as `CustomValidator` is, since its members answer through a status and output parameters, which a C# member says better with a nullable result. Its enums, such as `AccessibleRole` and `AccessibleStates`, are generated.
+
 ### Validators
 
 A validator checks a control's value, and moves data between the control and the application, when a dialog's OK button is pressed or `Window.Validate`, `TransferDataToWindow`, or `TransferDataFromWindow` runs. `TextValidator` is wxWidgets's, with its filters as `TextValidatorStyle`. A validator written in C# derives from `CustomValidator` and overrides the checks it needs:

@@ -228,7 +228,7 @@ public enum ListBoxStyle : long {
 	/// <summary>Extended-selection list: the user can extend the selection by using SHIFT or CTRL keys together with the cursor movement keys or the mouse. Wraps wxLB_EXTENDED.</summary>
 	Extended = 0x80,
 	/// <summary>Create horizontal scrollbar if contents are too wide (Windows only). Wraps wxLB_HSCROLL.</summary>
-	Hscroll = 0x40000000,
+	HorizontalScrollBar = 0x40000000,
 	/// <summary>Always show a vertical scrollbar. Wraps wxLB_ALWAYS_SB.</summary>
 	AlwaysSb = 0x200,
 	/// <summary>Only create a vertical scrollbar if needed. Wraps wxLB_NEEDED_SB.</summary>
@@ -567,7 +567,7 @@ public enum StatusBarStyle : long {
 	/// <summary>No styles. Wraps 0.</summary>
 	None = 0x0,
 	/// <summary>Displays a gripper at the right-hand side of the status bar which can be used to resize the parent window. Wraps wxSTB_SIZEGRIP.</summary>
-	Sizegrip = 0x10,
+	SizeGrip = 0x10,
 	/// <summary>Displays tooltips for those panes whose status text has been ellipsized/truncated because the status text doesn't fit the pane width. Note that this style has effect only on wxGTK (with GTK+ &gt;= 2.12) currently. Wraps wxSTB_SHOW_TIPS.</summary>
 	ShowTips = 0x20,
 	/// <summary>Replace the beginning of the status texts with an ellipsis when the status text widths exceed the status bar pane's widths (uses wxControl::Ellipsize). Wraps wxSTB_ELLIPSIZE_START.</summary>
@@ -604,9 +604,9 @@ public enum TextCtrlStyle : long {
 	/// <summary>By default, the Windows text control doesn't show the selection when it doesn't have focus - use this style to force it to always show it. It doesn't do anything under other platforms. Wraps wxTE_NOHIDESEL.</summary>
 	NoHideSelection = 0x2000,
 	/// <summary>A horizontal scrollbar will be created and used, so that text won't be wrapped. Wraps wxHSCROLL.</summary>
-	Hscroll = 0x40000000,
+	HorizontalScrollBar = 0x40000000,
 	/// <summary>For multiline controls only: vertical scrollbar will never be created. This limits the amount of text which can be entered into the control to what can be displayed in it under wxMSW but not under wxGTK or wxOSX. Currently not implemented for the other platforms. Wraps wxTE_NO_VSCROLL.</summary>
-	NoVscroll = 0x2,
+	NoVerticalScrollBar = 0x2,
 	/// <summary>The text in the control will be left-justified (default). Wraps wxTE_LEFT.</summary>
 	Left = 0x0,
 	/// <summary>The text in the control will be centered (wxMSW, wxGTK, wxOSX). Wraps wxTE_CENTRE.</summary>
@@ -719,9 +719,9 @@ public enum WindowStyle : long {
 	/// <summary>On Windows, this style used to disable repainting the window completely when its size is changed. Since this behaviour is now the default, the style is now obsolete and no longer has an effect. Wraps wxNO_FULL_REPAINT_ON_RESIZE.</summary>
 	NoFullRepaintOnResize = 0x0,
 	/// <summary>Use this style to enable a vertical scrollbar. Notice that this style cannot be used with native controls which don't support scrollbars nor with top-level windows in most ports. Wraps wxVSCROLL.</summary>
-	Vscroll = 0x80000000,
+	VerticalScrollBar = 0x80000000,
 	/// <summary>Use this style to enable a horizontal scrollbar. The same limitations as for wxVSCROLL apply to this style. Wraps wxHSCROLL.</summary>
-	Hscroll = 0x40000000,
+	HorizontalScrollBar = 0x40000000,
 	/// <summary>If a window has scrollbars, disable them instead of hiding them when they are not needed (i.e. when the size of the window is big enough to not require the scrollbars to navigate it). This style is currently implemented for wxMSW, wxGTK and wxUniversal and does nothing on the other platforms. Wraps wxALWAYS_SHOW_SB.</summary>
 	AlwaysShowSb = 0x800000,
 	/// <summary>Use this style to eliminate flicker caused by the background being repainted, then children being painted over them. Windows only. Wraps wxCLIP_CHILDREN.</summary>

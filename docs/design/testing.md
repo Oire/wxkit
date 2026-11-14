@@ -52,6 +52,8 @@ Some events only come from the user, such as a button click. On Windows, the tes
 
 ## Accessibility checks
 
-Native controls are accessible by default, but the way an application builds them can still break that, such as creating a label after the control it names. The Hello sample was checked by hand through MSAA, where its text box is named after the label before it and its button reports its role and state. A later step is to make checks like that part of the tests.
+Native controls are accessible by default, but the way an application builds them can still break that, such as creating a label after the control it names. The Hello sample was checked by hand through MSAA, where its text box is named after the label before it and its button reports its role and state.
+
+The tests of `Accessible` read a window through MSAA, as a screen reader does. `Msaa.Of` asks Windows for the window's `IAccessible`, which in the same process and on the GUI thread is the window's own, so a test can ask for a name, role, state, or child count and check what the control's `Accessible` answered. Making checks like that for the Hello sample's controls is a later step.
 
 When checking from .NET, note that the managed UI Automation client in `System.Windows.Automation` reports every Win32 control as a pane with no patterns, because it lacks the client-side providers that map them. MSAA, or the native UI Automation COM interface, shows the real roles and names, as a screen reader sees them.

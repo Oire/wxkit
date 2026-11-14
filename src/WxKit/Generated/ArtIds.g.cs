@@ -142,5 +142,5 @@ public static class ArtClient {
 	/// <summary>Wraps wxART_OTHER.</summary>
 	public const string Other = "wxART_OTHER_C";
 	/// <summary>Wraps wxART_TOOLBAR.</summary>
-	public const string Toolbar = "wxART_TOOLBAR_C";
+	public const string ToolBar = "wxART_TOOLBAR_C";
 }

@@ -3,6 +3,326 @@
 
 namespace WxKit;
 
+/// <summary>Wraps wxACC_EVENT_*.</summary>
+public enum AccessibleEvent {
+	/// <summary>Wraps wxACC_EVENT_SYSTEM_SOUND.</summary>
+	SystemSound = 1,
+	/// <summary>Wraps wxACC_EVENT_SYSTEM_ALERT.</summary>
+	SystemAlert = 2,
+	/// <summary>Wraps wxACC_EVENT_SYSTEM_FOREGROUND.</summary>
+	SystemForeground = 3,
+	/// <summary>Wraps wxACC_EVENT_SYSTEM_MENUSTART.</summary>
+	SystemMenuStart = 4,
+	/// <summary>Wraps wxACC_EVENT_SYSTEM_MENUEND.</summary>
+	SystemMenuEnd = 5,
+	/// <summary>Wraps wxACC_EVENT_SYSTEM_MENUPOPUPSTART.</summary>
+	SystemMenuPopupStart = 6,
+	/// <summary>Wraps wxACC_EVENT_SYSTEM_MENUPOPUPEND.</summary>
+	SystemMenuPopupEnd = 7,
+	/// <summary>Wraps wxACC_EVENT_SYSTEM_CAPTURESTART.</summary>
+	SystemCaptureStart = 8,
+	/// <summary>Wraps wxACC_EVENT_SYSTEM_CAPTUREEND.</summary>
+	SystemCaptureEnd = 9,
+	/// <summary>Wraps wxACC_EVENT_SYSTEM_MOVESIZESTART.</summary>
+	SystemMoveSizeStart = 10,
+	/// <summary>Wraps wxACC_EVENT_SYSTEM_MOVESIZEEND.</summary>
+	SystemMoveSizeEnd = 11,
+	/// <summary>Wraps wxACC_EVENT_SYSTEM_CONTEXTHELPSTART.</summary>
+	SystemContextHelpStart = 12,
+	/// <summary>Wraps wxACC_EVENT_SYSTEM_CONTEXTHELPEND.</summary>
+	SystemContextHelpEnd = 13,
+	/// <summary>Wraps wxACC_EVENT_SYSTEM_DRAGDROPSTART.</summary>
+	SystemDragDropStart = 14,
+	/// <summary>Wraps wxACC_EVENT_SYSTEM_DRAGDROPEND.</summary>
+	SystemDragDropEnd = 15,
+	/// <summary>Wraps wxACC_EVENT_SYSTEM_DIALOGSTART.</summary>
+	SystemDialogStart = 16,
+	/// <summary>Wraps wxACC_EVENT_SYSTEM_DIALOGEND.</summary>
+	SystemDialogEnd = 17,
+	/// <summary>Wraps wxACC_EVENT_SYSTEM_SCROLLINGSTART.</summary>
+	SystemScrollingStart = 18,
+	/// <summary>Wraps wxACC_EVENT_SYSTEM_SCROLLINGEND.</summary>
+	SystemScrollingEnd = 19,
+	/// <summary>Wraps wxACC_EVENT_SYSTEM_SWITCHSTART.</summary>
+	SystemSwitchStart = 20,
+	/// <summary>Wraps wxACC_EVENT_SYSTEM_SWITCHEND.</summary>
+	SystemSwitchEnd = 21,
+	/// <summary>Wraps wxACC_EVENT_SYSTEM_MINIMIZESTART.</summary>
+	SystemMinimizeStart = 22,
+	/// <summary>Wraps wxACC_EVENT_SYSTEM_MINIMIZEEND.</summary>
+	SystemMinimizeEnd = 23,
+	/// <summary>Wraps wxACC_EVENT_OBJECT_CREATE.</summary>
+	ObjectCreate = 32768,
+	/// <summary>Wraps wxACC_EVENT_OBJECT_DESTROY.</summary>
+	ObjectDestroy = 32769,
+	/// <summary>Wraps wxACC_EVENT_OBJECT_SHOW.</summary>
+	ObjectShow = 32770,
+	/// <summary>Wraps wxACC_EVENT_OBJECT_HIDE.</summary>
+	ObjectHide = 32771,
+	/// <summary>Wraps wxACC_EVENT_OBJECT_REORDER.</summary>
+	ObjectReorder = 32772,
+	/// <summary>Wraps wxACC_EVENT_OBJECT_FOCUS.</summary>
+	ObjectFocus = 32773,
+	/// <summary>Wraps wxACC_EVENT_OBJECT_SELECTION.</summary>
+	ObjectSelection = 32774,
+	/// <summary>Wraps wxACC_EVENT_OBJECT_SELECTIONADD.</summary>
+	ObjectSelectionAdd = 32775,
+	/// <summary>Wraps wxACC_EVENT_OBJECT_SELECTIONREMOVE.</summary>
+	ObjectSelectionRemove = 32776,
+	/// <summary>Wraps wxACC_EVENT_OBJECT_SELECTIONWITHIN.</summary>
+	ObjectSelectionWithin = 32777,
+	/// <summary>Wraps wxACC_EVENT_OBJECT_STATECHANGE.</summary>
+	ObjectStateChange = 32778,
+	/// <summary>Wraps wxACC_EVENT_OBJECT_LOCATIONCHANGE.</summary>
+	ObjectLocationChange = 32779,
+	/// <summary>Wraps wxACC_EVENT_OBJECT_NAMECHANGE.</summary>
+	ObjectNameChange = 32780,
+	/// <summary>Wraps wxACC_EVENT_OBJECT_DESCRIPTIONCHANGE.</summary>
+	ObjectDescriptionChange = 32781,
+	/// <summary>Wraps wxACC_EVENT_OBJECT_VALUECHANGE.</summary>
+	ObjectValueChange = 32782,
+	/// <summary>Wraps wxACC_EVENT_OBJECT_PARENTCHANGE.</summary>
+	ObjectParentChange = 32783,
+	/// <summary>Wraps wxACC_EVENT_OBJECT_HELPCHANGE.</summary>
+	ObjectHelpChange = 32784,
+	/// <summary>Wraps wxACC_EVENT_OBJECT_DEFACTIONCHANGE.</summary>
+	ObjectDefaultActionChange = 32785,
+	/// <summary>Wraps wxACC_EVENT_OBJECT_ACCELERATORCHANGE.</summary>
+	ObjectAcceleratorChange = 32786,
+}
+
+/// <summary>Wraps wxAccObject.</summary>
+public enum AccessibleObject {
+	/// <summary>Wraps wxOBJID_WINDOW.</summary>
+	Window = 0,
+	/// <summary>Wraps wxOBJID_SYSMENU.</summary>
+	SystemMenu = -1,
+	/// <summary>Wraps wxOBJID_TITLEBAR.</summary>
+	TitleBar = -2,
+	/// <summary>Wraps wxOBJID_MENU.</summary>
+	Menu = -3,
+	/// <summary>Wraps wxOBJID_CLIENT.</summary>
+	Client = -4,
+	/// <summary>Wraps wxOBJID_VSCROLL.</summary>
+	VerticalScrollBar = -5,
+	/// <summary>Wraps wxOBJID_HSCROLL.</summary>
+	HorizontalScrollBar = -6,
+	/// <summary>Wraps wxOBJID_SIZEGRIP.</summary>
+	SizeGrip = -7,
+	/// <summary>Wraps wxOBJID_CARET.</summary>
+	Caret = -8,
+	/// <summary>Wraps wxOBJID_CURSOR.</summary>
+	Cursor = -9,
+	/// <summary>Wraps wxOBJID_ALERT.</summary>
+	Alert = -10,
+	/// <summary>Wraps wxOBJID_SOUND.</summary>
+	Sound = -11,
+}
+
+/// <summary>Wraps wxAccRole.</summary>
+public enum AccessibleRole {
+	/// <summary>Wraps wxROLE_NONE.</summary>
+	None = 0,
+	/// <summary>Wraps wxROLE_SYSTEM_ALERT.</summary>
+	Alert = 1,
+	/// <summary>Wraps wxROLE_SYSTEM_ANIMATION.</summary>
+	Animation = 2,
+	/// <summary>Wraps wxROLE_SYSTEM_APPLICATION.</summary>
+	Application = 3,
+	/// <summary>Wraps wxROLE_SYSTEM_BORDER.</summary>
+	Border = 4,
+	/// <summary>Wraps wxROLE_SYSTEM_BUTTONDROPDOWN.</summary>
+	ButtonDropDown = 5,
+	/// <summary>Wraps wxROLE_SYSTEM_BUTTONDROPDOWNGRID.</summary>
+	ButtonDropDownGrid = 6,
+	/// <summary>Wraps wxROLE_SYSTEM_BUTTONMENU.</summary>
+	ButtonMenu = 7,
+	/// <summary>Wraps wxROLE_SYSTEM_CARET.</summary>
+	Caret = 8,
+	/// <summary>Wraps wxROLE_SYSTEM_CELL.</summary>
+	Cell = 9,
+	/// <summary>Wraps wxROLE_SYSTEM_CHARACTER.</summary>
+	Character = 10,
+	/// <summary>Wraps wxROLE_SYSTEM_CHART.</summary>
+	Chart = 11,
+	/// <summary>Wraps wxROLE_SYSTEM_CHECKBUTTON.</summary>
+	CheckButton = 12,
+	/// <summary>Wraps wxROLE_SYSTEM_CLIENT.</summary>
+	Client = 13,
+	/// <summary>Wraps wxROLE_SYSTEM_CLOCK.</summary>
+	Clock = 14,
+	/// <summary>Wraps wxROLE_SYSTEM_COLUMN.</summary>
+	Column = 15,
+	/// <summary>Wraps wxROLE_SYSTEM_COLUMNHEADER.</summary>
+	ColumnHeader = 16,
+	/// <summary>Wraps wxROLE_SYSTEM_COMBOBOX.</summary>
+	ComboBox = 17,
+	/// <summary>Wraps wxROLE_SYSTEM_CURSOR.</summary>
+	Cursor = 18,
+	/// <summary>Wraps wxROLE_SYSTEM_DIAGRAM.</summary>
+	Diagram = 19,
+	/// <summary>Wraps wxROLE_SYSTEM_DIAL.</summary>
+	Dial = 20,
+	/// <summary>Wraps wxROLE_SYSTEM_DIALOG.</summary>
+	Dialog = 21,
+	/// <summary>Wraps wxROLE_SYSTEM_DOCUMENT.</summary>
+	Document = 22,
+	/// <summary>Wraps wxROLE_SYSTEM_DROPLIST.</summary>
+	DropList = 23,
+	/// <summary>Wraps wxROLE_SYSTEM_EQUATION.</summary>
+	Equation = 24,
+	/// <summary>Wraps wxROLE_SYSTEM_GRAPHIC.</summary>
+	Graphic = 25,
+	/// <summary>Wraps wxROLE_SYSTEM_GRIP.</summary>
+	Grip = 26,
+	/// <summary>Wraps wxROLE_SYSTEM_GROUPING.</summary>
+	Grouping = 27,
+	/// <summary>Wraps wxROLE_SYSTEM_HELPBALLOON.</summary>
+	HelpBalloon = 28,
+	/// <summary>Wraps wxROLE_SYSTEM_HOTKEYFIELD.</summary>
+	HotkeyField = 29,
+	/// <summary>Wraps wxROLE_SYSTEM_INDICATOR.</summary>
+	Indicator = 30,
+	/// <summary>Wraps wxROLE_SYSTEM_LINK.</summary>
+	Link = 31,
+	/// <summary>Wraps wxROLE_SYSTEM_LIST.</summary>
+	List = 32,
+	/// <summary>Wraps wxROLE_SYSTEM_LISTITEM.</summary>
+	ListItem = 33,
+	/// <summary>Wraps wxROLE_SYSTEM_MENUBAR.</summary>
+	MenuBar = 34,
+	/// <summary>Wraps wxROLE_SYSTEM_MENUITEM.</summary>
+	MenuItem = 35,
+	/// <summary>Wraps wxROLE_SYSTEM_MENUPOPUP.</summary>
+	MenuPopup = 36,
+	/// <summary>Wraps wxROLE_SYSTEM_OUTLINE.</summary>
+	Outline = 37,
+	/// <summary>Wraps wxROLE_SYSTEM_OUTLINEITEM.</summary>
+	OutlineItem = 38,
+	/// <summary>Wraps wxROLE_SYSTEM_PAGETAB.</summary>
+	PageTab = 39,
+	/// <summary>Wraps wxROLE_SYSTEM_PAGETABLIST.</summary>
+	PageTabList = 40,
+	/// <summary>Wraps wxROLE_SYSTEM_PANE.</summary>
+	Pane = 41,
+	/// <summary>Wraps wxROLE_SYSTEM_PROGRESSBAR.</summary>
+	ProgressBar = 42,
+	/// <summary>Wraps wxROLE_SYSTEM_PROPERTYPAGE.</summary>
+	PropertyPage = 43,
+	/// <summary>Wraps wxROLE_SYSTEM_PUSHBUTTON.</summary>
+	PushButton = 44,
+	/// <summary>Wraps wxROLE_SYSTEM_RADIOBUTTON.</summary>
+	RadioButton = 45,
+	/// <summary>Wraps wxROLE_SYSTEM_ROW.</summary>
+	Row = 46,
+	/// <summary>Wraps wxROLE_SYSTEM_ROWHEADER.</summary>
+	RowHeader = 47,
+	/// <summary>Wraps wxROLE_SYSTEM_SCROLLBAR.</summary>
+	ScrollBar = 48,
+	/// <summary>Wraps wxROLE_SYSTEM_SEPARATOR.</summary>
+	Separator = 49,
+	/// <summary>Wraps wxROLE_SYSTEM_SLIDER.</summary>
+	Slider = 50,
+	/// <summary>Wraps wxROLE_SYSTEM_SOUND.</summary>
+	Sound = 51,
+	/// <summary>Wraps wxROLE_SYSTEM_SPINBUTTON.</summary>
+	SpinButton = 52,
+	/// <summary>Wraps wxROLE_SYSTEM_STATICTEXT.</summary>
+	StaticText = 53,
+	/// <summary>Wraps wxROLE_SYSTEM_STATUSBAR.</summary>
+	StatusBar = 54,
+	/// <summary>Wraps wxROLE_SYSTEM_TABLE.</summary>
+	Table = 55,
+	/// <summary>Wraps wxROLE_SYSTEM_TEXT.</summary>
+	Text = 56,
+	/// <summary>Wraps wxROLE_SYSTEM_TITLEBAR.</summary>
+	TitleBar = 57,
+	/// <summary>Wraps wxROLE_SYSTEM_TOOLBAR.</summary>
+	ToolBar = 58,
+	/// <summary>Wraps wxROLE_SYSTEM_TOOLTIP.</summary>
+	ToolTip = 59,
+	/// <summary>Wraps wxROLE_SYSTEM_WHITESPACE.</summary>
+	WhiteSpace = 60,
+	/// <summary>Wraps wxROLE_SYSTEM_WINDOW.</summary>
+	Window = 61,
+}
+
+/// <summary>Wraps wxAccSelectionFlags.</summary>
+[Flags]
+public enum AccessibleSelection {
+	/// <summary>No action is performed. Wraps wxACC_SEL_NONE.</summary>
+	None = 0,
+	/// <summary>The object is focused and becomes the selection anchor. Wraps wxACC_SEL_TAKEFOCUS.</summary>
+	TakeFocus = 1,
+	/// <summary>The object is selected and all other objects are removed from the current selection. Wraps wxACC_SEL_TAKESELECTION.</summary>
+	TakeSelection = 2,
+	/// <summary>All objects between the selection anchor and this object are added to the current selection if the anchor object's is selected or they are removed from the current selection otherwise. Wraps wxACC_SEL_EXTENDSELECTION.</summary>
+	ExtendSelection = 4,
+	/// <summary>The object is added to the current selection. Wraps wxACC_SEL_ADDSELECTION.</summary>
+	AddSelection = 8,
+	/// <summary>The object is removed from the current selection. Wraps wxACC_SEL_REMOVESELECTION.</summary>
+	RemoveSelection = 16,
+}
+
+/// <summary>Wraps wxACC_STATE_SYSTEM_*.</summary>
+[Flags]
+public enum AccessibleStates {
+	/// <summary>None of the flags. Wraps 0.</summary>
+	None = 0,
+	/// <summary>Wraps wxACC_STATE_SYSTEM_ALERT_HIGH.</summary>
+	AlertHigh = 1,
+	/// <summary>Wraps wxACC_STATE_SYSTEM_ALERT_MEDIUM.</summary>
+	AlertMedium = 2,
+	/// <summary>Wraps wxACC_STATE_SYSTEM_ALERT_LOW.</summary>
+	AlertLow = 4,
+	/// <summary>Wraps wxACC_STATE_SYSTEM_ANIMATED.</summary>
+	Animated = 8,
+	/// <summary>Wraps wxACC_STATE_SYSTEM_BUSY.</summary>
+	Busy = 16,
+	/// <summary>Wraps wxACC_STATE_SYSTEM_CHECKED.</summary>
+	Checked = 32,
+	/// <summary>Wraps wxACC_STATE_SYSTEM_COLLAPSED.</summary>
+	Collapsed = 64,
+	/// <summary>Wraps wxACC_STATE_SYSTEM_DEFAULT.</summary>
+	Default = 128,
+	/// <summary>Wraps wxACC_STATE_SYSTEM_EXPANDED.</summary>
+	Expanded = 256,
+	/// <summary>Wraps wxACC_STATE_SYSTEM_EXTSELECTABLE.</summary>
+	ExtSelectable = 512,
+	/// <summary>Wraps wxACC_STATE_SYSTEM_FLOATING.</summary>
+	Floating = 1024,
+	/// <summary>Wraps wxACC_STATE_SYSTEM_FOCUSABLE.</summary>
+	Focusable = 2048,
+	/// <summary>Wraps wxACC_STATE_SYSTEM_FOCUSED.</summary>
+	Focused = 4096,
+	/// <summary>Wraps wxACC_STATE_SYSTEM_HOTTRACKED.</summary>
+	HotTracked = 8192,
+	/// <summary>Wraps wxACC_STATE_SYSTEM_INVISIBLE.</summary>
+	Invisible = 16384,
+	/// <summary>Wraps wxACC_STATE_SYSTEM_MARQUEED.</summary>
+	Marqueed = 32768,
+	/// <summary>Wraps wxACC_STATE_SYSTEM_MIXED.</summary>
+	Mixed = 65536,
+	/// <summary>Wraps wxACC_STATE_SYSTEM_MULTISELECTABLE.</summary>
+	MultiSelectable = 131072,
+	/// <summary>Wraps wxACC_STATE_SYSTEM_OFFSCREEN.</summary>
+	Offscreen = 262144,
+	/// <summary>Wraps wxACC_STATE_SYSTEM_PRESSED.</summary>
+	Pressed = 524288,
+	/// <summary>Wraps wxACC_STATE_SYSTEM_PROTECTED.</summary>
+	Protected = 1048576,
+	/// <summary>Wraps wxACC_STATE_SYSTEM_READONLY.</summary>
+	ReadOnly = 2097152,
+	/// <summary>Wraps wxACC_STATE_SYSTEM_SELECTABLE.</summary>
+	Selectable = 4194304,
+	/// <summary>Wraps wxACC_STATE_SYSTEM_SELECTED.</summary>
+	Selected = 8388608,
+	/// <summary>Wraps wxACC_STATE_SYSTEM_SELFVOICING.</summary>
+	SelfVoicing = 16777216,
+	/// <summary>Wraps wxACC_STATE_SYSTEM_UNAVAILABLE.</summary>
+	Unavailable = 33554432,
+}
+
 /// <summary>Wraps wxBackgroundStyle.</summary>
 public enum BackgroundStyle {
 	/// <summary>Default background style value indicating that the background may be erased in the user-defined EVT_ERASE_BACKGROUND handler. Wraps wxBG_STYLE_ERASE.</summary>
@@ -502,31 +822,31 @@ public enum HitTest {
 	/// <summary>Wraps wxHT_NOWHERE.</summary>
 	Nowhere = 0,
 	/// <summary>Wraps wxHT_SCROLLBAR_FIRST.</summary>
-	ScrollbarFirst = 0,
+	ScrollBarFirst = 0,
 	/// <summary>left or upper arrow to scroll by line. Wraps wxHT_SCROLLBAR_ARROW_LINE_1.</summary>
-	ScrollbarArrowLineOne = 1,
+	ScrollBarArrowLineOne = 1,
 	/// <summary>right or down. Wraps wxHT_SCROLLBAR_ARROW_LINE_2.</summary>
-	ScrollbarArrowLineTwo = 2,
+	ScrollBarArrowLineTwo = 2,
 	/// <summary>left or upper arrow to scroll by page. Wraps wxHT_SCROLLBAR_ARROW_PAGE_1.</summary>
-	ScrollbarArrowPageOne = 3,
+	ScrollBarArrowPageOne = 3,
 	/// <summary>right or down. Wraps wxHT_SCROLLBAR_ARROW_PAGE_2.</summary>
-	ScrollbarArrowPageTwo = 4,
+	ScrollBarArrowPageTwo = 4,
 	/// <summary>on the thumb. Wraps wxHT_SCROLLBAR_THUMB.</summary>
-	ScrollbarThumb = 5,
+	ScrollBarThumb = 5,
 	/// <summary>bar to the left/above the thumb. Wraps wxHT_SCROLLBAR_BAR_1.</summary>
-	ScrollbarBarOne = 6,
+	ScrollBarBarOne = 6,
 	/// <summary>bar to the right/below the thumb. Wraps wxHT_SCROLLBAR_BAR_2.</summary>
-	ScrollbarBarTwo = 7,
+	ScrollBarBarTwo = 7,
 	/// <summary>Wraps wxHT_SCROLLBAR_LAST.</summary>
-	ScrollbarLast = 8,
+	ScrollBarLast = 8,
 	/// <summary>not in this window at all. Wraps wxHT_WINDOW_OUTSIDE.</summary>
 	WindowOutside = 9,
 	/// <summary>in the client area. Wraps wxHT_WINDOW_INSIDE.</summary>
 	WindowInside = 10,
 	/// <summary>on the vertical scrollbar. Wraps wxHT_WINDOW_VERT_SCROLLBAR.</summary>
-	WindowVertScrollbar = 11,
+	WindowVertScrollBar = 11,
 	/// <summary>on the horizontal scrollbar. Wraps wxHT_WINDOW_HORZ_SCROLLBAR.</summary>
-	WindowHorzScrollbar = 12,
+	WindowHorzScrollBar = 12,
 	/// <summary>on the corner between 2 scrollbars. Wraps wxHT_WINDOW_CORNER.</summary>
 	WindowCorner = 13,
 	/// <summary>Wraps wxHT_MAX.</summary>
@@ -613,6 +933,26 @@ public enum MouseWheelAxis {
 	Vertical = 0,
 	/// <summary>Horizontal scroll event. Wraps wxMOUSE_WHEEL_HORIZONTAL.</summary>
 	Horizontal = 1,
+}
+
+/// <summary>Wraps wxNavDir.</summary>
+public enum NavigationDirection {
+	/// <summary>Navigate to the first child of the object. Wraps wxNAVDIR_FIRSTCHILD.</summary>
+	FirstChild = 1,
+	/// <summary>Navigate to the last child of the object. Wraps wxNAVDIR_LASTCHILD.</summary>
+	LastChild = 2,
+	/// <summary>Wraps wxNAVDIR_DOWN.</summary>
+	Down = 0,
+	/// <summary>Wraps wxNAVDIR_LEFT.</summary>
+	Left = 3,
+	/// <summary>Wraps wxNAVDIR_NEXT.</summary>
+	Next = 4,
+	/// <summary>Wraps wxNAVDIR_PREVIOUS.</summary>
+	Previous = 5,
+	/// <summary>Wraps wxNAVDIR_RIGHT.</summary>
+	Right = 6,
+	/// <summary>Wraps wxNAVDIR_UP.</summary>
+	Up = 7,
 }
 
 /// <summary>Wraps wxHelpEvent::Origin.</summary>
@@ -838,7 +1178,7 @@ public enum StockCursor {
 /// <summary>Wraps wxSystemColour.</summary>
 public enum SystemColor {
 	/// <summary>The scrollbar grey area. Wraps wxSYS_COLOUR_SCROLLBAR.</summary>
-	Scrollbar = 0,
+	ScrollBar = 0,
 	/// <summary>The desktop colour. Wraps wxSYS_COLOUR_DESKTOP.</summary>
 	Desktop = 1,
 	/// <summary>Active window caption colour. Wraps wxSYS_COLOUR_ACTIVECAPTION.</summary>
@@ -898,7 +1238,7 @@ public enum SystemColor {
 	/// <summary>The colour used to highlight menu items when the menu appears as a flat menu. Wraps wxSYS_COLOUR_MENUHILIGHT.</summary>
 	Menuhilight = 29,
 	/// <summary>The background colour for the menu bar when menus appear as flat menus. Wraps wxSYS_COLOUR_MENUBAR.</summary>
-	Menubar = 30,
+	MenuBar = 30,
 	/// <summary>Text colour for list-like controls. Wraps wxSYS_COLOUR_LISTBOXTEXT.</summary>
 	Listboxtext = 31,
 	/// <summary>Text colour for the selected items in list-like controls. Wraps wxSYS_COLOUR_LISTBOXHIGHLIGHTTEXT.</summary>
@@ -976,9 +1316,9 @@ public enum SystemMetric {
 	/// <summary>Height of a 3D border, in pixels. Wraps wxSYS_EDGE_Y.</summary>
 	EdgeY = 11,
 	/// <summary>Width of arrow bitmap on horizontal scrollbar. Wraps wxSYS_HSCROLL_ARROW_X.</summary>
-	HscrollArrowX = 12,
+	HorizontalScrollBarArrowX = 12,
 	/// <summary>Height of arrow bitmap on horizontal scrollbar. Wraps wxSYS_HSCROLL_ARROW_Y.</summary>
-	HscrollArrowY = 13,
+	HorizontalScrollBarArrowY = 13,
 	/// <summary>Width of horizontal scrollbar thumb. Wraps wxSYS_HTHUMB_X.</summary>
 	HthumbX = 14,
 	/// <summary>The default width of an icon. Wraps wxSYS_ICON_X.</summary>
@@ -1006,13 +1346,13 @@ public enum SystemMetric {
 	/// <summary>Recommended height of a small icon (in window captions, and small icon view). Wraps wxSYS_SMALLICON_Y.</summary>
 	SmalliconY = 26,
 	/// <summary>Height of horizontal scrollbar in pixels. Wraps wxSYS_HSCROLL_Y.</summary>
-	HscrollY = 27,
+	HorizontalScrollBarY = 27,
 	/// <summary>Width of vertical scrollbar in pixels. Wraps wxSYS_VSCROLL_X.</summary>
-	VscrollX = 28,
+	VerticalScrollBarX = 28,
 	/// <summary>Width of arrow bitmap on a vertical scrollbar. Wraps wxSYS_VSCROLL_ARROW_X.</summary>
-	VscrollArrowX = 29,
+	VerticalScrollBarArrowX = 29,
 	/// <summary>Height of arrow bitmap on a vertical scrollbar. Wraps wxSYS_VSCROLL_ARROW_Y.</summary>
-	VscrollArrowY = 30,
+	VerticalScrollBarArrowY = 30,
 	/// <summary>Height of vertical scrollbar thumb. Wraps wxSYS_VTHUMB_Y.</summary>
 	VthumbY = 31,
 	/// <summary>Height of normal caption area. Wraps wxSYS_CAPTION_Y.</summary>

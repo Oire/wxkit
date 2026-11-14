@@ -18,7 +18,22 @@ internal sealed class Tweaks {
 	}
 
 	public void EventType(string constant, string eventClass) => ExtraEventTypes[constant] = eventClass;
+
+	/// <summary>C++ enums to bind under a name of their own, such as wxAccRole as AccessibleRole, even when no bound member uses them.</summary>
+	public Dictionary<string, EnumTweak> Enums { get; } = new(StringComparer.Ordinal);
+
+	/// <summary>Constants wxWidgets defines one by one with a shared prefix, bound as one C# enum, such as wxACC_STATE_SYSTEM_ as AccessibleStates.</summary>
+	public List<ConstantEnumTweak> ConstantEnums { get; } = [];
+
+	/// <param name="memberPrefix">A prefix most members share that their names leave out, such as wxROLE_SYSTEM_.</param>
+	public void Enum(string cppName, string managedName, bool isFlags = false, string? memberPrefix = null) => Enums[cppName] = new EnumTweak(managedName, isFlags, memberPrefix);
+
+	public void ConstantEnum(string managedName, string prefix, bool isFlags = false) => ConstantEnums.Add(new ConstantEnumTweak(managedName, prefix, isFlags));
 }
+
+internal sealed record EnumTweak(string Name, bool IsFlags, string? MemberPrefix);
+
+internal sealed record ConstantEnumTweak(string Name, string Prefix, bool IsFlags);
 
 internal sealed class ClassTweak(string name) {
 	public string CppName { get; } = name;

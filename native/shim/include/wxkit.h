@@ -181,6 +181,54 @@ WXK_FUNCTION(void) wxk_Image_AddXpmHandler(void) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Image_AddIconHandler(void) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Image_AddAllHandlers(void) WXK_NOEXCEPT;
 
+// Accessibility
+
+// An accessible object, which describes a window to screen readers. The window owns it.
+typedef struct wxk_Accessible wxk_Accessible;
+
+// Which text an accessible object's getText callback is asked for.
+typedef enum wxk_AccessibleText {
+	WXK_ACCESSIBLE_NAME = 0,
+	WXK_ACCESSIBLE_DESCRIPTION = 1,
+	WXK_ACCESSIBLE_HELP_TEXT = 2,
+	WXK_ACCESSIBLE_KEYBOARD_SHORTCUT = 3,
+	WXK_ACCESSIBLE_DEFAULT_ACTION = 4,
+	WXK_ACCESSIBLE_VALUE = 5
+} wxk_AccessibleText;
+
+// Which element its getElement callback is asked for: a child, the focus, the element at a point,
+// or the one in a direction from another.
+typedef enum wxk_AccessibleElement {
+	WXK_ACCESSIBLE_CHILD = 0,
+	WXK_ACCESSIBLE_FOCUS = 1,
+	WXK_ACCESSIBLE_HIT_TEST = 2,
+	WXK_ACCESSIBLE_NAVIGATE = 3
+} wxk_AccessibleElement;
+
+// What its act callback is asked to do.
+typedef enum wxk_AccessibleAction {
+	WXK_ACCESSIBLE_DO_DEFAULT_ACTION = 0,
+	WXK_ACCESSIBLE_SELECT = 1
+} wxk_AccessibleAction;
+
+// The callbacks every managed accessible object calls, which return a wxAccStatus. A callback
+// that returns wxACC_OK has filled in its result.
+typedef struct wxk_AccessibleCallbacks {
+	int32_t (*getText)(void* userdata, int32_t which, int32_t childId, wxk_String** text);
+	int32_t (*getRole)(void* userdata, int32_t childId, int32_t* role);
+	int32_t (*getState)(void* userdata, int32_t childId, int64_t* state);
+	int32_t (*getChildCount)(void* userdata, int32_t* count);
+	int32_t (*getLocation)(void* userdata, int32_t elementId, wxk_Rect* rect);
+	int32_t (*getElement)(void* userdata, int32_t which, int32_t childId, int32_t direction, wxk_Point point, int32_t* resultId, wxk_Accessible** resultObject);
+	int32_t (*act)(void* userdata, int32_t which, int32_t childId, int32_t flags);
+	void (*onFree)(void* userdata);
+} wxk_AccessibleCallbacks;
+
+WXK_FUNCTION(void) wxk_Accessible_SetCallbacks(const wxk_AccessibleCallbacks* callbacks) WXK_NOEXCEPT;
+// Gives the window an accessible object whose answers come from .NET, replacing the one it had.
+WXK_FUNCTION(wxk_Accessible*) wxk_ManagedAccessible_new(wxk_Window* window, void* userdata) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Accessible_NotifyEvent(int32_t eventType, wxk_Window* window, int32_t objectType, int32_t objectId) WXK_NOEXCEPT;
+
 // Validators
 
 // A validator whose checks call back into .NET. retain and release are called as windows take

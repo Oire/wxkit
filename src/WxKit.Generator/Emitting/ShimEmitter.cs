@@ -41,9 +41,9 @@ internal static class ShimEmitter {
 		writer.Line();
 		// The managed enums hold the values the generator worked out from the headers. These checks
 		// fail the native build if one of them is not what the C++ constant is.
-		// Styles are compared as the long the shim passes them as, so wxVSCROLL, which is
-		// (int)0x80000000, matches 0x80000000.
-		IEnumerable<(BoundStyle Value, string Type)> values = result.Enums.SelectMany(static bound => bound.Members).Select(static value => (value, "long long")).Concat(result.Classes.SelectMany(static bound => bound.Styles?.Members ?? []).Select(static value => (value, "long")));
+		// Each is compared as the type the shim passes it as: enums as 32-bit ints, so wxOBJID_SYSMENU,
+		// 0xFFFFFFFF, matches -1, and styles as longs, so wxVSCROLL, (int)0x80000000, matches 0x80000000.
+		IEnumerable<(BoundStyle Value, string Type)> values = result.Enums.SelectMany(static bound => bound.Members).Select(static value => (value, "int32_t")).Concat(result.Classes.SelectMany(static bound => bound.Styles?.Members ?? []).Select(static value => (value, "long")));
 		foreach ((BoundStyle value, string type) in values.Where(static entry => entry.Value.Constant.StartsWith("wx", StringComparison.Ordinal)).DistinctBy(static entry => entry.Value.Constant).OrderBy(static entry => entry.Value.Constant, StringComparer.Ordinal)) {
 			writer.Line($"static_assert(static_cast<{type}>({value.Constant}) == static_cast<{type}>({value.Value}LL), \"{value.Constant} is not {value.Value}\");");
 		}

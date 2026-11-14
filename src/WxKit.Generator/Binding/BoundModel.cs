@@ -13,7 +13,10 @@ internal sealed record BindingResult(
 }
 
 /// <summary>A C++ enum the managed API shows as a C# one, such as wxShowEffect as ShowEffect.</summary>
-internal sealed record BoundEnum(string Name, string CppName, IReadOnlyList<BoundStyle> Members);
+internal sealed record BoundEnum(string Name, string CppName, IReadOnlyList<BoundStyle> Members) {
+	/// <summary>Whether its members are flags to combine, which gives it [Flags].</summary>
+	public bool IsFlags { get; init; }
+}
 
 /// <summary>How objects of a class cross the boundary: the handle type and what it points at.</summary>
 /// <param name="CType">The shim's handle type, such as wxk_Window.</param>

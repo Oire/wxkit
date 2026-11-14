@@ -263,10 +263,12 @@ internal static class ManagedEmitter {
 		foreach (BoundEnum bound in result.Enums) {
 			writer.Line();
 			Summary(writer, $"Wraps {bound.CppName}.");
+			if (bound.IsFlags) writer.Line("[Flags]");
 			writer.Open($"public enum {bound.Name}");
 			foreach (BoundStyle member in bound.Members) {
 				Summary(writer, member.Description.Length > 0 ? $"{Sentence(member.Description)}Wraps {member.Constant}." : $"Wraps {member.Constant}.");
-				writer.Line($"{member.Name} = {member.Value},");
+				// An enum crosses as a 32-bit int, so a value such as wxOBJID_SYSMENU, 0xFFFFFFFF, is -1.
+				writer.Line($"{member.Name} = {(member.Value is > int.MaxValue and <= uint.MaxValue ? member.Value - (1L << 32) : member.Value)},");
 			}
 			writer.Close();
 		}

@@ -202,6 +202,18 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void ImageAddAllHandlers();
 
+	[LibraryImport(Library, EntryPoint = "wxk_Accessible_SetCallbacks")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void AccessibleSetCallbacks(WxkAccessibleCallbacks* callbacks);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ManagedAccessible_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkAccessible* ManagedAccessibleNew(WxkWindow* window, void* userdata);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Accessible_NotifyEvent")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void AccessibleNotifyEvent(int eventType, WxkWindow* window, int objectType, int objectId);
+
 	[LibraryImport(Library, EntryPoint = "wxk_ManagedValidator_new")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkObject* ManagedValidatorNew(delegate* unmanaged[Cdecl]<void*, WxkWindow*, WxkWindow*, byte> validate, delegate* unmanaged[Cdecl]<void*, WxkWindow*, byte> toWindow, delegate* unmanaged[Cdecl]<void*, WxkWindow*, byte> fromWindow, delegate* unmanaged[Cdecl]<void*, void> retain, delegate* unmanaged[Cdecl]<void*, void> release, delegate* unmanaged[Cdecl]<void*, void> onFree, void* userdata);
