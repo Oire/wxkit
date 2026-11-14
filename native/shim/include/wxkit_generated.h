@@ -160,7 +160,7 @@ WXK_FUNCTION(uint8_t) wxk_CheckBox_IsChecked(wxk_Window* self) WXK_NOEXCEPT;
 // wxCheckListBox
 
 WXK_FUNCTION(wxk_Window*) wxk_CheckListBox_new_WindowIntPointSize(wxk_Window* parent, int32_t id, wxk_Point position, wxk_Size size) WXK_NOEXCEPT;
-WXK_FUNCTION(wxk_Window*) wxk_CheckListBox_new_WindowIntPointSizeStringsLong(wxk_Window* parent, int32_t id, wxk_Point position, wxk_Size size, const wxk_StringArray* choices, int64_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Window*) wxk_CheckListBox_new_WindowIntPointSizeStringsListBoxStyle(wxk_Window* parent, int32_t id, wxk_Point position, wxk_Size size, const wxk_StringArray* choices, int64_t style) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_CheckListBox_Check(wxk_Window* self, uint32_t item, uint8_t check) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_CheckListBox_IsChecked(wxk_Window* self, uint32_t item) WXK_NOEXCEPT;
 
@@ -398,7 +398,7 @@ WXK_FUNCTION(void) wxk_DC_GradientFillConcentric_RectColorColor(wxk_Object* self
 WXK_FUNCTION(void) wxk_DC_GradientFillConcentric_RectColorColorPoint(wxk_Object* self, wxk_Rect rect, wxk_Colour initialColor, wxk_Colour destColor, wxk_Point circleCenter) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_DC_GradientFillLinear(wxk_Object* self, wxk_Rect rect, wxk_Colour initialColor, wxk_Colour destColor, int32_t nDirection) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_DC_FloodFill_IntIntColorFloodFillStyle(wxk_Object* self, int32_t x, int32_t y, wxk_Colour color, int32_t style) WXK_NOEXCEPT;
-WXK_FUNCTION(uint8_t) wxk_DC_FloodFill_PointColorFloodFillStyle(wxk_Object* self, wxk_Point point, wxk_Colour col, int32_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_DC_FloodFill_PointColorFloodFillStyle(wxk_Object* self, wxk_Point point, wxk_Colour column, int32_t style) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_DC_CrossHair_IntInt(wxk_Object* self, int32_t x, int32_t y) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_DC_CrossHair_Point(wxk_Object* self, wxk_Point point) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_DC_DestroyClippingRegion(wxk_Object* self) WXK_NOEXCEPT;
@@ -846,6 +846,150 @@ WXK_FUNCTION(uint8_t) wxk_ListBox_IsEmpty(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_StringArray*) wxk_ListBox_GetStrings(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_String*) wxk_ListBox_GetStringSelection(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_ListBox_SetStringSelection_String(wxk_Window* self, const char16_t* s, size_t sLength) WXK_NOEXCEPT;
+
+// wxListCtrl
+
+WXK_FUNCTION(wxk_Window*) wxk_ListCtrl_new(wxk_Window* parent, int32_t id, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(int64_t) wxk_ListCtrl_AppendColumn(wxk_Window* self, const char16_t* heading, size_t headingLength, int32_t format, int32_t width) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_Arrange(wxk_Window* self, int32_t flag) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListCtrl_ClearAll(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_DeleteAllColumns(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_DeleteAllItems(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_DeleteColumn(wxk_Window* self, int32_t column) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_DeleteItem(wxk_Window* self, int64_t item) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Window*) wxk_ListCtrl_EditLabel(wxk_Window* self, int64_t item) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListCtrl_EnableAlternateRowColours(wxk_Window* self, uint8_t enable) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListCtrl_EnableBellOnNoMatch(wxk_Window* self, uint8_t on) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_EndEditLabel(wxk_Window* self, uint8_t cancel) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_EnsureVisible(wxk_Window* self, int64_t item) WXK_NOEXCEPT;
+WXK_FUNCTION(int64_t) wxk_ListCtrl_FindItem_LongStringBool(wxk_Window* self, int64_t start, const char16_t* text, size_t textLength, uint8_t partial) WXK_NOEXCEPT;
+WXK_FUNCTION(int64_t) wxk_ListCtrl_FindItem_LongPointInt(wxk_Window* self, int64_t start, wxk_Point point, int32_t direction) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_GetColumn(wxk_Window* self, int32_t column, wxk_Object* item) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_ListCtrl_GetColumnIndexFromOrder(wxk_Window* self, int32_t position) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_ListCtrl_GetColumnOrder(wxk_Window* self, int32_t column) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_ListCtrl_GetColumnWidth(wxk_Window* self, int32_t column) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_GetItem(wxk_Window* self, wxk_Object* info) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Colour) wxk_ListCtrl_GetItemBackgroundColour(wxk_Window* self, int64_t item) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_ListCtrl_GetItemFont(wxk_Window* self, int64_t item) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_ListCtrl_GetItemState(wxk_Window* self, int64_t item, int64_t stateMask) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_String*) wxk_ListCtrl_GetItemText(wxk_Window* self, int64_t item, int32_t column) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Colour) wxk_ListCtrl_GetItemTextColour(wxk_Window* self, int64_t item) WXK_NOEXCEPT;
+WXK_FUNCTION(int64_t) wxk_ListCtrl_GetNextItem(wxk_Window* self, int64_t item, int32_t geometry, int32_t state) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_InReportView(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(int64_t) wxk_ListCtrl_InsertColumn_LongListItem(wxk_Window* self, int64_t column, const wxk_Object* info) WXK_NOEXCEPT;
+WXK_FUNCTION(int64_t) wxk_ListCtrl_InsertColumn_LongStringListColumnFormatInt(wxk_Window* self, int64_t column, const char16_t* heading, size_t headingLength, int32_t format, int32_t width) WXK_NOEXCEPT;
+WXK_FUNCTION(int64_t) wxk_ListCtrl_InsertItem_ListItem(wxk_Window* self, wxk_Object* info) WXK_NOEXCEPT;
+WXK_FUNCTION(int64_t) wxk_ListCtrl_InsertItem_LongString(wxk_Window* self, int64_t index, const char16_t* label, size_t labelLength) WXK_NOEXCEPT;
+WXK_FUNCTION(int64_t) wxk_ListCtrl_InsertItem_LongInt(wxk_Window* self, int64_t index, int32_t imageIndex) WXK_NOEXCEPT;
+WXK_FUNCTION(int64_t) wxk_ListCtrl_InsertItem_LongStringInt(wxk_Window* self, int64_t index, const char16_t* label, size_t labelLength, int32_t imageIndex) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListCtrl_RefreshItem(wxk_Window* self, int64_t item) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListCtrl_RefreshItems(wxk_Window* self, int64_t itemFrom, int64_t itemTo) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_ScrollList(wxk_Window* self, int32_t dx, int32_t dy) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_SetBackgroundColour(wxk_Window* self, wxk_Colour column) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_SetColumn(wxk_Window* self, int32_t column, wxk_Object* item) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_SetColumnWidth(wxk_Window* self, int32_t column, int32_t width) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_IsVisible(wxk_Window* self, int64_t item) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_SetItem_ListItem(wxk_Window* self, wxk_Object* info) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_SetItem_LongIntStringInt(wxk_Window* self, int64_t index, int32_t column, const char16_t* label, size_t labelLength, int32_t imageId) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListCtrl_SetItemBackgroundColour(wxk_Window* self, int64_t item, wxk_Colour column) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_SetItemColumnImage(wxk_Window* self, int64_t item, int64_t column, int32_t image) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListCtrl_SetItemCount(wxk_Window* self, int64_t count) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_SetItemData(wxk_Window* self, int64_t item, int64_t data) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListCtrl_SetItemFont(wxk_Window* self, int64_t item, const wxk_Object* font) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_SetItemImage(wxk_Window* self, int64_t item, int32_t image, int32_t selImage) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_SetItemPosition(wxk_Window* self, int64_t item, wxk_Point position) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_SetItemState(wxk_Window* self, int64_t item, int64_t state, int64_t stateMask) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListCtrl_SetItemText(wxk_Window* self, int64_t item, const char16_t* text, size_t textLength) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListCtrl_SetItemTextColour(wxk_Window* self, int64_t item, wxk_Colour column) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListCtrl_SetSingleStyle(wxk_Window* self, int64_t style, uint8_t add) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListCtrl_SetWindowStyleFlag(wxk_Window* self, int64_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_EnableCheckBoxes(wxk_Window* self, uint8_t enable) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_IsItemChecked(wxk_Window* self, int64_t item) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListCtrl_CheckItem(wxk_Window* self, int64_t item, uint8_t check) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListCtrl_ExtendRulesAndAlternateColour(wxk_Window* self, uint8_t extend) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListCtrl_ShowSortIndicator(wxk_Window* self, int32_t column, uint8_t ascending) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListCtrl_RemoveSortIndicator(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_GetUpdatedAscendingSortIndicator(wxk_Window* self, int32_t column) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_ListCtrl_GetColumnCount(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_ListCtrl_GetCountPerPage(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Window*) wxk_ListCtrl_GetEditControl(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_ListCtrl_GetItemCount(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Size) wxk_ListCtrl_GetItemSpacing(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_ListCtrl_GetSelectedItemCount(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Colour) wxk_ListCtrl_GetTextColour(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListCtrl_SetTextColour(wxk_Window* self, wxk_Colour column) WXK_NOEXCEPT;
+WXK_FUNCTION(int64_t) wxk_ListCtrl_GetTopItem(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Rect) wxk_ListCtrl_GetViewRect(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Colour) wxk_ListCtrl_GetAlternateRowColour(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListCtrl_SetAlternateRowColour(wxk_Window* self, wxk_Colour color) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_IsEmpty(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_IsVirtual(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_HasCheckBoxes(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_ListCtrl_GetSortIndicator(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_IsAscendingSortIndicator(wxk_Window* self) WXK_NOEXCEPT;
+
+// wxListEvent
+
+WXK_FUNCTION(int64_t) wxk_ListEvent_GetCacheFrom(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListEvent_SetCacheFrom(wxk_Event* self, int64_t cacheFrom) WXK_NOEXCEPT;
+WXK_FUNCTION(int64_t) wxk_ListEvent_GetCacheTo(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListEvent_SetCacheTo(wxk_Event* self, int64_t cacheTo) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_ListEvent_GetColumn(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListEvent_SetColumn(wxk_Event* self, int32_t column) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_ListEvent_GetImage(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(int64_t) wxk_ListEvent_GetIndex(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListEvent_SetIndex(wxk_Event* self, int64_t index) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_ListEvent_GetItem(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListEvent_SetItem(wxk_Event* self, const wxk_Object* item) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_ListEvent_GetKeyCode(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListEvent_SetKeyCode(wxk_Event* self, int32_t code) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_String*) wxk_ListEvent_GetLabel(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(int64_t) wxk_ListEvent_GetMask(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Point) wxk_ListEvent_GetPoint(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListEvent_SetPoint(wxk_Event* self, wxk_Point point) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_String*) wxk_ListEvent_GetText(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListEvent_IsEditCancelled(wxk_Event* self) WXK_NOEXCEPT;
+
+// wxListItem
+
+WXK_FUNCTION(wxk_Object*) wxk_ListItem_new(void) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListItem_SetData(wxk_Object* self, int64_t data) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListItem_Clear(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListItem_SetStateMask(wxk_Object* self, int64_t stateMask) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_ListItem_GetAlign(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListItem_SetAlign(wxk_Object* self, int32_t align) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Colour) wxk_ListItem_GetBackgroundColour(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListItem_SetBackgroundColour(wxk_Object* self, wxk_Colour colBack) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_ListItem_GetColumn(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListItem_SetColumn(wxk_Object* self, int32_t column) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_ListItem_GetFont(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListItem_SetFont(wxk_Object* self, const wxk_Object* font) WXK_NOEXCEPT;
+WXK_FUNCTION(int64_t) wxk_ListItem_GetId(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListItem_SetId(wxk_Object* self, int64_t id) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_ListItem_GetImage(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListItem_SetImage(wxk_Object* self, int32_t image) WXK_NOEXCEPT;
+WXK_FUNCTION(int64_t) wxk_ListItem_GetMask(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListItem_SetMask(wxk_Object* self, int64_t mask) WXK_NOEXCEPT;
+WXK_FUNCTION(int64_t) wxk_ListItem_GetState(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListItem_SetState(wxk_Object* self, int64_t state) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_String*) wxk_ListItem_GetText(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListItem_SetText(wxk_Object* self, const char16_t* text, size_t textLength) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Colour) wxk_ListItem_GetTextColour(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListItem_SetTextColour(wxk_Object* self, wxk_Colour colText) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_ListItem_GetWidth(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListItem_SetWidth(wxk_Object* self, int32_t width) WXK_NOEXCEPT;
+
+// wxListView
+
+WXK_FUNCTION(wxk_Window*) wxk_ListView_new(wxk_Window* parent, int32_t id, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListView_ClearColumnImage(wxk_Window* self, int32_t column) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListView_Focus(wxk_Window* self, int64_t index) WXK_NOEXCEPT;
+WXK_FUNCTION(int64_t) wxk_ListView_GetNextSelected(wxk_Window* self, int64_t item) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListView_IsSelected(wxk_Window* self, int64_t index) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListView_Select(wxk_Window* self, int64_t index, uint8_t on) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListView_SetColumnImage(wxk_Window* self, int32_t column, int32_t image) WXK_NOEXCEPT;
+WXK_FUNCTION(int64_t) wxk_ListView_GetFirstSelected(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(int64_t) wxk_ListView_GetFocusedItem(wxk_Window* self) WXK_NOEXCEPT;
 
 // wxMemoryDC
 
@@ -1322,8 +1466,8 @@ WXK_FUNCTION(void) wxk_SplitterWindow_SetLastSplitPosition(wxk_Window* self, wxk
 
 // wxStaticBox
 
-WXK_FUNCTION(wxk_Window*) wxk_StaticBox_new_WindowIntStringPointSizeLong(wxk_Window* parent, int32_t id, const char16_t* label, size_t labelLength, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
-WXK_FUNCTION(wxk_Window*) wxk_StaticBox_new_WindowIntWindowPointSizeLong(wxk_Window* parent, int32_t id, wxk_Window* label, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Window*) wxk_StaticBox_new_WindowIntStringPointSizeWindowStyle(wxk_Window* parent, int32_t id, const char16_t* label, size_t labelLength, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Window*) wxk_StaticBox_new_WindowIntWindowPointSizeWindowStyle(wxk_Window* parent, int32_t id, wxk_Window* label, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_StaticBox_Enable(wxk_Window* self, uint8_t enable) WXK_NOEXCEPT;
 
 // wxStaticBoxSizer
@@ -1509,6 +1653,95 @@ WXK_FUNCTION(wxk_Window*) wxk_TopLevelWindow_SetTmpDefaultItem(wxk_Window* self,
 WXK_FUNCTION(int32_t) wxk_TopLevelWindow_GetContentProtection(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_TopLevelWindow_SetContentProtection(wxk_Window* self, int32_t contentProtection) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Size) wxk_TopLevelWindow_GetDefaultSize(void) WXK_NOEXCEPT;
+
+// wxTreeCtrl
+
+WXK_FUNCTION(wxk_Window*) wxk_TreeCtrl_new(wxk_Window* parent, int32_t id, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(void*) wxk_TreeCtrl_AddRoot(wxk_Window* self, const char16_t* text, size_t textLength, int32_t image, int32_t selImage) WXK_NOEXCEPT;
+WXK_FUNCTION(void*) wxk_TreeCtrl_AppendItem(wxk_Window* self, void* parent, const char16_t* text, size_t textLength, int32_t image, int32_t selImage) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_Collapse(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_CollapseAll(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_CollapseAllChildren(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_CollapseAndReset(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_Delete(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_DeleteAllItems(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_DeleteChildren(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Window*) wxk_TreeCtrl_EditLabel(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_EnableBellOnNoMatch(wxk_Window* self, uint8_t on) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_EndEditLabel(wxk_Window* self, void* item, uint8_t discardChanges) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_EnsureVisible(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_Expand(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_ExpandAll(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_ExpandAllChildren(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(size_t) wxk_TreeCtrl_GetChildrenCount(wxk_Window* self, void* item, uint8_t recursively) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_ClearFocusedItem(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Colour) wxk_TreeCtrl_GetItemBackgroundColour(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_TreeCtrl_GetItemFont(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_TreeCtrl_GetItemImage(wxk_Window* self, void* item, int32_t which) WXK_NOEXCEPT;
+WXK_FUNCTION(void*) wxk_TreeCtrl_GetItemParent(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_TreeCtrl_GetItemState(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_String*) wxk_TreeCtrl_GetItemText(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Colour) wxk_TreeCtrl_GetItemTextColour(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(void*) wxk_TreeCtrl_GetLastChild(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(void*) wxk_TreeCtrl_GetNextSibling(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(void*) wxk_TreeCtrl_GetNextVisible(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(void*) wxk_TreeCtrl_GetPrevSibling(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(void*) wxk_TreeCtrl_GetPrevVisible(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(void*) wxk_TreeCtrl_InsertItem_TreeItemIdTreeItemIdStringIntInt(wxk_Window* self, void* parent, void* previous, const char16_t* text, size_t textLength, int32_t image, int32_t selImage) WXK_NOEXCEPT;
+WXK_FUNCTION(void*) wxk_TreeCtrl_InsertItem_TreeItemIdSizeTStringIntInt(wxk_Window* self, void* parent, size_t position, const char16_t* text, size_t textLength, int32_t image, int32_t selImage) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_TreeCtrl_IsBold(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_TreeCtrl_IsExpanded(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_TreeCtrl_IsSelected(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_TreeCtrl_IsVisible(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_TreeCtrl_ItemHasChildren(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_TreeCtrl_OnCompareItems(wxk_Window* self, void* item1, void* item2) WXK_NOEXCEPT;
+WXK_FUNCTION(void*) wxk_TreeCtrl_PrependItem(wxk_Window* self, void* parent, const char16_t* text, size_t textLength, int32_t image, int32_t selImage) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_ScrollTo(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_SelectItem(wxk_Window* self, void* item, uint8_t select) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_SetItemBackgroundColour(wxk_Window* self, void* item, wxk_Colour column) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_SetItemBold(wxk_Window* self, void* item, uint8_t bold) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_SetItemDropHighlight(wxk_Window* self, void* item, uint8_t highlight) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_SetItemFont(wxk_Window* self, void* item, const wxk_Object* font) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_SetItemHasChildren(wxk_Window* self, void* item, uint8_t hasChildren) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_SetItemImage(wxk_Window* self, void* item, int32_t image, int32_t which) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_SetItemState(wxk_Window* self, void* item, int32_t state) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_SetItemText(wxk_Window* self, void* item, const char16_t* text, size_t textLength) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_SetItemTextColour(wxk_Window* self, void* item, wxk_Colour column) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_SortChildren(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_Toggle(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_ToggleItemSelection(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_Unselect(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_UnselectAll(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_UnselectItem(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_SelectChildren(wxk_Window* self, void* parent) WXK_NOEXCEPT;
+WXK_FUNCTION(uint32_t) wxk_TreeCtrl_GetCount(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Window*) wxk_TreeCtrl_GetEditControl(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void*) wxk_TreeCtrl_GetFirstVisibleItem(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void*) wxk_TreeCtrl_GetFocusedItem(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_SetFocusedItem(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(uint32_t) wxk_TreeCtrl_GetIndent(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_SetIndent(wxk_Window* self, uint32_t indent) WXK_NOEXCEPT;
+WXK_FUNCTION(uint32_t) wxk_TreeCtrl_GetSpacing(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_SetSpacing(wxk_Window* self, uint32_t spacing) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_TreeCtrl_GetQuickBestSize(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_SetQuickBestSize(wxk_Window* self, uint8_t quickBestSize) WXK_NOEXCEPT;
+WXK_FUNCTION(void*) wxk_TreeCtrl_GetRootItem(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void*) wxk_TreeCtrl_GetSelection(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_TreeCtrl_GetStateImageCount(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_TreeCtrl_HasStateImages(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_TreeCtrl_IsEmpty(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_TreeCtrl_GetImageCount(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_TreeCtrl_HasImages(wxk_Window* self) WXK_NOEXCEPT;
+
+// wxTreeEvent
+
+WXK_FUNCTION(void) wxk_TreeEvent_SetToolTip(wxk_Event* self, const char16_t* tooltip, size_t tooltipLength) WXK_NOEXCEPT;
+WXK_FUNCTION(void*) wxk_TreeEvent_GetItem(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_TreeEvent_GetKeyCode(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_String*) wxk_TreeEvent_GetLabel(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void*) wxk_TreeEvent_GetOldItem(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Point) wxk_TreeEvent_GetPoint(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_TreeEvent_IsEditCancelled(wxk_Event* self) WXK_NOEXCEPT;
 
 // wxUpdateUIEvent
 
@@ -1863,6 +2096,28 @@ WXK_FUNCTION(int32_t) wxk_EventType_LeaveWindow(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_LeftDclick(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_LeftDown(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_LeftUp(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_ListBeginDrag(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_ListBeginLabelEdit(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_ListBeginRdrag(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_ListCacheHint(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_ListColBeginDrag(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_ListColClick(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_ListColDragging(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_ListColEndDrag(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_ListColRightClick(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_ListDeleteAllItems(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_ListDeleteItem(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_ListEndLabelEdit(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_ListInsertItem(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_ListItemActivated(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_ListItemChecked(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_ListItemDeselected(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_ListItemFocused(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_ListItemMiddleClick(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_ListItemRightClick(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_ListItemSelected(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_ListItemUnchecked(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_ListKeyDown(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_Listbox(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_ListboxDclick(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_Magnify(void) WXK_NOEXCEPT;
@@ -1940,4 +2195,25 @@ WXK_FUNCTION(int32_t) wxk_EventType_Togglebutton(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_Tool(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_ToolEnter(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_ToolRclicked(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TreeBeginDrag(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TreeBeginLabelEdit(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TreeBeginRdrag(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TreeDeleteItem(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TreeEndDrag(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TreeEndLabelEdit(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TreeGetInfo(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TreeItemActivated(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TreeItemCollapsed(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TreeItemCollapsing(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TreeItemExpanded(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TreeItemExpanding(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TreeItemGettooltip(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TreeItemMenu(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TreeItemMiddleClick(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TreeItemRightClick(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TreeKeyDown(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TreeSelChanged(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TreeSelChanging(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TreeSetInfo(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TreeStateImageClick(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_UpdateUi(void) WXK_NOEXCEPT;

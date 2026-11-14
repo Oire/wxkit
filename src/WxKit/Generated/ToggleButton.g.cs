@@ -7,7 +7,7 @@ namespace WxKit;
 /// <summary>wxToggleButton is a button that stays pressed when clicked by the user. Wraps wxToggleButton.</summary>
 public unsafe partial class ToggleButton : AnyButton {
 	/// <summary>Constructor, creating and showing a toggle button.</summary>
-	public ToggleButton(Window parent, string label, int id = StandardId.Any, Point? position = null, Size? size = null, long style = 0) : this(CreateNative(parent, label, id, position, size, style)) {
+	public ToggleButton(Window parent, string label, int id = StandardId.Any, Point? position = null, Size? size = null, WindowStyle style = WindowStyle.None) : this(CreateNative(parent, label, id, position, size, style)) {
 	}
 
 	internal ToggleButton(WxkWindow* native) : base(native) {
@@ -25,12 +25,12 @@ public unsafe partial class ToggleButton : AnyButton {
 		remove => RemoveHandler(EventType.Togglebutton, StandardId.Any, StandardId.Any, value);
 	}
 
-	private static WxkWindow* CreateNative(Window parent, string label, int id, Point? position, Size? size, long style) {
+	private static WxkWindow* CreateNative(Window parent, string label, int id, Point? position, Size? size, WindowStyle style) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(parent);
 		ArgumentNullException.ThrowIfNull(label);
 		fixed (char* labelText = label) {
-			return WxKitNative.ToggleButtonNew((WxkWindow*)parent.Native, id, labelText, NativeString.Length(label), position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, style);
+			return WxKitNative.ToggleButtonNew((WxkWindow*)parent.Native, id, labelText, NativeString.Length(label), position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, (long)style);
 		}
 	}
 }

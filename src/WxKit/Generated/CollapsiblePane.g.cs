@@ -7,7 +7,7 @@ namespace WxKit;
 /// <summary>A collapsible pane is a container with an embedded button-like control which can be used by the user to collapse or expand the pane's contents. Wraps wxCollapsiblePane.</summary>
 public unsafe partial class CollapsiblePane : Control {
 	/// <summary>Initializes the object and calls Create() with all the parameters.</summary>
-	public CollapsiblePane(Window parent, string label, int id = StandardId.Any, Point? position = null, Size? size = null, CollapsiblePaneStyle style = CollapsiblePaneStyle.DefaultStyle) : this(CreateNative(parent, label, id, position, size, style)) {
+	public CollapsiblePane(Window parent, string label, int id = StandardId.Any, Point? position = null, Size? size = null, CollapsiblePaneStyle style = CollapsiblePaneStyle.Default) : this(CreateNative(parent, label, id, position, size, style)) {
 	}
 
 	internal CollapsiblePane(WxkWindow* native) : base(native) {

@@ -66,6 +66,14 @@ internal sealed class ClassTweak(string name) {
 	/// <summary>The class only has static members, such as wxSystemSettings, and becomes a static class.</summary>
 	public bool IsStaticOnly { get; private set; }
 
+	/// <summary>The class is copied like a value, though it is not one of the classes that are by their ancestry, such as wxListItem.</summary>
+	public bool IsValueObject { get; private set; }
+
+	public ClassTweak ValueObject() {
+		IsValueObject = true;
+		return this;
+	}
+
 	public ClassTweak StaticOnly() {
 		IsStaticOnly = true;
 		return this;

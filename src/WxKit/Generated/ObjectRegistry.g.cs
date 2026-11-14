@@ -24,6 +24,8 @@ internal static unsafe partial class ObjectRegistry {
 		["wxGauge"] = static native => new Gauge((WxkWindow*)native),
 		["wxHyperlinkCtrl"] = static native => new HyperlinkCtrl((WxkWindow*)native),
 		["wxListBox"] = static native => new ListBox((WxkWindow*)native),
+		["wxListCtrl"] = static native => new ListCtrl((WxkWindow*)native),
+		["wxListView"] = static native => new ListView((WxkWindow*)native),
 		["wxMenu"] = static native => new Menu((WxkMenu*)native),
 		["wxMenuBar"] = static native => new MenuBar((WxkWindow*)native),
 		["wxMessageDialog"] = static native => new MessageDialog((WxkWindow*)native),
@@ -50,6 +52,7 @@ internal static unsafe partial class ObjectRegistry {
 		["wxTextEntryDialog"] = static native => new TextEntryDialog((WxkWindow*)native),
 		["wxToggleButton"] = static native => new ToggleButton((WxkWindow*)native),
 		["wxTopLevelWindow"] = static native => new TopLevelWindow((WxkWindow*)native),
+		["wxTreeCtrl"] = static native => new TreeCtrl((WxkWindow*)native),
 		["wxWindow"] = static native => new Window((WxkWindow*)native),
 	};
 }

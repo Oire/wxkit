@@ -7,7 +7,7 @@ namespace WxKit;
 /// <summary>This is the base class for a control or "widget". Wraps wxControl.</summary>
 public unsafe partial class Control : Window {
 	/// <summary>Constructs a control.</summary>
-	public Control(Window parent, int id = StandardId.Any, Point? position = null, Size? size = null, long style = 0) : this(CreateNative(parent, id, position, size, style)) {
+	public Control(Window parent, int id = StandardId.Any, Point? position = null, Size? size = null, WindowStyle style = WindowStyle.None) : this(CreateNative(parent, id, position, size, style)) {
 	}
 
 	internal Control(WxkWindow* native) : base(native) {
@@ -91,9 +91,9 @@ public unsafe partial class Control : Window {
 		}
 	}
 
-	private static WxkWindow* CreateNative(Window parent, int id, Point? position, Size? size, long style) {
+	private static WxkWindow* CreateNative(Window parent, int id, Point? position, Size? size, WindowStyle style) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(parent);
-		return WxKitNative.ControlNew((WxkWindow*)parent.Native, id, position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, style);
+		return WxKitNative.ControlNew((WxkWindow*)parent.Native, id, position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, (long)style);
 	}
 }

@@ -7,7 +7,7 @@ namespace WxKit;
 /// <summary>A menu bar is a series of menus accessible from the top of a frame. Wraps wxMenuBar.</summary>
 public unsafe partial class MenuBar : Window {
 	/// <summary>Construct an empty menu bar.</summary>
-	public MenuBar(long style = 0) : this(CreateNative(style)) {
+	public MenuBar(WindowStyle style = WindowStyle.None) : this(CreateNative(style)) {
 	}
 
 	internal MenuBar(WxkWindow* native) : base(native) {
@@ -148,8 +148,8 @@ public unsafe partial class MenuBar : Window {
 		}
 	}
 
-	private static WxkWindow* CreateNative(long style) {
+	private static WxkWindow* CreateNative(WindowStyle style) {
 		Application.VerifyAccess();
-		return WxKitNative.MenuBarNew(style);
+		return WxKitNative.MenuBarNew((long)style);
 	}
 }

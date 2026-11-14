@@ -11,7 +11,7 @@ public unsafe partial class CheckListBox : ListBox {
 	}
 
 	/// <summary>Constructor, creating and showing a list box.</summary>
-	public CheckListBox(Window parent, IEnumerable<string> choices, int id = StandardId.Any, Point? position = null, Size? size = null, long style = 0) : this(CreateNative(parent, choices, id, position, size, style)) {
+	public CheckListBox(Window parent, IEnumerable<string> choices, int id = StandardId.Any, Point? position = null, Size? size = null, ListBoxStyle style = ListBoxStyle.None) : this(CreateNative(parent, choices, id, position, size, style)) {
 	}
 
 	internal CheckListBox(WxkWindow* native) : base(native) {
@@ -35,11 +35,11 @@ public unsafe partial class CheckListBox : ListBox {
 		return WxKitNative.CheckListBoxNewWindowIntPointSize((WxkWindow*)parent.Native, id, position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default);
 	}
 
-	private static WxkWindow* CreateNative(Window parent, IEnumerable<string> choices, int id, Point? position, Size? size, long style) {
+	private static WxkWindow* CreateNative(Window parent, IEnumerable<string> choices, int id, Point? position, Size? size, ListBoxStyle style) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(parent);
 		ArgumentNullException.ThrowIfNull(choices);
 		using NativeStringArray choicesNative = new(choices);
-		return WxKitNative.CheckListBoxNewWindowIntPointSizeStringsLong((WxkWindow*)parent.Native, id, position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, choicesNative.Handle, style);
+		return WxKitNative.CheckListBoxNewWindowIntPointSizeStringsListBoxStyle((WxkWindow*)parent.Native, id, position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, choicesNative.Handle, (long)style);
 	}
 }

@@ -152,10 +152,13 @@ T& ValueRef(wxk_Object* object) {
 	return *static_cast<T*>(reinterpret_cast<wxObject*>(object));
 }
 
-// Copies a value object out, which only adds a reference to its data. An empty one is null.
+// Copies a value object out, which only adds a reference to its data. An empty one is null, for
+// the classes that can be empty, which are the ones with IsOk.
 template <typename T>
 wxk_Object* CopyValue(const T& value) {
-	if (!value.IsOk()) return nullptr;
+	if constexpr (requires { value.IsOk(); }) {
+		if (!value.IsOk()) return nullptr;
+	}
 	wxObject* copy = new T(value);
 	return reinterpret_cast<wxk_Object*>(copy);
 }

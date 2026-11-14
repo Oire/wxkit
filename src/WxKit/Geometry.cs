@@ -26,6 +26,12 @@ public readonly record struct Color(byte R, byte G, byte B, byte A = 255) {
 	internal static Color? FromNative(WxkColor color) => color.Valid != 0 ? new Color(color.Red, color.Green, color.Blue, color.Alpha) : null;
 }
 
+/// <summary>An item in a <see cref="TreeCtrl"/>. Wraps wxTreeItemId. The default one is no item.</summary>
+public readonly record struct TreeItemId(nint Value) {
+	/// <summary>Whether this is an item, rather than none.</summary>
+	public bool IsOk => Value != 0;
+}
+
 /// <summary>A size in pixels. Wraps wxSize, and crosses into the shim as it is.</summary>
 public readonly record struct Size(int Width, int Height) {
 	/// <summary>Lets wxWidgets choose. Wraps wxDefaultSize.</summary>

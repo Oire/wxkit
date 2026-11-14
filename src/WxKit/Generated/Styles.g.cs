@@ -54,7 +54,7 @@ public enum CollapsiblePaneStyle : long {
 	/// <summary>No styles. Wraps 0.</summary>
 	None = 0x0,
 	/// <summary>The default style. It includes wxTAB_TRAVERSAL and wxBORDER_NONE. Wraps wxCP_DEFAULT_STYLE.</summary>
-	DefaultStyle = 0x280000,
+	Default = 0x280000,
 	/// <summary>By default wxCollapsiblePane resizes the top level window containing it when its own size changes. This allows easily implementing dialogs containing an optionally shown part, for example, and so is the default behaviour but can be inconvenient in some specific cases use this flag to disable this automatic parent resizing then. Wraps wxCP_NO_TLW_RESIZE.</summary>
 	NoTlwResize = 0x2,
 }
@@ -107,7 +107,7 @@ public enum DirDialogStyle : long {
 	/// <summary>No styles. Wraps 0.</summary>
 	None = 0x0,
 	/// <summary>Equivalent to a combination of wxDEFAULT_DIALOG_STYLE and wxRESIZE_BORDER. Wraps wxDD_DEFAULT_STYLE.</summary>
-	DefaultStyle = 0x20001840,
+	Default = 0x20001840,
 	/// <summary>The dialog will allow the user to choose only an existing folder. When this style is not given, a "Create new directory" button is added to the dialog or some other way is provided to the user to type the name of a new folder. Wraps wxDD_DIR_MUST_EXIST.</summary>
 	DirMustExist = 0x200,
 	/// <summary>Change the current working directory to the directory chosen by the user. This flag cannot be used with the wxDD_MULTIPLE style. Wraps wxDD_CHANGE_DIR.</summary>
@@ -124,7 +124,7 @@ public enum FileDialogStyle : long {
 	/// <summary>No styles. Wraps 0.</summary>
 	None = 0x0,
 	/// <summary>Equivalent to wxFD_OPEN. Wraps wxFD_DEFAULT_STYLE.</summary>
-	DefaultStyle = 0x1,
+	Default = 0x1,
 	/// <summary>This is an open dialog; usually this means that the default button's label of the dialog is "Open". Cannot be combined with wxFD_SAVE. Wraps wxFD_OPEN.</summary>
 	Open = 0x1,
 	/// <summary>This is a save dialog; usually this means that the default button's label of the dialog is "Save". Cannot be combined with wxFD_OPEN. Wraps wxFD_SAVE.</summary>
@@ -213,7 +213,7 @@ public enum HyperlinkCtrlStyle : long {
 	/// <summary>Pop up a context menu when the hyperlink is right-clicked. The context menu contains a "Copy URL" menu item which is automatically handled by the hyperlink and which just copies in the clipboard the URL (not the label) of the control. Wraps wxHL_CONTEXTMENU.</summary>
 	Contextmenu = 0x1,
 	/// <summary>The default style for wxHyperlinkCtrl: wxBORDER_NONE|wxHL_CONTEXTMENU|wxHL_ALIGN_CENTRE. Wraps wxHL_DEFAULT_STYLE.</summary>
-	DefaultStyle = 0x200009,
+	Default = 0x200009,
 }
 
 /// <summary>Styles for <see cref="ListBox"/>.</summary>
@@ -237,6 +237,43 @@ public enum ListBoxStyle : long {
 	NoSb = 0x400,
 	/// <summary>The listbox contents are sorted in alphabetical order. Wraps wxLB_SORT.</summary>
 	Sort = 0x10,
+}
+
+/// <summary>Styles for <see cref="ListCtrl"/>.</summary>
+[Flags]
+public enum ListCtrlStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Multicolumn list view, with optional small icons. Columns are computed automatically, i.e. you don't set columns as in wxLC_REPORT. In other words, the list wraps, unlike a wxListBox. Wraps wxLC_LIST.</summary>
+	List = 0x10,
+	/// <summary>Single or multicolumn report view, with optional header. Wraps wxLC_REPORT.</summary>
+	Report = 0x20,
+	/// <summary>The application provides items text on demand. May only be used with wxLC_REPORT. Wraps wxLC_VIRTUAL.</summary>
+	Virtual = 0x200,
+	/// <summary>Large icon view, with optional labels. Wraps wxLC_ICON.</summary>
+	Icon = 0x4,
+	/// <summary>Small icon view, with optional labels. Wraps wxLC_SMALL_ICON.</summary>
+	SmallIcon = 0x8,
+	/// <summary>Icons align to the top. Win32 default, Win32 only. Wraps wxLC_ALIGN_TOP.</summary>
+	AlignTop = 0x40,
+	/// <summary>Icons align to the left. Wraps wxLC_ALIGN_LEFT.</summary>
+	AlignLeft = 0x80,
+	/// <summary>Icons arrange themselves. Win32 only. Wraps wxLC_AUTOARRANGE.</summary>
+	Autoarrange = 0x100,
+	/// <summary>Labels are editable: the application will be notified when editing starts. Wraps wxLC_EDIT_LABELS.</summary>
+	EditLabels = 0x400,
+	/// <summary>No header in report mode. Wraps wxLC_NO_HEADER.</summary>
+	NoHeader = 0x800,
+	/// <summary>Single selection (default is multiple). Wraps wxLC_SINGLE_SEL.</summary>
+	SingleSel = 0x2000,
+	/// <summary>Sort in ascending order. (You must still supply a comparison callback in wxListCtrl::SortItems.). Wraps wxLC_SORT_ASCENDING.</summary>
+	SortAscending = 0x4000,
+	/// <summary>Sort in descending order. (You must still supply a comparison callback in wxListCtrl::SortItems.). Wraps wxLC_SORT_DESCENDING.</summary>
+	SortDescending = 0x8000,
+	/// <summary>Draws light horizontal rules between rows in report mode. Wraps wxLC_HRULES.</summary>
+	Hrules = 0x2,
+	/// <summary>Draws light vertical rules between columns in report mode. Wraps wxLC_VRULES.</summary>
+	Vrules = 0x1,
 }
 
 /// <summary>Styles for <see cref="MessageDialog"/>.</summary>
@@ -540,7 +577,7 @@ public enum StatusBarStyle : long {
 	/// <summary>Replace the end of the status texts with an ellipsis when the status text widths exceed the status bar pane's widths (uses wxControl::Ellipsize). Wraps wxSTB_ELLIPSIZE_END.</summary>
 	EllipsizeEnd = 0x100,
 	/// <summary>The default style: includes wxSTB_SIZEGRIP|wxSTB_SHOW_TIPS|wxSTB_ELLIPSIZE_END|wxFULL_REPAINT_ON_RESIZE. Wraps wxSTB_DEFAULT_STYLE.</summary>
-	DefaultStyle = 0x10130,
+	Default = 0x10130,
 }
 
 /// <summary>Styles for <see cref="TextCtrl"/>.</summary>
@@ -584,6 +621,39 @@ public enum TextCtrlStyle : long {
 	WordWrap = 0x1,
 	/// <summary>For multiline controls only: wrap the lines at word boundaries or at any other character if there are words longer than the window width (this is the default). Wraps wxTE_BESTWRAP.</summary>
 	BestWrap = 0x0,
+}
+
+/// <summary>Styles for <see cref="TreeCtrl"/>.</summary>
+[Flags]
+public enum TreeCtrlStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Use this style if you wish the user to be able to edit labels in the tree control. Wraps wxTR_EDIT_LABELS.</summary>
+	EditLabels = 0x200,
+	/// <summary>For convenience to document that no buttons are to be drawn. Wraps wxTR_NO_BUTTONS.</summary>
+	NoButtons = 0x0,
+	/// <summary>Use this style to show + and - buttons to the left of parent items. Wraps wxTR_HAS_BUTTONS.</summary>
+	HasButtons = 0x1,
+	/// <summary>Selects alternative style of +/- buttons and shows rotating ("twisting") arrows instead. Currently this style is only implemented in wxMSW and is ignored under the other platforms as enabling it is equivalent to using wxSystemThemedControl::EnableSystemTheme(). Wraps wxTR_TWIST_BUTTONS.</summary>
+	TwistButtons = 0x10,
+	/// <summary>Use this style to hide vertical level connectors. Wraps wxTR_NO_LINES.</summary>
+	NoLines = 0x4,
+	/// <summary>Use this style to have the background colour and the selection highlight extend over the entire horizontal row of the tree control window. (This flag is ignored under Windows unless you specify wxTR_NO_LINES as well.). Wraps wxTR_FULL_ROW_HIGHLIGHT.</summary>
+	FullRowHighlight = 0x2000,
+	/// <summary>Use this style to show lines leading to the root nodes (unless no wxTR_NO_LINES is also used, in which case no lines are shown). Note that in the MSW version, if this style is omitted, not only the lines, but also the button used for expanding the root item is not shown, which can be unexpected, so it is recommended to always use it. Wraps wxTR_LINES_AT_ROOT.</summary>
+	LinesAtRoot = 0x8,
+	/// <summary>Use this style to suppress the display of the root node, effectively causing the first-level nodes to appear as a series of root nodes. Note that in wxMSW this style must be set when creating the control and can't be changed later. Wraps wxTR_HIDE_ROOT.</summary>
+	HideRoot = 0x800,
+	/// <summary>Use this style to draw a contrasting border between displayed rows. Wraps wxTR_ROW_LINES.</summary>
+	RowLines = 0x400,
+	/// <summary>Use this style to cause row heights to be just big enough to fit the content. If not set, all rows use the largest row height. The default is that this flag is unset. Generic only. Wraps wxTR_HAS_VARIABLE_ROW_HEIGHT.</summary>
+	HasVariableRowHeight = 0x80,
+	/// <summary>For convenience to document that only one item may be selected at a time. Selecting another item causes the current selection, if any, to be deselected. This is the default. Wraps wxTR_SINGLE.</summary>
+	Single = 0x0,
+	/// <summary>Use this style to allow a range of items to be selected. If a second range is selected, the current range, if any, is deselected. Wraps wxTR_MULTIPLE.</summary>
+	Multiple = 0x20,
+	/// <summary>The set of flags that are closest to the defaults for the native control for a particular toolkit. Wraps wxTR_DEFAULT_STYLE.</summary>
+	Default = 0x9,
 }
 
 /// <summary>Styles for <see cref="Window"/>.</summary>

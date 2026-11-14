@@ -7,7 +7,7 @@ namespace WxKit;
 /// <summary>This class shows a static text element which links to an URL. Wraps wxHyperlinkCtrl.</summary>
 public unsafe partial class HyperlinkCtrl : Control {
 	/// <summary>Constructor.</summary>
-	public HyperlinkCtrl(Window parent, string label, string url, int id = StandardId.Any, Point? position = null, Size? size = null, HyperlinkCtrlStyle style = HyperlinkCtrlStyle.DefaultStyle) : this(CreateNative(parent, label, url, id, position, size, style)) {
+	public HyperlinkCtrl(Window parent, string label, string url, int id = StandardId.Any, Point? position = null, Size? size = null, HyperlinkCtrlStyle style = HyperlinkCtrlStyle.Default) : this(CreateNative(parent, label, url, id, position, size, style)) {
 	}
 
 	internal HyperlinkCtrl(WxkWindow* native) : base(native) {

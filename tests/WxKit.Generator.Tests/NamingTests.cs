@@ -44,6 +44,7 @@ public class NamingTests {
 	[Theory]
 	[InlineData("wxTE_MULTILINE", "TE", "wxTextCtrl", "MultiLine")]
 	[InlineData("wxDEFAULT_FRAME_STYLE", null, "wxFrame", "Default")]
+	[InlineData("wxTR_DEFAULT_STYLE", "TR", "wxTreeCtrl", "Default")]
 	[InlineData("wxFRAME_TOOL_WINDOW", null, "wxFrame", "ToolWindow")]
 	[InlineData("wxICON_ERROR", null, "wxMessageDialog", "IconError")]
 	[InlineData("wxCENTRE", null, "wxMessageDialog", "Center")]

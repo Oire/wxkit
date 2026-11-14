@@ -140,6 +140,72 @@ public static unsafe partial class EventType {
 	/// <summary>Wraps wxEVT_LEFT_UP.</summary>
 	public static EventType<MouseEvent> LeftUp { get; } = new(WxKitNative.EventTypeLeftUp, static native => new MouseEvent((WxkEvent*)native));
 
+	/// <summary>Wraps wxEVT_LIST_BEGIN_DRAG.</summary>
+	public static EventType<ListEvent> ListBeginDrag { get; } = new(WxKitNative.EventTypeListBeginDrag, static native => new ListEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_LIST_BEGIN_LABEL_EDIT.</summary>
+	public static EventType<ListEvent> ListBeginLabelEdit { get; } = new(WxKitNative.EventTypeListBeginLabelEdit, static native => new ListEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_LIST_BEGIN_RDRAG.</summary>
+	public static EventType<ListEvent> ListBeginRdrag { get; } = new(WxKitNative.EventTypeListBeginRdrag, static native => new ListEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_LIST_CACHE_HINT.</summary>
+	public static EventType<ListEvent> ListCacheHint { get; } = new(WxKitNative.EventTypeListCacheHint, static native => new ListEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_LIST_COL_BEGIN_DRAG.</summary>
+	public static EventType<ListEvent> ListColBeginDrag { get; } = new(WxKitNative.EventTypeListColBeginDrag, static native => new ListEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_LIST_COL_CLICK.</summary>
+	public static EventType<ListEvent> ListColClick { get; } = new(WxKitNative.EventTypeListColClick, static native => new ListEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_LIST_COL_DRAGGING.</summary>
+	public static EventType<ListEvent> ListColDragging { get; } = new(WxKitNative.EventTypeListColDragging, static native => new ListEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_LIST_COL_END_DRAG.</summary>
+	public static EventType<ListEvent> ListColEndDrag { get; } = new(WxKitNative.EventTypeListColEndDrag, static native => new ListEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_LIST_COL_RIGHT_CLICK.</summary>
+	public static EventType<ListEvent> ListColRightClick { get; } = new(WxKitNative.EventTypeListColRightClick, static native => new ListEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_LIST_DELETE_ALL_ITEMS.</summary>
+	public static EventType<ListEvent> ListDeleteAllItems { get; } = new(WxKitNative.EventTypeListDeleteAllItems, static native => new ListEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_LIST_DELETE_ITEM.</summary>
+	public static EventType<ListEvent> ListDeleteItem { get; } = new(WxKitNative.EventTypeListDeleteItem, static native => new ListEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_LIST_END_LABEL_EDIT.</summary>
+	public static EventType<ListEvent> ListEndLabelEdit { get; } = new(WxKitNative.EventTypeListEndLabelEdit, static native => new ListEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_LIST_INSERT_ITEM.</summary>
+	public static EventType<ListEvent> ListInsertItem { get; } = new(WxKitNative.EventTypeListInsertItem, static native => new ListEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_LIST_ITEM_ACTIVATED.</summary>
+	public static EventType<ListEvent> ListItemActivated { get; } = new(WxKitNative.EventTypeListItemActivated, static native => new ListEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_LIST_ITEM_CHECKED.</summary>
+	public static EventType<ListEvent> ListItemChecked { get; } = new(WxKitNative.EventTypeListItemChecked, static native => new ListEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_LIST_ITEM_DESELECTED.</summary>
+	public static EventType<ListEvent> ListItemDeselected { get; } = new(WxKitNative.EventTypeListItemDeselected, static native => new ListEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_LIST_ITEM_FOCUSED.</summary>
+	public static EventType<ListEvent> ListItemFocused { get; } = new(WxKitNative.EventTypeListItemFocused, static native => new ListEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_LIST_ITEM_MIDDLE_CLICK.</summary>
+	public static EventType<ListEvent> ListItemMiddleClick { get; } = new(WxKitNative.EventTypeListItemMiddleClick, static native => new ListEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_LIST_ITEM_RIGHT_CLICK.</summary>
+	public static EventType<ListEvent> ListItemRightClick { get; } = new(WxKitNative.EventTypeListItemRightClick, static native => new ListEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_LIST_ITEM_SELECTED.</summary>
+	public static EventType<ListEvent> ListItemSelected { get; } = new(WxKitNative.EventTypeListItemSelected, static native => new ListEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_LIST_ITEM_UNCHECKED.</summary>
+	public static EventType<ListEvent> ListItemUnchecked { get; } = new(WxKitNative.EventTypeListItemUnchecked, static native => new ListEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_LIST_KEY_DOWN.</summary>
+	public static EventType<ListEvent> ListKeyDown { get; } = new(WxKitNative.EventTypeListKeyDown, static native => new ListEvent((WxkEvent*)native));
+
 	/// <summary>Wraps wxEVT_LISTBOX.</summary>
 	public static EventType<CommandEvent> Listbox { get; } = new(WxKitNative.EventTypeListbox, static native => new CommandEvent((WxkEvent*)native));
 
@@ -370,6 +436,69 @@ public static unsafe partial class EventType {
 
 	/// <summary>Wraps wxEVT_TOOL_RCLICKED.</summary>
 	public static EventType<CommandEvent> ToolRclicked { get; } = new(WxKitNative.EventTypeToolRclicked, static native => new CommandEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_TREE_BEGIN_DRAG.</summary>
+	public static EventType<TreeEvent> TreeBeginDrag { get; } = new(WxKitNative.EventTypeTreeBeginDrag, static native => new TreeEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_TREE_BEGIN_LABEL_EDIT.</summary>
+	public static EventType<TreeEvent> TreeBeginLabelEdit { get; } = new(WxKitNative.EventTypeTreeBeginLabelEdit, static native => new TreeEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_TREE_BEGIN_RDRAG.</summary>
+	public static EventType<TreeEvent> TreeBeginRdrag { get; } = new(WxKitNative.EventTypeTreeBeginRdrag, static native => new TreeEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_TREE_DELETE_ITEM.</summary>
+	public static EventType<TreeEvent> TreeDeleteItem { get; } = new(WxKitNative.EventTypeTreeDeleteItem, static native => new TreeEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_TREE_END_DRAG.</summary>
+	public static EventType<TreeEvent> TreeEndDrag { get; } = new(WxKitNative.EventTypeTreeEndDrag, static native => new TreeEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_TREE_END_LABEL_EDIT.</summary>
+	public static EventType<TreeEvent> TreeEndLabelEdit { get; } = new(WxKitNative.EventTypeTreeEndLabelEdit, static native => new TreeEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_TREE_GET_INFO.</summary>
+	public static EventType<TreeEvent> TreeGetInfo { get; } = new(WxKitNative.EventTypeTreeGetInfo, static native => new TreeEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_TREE_ITEM_ACTIVATED.</summary>
+	public static EventType<TreeEvent> TreeItemActivated { get; } = new(WxKitNative.EventTypeTreeItemActivated, static native => new TreeEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_TREE_ITEM_COLLAPSED.</summary>
+	public static EventType<TreeEvent> TreeItemCollapsed { get; } = new(WxKitNative.EventTypeTreeItemCollapsed, static native => new TreeEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_TREE_ITEM_COLLAPSING.</summary>
+	public static EventType<TreeEvent> TreeItemCollapsing { get; } = new(WxKitNative.EventTypeTreeItemCollapsing, static native => new TreeEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_TREE_ITEM_EXPANDED.</summary>
+	public static EventType<TreeEvent> TreeItemExpanded { get; } = new(WxKitNative.EventTypeTreeItemExpanded, static native => new TreeEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_TREE_ITEM_EXPANDING.</summary>
+	public static EventType<TreeEvent> TreeItemExpanding { get; } = new(WxKitNative.EventTypeTreeItemExpanding, static native => new TreeEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_TREE_ITEM_GETTOOLTIP.</summary>
+	public static EventType<TreeEvent> TreeItemGettooltip { get; } = new(WxKitNative.EventTypeTreeItemGettooltip, static native => new TreeEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_TREE_ITEM_MENU.</summary>
+	public static EventType<TreeEvent> TreeItemMenu { get; } = new(WxKitNative.EventTypeTreeItemMenu, static native => new TreeEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_TREE_ITEM_MIDDLE_CLICK.</summary>
+	public static EventType<TreeEvent> TreeItemMiddleClick { get; } = new(WxKitNative.EventTypeTreeItemMiddleClick, static native => new TreeEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_TREE_ITEM_RIGHT_CLICK.</summary>
+	public static EventType<TreeEvent> TreeItemRightClick { get; } = new(WxKitNative.EventTypeTreeItemRightClick, static native => new TreeEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_TREE_KEY_DOWN.</summary>
+	public static EventType<TreeEvent> TreeKeyDown { get; } = new(WxKitNative.EventTypeTreeKeyDown, static native => new TreeEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_TREE_SEL_CHANGED.</summary>
+	public static EventType<TreeEvent> TreeSelChanged { get; } = new(WxKitNative.EventTypeTreeSelChanged, static native => new TreeEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_TREE_SEL_CHANGING.</summary>
+	public static EventType<TreeEvent> TreeSelChanging { get; } = new(WxKitNative.EventTypeTreeSelChanging, static native => new TreeEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_TREE_SET_INFO.</summary>
+	public static EventType<TreeEvent> TreeSetInfo { get; } = new(WxKitNative.EventTypeTreeSetInfo, static native => new TreeEvent((WxkEvent*)native));
+
+	/// <summary>Wraps wxEVT_TREE_STATE_IMAGE_CLICK.</summary>
+	public static EventType<TreeEvent> TreeStateImageClick { get; } = new(WxKitNative.EventTypeTreeStateImageClick, static native => new TreeEvent((WxkEvent*)native));
 
 	/// <summary>Wraps wxEVT_UPDATE_UI.</summary>
 	public static EventType<UpdateUIEvent> UpdateUi { get; } = new(WxKitNative.EventTypeUpdateUi, static native => new UpdateUIEvent((WxkEvent*)native));

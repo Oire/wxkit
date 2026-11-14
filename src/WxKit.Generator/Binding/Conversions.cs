@@ -576,3 +576,30 @@ internal sealed class WindowListConversion : Conversion {
 
 	public override string ManagedReturn(string expression) => $"global::WxKit.NativeWindowList.Take({expression})";
 }
+
+// A wxTreeItemId wraps one pointer, so it crosses as that pointer and becomes the TreeItemId value type.
+internal sealed class TreeItemIdConversion : Conversion {
+	public static TreeItemIdConversion Instance { get; } = new();
+
+	public override string Suffix => "TreeItemId";
+
+	public override string CReturnType => "void*";
+
+	public override string Fallback => "nullptr";
+
+	public override string InteropReturnType => "nint";
+
+	public override IEnumerable<string> CParameters(string name) => [$"void* {name}"];
+
+	public override string ToCpp(string name) => $"wxTreeItemId({name})";
+
+	public override string FromCpp(string expression) => $"({expression}).GetID()";
+
+	public override IEnumerable<string> InteropParameters(string name) => [$"nint {name}"];
+
+	public override string ManagedType(bool nullable) => "TreeItemId";
+
+	public override IEnumerable<string> InteropArguments(string name, bool nullable) => [$"{name}.Value"];
+
+	public override string ManagedReturn(string expression) => $"new global::WxKit.TreeItemId({expression})";
+}

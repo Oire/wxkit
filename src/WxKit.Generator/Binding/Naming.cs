@@ -50,6 +50,7 @@ internal static class Naming {
 		["str"] = "text",
 		["n"] = "index",
 		["img"] = "image",
+		["col"] = "column",
 		["bmp"] = "bitmap",
 		["idx"] = "index",
 	};
@@ -141,8 +142,8 @@ internal static class Naming {
 	public static string Style(string constant, string? sharedPrefix, string className) {
 		string[] words = constant[2..].Split('_', StringSplitOptions.RemoveEmptyEntries);
 		string classWord = Type(className).ToUpperInvariant();
-		if (words is ["DEFAULT", .., "STYLE"]) return "Default";
 		if (words.Length > 1 && (words[0] == sharedPrefix || words[0] == classWord)) words = words[1..];
+		if (words is ["DEFAULT", .., "STYLE"]) return "Default";
 		return Words(string.Join('_', words));
 	}
 

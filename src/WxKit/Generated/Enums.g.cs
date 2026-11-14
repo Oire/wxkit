@@ -583,6 +583,16 @@ public enum LayoutDirection {
 	RightToLeft = 2,
 }
 
+/// <summary>Wraps wxListColumnFormat.</summary>
+public enum ListColumnFormat {
+	/// <summary>Wraps wxLIST_FORMAT_LEFT.</summary>
+	Left = 0,
+	/// <summary>Wraps wxLIST_FORMAT_RIGHT.</summary>
+	Right = 1,
+	/// <summary>Wraps wxLIST_FORMAT_CENTRE.</summary>
+	Center = 2,
+}
+
 /// <summary>Wraps wxMouseButton.</summary>
 public enum MouseButton {
 	/// <summary>Any mouse button, means to check for any button being pressed for example. Wraps wxMOUSE_BTN_ANY.</summary>
@@ -1105,6 +1115,20 @@ public enum TextValidatorStyle {
 	Xdigits = 11,
 	/// <summary>A convenience flag for use with the other flags. Wraps wxFILTER_SPACE.</summary>
 	Space = 12,
+}
+
+/// <summary>Wraps wxTreeItemIcon.</summary>
+public enum TreeItemIcon {
+	/// <summary>To get/set the item image for when the item is not selected and not expanded. Wraps wxTreeItemIcon_Normal.</summary>
+	Normal = 0,
+	/// <summary>To get/set the item image for when the item is selected and not expanded. Wraps wxTreeItemIcon_Selected.</summary>
+	Selected = 1,
+	/// <summary>To get/set the item image for when the item is not selected and expanded. Wraps wxTreeItemIcon_Expanded.</summary>
+	Expanded = 2,
+	/// <summary>To get/set the item image for when the item is selected and expanded. Wraps wxTreeItemIcon_SelectedExpanded.</summary>
+	SelectedExpanded = 3,
+	/// <summary>Wraps wxTreeItemIcon_Max.</summary>
+	Max = 4,
 }
 
 /// <summary>Wraps wxUpdateUIMode.</summary>

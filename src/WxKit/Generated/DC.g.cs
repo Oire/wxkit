@@ -236,7 +236,7 @@ public unsafe partial class DC : NativeObject {
 	public bool FloodFill(int x, int y, Color? color, FloodFillStyle style = FloodFillStyle.Surface) => WxKitNative.DCFloodFillIntIntColorFloodFillStyle(Native, x, y, global::WxKit.Color.ToNative(color), (int)style) != 0;
 
 	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
-	public bool FloodFill(Point point, Color? col, FloodFillStyle style = FloodFillStyle.Surface) => WxKitNative.DCFloodFillPointColorFloodFillStyle(Native, point, global::WxKit.Color.ToNative(col), (int)style) != 0;
+	public bool FloodFill(Point point, Color? column, FloodFillStyle style = FloodFillStyle.Surface) => WxKitNative.DCFloodFillPointColorFloodFillStyle(Native, point, global::WxKit.Color.ToNative(column), (int)style) != 0;
 
 	/// <summary>Gets the rectangle surrounding the current clipping region.</summary>
 	public bool GetClippingBox(out int x, out int y, out int width, out int height) {

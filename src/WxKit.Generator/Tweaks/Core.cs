@@ -46,6 +46,13 @@ internal static class Core {
 		]) {
 			tweaks.Class(control);
 		}
+		// Lists and trees, and what they hold.
+		tweaks.Class("wxListCtrl", list => list.ParameterEnum("InsertColumn", "format", "wxListColumnFormat"));
+		tweaks.Class("wxListView");
+		tweaks.Class("wxTreeCtrl");
+		tweaks.Class("wxListItem").ValueObject();
+		tweaks.Class("wxListEvent");
+		tweaks.Class("wxTreeEvent");
 		// IsEmpty is ambiguous on purpose, between the list and the text. IsListEmpty and IsTextEmpty say which.
 		tweaks.Class("wxComboBox").Ignore("IsEmpty");
 		// Fonts, pens, brushes, bitmaps, icons, cursors, and images, which are copied like values.

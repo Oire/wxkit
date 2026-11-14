@@ -32,7 +32,8 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 	public BindingResult Bind() {
 		foreach (ClassTweak tweak in tweaks.Classes.Values) {
 			if (!api.Classes.TryGetValue(tweak.CppName, out DoxygenClass? source)) throw new InvalidOperationException($"A tweak names {tweak.CppName}, which the interface headers do not have.");
-			_classes[tweak.CppName] = new BoundClass(source, tweak, tweak.IsStaticOnly ? HandleKind.Static : HandleFor(source.Name));
+			HandleKind handle = tweak.IsStaticOnly ? HandleKind.Static : tweak.IsValueObject ? HandleKind.Value : HandleFor(source.Name);
+			_classes[tweak.CppName] = new BoundClass(source, tweak, handle);
 		}
 		foreach (BoundClass bound in _classes.Values) {
 			List<string> ancestors = Ancestors(bound.CppName);
@@ -233,8 +234,15 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		// A value object passed by a reference that can change, such as the bitmap a wxMemoryDC
 		// draws into, is the managed object's own copy, so the change shows there.
 		if (!isReturn && type.IsReference && !type.IsConst && _classes.TryGetValue(type.Name, out BoundClass? changed) && changed.Handle == HandleKind.Value) return new ValueConversion(changed, mutable: true);
-		if (parameter is not null && owner.Tweak.ParameterEnums.TryGetValue((member, parameter), out string? enumName)) return new EnumConversion(enumName, type.Name == "long" ? NumberConversion.Long : NumberConversion.Int);
-		if (parameter == "style" && type.Name == "long" && type.Pointers == 0 && owner.Styles is BoundStyles styles && member == owner.CppName) return new EnumConversion(styles.Name, NumberConversion.Long);
+		// A tweak names an enum by its managed name, or by its C++ one, which is then generated like any other.
+		if (parameter is not null && owner.Tweak.ParameterEnums.TryGetValue((member, parameter), out string? enumName)) {
+			string managed = enumName.StartsWith("wx", StringComparison.Ordinal) ? EnumFor(enumName)?.Name ?? throw new InvalidOperationException($"A tweak gives {owner.CppName}::{member} the enum {enumName}, which the headers do not have.") : enumName;
+			return new EnumConversion(managed, type.Name == "long" ? NumberConversion.Long : NumberConversion.Int);
+		}
+		// A class without a style table of its own, such as wxListView, takes its nearest ancestor's.
+		BoundStyles? styles = null;
+		for (BoundClass? current = owner; current is not null && styles is null; current = current.Base) styles = current.Styles;
+		if (parameter == "style" && type.Name == "long" && type.Pointers == 0 && styles is not null && member == owner.CppName) return new EnumConversion(styles.Name, NumberConversion.Long);
 		// A getter of the style, such as GetMessageDialogStyle, returns the class's style enum.
 		if (isReturn && type.Name == "long" && type.Pointers == 0 && member.EndsWith("Style", StringComparison.Ordinal) && owner.Styles is BoundStyles ownStyles) return new EnumConversion(ownStyles.Name, NumberConversion.Long);
 		if (type.IsVoid) return isReturn ? VoidConversion.Instance : null;
@@ -279,6 +287,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 			"size_t" => CountConversion.Size,
 			"unsigned" or "unsigned int" => CountConversion.Unsigned,
 			"wxRect" => RectConversion.Instance,
+			"wxTreeItemId" => TreeItemIdConversion.Instance,
 			"wxArrayString" => StringArrayConversion.Instance,
 			"wxColour" => ColorConversion.Instance,
 			"wxPoint" => GeometryConversion.Point,

@@ -7,11 +7,11 @@ namespace WxKit;
 /// <summary>A static box is a rectangle drawn around other windows to denote a logical grouping of items. Wraps wxStaticBox.</summary>
 public unsafe partial class StaticBox : Control {
 	/// <summary>Constructor, creating and showing a static box.</summary>
-	public StaticBox(Window parent, string label, int id = StandardId.Any, Point? position = null, Size? size = null, long style = 0) : this(CreateNative(parent, label, id, position, size, style)) {
+	public StaticBox(Window parent, string label, int id = StandardId.Any, Point? position = null, Size? size = null, WindowStyle style = WindowStyle.None) : this(CreateNative(parent, label, id, position, size, style)) {
 	}
 
 	/// <summary>Constructor for a static box using the given window as label.</summary>
-	public StaticBox(Window parent, Window label, int id = StandardId.Any, Point? position = null, Size? size = null, long style = 0) : this(CreateNative(parent, label, id, position, size, style)) {
+	public StaticBox(Window parent, Window label, int id = StandardId.Any, Point? position = null, Size? size = null, WindowStyle style = WindowStyle.None) : this(CreateNative(parent, label, id, position, size, style)) {
 	}
 
 	internal StaticBox(WxkWindow* native) : base(native) {
@@ -20,19 +20,19 @@ public unsafe partial class StaticBox : Control {
 	/// <summary>Enables or disables the box without affecting its label window, if any.</summary>
 	public bool Enable(bool enable = true) => WxKitNative.StaticBoxEnable(Native, enable ? (byte)1 : (byte)0) != 0;
 
-	private static WxkWindow* CreateNative(Window parent, string label, int id, Point? position, Size? size, long style) {
+	private static WxkWindow* CreateNative(Window parent, string label, int id, Point? position, Size? size, WindowStyle style) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(parent);
 		ArgumentNullException.ThrowIfNull(label);
 		fixed (char* labelText = label) {
-			return WxKitNative.StaticBoxNewWindowIntStringPointSizeLong((WxkWindow*)parent.Native, id, labelText, NativeString.Length(label), position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, style);
+			return WxKitNative.StaticBoxNewWindowIntStringPointSizeWindowStyle((WxkWindow*)parent.Native, id, labelText, NativeString.Length(label), position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, (long)style);
 		}
 	}
 
-	private static WxkWindow* CreateNative(Window parent, Window label, int id, Point? position, Size? size, long style) {
+	private static WxkWindow* CreateNative(Window parent, Window label, int id, Point? position, Size? size, WindowStyle style) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(parent);
 		ArgumentNullException.ThrowIfNull(label);
-		return WxKitNative.StaticBoxNewWindowIntWindowPointSizeLong((WxkWindow*)parent.Native, id, (WxkWindow*)label.Native, position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, style);
+		return WxKitNative.StaticBoxNewWindowIntWindowPointSizeWindowStyle((WxkWindow*)parent.Native, id, (WxkWindow*)label.Native, position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, (long)style);
 	}
 }
