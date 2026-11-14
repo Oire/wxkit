@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+# A newer push to the same branch or pull request makes an older run moot, so only the newest runs.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  windows:
+    # MSVC links libraries from an older toolset but not a newer one, so wxWidgets is built with the
+    # oldest Visual Studio an application is likely to publish with.
+    runs-on: windows-2022
+    # A cold wxWidgets build takes most of this. A hung test would otherwise hold the runner for hours.
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Find the wxWidgets commit
+        id: wx
+        shell: pwsh
+        run: echo "commit=$(git -C native/wxWidgets rev-parse HEAD)" >> $env:GITHUB_OUTPUT
+
+      # The build folder is cached, so a change to the shim rebuilds only the shim. The key starts
+      # with the wxWidgets commit and the build script, so a cache from another wxWidgets or other
+      # build options is never restored.
+      - name: Cache the native build
+        uses: actions/cache@v4
+        with:
+          path: artifacts/native-build/win-x64
+          key: native-win-x64-${{ steps.wx.outputs.commit }}-${{ hashFiles('scripts/build-native.ps1') }}-${{ hashFiles('native/shim/**') }}
+          restore-keys: native-win-x64-${{ steps.wx.outputs.commit }}-${{ hashFiles('scripts/build-native.ps1') }}-
+
+      # A fresh checkout makes every source newer than the cached objects, so MSBuild would rebuild
+      # wxWidgets from scratch. Its sources only change with its commit, which is in the cache key,
+      # so dating them before any build lets MSBuild reuse the cached objects.
+      - name: Date the wxWidgets sources
+        shell: bash
+        run: find native/wxWidgets -type f -not -path '*/.git/*' -exec touch -d '2000-01-01' {} +
+
+      - name: Build wxWidgets and the shim
+        shell: pwsh
+        run: ./scripts/build-native.ps1 -Runtimes win-x64
+
+      - name: Check formatting
+        run: dotnet format WxKit.slnx --verify-no-changes
+
+      - name: Test
+        run: dotnet test --project tests/WxKit.Tests -c Release
+
+      - name: Test Native AOT
+        shell: pwsh
+        run: ./scripts/test-aot.ps1 -Runtime win-x64
