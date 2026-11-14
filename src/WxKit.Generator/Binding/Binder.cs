@@ -32,7 +32,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 	public BindingResult Bind() {
 		foreach (ClassTweak tweak in tweaks.Classes.Values) {
 			if (!api.Classes.TryGetValue(tweak.CppName, out DoxygenClass? source)) throw new InvalidOperationException($"A tweak names {tweak.CppName}, which the interface headers do not have.");
-			_classes[tweak.CppName] = new BoundClass(source, tweak, HandleFor(source.Name));
+			_classes[tweak.CppName] = new BoundClass(source, tweak, tweak.IsStaticOnly ? HandleKind.Static : HandleFor(source.Name));
 		}
 		foreach (BoundClass bound in _classes.Values) {
 			List<string> ancestors = Ancestors(bound.CppName);
@@ -51,7 +51,9 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 			[.. _classes.Values.OrderBy(static bound => bound.CppName, StringComparer.Ordinal)],
 			[.. _eventTypes.Values.OrderBy(static type => type.Name, StringComparer.Ordinal)],
 			[.. _enums.Values.OfType<BoundEnum>().OrderBy(static bound => bound.Name, StringComparer.Ordinal)],
-			_skipped);
+			_skipped) {
+			StringConstants = api.StringConstants,
+		};
 	}
 
 	// A class's primary bases, itself first. wxWidgets classes inherit from wxObject along their first base.
@@ -118,10 +120,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 				Skip(bound, member, "it is deprecated");
 				continue;
 			}
-			if (member.IsStatic) {
-				Skip(bound, member, "static members are not bound yet");
-				continue;
-			}
+			if (bound.Handle == HandleKind.Static && (!member.IsStatic || isConstructor)) continue;
 			if (BindFunction(bound, member, isConstructor) is BoundFunction function) functions.Add(function);
 		}
 		// A mixin can declare a member the class declares too, such as SetValue in both wxComboBox
@@ -139,6 +138,8 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 	// Show in wxTopLevelWindow. Binding it again would only hide the base's, which already reaches
 	// the override, so a member that a base binds with the same signature is left out. So is a
 	// second member with the same managed signature, such as CenterOnParent beside CentreOnParent.
+	// A static member is not inherited the same way: the derived one does something else, as each
+	// class's GetClassDefaultAttributes does, so it stays and hides the base's.
 	private static void RemoveRedeclarations(BoundClass bound) {
 		HashSet<string> inherited = [];
 		for (BoundClass? ancestor = bound.Base; ancestor is not null; ancestor = ancestor.Base) {
@@ -146,8 +147,14 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 			inherited.UnionWith(ancestor.Methods.Select(Signature));
 		}
 		HashSet<string> seen = [];
-		bound.Properties.RemoveAll(property => inherited.Contains(property.Name) || !seen.Add(property.Name));
-		bound.Methods.RemoveAll(method => inherited.Contains(Signature(method)) || !seen.Add(Signature(method)));
+		bound.Properties.RemoveAll(property => !property.Getter.IsStatic && inherited.Contains(property.Name) || !seen.Add(property.Name));
+		bound.Methods.RemoveAll(method => !method.Function.IsStatic && inherited.Contains(Signature(method)) || !seen.Add(Signature(method)));
+		for (int index = 0; index < bound.Properties.Count; index++) {
+			if (inherited.Contains(bound.Properties[index].Name)) bound.Properties[index] = bound.Properties[index] with { Hides = true };
+		}
+		for (int index = 0; index < bound.Methods.Count; index++) {
+			if (inherited.Contains(Signature(bound.Methods[index]))) bound.Methods[index] = bound.Methods[index] with { Hides = true };
+		}
 		// C# cannot have a property and a method with the same name, and which to rename is a choice.
 		foreach (BoundMethod method in bound.Methods) {
 			if (bound.Properties.Any(property => property.Name == method.Name)) throw new InvalidOperationException($"{bound.CppName}::{method.Function.Source.Name} and a property are both called {method.Name}. Rename one with a tweak.");
@@ -233,7 +240,8 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		if (type.IsVoid) return isReturn ? VoidConversion.Instance : null;
 		if (type.Pointers == 1 && !type.IsReference) {
 			if (type.Name == "wxObject" && isReturn) return AnyObjectConversion.Instance;
-			if (!_classes.TryGetValue(type.Name, out BoundClass? target) || target.Handle == HandleKind.Event) return null;
+			// Events are only received, and a static class has no objects to pass.
+			if (!_classes.TryGetValue(type.Name, out BoundClass? target) || target.Handle == HandleKind.Event || target.Handle == HandleKind.Static) return null;
 			// Only event handlers are tracked, so only they can be wrapped when wxWidgets hands one back.
 			return isReturn && !target.Handle.IsEvtHandler ? null : new ObjectConversion(target);
 		}
@@ -252,7 +260,8 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 			"float" => NumberConversion.Float,
 			"unsigned char" or "wxByte" => NumberConversion.Byte,
 			// A wxMessageDialog button label converts from a string, which is how WxKit gives it.
-			"wxString" or "ButtonLabel" => StringConversion.Instance,
+			// wxArtID and wxArtClient are typedefs of wxString.
+			"wxString" or "ButtonLabel" or "wxArtID" or "wxArtClient" => StringConversion.Instance,
 			"size_t" => CountConversion.Size,
 			"unsigned" or "unsigned int" => CountConversion.Unsigned,
 			"wxRect" => RectConversion.Instance,
@@ -268,7 +277,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		managed = null;
 		isNull = false;
 		string value = cppDefault.Trim();
-		if (conversion is GeometryConversion geometry && geometry.IsDefault(value) || value is "nullptr" or "NULL" && conversion.AcceptsNull || conversion is ColorConversion && value == "wxNullColour" || conversion is ValueConversion && (value.StartsWith("wxNull", StringComparison.Ordinal) || value.EndsWith("()", StringComparison.Ordinal))) {
+		if (conversion is GeometryConversion geometry && geometry.IsDefault(value) || value is "nullptr" or "NULL" or "0" && conversion.AcceptsNull || conversion is ColorConversion && value == "wxNullColour" || conversion is ValueConversion && (value.StartsWith("wxNull", StringComparison.Ordinal) || value.EndsWith("()", StringComparison.Ordinal))) {
 			managed = "null";
 			isNull = true;
 			return true;
@@ -282,6 +291,10 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 				return true;
 			case StringConversion when StringLiteralPattern().IsMatch(value):
 				managed = value;
+				return true;
+			// An art id is written as the ArtId or ArtClient constant WxKit generates for it.
+			case StringConversion when api.StringConstants.TryGetValue(value, out string? constant):
+				managed = $"{(constant.EndsWith("_C", StringComparison.Ordinal) ? "ArtClient" : "ArtId")}.{Naming.Words(value["wxART_".Length..])}";
 				return true;
 			case NumberConversion number when number == NumberConversion.Int && value == "wxID_ANY":
 				managed = "StandardId.Any";
@@ -355,7 +368,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 				: getter.Returns is BoolConversion && IsPredicate(name) ? name
 				: null;
 			if (propertyName is null) continue;
-			BoundFunction? setter = functions.FirstOrDefault(function => !used.Contains(function) && function.Source.Name == "Set" + (name.StartsWith("Get", StringComparison.Ordinal) ? propertyName : name[2..]) && function.Parameters.Count == 1 && function.Parameters[0].Conversion.Suffix == getter.Returns.Suffix);
+			BoundFunction? setter = functions.FirstOrDefault(function => !used.Contains(function) && function.IsStatic == getter.IsStatic && function.Source.Name == "Set" + (name.StartsWith("Get", StringComparison.Ordinal) ? propertyName : name[2..]) && function.Parameters.Count == 1 && function.Parameters[0].Conversion.Suffix == getter.Returns.Suffix);
 			used.Add(getter);
 			if (setter is not null) used.Add(setter);
 			bound.Properties.Add(new BoundProperty(tweak.Renames.GetValueOrDefault(name) ?? Naming.Member(propertyName), getter, setter));

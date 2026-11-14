@@ -13,6 +13,13 @@ public unsafe partial class ClientDC : WindowDC {
 	internal ClientDC(WxkObject* native) : base(native) {
 	}
 
+	/// <summary>Return true if drawing on wxClientDC actually works.</summary>
+	public static bool CanBeUsedForDrawing(Window window) {
+		Application.VerifyAccess();
+		ArgumentNullException.ThrowIfNull(window);
+		return WxKitNative.ClientDCCanBeUsedForDrawing((WxkWindow*)window.Native) != 0;
+	}
+
 	private static WxkObject* CreateNative(Window window) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(window);

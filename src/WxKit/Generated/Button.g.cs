@@ -25,6 +25,12 @@ public unsafe partial class Button : AnyButton {
 		remove => RemoveHandler(EventType.Button, StandardId.Any, StandardId.Any, value);
 	}
 
+	/// <summary>Returns the default size for the buttons.</summary>
+	public static Size GetDefaultSize(Window? window = null) {
+		Application.VerifyAccess();
+		return WxKitNative.ButtonGetDefaultSize(window is null ? null : (WxkWindow*)window.Native);
+	}
+
 	/// <summary>This sets the button to be the default item in its top-level window (e.g.</summary>
 	public Window? SetDefault() => ObjectRegistry.Wrap<Window>(WxKitNative.ButtonSetDefault(Native));
 

@@ -45,6 +45,14 @@ public unsafe partial class Window : EvtHandler {
 	/// <summary>Returns true if the system supports transparent windows and calling SetTransparent() may succeed.</summary>
 	public bool CanSetTransparent => WxKitNative.WindowCanSetTransparent(Native) != 0;
 
+	/// <summary>Returns the currently captured window.</summary>
+	public static Window? Capture {
+		get {
+			Application.VerifyAccess();
+			return ObjectRegistry.Wrap<Window>(WxKitNative.WindowGetCapture());
+		}
+	}
+
 	/// <summary>Returns the character height for this window.</summary>
 	public int CharHeight => WxKitNative.WindowGetCharHeight(Native);
 
@@ -525,6 +533,12 @@ public unsafe partial class Window : EvtHandler {
 	/// <summary>Fix child window positions after setting all of them at once.</summary>
 	public void EndRepositioningChildren() => WxKitNative.WindowEndRepositioningChildren(Native);
 
+	/// <summary>Finds the window or control which currently has the keyboard focus.</summary>
+	public static Window? FindFocus() {
+		Application.VerifyAccess();
+		return ObjectRegistry.Wrap<Window>(WxKitNative.WindowFindFocus());
+	}
+
 	/// <summary>Find a child of this window, by id.</summary>
 	public Window? FindWindow(long id) => ObjectRegistry.Wrap<Window>(WxKitNative.WindowFindWindowLong(Native, id));
 
@@ -533,6 +547,30 @@ public unsafe partial class Window : EvtHandler {
 		ArgumentNullException.ThrowIfNull(name);
 		fixed (char* nameText = name) {
 			return ObjectRegistry.Wrap<Window>(WxKitNative.WindowFindWindowString(Native, nameText, NativeString.Length(name)));
+		}
+	}
+
+	/// <summary>Find the first window with the given id.</summary>
+	public static Window? FindWindowById(long id, Window? parent = null) {
+		Application.VerifyAccess();
+		return ObjectRegistry.Wrap<Window>(WxKitNative.WindowFindWindowById(id, parent is null ? null : (WxkWindow*)parent.Native));
+	}
+
+	/// <summary>Find a window by its label.</summary>
+	public static Window? FindWindowByLabel(string label, Window? parent = null) {
+		Application.VerifyAccess();
+		ArgumentNullException.ThrowIfNull(label);
+		fixed (char* labelText = label) {
+			return ObjectRegistry.Wrap<Window>(WxKitNative.WindowFindWindowByLabel(labelText, NativeString.Length(label), parent is null ? null : (WxkWindow*)parent.Native));
+		}
+	}
+
+	/// <summary>Find a window by its name (as given in a window constructor or Create() function call).</summary>
+	public static Window? FindWindowByName(string name, Window? parent = null) {
+		Application.VerifyAccess();
+		ArgumentNullException.ThrowIfNull(name);
+		fixed (char* nameText = name) {
+			return ObjectRegistry.Wrap<Window>(WxKitNative.WindowFindWindowByName(nameText, NativeString.Length(name), parent is null ? null : (WxkWindow*)parent.Native));
 		}
 	}
 
@@ -554,6 +592,27 @@ public unsafe partial class Window : EvtHandler {
 	/// <summary>Convert DPI-independent distance in pixels to the value in pixels appropriate for the current toolkit.</summary>
 	public int FromDIP(int d) => WxKitNative.WindowFromDIPInt(Native, d);
 
+	/// <summary>Non window-specific DPI-independent pixels conversion functions.</summary>
+	public static Size FromDIP(Size size, Window w) {
+		Application.VerifyAccess();
+		ArgumentNullException.ThrowIfNull(w);
+		return WxKitNative.WindowFromDIPSizeWindow(size, (WxkWindow*)w.Native);
+	}
+
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public static Point FromDIP(Point point, Window w) {
+		Application.VerifyAccess();
+		ArgumentNullException.ThrowIfNull(w);
+		return WxKitNative.WindowFromDIPPointWindow(point, (WxkWindow*)w.Native);
+	}
+
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public static int FromDIP(int d, Window w) {
+		Application.VerifyAccess();
+		ArgumentNullException.ThrowIfNull(w);
+		return WxKitNative.WindowFromDIPIntWindow(d, (WxkWindow*)w.Native);
+	}
+
 	/// <summary>Convert from physical pixels to logical pixels.</summary>
 	public Size FromPhys(Size size) => WxKitNative.WindowFromPhysSize(Native, size);
 
@@ -562,6 +621,27 @@ public unsafe partial class Window : EvtHandler {
 
 	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
 	public int FromPhys(int d) => WxKitNative.WindowFromPhysInt(Native, d);
+
+	/// <summary>Convert from physical pixels to logical pixels for any window.</summary>
+	public static Size FromPhys(Size size, Window w) {
+		Application.VerifyAccess();
+		ArgumentNullException.ThrowIfNull(w);
+		return WxKitNative.WindowFromPhysSizeWindow(size, (WxkWindow*)w.Native);
+	}
+
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public static Point FromPhys(Point point, Window w) {
+		Application.VerifyAccess();
+		ArgumentNullException.ThrowIfNull(w);
+		return WxKitNative.WindowFromPhysPointWindow(point, (WxkWindow*)w.Native);
+	}
+
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public static int FromPhys(int d, Window w) {
+		Application.VerifyAccess();
+		ArgumentNullException.ThrowIfNull(w);
+		return WxKitNative.WindowFromPhysIntWindow(d, (WxkWindow*)w.Native);
+	}
 
 	/// <summary>Returns the best height needed by this window if it had the given width.</summary>
 	public int GetBestHeight(int width) => WxKitNative.WindowGetBestHeight(Native, width);
@@ -690,6 +770,12 @@ public unsafe partial class Window : EvtHandler {
 
 	/// <summary>Performs a keyboard navigation action inside this window.</summary>
 	public bool NavigateIn() => WxKitNative.WindowNavigateIn(Native) != 0;
+
+	/// <summary>Create a new ID or range of IDs that are not currently in use.</summary>
+	public static int NewControlId(int count = 1) {
+		Application.VerifyAccess();
+		return WxKitNative.WindowNewControlId(count);
+	}
 
 	/// <summary>This virtual function is normally only used internally, but sometimes an application may need it to implement functionality that should not be disabled by an application defining an OnIdle handler in a derived class.</summary>
 	public void OnInternalIdle() => WxKitNative.WindowOnInternalIdle(Native);
@@ -896,6 +982,27 @@ public unsafe partial class Window : EvtHandler {
 	/// <summary>Convert pixel values of the current toolkit to DPI-independent pixel values.</summary>
 	public int ToDIP(int d) => WxKitNative.WindowToDIPInt(Native, d);
 
+	/// <summary>Non window-specific pixel to DPI-independent pixels conversion functions.</summary>
+	public static Size ToDIP(Size size, Window w) {
+		Application.VerifyAccess();
+		ArgumentNullException.ThrowIfNull(w);
+		return WxKitNative.WindowToDIPSizeWindow(size, (WxkWindow*)w.Native);
+	}
+
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public static Point ToDIP(Point point, Window w) {
+		Application.VerifyAccess();
+		ArgumentNullException.ThrowIfNull(w);
+		return WxKitNative.WindowToDIPPointWindow(point, (WxkWindow*)w.Native);
+	}
+
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public static int ToDIP(int d, Window w) {
+		Application.VerifyAccess();
+		ArgumentNullException.ThrowIfNull(w);
+		return WxKitNative.WindowToDIPIntWindow(d, (WxkWindow*)w.Native);
+	}
+
 	/// <summary>Convert from logical pixels to physical pixels.</summary>
 	public Size ToPhys(Size size) => WxKitNative.WindowToPhysSize(Native, size);
 
@@ -904,6 +1011,27 @@ public unsafe partial class Window : EvtHandler {
 
 	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
 	public int ToPhys(int d) => WxKitNative.WindowToPhysInt(Native, d);
+
+	/// <summary>Convert from logical pixels to physical pixels for any window.</summary>
+	public static Size ToPhys(Size size, Window w) {
+		Application.VerifyAccess();
+		ArgumentNullException.ThrowIfNull(w);
+		return WxKitNative.WindowToPhysSizeWindow(size, (WxkWindow*)w.Native);
+	}
+
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public static Point ToPhys(Point point, Window w) {
+		Application.VerifyAccess();
+		ArgumentNullException.ThrowIfNull(w);
+		return WxKitNative.WindowToPhysPointWindow(point, (WxkWindow*)w.Native);
+	}
+
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public static int ToPhys(int d, Window w) {
+		Application.VerifyAccess();
+		ArgumentNullException.ThrowIfNull(w);
+		return WxKitNative.WindowToPhysIntWindow(d, (WxkWindow*)w.Native);
+	}
 
 	/// <summary>Turns the given flag on if it's currently turned off and vice versa.</summary>
 	public bool ToggleWindowStyle(int flag) => WxKitNative.WindowToggleWindowStyle(Native, flag) != 0;
@@ -916,6 +1044,12 @@ public unsafe partial class Window : EvtHandler {
 
 	/// <summary>Unregisters a system wide hotkey.</summary>
 	public bool UnregisterHotKey(int hotkeyId) => WxKitNative.WindowUnregisterHotKey(Native, hotkeyId) != 0;
+
+	/// <summary>Unreserve an ID or range of IDs that was reserved by NewControlId().</summary>
+	public static void UnreserveControlId(int count = 1, int id = StandardId.Any) {
+		Application.VerifyAccess();
+		WxKitNative.WindowUnreserveControlId(id, count);
+	}
 
 	/// <summary>Unset any existing tooltip.</summary>
 	public void UnsetToolTip() => WxKitNative.WindowUnsetToolTip(Native);

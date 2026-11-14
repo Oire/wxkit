@@ -8,7 +8,9 @@ internal sealed record BindingResult(
 	IReadOnlyList<BoundClass> Classes,
 	IReadOnlyList<BoundEventType> EventTypes,
 	IReadOnlyList<BoundEnum> Enums,
-	IReadOnlyList<string> Skipped);
+	IReadOnlyList<string> Skipped) {
+	public IReadOnlyDictionary<string, string> StringConstants { get; init; } = new Dictionary<string, string>();
+}
 
 /// <summary>A C++ enum the managed API shows as a C# one, such as wxShowEffect as ShowEffect.</summary>
 internal sealed record BoundEnum(string Name, string CppName, IReadOnlyList<BoundStyle> Members);
@@ -32,6 +34,9 @@ internal sealed record HandleKind(string CType, string CppBase, string InteropTy
 
 	/// <summary>A value object, such as a font or a bitmap, which the managed side owns a copy of.</summary>
 	public static HandleKind Value { get; } = new("wxk_Object", "wxObject", "WxkObject", "Native", "Value");
+
+	/// <summary>A class with only static members, such as wxSystemSettings, which becomes a static class.</summary>
+	public static HandleKind Static { get; } = new(string.Empty, string.Empty, string.Empty, string.Empty, "Static");
 
 	/// <summary>An object the managed side creates and deletes, such as a drawing context.</summary>
 	public static HandleKind Owned { get; } = new("wxk_Object", "wxObject", "WxkObject", "Native", "Owned");
@@ -89,6 +94,8 @@ internal sealed class BoundFunction(BoundClass owner, DoxygenMember source, Conv
 
 	public bool IsConstructor { get; } = isConstructor;
 
+	public bool IsStatic => Source.IsStatic && !IsConstructor;
+
 	/// <summary>Told apart from overloads with the same name, such as "SetSize_Int4".</summary>
 	public string ExportName { get; set; } = isConstructor ? "new" : source.Name;
 
@@ -99,9 +106,14 @@ internal sealed class BoundFunction(BoundClass owner, DoxygenMember source, Conv
 	public IReadOnlyList<string> OnlyFor => Source.OnlyFor;
 }
 
-internal sealed record BoundMethod(string Name, BoundFunction Function);
+internal sealed record BoundMethod(string Name, BoundFunction Function) {
+	/// <summary>Whether it hides a static member of a base with the same signature, which needs the new modifier.</summary>
+	public bool Hides { get; init; }
+}
 
-internal sealed record BoundProperty(string Name, BoundFunction Getter, BoundFunction? Setter);
+internal sealed record BoundProperty(string Name, BoundFunction Getter, BoundFunction? Setter) {
+	public bool Hides { get; init; }
+}
 
 internal sealed record BoundEvent(string Name, BoundEventType Type, string Description);
 

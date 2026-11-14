@@ -55,7 +55,7 @@ internal static class ShimEmitter {
 	private static string Signature(BoundFunction function) {
 		BoundClass owner = function.Owner;
 		List<string> parameters = [];
-		if (!function.IsConstructor) parameters.Add($"{owner.Handle.CType}* self");
+		if (!function.IsConstructor && !function.IsStatic) parameters.Add($"{owner.Handle.CType}* self");
 		parameters.AddRange(function.Parameters.SelectMany(static parameter => parameter.Conversion.CParameters(parameter.Name.TrimStart('@'))));
 		string returns = function.IsConstructor ? $"{owner.Handle.CType}*" : function.Returns.CReturnType;
 		return $"WXK_FUNCTION({returns}) {function.ShimName}({(parameters.Count == 0 ? "void" : string.Join(", ", parameters))})";
@@ -79,7 +79,7 @@ internal static class ShimEmitter {
 			// have one, as wxTextEntry and wxItemContainer both have IsEmpty, and still calls overrides.
 			string target = $"static_cast<{owner.CppName}*>(wxk::Unwrap(self))";
 			if (function.Source.Mixin is string mixin) target = $"static_cast<{mixin}*>({target})";
-			string call = $"{target}->{function.Source.Name}({arguments})";
+			string call = function.IsStatic ? $"{function.Source.Mixin ?? owner.CppName}::{function.Source.Name}({arguments})" : $"{target}->{function.Source.Name}({arguments})";
 			if (function.Returns is VoidConversion) {
 				writer.Line($"wxk::Guard([&] {{ {call}; }});");
 			} else {
@@ -90,7 +90,7 @@ internal static class ShimEmitter {
 			// A function the port lacks still exists, so an application that links statically never
 			// misses a symbol. It does nothing, and returns the function's "nothing" value.
 			writer.Line("#else");
-			if (!function.IsConstructor) writer.Line("(void)self;");
+			if (!function.IsConstructor && !function.IsStatic) writer.Line("(void)self;");
 			foreach (BoundParameter parameter in function.Parameters) {
 				foreach (string declaration in parameter.Conversion.CParameters(parameter.Name.TrimStart('@'))) writer.Line($"(void){declaration.Split(' ')[^1]};");
 			}

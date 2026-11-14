@@ -18,6 +18,18 @@ public unsafe partial class UpdateUIEvent : CommandEvent {
 	/// <summary>Returns true if the UI element can be checked.</summary>
 	public bool IsCheckable => WxKitNative.UpdateUIEventIsCheckable(Handle) != 0;
 
+	/// <summary>Static function returning a value specifying how wxWidgets will send update events: to all windows, or only to those which specify that they will process the events.</summary>
+	public static UpdateUIMode Mode {
+		get {
+			Application.VerifyAccess();
+			return (UpdateUIMode)WxKitNative.UpdateUIEventGetMode();
+		}
+		set {
+			Application.VerifyAccess();
+			WxKitNative.UpdateUIEventSetMode((int)value);
+		}
+	}
+
 	/// <summary>Returns true if the application has called Check() or SetSet3StateValue().</summary>
 	public bool SetChecked => WxKitNative.UpdateUIEventGetSetChecked(Handle) != 0;
 
@@ -50,6 +62,25 @@ public unsafe partial class UpdateUIEvent : CommandEvent {
 		set => WxKitNative.UpdateUIEventSet3StateValue(Handle, (int)value);
 	}
 
+	/// <summary>Returns the current interval between updates in milliseconds.</summary>
+	public static long UpdateInterval {
+		get {
+			Application.VerifyAccess();
+			return WxKitNative.UpdateUIEventGetUpdateInterval();
+		}
+		set {
+			Application.VerifyAccess();
+			WxKitNative.UpdateUIEventSetUpdateInterval(value);
+		}
+	}
+
+	/// <summary>Returns true if it is appropriate to update (send UI update events to) this window.</summary>
+	public static bool CanUpdate(Window window) {
+		Application.VerifyAccess();
+		ArgumentNullException.ThrowIfNull(window);
+		return WxKitNative.UpdateUIEventCanUpdate((WxkWindow*)window.Native) != 0;
+	}
+
 	/// <summary>Check or uncheck the UI element.</summary>
 	public void Check(bool check) => WxKitNative.UpdateUIEventCheck(Handle, check ? (byte)1 : (byte)0);
 
@@ -58,6 +89,12 @@ public unsafe partial class UpdateUIEvent : CommandEvent {
 
 	/// <summary>Returns true if the UI element supports wxCheckboxState.</summary>
 	public bool Is3State() => WxKitNative.UpdateUIEventIs3State(Handle) != 0;
+
+	/// <summary>Used internally to reset the last-updated time to the current time.</summary>
+	public static void ResetUpdateTime() {
+		Application.VerifyAccess();
+		WxKitNative.UpdateUIEventResetUpdateTime();
+	}
 
 	/// <summary>Show or hide the UI element.</summary>
 	public void Show(bool show) => WxKitNative.UpdateUIEventShow(Handle, show ? (byte)1 : (byte)0);

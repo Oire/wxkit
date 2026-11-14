@@ -63,6 +63,14 @@ internal sealed class ClassTweak(string name) {
 		return this;
 	}
 
+	/// <summary>The class only has static members, such as wxSystemSettings, and becomes a static class.</summary>
+	public bool IsStaticOnly { get; private set; }
+
+	public ClassTweak StaticOnly() {
+		IsStaticOnly = true;
+		return this;
+	}
+
 	public ClassTweak Wrappable() {
 		IsWrappable = true;
 		return this;

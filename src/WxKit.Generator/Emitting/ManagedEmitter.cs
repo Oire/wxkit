@@ -14,6 +14,7 @@ internal static class ManagedEmitter {
 		yield return ("EventType.g.cs", EventTypes(result));
 		yield return ("Styles.g.cs", Styles(result));
 		yield return ("Enums.g.cs", Enums(result));
+		yield return ("ArtIds.g.cs", ArtIds(result));
 		yield return ("ObjectRegistry.g.cs", Factories(result));
 	}
 
@@ -23,7 +24,7 @@ internal static class ManagedEmitter {
 		CodeWriter writer = Start();
 		Summary(writer, $"{Sentence(bound.Source.Brief)}Wraps {bound.CppName}.");
 		string baseList = bound.Base is not null ? " : " + bound.Base.Name : bound.Handle.IsOwned ? " : NativeObject" : string.Empty;
-		writer.Open($"public unsafe partial class {bound.Name}{baseList}");
+		writer.Open(bound.Handle == HandleKind.Static ? $"public static unsafe partial class {bound.Name}" : $"public unsafe partial class {bound.Name}{baseList}");
 		bool first = true;
 		void Gap() {
 			if (!first) writer.Line();
@@ -44,7 +45,7 @@ internal static class ManagedEmitter {
 			writer.Line();
 			writer.Line("// Takes ownership of a copy the shim hands out, which is null when the value was empty.");
 			writer.Line($"internal static {(bound.Base is null ? string.Empty : "new ")}{bound.Name}? Take(WxkObject* native) => native is null ? null : new {bound.Name}(native);");
-		} else if (bound.Base is not null) {
+		} else if (bound.Base is not null && bound.Handle != HandleKind.Static) {
 			Gap();
 			// A base with another kind of handle, such as EvtHandler under Window, takes it as its own kind.
 			string handle = bound.Base.Handle == bound.Handle ? "native" : $"({bound.Base.Handle.InteropType}*)native";
@@ -82,16 +83,17 @@ internal static class ManagedEmitter {
 	private static void WriteProperty(CodeWriter writer, BoundClass bound, BoundProperty property) {
 		Summary(writer, property.Getter.Source.Brief);
 		string type = property.Getter.Returns.ManagedReturnType(nullable: property.Getter.Returns is ObjectConversion or AnyObjectConversion);
+		string modifiers = Modifiers(property.Getter, property.Hides);
 		if (property.Setter is null && IsSimple(property.Getter)) {
-			writer.Line($"public {type} {property.Name} => {Call(bound, property.Getter, property.Getter.Returns.ManagedReturn)};");
+			writer.Line($"{modifiers} {type} {property.Name} => {Call(bound, property.Getter, property.Getter.Returns.ManagedReturn)};");
 			return;
 		}
-		writer.Open($"public {type} {property.Name}");
+		writer.Open($"{modifiers} {type} {property.Name}");
 		if (IsSimple(property.Getter)) {
 			writer.Line($"get => {Call(bound, property.Getter, property.Getter.Returns.ManagedReturn)};");
 		} else {
 			writer.Open("get");
-			WriteCall(writer, property.Getter, bound.Handle.Accessor, result => $"return {property.Getter.Returns.ManagedReturn(result)};");
+			WriteCall(writer, property.Getter, Self(bound, property.Getter), result => $"return {property.Getter.Returns.ManagedReturn(result)};");
 			writer.Close();
 		}
 		if (property.Setter is BoundFunction setter) {
@@ -102,7 +104,7 @@ internal static class ManagedEmitter {
 				writer.Line($"set => {Call(bound, renamed, static result => result)};");
 			} else {
 				writer.Open("set");
-				WriteCall(writer, renamed, bound.Handle.Accessor, static result => $"{result};");
+				WriteCall(writer, renamed, Self(bound, renamed), static result => $"{result};");
 				writer.Close();
 			}
 		}
@@ -113,21 +115,27 @@ internal static class ManagedEmitter {
 		BoundFunction function = method.Function;
 		Summary(writer, function.Source.Brief);
 		string returns = function.Returns.ManagedReturnType(nullable: function.Returns is ObjectConversion or AnyObjectConversion);
-		string signature = $"public {returns} {method.Name}({ParameterList(function.ManagedParameters, withDefaults: true)})";
+		string signature = $"{Modifiers(function, method.Hides)} {returns} {method.Name}({ParameterList(function.ManagedParameters, withDefaults: true)})";
 		bool isVoid = function.Returns is VoidConversion;
 		if (IsSimple(function)) {
 			writer.Line($"{signature} => {Call(bound, function, function.Returns.ManagedReturn)};");
 			return;
 		}
 		writer.Open(signature);
-		WriteCall(writer, function, bound.Handle.Accessor, result => isVoid ? $"{result};" : $"return {function.Returns.ManagedReturn(result)};");
+		WriteCall(writer, function, Self(bound, function), result => isVoid ? $"{result};" : $"return {function.Returns.ManagedReturn(result)};");
 		writer.Close();
 	}
 
-	// A call needs a block when a parameter has to be checked for null or pinned first.
-	private static bool IsSimple(BoundFunction function) => function.Parameters.All(static parameter => parameter.Conversion.Check(parameter.Name, parameter.Nullable) is null && parameter.Conversion.Fixed(parameter.Name) is null && parameter.Conversion.Prepare(parameter.Name) is null);
+	private static string Modifiers(BoundFunction function, bool hides) => $"public{(hides ? " new" : string.Empty)}{(function.IsStatic ? " static" : string.Empty)}";
 
-	private static string Call(BoundClass bound, BoundFunction function, Func<string, string> finish) => finish(InteropCall(function, bound.Handle.Accessor));
+	// An instance member passes its object's handle. A static one has none.
+	private static string? Self(BoundClass bound, BoundFunction function) => function.IsStatic ? null : bound.Handle.Accessor;
+
+	// A call needs a block when a parameter has to be checked for null or pinned first, and a
+	// static member always does, since only an instance member's handle checks the thread.
+	private static bool IsSimple(BoundFunction function) => !function.IsStatic && function.Parameters.All(static parameter => parameter.Conversion.Check(parameter.Name, parameter.Nullable) is null && parameter.Conversion.Fixed(parameter.Name) is null && parameter.Conversion.Prepare(parameter.Name) is null);
+
+	private static string Call(BoundClass bound, BoundFunction function, Func<string, string> finish) => finish(InteropCall(function, Self(bound, function)));
 
 	private static string InteropCall(BoundFunction function, string? self) {
 		List<string> arguments = self is null ? [] : [self];
@@ -136,6 +144,7 @@ internal static class ManagedEmitter {
 	}
 
 	private static void WriteCall(CodeWriter writer, BoundFunction function, string? self, Func<string, string> statement) {
+		if (function.IsStatic) writer.Line("Application.VerifyAccess();");
 		foreach (BoundParameter parameter in function.ManagedParameters) {
 			if (parameter.Conversion.Check(parameter.Name, parameter.Nullable) is string check) writer.Line(check);
 		}
@@ -199,6 +208,22 @@ internal static class ManagedEmitter {
 			foreach (BoundStyle member in bound.Members) {
 				Summary(writer, member.Description.Length > 0 ? $"{Sentence(member.Description)}Wraps {member.Constant}." : $"Wraps {member.Constant}.");
 				writer.Line($"{member.Name} = {member.Value},");
+			}
+			writer.Close();
+		}
+		return writer.ToString();
+	}
+
+	// The art provider's ids, as constants: ArtId names an image, and ArtClient where it is shown.
+	private static string ArtIds(BindingResult result) {
+		CodeWriter writer = new CodeWriter().Line(Banner).Line().Line("namespace WxKit;");
+		foreach ((string className, bool clients, string about) in new[] { ("ArtId", false, "The standard images ArtProvider gives."), ("ArtClient", true, "Where an ArtProvider image is shown, which can change which image it gives.") }) {
+			writer.Line();
+			Summary(writer, about);
+			writer.Open($"public static class {className}");
+			foreach ((string constant, string value) in result.StringConstants.Where(pair => pair.Value.EndsWith("_C", StringComparison.Ordinal) == clients).OrderBy(static pair => pair.Key, StringComparer.Ordinal)) {
+				Summary(writer, $"Wraps {constant}.");
+				writer.Line($"public const string {Naming.Words(constant["wxART_".Length..])} = \"{value}\";");
 			}
 			writer.Close();
 		}

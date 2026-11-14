@@ -21,6 +21,20 @@ internal static partial class HeaderConstants {
 		return constants;
 	}
 
+	// The art provider's ids are macros that make strings, which the interface headers only declare
+	// as variables: wxART_MAKE_ART_ID(X) is "X", and wxART_MAKE_CLIENT_ID(X) is "X_C".
+	public static Dictionary<string, string> ReadArtIds(string artProviderHeader) {
+		Dictionary<string, string> ids = new(StringComparer.Ordinal);
+		foreach (Match match in ArtIdPattern().Matches(File.ReadAllText(artProviderHeader))) {
+			ids[match.Groups[1].Value] = match.Groups[3].Value + (match.Groups[2].Value == "CLIENT" ? "_C" : string.Empty);
+		}
+		if (ids.Count == 0) throw new InvalidOperationException($"{artProviderHeader} no longer defines its ids the way the generator reads them.");
+		return ids;
+	}
+
+	[GeneratedRegex(@"^#define\s+(wxART_\w+)\s+wxART_MAKE_(ART|CLIENT)_ID\((\w+)\)", RegexOptions.Multiline)]
+	private static partial Regex ArtIdPattern();
+
 	[GeneratedRegex(@"enum wxDeprecatedGUIConstants\s*\{(.*?)\};", RegexOptions.Singleline)]
 	private static partial Regex EnumPattern();
 

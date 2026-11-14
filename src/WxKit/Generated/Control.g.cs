@@ -15,7 +15,7 @@ public unsafe partial class Control : Window {
 
 	/// <summary>Returns the control's label without mnemonics.</summary>
 	public string LabelText {
-		get => NativeString.Take(WxKitNative.ControlGetLabelText(Native));
+		get => NativeString.Take(WxKitNative.ControlGetLabelTextDefault(Native));
 		set {
 			ArgumentNullException.ThrowIfNull(value);
 			fixed (char* valueText = value) {
@@ -42,6 +42,24 @@ public unsafe partial class Control : Window {
 		remove => RemoveHandler(EventType.TextPaste, StandardId.Any, StandardId.Any, value);
 	}
 
+	/// <summary>Escapes the special mnemonics characters ("&amp;") in the given string.</summary>
+	public static string EscapeMnemonics(string text) {
+		Application.VerifyAccess();
+		ArgumentNullException.ThrowIfNull(text);
+		fixed (char* textText = text) {
+			return NativeString.Take(WxKitNative.ControlEscapeMnemonics(textText, NativeString.Length(text)));
+		}
+	}
+
+	/// <summary>Returns the given label string without mnemonics ("&amp;" characters).</summary>
+	public static string GetLabelText(string label) {
+		Application.VerifyAccess();
+		ArgumentNullException.ThrowIfNull(label);
+		fixed (char* labelText = label) {
+			return NativeString.Take(WxKitNative.ControlGetLabelTextString(labelText, NativeString.Length(label)));
+		}
+	}
+
 	/// <summary>Determine the minimum size needed by the control to display the given text.</summary>
 	public Size GetSizeFromText(string text) {
 		ArgumentNullException.ThrowIfNull(text);
@@ -55,6 +73,15 @@ public unsafe partial class Control : Window {
 
 	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
 	public Size GetSizeFromTextSize(Size tsize) => WxKitNative.ControlGetSizeFromTextSizeSize(Native, tsize);
+
+	/// <summary>Returns the given str string without mnemonics ("&amp;" characters).</summary>
+	public static string RemoveMnemonics(string text) {
+		Application.VerifyAccess();
+		ArgumentNullException.ThrowIfNull(text);
+		fixed (char* textText = text) {
+			return NativeString.Take(WxKitNative.ControlRemoveMnemonics(textText, NativeString.Length(text)));
+		}
+	}
 
 	/// <summary>Sets the controls label to a string using markup.</summary>
 	public bool SetLabelMarkup(string markup) {

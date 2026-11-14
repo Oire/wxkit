@@ -31,6 +31,14 @@ public unsafe partial class Dialog : TopLevelWindow {
 		set => WxKitNative.DialogSetEscapeId(Native, value);
 	}
 
+	/// <summary>A static function returning true if layout adaptation is enabled for all dialogs.</summary>
+	public static bool IsLayoutAdaptationEnabled {
+		get {
+			Application.VerifyAccess();
+			return WxKitNative.DialogIsLayoutAdaptationEnabled() != 0;
+		}
+	}
+
 	/// <summary>Returns true if the dialog box is modal, false otherwise.</summary>
 	public bool IsModal => WxKitNative.DialogIsModal(Native) != 0;
 
@@ -69,6 +77,12 @@ public unsafe partial class Dialog : TopLevelWindow {
 
 	/// <summary>Performs layout adaptation, usually if the dialog is too large to fit on the display.</summary>
 	public bool DoLayoutAdaptation() => WxKitNative.DialogDoLayoutAdaptation(Native) != 0;
+
+	/// <summary>A static function enabling or disabling layout adaptation for all dialogs.</summary>
+	public static void EnableLayoutAdaptation(bool enable) {
+		Application.VerifyAccess();
+		WxKitNative.DialogEnableLayoutAdaptation(enable ? (byte)1 : (byte)0);
+	}
 
 	/// <summary>Ends a modal dialog, passing a value to be returned from the ShowModal() invocation.</summary>
 	public void EndModal(int retCode) => WxKitNative.DialogEndModal(Native, retCode);

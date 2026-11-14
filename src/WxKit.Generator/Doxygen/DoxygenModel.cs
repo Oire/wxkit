@@ -4,7 +4,10 @@ namespace WxKit.Generator.Doxygen;
 
 /// <param name="EventTypes">Every wxEVT_ constant the headers declare, and the header that declares it, such as wx/textctrl.h.</param>
 /// <param name="Enums">Every enum, by its name and, for one inside a class, also by Class::Name.</param>
-internal sealed record DoxygenApi(IReadOnlyDictionary<string, DoxygenClass> Classes, IReadOnlyDictionary<string, string> Constants, IReadOnlyDictionary<string, string> EventTypes, IReadOnlyDictionary<string, DoxygenEnum> Enums);
+internal sealed record DoxygenApi(IReadOnlyDictionary<string, DoxygenClass> Classes, IReadOnlyDictionary<string, string> Constants, IReadOnlyDictionary<string, string> EventTypes, IReadOnlyDictionary<string, DoxygenEnum> Enums) {
+	/// <summary>String constants, such as wxART_OTHER, which is "wxART_OTHER_C", by name.</summary>
+	public IReadOnlyDictionary<string, string> StringConstants { get; init; } = new Dictionary<string, string>();
+}
 
 internal sealed record DoxygenEnum(string Name, IReadOnlyList<DoxygenEnumValue> Values);
 

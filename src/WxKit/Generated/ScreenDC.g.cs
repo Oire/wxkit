@@ -13,6 +13,25 @@ public unsafe partial class ScreenDC : DC {
 	internal ScreenDC(WxkObject* native) : base(native) {
 	}
 
+	/// <summary>Use this in conjunction with StartDrawingOnTop().</summary>
+	public static bool EndDrawingOnTop() {
+		Application.VerifyAccess();
+		return WxKitNative.ScreenDCEndDrawingOnTop() != 0;
+	}
+
+	/// <summary>Use this in conjunction with EndDrawingOnTop() to ensure that drawing to the screen occurs on top of existing windows.</summary>
+	public static bool StartDrawingOnTop(Window window) {
+		Application.VerifyAccess();
+		ArgumentNullException.ThrowIfNull(window);
+		return WxKitNative.ScreenDCStartDrawingOnTopWindow((WxkWindow*)window.Native) != 0;
+	}
+
+	/// <summary>Use this in conjunction with EndDrawingOnTop() to ensure that drawing to the screen occurs on top of existing windows.</summary>
+	public static bool StartDrawingOnTop() {
+		Application.VerifyAccess();
+		return WxKitNative.ScreenDCStartDrawingOnTopDefault() != 0;
+	}
+
 	private static WxkObject* CreateNative() {
 		Application.VerifyAccess();
 		return WxKitNative.ScreenDCNew();

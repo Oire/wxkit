@@ -62,6 +62,9 @@ internal static class Core {
 		foreach (string dc in (string[])["wxDC", "wxWindowDC", "wxClientDC", "wxPaintDC", "wxMemoryDC", "wxScreenDC"]) {
 			tweaks.Class(dc);
 		}
+		// The system's colors, fonts, and metrics, and the standard icons.
+		tweaks.Class("wxSystemSettings").StaticOnly();
+		tweaks.Class("wxArtProvider").StaticOnly();
 		// The standard dialogs.
 		foreach (string dialog in (string[])["wxTextEntryDialog", "wxPasswordEntryDialog", "wxFileDialog", "wxDirDialog", "wxProgressDialog", "wxSingleChoiceDialog", "wxMultiChoiceDialog"]) {
 			tweaks.Class(dialog);

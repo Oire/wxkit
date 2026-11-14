@@ -539,6 +539,14 @@ public enum HitTest {
 	Max = 14,
 }
 
+/// <summary>Wraps wxIdleMode.</summary>
+public enum IdleMode {
+	/// <summary>Send idle events to all windows. Wraps wxIDLE_PROCESS_ALL.</summary>
+	All = 0,
+	/// <summary>Send idle events to windows that have the wxWS_EX_PROCESS_IDLE flag specified. Wraps wxIDLE_PROCESS_SPECIFIED.</summary>
+	Specified = 1,
+}
+
 /// <summary>Wraps wxImageAlphaBlendMode.</summary>
 public enum ImageAlphaBlendMode {
 	/// <summary>Overwrite the original alpha values with the ones being pasted. Wraps wxIMAGE_ALPHA_BLEND_OVER.</summary>
@@ -839,6 +847,222 @@ public enum StockCursor {
 	Max = 34,
 }
 
+/// <summary>Wraps wxSystemColour.</summary>
+public enum SystemColor {
+	/// <summary>The scrollbar grey area. Wraps wxSYS_COLOUR_SCROLLBAR.</summary>
+	Scrollbar = 0,
+	/// <summary>The desktop colour. Wraps wxSYS_COLOUR_DESKTOP.</summary>
+	Desktop = 1,
+	/// <summary>Active window caption colour. Wraps wxSYS_COLOUR_ACTIVECAPTION.</summary>
+	Activecaption = 2,
+	/// <summary>Inactive window caption colour. Wraps wxSYS_COLOUR_INACTIVECAPTION.</summary>
+	Inactivecaption = 3,
+	/// <summary>Menu background colour. Wraps wxSYS_COLOUR_MENU.</summary>
+	Menu = 4,
+	/// <summary>Window background colour. Wraps wxSYS_COLOUR_WINDOW.</summary>
+	Window = 5,
+	/// <summary>Window frame colour. Wraps wxSYS_COLOUR_WINDOWFRAME.</summary>
+	Windowframe = 6,
+	/// <summary>Colour of the text used in the menus. Wraps wxSYS_COLOUR_MENUTEXT.</summary>
+	Menutext = 7,
+	/// <summary>Colour of the text used in generic windows. Wraps wxSYS_COLOUR_WINDOWTEXT.</summary>
+	Windowtext = 8,
+	/// <summary>Colour of the text used in captions, size boxes and scrollbar arrow boxes. Wraps wxSYS_COLOUR_CAPTIONTEXT.</summary>
+	Captiontext = 9,
+	/// <summary>Active window border colour. Wraps wxSYS_COLOUR_ACTIVEBORDER.</summary>
+	Activeborder = 10,
+	/// <summary>Inactive window border colour. Wraps wxSYS_COLOUR_INACTIVEBORDER.</summary>
+	Inactiveborder = 11,
+	/// <summary>Background colour for MDI applications. Wraps wxSYS_COLOUR_APPWORKSPACE.</summary>
+	Appworkspace = 12,
+	/// <summary>Colour of item(s) selected in a control. Wraps wxSYS_COLOUR_HIGHLIGHT.</summary>
+	Highlight = 13,
+	/// <summary>Colour of the text of item(s) selected in a control. Wraps wxSYS_COLOUR_HIGHLIGHTTEXT.</summary>
+	Highlighttext = 14,
+	/// <summary>Face shading colour on push buttons. Wraps wxSYS_COLOUR_BTNFACE.</summary>
+	Btnface = 15,
+	/// <summary>Edge shading colour on push buttons. Wraps wxSYS_COLOUR_BTNSHADOW.</summary>
+	Btnshadow = 16,
+	/// <summary>Colour of greyed (disabled) text. Wraps wxSYS_COLOUR_GRAYTEXT.</summary>
+	Graytext = 17,
+	/// <summary>Colour of the text on push buttons. Wraps wxSYS_COLOUR_BTNTEXT.</summary>
+	Btntext = 18,
+	/// <summary>Colour of the text in inactive captions. Wraps wxSYS_COLOUR_INACTIVECAPTIONTEXT.</summary>
+	Inactivecaptiontext = 19,
+	/// <summary>Highlight colour for buttons. Wraps wxSYS_COLOUR_BTNHIGHLIGHT.</summary>
+	Btnhighlight = 20,
+	/// <summary>Dark shadow colour for three-dimensional display elements. Wraps wxSYS_COLOUR_3DDKSHADOW.</summary>
+	ThreeDdkshadow = 21,
+	/// <summary>Light colour for three-dimensional display elements. Wraps wxSYS_COLOUR_3DLIGHT.</summary>
+	ThreeDlight = 22,
+	/// <summary>Text colour for tooltip controls. Wraps wxSYS_COLOUR_INFOTEXT.</summary>
+	Infotext = 23,
+	/// <summary>Background colour for tooltip controls. Wraps wxSYS_COLOUR_INFOBK.</summary>
+	Infobk = 24,
+	/// <summary>Background colour for list-like controls. Wraps wxSYS_COLOUR_LISTBOX.</summary>
+	Listbox = 25,
+	/// <summary>Colour for a hyperlink or hot-tracked item. Wraps wxSYS_COLOUR_HOTLIGHT.</summary>
+	Hotlight = 26,
+	/// <summary>Right side colour in the colour gradient of an active window's title bar. Wraps wxSYS_COLOUR_GRADIENTACTIVECAPTION.</summary>
+	Gradientactivecaption = 27,
+	/// <summary>Right side colour in the colour gradient of an inactive window's title bar. Wraps wxSYS_COLOUR_GRADIENTINACTIVECAPTION.</summary>
+	Gradientinactivecaption = 28,
+	/// <summary>The colour used to highlight menu items when the menu appears as a flat menu. Wraps wxSYS_COLOUR_MENUHILIGHT.</summary>
+	Menuhilight = 29,
+	/// <summary>The background colour for the menu bar when menus appear as flat menus. Wraps wxSYS_COLOUR_MENUBAR.</summary>
+	Menubar = 30,
+	/// <summary>Text colour for list-like controls. Wraps wxSYS_COLOUR_LISTBOXTEXT.</summary>
+	Listboxtext = 31,
+	/// <summary>Text colour for the selected items in list-like controls. Wraps wxSYS_COLOUR_LISTBOXHIGHLIGHTTEXT.</summary>
+	Listboxhighlighttext = 32,
+	/// <summary>Colour of separator lines in grid-like controls. Wraps wxSYS_COLOUR_GRIDLINES.</summary>
+	Gridlines = 33,
+	/// <summary>Background colour of a selected item in a wxListBox or similar control. Wraps wxSYS_COLOUR_LISTBOXHIGHLIGHT.</summary>
+	Listboxhighlight = 34,
+	/// <summary>Synonym for wxSYS_COLOUR_DESKTOP. Wraps wxSYS_COLOUR_BACKGROUND.</summary>
+	Background = 1,
+	/// <summary>Synonym for wxSYS_COLOUR_BTNFACE. Wraps wxSYS_COLOUR_3DFACE.</summary>
+	ThreeDface = 15,
+	/// <summary>Synonym for wxSYS_COLOUR_BTNSHADOW. Wraps wxSYS_COLOUR_3DSHADOW.</summary>
+	ThreeDshadow = 16,
+	/// <summary>Synonym for wxSYS_COLOUR_BTNHIGHLIGHT. Wraps wxSYS_COLOUR_BTNHILIGHT.</summary>
+	Btnhilight = 20,
+	/// <summary>Synonym for wxSYS_COLOUR_BTNHIGHLIGHT. Wraps wxSYS_COLOUR_3DHIGHLIGHT.</summary>
+	ThreeDhighlight = 20,
+	/// <summary>Synonym for wxSYS_COLOUR_BTNHIGHLIGHT. Wraps wxSYS_COLOUR_3DHILIGHT.</summary>
+	ThreeDhilight = 20,
+	/// <summary>Synonym for wxSYS_COLOUR_BTNFACE. Wraps wxSYS_COLOUR_FRAMEBK.</summary>
+	Framebk = 15,
+}
+
+/// <summary>Wraps wxSystemFeature.</summary>
+public enum SystemFeature {
+	/// <summary>Wraps wxSYS_CAN_DRAW_FRAME_DECORATIONS.</summary>
+	CanDrawFrameDecorations = 1,
+	/// <summary>Wraps wxSYS_CAN_ICONIZE_FRAME.</summary>
+	CanIconizeFrame = 2,
+	/// <summary>Wraps wxSYS_TABLET_PRESENT.</summary>
+	TabletPresent = 3,
+}
+
+/// <summary>Wraps wxSystemFont.</summary>
+public enum SystemFont {
+	/// <summary>Original equipment manufacturer dependent fixed-pitch font. Wraps wxSYS_OEM_FIXED_FONT.</summary>
+	OemFixedFont = 10,
+	/// <summary>Windows fixed-pitch (monospaced) font. Wraps wxSYS_ANSI_FIXED_FONT.</summary>
+	AnsiFixedFont = 11,
+	/// <summary>Windows variable-pitch (proportional) font. Wraps wxSYS_ANSI_VAR_FONT.</summary>
+	AnsiVarFont = 12,
+	/// <summary>System font. Wraps wxSYS_SYSTEM_FONT.</summary>
+	SystemFont = 13,
+	/// <summary>Device-dependent font. Wraps wxSYS_DEVICE_DEFAULT_FONT.</summary>
+	DeviceDefaultFont = 14,
+	/// <summary>Default font for user interface objects such as menus and dialog boxes. Wraps wxSYS_DEFAULT_GUI_FONT.</summary>
+	DefaultGuiFont = 15,
+}
+
+/// <summary>Wraps wxSystemMetric.</summary>
+public enum SystemMetric {
+	/// <summary>Number of buttons on mouse, or zero if no mouse was installed. Wraps wxSYS_MOUSE_BUTTONS.</summary>
+	MouseButtons = 0,
+	/// <summary>Width of single border. Wraps wxSYS_BORDER_X.</summary>
+	BorderX = 1,
+	/// <summary>Height of single border. Wraps wxSYS_BORDER_Y.</summary>
+	BorderY = 2,
+	/// <summary>Width of cursor in logical pixels. Wraps wxSYS_CURSOR_X.</summary>
+	CursorX = 3,
+	/// <summary>Height of cursor in logical pixels. Wraps wxSYS_CURSOR_Y.</summary>
+	CursorY = 4,
+	/// <summary>Width or height of cursor in logical pixels. Wraps wxSYS_CURSOR_SIZE.</summary>
+	CursorSize = 5,
+	/// <summary>Width in pixels of rectangle within which two successive mouse clicks must fall to generate a double-click. Wraps wxSYS_DCLICK_X.</summary>
+	DclickX = 6,
+	/// <summary>Height in pixels of rectangle within which two successive mouse clicks must fall to generate a double-click. Wraps wxSYS_DCLICK_Y.</summary>
+	DclickY = 7,
+	/// <summary>Width in pixels of a rectangle centered on a drag point to allow for limited movement of the mouse pointer before a drag operation begins. Wraps wxSYS_DRAG_X.</summary>
+	DragX = 8,
+	/// <summary>Height in pixels of a rectangle centered on a drag point to allow for limited movement of the mouse pointer before a drag operation begins. Wraps wxSYS_DRAG_Y.</summary>
+	DragY = 9,
+	/// <summary>Width of a 3D border, in pixels. Wraps wxSYS_EDGE_X.</summary>
+	EdgeX = 10,
+	/// <summary>Height of a 3D border, in pixels. Wraps wxSYS_EDGE_Y.</summary>
+	EdgeY = 11,
+	/// <summary>Width of arrow bitmap on horizontal scrollbar. Wraps wxSYS_HSCROLL_ARROW_X.</summary>
+	HscrollArrowX = 12,
+	/// <summary>Height of arrow bitmap on horizontal scrollbar. Wraps wxSYS_HSCROLL_ARROW_Y.</summary>
+	HscrollArrowY = 13,
+	/// <summary>Width of horizontal scrollbar thumb. Wraps wxSYS_HTHUMB_X.</summary>
+	HthumbX = 14,
+	/// <summary>The default width of an icon. Wraps wxSYS_ICON_X.</summary>
+	IconX = 15,
+	/// <summary>The default height of an icon. Wraps wxSYS_ICON_Y.</summary>
+	IconY = 16,
+	/// <summary>Width of a grid cell for items in large icon view, in pixels. Each item fits into a rectangle of this size when arranged. Wraps wxSYS_ICONSPACING_X.</summary>
+	IconspacingX = 17,
+	/// <summary>Height of a grid cell for items in large icon view, in pixels. Each item fits into a rectangle of this size when arranged. Wraps wxSYS_ICONSPACING_Y.</summary>
+	IconspacingY = 18,
+	/// <summary>Minimum width of a window. Wraps wxSYS_WINDOWMIN_X.</summary>
+	WindowminX = 19,
+	/// <summary>Minimum height of a window. Wraps wxSYS_WINDOWMIN_Y.</summary>
+	WindowminY = 20,
+	/// <summary>Width of the screen in pixels. Wraps wxSYS_SCREEN_X.</summary>
+	ScreenX = 21,
+	/// <summary>Height of the screen in pixels. Wraps wxSYS_SCREEN_Y.</summary>
+	ScreenY = 22,
+	/// <summary>Width of the window frame for a window with wxRESIZE_BORDER. Wraps wxSYS_FRAMESIZE_X.</summary>
+	FramesizeX = 23,
+	/// <summary>Height of the window frame for a window with wxRESIZE_BORDER. Wraps wxSYS_FRAMESIZE_Y.</summary>
+	FramesizeY = 24,
+	/// <summary>Recommended width of a small icon (in window captions, and small icon view). Wraps wxSYS_SMALLICON_X.</summary>
+	SmalliconX = 25,
+	/// <summary>Recommended height of a small icon (in window captions, and small icon view). Wraps wxSYS_SMALLICON_Y.</summary>
+	SmalliconY = 26,
+	/// <summary>Height of horizontal scrollbar in pixels. Wraps wxSYS_HSCROLL_Y.</summary>
+	HscrollY = 27,
+	/// <summary>Width of vertical scrollbar in pixels. Wraps wxSYS_VSCROLL_X.</summary>
+	VscrollX = 28,
+	/// <summary>Width of arrow bitmap on a vertical scrollbar. Wraps wxSYS_VSCROLL_ARROW_X.</summary>
+	VscrollArrowX = 29,
+	/// <summary>Height of arrow bitmap on a vertical scrollbar. Wraps wxSYS_VSCROLL_ARROW_Y.</summary>
+	VscrollArrowY = 30,
+	/// <summary>Height of vertical scrollbar thumb. Wraps wxSYS_VTHUMB_Y.</summary>
+	VthumbY = 31,
+	/// <summary>Height of normal caption area. Wraps wxSYS_CAPTION_Y.</summary>
+	CaptionY = 32,
+	/// <summary>Height of single-line menu bar. Wraps wxSYS_MENU_Y.</summary>
+	MenuY = 33,
+	/// <summary>1 if there is a network present, 0 otherwise. Wraps wxSYS_NETWORK_PRESENT.</summary>
+	NetworkPresent = 34,
+	/// <summary>1 if PenWindows is installed, 0 otherwise. Wraps wxSYS_PENWINDOWS_PRESENT.</summary>
+	PenwindowsPresent = 35,
+	/// <summary>Wraps wxSYS_SHOW_SOUNDS.</summary>
+	ShowSounds = 36,
+	/// <summary>Non-zero if the meanings of the left and right mouse buttons are swapped; zero otherwise. Wraps wxSYS_SWAP_BUTTONS.</summary>
+	SwapButtons = 37,
+	/// <summary>Maximal time, in milliseconds, which may pass between subsequent clicks for a double click to be generated. Wraps wxSYS_DCLICK_MSEC.</summary>
+	DclickMsec = 38,
+	/// <summary>Time, in milliseconds, for how long a blinking caret should stay visible during a single blink cycle before it disappears. Wraps wxSYS_CARET_ON_MSEC.</summary>
+	CaretOnMsec = 39,
+	/// <summary>Time, in milliseconds, for how long a blinking caret should stay invisible during a single blink cycle before it reappears. Wraps wxSYS_CARET_OFF_MSEC.</summary>
+	CaretOffMsec = 40,
+	/// <summary>Time, in milliseconds, for how long a caret should blink after a user interaction. Wraps wxSYS_CARET_TIMEOUT_MSEC.</summary>
+	CaretTimeoutMsec = 41,
+}
+
+/// <summary>Wraps wxSystemScreenType.</summary>
+public enum SystemScreenType {
+	/// <summary>Undefined screen type. Wraps wxSYS_SCREEN_NONE.</summary>
+	None = 0,
+	/// <summary>Tiny screen, less than 320x240. Wraps wxSYS_SCREEN_TINY.</summary>
+	Tiny = 1,
+	/// <summary>PDA screen, 320x240 or more but less than 640x480. Wraps wxSYS_SCREEN_PDA.</summary>
+	Pda = 2,
+	/// <summary>Small screen, 640x480 or more but less than 800x600. Wraps wxSYS_SCREEN_SMALL.</summary>
+	Small = 3,
+	/// <summary>Desktop screen, 800x600 or more. Wraps wxSYS_SCREEN_DESKTOP.</summary>
+	Desktop = 4,
+}
+
 /// <summary>Wraps wxTextCtrlHitTestResult.</summary>
 public enum TextCtrlHitTestResult {
 	/// <summary>Indicates that wxTextCtrl::HitTest() is not implemented on this platform. Wraps wxTE_HT_UNKNOWN.</summary>
@@ -881,6 +1105,14 @@ public enum TextValidatorStyle {
 	Xdigits = 11,
 	/// <summary>A convenience flag for use with the other flags. Wraps wxFILTER_SPACE.</summary>
 	Space = 12,
+}
+
+/// <summary>Wraps wxUpdateUIMode.</summary>
+public enum UpdateUIMode {
+	/// <summary>Send UI update events to all windows. Wraps wxUPDATE_UI_PROCESS_ALL.</summary>
+	All = 0,
+	/// <summary>Send UI update events to windows that have the wxWS_EX_PROCESS_UI_UPDATES flag specified. Wraps wxUPDATE_UI_PROCESS_SPECIFIED.</summary>
+	Specified = 1,
 }
 
 /// <summary>Wraps wxWindowMode.</summary>

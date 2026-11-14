@@ -13,7 +13,8 @@ DoxygenApi read = DoxygenReader.Read(xml);
 // The interface headers use a few constants only the real headers define, such as wxDEFAULT.
 Dictionary<string, string> constants = new(read.Constants);
 foreach ((string name, string value) in HeaderConstants.ReadDeprecatedGuiConstants(Path.Combine(root, "native", "wxWidgets", "include", "wx", "defs.h"))) constants.TryAdd(name, value);
-DoxygenApi api = read with { Constants = constants };
+Dictionary<string, string> artIds = HeaderConstants.ReadArtIds(Path.Combine(root, "native", "wxWidgets", "include", "wx", "artprov.h"));
+DoxygenApi api = read with { Constants = constants, StringConstants = artIds };
 Tweaks tweaks = new();
 WxKit.Generator.Tweaks.Core.Apply(tweaks);
 BindingResult result = new Binder(api, tweaks).Bind();

@@ -19,7 +19,7 @@ internal static class InteropEmitter {
 				if (!first) writer.Line();
 				first = false;
 				List<string> parameters = [];
-				if (!function.IsConstructor) parameters.Add($"{bound.Handle.InteropType}* self");
+				if (!function.IsConstructor && !function.IsStatic) parameters.Add($"{bound.Handle.InteropType}* self");
 				parameters.AddRange(function.Parameters.SelectMany(static parameter => parameter.Conversion.InteropParameters(parameter.Name)));
 				string returns = function.IsConstructor ? $"{bound.Handle.InteropType}*" : function.Returns.InteropReturnType;
 				Import(writer, function.ShimName, $"public static partial {returns} {function.InteropName}({string.Join(", ", parameters)});");

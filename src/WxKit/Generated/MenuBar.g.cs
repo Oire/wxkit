@@ -96,6 +96,19 @@ public unsafe partial class MenuBar : Window {
 	/// <summary>Determines whether an item is enabled.</summary>
 	public bool IsItemEnabled(int id = StandardId.Any) => WxKitNative.MenuBarIsEnabled(Native, id) != 0;
 
+	/// <summary>Enables you to get the global menubar on Mac, that is, the menubar displayed when the app is running without any frames open.</summary>
+	public static MenuBar? MacGetCommonMenuBar() {
+		Application.VerifyAccess();
+		return ObjectRegistry.Wrap<MenuBar>(WxKitNative.MenuBarMacGetCommonMenuBar());
+	}
+
+	/// <summary>Enables you to set the global menubar on Mac, that is, the menubar displayed when the app is running without any frames open.</summary>
+	public static void MacSetCommonMenuBar(MenuBar menubar) {
+		Application.VerifyAccess();
+		ArgumentNullException.ThrowIfNull(menubar);
+		WxKitNative.MenuBarMacSetCommonMenuBar((WxkWindow*)menubar.Native);
+	}
+
 	/// <summary>Returns the Apple menu.</summary>
 	public Menu? OSXGetAppleMenu() => ObjectRegistry.Wrap<Menu>(WxKitNative.MenuBarOSXGetAppleMenu(Native));
 

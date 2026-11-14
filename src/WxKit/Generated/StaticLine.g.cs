@@ -13,6 +13,14 @@ public unsafe partial class StaticLine : Control {
 	internal StaticLine(WxkWindow* native) : base(native) {
 	}
 
+	/// <summary>This static function returns the size which will be given to the smaller dimension of the static line, i.e.</summary>
+	public static int DefaultSize {
+		get {
+			Application.VerifyAccess();
+			return WxKitNative.StaticLineGetDefaultSize();
+		}
+	}
+
 	/// <summary>Returns true if the line is vertical, false if horizontal.</summary>
 	public bool IsVertical => WxKitNative.StaticLineIsVertical(Native) != 0;
 

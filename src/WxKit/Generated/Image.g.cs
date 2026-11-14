@@ -32,6 +32,18 @@ public unsafe partial class Image : NativeObject {
 	// Takes ownership of a copy the shim hands out, which is null when the value was empty.
 	internal static Image? Take(WxkObject* native) => native is null ? null : new Image(native);
 
+	/// <summary>Returns the currently used default file load flags.</summary>
+	public static int DefaultLoadFlags {
+		get {
+			Application.VerifyAccess();
+			return WxKitNative.ImageGetDefaultLoadFlags();
+		}
+		set {
+			Application.VerifyAccess();
+			WxKitNative.ImageSetDefaultLoadFlags(value);
+		}
+	}
+
 	/// <summary>Returns true if this image has alpha channel, false otherwise.</summary>
 	public bool HasAlpha => WxKitNative.ImageHasAlpha(Native) != 0;
 
@@ -40,6 +52,14 @@ public unsafe partial class Image : NativeObject {
 
 	/// <summary>Gets the height of the image in pixels.</summary>
 	public int Height => WxKitNative.ImageGetHeight(Native);
+
+	/// <summary>Iterates all registered wxImageHandler objects, and returns a string containing file extension masks suitable for passing to file open/save dialog boxes.</summary>
+	public static string ImageExtWildcard {
+		get {
+			Application.VerifyAccess();
+			return NativeString.Take(WxKitNative.ImageGetImageExtWildcard());
+		}
+	}
 
 	/// <summary>Returns true if image data is present.</summary>
 	public bool IsOk => WxKitNative.ImageIsOk(Native) != 0;
@@ -80,6 +100,15 @@ public unsafe partial class Image : NativeObject {
 	/// <summary>Blurs the image in the vertical direction only.</summary>
 	public Image? BlurVertical(int blurRadius) => global::WxKit.Image.Take(WxKitNative.ImageBlurVertical(Native, blurRadius));
 
+	/// <summary>Returns true if at least one of the available image handlers can read the file with the given name.</summary>
+	public static bool CanRead(string filename) {
+		Application.VerifyAccess();
+		ArgumentNullException.ThrowIfNull(filename);
+		fixed (char* filenameText = filename) {
+			return WxKitNative.ImageCanRead(filenameText, NativeString.Length(filename)) != 0;
+		}
+	}
+
 	/// <summary>Changes the brightness (value) of each pixel in the image.</summary>
 	public void ChangeBrightness(double factor) => WxKitNative.ImageChangeBrightness(Native, factor);
 
@@ -91,6 +120,12 @@ public unsafe partial class Image : NativeObject {
 
 	/// <summary>Changes the saturation of each pixel in the image.</summary>
 	public void ChangeSaturation(double factor) => WxKitNative.ImageChangeSaturation(Native, factor);
+
+	/// <summary>Deletes all image handlers.</summary>
+	public static void CleanUpHandlers() {
+		Application.VerifyAccess();
+		WxKitNative.ImageCleanUpHandlers();
+	}
 
 	/// <summary>Initialize the image data with zeroes (the default) or with the byte value given as value.</summary>
 	public void Clear(byte value = 0) => WxKitNative.ImageClear(Native, value);
@@ -137,6 +172,15 @@ public unsafe partial class Image : NativeObject {
 	/// <summary>Returns the green intensity at the given coordinate.</summary>
 	public byte GetGreen(int x, int y) => WxKitNative.ImageGetGreen(Native, x, y);
 
+	/// <summary>If the image file contains more than one image and the image handler is capable of retrieving these individually, this function will return the number of available images.</summary>
+	public static int GetImageCount(string filename, BitmapType type = BitmapType.Any) {
+		Application.VerifyAccess();
+		ArgumentNullException.ThrowIfNull(filename);
+		fixed (char* filenameText = filename) {
+			return WxKitNative.ImageGetImageCount(filenameText, NativeString.Length(filename), (int)type);
+		}
+	}
+
 	/// <summary>Gets a user-defined string-valued option.</summary>
 	public string GetOption(string name) {
 		ArgumentNullException.ThrowIfNull(name);
@@ -170,6 +214,12 @@ public unsafe partial class Image : NativeObject {
 	/// <summary>Initializes the image alpha channel data.</summary>
 	public void InitAlpha() => WxKitNative.ImageInitAlpha(Native);
 
+	/// <summary>Internal use only.</summary>
+	public static void InitStandardHandlers() {
+		Application.VerifyAccess();
+		WxKitNative.ImageInitStandardHandlers();
+	}
+
 	/// <summary>Returns true if the given pixel is transparent, i.e. either has the mask colour if this image has a mask or if this image has alpha channel and alpha value of this pixel is strictly less than threshold.</summary>
 	public bool IsTransparent(int x, int y) => WxKitNative.ImageIsTransparent(Native, x, y) != 0;
 
@@ -198,6 +248,15 @@ public unsafe partial class Image : NativeObject {
 	public void Paste(Image image, int x, int y, ImageAlphaBlendMode alphaBlend = ImageAlphaBlendMode.Over) {
 		ArgumentNullException.ThrowIfNull(image);
 		WxKitNative.ImagePaste(Native, image.Native, x, y, (int)alphaBlend);
+	}
+
+	/// <summary>Finds the handler with the given name, and removes it.</summary>
+	public static bool RemoveHandler(string name) {
+		Application.VerifyAccess();
+		ArgumentNullException.ThrowIfNull(name);
+		fixed (char* nameText = name) {
+			return WxKitNative.ImageRemoveHandler(nameText, NativeString.Length(name)) != 0;
+		}
 	}
 
 	/// <summary>Replaces the colour specified by r1,g1,b1 by the colour r2,g2,b2.</summary>

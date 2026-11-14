@@ -24,6 +24,14 @@ public unsafe partial class TopLevelWindow : Window {
 		}
 	}
 
+	/// <summary>Get the default size for a new top level window.</summary>
+	public static Size DefaultSize {
+		get {
+			Application.VerifyAccess();
+			return WxKitNative.TopLevelWindowGetDefaultSize();
+		}
+	}
+
 	/// <summary>Returns the standard icon of the window.</summary>
 	public Icon? Icon {
 		get => global::WxKit.Icon.Take(WxKitNative.TopLevelWindowGetIcon(Native));

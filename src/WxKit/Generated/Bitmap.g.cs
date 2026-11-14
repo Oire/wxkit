@@ -89,6 +89,12 @@ public unsafe partial class Bitmap : NativeObject {
 	/// <summary>Returns the width of the bitmap in physical pixels.</summary>
 	public int Width => WxKitNative.BitmapGetWidth(Native);
 
+	/// <summary>Deletes all bitmap handlers.</summary>
+	public static void CleanUpHandlers() {
+		Application.VerifyAccess();
+		WxKitNative.BitmapCleanUpHandlers();
+	}
+
 	/// <summary>Returns disabled (dimmed) version of the bitmap.</summary>
 	public Bitmap? ConvertToDisabled(byte brightness = 255) => global::WxKit.Bitmap.Take(WxKitNative.BitmapConvertToDisabled(Native, brightness));
 
@@ -131,12 +137,41 @@ public unsafe partial class Bitmap : NativeObject {
 	/// <summary>Returns a sub bitmap of the current one as long as the rect belongs entirely to the bitmap.</summary>
 	public Bitmap? GetSubBitmap(Rect rect) => global::WxKit.Bitmap.Take(WxKitNative.BitmapGetSubBitmap(Native, rect));
 
+	/// <summary>Adds the standard bitmap format handlers, which, depending on wxWidgets configuration, can be handlers for Windows bitmap, Windows bitmap resource, and XPM.</summary>
+	public static void InitStandardHandlers() {
+		Application.VerifyAccess();
+		WxKitNative.BitmapInitStandardHandlers();
+	}
+
 	/// <summary>Loads a bitmap from a file or resource.</summary>
 	public bool LoadFile(string name) {
 		ArgumentNullException.ThrowIfNull(name);
 		fixed (char* nameText = name) {
 			return WxKitNative.BitmapLoadFile(Native, nameText, NativeString.Length(name)) != 0;
 		}
+	}
+
+	/// <summary>Convert the given bitmap to a disabled ("greyed out") appearance in place.</summary>
+	public static void MakeDisabled(Bitmap bitmap) {
+		Application.VerifyAccess();
+		ArgumentNullException.ThrowIfNull(bitmap);
+		WxKitNative.BitmapMakeDisabled(bitmap.Native);
+	}
+
+	/// <summary>Finds the handler with the given name, and removes it.</summary>
+	public static bool RemoveHandler(string name) {
+		Application.VerifyAccess();
+		ArgumentNullException.ThrowIfNull(name);
+		fixed (char* nameText = name) {
+			return WxKitNative.BitmapRemoveHandler(nameText, NativeString.Length(name)) != 0;
+		}
+	}
+
+	/// <summary>Rescale the given bitmap to the requested size.</summary>
+	public static void Rescale(Bitmap bitmap, Size sizeNeeded) {
+		Application.VerifyAccess();
+		ArgumentNullException.ThrowIfNull(bitmap);
+		WxKitNative.BitmapRescale(bitmap.Native, sizeNeeded);
 	}
 
 	/// <summary>Remove alpha channel from the bitmap.</summary>

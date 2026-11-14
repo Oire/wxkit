@@ -31,6 +31,18 @@ public unsafe partial class Font : NativeObject {
 	/// <summary>Returns a font with the same face/size as the given one but with normal weight and style and not underlined nor stricken through.</summary>
 	public Font? BaseFont => global::WxKit.Font.Take(WxKitNative.FontGetBaseFont(Native));
 
+	/// <summary>Returns the current application's default encoding.</summary>
+	public static FontEncoding DefaultEncoding {
+		get {
+			Application.VerifyAccess();
+			return (FontEncoding)WxKitNative.FontGetDefaultEncoding();
+		}
+		set {
+			Application.VerifyAccess();
+			WxKitNative.FontSetDefaultEncoding((int)value);
+		}
+	}
+
 	/// <summary>Returns the encoding of this font.</summary>
 	public FontEncoding Encoding {
 		get => (FontEncoding)WxKitNative.FontGetEncoding(Native);
@@ -122,8 +134,23 @@ public unsafe partial class Font : NativeObject {
 		set => WxKitNative.FontSetWeight(Native, (int)value);
 	}
 
+	/// <summary>Specify the name of a file containing a TrueType font to be made available to the current application.</summary>
+	public static bool AddPrivateFont(string filename) {
+		Application.VerifyAccess();
+		ArgumentNullException.ThrowIfNull(filename);
+		fixed (char* filenameText = filename) {
+			return WxKitNative.FontAddPrivateFont(filenameText, NativeString.Length(filename)) != 0;
+		}
+	}
+
 	/// <summary>Returns a bold version of this font.</summary>
 	public Font? Bold() => global::WxKit.Font.Take(WxKitNative.FontBold(Native));
+
+	/// <summary>Get the raw weight value corresponding to the given symbolic constant.</summary>
+	public static int GetNumericWeightOf(FontWeight weight) {
+		Application.VerifyAccess();
+		return WxKitNative.FontGetNumericWeightOf((int)weight);
+	}
 
 	/// <summary>Returns an italic version of this font.</summary>
 	public Font? Italic() => global::WxKit.Font.Take(WxKitNative.FontItalic(Native));
