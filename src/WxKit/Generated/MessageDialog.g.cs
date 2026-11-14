@@ -13,18 +13,18 @@ public unsafe partial class MessageDialog : Dialog {
 	internal MessageDialog(WxkWindow* native) : base(native) {
 	}
 
-	public string CancelLabel => Text.Take(WxKitNative.MessageDialogGetCancelLabel(Native));
+	public string CancelLabel => NativeString.Take(WxKitNative.MessageDialogGetCancelLabel(Native));
 
-	public string Caption => Text.Take(WxKitNative.MessageDialogGetCaption(Native));
+	public string Caption => NativeString.Take(WxKitNative.MessageDialogGetCaption(Native));
 
 	public long EffectiveIcon => WxKitNative.MessageDialogGetEffectiveIcon(Native);
 
 	public string ExtendedMessage {
-		get => Text.Take(WxKitNative.MessageDialogGetExtendedMessage(Native));
+		get => NativeString.Take(WxKitNative.MessageDialogGetExtendedMessage(Native));
 		set {
 			ArgumentNullException.ThrowIfNull(value);
 			fixed (char* valueText = value) {
-				WxKitNative.MessageDialogSetExtendedMessage(Native, valueText, Text.Length(value));
+				WxKitNative.MessageDialogSetExtendedMessage(Native, valueText, NativeString.Length(value));
 			}
 		}
 	}
@@ -32,40 +32,40 @@ public unsafe partial class MessageDialog : Dialog {
 	public bool HasCustomLabels => WxKitNative.MessageDialogHasCustomLabels(Native) != 0;
 
 	public string HelpLabel {
-		get => Text.Take(WxKitNative.MessageDialogGetHelpLabel(Native));
+		get => NativeString.Take(WxKitNative.MessageDialogGetHelpLabel(Native));
 		set {
 			ArgumentNullException.ThrowIfNull(value);
 			fixed (char* valueText = value) {
-				WxKitNative.MessageDialogSetHelpLabel(Native, valueText, Text.Length(value));
+				WxKitNative.MessageDialogSetHelpLabel(Native, valueText, NativeString.Length(value));
 			}
 		}
 	}
 
 	public string Message {
-		get => Text.Take(WxKitNative.MessageDialogGetMessage(Native));
+		get => NativeString.Take(WxKitNative.MessageDialogGetMessage(Native));
 		set {
 			ArgumentNullException.ThrowIfNull(value);
 			fixed (char* valueText = value) {
-				WxKitNative.MessageDialogSetMessage(Native, valueText, Text.Length(value));
+				WxKitNative.MessageDialogSetMessage(Native, valueText, NativeString.Length(value));
 			}
 		}
 	}
 
 	public MessageDialogStyle MessageDialogStyle => (MessageDialogStyle)WxKitNative.MessageDialogGetMessageDialogStyle(Native);
 
-	public string NoLabel => Text.Take(WxKitNative.MessageDialogGetNoLabel(Native));
+	public string NoLabel => NativeString.Take(WxKitNative.MessageDialogGetNoLabel(Native));
 
 	public string OKLabel {
-		get => Text.Take(WxKitNative.MessageDialogGetOKLabel(Native));
+		get => NativeString.Take(WxKitNative.MessageDialogGetOKLabel(Native));
 		set {
 			ArgumentNullException.ThrowIfNull(value);
 			fixed (char* valueText = value) {
-				WxKitNative.MessageDialogSetOKLabel(Native, valueText, Text.Length(value));
+				WxKitNative.MessageDialogSetOKLabel(Native, valueText, NativeString.Length(value));
 			}
 		}
 	}
 
-	public string YesLabel => Text.Take(WxKitNative.MessageDialogGetYesLabel(Native));
+	public string YesLabel => NativeString.Take(WxKitNative.MessageDialogGetYesLabel(Native));
 
 	/// <summary>Overrides the default labels of the OK and Cancel buttons.</summary>
 	public bool SetOKCancelLabels(string ok, string cancel) {
@@ -73,7 +73,7 @@ public unsafe partial class MessageDialog : Dialog {
 		ArgumentNullException.ThrowIfNull(cancel);
 		fixed (char* okText = ok)
 		fixed (char* cancelText = cancel) {
-			return WxKitNative.MessageDialogSetOKCancelLabels(Native, okText, Text.Length(ok), cancelText, Text.Length(cancel)) != 0;
+			return WxKitNative.MessageDialogSetOKCancelLabels(Native, okText, NativeString.Length(ok), cancelText, NativeString.Length(cancel)) != 0;
 		}
 	}
 
@@ -85,7 +85,7 @@ public unsafe partial class MessageDialog : Dialog {
 		fixed (char* yesText = yes)
 		fixed (char* noText = no)
 		fixed (char* cancelText = cancel) {
-			return WxKitNative.MessageDialogSetYesNoCancelLabels(Native, yesText, Text.Length(yes), noText, Text.Length(no), cancelText, Text.Length(cancel)) != 0;
+			return WxKitNative.MessageDialogSetYesNoCancelLabels(Native, yesText, NativeString.Length(yes), noText, NativeString.Length(no), cancelText, NativeString.Length(cancel)) != 0;
 		}
 	}
 
@@ -95,7 +95,7 @@ public unsafe partial class MessageDialog : Dialog {
 		ArgumentNullException.ThrowIfNull(no);
 		fixed (char* yesText = yes)
 		fixed (char* noText = no) {
-			return WxKitNative.MessageDialogSetYesNoLabels(Native, yesText, Text.Length(yes), noText, Text.Length(no)) != 0;
+			return WxKitNative.MessageDialogSetYesNoLabels(Native, yesText, NativeString.Length(yes), noText, NativeString.Length(no)) != 0;
 		}
 	}
 
@@ -105,7 +105,7 @@ public unsafe partial class MessageDialog : Dialog {
 		ArgumentNullException.ThrowIfNull(caption);
 		fixed (char* messageText = message)
 		fixed (char* captionText = caption) {
-			return WxKitNative.MessageDialogNew(parent is null ? null : (WxkWindow*)parent.Native, messageText, Text.Length(message), captionText, Text.Length(caption), (long)style, position ?? Point.Default);
+			return WxKitNative.MessageDialogNew(parent is null ? null : (WxkWindow*)parent.Native, messageText, NativeString.Length(message), captionText, NativeString.Length(caption), (long)style, position ?? Point.Default);
 		}
 	}
 }

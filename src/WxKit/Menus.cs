@@ -25,7 +25,7 @@ public sealed unsafe class Menu : EvtHandler {
 		ArgumentNullException.ThrowIfNull(help);
 		fixed (char* itemText = text)
 		fixed (char* helpText = help) {
-			return MenuItem.Wrap(this, WxKitNative.MenuAppend(Native, id, itemText, Text.Length(text), helpText, Text.Length(help), (int)kind));
+			return MenuItem.Wrap(this, WxKitNative.MenuAppend(Native, id, itemText, NativeString.Length(text), helpText, NativeString.Length(help), (int)kind));
 		}
 	}
 

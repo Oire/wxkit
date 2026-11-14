@@ -41,11 +41,11 @@ public unsafe partial class TopLevelWindow : Window {
 
 	/// <summary>Gets a string containing the window title.</summary>
 	public string Title {
-		get => Text.Take(WxKitNative.TopLevelWindowGetTitle(Native));
+		get => NativeString.Take(WxKitNative.TopLevelWindowGetTitle(Native));
 		set {
 			ArgumentNullException.ThrowIfNull(value);
 			fixed (char* valueText = value) {
-				WxKitNative.TopLevelWindowSetTitle(Native, valueText, Text.Length(value));
+				WxKitNative.TopLevelWindowSetTitle(Native, valueText, NativeString.Length(value));
 			}
 		}
 	}
@@ -64,37 +64,37 @@ public unsafe partial class TopLevelWindow : Window {
 	}
 
 	/// <summary>Process a wxEVT_FULLSCREEN event. See wxFullScreenEvent.</summary>
-	public event EventHandler<Event>? FullScreenChanged {
+	public event EventHandler<FullScreenEvent>? FullScreenChanged {
 		add => AddHandler(EventType.Fullscreen, StandardId.Any, StandardId.Any, value, this);
 		remove => RemoveHandler(EventType.Fullscreen, StandardId.Any, StandardId.Any, value);
 	}
 
 	/// <summary>Process a wxEVT_MAXIMIZE event. See wxMaximizeEvent.</summary>
-	public event EventHandler<Event>? Maximized {
+	public event EventHandler<MaximizeEvent>? Maximized {
 		add => AddHandler(EventType.Maximize, StandardId.Any, StandardId.Any, value, this);
 		remove => RemoveHandler(EventType.Maximize, StandardId.Any, StandardId.Any, value);
 	}
 
 	/// <summary>Process a wxEVT_MOVE_END event, which is generated when the user stops moving or sizing a window. wxMSW only. See wxMoveEvent.</summary>
-	public event EventHandler<Event>? MoveEnded {
+	public event EventHandler<MoveEvent>? MoveEnded {
 		add => AddHandler(EventType.MoveEnd, StandardId.Any, StandardId.Any, value, this);
 		remove => RemoveHandler(EventType.MoveEnd, StandardId.Any, StandardId.Any, value);
 	}
 
 	/// <summary>Process a wxEVT_MOVE_START event, which is generated when the user starts to move or size a window. wxMSW only. See wxMoveEvent.</summary>
-	public event EventHandler<Event>? MoveStarted {
+	public event EventHandler<MoveEvent>? MoveStarted {
 		add => AddHandler(EventType.MoveStart, StandardId.Any, StandardId.Any, value, this);
 		remove => RemoveHandler(EventType.MoveStart, StandardId.Any, StandardId.Any, value);
 	}
 
 	/// <summary>Process a wxEVT_MOVE event, which is generated when a window is moved. See wxMoveEvent.</summary>
-	public event EventHandler<Event>? Moved {
+	public event EventHandler<MoveEvent>? Moved {
 		add => AddHandler(EventType.Move, StandardId.Any, StandardId.Any, value, this);
 		remove => RemoveHandler(EventType.Move, StandardId.Any, StandardId.Any, value);
 	}
 
 	/// <summary>Process a wxEVT_SHOW event. See wxShowEvent.</summary>
-	public event EventHandler<Event>? VisibilityChanged {
+	public event EventHandler<ShowEvent>? VisibilityChanged {
 		add => AddHandler(EventType.Show, StandardId.Any, StandardId.Any, value, this);
 		remove => RemoveHandler(EventType.Show, StandardId.Any, StandardId.Any, value);
 	}
@@ -145,7 +145,7 @@ public unsafe partial class TopLevelWindow : Window {
 	public void SetRepresentedFilename(string filename) {
 		ArgumentNullException.ThrowIfNull(filename);
 		fixed (char* filenameText = filename) {
-			WxKitNative.TopLevelWindowSetRepresentedFilename(Native, filenameText, Text.Length(filename));
+			WxKitNative.TopLevelWindowSetRepresentedFilename(Native, filenameText, NativeString.Length(filename));
 		}
 	}
 

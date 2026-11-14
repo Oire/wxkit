@@ -45,7 +45,7 @@ internal static unsafe partial class ObjectRegistry {
 		if (FactoriesByClass.TryGetValue((nint)info, out Func<nint, EvtHandler>? cached)) return cached;
 		Func<nint, EvtHandler>? factory = null;
 		for (WxkClassInfo* current = info; current is not null && factory is null; current = WxKitNative.ClassInfoGetBaseClass(current)) {
-			Factories.TryGetValue(Text.Take(WxKitNative.ClassInfoGetClassName(current)), out factory);
+			Factories.TryGetValue(NativeString.Take(WxKitNative.ClassInfoGetClassName(current)), out factory);
 		}
 		FactoriesByClass[(nint)info] = factory;
 		return factory;

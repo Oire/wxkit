@@ -25,7 +25,7 @@ public unsafe partial class MenuBar : Window {
 		ArgumentNullException.ThrowIfNull(menu);
 		ArgumentNullException.ThrowIfNull(title);
 		fixed (char* titleText = title) {
-			return WxKitNative.MenuBarAppend(Native, (WxkMenu*)menu.Native, titleText, Text.Length(title)) != 0;
+			return WxKitNative.MenuBarAppend(Native, (WxkMenu*)menu.Native, titleText, NativeString.Length(title)) != 0;
 		}
 	}
 
@@ -49,7 +49,7 @@ public unsafe partial class MenuBar : Window {
 	public int FindMenu(string title) {
 		ArgumentNullException.ThrowIfNull(title);
 		fixed (char* titleText = title) {
-			return WxKitNative.MenuBarFindMenu(Native, titleText, Text.Length(title));
+			return WxKitNative.MenuBarFindMenu(Native, titleText, NativeString.Length(title));
 		}
 	}
 
@@ -59,31 +59,31 @@ public unsafe partial class MenuBar : Window {
 		ArgumentNullException.ThrowIfNull(itemString);
 		fixed (char* menuStringText = menuString)
 		fixed (char* itemStringText = itemString) {
-			return WxKitNative.MenuBarFindMenuItem(Native, menuStringText, Text.Length(menuString), itemStringText, Text.Length(itemString));
+			return WxKitNative.MenuBarFindMenuItem(Native, menuStringText, NativeString.Length(menuString), itemStringText, NativeString.Length(itemString));
 		}
 	}
 
 	/// <summary>Gets the help string associated with the menu item identifier.</summary>
-	public string GetHelpString(int id = StandardId.Any) => Text.Take(WxKitNative.MenuBarGetHelpString(Native, id));
+	public string GetHelpString(int id = StandardId.Any) => NativeString.Take(WxKitNative.MenuBarGetHelpString(Native, id));
 
 	/// <summary>Gets the label associated with a menu item.</summary>
-	public string GetLabel(int id = StandardId.Any) => Text.Take(WxKitNative.MenuBarGetLabel(Native, id));
+	public string GetLabel(int id = StandardId.Any) => NativeString.Take(WxKitNative.MenuBarGetLabel(Native, id));
 
 	/// <summary>Returns the menu at menuIndex (zero-based).</summary>
 	public Menu? GetMenu(int menuIndex) => ObjectRegistry.Wrap<Menu>(WxKitNative.MenuBarGetMenu(Native, checked((nuint)menuIndex)));
 
 	/// <summary>Returns the label of a top-level menu.</summary>
-	public string GetMenuLabel(int position) => Text.Take(WxKitNative.MenuBarGetMenuLabel(Native, checked((nuint)position)));
+	public string GetMenuLabel(int position) => NativeString.Take(WxKitNative.MenuBarGetMenuLabel(Native, checked((nuint)position)));
 
 	/// <summary>Returns the label of a top-level menu.</summary>
-	public string GetMenuLabelText(int position) => Text.Take(WxKitNative.MenuBarGetMenuLabelText(Native, checked((nuint)position)));
+	public string GetMenuLabelText(int position) => NativeString.Take(WxKitNative.MenuBarGetMenuLabelText(Native, checked((nuint)position)));
 
 	/// <summary>Inserts the menu at the given position into the menu bar.</summary>
 	public bool Insert(int position, Menu menu, string title) {
 		ArgumentNullException.ThrowIfNull(menu);
 		ArgumentNullException.ThrowIfNull(title);
 		fixed (char* titleText = title) {
-			return WxKitNative.MenuBarInsert(Native, checked((nuint)position), (WxkMenu*)menu.Native, titleText, Text.Length(title)) != 0;
+			return WxKitNative.MenuBarInsert(Native, checked((nuint)position), (WxkMenu*)menu.Native, titleText, NativeString.Length(title)) != 0;
 		}
 	}
 
@@ -107,7 +107,7 @@ public unsafe partial class MenuBar : Window {
 		ArgumentNullException.ThrowIfNull(menu);
 		ArgumentNullException.ThrowIfNull(title);
 		fixed (char* titleText = title) {
-			return ObjectRegistry.Wrap<Menu>(WxKitNative.MenuBarReplace(Native, checked((nuint)position), (WxkMenu*)menu.Native, titleText, Text.Length(title)));
+			return ObjectRegistry.Wrap<Menu>(WxKitNative.MenuBarReplace(Native, checked((nuint)position), (WxkMenu*)menu.Native, titleText, NativeString.Length(title)));
 		}
 	}
 
@@ -115,7 +115,7 @@ public unsafe partial class MenuBar : Window {
 	public void SetHelpString(string helpString, int id = StandardId.Any) {
 		ArgumentNullException.ThrowIfNull(helpString);
 		fixed (char* helpStringText = helpString) {
-			WxKitNative.MenuBarSetHelpString(Native, id, helpStringText, Text.Length(helpString));
+			WxKitNative.MenuBarSetHelpString(Native, id, helpStringText, NativeString.Length(helpString));
 		}
 	}
 
@@ -123,7 +123,7 @@ public unsafe partial class MenuBar : Window {
 	public void SetLabel(string label, int id = StandardId.Any) {
 		ArgumentNullException.ThrowIfNull(label);
 		fixed (char* labelText = label) {
-			WxKitNative.MenuBarSetLabel(Native, id, labelText, Text.Length(label));
+			WxKitNative.MenuBarSetLabel(Native, id, labelText, NativeString.Length(label));
 		}
 	}
 
@@ -131,7 +131,7 @@ public unsafe partial class MenuBar : Window {
 	public void SetMenuLabel(int position, string label) {
 		ArgumentNullException.ThrowIfNull(label);
 		fixed (char* labelText = label) {
-			WxKitNative.MenuBarSetMenuLabel(Native, checked((nuint)position), labelText, Text.Length(label));
+			WxKitNative.MenuBarSetMenuLabel(Native, checked((nuint)position), labelText, NativeString.Length(label));
 		}
 	}
 

@@ -38,6 +38,18 @@ internal static class Core {
 		tweaks.Class("wxCommandEvent");
 		// Veto is written by hand, since it refuses when the close cannot be vetoed.
 		tweaks.Class("wxCloseEvent", e => e.Ignore("Veto").Rename("GetVeto", "IsVetoed"));
+		// Button(button) asks whether the event came from that button. GetButton is the Button
+		// property, and IsButton is taken too.
+		tweaks.Class("wxMouseEvent", e => e.Rename("Button", "IsFromButton"));
+		foreach (string eventClass in (string[])[
+			"wxNotifyEvent", "wxKeyEvent", "wxSizeEvent", "wxMoveEvent", "wxFocusEvent",
+			"wxChildFocusEvent", "wxPaintEvent", "wxShowEvent", "wxIconizeEvent", "wxMaximizeEvent",
+			"wxActivateEvent", "wxIdleEvent", "wxUpdateUIEvent", "wxContextMenuEvent", "wxHelpEvent",
+			"wxSysColourChangedEvent", "wxDPIChangedEvent", "wxInitDialogEvent", "wxMenuEvent",
+			"wxFullScreenEvent", "wxNavigationKeyEvent", "wxTimerEvent", "wxScrollWinEvent", "wxEraseEvent",
+		]) {
+			tweaks.Class(eventClass);
+		}
 
 		// Bound by hand-written classes: menu items' clicks and timers' ticks.
 		tweaks.EventType("wxEVT_MENU", "wxCommandEvent");

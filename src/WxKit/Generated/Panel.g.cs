@@ -14,7 +14,7 @@ public unsafe partial class Panel : Window {
 	}
 
 	/// <summary>Process a navigation key event.</summary>
-	public event EventHandler<Event>? NavigationKey {
+	public event EventHandler<NavigationKeyEvent>? NavigationKey {
 		add => AddHandler(EventType.NavigationKey, StandardId.Any, StandardId.Any, value, this);
 		remove => RemoveHandler(EventType.NavigationKey, StandardId.Any, StandardId.Any, value);
 	}

@@ -185,9 +185,9 @@ internal sealed class StringConversion : Conversion {
 
 	public override string? Fixed(string name) => $"fixed (char* {Pinned(name)} = {name})";
 
-	public override IEnumerable<string> InteropArguments(string name, bool nullable) => [Pinned(name), $"Text.Length({name})"];
+	public override IEnumerable<string> InteropArguments(string name, bool nullable) => [Pinned(name), $"NativeString.Length({name})"];
 
-	public override string ManagedReturn(string expression) => $"Text.Take({expression})";
+	public override string ManagedReturn(string expression) => $"NativeString.Take({expression})";
 
 	private static string Pinned(string name) => name.TrimStart('@') + "Text";
 }

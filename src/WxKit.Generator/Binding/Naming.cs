@@ -79,8 +79,10 @@ internal static class Naming {
 	/// <summary>wxButton to Button.</summary>
 	public static string Type(string name) => Respell(name.StartsWith("wx", StringComparison.Ordinal) ? name[2..] : name);
 
-	/// <summary>A method or property name, respelled.</summary>
-	public static string Member(string name) => Respell(name);
+	/// <summary>A method or property name, respelled. A leading digit is spelled out, as Get3StateValue gives ThreeStateValue.</summary>
+	public static string Member(string name) => Respell(name.Length > 0 && char.IsDigit(name[0]) ? Digits[name[0] - '0'] + name[1..] : name);
+
+	private static readonly string[] Digits = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"];
 
 	public static string Parameter(string name) {
 		string renamed = ParameterNames.GetValueOrDefault(name, name);

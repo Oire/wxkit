@@ -102,6 +102,27 @@ public class EventTests {
 	});
 
 	[Fact]
+	public Task GivesKeyEventsTheirKey() => Gui.WithFrame(frame => {
+		Assert.SkipUnless(OperatingSystem.IsWindows(), "Keys are sent as Windows messages.");
+		TextCtrl text = new(frame);
+		int? keyCode = null;
+		text.KeyDown += (_, e) => keyCode = e.KeyCode;
+		Win32.PressKey(text, 'A');
+		Assert.Equal('A', keyCode);
+	});
+
+	[Fact]
+	public Task GivesSizeEventsTheNewSize() => Gui.WithFrame(frame => {
+		Size? reported = null;
+		frame.SizeChanged += (_, e) => {
+			reported = e.Size;
+			e.Skip();
+		};
+		frame.Size = new Size(300, 200);
+		Assert.Equal(new Size(300, 200), reported);
+	});
+
+	[Fact]
 	public Task ReportsExceptionsFromHandlers() => Gui.WithFrame(frame => {
 		TextCtrl text = new(frame);
 		text.TextChanged += (_, _) => throw new InvalidOperationException("handler");

@@ -27,7 +27,7 @@ public unsafe class Application {
 	public static bool IsGuiThread => _guiThreadId != 0 && _guiThreadId == Environment.CurrentManagedThreadId;
 
 	/// <summary>The version of wxWidgets that WxKit is built with, such as "wxWidgets 3.3.4".</summary>
-	public static string WxWidgetsVersion => Text.Take(WxKitNative.VersionGetString());
+	public static string WxWidgetsVersion => NativeString.Take(WxKitNative.VersionGetString());
 
 	/// <summary>Runs an application whose startup is <paramref name="onInit"/>, and returns its exit code.</summary>
 	public static int Run(Action onInit) {

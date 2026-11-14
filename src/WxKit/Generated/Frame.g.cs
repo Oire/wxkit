@@ -20,25 +20,25 @@ public unsafe partial class Frame : TopLevelWindow {
 	}
 
 	/// <summary>Process a wxEVT_ICONIZE event. See wxIconizeEvent.</summary>
-	public event EventHandler<Event>? Iconized {
+	public event EventHandler<IconizeEvent>? Iconized {
 		add => AddHandler(EventType.Iconize, StandardId.Any, StandardId.Any, value, this);
 		remove => RemoveHandler(EventType.Iconize, StandardId.Any, StandardId.Any, value);
 	}
 
 	/// <summary>A menu has been just closed. See wxMenuEvent.</summary>
-	public event EventHandler<Event>? MenuClosed {
+	public event EventHandler<MenuEvent>? MenuClosed {
 		add => AddHandler(EventType.MenuClose, StandardId.Any, StandardId.Any, value, this);
 		remove => RemoveHandler(EventType.MenuClose, StandardId.Any, StandardId.Any, value);
 	}
 
 	/// <summary>The menu item with the specified id has been highlighted: used to show help prompts in the status bar by wxFrame. See wxMenuEvent.</summary>
-	public event EventHandler<Event>? MenuHighlighted {
+	public event EventHandler<MenuEvent>? MenuHighlighted {
 		add => AddHandler(EventType.MenuHighlight, StandardId.Any, StandardId.Any, value, this);
 		remove => RemoveHandler(EventType.MenuHighlight, StandardId.Any, StandardId.Any, value);
 	}
 
 	/// <summary>A menu is about to be opened. See wxMenuEvent.</summary>
-	public event EventHandler<Event>? MenuOpened {
+	public event EventHandler<MenuEvent>? MenuOpened {
 		add => AddHandler(EventType.MenuOpen, StandardId.Any, StandardId.Any, value, this);
 		remove => RemoveHandler(EventType.MenuOpen, StandardId.Any, StandardId.Any, value);
 	}
@@ -47,7 +47,7 @@ public unsafe partial class Frame : TopLevelWindow {
 	public void DoGiveHelp(string text, bool show) {
 		ArgumentNullException.ThrowIfNull(text);
 		fixed (char* textText = text) {
-			WxKitNative.FrameDoGiveHelp(Native, textText, Text.Length(text), show ? (byte)1 : (byte)0);
+			WxKitNative.FrameDoGiveHelp(Native, textText, NativeString.Length(text), show ? (byte)1 : (byte)0);
 		}
 	}
 
@@ -59,7 +59,7 @@ public unsafe partial class Frame : TopLevelWindow {
 	public void PushStatusText(string text, int number = 0) {
 		ArgumentNullException.ThrowIfNull(text);
 		fixed (char* textText = text) {
-			WxKitNative.FramePushStatusText(Native, textText, Text.Length(text), number);
+			WxKitNative.FramePushStatusText(Native, textText, NativeString.Length(text), number);
 		}
 	}
 
@@ -67,7 +67,7 @@ public unsafe partial class Frame : TopLevelWindow {
 	public void SetStatusText(string text, int number = 0) {
 		ArgumentNullException.ThrowIfNull(text);
 		fixed (char* textText = text) {
-			WxKitNative.FrameSetStatusText(Native, textText, Text.Length(text), number);
+			WxKitNative.FrameSetStatusText(Native, textText, NativeString.Length(text), number);
 		}
 	}
 
@@ -78,7 +78,7 @@ public unsafe partial class Frame : TopLevelWindow {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(title);
 		fixed (char* titleText = title) {
-			return WxKitNative.FrameNew(parent is null ? null : (WxkWindow*)parent.Native, id, titleText, Text.Length(title), position ?? Point.Default, size ?? Size.Default, (long)style);
+			return WxKitNative.FrameNew(parent is null ? null : (WxkWindow*)parent.Native, id, titleText, NativeString.Length(title), position ?? Point.Default, size ?? Size.Default, (long)style);
 		}
 	}
 }

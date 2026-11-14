@@ -33,7 +33,7 @@ public unsafe partial class Button : Window {
 		ArgumentNullException.ThrowIfNull(parent);
 		ArgumentNullException.ThrowIfNull(label);
 		fixed (char* labelText = label) {
-			return WxKitNative.ButtonNew((WxkWindow*)parent.Native, id, labelText, Text.Length(label), position ?? Point.Default, size ?? Size.Default, (long)style);
+			return WxKitNative.ButtonNew((WxkWindow*)parent.Native, id, labelText, NativeString.Length(label), position ?? Point.Default, size ?? Size.Default, (long)style);
 		}
 	}
 }

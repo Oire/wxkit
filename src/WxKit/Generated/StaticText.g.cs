@@ -20,7 +20,7 @@ public unsafe partial class StaticText : Window {
 	public void SetLabel(string label) {
 		ArgumentNullException.ThrowIfNull(label);
 		fixed (char* labelText = label) {
-			WxKitNative.StaticTextSetLabel(Native, labelText, Text.Length(label));
+			WxKitNative.StaticTextSetLabel(Native, labelText, NativeString.Length(label));
 		}
 	}
 
@@ -32,7 +32,7 @@ public unsafe partial class StaticText : Window {
 		ArgumentNullException.ThrowIfNull(parent);
 		ArgumentNullException.ThrowIfNull(label);
 		fixed (char* labelText = label) {
-			return WxKitNative.StaticTextNew((WxkWindow*)parent.Native, id, labelText, Text.Length(label), position ?? Point.Default, size ?? Size.Default, (long)style);
+			return WxKitNative.StaticTextNew((WxkWindow*)parent.Native, id, labelText, NativeString.Length(label), position ?? Point.Default, size ?? Size.Default, (long)style);
 		}
 	}
 }

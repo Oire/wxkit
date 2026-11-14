@@ -110,11 +110,11 @@ public unsafe partial class Window : EvtHandler {
 
 	/// <summary>Gets the help text to be used as context-sensitive help for this window.</summary>
 	public string HelpText {
-		get => Text.Take(WxKitNative.WindowGetHelpText(Native));
+		get => NativeString.Take(WxKitNative.WindowGetHelpText(Native));
 		set {
 			ArgumentNullException.ThrowIfNull(value);
 			fixed (char* valueText = value) {
-				WxKitNative.WindowSetHelpText(Native, valueText, Text.Length(value));
+				WxKitNative.WindowSetHelpText(Native, valueText, NativeString.Length(value));
 			}
 		}
 	}
@@ -172,11 +172,11 @@ public unsafe partial class Window : EvtHandler {
 
 	/// <summary>Generic way of getting a label from any window, for identification purposes.</summary>
 	public string Label {
-		get => Text.Take(WxKitNative.WindowGetLabel(Native));
+		get => NativeString.Take(WxKitNative.WindowGetLabel(Native));
 		set {
 			ArgumentNullException.ThrowIfNull(value);
 			fixed (char* valueText = value) {
-				WxKitNative.WindowSetLabel(Native, valueText, Text.Length(value));
+				WxKitNative.WindowSetLabel(Native, valueText, NativeString.Length(value));
 			}
 		}
 	}
@@ -225,11 +225,11 @@ public unsafe partial class Window : EvtHandler {
 
 	/// <summary>Returns the window's name.</summary>
 	public string Name {
-		get => Text.Take(WxKitNative.WindowGetName(Native));
+		get => NativeString.Take(WxKitNative.WindowGetName(Native));
 		set {
 			ArgumentNullException.ThrowIfNull(value);
 			fixed (char* valueText = value) {
-				WxKitNative.WindowSetName(Native, valueText, Text.Length(value));
+				WxKitNative.WindowSetName(Native, valueText, NativeString.Length(value));
 			}
 		}
 	}
@@ -271,7 +271,7 @@ public unsafe partial class Window : EvtHandler {
 	}
 
 	/// <summary>Get the text of the associated tooltip or empty string if none.</summary>
-	public string ToolTipText => Text.Take(WxKitNative.WindowGetToolTipText(Native));
+	public string ToolTipText => NativeString.Take(WxKitNative.WindowGetToolTipText(Native));
 
 	/// <summary>Get the update rectangle bounding box in client coords.</summary>
 	public Rect UpdateClientRect => WxKitNative.WindowGetUpdateClientRect(Native);
@@ -301,25 +301,25 @@ public unsafe partial class Window : EvtHandler {
 	}
 
 	/// <summary>Process a wxEVT_ACTIVATE event. See wxActivateEvent.</summary>
-	public event EventHandler<Event>? Activated {
+	public event EventHandler<ActivateEvent>? Activated {
 		add => AddHandler(EventType.Activate, StandardId.Any, StandardId.Any, value, this);
 		remove => RemoveHandler(EventType.Activate, StandardId.Any, StandardId.Any, value);
 	}
 
 	/// <summary>Process a wxEVT_CHAR event. See wxKeyEvent.</summary>
-	public event EventHandler<Event>? Char {
+	public event EventHandler<KeyEvent>? Char {
 		add => AddHandler(EventType.Char, StandardId.Any, StandardId.Any, value, this);
 		remove => RemoveHandler(EventType.Char, StandardId.Any, StandardId.Any, value);
 	}
 
 	/// <summary>Process a wxEVT_CHAR_HOOK event. See wxKeyEvent.</summary>
-	public event EventHandler<Event>? CharHook {
+	public event EventHandler<KeyEvent>? CharHook {
 		add => AddHandler(EventType.CharHook, StandardId.Any, StandardId.Any, value, this);
 		remove => RemoveHandler(EventType.CharHook, StandardId.Any, StandardId.Any, value);
 	}
 
 	/// <summary>Process a wxEVT_CHILD_FOCUS event. See wxChildFocusEvent.</summary>
-	public event EventHandler<CommandEvent>? ChildFocused {
+	public event EventHandler<ChildFocusEvent>? ChildFocused {
 		add => AddHandler(EventType.ChildFocus, StandardId.Any, StandardId.Any, value, this);
 		remove => RemoveHandler(EventType.ChildFocus, StandardId.Any, StandardId.Any, value);
 	}
@@ -337,49 +337,49 @@ public unsafe partial class Window : EvtHandler {
 	}
 
 	/// <summary>Process a wxEVT_ERASE_BACKGROUND event. See wxEraseEvent.</summary>
-	public event EventHandler<Event>? EraseBackground {
+	public event EventHandler<EraseEvent>? EraseBackground {
 		add => AddHandler(EventType.EraseBackground, StandardId.Any, StandardId.Any, value, this);
 		remove => RemoveHandler(EventType.EraseBackground, StandardId.Any, StandardId.Any, value);
 	}
 
 	/// <summary>Process a wxEVT_SET_FOCUS event. See wxFocusEvent.</summary>
-	public event EventHandler<Event>? GotFocus {
+	public event EventHandler<FocusEvent>? GotFocus {
 		add => AddHandler(EventType.SetFocus, StandardId.Any, StandardId.Any, value, this);
 		remove => RemoveHandler(EventType.SetFocus, StandardId.Any, StandardId.Any, value);
 	}
 
 	/// <summary>Process a wxEVT_HELP event for a range of ids. See wxHelpEvent.</summary>
-	public event EventHandler<CommandEvent>? HelpRange {
+	public event EventHandler<HelpEvent>? HelpRange {
 		add => AddHandler(EventType.Help, StandardId.Any, StandardId.Any, value, this);
 		remove => RemoveHandler(EventType.Help, StandardId.Any, StandardId.Any, value);
 	}
 
 	/// <summary>Process a wxEVT_HELP event. See wxHelpEvent.</summary>
-	public event EventHandler<CommandEvent>? HelpRequested {
+	public event EventHandler<HelpEvent>? HelpRequested {
 		add => AddHandler(EventType.Help, StandardId.Any, StandardId.Any, value, this);
 		remove => RemoveHandler(EventType.Help, StandardId.Any, StandardId.Any, value);
 	}
 
 	/// <summary>Process a wxEVT_IDLE event. See wxIdleEvent.</summary>
-	public event EventHandler<Event>? Idle {
+	public event EventHandler<IdleEvent>? Idle {
 		add => AddHandler(EventType.Idle, StandardId.Any, StandardId.Any, value, this);
 		remove => RemoveHandler(EventType.Idle, StandardId.Any, StandardId.Any, value);
 	}
 
 	/// <summary>Process a wxEVT_KEY_DOWN event (any key has been pressed). See wxKeyEvent.</summary>
-	public event EventHandler<Event>? KeyDown {
+	public event EventHandler<KeyEvent>? KeyDown {
 		add => AddHandler(EventType.KeyDown, StandardId.Any, StandardId.Any, value, this);
 		remove => RemoveHandler(EventType.KeyDown, StandardId.Any, StandardId.Any, value);
 	}
 
 	/// <summary>Process a wxEVT_KEY_UP event (any key has been released). See wxKeyEvent.</summary>
-	public event EventHandler<Event>? KeyUp {
+	public event EventHandler<KeyEvent>? KeyUp {
 		add => AddHandler(EventType.KeyUp, StandardId.Any, StandardId.Any, value, this);
 		remove => RemoveHandler(EventType.KeyUp, StandardId.Any, StandardId.Any, value);
 	}
 
 	/// <summary>Process a wxEVT_KILL_FOCUS event. See wxFocusEvent.</summary>
-	public event EventHandler<Event>? LostFocus {
+	public event EventHandler<FocusEvent>? LostFocus {
 		add => AddHandler(EventType.KillFocus, StandardId.Any, StandardId.Any, value, this);
 		remove => RemoveHandler(EventType.KillFocus, StandardId.Any, StandardId.Any, value);
 	}
@@ -397,7 +397,7 @@ public unsafe partial class Window : EvtHandler {
 	}
 
 	/// <summary>Process a wxEVT_PAINT event. See wxPaintEvent.</summary>
-	public event EventHandler<Event>? Paint {
+	public event EventHandler<PaintEvent>? Paint {
 		add => AddHandler(EventType.Paint, StandardId.Any, StandardId.Any, value, this);
 		remove => RemoveHandler(EventType.Paint, StandardId.Any, StandardId.Any, value);
 	}
@@ -409,13 +409,13 @@ public unsafe partial class Window : EvtHandler {
 	}
 
 	/// <summary>Process a wxEVT_SIZE event. See wxSizeEvent.</summary>
-	public event EventHandler<Event>? SizeChanged {
+	public event EventHandler<SizeEvent>? SizeChanged {
 		add => AddHandler(EventType.Size, StandardId.Any, StandardId.Any, value, this);
 		remove => RemoveHandler(EventType.Size, StandardId.Any, StandardId.Any, value);
 	}
 
 	/// <summary>Process a wxEVT_SYS_COLOUR_CHANGED event. See wxSysColourChangedEvent.</summary>
-	public event EventHandler<Event>? SystemColorsChanged {
+	public event EventHandler<SysColorChangedEvent>? SystemColorsChanged {
 		add => AddHandler(EventType.SysColorChanged, StandardId.Any, StandardId.Any, value, this);
 		remove => RemoveHandler(EventType.SysColorChanged, StandardId.Any, StandardId.Any, value);
 	}
@@ -520,7 +520,7 @@ public unsafe partial class Window : EvtHandler {
 	public Window? FindWindow(string name) {
 		ArgumentNullException.ThrowIfNull(name);
 		fixed (char* nameText = name) {
-			return ObjectRegistry.Wrap<Window>(WxKitNative.WindowFindWindowString(Native, nameText, Text.Length(name)));
+			return ObjectRegistry.Wrap<Window>(WxKitNative.WindowFindWindowString(Native, nameText, NativeString.Length(name)));
 		}
 	}
 
@@ -564,7 +564,7 @@ public unsafe partial class Window : EvtHandler {
 	public int GetHelpIdAtPoint(Point point) => WxKitNative.WindowGetHelpIdAtPoint(Native, point);
 
 	/// <summary>Gets the help text to be used as context-sensitive help for this window.</summary>
-	public string GetHelpTextAtPoint(Point point, Origin origin) => Text.Take(WxKitNative.WindowGetHelpTextAtPoint(Native, point, (int)origin));
+	public string GetHelpTextAtPoint(Point point, Origin origin) => NativeString.Take(WxKitNative.WindowGetHelpTextAtPoint(Native, point, (int)origin));
 
 	/// <summary>May be overridden if the control minimal size depends on the layout direction.</summary>
 	public Size GetMinSizeFromKnownDirection(int direction, int size, int availableOtherDir) => WxKitNative.WindowGetMinSizeFromKnownDirection(Native, direction, size, availableOtherDir);
@@ -585,7 +585,7 @@ public unsafe partial class Window : EvtHandler {
 	public Size GetTextExtent(string text) {
 		ArgumentNullException.ThrowIfNull(text);
 		fixed (char* textText = text) {
-			return WxKitNative.WindowGetTextExtent(Native, textText, Text.Length(text));
+			return WxKitNative.WindowGetTextExtent(Native, textText, NativeString.Length(text));
 		}
 	}
 
@@ -770,7 +770,7 @@ public unsafe partial class Window : EvtHandler {
 	public void SetAccessibleName(string name) {
 		ArgumentNullException.ThrowIfNull(name);
 		fixed (char* nameText = name) {
-			WxKitNative.WindowSetAccessibleName(Native, nameText, Text.Length(name));
+			WxKitNative.WindowSetAccessibleName(Native, nameText, NativeString.Length(name));
 		}
 	}
 
@@ -844,7 +844,7 @@ public unsafe partial class Window : EvtHandler {
 	public void SetToolTip(string tipString) {
 		ArgumentNullException.ThrowIfNull(tipString);
 		fixed (char* tipStringText = tipString) {
-			WxKitNative.WindowSetToolTip(Native, tipStringText, Text.Length(tipString));
+			WxKitNative.WindowSetToolTip(Native, tipStringText, NativeString.Length(tipString));
 		}
 	}
 

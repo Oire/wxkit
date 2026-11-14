@@ -30,11 +30,11 @@ public unsafe partial class TextCtrl : Window {
 
 	/// <summary>Returns the current hint string.</summary>
 	public string Hint {
-		get => Text.Take(WxKitNative.TextCtrlGetHint(Native));
+		get => NativeString.Take(WxKitNative.TextCtrlGetHint(Native));
 		set {
 			ArgumentNullException.ThrowIfNull(value);
 			fixed (char* valueText = value) {
-				WxKitNative.TextCtrlSetHint(Native, valueText, Text.Length(value));
+				WxKitNative.TextCtrlSetHint(Native, valueText, NativeString.Length(value));
 			}
 		}
 	}
@@ -80,25 +80,25 @@ public unsafe partial class TextCtrl : Window {
 
 	/// <summary>Returns the content of a multiline text control as RTF (Rich Text Formatted) text.</summary>
 	public string RTFValue {
-		get => Text.Take(WxKitNative.TextCtrlGetRTFValue(Native));
+		get => NativeString.Take(WxKitNative.TextCtrlGetRTFValue(Native));
 		set {
 			ArgumentNullException.ThrowIfNull(value);
 			fixed (char* valueText = value) {
-				WxKitNative.TextCtrlSetRTFValue(Native, valueText, Text.Length(value));
+				WxKitNative.TextCtrlSetRTFValue(Native, valueText, NativeString.Length(value));
 			}
 		}
 	}
 
 	/// <summary>Gets the text currently selected in the control.</summary>
-	public string StringSelection => Text.Take(WxKitNative.TextCtrlGetStringSelection(Native));
+	public string StringSelection => NativeString.Take(WxKitNative.TextCtrlGetStringSelection(Native));
 
 	/// <summary>Gets the contents of the control.</summary>
 	public string Value {
-		get => Text.Take(WxKitNative.TextCtrlGetValue(Native));
+		get => NativeString.Take(WxKitNative.TextCtrlGetValue(Native));
 		set {
 			ArgumentNullException.ThrowIfNull(value);
 			fixed (char* valueText = value) {
-				WxKitNative.TextCtrlSetValue(Native, valueText, Text.Length(value));
+				WxKitNative.TextCtrlSetValue(Native, valueText, NativeString.Length(value));
 			}
 		}
 	}
@@ -131,7 +131,7 @@ public unsafe partial class TextCtrl : Window {
 	public void AppendText(string text) {
 		ArgumentNullException.ThrowIfNull(text);
 		fixed (char* textText = text) {
-			WxKitNative.TextCtrlAppendText(Native, textText, Text.Length(text));
+			WxKitNative.TextCtrlAppendText(Native, textText, NativeString.Length(text));
 		}
 	}
 
@@ -145,7 +145,7 @@ public unsafe partial class TextCtrl : Window {
 	public void ChangeValue(string value) {
 		ArgumentNullException.ThrowIfNull(value);
 		fixed (char* valueText = value) {
-			WxKitNative.TextCtrlChangeValue(Native, valueText, Text.Length(value));
+			WxKitNative.TextCtrlChangeValue(Native, valueText, NativeString.Length(value));
 		}
 	}
 
@@ -174,7 +174,7 @@ public unsafe partial class TextCtrl : Window {
 	public bool GTKSetPangoMarkup(string text) {
 		ArgumentNullException.ThrowIfNull(text);
 		fixed (char* textText = text) {
-			return WxKitNative.TextCtrlGTKSetPangoMarkup(Native, textText, Text.Length(text)) != 0;
+			return WxKitNative.TextCtrlGTKSetPangoMarkup(Native, textText, NativeString.Length(text)) != 0;
 		}
 	}
 
@@ -182,16 +182,16 @@ public unsafe partial class TextCtrl : Window {
 	public int GetLineLength(long lineNo) => WxKitNative.TextCtrlGetLineLength(Native, lineNo);
 
 	/// <summary>Returns the contents of a given line in the text control, not including any trailing newline character(s).</summary>
-	public string GetLineText(long lineNo) => Text.Take(WxKitNative.TextCtrlGetLineText(Native, lineNo));
+	public string GetLineText(long lineNo) => NativeString.Take(WxKitNative.TextCtrlGetLineText(Native, lineNo));
 
 	/// <summary>Returns the string containing the text starting in the positions from and up to to in the control.</summary>
-	public string GetRange(long from, long to) => Text.Take(WxKitNative.TextCtrlGetRange(Native, from, to));
+	public string GetRange(long from, long to) => NativeString.Take(WxKitNative.TextCtrlGetRange(Native, from, to));
 
 	/// <summary>Loads and displays the named file, if it exists.</summary>
 	public bool LoadFile(string filename, int fileType = 0) {
 		ArgumentNullException.ThrowIfNull(filename);
 		fixed (char* filenameText = filename) {
-			return WxKitNative.TextCtrlLoadFile(Native, filenameText, Text.Length(filename), fileType) != 0;
+			return WxKitNative.TextCtrlLoadFile(Native, filenameText, NativeString.Length(filename), fileType) != 0;
 		}
 	}
 
@@ -226,7 +226,7 @@ public unsafe partial class TextCtrl : Window {
 	public void Replace(long from, long to, string value) {
 		ArgumentNullException.ThrowIfNull(value);
 		fixed (char* valueText = value) {
-			WxKitNative.TextCtrlReplace(Native, from, to, valueText, Text.Length(value));
+			WxKitNative.TextCtrlReplace(Native, from, to, valueText, NativeString.Length(value));
 		}
 	}
 
@@ -234,7 +234,7 @@ public unsafe partial class TextCtrl : Window {
 	public bool SaveFile(string filename = "", int fileType = 0) {
 		ArgumentNullException.ThrowIfNull(filename);
 		fixed (char* filenameText = filename) {
-			return WxKitNative.TextCtrlSaveFile(Native, filenameText, Text.Length(filename), fileType) != 0;
+			return WxKitNative.TextCtrlSaveFile(Native, filenameText, NativeString.Length(filename), fileType) != 0;
 		}
 	}
 
@@ -263,7 +263,7 @@ public unsafe partial class TextCtrl : Window {
 	public void WriteText(string text) {
 		ArgumentNullException.ThrowIfNull(text);
 		fixed (char* textText = text) {
-			WxKitNative.TextCtrlWriteText(Native, textText, Text.Length(text));
+			WxKitNative.TextCtrlWriteText(Native, textText, NativeString.Length(text));
 		}
 	}
 
@@ -275,7 +275,7 @@ public unsafe partial class TextCtrl : Window {
 		ArgumentNullException.ThrowIfNull(parent);
 		ArgumentNullException.ThrowIfNull(value);
 		fixed (char* valueText = value) {
-			return WxKitNative.TextCtrlNew((WxkWindow*)parent.Native, id, valueText, Text.Length(value), position ?? Point.Default, size ?? Size.Default, (long)style);
+			return WxKitNative.TextCtrlNew((WxkWindow*)parent.Native, id, valueText, NativeString.Length(value), position ?? Point.Default, size ?? Size.Default, (long)style);
 		}
 	}
 }

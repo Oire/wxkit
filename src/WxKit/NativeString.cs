@@ -2,7 +2,7 @@ using WxKit.Interop;
 
 namespace WxKit;
 
-internal static unsafe class Text {
+internal static unsafe class NativeString {
 	// Takes ownership of the shim's string and frees it.
 	internal static string Take(WxkString* text) {
 		if (text is null) return string.Empty;

@@ -76,7 +76,8 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 	private IEnumerable<DoxygenMember> MembersOf(DoxygenClass source) {
 		IEnumerable<DoxygenMember> members = source.Members;
 		foreach (string mixin in source.Bases.Skip(1)) {
-			if (api.Classes.TryGetValue(mixin, out DoxygenClass? mixed) && !_classes.ContainsKey(mixin)) members = members.Concat(MembersOf(mixed));
+			// A mixin's own constructors and destructor are not members of the class it is mixed into.
+			if (api.Classes.TryGetValue(mixin, out DoxygenClass? mixed) && !_classes.ContainsKey(mixin)) members = members.Concat(MembersOf(mixed).Where(member => member.Name != mixin && member.Name != "~" + mixin));
 		}
 		return members;
 	}
@@ -133,6 +134,10 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		HashSet<string> seen = [];
 		bound.Properties.RemoveAll(property => inherited.Contains(property.Name) || !seen.Add(property.Name));
 		bound.Methods.RemoveAll(method => inherited.Contains(Signature(method)) || !seen.Add(Signature(method)));
+		// C# cannot have a property and a method with the same name, and which to rename is a choice.
+		foreach (BoundMethod method in bound.Methods) {
+			if (bound.Properties.Any(property => property.Name == method.Name)) throw new InvalidOperationException($"{bound.CppName}::{method.Function.Source.Name} and a property are both called {method.Name}. Rename one with a tweak.");
+		}
 	}
 
 	private static string Signature(BoundMethod method) => $"{method.Name}({string.Join(",", method.Function.ManagedParameters.Select(static parameter => parameter.Conversion.Suffix))})";
@@ -411,6 +416,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 	// The C# enum for a C++ one, made the first time a bound member uses it. Its members drop the
 	// prefix they all share, so wxSHOW_EFFECT_ROLL_TO_LEFT becomes ShowEffect.RollToLeft.
 	private BoundEnum? EnumFor(string cppName) {
+		if (cppName.Length == 0) return null;
 		if (_enums.TryGetValue(cppName, out BoundEnum? cached)) return cached;
 		_enums[cppName] = null;
 		if (!api.Enums.TryGetValue(cppName, out DoxygenEnum? source) || source.Values.Count == 0) return null;

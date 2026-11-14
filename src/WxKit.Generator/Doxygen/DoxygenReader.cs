@@ -132,7 +132,7 @@ internal static partial class DoxygenReader {
 			} else if (kind == "enum") {
 				string enumName = (string)member.Element("name")!;
 				// An anonymous enum only holds constants, which the loop below still reads.
-				if (!enumName.StartsWith('@')) {
+				if (enumName.Length > 0 && !enumName.StartsWith('@')) {
 					DoxygenEnum read = new(enumName, [.. member.Elements("enumvalue").Select(static value => new DoxygenEnumValue((string)value.Element("name")!, Text(value.Element("briefdescription"))))]);
 					enums.TryAdd(enumName, read);
 					if (owner is not null) enums.TryAdd($"{owner}::{enumName}", read);

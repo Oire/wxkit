@@ -59,7 +59,7 @@ public unsafe partial class Dialog : TopLevelWindow {
 	}
 
 	/// <summary>Process a wxEVT_INIT_DIALOG event. See wxInitDialogEvent.</summary>
-	public event EventHandler<Event>? InitDialogEvent {
+	public event EventHandler<InitDialogEvent>? InitDialogEvent {
 		add => AddHandler(EventType.InitDialog, StandardId.Any, StandardId.Any, value, this);
 		remove => RemoveHandler(EventType.InitDialog, StandardId.Any, StandardId.Any, value);
 	}
@@ -86,7 +86,7 @@ public unsafe partial class Dialog : TopLevelWindow {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(title);
 		fixed (char* titleText = title) {
-			return WxKitNative.DialogNew(parent is null ? null : (WxkWindow*)parent.Native, id, titleText, Text.Length(title), position ?? Point.Default, size ?? Size.Default, (long)style);
+			return WxKitNative.DialogNew(parent is null ? null : (WxkWindow*)parent.Native, id, titleText, NativeString.Length(title), position ?? Point.Default, size ?? Size.Default, (long)style);
 		}
 	}
 }

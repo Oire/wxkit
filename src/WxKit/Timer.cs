@@ -14,7 +14,7 @@ public sealed unsafe class Timer : EvtHandler, IDisposable {
 
 	private WxkTimer* Native => (WxkTimer*)Handle;
 
-	public event EventHandler<Event>? Tick {
+	public event EventHandler<TimerEvent>? Tick {
 		add => AddHandler(EventType.Timer, StandardId.Any, StandardId.Any, value, this);
 		remove => RemoveHandler(EventType.Timer, StandardId.Any, StandardId.Any, value);
 	}

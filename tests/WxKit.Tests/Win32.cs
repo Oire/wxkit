@@ -13,6 +13,9 @@ internal static partial class Win32 {
 
 	public static void ChooseMenuItem(Frame frame, MenuItem item) => SendMessage(frame.NativeHandle, WmCommand, item.Id & 0xFFFF, 0);
 
+	// WM_KEYDOWN, with the virtual key code, which for letters is the upper-case letter.
+	public static void PressKey(Window window, char key) => SendMessage(window.NativeHandle, 0x0100, key, 0);
+
 	[LibraryImport("user32.dll", EntryPoint = "SendMessageW")]
 	private static partial nint SendMessage(nint window, uint message, nint wParam, nint lParam);
 }

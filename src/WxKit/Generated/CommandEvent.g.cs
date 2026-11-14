@@ -32,11 +32,11 @@ public unsafe partial class CommandEvent : Event {
 
 	/// <summary>Returns item string for a listbox or choice selection event.</summary>
 	public string String {
-		get => Text.Take(WxKitNative.CommandEventGetString(Handle));
+		get => NativeString.Take(WxKitNative.CommandEventGetString(Handle));
 		set {
 			ArgumentNullException.ThrowIfNull(value);
 			fixed (char* valueText = value) {
-				WxKitNative.CommandEventSetString(Handle, valueText, Text.Length(value));
+				WxKitNative.CommandEventSetString(Handle, valueText, NativeString.Length(value));
 			}
 		}
 	}
