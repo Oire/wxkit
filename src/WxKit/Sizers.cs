@@ -73,17 +73,6 @@ public abstract unsafe class Sizer {
 	}
 }
 
-/// <summary>Lays items out in a row or a column. Wraps wxBoxSizer.</summary>
-public sealed unsafe class BoxSizer : Sizer {
-	public BoxSizer(Orientation orientation) : base(Create(orientation)) {
-	}
-
-	private static WxkSizer* Create(Orientation orientation) {
-		Application.VerifyAccess();
-		return WxKitNative.BoxSizerNew((int)orientation);
-	}
-}
-
 /// <summary>
 /// How a sizer lays out one item: how much it grows, how it aligns, and its border. Wraps
 /// wxSizerFlags. Each method returns a copy with the change, so calls chain:

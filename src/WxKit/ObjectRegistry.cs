@@ -8,25 +8,12 @@ namespace WxKit;
 // strongly, so a window keeps its managed object alive, with any fields a derived class added, for
 // exactly as long as wxWidgets keeps the window. The shim's tracker removes the entry when
 // wxWidgets destroys the object. Only the GUI thread touches it.
-internal static unsafe class ObjectRegistry {
+internal static unsafe partial class ObjectRegistry {
 	private static readonly Dictionary<nint, EvtHandler> Handlers = [];
 
-	// The managed class to wrap each wxWidgets class in, found by walking up from the native object's
-	// own class until a class WxKit knows. Results are cached by class, since a class's ancestry
-	// never changes.
-	private static readonly Dictionary<string, Func<nint, EvtHandler>> Factories = new(StringComparer.Ordinal) {
-		["wxWindow"] = static native => new Window((WxkWindow*)native),
-		["wxTopLevelWindow"] = static native => new TopLevelWindow((WxkWindow*)native),
-		["wxFrame"] = static native => new Frame((WxkWindow*)native),
-		["wxDialog"] = static native => new Dialog((WxkWindow*)native),
-		["wxPanel"] = static native => new Panel((WxkWindow*)native),
-		["wxButton"] = static native => new Button((WxkWindow*)native),
-		["wxStaticText"] = static native => new StaticText((WxkWindow*)native),
-		["wxTextCtrl"] = static native => new TextCtrl((WxkWindow*)native),
-		["wxMenuBar"] = static native => new MenuBar((WxkWindow*)native),
-		["wxMenu"] = static native => new Menu((WxkMenu*)native),
-	};
-
+	// Factories, in ObjectRegistry.g.cs, names the managed class to wrap each wxWidgets class in.
+	// A native object's class is walked up until a class WxKit knows, and the result is cached by
+	// class, since a class's ancestry never changes.
 	private static readonly Dictionary<nint, Func<nint, EvtHandler>?> FactoriesByClass = [];
 
 	internal static void Register(EvtHandler handler, WxkEvtHandler* native) {

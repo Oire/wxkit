@@ -7,6 +7,7 @@ internal sealed record DoxygenApi(IReadOnlyDictionary<string, DoxygenClass> Clas
 internal sealed record DoxygenClass(
 	string Name,
 	IReadOnlyList<string> Bases,
+	string? Header,
 	string Brief,
 	IReadOnlyList<DoxygenMember> Members,
 	IReadOnlyList<DoxygenStyle> Styles,

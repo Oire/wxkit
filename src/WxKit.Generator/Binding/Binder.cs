@@ -1,0 +1,338 @@
+using System.Globalization;
+using System.Text.RegularExpressions;
+using WxKit.Generator.Doxygen;
+
+namespace WxKit.Generator.Binding;
+
+// Decides how each tweaked class is bound: its handle, its base, which members it gets and how
+// their types and defaults convert, which getters and setters form properties, and its events and
+// styles. Anything it cannot bind goes in the skipped list with the reason, so gaps stay visible.
+internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
+	private const string EventObjectClass = "wxEvtHandler";
+
+	// Known string constants used as defaults, and their values.
+	private static readonly Dictionary<string, string> StringDefaults = new(StringComparer.Ordinal) {
+		["wxEmptyString"] = string.Empty,
+		["wxMessageBoxCaptionStr"] = "Message",
+	};
+
+	private readonly Constants _constants = new(api.Constants);
+	private readonly Dictionary<string, BoundClass> _classes = new(StringComparer.Ordinal);
+	private readonly Dictionary<string, BoundEventType> _eventTypes = new(StringComparer.Ordinal);
+	private readonly List<string> _skipped = [];
+
+	public BindingResult Bind() {
+		foreach (ClassTweak tweak in tweaks.Classes.Values) {
+			if (!api.Classes.TryGetValue(tweak.CppName, out DoxygenClass? source)) throw new InvalidOperationException($"A tweak names {tweak.CppName}, which the interface headers do not have.");
+			_classes[tweak.CppName] = new BoundClass(source, tweak, HandleFor(source.Name));
+		}
+		foreach (BoundClass bound in _classes.Values) {
+			List<string> ancestors = Ancestors(bound.CppName);
+			bound.Base = ancestors.Skip(1).Select(name => _classes.GetValueOrDefault(name)).FirstOrDefault(static candidate => candidate is not null);
+			bound.IsTopLevel = ancestors.Contains("wxTopLevelWindow");
+		}
+		foreach (BoundClass bound in _classes.Values.Where(static bound => !bound.Tweak.IsHandwritten).OrderBy(static bound => bound.CppName, StringComparer.Ordinal)) {
+			bound.Styles = BindStyles(bound);
+			BindMembers(bound);
+			BindEvents(bound);
+		}
+		foreach ((string constant, string eventClass) in tweaks.ExtraEventTypes) EventTypeFor(constant, eventClass);
+		return new BindingResult(
+			[.. _classes.Values.OrderBy(static bound => bound.CppName, StringComparer.Ordinal)],
+			[.. _eventTypes.Values.OrderBy(static type => type.Name, StringComparer.Ordinal)],
+			_skipped);
+	}
+
+	// A class's primary bases, itself first. wxWidgets classes inherit from wxObject along their first base.
+	private List<string> Ancestors(string name) {
+		List<string> chain = [];
+		for (string? current = name; current is not null && api.Classes.TryGetValue(current, out DoxygenClass? found); current = found.Bases.FirstOrDefault()) chain.Add(current);
+		return chain;
+	}
+
+	private HandleKind HandleFor(string name) {
+		List<string> ancestors = Ancestors(name);
+		if (ancestors.Contains("wxWindow")) return HandleKind.Window;
+		if (ancestors.Contains("wxSizer")) return HandleKind.Sizer;
+		if (ancestors.Contains("wxMenu")) return HandleKind.Menu;
+		if (ancestors.Contains("wxEvent")) return HandleKind.Event;
+		if (ancestors.Contains(EventObjectClass)) return HandleKind.EvtHandler;
+		throw new InvalidOperationException($"{name} is not a kind of class WxKit can bind yet.");
+	}
+
+	// A class's own members, and those of the secondary bases it mixes in, such as wxTextEntry
+	// for wxTextCtrl, which are called through the class itself.
+	private IEnumerable<DoxygenMember> MembersOf(DoxygenClass source) {
+		IEnumerable<DoxygenMember> members = source.Members;
+		foreach (string mixin in source.Bases.Skip(1)) {
+			if (api.Classes.TryGetValue(mixin, out DoxygenClass? mixed) && !_classes.ContainsKey(mixin)) members = members.Concat(MembersOf(mixed));
+		}
+		return members;
+	}
+
+	private void BindMembers(BoundClass bound) {
+		ClassTweak tweak = bound.Tweak;
+		List<DoxygenMember> candidates = [.. MembersOf(bound.Source).Where(static member => member.IsPublic && !member.Name.StartsWith('~') && !member.Name.StartsWith("operator", StringComparison.Ordinal))];
+		HashSet<string> known = [.. candidates.Select(static member => member.Name)];
+		foreach (string named in (tweak.OnlyMembers ?? []).Concat(tweak.IgnoredMembers).Concat(tweak.Renames.Keys.Where(name => !tweak.PropertyPairs.ContainsKey(name))).Concat(tweak.PropertyPairs.Values.SelectMany(static pair => pair.Setter is null ? [pair.Getter] : new[] { pair.Getter, pair.Setter }))) {
+			if (!known.Contains(named)) throw new InvalidOperationException($"A tweak names {bound.CppName}::{named}, which the interface headers do not have.");
+		}
+		string shortName = bound.CppName;
+		List<BoundFunction> functions = [];
+		foreach (DoxygenMember member in candidates) {
+			bool isConstructor = member.Name == shortName;
+			if (tweak.IgnoredMembers.Contains(member.Name)) continue;
+			if (isConstructor) {
+				if (!tweak.HasConstructors || bound.Handle == HandleKind.Event) continue;
+				// Two-step creation is not exposed, so a window's default constructor is not bound.
+				if (member.Parameters.Count == 0 && bound.Handle == HandleKind.Window) continue;
+				if (member.Parameters.Count == 1 && CppType.Parse(member.Parameters[0].Type).Name == shortName) continue;
+			} else if (tweak.OnlyMembers is not null && !tweak.OnlyMembers.Contains(member.Name)) {
+				continue;
+			}
+			if (member.IsDeprecated) {
+				Skip(bound, member, "it is deprecated");
+				continue;
+			}
+			if (member.IsStatic) {
+				Skip(bound, member, "static members are not bound yet");
+				continue;
+			}
+			if (BindFunction(bound, member, isConstructor) is BoundFunction function) functions.Add(function);
+		}
+		NameOverloads(functions);
+		bound.Constructors.AddRange(functions.Where(static function => function.IsConstructor));
+		PairProperties(bound, [.. functions.Where(static function => !function.IsConstructor)]);
+	}
+
+	private BoundFunction? BindFunction(BoundClass owner, DoxygenMember member, bool isConstructor) {
+		Conversion returns = VoidConversion.Instance;
+		if (!isConstructor) {
+			Conversion? mapped = Map(CppType.Parse(member.Type), owner, member.Name, null, isReturn: true);
+			if (mapped is null) {
+				Skip(owner, member, $"WxKit cannot convert its return type, {member.Type}");
+				return null;
+			}
+			returns = mapped;
+		}
+		List<BoundParameter> parameters = [];
+		foreach (DoxygenParameter parameter in member.Parameters) {
+			Conversion? conversion = Map(CppType.Parse(parameter.Type), owner, member.Name, parameter.Name, isReturn: false);
+			bool nullable = parameter.Name == "parent" && isConstructor && owner.IsTopLevel;
+			string? managedDefault = null;
+			bool resolved = true;
+			if (conversion is not null && parameter.Default is string cppDefault) {
+				resolved = TryDefault(cppDefault, conversion, out managedDefault, out bool defaultIsNull);
+				nullable |= defaultIsNull;
+			}
+			// A trailing parameter with a default that WxKit cannot convert is left out, and the
+			// rest after it, so the C++ default applies. Anything else makes the function unbindable.
+			if (conversion is null || !resolved) {
+				if (parameter.Default is not null) break;
+				Skip(owner, member, conversion is null ? $"WxKit cannot convert {parameter.Name}, a {parameter.Type}" : $"WxKit cannot write the default of {parameter.Name}, {parameter.Default}");
+				return null;
+			}
+			parameters.Add(new BoundParameter(parameter.Name, Naming.Parameter(parameter.Name), conversion, nullable, managedDefault));
+		}
+		BoundFunction function = new(owner, member, returns, parameters, isConstructor);
+		function.ManagedParameters = ManagedOrder(parameters);
+		return function;
+	}
+
+	// Window ids are rarely needed, since WxKit binds events to objects rather than ids, so an id
+	// without a default gets wxID_ANY and moves after the label or title, before the position.
+	private static List<BoundParameter> ManagedOrder(List<BoundParameter> parameters) {
+		List<BoundParameter> ordered = [.. parameters];
+		int id = ordered.FindIndex(static parameter => parameter.CppName is "id" or "winid" && parameter.Default is null && parameter.Conversion == NumberConversion.Int);
+		if (id >= 0) {
+			BoundParameter moved = ordered[id] with { Default = "StandardId.Any" };
+			ordered.RemoveAt(id);
+			int position = ordered.FindIndex(id, static parameter => parameter.CppName == "pos");
+			ordered.Insert(position >= 0 ? position : ordered.Count, moved);
+		}
+		// C# needs every parameter after an optional one to be optional too.
+		int lastRequired = ordered.FindLastIndex(static parameter => parameter.Default is null);
+		for (int index = 0; index < lastRequired; index++) ordered[index] = ordered[index] with { Default = null };
+		return ordered;
+	}
+
+	private Conversion? Map(CppType type, BoundClass owner, string member, string? parameter, bool isReturn) {
+		if (parameter is not null && owner.Tweak.ParameterEnums.TryGetValue((member, parameter), out string? enumName)) return new EnumConversion(enumName, type.Name == "long" ? NumberConversion.Long : NumberConversion.Int);
+		if (parameter == "style" && type.Name == "long" && type.Pointers == 0 && owner.Styles is BoundStyles styles && member == owner.CppName) return new EnumConversion(styles.Name, NumberConversion.Long);
+		if (type.IsVoid) return isReturn ? VoidConversion.Instance : null;
+		if (type.Pointers == 1 && !type.IsReference) {
+			if (type.Name == "wxObject" && isReturn) return AnyObjectConversion.Instance;
+			return _classes.TryGetValue(type.Name, out BoundClass? target) && target.Handle != HandleKind.Event ? new ObjectConversion(target) : null;
+		}
+		if (!type.IsValueOrConstReference) return null;
+		return type.Name switch {
+			"bool" => BoolConversion.Instance,
+			"int" or "wxWindowID" or "wxCoord" => NumberConversion.Int,
+			"long" => NumberConversion.Long,
+			"double" => NumberConversion.Double,
+			"float" => NumberConversion.Float,
+			"wxString" => StringConversion.Instance,
+			"wxPoint" => GeometryConversion.Point,
+			"wxSize" => GeometryConversion.Size,
+			_ => null,
+		};
+	}
+
+	private bool TryDefault(string cppDefault, Conversion conversion, out string? managed, out bool isNull) {
+		managed = null;
+		isNull = false;
+		string value = cppDefault.Trim();
+		if (conversion is GeometryConversion geometry && geometry.IsDefault(value) || value is "nullptr" or "NULL" && conversion.AcceptsNull) {
+			managed = "null";
+			isNull = true;
+			return true;
+		}
+		switch (conversion) {
+			case BoolConversion when value is "true" or "false":
+				managed = value;
+				return true;
+			case StringConversion when StringDefaults.TryGetValue(value, out string? text):
+				managed = $"\"{text}\"";
+				return true;
+			case StringConversion when StringLiteralPattern().IsMatch(value):
+				managed = value;
+				return true;
+			case NumberConversion number when number == NumberConversion.Int && value == "wxID_ANY":
+				managed = "StandardId.Any";
+				return true;
+			case NumberConversion number when number == NumberConversion.Double || number == NumberConversion.Float:
+				if (!double.TryParse(value.TrimEnd('f'), NumberStyles.Float, CultureInfo.InvariantCulture, out double floating)) return false;
+				managed = number == NumberConversion.Float ? $"{floating.ToString(CultureInfo.InvariantCulture)}f" : floating.ToString(CultureInfo.InvariantCulture);
+				return true;
+			case NumberConversion:
+				if (_constants.Evaluate(value) is not long integer) return false;
+				managed = integer.ToString(CultureInfo.InvariantCulture);
+				return true;
+			case EnumConversion enumeration:
+				managed = EnumDefault(value, enumeration);
+				return managed is not null;
+			default:
+				return false;
+		}
+	}
+
+	// A default made of constants the enum has, such as wxOK | wxCENTRE, is written with its
+	// members, so it reads as MessageDialogStyle.Ok | MessageDialogStyle.Center.
+	private string? EnumDefault(string value, EnumConversion enumeration) {
+		BoundStyles? styles = _classes.Values.Select(static bound => bound.Styles).FirstOrDefault(found => found?.Name == enumeration.EnumName);
+		string[] parts = [.. value.Split('|', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)];
+		List<string> members = [];
+		foreach (string part in parts) {
+			string? member = styles is not null
+				? styles.Members.FirstOrDefault(style => style.Constant == part)?.Name
+				: ConstantPattern().IsMatch(part) ? Naming.Words(part[2..]) : null;
+			if (member is null) {
+				members.Clear();
+				break;
+			}
+			members.Add($"{enumeration.EnumName}.{member}");
+		}
+		if (members.Count > 0) return string.Join(" | ", members);
+		if (_constants.Evaluate(value) is not long number) return null;
+		if (styles?.Members.FirstOrDefault(style => style.Value == number) is BoundStyle exact) return $"{enumeration.EnumName}.{exact.Name}";
+		return number == 0 ? "0" : $"({enumeration.EnumName})0x{number:X}";
+	}
+
+	private static void NameOverloads(List<BoundFunction> functions) {
+		foreach (IGrouping<string, BoundFunction> group in functions.GroupBy(static function => function.ExportName).Where(static group => group.Count() > 1)) {
+			foreach (BoundFunction function in group) {
+				string suffix = function.Parameters.Count == 0 ? "Default" : string.Concat(function.Parameters.Select(static parameter => parameter.Conversion.Suffix));
+				function.ExportName = $"{function.ExportName}_{suffix}";
+			}
+		}
+	}
+
+	// A getter with no parameters and a setter with one, of the same type, form a property:
+	// GetLabel and SetLabel become Label, and IsShown becomes IsShown. A tweak can pair others,
+	// such as IsEnabled and Enable.
+	private static void PairProperties(BoundClass bound, List<BoundFunction> functions) {
+		ClassTweak tweak = bound.Tweak;
+		HashSet<BoundFunction> used = [];
+		BoundFunction? Find(string name) => functions.FirstOrDefault(function => function.Source.Name == name && !used.Contains(function));
+		foreach ((string propertyName, (string getterName, string? setterName)) in tweak.PropertyPairs) {
+			BoundFunction getter = Find(getterName) ?? throw new InvalidOperationException($"The getter {bound.CppName}::{getterName} of property {propertyName} could not be bound.");
+			BoundFunction? setter = setterName is null ? null : Find(setterName) ?? throw new InvalidOperationException($"The setter {bound.CppName}::{setterName} of property {propertyName} could not be bound.");
+			used.Add(getter);
+			if (setter is not null) used.Add(setter);
+			bound.Properties.Add(new BoundProperty(propertyName, getter, setter));
+		}
+		foreach (BoundFunction getter in functions.Where(static function => function.Parameters.Count == 0 && function.Returns is not VoidConversion)) {
+			if (used.Contains(getter)) continue;
+			string name = getter.Source.Name;
+			string? propertyName = name.StartsWith("Get", StringComparison.Ordinal) && name.Length > 3 ? name[3..]
+				: getter.Returns is BoolConversion && IsPredicate(name) ? name
+				: null;
+			if (propertyName is null) continue;
+			BoundFunction? setter = functions.FirstOrDefault(function => !used.Contains(function) && function.Source.Name == "Set" + (name.StartsWith("Get", StringComparison.Ordinal) ? propertyName : name[2..]) && function.Parameters.Count == 1 && function.Parameters[0].Conversion.Suffix == getter.Returns.Suffix);
+			used.Add(getter);
+			if (setter is not null) used.Add(setter);
+			bound.Properties.Add(new BoundProperty(tweak.Renames.GetValueOrDefault(name) ?? Naming.Member(propertyName), getter, setter));
+		}
+		foreach (BoundFunction function in functions.Where(function => !used.Contains(function))) {
+			bound.Methods.Add(new BoundMethod(tweak.Renames.GetValueOrDefault(function.Source.Name) ?? Naming.Member(function.Source.Name), function));
+		}
+	}
+
+	private static bool IsPredicate(string name) => name.Length > 2 && (name.StartsWith("Is", StringComparison.Ordinal) || name.StartsWith("Has", StringComparison.Ordinal) || name.StartsWith("Can", StringComparison.Ordinal)) && char.IsUpper(name[name.StartsWith("Is", StringComparison.Ordinal) ? 2 : 3]);
+
+	private void BindEvents(BoundClass bound) {
+		ClassTweak tweak = bound.Tweak;
+		List<DoxygenEvent> events = [.. bound.Source.Events, .. tweak.AddedEvents.Select(static added => new DoxygenEvent(added.Macro, added.Constant, added.EventClass, string.Empty))];
+		HashSet<string> macros = [.. events.Select(static found => found.Macro)];
+		foreach (string named in tweak.EventNames.Keys) {
+			if (!macros.Contains(named)) throw new InvalidOperationException($"A tweak names the event {named} of {bound.CppName}, which its event table does not list.");
+		}
+		foreach (DoxygenEvent found in events) {
+			// With a list of members to bind, events are bound only when a tweak names them too.
+			if (!tweak.EventNames.TryGetValue(found.Macro, out string? name)) {
+				if (tweak.OnlyMembers is not null) continue;
+				name = Naming.Words(found.Macro["EVT_".Length..]);
+			}
+			// An entry that leaves out its event type follows the convention that EVT_X sends wxEVT_X.
+			string constant = found.EventType ?? "wx" + found.Macro;
+			if (bound.Events.Any(existing => existing.Name == name)) continue;
+			bound.Events.Add(new BoundEvent(name, EventTypeFor(constant, found.EventClass ?? "wxEvent"), found.Description));
+		}
+	}
+
+	private BoundEventType EventTypeFor(string constant, string eventClass) {
+		if (_eventTypes.TryGetValue(constant, out BoundEventType? existing)) return existing;
+		// An event class WxKit does not bind is delivered as its nearest bound ancestor.
+		BoundClass wrapper = Ancestors(eventClass).Select(name => _classes.GetValueOrDefault(name)).FirstOrDefault(static candidate => candidate?.Handle == HandleKind.Event)
+			?? throw new InvalidOperationException($"No bound event class can carry {constant}, a {eventClass}.");
+		BoundEventType type = new(constant, Naming.EventType(constant), wrapper);
+		_eventTypes[constant] = type;
+		return type;
+	}
+
+	private BoundStyles? BindStyles(BoundClass bound) {
+		if (bound.Source.Styles.Count == 0) return null;
+		string? prefix = Naming.SharedStylePrefix(bound.Source.Styles.Select(static style => style.Name));
+		List<BoundStyle> members = [];
+		foreach (DoxygenStyle style in bound.Source.Styles) {
+			if (_constants.Value(style.Name) is not long value) {
+				_skipped.Add($"{bound.CppName} style {style.Name}: its value is unknown");
+				continue;
+			}
+			string name = Naming.Style(style.Name, prefix, bound.CppName);
+			if (members.Any(existing => existing.Name == name)) continue;
+			members.Add(new BoundStyle(name, style.Name, value, style.Description));
+		}
+		// Every style enum has None, even when a style such as wxTE_LEFT is also 0, so a default of 0 reads as None.
+		if (!members.Any(static member => member.Name == "None")) members.Insert(0, new BoundStyle("None", "0", 0, "No styles."));
+		return new BoundStyles(bound.Name + "Style", members);
+	}
+
+	private void Skip(BoundClass bound, DoxygenMember member, string reason) => _skipped.Add($"{bound.CppName}::{member.Name}({string.Join(", ", member.Parameters.Select(static parameter => parameter.Type))}): {reason}");
+
+	[GeneratedRegex("^\".*\"$")]
+	private static partial Regex StringLiteralPattern();
+
+	[GeneratedRegex(@"^wx[A-Z0-9_]+$")]
+	private static partial Regex ConstantPattern();
+}

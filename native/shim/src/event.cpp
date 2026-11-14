@@ -40,70 +40,10 @@ WXK_FUNCTION(uint8_t) wxk_EvtHandler_Bind(wxk_EvtHandler* handler, int32_t event
 	});
 }
 
-WXK_FUNCTION(int32_t) wxk_EventType_Button(void) noexcept {
-	return wxEVT_BUTTON;
-}
-
-WXK_FUNCTION(int32_t) wxk_EventType_Menu(void) noexcept {
-	return wxEVT_MENU;
-}
-
-WXK_FUNCTION(int32_t) wxk_EventType_Text(void) noexcept {
-	return wxEVT_TEXT;
-}
-
-WXK_FUNCTION(int32_t) wxk_EventType_CloseWindow(void) noexcept {
-	return wxEVT_CLOSE_WINDOW;
-}
-
-WXK_FUNCTION(int32_t) wxk_EventType_Timer(void) noexcept {
-	return wxEVT_TIMER;
-}
-
 WXK_FUNCTION(int32_t) wxk_Event_GetEventType(wxk_Event* event) noexcept {
 	return wxk::Unwrap(event)->GetEventType();
 }
 
-WXK_FUNCTION(int32_t) wxk_Event_GetId(wxk_Event* event) noexcept {
-	return wxk::Unwrap(event)->GetId();
-}
-
-WXK_FUNCTION(wxk_Object*) wxk_Event_GetEventObject(wxk_Event* event) noexcept {
-	return wxk::Wrap(wxk::Unwrap(event)->GetEventObject());
-}
-
-WXK_FUNCTION(void) wxk_Event_Skip(wxk_Event* event, uint8_t skip) noexcept {
-	wxk::Unwrap(event)->Skip(skip != 0);
-}
-
-WXK_FUNCTION(uint8_t) wxk_Event_GetSkipped(wxk_Event* event) noexcept {
-	return wxk::Unwrap(event)->GetSkipped() ? 1 : 0;
-}
-
-WXK_FUNCTION(wxk_String*) wxk_CommandEvent_GetString(wxk_Event* event) noexcept {
-	return wxk::Guard<wxk_String*>(nullptr, [&] { return wxk::ToUtf16(wxk::As<wxCommandEvent>(event)->GetString()); });
-}
-
-WXK_FUNCTION(int32_t) wxk_CommandEvent_GetInt(wxk_Event* event) noexcept {
-	return wxk::As<wxCommandEvent>(event)->GetInt();
-}
-
-WXK_FUNCTION(int32_t) wxk_CommandEvent_GetSelection(wxk_Event* event) noexcept {
-	return wxk::As<wxCommandEvent>(event)->GetSelection();
-}
-
-WXK_FUNCTION(uint8_t) wxk_CommandEvent_IsChecked(wxk_Event* event) noexcept {
-	return wxk::As<wxCommandEvent>(event)->IsChecked() ? 1 : 0;
-}
-
-WXK_FUNCTION(uint8_t) wxk_CloseEvent_CanVeto(wxk_Event* event) noexcept {
-	return wxk::As<wxCloseEvent>(event)->CanVeto() ? 1 : 0;
-}
-
 WXK_FUNCTION(void) wxk_CloseEvent_Veto(wxk_Event* event, uint8_t veto) noexcept {
 	wxk::Guard([&] { wxk::As<wxCloseEvent>(event)->Veto(veto != 0); });
-}
-
-WXK_FUNCTION(uint8_t) wxk_CloseEvent_GetVeto(wxk_Event* event) noexcept {
-	return wxk::As<wxCloseEvent>(event)->GetVeto() ? 1 : 0;
 }

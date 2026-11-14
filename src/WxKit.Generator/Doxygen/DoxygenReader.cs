@@ -37,7 +37,8 @@ internal static partial class DoxygenReader {
 			}
 		}
 		(List<DoxygenStyle> styles, List<DoxygenEvent> events) = ReadTables(definition.Element("detaileddescription"));
-		return new DoxygenClass(name, bases, Text(definition.Element("briefdescription")), members, styles, events);
+		string? header = (string?)definition.Element("includes");
+		return new DoxygenClass(name, bases, header, Text(definition.Element("briefdescription")), members, styles, events);
 	}
 
 	private static DoxygenMember ReadMember(XElement member) {

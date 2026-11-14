@@ -64,6 +64,14 @@ inline wxSize FromSize(wxk_Size size) {
 	return wxSize(size.width, size.height);
 }
 
+inline wxk_Point ToPoint(const wxPoint& point) {
+	return wxk_Point{point.x, point.y};
+}
+
+inline wxk_Size ToSize(const wxSize& size) {
+	return wxk_Size{size.x, size.y};
+}
+
 // Each handle type converts to and from the wxWidgets class it names. A pointer to a derived
 // class is first converted to that class, so the handle always points where the C interface says.
 #define WXK_HANDLE(handle, type) \

@@ -2,29 +2,6 @@ using WxKit.Interop;
 
 namespace WxKit;
 
-/// <summary>The bar of menus across the top of a frame. Wraps wxMenuBar. Set it as a frame's <see cref="Frame.MenuBar"/>.</summary>
-public sealed unsafe class MenuBar : Window {
-	public MenuBar() : base(Create()) {
-	}
-
-	internal MenuBar(WxkWindow* native) : base(native) {
-	}
-
-	/// <summary>Adds a menu, which the menu bar then owns. Put an ampersand before the letter that opens it, as in "&amp;File".</summary>
-	public void Append(Menu menu, string title) {
-		ArgumentNullException.ThrowIfNull(menu);
-		ArgumentNullException.ThrowIfNull(title);
-		fixed (char* text = title) {
-			if (WxKitNative.MenuBarAppend(Native, menu.Native, text, Text.Length(title)) == 0) throw new InvalidOperationException("wxWidgets could not add the menu.");
-		}
-	}
-
-	private static WxkWindow* Create() {
-		Application.VerifyAccess();
-		return WxKitNative.MenuBarNew(0);
-	}
-}
-
 /// <summary>
 /// A menu, on a menu bar or inside another menu. Wraps wxMenu. Once appended to a menu bar, the
 /// menu bar owns it. A menu that is never appended is not freed yet.

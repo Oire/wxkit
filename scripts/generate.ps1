@@ -71,4 +71,5 @@ function Invoke-Doxygen([string]$doxygen) {
 
 Invoke-Doxygen (Get-Doxygen)
 if ($XmlOnly) { return }
-throw "The generator does not exist yet. Use -XmlOnly."
+dotnet run --project (Join-Path $root "src/WxKit.Generator") -c Release -- (Join-Path $output "xml") $root
+if ($LASTEXITCODE -ne 0) { throw "The generator failed." }

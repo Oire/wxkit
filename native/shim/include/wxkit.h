@@ -92,75 +92,23 @@ WXK_FUNCTION(const wxk_ClassInfo*) wxk_ClassInfo_GetBaseClass(const wxk_ClassInf
 // wxWidgets releases the binding, which it does when the handler is destroyed, it calls onFree.
 WXK_FUNCTION(uint8_t) wxk_EvtHandler_Bind(wxk_EvtHandler* handler, int32_t eventType, int32_t id, int32_t lastId, wxk_EventCallback callback, void* userdata, wxk_Callback onFree) WXK_NOEXCEPT;
 
-WXK_FUNCTION(int32_t) wxk_EventType_Button(void) WXK_NOEXCEPT;
-WXK_FUNCTION(int32_t) wxk_EventType_Menu(void) WXK_NOEXCEPT;
-WXK_FUNCTION(int32_t) wxk_EventType_Text(void) WXK_NOEXCEPT;
-WXK_FUNCTION(int32_t) wxk_EventType_CloseWindow(void) WXK_NOEXCEPT;
-WXK_FUNCTION(int32_t) wxk_EventType_Timer(void) WXK_NOEXCEPT;
-
 WXK_FUNCTION(int32_t) wxk_Event_GetEventType(wxk_Event* event) WXK_NOEXCEPT;
-WXK_FUNCTION(int32_t) wxk_Event_GetId(wxk_Event* event) WXK_NOEXCEPT;
-WXK_FUNCTION(wxk_Object*) wxk_Event_GetEventObject(wxk_Event* event) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_Event_Skip(wxk_Event* event, uint8_t skip) WXK_NOEXCEPT;
-WXK_FUNCTION(uint8_t) wxk_Event_GetSkipped(wxk_Event* event) WXK_NOEXCEPT;
 
-WXK_FUNCTION(wxk_String*) wxk_CommandEvent_GetString(wxk_Event* event) WXK_NOEXCEPT;
-WXK_FUNCTION(int32_t) wxk_CommandEvent_GetInt(wxk_Event* event) WXK_NOEXCEPT;
-WXK_FUNCTION(int32_t) wxk_CommandEvent_GetSelection(wxk_Event* event) WXK_NOEXCEPT;
-WXK_FUNCTION(uint8_t) wxk_CommandEvent_IsChecked(wxk_Event* event) WXK_NOEXCEPT;
-
-WXK_FUNCTION(uint8_t) wxk_CloseEvent_CanVeto(wxk_Event* event) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_CloseEvent_Veto(wxk_Event* event, uint8_t veto) WXK_NOEXCEPT;
-WXK_FUNCTION(uint8_t) wxk_CloseEvent_GetVeto(wxk_Event* event) WXK_NOEXCEPT;
 
 // Windows
 
-WXK_FUNCTION(int32_t) wxk_Window_GetId(wxk_Window* window) WXK_NOEXCEPT;
 // The platform's own handle: an HWND on Windows, an NSView* on macOS, and a GtkWidget* on Linux.
 WXK_FUNCTION(void*) wxk_Window_GetHandle(wxk_Window* window) WXK_NOEXCEPT;
-WXK_FUNCTION(wxk_Window*) wxk_Window_GetParent(wxk_Window* window) WXK_NOEXCEPT;
-WXK_FUNCTION(wxk_String*) wxk_Window_GetLabel(wxk_Window* window) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_Window_SetLabel(wxk_Window* window, const char16_t* label, size_t labelLength) WXK_NOEXCEPT;
-WXK_FUNCTION(uint8_t) wxk_Window_Show(wxk_Window* window, uint8_t show) WXK_NOEXCEPT;
-WXK_FUNCTION(uint8_t) wxk_Window_IsShown(wxk_Window* window) WXK_NOEXCEPT;
-WXK_FUNCTION(uint8_t) wxk_Window_Enable(wxk_Window* window, uint8_t enable) WXK_NOEXCEPT;
-WXK_FUNCTION(uint8_t) wxk_Window_IsEnabled(wxk_Window* window) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_Window_SetFocus(wxk_Window* window) WXK_NOEXCEPT;
-WXK_FUNCTION(uint8_t) wxk_Window_Close(wxk_Window* window, uint8_t force) WXK_NOEXCEPT;
-WXK_FUNCTION(uint8_t) wxk_Window_Destroy(wxk_Window* window) WXK_NOEXCEPT;
 // Sets the window's sizer, deleting the one it had.
 WXK_FUNCTION(void) wxk_Window_SetSizer(wxk_Window* window, wxk_Sizer* sizer) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_Window_Fit(wxk_Window* window) WXK_NOEXCEPT;
-WXK_FUNCTION(uint8_t) wxk_Window_Layout(wxk_Window* window) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_Window_Centre(wxk_Window* window, int32_t direction) WXK_NOEXCEPT;
 
-WXK_FUNCTION(wxk_String*) wxk_TopLevelWindow_GetTitle(wxk_Window* window) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_TopLevelWindow_SetTitle(wxk_Window* window, const char16_t* title, size_t titleLength) WXK_NOEXCEPT;
-
-WXK_FUNCTION(wxk_Window*) wxk_Frame_new(wxk_Window* parent, int32_t id, const char16_t* title, size_t titleLength, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Frame_SetMenuBar(wxk_Window* frame, wxk_Window* menuBar) WXK_NOEXCEPT;
-
-WXK_FUNCTION(wxk_Window*) wxk_Panel_new(wxk_Window* parent, int32_t id, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
-
-WXK_FUNCTION(wxk_Window*) wxk_Button_new(wxk_Window* parent, int32_t id, const char16_t* label, size_t labelLength, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
-
-WXK_FUNCTION(wxk_Window*) wxk_StaticText_new(wxk_Window* parent, int32_t id, const char16_t* label, size_t labelLength, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
-
-WXK_FUNCTION(wxk_Window*) wxk_TextCtrl_new(wxk_Window* parent, int32_t id, const char16_t* value, size_t valueLength, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
-WXK_FUNCTION(wxk_String*) wxk_TextCtrl_GetValue(wxk_Window* text) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_TextCtrl_SetValue(wxk_Window* text, const char16_t* value, size_t valueLength) WXK_NOEXCEPT;
-// Like SetValue, without sending a text event.
-WXK_FUNCTION(void) wxk_TextCtrl_ChangeValue(wxk_Window* text, const char16_t* value, size_t valueLength) WXK_NOEXCEPT;
 
 // Dialogs
 
-WXK_FUNCTION(int32_t) wxk_Dialog_ShowModal(wxk_Window* dialog) WXK_NOEXCEPT;
-
-WXK_FUNCTION(wxk_Window*) wxk_MessageDialog_new(wxk_Window* parent, const char16_t* message, size_t messageLength, const char16_t* caption, size_t captionLength, int64_t style) WXK_NOEXCEPT;
-
 // Sizers
 
-WXK_FUNCTION(wxk_Sizer*) wxk_BoxSizer_new(int32_t orientation) WXK_NOEXCEPT;
 // A negative border means the platform's default border.
 WXK_FUNCTION(void) wxk_Sizer_AddWindow(wxk_Sizer* sizer, wxk_Window* window, int32_t proportion, int32_t flags, int32_t border) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Sizer_AddSizer(wxk_Sizer* sizer, wxk_Sizer* child, int32_t proportion, int32_t flags, int32_t border) WXK_NOEXCEPT;
@@ -170,9 +118,6 @@ WXK_FUNCTION(void) wxk_Sizer_AddStretchSpacer(wxk_Sizer* sizer, int32_t proporti
 WXK_FUNCTION(void) wxk_Sizer_Free(wxk_Sizer* sizer) WXK_NOEXCEPT;
 
 // Menus
-
-WXK_FUNCTION(wxk_Window*) wxk_MenuBar_new(int64_t style) WXK_NOEXCEPT;
-WXK_FUNCTION(uint8_t) wxk_MenuBar_Append(wxk_Window* menuBar, wxk_Menu* menu, const char16_t* title, size_t titleLength) WXK_NOEXCEPT;
 
 WXK_FUNCTION(wxk_Menu*) wxk_Menu_new(void) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_MenuItem*) wxk_Menu_Append(wxk_Menu* menu, int32_t id, const char16_t* text, size_t textLength, const char16_t* help, size_t helpLength, int32_t kind) WXK_NOEXCEPT;
@@ -190,3 +135,6 @@ WXK_FUNCTION(uint8_t) wxk_Timer_Start(wxk_Timer* timer, int32_t milliseconds, ui
 WXK_FUNCTION(void) wxk_Timer_Stop(wxk_Timer* timer) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Timer_IsRunning(wxk_Timer* timer) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Timer_Free(wxk_Timer* timer) WXK_NOEXCEPT;
+
+// The functions generated from the wxWidgets interface headers.
+#include "wxkit_generated.h"

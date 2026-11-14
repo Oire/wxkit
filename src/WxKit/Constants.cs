@@ -47,53 +47,6 @@ public enum Direction {
 	All = Left | Right | Top | Bottom,
 }
 
-/// <summary>Styles for <see cref="Frame"/>.</summary>
-[Flags]
-public enum FrameStyle : long {
-	None = 0,
-	ResizeBorder = 0x0040,
-	MaximizeBox = 0x0200,
-	MinimizeBox = 0x0400,
-	SystemMenu = 0x0800,
-	CloseBox = 0x1000,
-	StayOnTop = 0x8000,
-	ClipChildren = 0x00400000,
-	Caption = 0x20000000,
-	/// <summary>A normal, resizable frame. Wraps wxDEFAULT_FRAME_STYLE.</summary>
-	Default = SystemMenu | ResizeBorder | MinimizeBox | MaximizeBox | CloseBox | Caption | ClipChildren,
-}
-
-/// <summary>Styles for <see cref="TextCtrl"/>.</summary>
-[Flags]
-public enum TextCtrlStyle : long {
-	None = 0,
-	ReadOnly = 0x0010,
-	MultiLine = 0x0020,
-	ProcessEnter = 0x0400,
-	Password = 0x0800,
-}
-
-/// <summary>Buttons, icons, and options for <see cref="MessageDialog"/>.</summary>
-[Flags]
-public enum MessageDialogStyle : long {
-	Center = 0x00000001,
-	Yes = 0x00000002,
-	Ok = 0x00000004,
-	No = 0x00000008,
-	YesNo = Yes | No,
-	Cancel = 0x00000010,
-	/// <summary>Makes No the default button. Only valid with <see cref="YesNo"/>.</summary>
-	NoDefault = 0x00000080,
-	IconWarning = 0x00000100,
-	IconError = 0x00000200,
-	IconQuestion = 0x00000400,
-	IconInformation = 0x00000800,
-	Help = 0x00001000,
-	IconNone = 0x00040000,
-	/// <summary>Makes Cancel the default button. Only valid with <see cref="Cancel"/>.</summary>
-	CancelDefault = 0x80000000,
-}
-
 /// <summary>What kind of item a menu item is.</summary>
 public enum MenuItemKind {
 	Normal = 0,

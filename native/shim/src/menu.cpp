@@ -3,17 +3,6 @@
 using wxk::Guard;
 using wxk::Unwrap;
 
-WXK_FUNCTION(wxk_Window*) wxk_MenuBar_new(int64_t style) noexcept {
-	return Guard<wxk_Window*>(nullptr, [&] {
-		wxWindow* menuBar = new wxMenuBar(static_cast<long>(style));
-		return wxk::Wrap(menuBar);
-	});
-}
-
-WXK_FUNCTION(uint8_t) wxk_MenuBar_Append(wxk_Window* menuBar, wxk_Menu* menu, const char16_t* title, size_t titleLength) noexcept {
-	return Guard<uint8_t>(0, [&] { return wxk::As<wxMenuBar>(menuBar)->Append(Unwrap(menu), wxk::FromUtf16(title, titleLength)) ? 1 : 0; });
-}
-
 WXK_FUNCTION(wxk_Menu*) wxk_Menu_new(void) noexcept {
 	return Guard<wxk_Menu*>(nullptr, [] { return wxk::Wrap(new wxMenu()); });
 }
