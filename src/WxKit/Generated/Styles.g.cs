@@ -76,6 +76,27 @@ public enum ComboBoxStyle : long {
 	TeProcessEnter = 0x400,
 }
 
+/// <summary>Styles for <see cref="DataViewCtrl"/>.</summary>
+[Flags]
+public enum DataViewCtrlStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Single selection mode. This is the default. Wraps wxDV_SINGLE.</summary>
+	Single = 0x0,
+	/// <summary>Multiple selection mode. Wraps wxDV_MULTIPLE.</summary>
+	Multiple = 0x1,
+	/// <summary>Use alternating colours for odd and even rows. Wraps wxDV_ROW_LINES.</summary>
+	RowLines = 0x10,
+	/// <summary>Display the separator lines between rows. Wraps wxDV_HORIZ_RULES.</summary>
+	HorizRules = 0x4,
+	/// <summary>Display the separator lines between columns. Wraps wxDV_VERT_RULES.</summary>
+	VertRules = 0x8,
+	/// <summary>Allow variable line heights. This can be inefficient when displaying large number of items. Wraps wxDV_VARIABLE_LINE_HEIGHT.</summary>
+	VariableLineHeight = 0x20,
+	/// <summary>Do not show column headers (which are shown by default). Wraps wxDV_NO_HEADER.</summary>
+	NoHeader = 0x2,
+}
+
 /// <summary>Styles for <see cref="Dialog"/>.</summary>
 [Flags]
 public enum DialogStyle : long {

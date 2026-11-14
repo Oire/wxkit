@@ -307,6 +307,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		if (!isReturn && type.Name == "wxBitmapBundle" && _classes.TryGetValue("wxBitmap", out BoundClass? bitmap)) return new ValueConversion(bitmap, "wxBitmapBundle");
 		if (!isReturn && type.Name == "wxIconBundle" && _classes.TryGetValue("wxIcon", out BoundClass? icon)) return new ValueConversion(icon, "wxIconBundle");
 		if (HandwrittenEnums.TryGetValue(type.Name, out string? handwritten)) return new EnumConversion(handwritten, NumberConversion.Int, type.Name);
+		if (!isReturn && type.Name.Replace(" ", string.Empty, StringComparison.Ordinal) == "wxVector<wxVariant>") return VariantListConversion.Instance;
 		if (EnumFor(type.Name) is BoundEnum bound) return new EnumConversion(bound.Name, NumberConversion.Int, type.Name);
 		return type.Name switch {
 			"bool" => BoolConversion.Instance,
@@ -321,7 +322,9 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 			"size_t" => CountConversion.Size,
 			"unsigned" or "unsigned int" => CountConversion.Unsigned,
 			"wxRect" => RectConversion.Instance,
-			"wxTreeItemId" => TreeItemIdConversion.Instance,
+			"wxTreeItemId" => ItemIdConversion.TreeItem,
+			"wxDataViewItem" => ItemIdConversion.DataViewItem,
+			"wxVariant" => VariantConversion.Instance,
 			"wxArrayString" => StringArrayConversion.Instance,
 			"wxColour" => ColorConversion.Instance,
 			"wxPoint" => GeometryConversion.Point,

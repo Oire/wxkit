@@ -323,6 +323,30 @@ public enum AccessibleStates {
 	Unavailable = 33554432,
 }
 
+/// <summary>Wraps wxAlignment.</summary>
+public enum Alignment {
+	/// <summary>A value different from any valid alignment value. Wraps wxALIGN_INVALID.</summary>
+	Invalid = -1,
+	/// <summary>Wraps wxALIGN_NOT.</summary>
+	Not = 0,
+	/// <summary>Wraps wxALIGN_CENTER_HORIZONTAL.</summary>
+	CenterHorizontal = 256,
+	/// <summary>Wraps wxALIGN_LEFT.</summary>
+	Left = 0,
+	/// <summary>Wraps wxALIGN_TOP.</summary>
+	Top = 0,
+	/// <summary>Wraps wxALIGN_RIGHT.</summary>
+	Right = 512,
+	/// <summary>Wraps wxALIGN_BOTTOM.</summary>
+	Bottom = 1024,
+	/// <summary>Wraps wxALIGN_CENTER_VERTICAL.</summary>
+	CenterVertical = 2048,
+	/// <summary>Wraps wxALIGN_CENTER.</summary>
+	Center = 2304,
+	/// <summary>A mask to extract alignment from the combination of flags. Wraps wxALIGN_MASK.</summary>
+	Mask = 3840,
+}
+
 /// <summary>Wraps wxBackgroundStyle.</summary>
 public enum BackgroundStyle {
 	/// <summary>Default background style value indicating that the background may be erased in the user-defined EVT_ERASE_BACKGROUND handler. Wraps wxBG_STYLE_ERASE.</summary>
@@ -489,6 +513,29 @@ public enum ContentProtection {
 	Enabled = 1,
 }
 
+/// <summary>Wraps wxDataViewCellMode.</summary>
+public enum DataViewCellMode {
+	/// <summary>The cell only displays information and cannot be manipulated or otherwise interacted with in any way. Wraps wxDATAVIEW_CELL_INERT.</summary>
+	Inert = 0,
+	/// <summary>Indicates that the cell can be activated by clicking it or using keyboard. Wraps wxDATAVIEW_CELL_ACTIVATABLE.</summary>
+	Activatable = 1,
+	/// <summary>Indicates that the user can edit the data in-place in an inline editor control that will show up when the user wants to edit the cell. Wraps wxDATAVIEW_CELL_EDITABLE.</summary>
+	Editable = 2,
+}
+
+/// <summary>Wraps wxDataViewColumnFlags.</summary>
+[Flags]
+public enum DataViewColumnFlags {
+	/// <summary>Wraps wxDATAVIEW_COL_RESIZABLE.</summary>
+	Resizable = 1,
+	/// <summary>Wraps wxDATAVIEW_COL_SORTABLE.</summary>
+	Sortable = 2,
+	/// <summary>Wraps wxDATAVIEW_COL_REORDERABLE.</summary>
+	Reorderable = 4,
+	/// <summary>Wraps wxDATAVIEW_COL_HIDDEN.</summary>
+	Hidden = 8,
+}
+
 /// <summary>Wraps wxDialogLayoutAdaptationMode.</summary>
 public enum DialogLayoutAdaptationMode {
 	/// <summary>Use global adaptation enabled status. Wraps wxDIALOG_ADAPTATION_MODE_DEFAULT.</summary>
@@ -497,6 +544,22 @@ public enum DialogLayoutAdaptationMode {
 	Enabled = 1,
 	/// <summary>Disable this dialog overriding global status. Wraps wxDIALOG_ADAPTATION_MODE_DISABLED.</summary>
 	Disabled = 2,
+}
+
+/// <summary>Wraps wxDragResult.</summary>
+public enum DragResult {
+	/// <summary>Error prevented the D&amp;D operation from completing. Wraps wxDragError.</summary>
+	DragError = 0,
+	/// <summary>Drag target didn't accept the data. Wraps wxDragNone.</summary>
+	DragNone = 1,
+	/// <summary>The data was successfully copied. Wraps wxDragCopy.</summary>
+	DragCopy = 2,
+	/// <summary>The data was successfully moved (MSW only). Wraps wxDragMove.</summary>
+	DragMove = 3,
+	/// <summary>Operation is a drag-link. Wraps wxDragLink.</summary>
+	DragLink = 4,
+	/// <summary>The operation was cancelled by user (not an error). Wraps wxDragCancel.</summary>
+	DragCancel = 5,
 }
 
 /// <summary>Wraps wxEventCategory.</summary>

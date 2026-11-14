@@ -32,6 +32,7 @@ set(WXK_SOURCES
 	src/accessible.cpp
 	src/app.cpp
 	src/clipboard.cpp
+	src/dataview.cpp
 	src/event.cpp
 	src/handlers/all.cpp
 	src/handlers/png.cpp
@@ -51,6 +52,7 @@ set(WXK_SOURCES
 	src/string.cpp
 	src/timer.cpp
 	src/validator.cpp
+	src/variant.cpp
 	src/window.cpp
 )
 

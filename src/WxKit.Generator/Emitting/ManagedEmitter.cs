@@ -231,11 +231,18 @@ internal static class ManagedEmitter {
 		CodeWriter writer = Start();
 		writer.Open("public static unsafe partial class EventType");
 		bool first = true;
+		// Each event type is made the first time it is used, in a class of its own, so an application
+		// that never uses one never references its constant, and Native AOT leaves out the code
+		// behind it, such as a data view's for wxEVT_DATAVIEW_SELECTION_CHANGED.
 		foreach (BoundEventType type in result.EventTypes) {
 			if (!first) writer.Line();
 			first = false;
 			Summary(writer, $"Wraps {type.Constant}.");
-			writer.Line($"public static EventType<{type.EventClass.Name}> {type.Name} {{ get; }} = new(WxKitNative.EventType{type.Name}, static native => new {type.EventClass.Name}((WxkEvent*)native));");
+			writer.Line($"public static EventType<{type.EventClass.Name}> {type.Name} => {type.Name}Type.Value;");
+			writer.Line();
+			writer.Open($"private static class {type.Name}Type");
+			writer.Line($"public static readonly EventType<{type.EventClass.Name}> Value = new(WxKitNative.EventType{type.Name}, static native => new {type.EventClass.Name}((WxkEvent*)native));");
+			writer.Close();
 		}
 		writer.Close();
 		return writer.ToString();

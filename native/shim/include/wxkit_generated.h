@@ -447,6 +447,148 @@ WXK_FUNCTION(int32_t) wxk_DPIChangedEvent_ScaleY(wxk_Event* self, int32_t y) WXK
 WXK_FUNCTION(wxk_Size) wxk_DPIChangedEvent_GetOldDPI(wxk_Event* self) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Size) wxk_DPIChangedEvent_GetNewDPI(wxk_Event* self) WXK_NOEXCEPT;
 
+// wxDataViewCtrl
+
+WXK_FUNCTION(wxk_Window*) wxk_DataViewCtrl_new(wxk_Window* parent, int32_t id, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_AppendBitmapColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_AppendBitmapColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_PrependBitmapColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_PrependBitmapColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_AppendDateColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_AppendDateColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_PrependDateColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_PrependDateColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_AppendIconTextColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_AppendIconTextColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_PrependIconTextColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_PrependIconTextColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_AppendProgressColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_AppendProgressColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_PrependProgressColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_PrependProgressColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_AppendTextColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_AppendTextColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_PrependTextColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_PrependTextColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_AppendToggleColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_AppendToggleColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_PrependToggleColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_PrependToggleColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_AllowMultiColumnSort(wxk_Window* self, uint8_t allow) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_ClearColumns(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_Collapse(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_EnsureVisible(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_Expand(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_ExpandAncestors(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_ExpandChildren(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_GetColumn(wxk_Window* self, uint32_t position) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_GetExpanderColumn(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_GetCurrentColumn(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Rect) wxk_DataViewCtrl_GetItemRect(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_GetSortingColumn(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_GetSortingColumns(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_IsExpanded(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_IsSelected(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_Select(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_SelectAll(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_SetAlternateRowColour(wxk_Window* self, wxk_Colour color) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_Unselect(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_UnselectAll(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_SetRowHeight(wxk_Window* self, int32_t rowHeight) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_ToggleSortByColumn(wxk_Window* self, int32_t column) WXK_NOEXCEPT;
+WXK_FUNCTION(uint32_t) wxk_DataViewCtrl_GetColumnCount(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void*) wxk_DataViewCtrl_GetCurrentItem(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_SetCurrentItem(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_DataViewCtrl_GetIndent(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_SetIndent(wxk_Window* self, int32_t indent) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Window*) wxk_DataViewCtrl_GetMainWindow(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_DataViewCtrl_GetSelectedItemsCount(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void*) wxk_DataViewCtrl_GetSelection(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_HasSelection(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_IsMultiColumnSortAllowed(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_DataViewCtrl_GetCountPerPage(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void*) wxk_DataViewCtrl_GetTopItem(wxk_Window* self) WXK_NOEXCEPT;
+
+// wxDataViewEvent
+
+WXK_FUNCTION(void) wxk_DataViewEvent_SetPosition(wxk_Event* self, int32_t x, int32_t y) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewEvent_SetCache(wxk_Event* self, int32_t from, int32_t to) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_DataViewEvent_GetColumn(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewEvent_SetColumn(wxk_Event* self, int32_t column) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Point) wxk_DataViewEvent_GetPosition(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Variant*) wxk_DataViewEvent_GetValue(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewEvent_SetValue(wxk_Event* self, const wxk_Variant* value) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_DataViewEvent_IsEditCancelled(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(size_t) wxk_DataViewEvent_GetDataSize(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewEvent_SetDataSize(wxk_Event* self, size_t size) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_DataViewEvent_GetDropEffect(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewEvent_SetDropEffect(wxk_Event* self, int32_t effect) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_DataViewEvent_GetCacheFrom(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_DataViewEvent_GetCacheTo(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_DataViewEvent_GetProposedDropIndex(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void*) wxk_DataViewEvent_GetItem(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_DataViewEvent_GetDragFlags(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewEvent_SetDragFlags(wxk_Event* self, int32_t flags) WXK_NOEXCEPT;
+
+// wxDataViewIconText
+
+WXK_FUNCTION(wxk_Object*) wxk_DataViewIconText_new(const char16_t* text, size_t textLength, const wxk_Object* bitmap) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewIconText_SetBitmapBundle(wxk_Object* self, const wxk_Object* bitmap) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_DataViewIconText_GetIcon(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewIconText_SetIcon(wxk_Object* self, const wxk_Object* icon) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_String*) wxk_DataViewIconText_GetText(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewIconText_SetText(wxk_Object* self, const char16_t* text, size_t textLength) WXK_NOEXCEPT;
+
+// wxDataViewListCtrl
+
+WXK_FUNCTION(wxk_Window*) wxk_DataViewListCtrl_new(wxk_Window* parent, int32_t id, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewListCtrl_SelectRow(wxk_Window* self, uint32_t row) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewListCtrl_UnselectRow(wxk_Window* self, uint32_t row) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_DataViewListCtrl_IsRowSelected(wxk_Window* self, uint32_t row) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewListCtrl_AppendTextColumn(wxk_Window* self, const char16_t* label, size_t labelLength, int32_t mode, int32_t width, int32_t align, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewListCtrl_AppendToggleColumn(wxk_Window* self, const char16_t* label, size_t labelLength, int32_t mode, int32_t width, int32_t align, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewListCtrl_AppendProgressColumn(wxk_Window* self, const char16_t* label, size_t labelLength, int32_t mode, int32_t width, int32_t align, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewListCtrl_AppendIconTextColumn(wxk_Window* self, const char16_t* label, size_t labelLength, int32_t mode, int32_t width, int32_t align, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewListCtrl_AppendItem(wxk_Window* self, const wxk_VariantList* values) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewListCtrl_PrependItem(wxk_Window* self, const wxk_VariantList* values) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewListCtrl_InsertItem(wxk_Window* self, uint32_t row, const wxk_VariantList* values) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewListCtrl_DeleteItem(wxk_Window* self, uint32_t row) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewListCtrl_DeleteAllItems(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewListCtrl_SetValue(wxk_Window* self, const wxk_Variant* value, uint32_t row, uint32_t column) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewListCtrl_SetTextValue(wxk_Window* self, const char16_t* value, size_t valueLength, uint32_t row, uint32_t column) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_String*) wxk_DataViewListCtrl_GetTextValue(wxk_Window* self, uint32_t row, uint32_t column) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewListCtrl_SetToggleValue(wxk_Window* self, uint8_t value, uint32_t row, uint32_t column) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_DataViewListCtrl_GetToggleValue(wxk_Window* self, uint32_t row, uint32_t column) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_DataViewListCtrl_ItemToRow(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(void*) wxk_DataViewListCtrl_RowToItem(wxk_Window* self, int32_t row) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_DataViewListCtrl_GetSelectedRow(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint32_t) wxk_DataViewListCtrl_GetItemCount(wxk_Window* self) WXK_NOEXCEPT;
+
+// wxDataViewTreeCtrl
+
+WXK_FUNCTION(wxk_Window*) wxk_DataViewTreeCtrl_new(wxk_Window* parent, int32_t id, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(void*) wxk_DataViewTreeCtrl_AppendContainer(wxk_Window* self, void* parent, const char16_t* text, size_t textLength, int32_t icon, int32_t expanded) WXK_NOEXCEPT;
+WXK_FUNCTION(void*) wxk_DataViewTreeCtrl_AppendItem(wxk_Window* self, void* parent, const char16_t* text, size_t textLength, int32_t icon) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewTreeCtrl_DeleteAllItems(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewTreeCtrl_DeleteChildren(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewTreeCtrl_DeleteItem(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_DataViewTreeCtrl_GetChildCount(wxk_Window* self, void* parent) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewTreeCtrl_GetImageList(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewTreeCtrl_GetItemData(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_DataViewTreeCtrl_GetItemExpandedIcon(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_DataViewTreeCtrl_GetItemIcon(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(void*) wxk_DataViewTreeCtrl_GetItemParent(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_String*) wxk_DataViewTreeCtrl_GetItemText(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(void*) wxk_DataViewTreeCtrl_GetNthChild(wxk_Window* self, void* parent, uint32_t position) WXK_NOEXCEPT;
+WXK_FUNCTION(void*) wxk_DataViewTreeCtrl_InsertContainer(wxk_Window* self, void* parent, void* previous, const char16_t* text, size_t textLength, int32_t icon, int32_t expanded) WXK_NOEXCEPT;
+WXK_FUNCTION(void*) wxk_DataViewTreeCtrl_InsertItem(wxk_Window* self, void* parent, void* previous, const char16_t* text, size_t textLength, int32_t icon) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_DataViewTreeCtrl_IsContainer(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(void*) wxk_DataViewTreeCtrl_PrependContainer(wxk_Window* self, void* parent, const char16_t* text, size_t textLength, int32_t icon, int32_t expanded) WXK_NOEXCEPT;
+WXK_FUNCTION(void*) wxk_DataViewTreeCtrl_PrependItem(wxk_Window* self, void* parent, const char16_t* text, size_t textLength, int32_t icon) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewTreeCtrl_SetItemExpandedIcon(wxk_Window* self, void* item, const wxk_Object* icon) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewTreeCtrl_SetItemIcon(wxk_Window* self, void* item, const wxk_Object* icon) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewTreeCtrl_SetItemText(wxk_Window* self, void* item, const char16_t* text, size_t textLength) WXK_NOEXCEPT;
+
 // wxDialog
 
 WXK_FUNCTION(wxk_Window*) wxk_Dialog_new(wxk_Window* parent, int32_t id, const char16_t* title, size_t titleLength, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
@@ -737,7 +879,7 @@ WXK_FUNCTION(wxk_Object*) wxk_Image_Scale_SizeImageResizeQuality(wxk_Object* sel
 WXK_FUNCTION(wxk_Object*) wxk_Image_Size(wxk_Object* self, wxk_Size size, wxk_Point position, int32_t red, int32_t green, int32_t blue) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Image_ConvertAlphaToMask_Default(wxk_Object* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Image_ConvertAlphaToMask_ByteByteByte(wxk_Object* self, uint8_t mr, uint8_t mg, uint8_t mb) WXK_NOEXCEPT;
-WXK_FUNCTION(wxk_Object*) wxk_Image_ConvertToGreyscale_DoubleDoubleDouble(wxk_Object* self, double weight_r, double weight_g, double weight_b) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_Image_ConvertToGreyscale_DoubleDoubleDouble(wxk_Object* self, double weightR, double weightG, double weightB) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Image_ConvertToGreyscale_Default(wxk_Object* self) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Image_ConvertToMono(wxk_Object* self, uint8_t r, uint8_t g, uint8_t b) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Image_ConvertToDisabled(wxk_Object* self, uint8_t brightness) WXK_NOEXCEPT;
@@ -1204,7 +1346,7 @@ WXK_FUNCTION(int32_t) wxk_Pen_GetQuality(wxk_Object* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Pen_SetQuality(wxk_Object* self, int32_t quality) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Colour) wxk_Pen_GetColour(wxk_Object* self) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_Pen_GetJoin(wxk_Object* self) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_Pen_SetJoin(wxk_Object* self, int32_t join_style) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Pen_SetJoin(wxk_Object* self, int32_t joinStyle) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_Pen_GetStyle(wxk_Object* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Pen_SetStyle(wxk_Object* self, int32_t style) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_Pen_GetWidth(wxk_Object* self) WXK_NOEXCEPT;
@@ -2170,6 +2312,25 @@ WXK_FUNCTION(int32_t) wxk_EventType_CommandLeftDclick(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_CommandRightClick(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_CommandSetFocus(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_ContextMenu(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewCacheHint(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewColumnHeaderClick(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewColumnHeaderRightClick(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewColumnReordered(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewColumnSorted(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewItemActivated(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewItemBeginDrag(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewItemCollapsed(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewItemCollapsing(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewItemContextMenu(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewItemDrop(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewItemDropPossible(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewItemEditingDone(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewItemEditingStarted(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewItemExpanded(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewItemExpanding(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewItemStartEditing(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewItemValueChanged(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewSelectionChanged(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_DpiChanged(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_DropFiles(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_EndSession(void) WXK_NOEXCEPT;

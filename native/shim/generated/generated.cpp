@@ -16,6 +16,7 @@
 #include <wx/control.h>
 #include <wx/ctrlsub.h>
 #include <wx/cursor.h>
+#include <wx/dataview.h>
 #include <wx/dc.h>
 #include <wx/dcclient.h>
 #include <wx/dcmemory.h>
@@ -137,9 +138,17 @@ static_assert(static_cast<int32_t>(wxACC_STATE_SYSTEM_SELECTABLE) == static_cast
 static_assert(static_cast<int32_t>(wxACC_STATE_SYSTEM_SELECTED) == static_cast<int32_t>(8388608LL), "wxACC_STATE_SYSTEM_SELECTED is not 8388608");
 static_assert(static_cast<int32_t>(wxACC_STATE_SYSTEM_SELFVOICING) == static_cast<int32_t>(16777216LL), "wxACC_STATE_SYSTEM_SELFVOICING is not 16777216");
 static_assert(static_cast<int32_t>(wxACC_STATE_SYSTEM_UNAVAILABLE) == static_cast<int32_t>(33554432LL), "wxACC_STATE_SYSTEM_UNAVAILABLE is not 33554432");
+static_assert(static_cast<int32_t>(wxALIGN_BOTTOM) == static_cast<int32_t>(1024LL), "wxALIGN_BOTTOM is not 1024");
+static_assert(static_cast<int32_t>(wxALIGN_CENTER) == static_cast<int32_t>(2304LL), "wxALIGN_CENTER is not 2304");
+static_assert(static_cast<int32_t>(wxALIGN_CENTER_HORIZONTAL) == static_cast<int32_t>(256LL), "wxALIGN_CENTER_HORIZONTAL is not 256");
+static_assert(static_cast<int32_t>(wxALIGN_CENTER_VERTICAL) == static_cast<int32_t>(2048LL), "wxALIGN_CENTER_VERTICAL is not 2048");
 static_assert(static_cast<long>(wxALIGN_CENTRE_HORIZONTAL) == static_cast<long>(256LL), "wxALIGN_CENTRE_HORIZONTAL is not 256");
-static_assert(static_cast<long>(wxALIGN_LEFT) == static_cast<long>(0LL), "wxALIGN_LEFT is not 0");
-static_assert(static_cast<long>(wxALIGN_RIGHT) == static_cast<long>(512LL), "wxALIGN_RIGHT is not 512");
+static_assert(static_cast<int32_t>(wxALIGN_INVALID) == static_cast<int32_t>(-1LL), "wxALIGN_INVALID is not -1");
+static_assert(static_cast<int32_t>(wxALIGN_LEFT) == static_cast<int32_t>(0LL), "wxALIGN_LEFT is not 0");
+static_assert(static_cast<int32_t>(wxALIGN_MASK) == static_cast<int32_t>(3840LL), "wxALIGN_MASK is not 3840");
+static_assert(static_cast<int32_t>(wxALIGN_NOT) == static_cast<int32_t>(0LL), "wxALIGN_NOT is not 0");
+static_assert(static_cast<int32_t>(wxALIGN_RIGHT) == static_cast<int32_t>(512LL), "wxALIGN_RIGHT is not 512");
+static_assert(static_cast<int32_t>(wxALIGN_TOP) == static_cast<int32_t>(0LL), "wxALIGN_TOP is not 0");
 static_assert(static_cast<long>(wxALWAYS_SHOW_SB) == static_cast<long>(8388608LL), "wxALWAYS_SHOW_SB is not 8388608");
 static_assert(static_cast<int32_t>(wxAND) == static_cast<int32_t>(6LL), "wxAND is not 6");
 static_assert(static_cast<int32_t>(wxAND_INVERT) == static_cast<int32_t>(7LL), "wxAND_INVERT is not 7");
@@ -269,6 +278,13 @@ static_assert(static_cast<int32_t>(wxCURSOR_SIZING) == static_cast<int32_t>(22LL
 static_assert(static_cast<int32_t>(wxCURSOR_SPRAYCAN) == static_cast<int32_t>(23LL), "wxCURSOR_SPRAYCAN is not 23");
 static_assert(static_cast<int32_t>(wxCURSOR_WAIT) == static_cast<int32_t>(24LL), "wxCURSOR_WAIT is not 24");
 static_assert(static_cast<int32_t>(wxCURSOR_WATCH) == static_cast<int32_t>(25LL), "wxCURSOR_WATCH is not 25");
+static_assert(static_cast<int32_t>(wxDATAVIEW_CELL_ACTIVATABLE) == static_cast<int32_t>(1LL), "wxDATAVIEW_CELL_ACTIVATABLE is not 1");
+static_assert(static_cast<int32_t>(wxDATAVIEW_CELL_EDITABLE) == static_cast<int32_t>(2LL), "wxDATAVIEW_CELL_EDITABLE is not 2");
+static_assert(static_cast<int32_t>(wxDATAVIEW_CELL_INERT) == static_cast<int32_t>(0LL), "wxDATAVIEW_CELL_INERT is not 0");
+static_assert(static_cast<int32_t>(wxDATAVIEW_COL_HIDDEN) == static_cast<int32_t>(8LL), "wxDATAVIEW_COL_HIDDEN is not 8");
+static_assert(static_cast<int32_t>(wxDATAVIEW_COL_REORDERABLE) == static_cast<int32_t>(4LL), "wxDATAVIEW_COL_REORDERABLE is not 4");
+static_assert(static_cast<int32_t>(wxDATAVIEW_COL_RESIZABLE) == static_cast<int32_t>(1LL), "wxDATAVIEW_COL_RESIZABLE is not 1");
+static_assert(static_cast<int32_t>(wxDATAVIEW_COL_SORTABLE) == static_cast<int32_t>(2LL), "wxDATAVIEW_COL_SORTABLE is not 2");
 static_assert(static_cast<long>(wxDD_CHANGE_DIR) == static_cast<long>(256LL), "wxDD_CHANGE_DIR is not 256");
 static_assert(static_cast<long>(wxDD_DEFAULT_STYLE) == static_cast<long>(536877120LL), "wxDD_DEFAULT_STYLE is not 536877120");
 static_assert(static_cast<long>(wxDD_DIR_MUST_EXIST) == static_cast<long>(512LL), "wxDD_DIR_MUST_EXIST is not 512");
@@ -280,6 +296,19 @@ static_assert(static_cast<int32_t>(wxDIALOG_ADAPTATION_MODE_DEFAULT) == static_c
 static_assert(static_cast<int32_t>(wxDIALOG_ADAPTATION_MODE_DISABLED) == static_cast<int32_t>(2LL), "wxDIALOG_ADAPTATION_MODE_DISABLED is not 2");
 static_assert(static_cast<int32_t>(wxDIALOG_ADAPTATION_MODE_ENABLED) == static_cast<int32_t>(1LL), "wxDIALOG_ADAPTATION_MODE_ENABLED is not 1");
 static_assert(static_cast<long>(wxDIALOG_NO_PARENT) == static_cast<long>(32LL), "wxDIALOG_NO_PARENT is not 32");
+static_assert(static_cast<long>(wxDV_HORIZ_RULES) == static_cast<long>(4LL), "wxDV_HORIZ_RULES is not 4");
+static_assert(static_cast<long>(wxDV_MULTIPLE) == static_cast<long>(1LL), "wxDV_MULTIPLE is not 1");
+static_assert(static_cast<long>(wxDV_NO_HEADER) == static_cast<long>(2LL), "wxDV_NO_HEADER is not 2");
+static_assert(static_cast<long>(wxDV_ROW_LINES) == static_cast<long>(16LL), "wxDV_ROW_LINES is not 16");
+static_assert(static_cast<long>(wxDV_SINGLE) == static_cast<long>(0LL), "wxDV_SINGLE is not 0");
+static_assert(static_cast<long>(wxDV_VARIABLE_LINE_HEIGHT) == static_cast<long>(32LL), "wxDV_VARIABLE_LINE_HEIGHT is not 32");
+static_assert(static_cast<long>(wxDV_VERT_RULES) == static_cast<long>(8LL), "wxDV_VERT_RULES is not 8");
+static_assert(static_cast<int32_t>(wxDragCancel) == static_cast<int32_t>(5LL), "wxDragCancel is not 5");
+static_assert(static_cast<int32_t>(wxDragCopy) == static_cast<int32_t>(2LL), "wxDragCopy is not 2");
+static_assert(static_cast<int32_t>(wxDragError) == static_cast<int32_t>(0LL), "wxDragError is not 0");
+static_assert(static_cast<int32_t>(wxDragLink) == static_cast<int32_t>(4LL), "wxDragLink is not 4");
+static_assert(static_cast<int32_t>(wxDragMove) == static_cast<int32_t>(3LL), "wxDragMove is not 3");
+static_assert(static_cast<int32_t>(wxDragNone) == static_cast<int32_t>(1LL), "wxDragNone is not 1");
 static_assert(static_cast<int32_t>(wxEQUIV) == static_cast<int32_t>(10LL), "wxEQUIV is not 10");
 static_assert(static_cast<int32_t>(wxEVT_CATEGORY_ALL) == static_cast<int32_t>(127LL), "wxEVT_CATEGORY_ALL is not 127");
 static_assert(static_cast<int32_t>(wxEVT_CATEGORY_SOCKET) == static_cast<int32_t>(4LL), "wxEVT_CATEGORY_SOCKET is not 4");
@@ -2544,6 +2573,526 @@ WXK_FUNCTION(wxk_Size) wxk_DPIChangedEvent_GetNewDPI(wxk_Event* self) noexcept {
 	return wxk::Guard<wxk_Size>(wxk_Size{-1, -1}, [&]() -> wxk_Size { return wxk::ToSize(static_cast<wxDPIChangedEvent*>(wxk::Unwrap(self))->GetNewDPI()); });
 }
 
+WXK_FUNCTION(wxk_Window*) wxk_DataViewCtrl_new(wxk_Window* parent, int32_t id, wxk_Point position, wxk_Size size, int64_t style) noexcept {
+	return wxk::Guard<wxk_Window*>(nullptr, [&] {
+		wxWindow* created = new wxDataViewCtrl(static_cast<wxWindow*>(wxk::Unwrap(parent)), static_cast<int>(id), wxk::FromPoint(position), wxk::FromSize(size), static_cast<long>(style));
+		return wxk::Wrap(created);
+	});
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_AppendBitmapColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendBitmapColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_AppendBitmapColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendBitmapColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_PrependBitmapColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependBitmapColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_PrependBitmapColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependBitmapColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_AppendDateColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendDateColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_AppendDateColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendDateColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_PrependDateColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependDateColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_PrependDateColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependDateColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_AppendIconTextColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendIconTextColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_AppendIconTextColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendIconTextColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_PrependIconTextColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependIconTextColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_PrependIconTextColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependIconTextColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_AppendProgressColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendProgressColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_AppendProgressColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendProgressColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_PrependProgressColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependProgressColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_PrependProgressColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependProgressColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_AppendTextColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendTextColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_AppendTextColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendTextColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_PrependTextColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependTextColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_PrependTextColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependTextColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_AppendToggleColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendToggleColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_AppendToggleColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendToggleColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_PrependToggleColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependToggleColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_PrependToggleColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependToggleColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+}
+
+WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_AllowMultiColumnSort(wxk_Window* self, uint8_t allow) noexcept {
+	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AllowMultiColumnSort(allow != 0)) ? 1 : 0; });
+}
+
+WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_ClearColumns(wxk_Window* self) noexcept {
+	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->ClearColumns()) ? 1 : 0; });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_Collapse(wxk_Window* self, void* item) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->Collapse(wxDataViewItem(item)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_EnsureVisible(wxk_Window* self, void* item) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->EnsureVisible(wxDataViewItem(item)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_Expand(wxk_Window* self, void* item) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->Expand(wxDataViewItem(item)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_ExpandAncestors(wxk_Window* self, void* item) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->ExpandAncestors(wxDataViewItem(item)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_ExpandChildren(wxk_Window* self, void* item) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->ExpandChildren(wxDataViewItem(item)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_GetColumn(wxk_Window* self, uint32_t position) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->GetColumn(position); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_GetExpanderColumn(wxk_Window* self) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->GetExpanderColumn(); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_GetCurrentColumn(wxk_Window* self) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->GetCurrentColumn(); });
+}
+
+WXK_FUNCTION(wxk_Rect) wxk_DataViewCtrl_GetItemRect(wxk_Window* self, void* item) noexcept {
+	return wxk::Guard<wxk_Rect>(wxk_Rect{0, 0, 0, 0}, [&]() -> wxk_Rect { return wxk::ToRect(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->GetItemRect(wxDataViewItem(item))); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_GetSortingColumn(wxk_Window* self) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->GetSortingColumn(); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_GetSortingColumns(wxk_Window* self) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->GetSortingColumns(); });
+}
+
+WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_IsExpanded(wxk_Window* self, void* item) noexcept {
+	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->IsExpanded(wxDataViewItem(item))) ? 1 : 0; });
+}
+
+WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_IsSelected(wxk_Window* self, void* item) noexcept {
+	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->IsSelected(wxDataViewItem(item))) ? 1 : 0; });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_Select(wxk_Window* self, void* item) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->Select(wxDataViewItem(item)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_SelectAll(wxk_Window* self) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->SelectAll(); });
+}
+
+WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_SetAlternateRowColour(wxk_Window* self, wxk_Colour color) noexcept {
+	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->SetAlternateRowColour(wxk::FromColour(color))) ? 1 : 0; });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_Unselect(wxk_Window* self, void* item) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->Unselect(wxDataViewItem(item)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_UnselectAll(wxk_Window* self) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->UnselectAll(); });
+}
+
+WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_SetRowHeight(wxk_Window* self, int32_t rowHeight) noexcept {
+	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->SetRowHeight(static_cast<int>(rowHeight))) ? 1 : 0; });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_ToggleSortByColumn(wxk_Window* self, int32_t column) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->ToggleSortByColumn(static_cast<int>(column)); });
+}
+
+WXK_FUNCTION(uint32_t) wxk_DataViewCtrl_GetColumnCount(wxk_Window* self) noexcept {
+	return wxk::Guard<uint32_t>(0, [&]() -> uint32_t { return static_cast<uint32_t>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->GetColumnCount()); });
+}
+
+WXK_FUNCTION(void*) wxk_DataViewCtrl_GetCurrentItem(wxk_Window* self) noexcept {
+	return wxk::Guard<void*>(nullptr, [&]() -> void* { return (static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->GetCurrentItem()).GetID(); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_SetCurrentItem(wxk_Window* self, void* item) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->SetCurrentItem(wxDataViewItem(item)); });
+}
+
+WXK_FUNCTION(int32_t) wxk_DataViewCtrl_GetIndent(wxk_Window* self) noexcept {
+	return wxk::Guard<int32_t>(0, [&]() -> int32_t { return static_cast<int32_t>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->GetIndent()); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_SetIndent(wxk_Window* self, int32_t indent) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->SetIndent(static_cast<int>(indent)); });
+}
+
+WXK_FUNCTION(wxk_Window*) wxk_DataViewCtrl_GetMainWindow(wxk_Window* self) noexcept {
+	return wxk::Guard<wxk_Window*>(nullptr, [&]() -> wxk_Window* { return wxk::Wrap(static_cast<wxWindow*>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->GetMainWindow())); });
+}
+
+WXK_FUNCTION(int32_t) wxk_DataViewCtrl_GetSelectedItemsCount(wxk_Window* self) noexcept {
+	return wxk::Guard<int32_t>(0, [&]() -> int32_t { return static_cast<int32_t>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->GetSelectedItemsCount()); });
+}
+
+WXK_FUNCTION(void*) wxk_DataViewCtrl_GetSelection(wxk_Window* self) noexcept {
+	return wxk::Guard<void*>(nullptr, [&]() -> void* { return (static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->GetSelection()).GetID(); });
+}
+
+WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_HasSelection(wxk_Window* self) noexcept {
+	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->HasSelection()) ? 1 : 0; });
+}
+
+WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_IsMultiColumnSortAllowed(wxk_Window* self) noexcept {
+	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->IsMultiColumnSortAllowed()) ? 1 : 0; });
+}
+
+WXK_FUNCTION(int32_t) wxk_DataViewCtrl_GetCountPerPage(wxk_Window* self) noexcept {
+	return wxk::Guard<int32_t>(0, [&]() -> int32_t { return static_cast<int32_t>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->GetCountPerPage()); });
+}
+
+WXK_FUNCTION(void*) wxk_DataViewCtrl_GetTopItem(wxk_Window* self) noexcept {
+	return wxk::Guard<void*>(nullptr, [&]() -> void* { return (static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->GetTopItem()).GetID(); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewEvent_SetPosition(wxk_Event* self, int32_t x, int32_t y) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewEvent*>(wxk::Unwrap(self))->SetPosition(static_cast<int>(x), static_cast<int>(y)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewEvent_SetCache(wxk_Event* self, int32_t from, int32_t to) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewEvent*>(wxk::Unwrap(self))->SetCache(static_cast<int>(from), static_cast<int>(to)); });
+}
+
+WXK_FUNCTION(int32_t) wxk_DataViewEvent_GetColumn(wxk_Event* self) noexcept {
+	return wxk::Guard<int32_t>(0, [&]() -> int32_t { return static_cast<int32_t>(static_cast<wxDataViewEvent*>(wxk::Unwrap(self))->GetColumn()); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewEvent_SetColumn(wxk_Event* self, int32_t column) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewEvent*>(wxk::Unwrap(self))->SetColumn(static_cast<int>(column)); });
+}
+
+WXK_FUNCTION(wxk_Point) wxk_DataViewEvent_GetPosition(wxk_Event* self) noexcept {
+	return wxk::Guard<wxk_Point>(wxk_Point{-1, -1}, [&]() -> wxk_Point { return wxk::ToPoint(static_cast<wxDataViewEvent*>(wxk::Unwrap(self))->GetPosition()); });
+}
+
+WXK_FUNCTION(wxk_Variant*) wxk_DataViewEvent_GetValue(wxk_Event* self) noexcept {
+	return wxk::Guard<wxk_Variant*>(nullptr, [&]() -> wxk_Variant* { return wxk::Wrap(new wxVariant(static_cast<wxDataViewEvent*>(wxk::Unwrap(self))->GetValue())); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewEvent_SetValue(wxk_Event* self, const wxk_Variant* value) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewEvent*>(wxk::Unwrap(self))->SetValue(*wxk::Unwrap(const_cast<wxk_Variant*>(value))); });
+}
+
+WXK_FUNCTION(uint8_t) wxk_DataViewEvent_IsEditCancelled(wxk_Event* self) noexcept {
+	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxDataViewEvent*>(wxk::Unwrap(self))->IsEditCancelled()) ? 1 : 0; });
+}
+
+WXK_FUNCTION(size_t) wxk_DataViewEvent_GetDataSize(wxk_Event* self) noexcept {
+	return wxk::Guard<size_t>(0, [&]() -> size_t { return static_cast<size_t>(static_cast<wxDataViewEvent*>(wxk::Unwrap(self))->GetDataSize()); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewEvent_SetDataSize(wxk_Event* self, size_t size) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewEvent*>(wxk::Unwrap(self))->SetDataSize(size); });
+}
+
+WXK_FUNCTION(int32_t) wxk_DataViewEvent_GetDropEffect(wxk_Event* self) noexcept {
+	return wxk::Guard<int32_t>(0, [&]() -> int32_t { return static_cast<int32_t>(static_cast<wxDataViewEvent*>(wxk::Unwrap(self))->GetDropEffect()); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewEvent_SetDropEffect(wxk_Event* self, int32_t effect) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewEvent*>(wxk::Unwrap(self))->SetDropEffect(static_cast<wxDragResult>(effect)); });
+}
+
+WXK_FUNCTION(int32_t) wxk_DataViewEvent_GetCacheFrom(wxk_Event* self) noexcept {
+	return wxk::Guard<int32_t>(0, [&]() -> int32_t { return static_cast<int32_t>(static_cast<wxDataViewEvent*>(wxk::Unwrap(self))->GetCacheFrom()); });
+}
+
+WXK_FUNCTION(int32_t) wxk_DataViewEvent_GetCacheTo(wxk_Event* self) noexcept {
+	return wxk::Guard<int32_t>(0, [&]() -> int32_t { return static_cast<int32_t>(static_cast<wxDataViewEvent*>(wxk::Unwrap(self))->GetCacheTo()); });
+}
+
+WXK_FUNCTION(int32_t) wxk_DataViewEvent_GetProposedDropIndex(wxk_Event* self) noexcept {
+	return wxk::Guard<int32_t>(0, [&]() -> int32_t { return static_cast<int32_t>(static_cast<wxDataViewEvent*>(wxk::Unwrap(self))->GetProposedDropIndex()); });
+}
+
+WXK_FUNCTION(void*) wxk_DataViewEvent_GetItem(wxk_Event* self) noexcept {
+	return wxk::Guard<void*>(nullptr, [&]() -> void* { return (static_cast<wxDataViewEvent*>(wxk::Unwrap(self))->GetItem()).GetID(); });
+}
+
+WXK_FUNCTION(int32_t) wxk_DataViewEvent_GetDragFlags(wxk_Event* self) noexcept {
+	return wxk::Guard<int32_t>(0, [&]() -> int32_t { return static_cast<int32_t>(static_cast<wxDataViewEvent*>(wxk::Unwrap(self))->GetDragFlags()); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewEvent_SetDragFlags(wxk_Event* self, int32_t flags) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewEvent*>(wxk::Unwrap(self))->SetDragFlags(static_cast<int>(flags)); });
+}
+
+WXK_FUNCTION(wxk_Object*) wxk_DataViewIconText_new(const char16_t* text, size_t textLength, const wxk_Object* bitmap) noexcept {
+	return wxk::Guard<wxk_Object*>(nullptr, [&] {
+		wxObject* created = new wxDataViewIconText(wxk::FromUtf16(text, textLength), wxBitmapBundle(wxk::ValueOf<wxBitmap>(bitmap)));
+		return wxk::Wrap(created);
+	});
+}
+
+WXK_FUNCTION(void) wxk_DataViewIconText_SetBitmapBundle(wxk_Object* self, const wxk_Object* bitmap) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewIconText*>(wxk::Unwrap(self))->SetBitmapBundle(wxBitmapBundle(wxk::ValueOf<wxBitmap>(bitmap))); });
+}
+
+WXK_FUNCTION(wxk_Object*) wxk_DataViewIconText_GetIcon(wxk_Object* self) noexcept {
+	return wxk::Guard<wxk_Object*>(nullptr, [&]() -> wxk_Object* { return wxk::CopyValue<wxIcon>(static_cast<wxDataViewIconText*>(wxk::Unwrap(self))->GetIcon()); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewIconText_SetIcon(wxk_Object* self, const wxk_Object* icon) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewIconText*>(wxk::Unwrap(self))->SetIcon(wxk::ValueOf<wxIcon>(icon)); });
+}
+
+WXK_FUNCTION(wxk_String*) wxk_DataViewIconText_GetText(wxk_Object* self) noexcept {
+	return wxk::Guard<wxk_String*>(nullptr, [&]() -> wxk_String* { return wxk::ToUtf16(static_cast<wxDataViewIconText*>(wxk::Unwrap(self))->GetText()); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewIconText_SetText(wxk_Object* self, const char16_t* text, size_t textLength) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewIconText*>(wxk::Unwrap(self))->SetText(wxk::FromUtf16(text, textLength)); });
+}
+
+WXK_FUNCTION(wxk_Window*) wxk_DataViewListCtrl_new(wxk_Window* parent, int32_t id, wxk_Point position, wxk_Size size, int64_t style) noexcept {
+	return wxk::Guard<wxk_Window*>(nullptr, [&] {
+		wxWindow* created = new wxDataViewListCtrl(static_cast<wxWindow*>(wxk::Unwrap(parent)), static_cast<int>(id), wxk::FromPoint(position), wxk::FromSize(size), static_cast<long>(style));
+		return wxk::Wrap(created);
+	});
+}
+
+WXK_FUNCTION(void) wxk_DataViewListCtrl_SelectRow(wxk_Window* self, uint32_t row) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewListCtrl*>(wxk::Unwrap(self))->SelectRow(row); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewListCtrl_UnselectRow(wxk_Window* self, uint32_t row) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewListCtrl*>(wxk::Unwrap(self))->UnselectRow(row); });
+}
+
+WXK_FUNCTION(uint8_t) wxk_DataViewListCtrl_IsRowSelected(wxk_Window* self, uint32_t row) noexcept {
+	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxDataViewListCtrl*>(wxk::Unwrap(self))->IsRowSelected(row)) ? 1 : 0; });
+}
+
+WXK_FUNCTION(void) wxk_DataViewListCtrl_AppendTextColumn(wxk_Window* self, const char16_t* label, size_t labelLength, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewListCtrl*>(wxk::Unwrap(self))->AppendTextColumn(wxk::FromUtf16(label, labelLength), static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewListCtrl_AppendToggleColumn(wxk_Window* self, const char16_t* label, size_t labelLength, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewListCtrl*>(wxk::Unwrap(self))->AppendToggleColumn(wxk::FromUtf16(label, labelLength), static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewListCtrl_AppendProgressColumn(wxk_Window* self, const char16_t* label, size_t labelLength, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewListCtrl*>(wxk::Unwrap(self))->AppendProgressColumn(wxk::FromUtf16(label, labelLength), static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewListCtrl_AppendIconTextColumn(wxk_Window* self, const char16_t* label, size_t labelLength, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewListCtrl*>(wxk::Unwrap(self))->AppendIconTextColumn(wxk::FromUtf16(label, labelLength), static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewListCtrl_AppendItem(wxk_Window* self, const wxk_VariantList* values) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewListCtrl*>(wxk::Unwrap(self))->AppendItem(*wxk::Unwrap(const_cast<wxk_VariantList*>(values))); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewListCtrl_PrependItem(wxk_Window* self, const wxk_VariantList* values) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewListCtrl*>(wxk::Unwrap(self))->PrependItem(*wxk::Unwrap(const_cast<wxk_VariantList*>(values))); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewListCtrl_InsertItem(wxk_Window* self, uint32_t row, const wxk_VariantList* values) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewListCtrl*>(wxk::Unwrap(self))->InsertItem(row, *wxk::Unwrap(const_cast<wxk_VariantList*>(values))); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewListCtrl_DeleteItem(wxk_Window* self, uint32_t row) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewListCtrl*>(wxk::Unwrap(self))->DeleteItem(row); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewListCtrl_DeleteAllItems(wxk_Window* self) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewListCtrl*>(wxk::Unwrap(self))->DeleteAllItems(); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewListCtrl_SetValue(wxk_Window* self, const wxk_Variant* value, uint32_t row, uint32_t column) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewListCtrl*>(wxk::Unwrap(self))->SetValue(*wxk::Unwrap(const_cast<wxk_Variant*>(value)), row, column); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewListCtrl_SetTextValue(wxk_Window* self, const char16_t* value, size_t valueLength, uint32_t row, uint32_t column) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewListCtrl*>(wxk::Unwrap(self))->SetTextValue(wxk::FromUtf16(value, valueLength), row, column); });
+}
+
+WXK_FUNCTION(wxk_String*) wxk_DataViewListCtrl_GetTextValue(wxk_Window* self, uint32_t row, uint32_t column) noexcept {
+	return wxk::Guard<wxk_String*>(nullptr, [&]() -> wxk_String* { return wxk::ToUtf16(static_cast<wxDataViewListCtrl*>(wxk::Unwrap(self))->GetTextValue(row, column)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewListCtrl_SetToggleValue(wxk_Window* self, uint8_t value, uint32_t row, uint32_t column) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewListCtrl*>(wxk::Unwrap(self))->SetToggleValue(value != 0, row, column); });
+}
+
+WXK_FUNCTION(uint8_t) wxk_DataViewListCtrl_GetToggleValue(wxk_Window* self, uint32_t row, uint32_t column) noexcept {
+	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxDataViewListCtrl*>(wxk::Unwrap(self))->GetToggleValue(row, column)) ? 1 : 0; });
+}
+
+WXK_FUNCTION(int32_t) wxk_DataViewListCtrl_ItemToRow(wxk_Window* self, void* item) noexcept {
+	return wxk::Guard<int32_t>(0, [&]() -> int32_t { return static_cast<int32_t>(static_cast<wxDataViewListCtrl*>(wxk::Unwrap(self))->ItemToRow(wxDataViewItem(item))); });
+}
+
+WXK_FUNCTION(void*) wxk_DataViewListCtrl_RowToItem(wxk_Window* self, int32_t row) noexcept {
+	return wxk::Guard<void*>(nullptr, [&]() -> void* { return (static_cast<wxDataViewListCtrl*>(wxk::Unwrap(self))->RowToItem(static_cast<int>(row))).GetID(); });
+}
+
+WXK_FUNCTION(int32_t) wxk_DataViewListCtrl_GetSelectedRow(wxk_Window* self) noexcept {
+	return wxk::Guard<int32_t>(0, [&]() -> int32_t { return static_cast<int32_t>(static_cast<wxDataViewListCtrl*>(wxk::Unwrap(self))->GetSelectedRow()); });
+}
+
+WXK_FUNCTION(uint32_t) wxk_DataViewListCtrl_GetItemCount(wxk_Window* self) noexcept {
+	return wxk::Guard<uint32_t>(0, [&]() -> uint32_t { return static_cast<uint32_t>(static_cast<wxDataViewListCtrl*>(wxk::Unwrap(self))->GetItemCount()); });
+}
+
+WXK_FUNCTION(wxk_Window*) wxk_DataViewTreeCtrl_new(wxk_Window* parent, int32_t id, wxk_Point position, wxk_Size size, int64_t style) noexcept {
+	return wxk::Guard<wxk_Window*>(nullptr, [&] {
+		wxWindow* created = new wxDataViewTreeCtrl(static_cast<wxWindow*>(wxk::Unwrap(parent)), static_cast<int>(id), wxk::FromPoint(position), wxk::FromSize(size), static_cast<long>(style));
+		return wxk::Wrap(created);
+	});
+}
+
+WXK_FUNCTION(void*) wxk_DataViewTreeCtrl_AppendContainer(wxk_Window* self, void* parent, const char16_t* text, size_t textLength, int32_t icon, int32_t expanded) noexcept {
+	return wxk::Guard<void*>(nullptr, [&]() -> void* { return (static_cast<wxDataViewTreeCtrl*>(wxk::Unwrap(self))->AppendContainer(wxDataViewItem(parent), wxk::FromUtf16(text, textLength), static_cast<int>(icon), static_cast<int>(expanded))).GetID(); });
+}
+
+WXK_FUNCTION(void*) wxk_DataViewTreeCtrl_AppendItem(wxk_Window* self, void* parent, const char16_t* text, size_t textLength, int32_t icon) noexcept {
+	return wxk::Guard<void*>(nullptr, [&]() -> void* { return (static_cast<wxDataViewTreeCtrl*>(wxk::Unwrap(self))->AppendItem(wxDataViewItem(parent), wxk::FromUtf16(text, textLength), static_cast<int>(icon))).GetID(); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewTreeCtrl_DeleteAllItems(wxk_Window* self) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewTreeCtrl*>(wxk::Unwrap(self))->DeleteAllItems(); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewTreeCtrl_DeleteChildren(wxk_Window* self, void* item) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewTreeCtrl*>(wxk::Unwrap(self))->DeleteChildren(wxDataViewItem(item)); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewTreeCtrl_DeleteItem(wxk_Window* self, void* item) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewTreeCtrl*>(wxk::Unwrap(self))->DeleteItem(wxDataViewItem(item)); });
+}
+
+WXK_FUNCTION(int32_t) wxk_DataViewTreeCtrl_GetChildCount(wxk_Window* self, void* parent) noexcept {
+	return wxk::Guard<int32_t>(0, [&]() -> int32_t { return static_cast<int32_t>(static_cast<wxDataViewTreeCtrl*>(wxk::Unwrap(self))->GetChildCount(wxDataViewItem(parent))); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewTreeCtrl_GetImageList(wxk_Window* self) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewTreeCtrl*>(wxk::Unwrap(self))->GetImageList(); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewTreeCtrl_GetItemData(wxk_Window* self, void* item) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewTreeCtrl*>(wxk::Unwrap(self))->GetItemData(wxDataViewItem(item)); });
+}
+
+WXK_FUNCTION(wxk_Object*) wxk_DataViewTreeCtrl_GetItemExpandedIcon(wxk_Window* self, void* item) noexcept {
+	return wxk::Guard<wxk_Object*>(nullptr, [&]() -> wxk_Object* { return wxk::CopyValue<wxIcon>(static_cast<wxDataViewTreeCtrl*>(wxk::Unwrap(self))->GetItemExpandedIcon(wxDataViewItem(item))); });
+}
+
+WXK_FUNCTION(wxk_Object*) wxk_DataViewTreeCtrl_GetItemIcon(wxk_Window* self, void* item) noexcept {
+	return wxk::Guard<wxk_Object*>(nullptr, [&]() -> wxk_Object* { return wxk::CopyValue<wxIcon>(static_cast<wxDataViewTreeCtrl*>(wxk::Unwrap(self))->GetItemIcon(wxDataViewItem(item))); });
+}
+
+WXK_FUNCTION(void*) wxk_DataViewTreeCtrl_GetItemParent(wxk_Window* self, void* item) noexcept {
+	return wxk::Guard<void*>(nullptr, [&]() -> void* { return (static_cast<wxDataViewTreeCtrl*>(wxk::Unwrap(self))->GetItemParent(wxDataViewItem(item))).GetID(); });
+}
+
+WXK_FUNCTION(wxk_String*) wxk_DataViewTreeCtrl_GetItemText(wxk_Window* self, void* item) noexcept {
+	return wxk::Guard<wxk_String*>(nullptr, [&]() -> wxk_String* { return wxk::ToUtf16(static_cast<wxDataViewTreeCtrl*>(wxk::Unwrap(self))->GetItemText(wxDataViewItem(item))); });
+}
+
+WXK_FUNCTION(void*) wxk_DataViewTreeCtrl_GetNthChild(wxk_Window* self, void* parent, uint32_t position) noexcept {
+	return wxk::Guard<void*>(nullptr, [&]() -> void* { return (static_cast<wxDataViewTreeCtrl*>(wxk::Unwrap(self))->GetNthChild(wxDataViewItem(parent), position)).GetID(); });
+}
+
+WXK_FUNCTION(void*) wxk_DataViewTreeCtrl_InsertContainer(wxk_Window* self, void* parent, void* previous, const char16_t* text, size_t textLength, int32_t icon, int32_t expanded) noexcept {
+	return wxk::Guard<void*>(nullptr, [&]() -> void* { return (static_cast<wxDataViewTreeCtrl*>(wxk::Unwrap(self))->InsertContainer(wxDataViewItem(parent), wxDataViewItem(previous), wxk::FromUtf16(text, textLength), static_cast<int>(icon), static_cast<int>(expanded))).GetID(); });
+}
+
+WXK_FUNCTION(void*) wxk_DataViewTreeCtrl_InsertItem(wxk_Window* self, void* parent, void* previous, const char16_t* text, size_t textLength, int32_t icon) noexcept {
+	return wxk::Guard<void*>(nullptr, [&]() -> void* { return (static_cast<wxDataViewTreeCtrl*>(wxk::Unwrap(self))->InsertItem(wxDataViewItem(parent), wxDataViewItem(previous), wxk::FromUtf16(text, textLength), static_cast<int>(icon))).GetID(); });
+}
+
+WXK_FUNCTION(uint8_t) wxk_DataViewTreeCtrl_IsContainer(wxk_Window* self, void* item) noexcept {
+	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxDataViewTreeCtrl*>(wxk::Unwrap(self))->IsContainer(wxDataViewItem(item))) ? 1 : 0; });
+}
+
+WXK_FUNCTION(void*) wxk_DataViewTreeCtrl_PrependContainer(wxk_Window* self, void* parent, const char16_t* text, size_t textLength, int32_t icon, int32_t expanded) noexcept {
+	return wxk::Guard<void*>(nullptr, [&]() -> void* { return (static_cast<wxDataViewTreeCtrl*>(wxk::Unwrap(self))->PrependContainer(wxDataViewItem(parent), wxk::FromUtf16(text, textLength), static_cast<int>(icon), static_cast<int>(expanded))).GetID(); });
+}
+
+WXK_FUNCTION(void*) wxk_DataViewTreeCtrl_PrependItem(wxk_Window* self, void* parent, const char16_t* text, size_t textLength, int32_t icon) noexcept {
+	return wxk::Guard<void*>(nullptr, [&]() -> void* { return (static_cast<wxDataViewTreeCtrl*>(wxk::Unwrap(self))->PrependItem(wxDataViewItem(parent), wxk::FromUtf16(text, textLength), static_cast<int>(icon))).GetID(); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewTreeCtrl_SetItemExpandedIcon(wxk_Window* self, void* item, const wxk_Object* icon) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewTreeCtrl*>(wxk::Unwrap(self))->SetItemExpandedIcon(wxDataViewItem(item), wxBitmapBundle(wxk::ValueOf<wxBitmap>(icon))); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewTreeCtrl_SetItemIcon(wxk_Window* self, void* item, const wxk_Object* icon) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewTreeCtrl*>(wxk::Unwrap(self))->SetItemIcon(wxDataViewItem(item), wxBitmapBundle(wxk::ValueOf<wxBitmap>(icon))); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewTreeCtrl_SetItemText(wxk_Window* self, void* item, const char16_t* text, size_t textLength) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewTreeCtrl*>(wxk::Unwrap(self))->SetItemText(wxDataViewItem(item), wxk::FromUtf16(text, textLength)); });
+}
+
 WXK_FUNCTION(wxk_Window*) wxk_Dialog_new(wxk_Window* parent, int32_t id, const char16_t* title, size_t titleLength, wxk_Point position, wxk_Size size, int64_t style) noexcept {
 	return wxk::Guard<wxk_Window*>(nullptr, [&] {
 		wxWindow* created = new wxDialog(static_cast<wxWindow*>(wxk::Unwrap(parent)), static_cast<int>(id), wxk::FromUtf16(title, titleLength), wxk::FromPoint(position), wxk::FromSize(size), static_cast<long>(style));
@@ -3573,8 +4122,8 @@ WXK_FUNCTION(uint8_t) wxk_Image_ConvertAlphaToMask_ByteByteByte(wxk_Object* self
 	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxImage*>(wxk::Unwrap(self))->ConvertAlphaToMask(static_cast<unsigned char>(mr), static_cast<unsigned char>(mg), static_cast<unsigned char>(mb))) ? 1 : 0; });
 }
 
-WXK_FUNCTION(wxk_Object*) wxk_Image_ConvertToGreyscale_DoubleDoubleDouble(wxk_Object* self, double weight_r, double weight_g, double weight_b) noexcept {
-	return wxk::Guard<wxk_Object*>(nullptr, [&]() -> wxk_Object* { return wxk::CopyValue<wxImage>(static_cast<wxImage*>(wxk::Unwrap(self))->ConvertToGreyscale(static_cast<double>(weight_r), static_cast<double>(weight_g), static_cast<double>(weight_b))); });
+WXK_FUNCTION(wxk_Object*) wxk_Image_ConvertToGreyscale_DoubleDoubleDouble(wxk_Object* self, double weightR, double weightG, double weightB) noexcept {
+	return wxk::Guard<wxk_Object*>(nullptr, [&]() -> wxk_Object* { return wxk::CopyValue<wxImage>(static_cast<wxImage*>(wxk::Unwrap(self))->ConvertToGreyscale(static_cast<double>(weightR), static_cast<double>(weightG), static_cast<double>(weightB))); });
 }
 
 WXK_FUNCTION(wxk_Object*) wxk_Image_ConvertToGreyscale_Default(wxk_Object* self) noexcept {
@@ -5282,8 +5831,8 @@ WXK_FUNCTION(int32_t) wxk_Pen_GetJoin(wxk_Object* self) noexcept {
 	return wxk::Guard<int32_t>(0, [&]() -> int32_t { return static_cast<int32_t>(static_cast<wxPen*>(wxk::Unwrap(self))->GetJoin()); });
 }
 
-WXK_FUNCTION(void) wxk_Pen_SetJoin(wxk_Object* self, int32_t join_style) noexcept {
-	wxk::Guard([&] { static_cast<wxPen*>(wxk::Unwrap(self))->SetJoin(static_cast<wxPenJoin>(join_style)); });
+WXK_FUNCTION(void) wxk_Pen_SetJoin(wxk_Object* self, int32_t joinStyle) noexcept {
+	wxk::Guard([&] { static_cast<wxPen*>(wxk::Unwrap(self))->SetJoin(static_cast<wxPenJoin>(joinStyle)); });
 }
 
 WXK_FUNCTION(int32_t) wxk_Pen_GetStyle(wxk_Object* self) noexcept {
@@ -8835,6 +9384,82 @@ WXK_FUNCTION(int32_t) wxk_EventType_CommandSetFocus(void) noexcept {
 
 WXK_FUNCTION(int32_t) wxk_EventType_ContextMenu(void) noexcept {
 	return wxEVT_CONTEXT_MENU;
+}
+
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewCacheHint(void) noexcept {
+	return wxEVT_DATAVIEW_CACHE_HINT;
+}
+
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewColumnHeaderClick(void) noexcept {
+	return wxEVT_DATAVIEW_COLUMN_HEADER_CLICK;
+}
+
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewColumnHeaderRightClick(void) noexcept {
+	return wxEVT_DATAVIEW_COLUMN_HEADER_RIGHT_CLICK;
+}
+
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewColumnReordered(void) noexcept {
+	return wxEVT_DATAVIEW_COLUMN_REORDERED;
+}
+
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewColumnSorted(void) noexcept {
+	return wxEVT_DATAVIEW_COLUMN_SORTED;
+}
+
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewItemActivated(void) noexcept {
+	return wxEVT_DATAVIEW_ITEM_ACTIVATED;
+}
+
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewItemBeginDrag(void) noexcept {
+	return wxEVT_DATAVIEW_ITEM_BEGIN_DRAG;
+}
+
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewItemCollapsed(void) noexcept {
+	return wxEVT_DATAVIEW_ITEM_COLLAPSED;
+}
+
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewItemCollapsing(void) noexcept {
+	return wxEVT_DATAVIEW_ITEM_COLLAPSING;
+}
+
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewItemContextMenu(void) noexcept {
+	return wxEVT_DATAVIEW_ITEM_CONTEXT_MENU;
+}
+
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewItemDrop(void) noexcept {
+	return wxEVT_DATAVIEW_ITEM_DROP;
+}
+
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewItemDropPossible(void) noexcept {
+	return wxEVT_DATAVIEW_ITEM_DROP_POSSIBLE;
+}
+
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewItemEditingDone(void) noexcept {
+	return wxEVT_DATAVIEW_ITEM_EDITING_DONE;
+}
+
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewItemEditingStarted(void) noexcept {
+	return wxEVT_DATAVIEW_ITEM_EDITING_STARTED;
+}
+
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewItemExpanded(void) noexcept {
+	return wxEVT_DATAVIEW_ITEM_EXPANDED;
+}
+
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewItemExpanding(void) noexcept {
+	return wxEVT_DATAVIEW_ITEM_EXPANDING;
+}
+
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewItemStartEditing(void) noexcept {
+	return wxEVT_DATAVIEW_ITEM_START_EDITING;
+}
+
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewItemValueChanged(void) noexcept {
+	return wxEVT_DATAVIEW_ITEM_VALUE_CHANGED;
+}
+
+WXK_FUNCTION(int32_t) wxk_EventType_DataViewSelectionChanged(void) noexcept {
+	return wxEVT_DATAVIEW_SELECTION_CHANGED;
 }
 
 WXK_FUNCTION(int32_t) wxk_EventType_DpiChanged(void) noexcept {

@@ -73,6 +73,35 @@ internal static class Core {
 			.Director("OnGetItemText", "OnGetItemImage", "OnGetItemColumnImage", "OnGetItemIsChecked"));
 		tweaks.Class("wxListView");
 		tweaks.Class("wxTreeCtrl");
+		// Data views show a model, whose classes are hand-written, in DataViewModel. Adding a column
+		// returns the column, which is not bound, so it gives nothing back; its model column names it.
+		tweaks.Enum("wxDataViewColumnFlags", "DataViewColumnFlags", isFlags: true);
+		tweaks.Class("wxDataViewCtrl", view => view
+			.DiscardUnboundReturns()
+			.Ignore("AssociateModel", "GetModel")
+			.ParameterEnum("AppendTextColumn", "flags", "wxDataViewColumnFlags")
+			.ParameterEnum("AppendToggleColumn", "flags", "wxDataViewColumnFlags")
+			.ParameterEnum("AppendProgressColumn", "flags", "wxDataViewColumnFlags")
+			.ParameterEnum("AppendIconTextColumn", "flags", "wxDataViewColumnFlags")
+			.ParameterEnum("AppendBitmapColumn", "flags", "wxDataViewColumnFlags")
+			.ParameterEnum("AppendDateColumn", "flags", "wxDataViewColumnFlags")
+			.ParameterEnum("PrependTextColumn", "flags", "wxDataViewColumnFlags")
+			.ParameterEnum("PrependToggleColumn", "flags", "wxDataViewColumnFlags")
+			.ParameterEnum("PrependProgressColumn", "flags", "wxDataViewColumnFlags")
+			.ParameterEnum("PrependIconTextColumn", "flags", "wxDataViewColumnFlags")
+			.ParameterEnum("PrependBitmapColumn", "flags", "wxDataViewColumnFlags")
+			.ParameterEnum("PrependDateColumn", "flags", "wxDataViewColumnFlags"));
+		tweaks.Class("wxDataViewListCtrl", view => view
+			.DiscardUnboundReturns()
+			.Ignore("GetStore")
+			.ParameterEnum("AppendTextColumn", "flags", "wxDataViewColumnFlags")
+			.ParameterEnum("AppendToggleColumn", "flags", "wxDataViewColumnFlags")
+			.ParameterEnum("AppendProgressColumn", "flags", "wxDataViewColumnFlags")
+			.ParameterEnum("AppendIconTextColumn", "flags", "wxDataViewColumnFlags"));
+		tweaks.Class("wxDataViewTreeCtrl", view => view.DiscardUnboundReturns().Ignore("GetStore"));
+		// The interface headers document SetItem, which the real wxDataViewEvent does not have.
+		tweaks.Class("wxDataViewEvent", dataViewEvent => dataViewEvent.Ignore("SetItem"));
+		tweaks.Class("wxDataViewIconText").ValueObject();
 		tweaks.Class("wxListItem").ValueObject();
 		tweaks.Class("wxListEvent");
 		tweaks.Class("wxTreeEvent");

@@ -2,6 +2,8 @@
 #pragma once
 
 #include <wx/wx.h>
+#include <wx/variant.h>
+#include <wx/vector.h>
 
 #include <string>
 #include <type_traits>
@@ -105,6 +107,8 @@ inline wxk_Colour ToColour(const wxColour& colour) {
 	inline handle* Wrap(type* value) { return reinterpret_cast<handle*>(value); }
 
 WXK_HANDLE(wxk_Object, wxObject)
+WXK_HANDLE(wxk_Variant, wxVariant)
+WXK_HANDLE(wxk_VariantList, wxVector<wxVariant>)
 WXK_HANDLE(wxk_EvtHandler, wxEvtHandler)
 WXK_HANDLE(wxk_Window, wxWindow)
 WXK_HANDLE(wxk_Sizer, wxSizer)

@@ -45,6 +45,50 @@ typedef struct wxk_StringArray wxk_StringArray;
 // A list of windows, such as a window's children, which the caller frees with wxk_WindowList_Free.
 typedef struct wxk_WindowList wxk_WindowList;
 
+// A wxVariant, which holds one value of any type, and which the caller frees with wxk_Variant_Free.
+typedef struct wxk_Variant wxk_Variant;
+
+// A wxVector<wxVariant>, such as a data view list row's values, freed with wxk_VariantList_Free.
+typedef struct wxk_VariantList wxk_VariantList;
+
+// The types of value a wxVariant crosses with. Any other type reads as text.
+typedef enum wxk_VariantType {
+	WXK_VARIANT_NULL = 0,
+	WXK_VARIANT_STRING = 1,
+	WXK_VARIANT_BOOL = 2,
+	WXK_VARIANT_LONG = 3,
+	WXK_VARIANT_DOUBLE = 4,
+	WXK_VARIANT_BITMAP = 5,
+	WXK_VARIANT_ICON = 6,
+	WXK_VARIANT_ICON_TEXT = 7
+} wxk_VariantType;
+
+// A wxDataViewModel, which is reference counted.
+typedef struct wxk_DataViewModel wxk_DataViewModel;
+
+// The wxDataViewItemArray a model fills with an item's children.
+typedef struct wxk_DataViewItems wxk_DataViewItems;
+
+// The callbacks of every model whose items come from .NET. An item is the id .NET gave it.
+typedef struct wxk_DataViewModelCallbacks {
+	void (*getValue)(void* userdata, void* item, uint32_t column, wxk_Variant* value);
+	uint8_t (*setValue)(void* userdata, const wxk_Variant* value, void* item, uint32_t column);
+	void* (*getParent)(void* userdata, void* item);
+	uint8_t (*isContainer)(void* userdata, void* item);
+	void (*getChildren)(void* userdata, void* item, wxk_DataViewItems* children);
+	uint8_t (*isEnabled)(void* userdata, void* item, uint32_t column);
+	uint8_t (*hasContainerColumns)(void* userdata, void* item);
+	void (*onFree)(void* userdata);
+} wxk_DataViewModelCallbacks;
+
+// The callbacks of every virtual list model whose rows come from .NET.
+typedef struct wxk_VirtualListModelCallbacks {
+	void (*getValue)(void* userdata, uint32_t row, uint32_t column, wxk_Variant* value);
+	uint8_t (*setValue)(void* userdata, const wxk_Variant* value, uint32_t row, uint32_t column);
+	uint8_t (*isEnabled)(void* userdata, uint32_t row, uint32_t column);
+	void (*onFree)(void* userdata);
+} wxk_VirtualListModelCallbacks;
+
 // Clipboard content in several formats, which wxk_Clipboard_SetContent takes ownership of.
 typedef struct wxk_ClipboardContent wxk_ClipboardContent;
 
@@ -180,6 +224,58 @@ WXK_FUNCTION(void) wxk_Image_AddTgaHandler(void) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Image_AddXpmHandler(void) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Image_AddIconHandler(void) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Image_AddAllHandlers(void) WXK_NOEXCEPT;
+
+// Variants
+
+WXK_FUNCTION(wxk_Variant*) wxk_Variant_new(void) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Variant_Free(wxk_Variant* variant) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Variant_SetNull(wxk_Variant* variant) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Variant_SetString(wxk_Variant* variant, const char16_t* text, size_t textLength) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Variant_SetBool(wxk_Variant* variant, uint8_t value) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Variant_SetLong(wxk_Variant* variant, int64_t value) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Variant_SetDouble(wxk_Variant* variant, double value) WXK_NOEXCEPT;
+// Copies a bitmap, an icon, or a wxDataViewIconText into the variant. Returns 0 for anything else.
+WXK_FUNCTION(uint8_t) wxk_Variant_SetObject(wxk_Variant* variant, wxk_Object* value) WXK_NOEXCEPT;
+// A wxk_VariantType.
+WXK_FUNCTION(int32_t) wxk_Variant_GetType(const wxk_Variant* variant) WXK_NOEXCEPT;
+// The value as text, which works for any type.
+WXK_FUNCTION(wxk_String*) wxk_Variant_GetString(const wxk_Variant* variant) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Variant_GetBool(const wxk_Variant* variant) WXK_NOEXCEPT;
+WXK_FUNCTION(int64_t) wxk_Variant_GetLong(const wxk_Variant* variant) WXK_NOEXCEPT;
+WXK_FUNCTION(double) wxk_Variant_GetDouble(const wxk_Variant* variant) WXK_NOEXCEPT;
+// A heap copy of the bitmap, icon, or icon text the variant holds, which the caller owns.
+WXK_FUNCTION(wxk_Object*) wxk_Variant_GetObject(const wxk_Variant* variant) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_VariantList*) wxk_VariantList_new(void) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_VariantList_Add(wxk_VariantList* list, const wxk_Variant* value) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_VariantList_Free(wxk_VariantList* list) WXK_NOEXCEPT;
+
+// Data view models
+
+WXK_FUNCTION(void) wxk_DataViewModel_SetCallbacks(const wxk_DataViewModelCallbacks* callbacks) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_VirtualListModel_SetCallbacks(const wxk_VirtualListModelCallbacks* callbacks) WXK_NOEXCEPT;
+// A model with one reference, which the caller releases with wxk_DataViewModel_DecRef.
+WXK_FUNCTION(wxk_DataViewModel*) wxk_ManagedDataViewModel_new(void* userdata) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_DataViewModel*) wxk_ManagedVirtualListModel_new(void* userdata, uint32_t count) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewModel_DecRef(wxk_DataViewModel* model) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewItems_Add(wxk_DataViewItems* items, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_DataViewModel_ItemAdded(wxk_DataViewModel* model, void* parent, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_DataViewModel_ItemDeleted(wxk_DataViewModel* model, void* parent, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_DataViewModel_ItemChanged(wxk_DataViewModel* model, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_DataViewModel_ValueChanged(wxk_DataViewModel* model, void* item, uint32_t column) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_DataViewModel_Cleared(wxk_DataViewModel* model) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewModel_Resort(wxk_DataViewModel* model) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_VirtualListModel_Reset(wxk_DataViewModel* model, uint32_t count) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_VirtualListModel_RowAppended(wxk_DataViewModel* model) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_VirtualListModel_RowPrepended(wxk_DataViewModel* model) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_VirtualListModel_RowInserted(wxk_DataViewModel* model, uint32_t before) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_VirtualListModel_RowDeleted(wxk_DataViewModel* model, uint32_t row) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_VirtualListModel_RowChanged(wxk_DataViewModel* model, uint32_t row) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_VirtualListModel_RowValueChanged(wxk_DataViewModel* model, uint32_t row, uint32_t column) WXK_NOEXCEPT;
+WXK_FUNCTION(uint32_t) wxk_VirtualListModel_GetCount(wxk_DataViewModel* model) WXK_NOEXCEPT;
+WXK_FUNCTION(void*) wxk_VirtualListModel_GetItem(wxk_DataViewModel* model, uint32_t row) WXK_NOEXCEPT;
+WXK_FUNCTION(uint32_t) wxk_VirtualListModel_GetRow(wxk_DataViewModel* model, void* item) WXK_NOEXCEPT;
+// Shows the model in the control, which takes a reference to it.
+WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_AssociateModel(wxk_Window* control, wxk_DataViewModel* model) WXK_NOEXCEPT;
 
 // Accessibility
 

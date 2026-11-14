@@ -6,503 +6,1304 @@ namespace WxKit;
 
 public static unsafe partial class EventType {
 	/// <summary>Wraps wxEVT_ACTIVATE.</summary>
-	public static EventType<ActivateEvent> Activate { get; } = new(WxKitNative.EventTypeActivate, static native => new ActivateEvent((WxkEvent*)native));
+	public static EventType<ActivateEvent> Activate => ActivateType.Value;
+
+	private static class ActivateType {
+		public static readonly EventType<ActivateEvent> Value = new(WxKitNative.EventTypeActivate, static native => new ActivateEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_ACTIVATE_APP.</summary>
-	public static EventType<ActivateEvent> ActivateApp { get; } = new(WxKitNative.EventTypeActivateApp, static native => new ActivateEvent((WxkEvent*)native));
+	public static EventType<ActivateEvent> ActivateApp => ActivateAppType.Value;
+
+	private static class ActivateAppType {
+		public static readonly EventType<ActivateEvent> Value = new(WxKitNative.EventTypeActivateApp, static native => new ActivateEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_AUX1_DCLICK.</summary>
-	public static EventType<MouseEvent> Aux1Dclick { get; } = new(WxKitNative.EventTypeAux1Dclick, static native => new MouseEvent((WxkEvent*)native));
+	public static EventType<MouseEvent> Aux1Dclick => Aux1DclickType.Value;
+
+	private static class Aux1DclickType {
+		public static readonly EventType<MouseEvent> Value = new(WxKitNative.EventTypeAux1Dclick, static native => new MouseEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_AUX1_DOWN.</summary>
-	public static EventType<MouseEvent> Aux1Down { get; } = new(WxKitNative.EventTypeAux1Down, static native => new MouseEvent((WxkEvent*)native));
+	public static EventType<MouseEvent> Aux1Down => Aux1DownType.Value;
+
+	private static class Aux1DownType {
+		public static readonly EventType<MouseEvent> Value = new(WxKitNative.EventTypeAux1Down, static native => new MouseEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_AUX1_UP.</summary>
-	public static EventType<MouseEvent> Aux1Up { get; } = new(WxKitNative.EventTypeAux1Up, static native => new MouseEvent((WxkEvent*)native));
+	public static EventType<MouseEvent> Aux1Up => Aux1UpType.Value;
+
+	private static class Aux1UpType {
+		public static readonly EventType<MouseEvent> Value = new(WxKitNative.EventTypeAux1Up, static native => new MouseEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_AUX2_DCLICK.</summary>
-	public static EventType<MouseEvent> Aux2Dclick { get; } = new(WxKitNative.EventTypeAux2Dclick, static native => new MouseEvent((WxkEvent*)native));
+	public static EventType<MouseEvent> Aux2Dclick => Aux2DclickType.Value;
+
+	private static class Aux2DclickType {
+		public static readonly EventType<MouseEvent> Value = new(WxKitNative.EventTypeAux2Dclick, static native => new MouseEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_AUX2_DOWN.</summary>
-	public static EventType<MouseEvent> Aux2Down { get; } = new(WxKitNative.EventTypeAux2Down, static native => new MouseEvent((WxkEvent*)native));
+	public static EventType<MouseEvent> Aux2Down => Aux2DownType.Value;
+
+	private static class Aux2DownType {
+		public static readonly EventType<MouseEvent> Value = new(WxKitNative.EventTypeAux2Down, static native => new MouseEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_AUX2_UP.</summary>
-	public static EventType<MouseEvent> Aux2Up { get; } = new(WxKitNative.EventTypeAux2Up, static native => new MouseEvent((WxkEvent*)native));
+	public static EventType<MouseEvent> Aux2Up => Aux2UpType.Value;
+
+	private static class Aux2UpType {
+		public static readonly EventType<MouseEvent> Value = new(WxKitNative.EventTypeAux2Up, static native => new MouseEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_BUTTON.</summary>
-	public static EventType<CommandEvent> Button { get; } = new(WxKitNative.EventTypeButton, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> Button => ButtonType.Value;
+
+	private static class ButtonType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeButton, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_CHAR.</summary>
-	public static EventType<KeyEvent> Char { get; } = new(WxKitNative.EventTypeChar, static native => new KeyEvent((WxkEvent*)native));
+	public static EventType<KeyEvent> Char => CharType.Value;
+
+	private static class CharType {
+		public static readonly EventType<KeyEvent> Value = new(WxKitNative.EventTypeChar, static native => new KeyEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_CHAR_HOOK.</summary>
-	public static EventType<KeyEvent> CharHook { get; } = new(WxKitNative.EventTypeCharHook, static native => new KeyEvent((WxkEvent*)native));
+	public static EventType<KeyEvent> CharHook => CharHookType.Value;
+
+	private static class CharHookType {
+		public static readonly EventType<KeyEvent> Value = new(WxKitNative.EventTypeCharHook, static native => new KeyEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_CHECKBOX.</summary>
-	public static EventType<CommandEvent> Checkbox { get; } = new(WxKitNative.EventTypeCheckbox, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> Checkbox => CheckboxType.Value;
+
+	private static class CheckboxType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeCheckbox, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_CHECKLISTBOX.</summary>
-	public static EventType<CommandEvent> Checklistbox { get; } = new(WxKitNative.EventTypeChecklistbox, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> Checklistbox => ChecklistboxType.Value;
+
+	private static class ChecklistboxType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeChecklistbox, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_CHILD_FOCUS.</summary>
-	public static EventType<ChildFocusEvent> ChildFocus { get; } = new(WxKitNative.EventTypeChildFocus, static native => new ChildFocusEvent((WxkEvent*)native));
+	public static EventType<ChildFocusEvent> ChildFocus => ChildFocusType.Value;
+
+	private static class ChildFocusType {
+		public static readonly EventType<ChildFocusEvent> Value = new(WxKitNative.EventTypeChildFocus, static native => new ChildFocusEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_CHOICE.</summary>
-	public static EventType<CommandEvent> Choice { get; } = new(WxKitNative.EventTypeChoice, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> Choice => ChoiceType.Value;
+
+	private static class ChoiceType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeChoice, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_CLOSE_WINDOW.</summary>
-	public static EventType<CloseEvent> CloseWindow { get; } = new(WxKitNative.EventTypeCloseWindow, static native => new CloseEvent((WxkEvent*)native));
+	public static EventType<CloseEvent> CloseWindow => CloseWindowType.Value;
+
+	private static class CloseWindowType {
+		public static readonly EventType<CloseEvent> Value = new(WxKitNative.EventTypeCloseWindow, static native => new CloseEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_COLLAPSIBLEPANE_CHANGED.</summary>
-	public static EventType<CollapsiblePaneEvent> CollapsiblepaneChanged { get; } = new(WxKitNative.EventTypeCollapsiblepaneChanged, static native => new CollapsiblePaneEvent((WxkEvent*)native));
+	public static EventType<CollapsiblePaneEvent> CollapsiblepaneChanged => CollapsiblepaneChangedType.Value;
+
+	private static class CollapsiblepaneChangedType {
+		public static readonly EventType<CollapsiblePaneEvent> Value = new(WxKitNative.EventTypeCollapsiblepaneChanged, static native => new CollapsiblePaneEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_COMBOBOX.</summary>
-	public static EventType<CommandEvent> ComboBox { get; } = new(WxKitNative.EventTypeComboBox, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> ComboBox => ComboBoxType.Value;
+
+	private static class ComboBoxType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeComboBox, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_COMBOBOX_CLOSEUP.</summary>
-	public static EventType<CommandEvent> ComboBoxCloseup { get; } = new(WxKitNative.EventTypeComboBoxCloseup, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> ComboBoxCloseup => ComboBoxCloseupType.Value;
+
+	private static class ComboBoxCloseupType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeComboBoxCloseup, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_COMBOBOX_DROPDOWN.</summary>
-	public static EventType<CommandEvent> ComboBoxDropdown { get; } = new(WxKitNative.EventTypeComboBoxDropdown, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> ComboBoxDropdown => ComboBoxDropdownType.Value;
+
+	private static class ComboBoxDropdownType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeComboBoxDropdown, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_COMMAND_ENTER.</summary>
-	public static EventType<CommandEvent> CommandEnter { get; } = new(WxKitNative.EventTypeCommandEnter, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> CommandEnter => CommandEnterType.Value;
+
+	private static class CommandEnterType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeCommandEnter, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_COMMAND_KILL_FOCUS.</summary>
-	public static EventType<CommandEvent> CommandKillFocus { get; } = new(WxKitNative.EventTypeCommandKillFocus, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> CommandKillFocus => CommandKillFocusType.Value;
+
+	private static class CommandKillFocusType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeCommandKillFocus, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_COMMAND_LEFT_CLICK.</summary>
-	public static EventType<CommandEvent> CommandLeftClick { get; } = new(WxKitNative.EventTypeCommandLeftClick, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> CommandLeftClick => CommandLeftClickType.Value;
+
+	private static class CommandLeftClickType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeCommandLeftClick, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_COMMAND_LEFT_DCLICK.</summary>
-	public static EventType<CommandEvent> CommandLeftDclick { get; } = new(WxKitNative.EventTypeCommandLeftDclick, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> CommandLeftDclick => CommandLeftDclickType.Value;
+
+	private static class CommandLeftDclickType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeCommandLeftDclick, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_COMMAND_RIGHT_CLICK.</summary>
-	public static EventType<CommandEvent> CommandRightClick { get; } = new(WxKitNative.EventTypeCommandRightClick, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> CommandRightClick => CommandRightClickType.Value;
+
+	private static class CommandRightClickType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeCommandRightClick, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_COMMAND_SET_FOCUS.</summary>
-	public static EventType<CommandEvent> CommandSetFocus { get; } = new(WxKitNative.EventTypeCommandSetFocus, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> CommandSetFocus => CommandSetFocusType.Value;
+
+	private static class CommandSetFocusType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeCommandSetFocus, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_CONTEXT_MENU.</summary>
-	public static EventType<CommandEvent> ContextMenu { get; } = new(WxKitNative.EventTypeContextMenu, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> ContextMenu => ContextMenuType.Value;
+
+	private static class ContextMenuType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeContextMenu, static native => new CommandEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_DATAVIEW_CACHE_HINT.</summary>
+	public static EventType<DataViewEvent> DataViewCacheHint => DataViewCacheHintType.Value;
+
+	private static class DataViewCacheHintType {
+		public static readonly EventType<DataViewEvent> Value = new(WxKitNative.EventTypeDataViewCacheHint, static native => new DataViewEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_DATAVIEW_COLUMN_HEADER_CLICK.</summary>
+	public static EventType<DataViewEvent> DataViewColumnHeaderClick => DataViewColumnHeaderClickType.Value;
+
+	private static class DataViewColumnHeaderClickType {
+		public static readonly EventType<DataViewEvent> Value = new(WxKitNative.EventTypeDataViewColumnHeaderClick, static native => new DataViewEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_DATAVIEW_COLUMN_HEADER_RIGHT_CLICK.</summary>
+	public static EventType<DataViewEvent> DataViewColumnHeaderRightClick => DataViewColumnHeaderRightClickType.Value;
+
+	private static class DataViewColumnHeaderRightClickType {
+		public static readonly EventType<DataViewEvent> Value = new(WxKitNative.EventTypeDataViewColumnHeaderRightClick, static native => new DataViewEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_DATAVIEW_COLUMN_REORDERED.</summary>
+	public static EventType<DataViewEvent> DataViewColumnReordered => DataViewColumnReorderedType.Value;
+
+	private static class DataViewColumnReorderedType {
+		public static readonly EventType<DataViewEvent> Value = new(WxKitNative.EventTypeDataViewColumnReordered, static native => new DataViewEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_DATAVIEW_COLUMN_SORTED.</summary>
+	public static EventType<DataViewEvent> DataViewColumnSorted => DataViewColumnSortedType.Value;
+
+	private static class DataViewColumnSortedType {
+		public static readonly EventType<DataViewEvent> Value = new(WxKitNative.EventTypeDataViewColumnSorted, static native => new DataViewEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_DATAVIEW_ITEM_ACTIVATED.</summary>
+	public static EventType<DataViewEvent> DataViewItemActivated => DataViewItemActivatedType.Value;
+
+	private static class DataViewItemActivatedType {
+		public static readonly EventType<DataViewEvent> Value = new(WxKitNative.EventTypeDataViewItemActivated, static native => new DataViewEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_DATAVIEW_ITEM_BEGIN_DRAG.</summary>
+	public static EventType<DataViewEvent> DataViewItemBeginDrag => DataViewItemBeginDragType.Value;
+
+	private static class DataViewItemBeginDragType {
+		public static readonly EventType<DataViewEvent> Value = new(WxKitNative.EventTypeDataViewItemBeginDrag, static native => new DataViewEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_DATAVIEW_ITEM_COLLAPSED.</summary>
+	public static EventType<DataViewEvent> DataViewItemCollapsed => DataViewItemCollapsedType.Value;
+
+	private static class DataViewItemCollapsedType {
+		public static readonly EventType<DataViewEvent> Value = new(WxKitNative.EventTypeDataViewItemCollapsed, static native => new DataViewEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_DATAVIEW_ITEM_COLLAPSING.</summary>
+	public static EventType<DataViewEvent> DataViewItemCollapsing => DataViewItemCollapsingType.Value;
+
+	private static class DataViewItemCollapsingType {
+		public static readonly EventType<DataViewEvent> Value = new(WxKitNative.EventTypeDataViewItemCollapsing, static native => new DataViewEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_DATAVIEW_ITEM_CONTEXT_MENU.</summary>
+	public static EventType<DataViewEvent> DataViewItemContextMenu => DataViewItemContextMenuType.Value;
+
+	private static class DataViewItemContextMenuType {
+		public static readonly EventType<DataViewEvent> Value = new(WxKitNative.EventTypeDataViewItemContextMenu, static native => new DataViewEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_DATAVIEW_ITEM_DROP.</summary>
+	public static EventType<DataViewEvent> DataViewItemDrop => DataViewItemDropType.Value;
+
+	private static class DataViewItemDropType {
+		public static readonly EventType<DataViewEvent> Value = new(WxKitNative.EventTypeDataViewItemDrop, static native => new DataViewEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_DATAVIEW_ITEM_DROP_POSSIBLE.</summary>
+	public static EventType<DataViewEvent> DataViewItemDropPossible => DataViewItemDropPossibleType.Value;
+
+	private static class DataViewItemDropPossibleType {
+		public static readonly EventType<DataViewEvent> Value = new(WxKitNative.EventTypeDataViewItemDropPossible, static native => new DataViewEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_DATAVIEW_ITEM_EDITING_DONE.</summary>
+	public static EventType<DataViewEvent> DataViewItemEditingDone => DataViewItemEditingDoneType.Value;
+
+	private static class DataViewItemEditingDoneType {
+		public static readonly EventType<DataViewEvent> Value = new(WxKitNative.EventTypeDataViewItemEditingDone, static native => new DataViewEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_DATAVIEW_ITEM_EDITING_STARTED.</summary>
+	public static EventType<DataViewEvent> DataViewItemEditingStarted => DataViewItemEditingStartedType.Value;
+
+	private static class DataViewItemEditingStartedType {
+		public static readonly EventType<DataViewEvent> Value = new(WxKitNative.EventTypeDataViewItemEditingStarted, static native => new DataViewEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_DATAVIEW_ITEM_EXPANDED.</summary>
+	public static EventType<DataViewEvent> DataViewItemExpanded => DataViewItemExpandedType.Value;
+
+	private static class DataViewItemExpandedType {
+		public static readonly EventType<DataViewEvent> Value = new(WxKitNative.EventTypeDataViewItemExpanded, static native => new DataViewEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_DATAVIEW_ITEM_EXPANDING.</summary>
+	public static EventType<DataViewEvent> DataViewItemExpanding => DataViewItemExpandingType.Value;
+
+	private static class DataViewItemExpandingType {
+		public static readonly EventType<DataViewEvent> Value = new(WxKitNative.EventTypeDataViewItemExpanding, static native => new DataViewEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_DATAVIEW_ITEM_START_EDITING.</summary>
+	public static EventType<DataViewEvent> DataViewItemStartEditing => DataViewItemStartEditingType.Value;
+
+	private static class DataViewItemStartEditingType {
+		public static readonly EventType<DataViewEvent> Value = new(WxKitNative.EventTypeDataViewItemStartEditing, static native => new DataViewEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_DATAVIEW_ITEM_VALUE_CHANGED.</summary>
+	public static EventType<DataViewEvent> DataViewItemValueChanged => DataViewItemValueChangedType.Value;
+
+	private static class DataViewItemValueChangedType {
+		public static readonly EventType<DataViewEvent> Value = new(WxKitNative.EventTypeDataViewItemValueChanged, static native => new DataViewEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_DATAVIEW_SELECTION_CHANGED.</summary>
+	public static EventType<DataViewEvent> DataViewSelectionChanged => DataViewSelectionChangedType.Value;
+
+	private static class DataViewSelectionChangedType {
+		public static readonly EventType<DataViewEvent> Value = new(WxKitNative.EventTypeDataViewSelectionChanged, static native => new DataViewEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_DPI_CHANGED.</summary>
-	public static EventType<DPIChangedEvent> DpiChanged { get; } = new(WxKitNative.EventTypeDpiChanged, static native => new DPIChangedEvent((WxkEvent*)native));
+	public static EventType<DPIChangedEvent> DpiChanged => DpiChangedType.Value;
+
+	private static class DpiChangedType {
+		public static readonly EventType<DPIChangedEvent> Value = new(WxKitNative.EventTypeDpiChanged, static native => new DPIChangedEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_DROP_FILES.</summary>
-	public static EventType<Event> DropFiles { get; } = new(WxKitNative.EventTypeDropFiles, static native => new Event((WxkEvent*)native));
+	public static EventType<Event> DropFiles => DropFilesType.Value;
+
+	private static class DropFilesType {
+		public static readonly EventType<Event> Value = new(WxKitNative.EventTypeDropFiles, static native => new Event((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_END_SESSION.</summary>
-	public static EventType<CloseEvent> EndSession { get; } = new(WxKitNative.EventTypeEndSession, static native => new CloseEvent((WxkEvent*)native));
+	public static EventType<CloseEvent> EndSession => EndSessionType.Value;
+
+	private static class EndSessionType {
+		public static readonly EventType<CloseEvent> Value = new(WxKitNative.EventTypeEndSession, static native => new CloseEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_ENTER_WINDOW.</summary>
-	public static EventType<MouseEvent> EnterWindow { get; } = new(WxKitNative.EventTypeEnterWindow, static native => new MouseEvent((WxkEvent*)native));
+	public static EventType<MouseEvent> EnterWindow => EnterWindowType.Value;
+
+	private static class EnterWindowType {
+		public static readonly EventType<MouseEvent> Value = new(WxKitNative.EventTypeEnterWindow, static native => new MouseEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_ERASE_BACKGROUND.</summary>
-	public static EventType<EraseEvent> EraseBackground { get; } = new(WxKitNative.EventTypeEraseBackground, static native => new EraseEvent((WxkEvent*)native));
+	public static EventType<EraseEvent> EraseBackground => EraseBackgroundType.Value;
+
+	private static class EraseBackgroundType {
+		public static readonly EventType<EraseEvent> Value = new(WxKitNative.EventTypeEraseBackground, static native => new EraseEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_FULLSCREEN.</summary>
-	public static EventType<FullScreenEvent> Fullscreen { get; } = new(WxKitNative.EventTypeFullscreen, static native => new FullScreenEvent((WxkEvent*)native));
+	public static EventType<FullScreenEvent> Fullscreen => FullscreenType.Value;
+
+	private static class FullscreenType {
+		public static readonly EventType<FullScreenEvent> Value = new(WxKitNative.EventTypeFullscreen, static native => new FullScreenEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_HELP.</summary>
-	public static EventType<HelpEvent> Help { get; } = new(WxKitNative.EventTypeHelp, static native => new HelpEvent((WxkEvent*)native));
+	public static EventType<HelpEvent> Help => HelpType.Value;
+
+	private static class HelpType {
+		public static readonly EventType<HelpEvent> Value = new(WxKitNative.EventTypeHelp, static native => new HelpEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_HYPERLINK.</summary>
-	public static EventType<HyperlinkEvent> Hyperlink { get; } = new(WxKitNative.EventTypeHyperlink, static native => new HyperlinkEvent((WxkEvent*)native));
+	public static EventType<HyperlinkEvent> Hyperlink => HyperlinkType.Value;
+
+	private static class HyperlinkType {
+		public static readonly EventType<HyperlinkEvent> Value = new(WxKitNative.EventTypeHyperlink, static native => new HyperlinkEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_ICONIZE.</summary>
-	public static EventType<IconizeEvent> Iconize { get; } = new(WxKitNative.EventTypeIconize, static native => new IconizeEvent((WxkEvent*)native));
+	public static EventType<IconizeEvent> Iconize => IconizeType.Value;
+
+	private static class IconizeType {
+		public static readonly EventType<IconizeEvent> Value = new(WxKitNative.EventTypeIconize, static native => new IconizeEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_IDLE.</summary>
-	public static EventType<IdleEvent> Idle { get; } = new(WxKitNative.EventTypeIdle, static native => new IdleEvent((WxkEvent*)native));
+	public static EventType<IdleEvent> Idle => IdleType.Value;
+
+	private static class IdleType {
+		public static readonly EventType<IdleEvent> Value = new(WxKitNative.EventTypeIdle, static native => new IdleEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_INIT_DIALOG.</summary>
-	public static EventType<InitDialogEvent> InitDialog { get; } = new(WxKitNative.EventTypeInitDialog, static native => new InitDialogEvent((WxkEvent*)native));
+	public static EventType<InitDialogEvent> InitDialog => InitDialogType.Value;
+
+	private static class InitDialogType {
+		public static readonly EventType<InitDialogEvent> Value = new(WxKitNative.EventTypeInitDialog, static native => new InitDialogEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_KEY_DOWN.</summary>
-	public static EventType<KeyEvent> KeyDown { get; } = new(WxKitNative.EventTypeKeyDown, static native => new KeyEvent((WxkEvent*)native));
+	public static EventType<KeyEvent> KeyDown => KeyDownType.Value;
+
+	private static class KeyDownType {
+		public static readonly EventType<KeyEvent> Value = new(WxKitNative.EventTypeKeyDown, static native => new KeyEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_KEY_UP.</summary>
-	public static EventType<KeyEvent> KeyUp { get; } = new(WxKitNative.EventTypeKeyUp, static native => new KeyEvent((WxkEvent*)native));
+	public static EventType<KeyEvent> KeyUp => KeyUpType.Value;
+
+	private static class KeyUpType {
+		public static readonly EventType<KeyEvent> Value = new(WxKitNative.EventTypeKeyUp, static native => new KeyEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_KILL_FOCUS.</summary>
-	public static EventType<FocusEvent> KillFocus { get; } = new(WxKitNative.EventTypeKillFocus, static native => new FocusEvent((WxkEvent*)native));
+	public static EventType<FocusEvent> KillFocus => KillFocusType.Value;
+
+	private static class KillFocusType {
+		public static readonly EventType<FocusEvent> Value = new(WxKitNative.EventTypeKillFocus, static native => new FocusEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_LEAVE_WINDOW.</summary>
-	public static EventType<MouseEvent> LeaveWindow { get; } = new(WxKitNative.EventTypeLeaveWindow, static native => new MouseEvent((WxkEvent*)native));
+	public static EventType<MouseEvent> LeaveWindow => LeaveWindowType.Value;
+
+	private static class LeaveWindowType {
+		public static readonly EventType<MouseEvent> Value = new(WxKitNative.EventTypeLeaveWindow, static native => new MouseEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_LEFT_DCLICK.</summary>
-	public static EventType<MouseEvent> LeftDclick { get; } = new(WxKitNative.EventTypeLeftDclick, static native => new MouseEvent((WxkEvent*)native));
+	public static EventType<MouseEvent> LeftDclick => LeftDclickType.Value;
+
+	private static class LeftDclickType {
+		public static readonly EventType<MouseEvent> Value = new(WxKitNative.EventTypeLeftDclick, static native => new MouseEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_LEFT_DOWN.</summary>
-	public static EventType<MouseEvent> LeftDown { get; } = new(WxKitNative.EventTypeLeftDown, static native => new MouseEvent((WxkEvent*)native));
+	public static EventType<MouseEvent> LeftDown => LeftDownType.Value;
+
+	private static class LeftDownType {
+		public static readonly EventType<MouseEvent> Value = new(WxKitNative.EventTypeLeftDown, static native => new MouseEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_LEFT_UP.</summary>
-	public static EventType<MouseEvent> LeftUp { get; } = new(WxKitNative.EventTypeLeftUp, static native => new MouseEvent((WxkEvent*)native));
+	public static EventType<MouseEvent> LeftUp => LeftUpType.Value;
+
+	private static class LeftUpType {
+		public static readonly EventType<MouseEvent> Value = new(WxKitNative.EventTypeLeftUp, static native => new MouseEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_LIST_BEGIN_DRAG.</summary>
-	public static EventType<ListEvent> ListBeginDrag { get; } = new(WxKitNative.EventTypeListBeginDrag, static native => new ListEvent((WxkEvent*)native));
+	public static EventType<ListEvent> ListBeginDrag => ListBeginDragType.Value;
+
+	private static class ListBeginDragType {
+		public static readonly EventType<ListEvent> Value = new(WxKitNative.EventTypeListBeginDrag, static native => new ListEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_LIST_BEGIN_LABEL_EDIT.</summary>
-	public static EventType<ListEvent> ListBeginLabelEdit { get; } = new(WxKitNative.EventTypeListBeginLabelEdit, static native => new ListEvent((WxkEvent*)native));
+	public static EventType<ListEvent> ListBeginLabelEdit => ListBeginLabelEditType.Value;
+
+	private static class ListBeginLabelEditType {
+		public static readonly EventType<ListEvent> Value = new(WxKitNative.EventTypeListBeginLabelEdit, static native => new ListEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_LIST_BEGIN_RDRAG.</summary>
-	public static EventType<ListEvent> ListBeginRdrag { get; } = new(WxKitNative.EventTypeListBeginRdrag, static native => new ListEvent((WxkEvent*)native));
+	public static EventType<ListEvent> ListBeginRdrag => ListBeginRdragType.Value;
+
+	private static class ListBeginRdragType {
+		public static readonly EventType<ListEvent> Value = new(WxKitNative.EventTypeListBeginRdrag, static native => new ListEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_LIST_CACHE_HINT.</summary>
-	public static EventType<ListEvent> ListCacheHint { get; } = new(WxKitNative.EventTypeListCacheHint, static native => new ListEvent((WxkEvent*)native));
+	public static EventType<ListEvent> ListCacheHint => ListCacheHintType.Value;
+
+	private static class ListCacheHintType {
+		public static readonly EventType<ListEvent> Value = new(WxKitNative.EventTypeListCacheHint, static native => new ListEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_LIST_COL_BEGIN_DRAG.</summary>
-	public static EventType<ListEvent> ListColBeginDrag { get; } = new(WxKitNative.EventTypeListColBeginDrag, static native => new ListEvent((WxkEvent*)native));
+	public static EventType<ListEvent> ListColBeginDrag => ListColBeginDragType.Value;
+
+	private static class ListColBeginDragType {
+		public static readonly EventType<ListEvent> Value = new(WxKitNative.EventTypeListColBeginDrag, static native => new ListEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_LIST_COL_CLICK.</summary>
-	public static EventType<ListEvent> ListColClick { get; } = new(WxKitNative.EventTypeListColClick, static native => new ListEvent((WxkEvent*)native));
+	public static EventType<ListEvent> ListColClick => ListColClickType.Value;
+
+	private static class ListColClickType {
+		public static readonly EventType<ListEvent> Value = new(WxKitNative.EventTypeListColClick, static native => new ListEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_LIST_COL_DRAGGING.</summary>
-	public static EventType<ListEvent> ListColDragging { get; } = new(WxKitNative.EventTypeListColDragging, static native => new ListEvent((WxkEvent*)native));
+	public static EventType<ListEvent> ListColDragging => ListColDraggingType.Value;
+
+	private static class ListColDraggingType {
+		public static readonly EventType<ListEvent> Value = new(WxKitNative.EventTypeListColDragging, static native => new ListEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_LIST_COL_END_DRAG.</summary>
-	public static EventType<ListEvent> ListColEndDrag { get; } = new(WxKitNative.EventTypeListColEndDrag, static native => new ListEvent((WxkEvent*)native));
+	public static EventType<ListEvent> ListColEndDrag => ListColEndDragType.Value;
+
+	private static class ListColEndDragType {
+		public static readonly EventType<ListEvent> Value = new(WxKitNative.EventTypeListColEndDrag, static native => new ListEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_LIST_COL_RIGHT_CLICK.</summary>
-	public static EventType<ListEvent> ListColRightClick { get; } = new(WxKitNative.EventTypeListColRightClick, static native => new ListEvent((WxkEvent*)native));
+	public static EventType<ListEvent> ListColRightClick => ListColRightClickType.Value;
+
+	private static class ListColRightClickType {
+		public static readonly EventType<ListEvent> Value = new(WxKitNative.EventTypeListColRightClick, static native => new ListEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_LIST_DELETE_ALL_ITEMS.</summary>
-	public static EventType<ListEvent> ListDeleteAllItems { get; } = new(WxKitNative.EventTypeListDeleteAllItems, static native => new ListEvent((WxkEvent*)native));
+	public static EventType<ListEvent> ListDeleteAllItems => ListDeleteAllItemsType.Value;
+
+	private static class ListDeleteAllItemsType {
+		public static readonly EventType<ListEvent> Value = new(WxKitNative.EventTypeListDeleteAllItems, static native => new ListEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_LIST_DELETE_ITEM.</summary>
-	public static EventType<ListEvent> ListDeleteItem { get; } = new(WxKitNative.EventTypeListDeleteItem, static native => new ListEvent((WxkEvent*)native));
+	public static EventType<ListEvent> ListDeleteItem => ListDeleteItemType.Value;
+
+	private static class ListDeleteItemType {
+		public static readonly EventType<ListEvent> Value = new(WxKitNative.EventTypeListDeleteItem, static native => new ListEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_LIST_END_LABEL_EDIT.</summary>
-	public static EventType<ListEvent> ListEndLabelEdit { get; } = new(WxKitNative.EventTypeListEndLabelEdit, static native => new ListEvent((WxkEvent*)native));
+	public static EventType<ListEvent> ListEndLabelEdit => ListEndLabelEditType.Value;
+
+	private static class ListEndLabelEditType {
+		public static readonly EventType<ListEvent> Value = new(WxKitNative.EventTypeListEndLabelEdit, static native => new ListEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_LIST_INSERT_ITEM.</summary>
-	public static EventType<ListEvent> ListInsertItem { get; } = new(WxKitNative.EventTypeListInsertItem, static native => new ListEvent((WxkEvent*)native));
+	public static EventType<ListEvent> ListInsertItem => ListInsertItemType.Value;
+
+	private static class ListInsertItemType {
+		public static readonly EventType<ListEvent> Value = new(WxKitNative.EventTypeListInsertItem, static native => new ListEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_LIST_ITEM_ACTIVATED.</summary>
-	public static EventType<ListEvent> ListItemActivated { get; } = new(WxKitNative.EventTypeListItemActivated, static native => new ListEvent((WxkEvent*)native));
+	public static EventType<ListEvent> ListItemActivated => ListItemActivatedType.Value;
+
+	private static class ListItemActivatedType {
+		public static readonly EventType<ListEvent> Value = new(WxKitNative.EventTypeListItemActivated, static native => new ListEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_LIST_ITEM_CHECKED.</summary>
-	public static EventType<ListEvent> ListItemChecked { get; } = new(WxKitNative.EventTypeListItemChecked, static native => new ListEvent((WxkEvent*)native));
+	public static EventType<ListEvent> ListItemChecked => ListItemCheckedType.Value;
+
+	private static class ListItemCheckedType {
+		public static readonly EventType<ListEvent> Value = new(WxKitNative.EventTypeListItemChecked, static native => new ListEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_LIST_ITEM_DESELECTED.</summary>
-	public static EventType<ListEvent> ListItemDeselected { get; } = new(WxKitNative.EventTypeListItemDeselected, static native => new ListEvent((WxkEvent*)native));
+	public static EventType<ListEvent> ListItemDeselected => ListItemDeselectedType.Value;
+
+	private static class ListItemDeselectedType {
+		public static readonly EventType<ListEvent> Value = new(WxKitNative.EventTypeListItemDeselected, static native => new ListEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_LIST_ITEM_FOCUSED.</summary>
-	public static EventType<ListEvent> ListItemFocused { get; } = new(WxKitNative.EventTypeListItemFocused, static native => new ListEvent((WxkEvent*)native));
+	public static EventType<ListEvent> ListItemFocused => ListItemFocusedType.Value;
+
+	private static class ListItemFocusedType {
+		public static readonly EventType<ListEvent> Value = new(WxKitNative.EventTypeListItemFocused, static native => new ListEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_LIST_ITEM_MIDDLE_CLICK.</summary>
-	public static EventType<ListEvent> ListItemMiddleClick { get; } = new(WxKitNative.EventTypeListItemMiddleClick, static native => new ListEvent((WxkEvent*)native));
+	public static EventType<ListEvent> ListItemMiddleClick => ListItemMiddleClickType.Value;
+
+	private static class ListItemMiddleClickType {
+		public static readonly EventType<ListEvent> Value = new(WxKitNative.EventTypeListItemMiddleClick, static native => new ListEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_LIST_ITEM_RIGHT_CLICK.</summary>
-	public static EventType<ListEvent> ListItemRightClick { get; } = new(WxKitNative.EventTypeListItemRightClick, static native => new ListEvent((WxkEvent*)native));
+	public static EventType<ListEvent> ListItemRightClick => ListItemRightClickType.Value;
+
+	private static class ListItemRightClickType {
+		public static readonly EventType<ListEvent> Value = new(WxKitNative.EventTypeListItemRightClick, static native => new ListEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_LIST_ITEM_SELECTED.</summary>
-	public static EventType<ListEvent> ListItemSelected { get; } = new(WxKitNative.EventTypeListItemSelected, static native => new ListEvent((WxkEvent*)native));
+	public static EventType<ListEvent> ListItemSelected => ListItemSelectedType.Value;
+
+	private static class ListItemSelectedType {
+		public static readonly EventType<ListEvent> Value = new(WxKitNative.EventTypeListItemSelected, static native => new ListEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_LIST_ITEM_UNCHECKED.</summary>
-	public static EventType<ListEvent> ListItemUnchecked { get; } = new(WxKitNative.EventTypeListItemUnchecked, static native => new ListEvent((WxkEvent*)native));
+	public static EventType<ListEvent> ListItemUnchecked => ListItemUncheckedType.Value;
+
+	private static class ListItemUncheckedType {
+		public static readonly EventType<ListEvent> Value = new(WxKitNative.EventTypeListItemUnchecked, static native => new ListEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_LIST_KEY_DOWN.</summary>
-	public static EventType<ListEvent> ListKeyDown { get; } = new(WxKitNative.EventTypeListKeyDown, static native => new ListEvent((WxkEvent*)native));
+	public static EventType<ListEvent> ListKeyDown => ListKeyDownType.Value;
+
+	private static class ListKeyDownType {
+		public static readonly EventType<ListEvent> Value = new(WxKitNative.EventTypeListKeyDown, static native => new ListEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_LISTBOX.</summary>
-	public static EventType<CommandEvent> Listbox { get; } = new(WxKitNative.EventTypeListbox, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> Listbox => ListboxType.Value;
+
+	private static class ListboxType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeListbox, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_LISTBOX_DCLICK.</summary>
-	public static EventType<CommandEvent> ListboxDclick { get; } = new(WxKitNative.EventTypeListboxDclick, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> ListboxDclick => ListboxDclickType.Value;
+
+	private static class ListboxDclickType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeListboxDclick, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_MAGNIFY.</summary>
-	public static EventType<MouseEvent> Magnify { get; } = new(WxKitNative.EventTypeMagnify, static native => new MouseEvent((WxkEvent*)native));
+	public static EventType<MouseEvent> Magnify => MagnifyType.Value;
+
+	private static class MagnifyType {
+		public static readonly EventType<MouseEvent> Value = new(WxKitNative.EventTypeMagnify, static native => new MouseEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_MAXIMIZE.</summary>
-	public static EventType<MaximizeEvent> Maximize { get; } = new(WxKitNative.EventTypeMaximize, static native => new MaximizeEvent((WxkEvent*)native));
+	public static EventType<MaximizeEvent> Maximize => MaximizeType.Value;
+
+	private static class MaximizeType {
+		public static readonly EventType<MaximizeEvent> Value = new(WxKitNative.EventTypeMaximize, static native => new MaximizeEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_MENU.</summary>
-	public static EventType<CommandEvent> Menu { get; } = new(WxKitNative.EventTypeMenu, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> Menu => MenuType.Value;
+
+	private static class MenuType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeMenu, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_MENU_CLOSE.</summary>
-	public static EventType<MenuEvent> MenuClose { get; } = new(WxKitNative.EventTypeMenuClose, static native => new MenuEvent((WxkEvent*)native));
+	public static EventType<MenuEvent> MenuClose => MenuCloseType.Value;
+
+	private static class MenuCloseType {
+		public static readonly EventType<MenuEvent> Value = new(WxKitNative.EventTypeMenuClose, static native => new MenuEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_MENU_HIGHLIGHT.</summary>
-	public static EventType<MenuEvent> MenuHighlight { get; } = new(WxKitNative.EventTypeMenuHighlight, static native => new MenuEvent((WxkEvent*)native));
+	public static EventType<MenuEvent> MenuHighlight => MenuHighlightType.Value;
+
+	private static class MenuHighlightType {
+		public static readonly EventType<MenuEvent> Value = new(WxKitNative.EventTypeMenuHighlight, static native => new MenuEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_MENU_OPEN.</summary>
-	public static EventType<MenuEvent> MenuOpen { get; } = new(WxKitNative.EventTypeMenuOpen, static native => new MenuEvent((WxkEvent*)native));
+	public static EventType<MenuEvent> MenuOpen => MenuOpenType.Value;
+
+	private static class MenuOpenType {
+		public static readonly EventType<MenuEvent> Value = new(WxKitNative.EventTypeMenuOpen, static native => new MenuEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_MIDDLE_DCLICK.</summary>
-	public static EventType<MouseEvent> MiddleDclick { get; } = new(WxKitNative.EventTypeMiddleDclick, static native => new MouseEvent((WxkEvent*)native));
+	public static EventType<MouseEvent> MiddleDclick => MiddleDclickType.Value;
+
+	private static class MiddleDclickType {
+		public static readonly EventType<MouseEvent> Value = new(WxKitNative.EventTypeMiddleDclick, static native => new MouseEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_MIDDLE_DOWN.</summary>
-	public static EventType<MouseEvent> MiddleDown { get; } = new(WxKitNative.EventTypeMiddleDown, static native => new MouseEvent((WxkEvent*)native));
+	public static EventType<MouseEvent> MiddleDown => MiddleDownType.Value;
+
+	private static class MiddleDownType {
+		public static readonly EventType<MouseEvent> Value = new(WxKitNative.EventTypeMiddleDown, static native => new MouseEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_MIDDLE_UP.</summary>
-	public static EventType<MouseEvent> MiddleUp { get; } = new(WxKitNative.EventTypeMiddleUp, static native => new MouseEvent((WxkEvent*)native));
+	public static EventType<MouseEvent> MiddleUp => MiddleUpType.Value;
+
+	private static class MiddleUpType {
+		public static readonly EventType<MouseEvent> Value = new(WxKitNative.EventTypeMiddleUp, static native => new MouseEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_MOTION.</summary>
-	public static EventType<MouseEvent> Motion { get; } = new(WxKitNative.EventTypeMotion, static native => new MouseEvent((WxkEvent*)native));
+	public static EventType<MouseEvent> Motion => MotionType.Value;
+
+	private static class MotionType {
+		public static readonly EventType<MouseEvent> Value = new(WxKitNative.EventTypeMotion, static native => new MouseEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_MOUSE_CAPTURE_CHANGED.</summary>
-	public static EventType<Event> MouseCaptureChanged { get; } = new(WxKitNative.EventTypeMouseCaptureChanged, static native => new Event((WxkEvent*)native));
+	public static EventType<Event> MouseCaptureChanged => MouseCaptureChangedType.Value;
+
+	private static class MouseCaptureChangedType {
+		public static readonly EventType<Event> Value = new(WxKitNative.EventTypeMouseCaptureChanged, static native => new Event((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_MOUSE_CAPTURE_LOST.</summary>
-	public static EventType<Event> MouseCaptureLost { get; } = new(WxKitNative.EventTypeMouseCaptureLost, static native => new Event((WxkEvent*)native));
+	public static EventType<Event> MouseCaptureLost => MouseCaptureLostType.Value;
+
+	private static class MouseCaptureLostType {
+		public static readonly EventType<Event> Value = new(WxKitNative.EventTypeMouseCaptureLost, static native => new Event((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_MOUSEWHEEL.</summary>
-	public static EventType<MouseEvent> Mousewheel { get; } = new(WxKitNative.EventTypeMousewheel, static native => new MouseEvent((WxkEvent*)native));
+	public static EventType<MouseEvent> Mousewheel => MousewheelType.Value;
+
+	private static class MousewheelType {
+		public static readonly EventType<MouseEvent> Value = new(WxKitNative.EventTypeMousewheel, static native => new MouseEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_MOVE.</summary>
-	public static EventType<MoveEvent> Move { get; } = new(WxKitNative.EventTypeMove, static native => new MoveEvent((WxkEvent*)native));
+	public static EventType<MoveEvent> Move => MoveType.Value;
+
+	private static class MoveType {
+		public static readonly EventType<MoveEvent> Value = new(WxKitNative.EventTypeMove, static native => new MoveEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_MOVE_END.</summary>
-	public static EventType<MoveEvent> MoveEnd { get; } = new(WxKitNative.EventTypeMoveEnd, static native => new MoveEvent((WxkEvent*)native));
+	public static EventType<MoveEvent> MoveEnd => MoveEndType.Value;
+
+	private static class MoveEndType {
+		public static readonly EventType<MoveEvent> Value = new(WxKitNative.EventTypeMoveEnd, static native => new MoveEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_MOVE_START.</summary>
-	public static EventType<MoveEvent> MoveStart { get; } = new(WxKitNative.EventTypeMoveStart, static native => new MoveEvent((WxkEvent*)native));
+	public static EventType<MoveEvent> MoveStart => MoveStartType.Value;
+
+	private static class MoveStartType {
+		public static readonly EventType<MoveEvent> Value = new(WxKitNative.EventTypeMoveStart, static native => new MoveEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_MOVING.</summary>
-	public static EventType<MoveEvent> Moving { get; } = new(WxKitNative.EventTypeMoving, static native => new MoveEvent((WxkEvent*)native));
+	public static EventType<MoveEvent> Moving => MovingType.Value;
+
+	private static class MovingType {
+		public static readonly EventType<MoveEvent> Value = new(WxKitNative.EventTypeMoving, static native => new MoveEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_NAVIGATION_KEY.</summary>
-	public static EventType<NavigationKeyEvent> NavigationKey { get; } = new(WxKitNative.EventTypeNavigationKey, static native => new NavigationKeyEvent((WxkEvent*)native));
+	public static EventType<NavigationKeyEvent> NavigationKey => NavigationKeyType.Value;
+
+	private static class NavigationKeyType {
+		public static readonly EventType<NavigationKeyEvent> Value = new(WxKitNative.EventTypeNavigationKey, static native => new NavigationKeyEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_NOTEBOOK_PAGE_CHANGED.</summary>
-	public static EventType<BookCtrlEvent> NotebookPageChanged { get; } = new(WxKitNative.EventTypeNotebookPageChanged, static native => new BookCtrlEvent((WxkEvent*)native));
+	public static EventType<BookCtrlEvent> NotebookPageChanged => NotebookPageChangedType.Value;
+
+	private static class NotebookPageChangedType {
+		public static readonly EventType<BookCtrlEvent> Value = new(WxKitNative.EventTypeNotebookPageChanged, static native => new BookCtrlEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_NOTEBOOK_PAGE_CHANGING.</summary>
-	public static EventType<BookCtrlEvent> NotebookPageChanging { get; } = new(WxKitNative.EventTypeNotebookPageChanging, static native => new BookCtrlEvent((WxkEvent*)native));
+	public static EventType<BookCtrlEvent> NotebookPageChanging => NotebookPageChangingType.Value;
+
+	private static class NotebookPageChangingType {
+		public static readonly EventType<BookCtrlEvent> Value = new(WxKitNative.EventTypeNotebookPageChanging, static native => new BookCtrlEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_PAINT.</summary>
-	public static EventType<PaintEvent> Paint { get; } = new(WxKitNative.EventTypePaint, static native => new PaintEvent((WxkEvent*)native));
+	public static EventType<PaintEvent> Paint => PaintType.Value;
+
+	private static class PaintType {
+		public static readonly EventType<PaintEvent> Value = new(WxKitNative.EventTypePaint, static native => new PaintEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_QUERY_END_SESSION.</summary>
-	public static EventType<CloseEvent> QueryEndSession { get; } = new(WxKitNative.EventTypeQueryEndSession, static native => new CloseEvent((WxkEvent*)native));
+	public static EventType<CloseEvent> QueryEndSession => QueryEndSessionType.Value;
+
+	private static class QueryEndSessionType {
+		public static readonly EventType<CloseEvent> Value = new(WxKitNative.EventTypeQueryEndSession, static native => new CloseEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_RADIOBUTTON.</summary>
-	public static EventType<CommandEvent> RadioButton { get; } = new(WxKitNative.EventTypeRadioButton, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> RadioButton => RadioButtonType.Value;
+
+	private static class RadioButtonType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeRadioButton, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_RADIOBOX.</summary>
-	public static EventType<CommandEvent> Radiobox { get; } = new(WxKitNative.EventTypeRadiobox, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> Radiobox => RadioboxType.Value;
+
+	private static class RadioboxType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeRadiobox, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_RIGHT_DCLICK.</summary>
-	public static EventType<MouseEvent> RightDclick { get; } = new(WxKitNative.EventTypeRightDclick, static native => new MouseEvent((WxkEvent*)native));
+	public static EventType<MouseEvent> RightDclick => RightDclickType.Value;
+
+	private static class RightDclickType {
+		public static readonly EventType<MouseEvent> Value = new(WxKitNative.EventTypeRightDclick, static native => new MouseEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_RIGHT_DOWN.</summary>
-	public static EventType<MouseEvent> RightDown { get; } = new(WxKitNative.EventTypeRightDown, static native => new MouseEvent((WxkEvent*)native));
+	public static EventType<MouseEvent> RightDown => RightDownType.Value;
+
+	private static class RightDownType {
+		public static readonly EventType<MouseEvent> Value = new(WxKitNative.EventTypeRightDown, static native => new MouseEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_RIGHT_UP.</summary>
-	public static EventType<MouseEvent> RightUp { get; } = new(WxKitNative.EventTypeRightUp, static native => new MouseEvent((WxkEvent*)native));
+	public static EventType<MouseEvent> RightUp => RightUpType.Value;
+
+	private static class RightUpType {
+		public static readonly EventType<MouseEvent> Value = new(WxKitNative.EventTypeRightUp, static native => new MouseEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SCROLLBAR.</summary>
-	public static EventType<ScrollEvent> ScrollBar { get; } = new(WxKitNative.EventTypeScrollBar, static native => new ScrollEvent((WxkEvent*)native));
+	public static EventType<ScrollEvent> ScrollBar => ScrollBarType.Value;
+
+	private static class ScrollBarType {
+		public static readonly EventType<ScrollEvent> Value = new(WxKitNative.EventTypeScrollBar, static native => new ScrollEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SCROLL_BOTTOM.</summary>
-	public static EventType<ScrollEvent> ScrollBottom { get; } = new(WxKitNative.EventTypeScrollBottom, static native => new ScrollEvent((WxkEvent*)native));
+	public static EventType<ScrollEvent> ScrollBottom => ScrollBottomType.Value;
+
+	private static class ScrollBottomType {
+		public static readonly EventType<ScrollEvent> Value = new(WxKitNative.EventTypeScrollBottom, static native => new ScrollEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SCROLL_CHANGED.</summary>
-	public static EventType<ScrollEvent> ScrollChanged { get; } = new(WxKitNative.EventTypeScrollChanged, static native => new ScrollEvent((WxkEvent*)native));
+	public static EventType<ScrollEvent> ScrollChanged => ScrollChangedType.Value;
+
+	private static class ScrollChangedType {
+		public static readonly EventType<ScrollEvent> Value = new(WxKitNative.EventTypeScrollChanged, static native => new ScrollEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SCROLL_LINEDOWN.</summary>
-	public static EventType<ScrollEvent> ScrollLinedown { get; } = new(WxKitNative.EventTypeScrollLinedown, static native => new ScrollEvent((WxkEvent*)native));
+	public static EventType<ScrollEvent> ScrollLinedown => ScrollLinedownType.Value;
+
+	private static class ScrollLinedownType {
+		public static readonly EventType<ScrollEvent> Value = new(WxKitNative.EventTypeScrollLinedown, static native => new ScrollEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SCROLL_LINEUP.</summary>
-	public static EventType<ScrollEvent> ScrollLineup { get; } = new(WxKitNative.EventTypeScrollLineup, static native => new ScrollEvent((WxkEvent*)native));
+	public static EventType<ScrollEvent> ScrollLineup => ScrollLineupType.Value;
+
+	private static class ScrollLineupType {
+		public static readonly EventType<ScrollEvent> Value = new(WxKitNative.EventTypeScrollLineup, static native => new ScrollEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SCROLL_PAGEDOWN.</summary>
-	public static EventType<ScrollEvent> ScrollPagedown { get; } = new(WxKitNative.EventTypeScrollPagedown, static native => new ScrollEvent((WxkEvent*)native));
+	public static EventType<ScrollEvent> ScrollPagedown => ScrollPagedownType.Value;
+
+	private static class ScrollPagedownType {
+		public static readonly EventType<ScrollEvent> Value = new(WxKitNative.EventTypeScrollPagedown, static native => new ScrollEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SCROLL_PAGEUP.</summary>
-	public static EventType<ScrollEvent> ScrollPageup { get; } = new(WxKitNative.EventTypeScrollPageup, static native => new ScrollEvent((WxkEvent*)native));
+	public static EventType<ScrollEvent> ScrollPageup => ScrollPageupType.Value;
+
+	private static class ScrollPageupType {
+		public static readonly EventType<ScrollEvent> Value = new(WxKitNative.EventTypeScrollPageup, static native => new ScrollEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SCROLL_THUMBRELEASE.</summary>
-	public static EventType<ScrollEvent> ScrollThumbrelease { get; } = new(WxKitNative.EventTypeScrollThumbrelease, static native => new ScrollEvent((WxkEvent*)native));
+	public static EventType<ScrollEvent> ScrollThumbrelease => ScrollThumbreleaseType.Value;
+
+	private static class ScrollThumbreleaseType {
+		public static readonly EventType<ScrollEvent> Value = new(WxKitNative.EventTypeScrollThumbrelease, static native => new ScrollEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SCROLL_THUMBTRACK.</summary>
-	public static EventType<ScrollEvent> ScrollThumbtrack { get; } = new(WxKitNative.EventTypeScrollThumbtrack, static native => new ScrollEvent((WxkEvent*)native));
+	public static EventType<ScrollEvent> ScrollThumbtrack => ScrollThumbtrackType.Value;
+
+	private static class ScrollThumbtrackType {
+		public static readonly EventType<ScrollEvent> Value = new(WxKitNative.EventTypeScrollThumbtrack, static native => new ScrollEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SCROLL_TOP.</summary>
-	public static EventType<ScrollEvent> ScrollTop { get; } = new(WxKitNative.EventTypeScrollTop, static native => new ScrollEvent((WxkEvent*)native));
+	public static EventType<ScrollEvent> ScrollTop => ScrollTopType.Value;
+
+	private static class ScrollTopType {
+		public static readonly EventType<ScrollEvent> Value = new(WxKitNative.EventTypeScrollTop, static native => new ScrollEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SCROLLWIN_BOTTOM.</summary>
-	public static EventType<ScrollWinEvent> ScrollwinBottom { get; } = new(WxKitNative.EventTypeScrollwinBottom, static native => new ScrollWinEvent((WxkEvent*)native));
+	public static EventType<ScrollWinEvent> ScrollwinBottom => ScrollwinBottomType.Value;
+
+	private static class ScrollwinBottomType {
+		public static readonly EventType<ScrollWinEvent> Value = new(WxKitNative.EventTypeScrollwinBottom, static native => new ScrollWinEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SCROLLWIN_LINEDOWN.</summary>
-	public static EventType<ScrollWinEvent> ScrollwinLinedown { get; } = new(WxKitNative.EventTypeScrollwinLinedown, static native => new ScrollWinEvent((WxkEvent*)native));
+	public static EventType<ScrollWinEvent> ScrollwinLinedown => ScrollwinLinedownType.Value;
+
+	private static class ScrollwinLinedownType {
+		public static readonly EventType<ScrollWinEvent> Value = new(WxKitNative.EventTypeScrollwinLinedown, static native => new ScrollWinEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SCROLLWIN_LINEUP.</summary>
-	public static EventType<ScrollWinEvent> ScrollwinLineup { get; } = new(WxKitNative.EventTypeScrollwinLineup, static native => new ScrollWinEvent((WxkEvent*)native));
+	public static EventType<ScrollWinEvent> ScrollwinLineup => ScrollwinLineupType.Value;
+
+	private static class ScrollwinLineupType {
+		public static readonly EventType<ScrollWinEvent> Value = new(WxKitNative.EventTypeScrollwinLineup, static native => new ScrollWinEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SCROLLWIN_PAGEDOWN.</summary>
-	public static EventType<ScrollWinEvent> ScrollwinPagedown { get; } = new(WxKitNative.EventTypeScrollwinPagedown, static native => new ScrollWinEvent((WxkEvent*)native));
+	public static EventType<ScrollWinEvent> ScrollwinPagedown => ScrollwinPagedownType.Value;
+
+	private static class ScrollwinPagedownType {
+		public static readonly EventType<ScrollWinEvent> Value = new(WxKitNative.EventTypeScrollwinPagedown, static native => new ScrollWinEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SCROLLWIN_PAGEUP.</summary>
-	public static EventType<ScrollWinEvent> ScrollwinPageup { get; } = new(WxKitNative.EventTypeScrollwinPageup, static native => new ScrollWinEvent((WxkEvent*)native));
+	public static EventType<ScrollWinEvent> ScrollwinPageup => ScrollwinPageupType.Value;
+
+	private static class ScrollwinPageupType {
+		public static readonly EventType<ScrollWinEvent> Value = new(WxKitNative.EventTypeScrollwinPageup, static native => new ScrollWinEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SCROLLWIN_THUMBRELEASE.</summary>
-	public static EventType<ScrollWinEvent> ScrollwinThumbrelease { get; } = new(WxKitNative.EventTypeScrollwinThumbrelease, static native => new ScrollWinEvent((WxkEvent*)native));
+	public static EventType<ScrollWinEvent> ScrollwinThumbrelease => ScrollwinThumbreleaseType.Value;
+
+	private static class ScrollwinThumbreleaseType {
+		public static readonly EventType<ScrollWinEvent> Value = new(WxKitNative.EventTypeScrollwinThumbrelease, static native => new ScrollWinEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SCROLLWIN_THUMBTRACK.</summary>
-	public static EventType<ScrollWinEvent> ScrollwinThumbtrack { get; } = new(WxKitNative.EventTypeScrollwinThumbtrack, static native => new ScrollWinEvent((WxkEvent*)native));
+	public static EventType<ScrollWinEvent> ScrollwinThumbtrack => ScrollwinThumbtrackType.Value;
+
+	private static class ScrollwinThumbtrackType {
+		public static readonly EventType<ScrollWinEvent> Value = new(WxKitNative.EventTypeScrollwinThumbtrack, static native => new ScrollWinEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SCROLLWIN_TOP.</summary>
-	public static EventType<ScrollWinEvent> ScrollwinTop { get; } = new(WxKitNative.EventTypeScrollwinTop, static native => new ScrollWinEvent((WxkEvent*)native));
+	public static EventType<ScrollWinEvent> ScrollwinTop => ScrollwinTopType.Value;
+
+	private static class ScrollwinTopType {
+		public static readonly EventType<ScrollWinEvent> Value = new(WxKitNative.EventTypeScrollwinTop, static native => new ScrollWinEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SEARCH.</summary>
-	public static EventType<CommandEvent> Search { get; } = new(WxKitNative.EventTypeSearch, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> Search => SearchType.Value;
+
+	private static class SearchType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeSearch, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SEARCH_CANCEL.</summary>
-	public static EventType<CommandEvent> SearchCancel { get; } = new(WxKitNative.EventTypeSearchCancel, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> SearchCancel => SearchCancelType.Value;
+
+	private static class SearchCancelType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeSearchCancel, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SET_CURSOR.</summary>
-	public static EventType<Event> SetCursor { get; } = new(WxKitNative.EventTypeSetCursor, static native => new Event((WxkEvent*)native));
+	public static EventType<Event> SetCursor => SetCursorType.Value;
+
+	private static class SetCursorType {
+		public static readonly EventType<Event> Value = new(WxKitNative.EventTypeSetCursor, static native => new Event((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SET_FOCUS.</summary>
-	public static EventType<FocusEvent> SetFocus { get; } = new(WxKitNative.EventTypeSetFocus, static native => new FocusEvent((WxkEvent*)native));
+	public static EventType<FocusEvent> SetFocus => SetFocusType.Value;
+
+	private static class SetFocusType {
+		public static readonly EventType<FocusEvent> Value = new(WxKitNative.EventTypeSetFocus, static native => new FocusEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SHOW.</summary>
-	public static EventType<ShowEvent> Show { get; } = new(WxKitNative.EventTypeShow, static native => new ShowEvent((WxkEvent*)native));
+	public static EventType<ShowEvent> Show => ShowType.Value;
+
+	private static class ShowType {
+		public static readonly EventType<ShowEvent> Value = new(WxKitNative.EventTypeShow, static native => new ShowEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SIZE.</summary>
-	public static EventType<SizeEvent> Size { get; } = new(WxKitNative.EventTypeSize, static native => new SizeEvent((WxkEvent*)native));
+	public static EventType<SizeEvent> Size => SizeType.Value;
+
+	private static class SizeType {
+		public static readonly EventType<SizeEvent> Value = new(WxKitNative.EventTypeSize, static native => new SizeEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SLIDER.</summary>
-	public static EventType<CommandEvent> Slider { get; } = new(WxKitNative.EventTypeSlider, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> Slider => SliderType.Value;
+
+	private static class SliderType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeSlider, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SPIN.</summary>
-	public static EventType<SpinEvent> Spin { get; } = new(WxKitNative.EventTypeSpin, static native => new SpinEvent((WxkEvent*)native));
+	public static EventType<SpinEvent> Spin => SpinType.Value;
+
+	private static class SpinType {
+		public static readonly EventType<SpinEvent> Value = new(WxKitNative.EventTypeSpin, static native => new SpinEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SPIN_DOWN.</summary>
-	public static EventType<SpinEvent> SpinDown { get; } = new(WxKitNative.EventTypeSpinDown, static native => new SpinEvent((WxkEvent*)native));
+	public static EventType<SpinEvent> SpinDown => SpinDownType.Value;
+
+	private static class SpinDownType {
+		public static readonly EventType<SpinEvent> Value = new(WxKitNative.EventTypeSpinDown, static native => new SpinEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SPIN_UP.</summary>
-	public static EventType<SpinEvent> SpinUp { get; } = new(WxKitNative.EventTypeSpinUp, static native => new SpinEvent((WxkEvent*)native));
+	public static EventType<SpinEvent> SpinUp => SpinUpType.Value;
+
+	private static class SpinUpType {
+		public static readonly EventType<SpinEvent> Value = new(WxKitNative.EventTypeSpinUp, static native => new SpinEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SPINCTRL.</summary>
-	public static EventType<SpinEvent> Spinctrl { get; } = new(WxKitNative.EventTypeSpinctrl, static native => new SpinEvent((WxkEvent*)native));
+	public static EventType<SpinEvent> Spinctrl => SpinctrlType.Value;
+
+	private static class SpinctrlType {
+		public static readonly EventType<SpinEvent> Value = new(WxKitNative.EventTypeSpinctrl, static native => new SpinEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SPINCTRLDOUBLE.</summary>
-	public static EventType<SpinDoubleEvent> Spinctrldouble { get; } = new(WxKitNative.EventTypeSpinctrldouble, static native => new SpinDoubleEvent((WxkEvent*)native));
+	public static EventType<SpinDoubleEvent> Spinctrldouble => SpinctrldoubleType.Value;
+
+	private static class SpinctrldoubleType {
+		public static readonly EventType<SpinDoubleEvent> Value = new(WxKitNative.EventTypeSpinctrldouble, static native => new SpinDoubleEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SPLITTER_DOUBLECLICKED.</summary>
-	public static EventType<SplitterEvent> SplitterDoubleclicked { get; } = new(WxKitNative.EventTypeSplitterDoubleclicked, static native => new SplitterEvent((WxkEvent*)native));
+	public static EventType<SplitterEvent> SplitterDoubleclicked => SplitterDoubleclickedType.Value;
+
+	private static class SplitterDoubleclickedType {
+		public static readonly EventType<SplitterEvent> Value = new(WxKitNative.EventTypeSplitterDoubleclicked, static native => new SplitterEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SPLITTER_SASH_POS_CHANGED.</summary>
-	public static EventType<SplitterEvent> SplitterSashPosChanged { get; } = new(WxKitNative.EventTypeSplitterSashPosChanged, static native => new SplitterEvent((WxkEvent*)native));
+	public static EventType<SplitterEvent> SplitterSashPosChanged => SplitterSashPosChangedType.Value;
+
+	private static class SplitterSashPosChangedType {
+		public static readonly EventType<SplitterEvent> Value = new(WxKitNative.EventTypeSplitterSashPosChanged, static native => new SplitterEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SPLITTER_SASH_POS_CHANGING.</summary>
-	public static EventType<SplitterEvent> SplitterSashPosChanging { get; } = new(WxKitNative.EventTypeSplitterSashPosChanging, static native => new SplitterEvent((WxkEvent*)native));
+	public static EventType<SplitterEvent> SplitterSashPosChanging => SplitterSashPosChangingType.Value;
+
+	private static class SplitterSashPosChangingType {
+		public static readonly EventType<SplitterEvent> Value = new(WxKitNative.EventTypeSplitterSashPosChanging, static native => new SplitterEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SPLITTER_SASH_POS_RESIZE.</summary>
-	public static EventType<SplitterEvent> SplitterSashPosResize { get; } = new(WxKitNative.EventTypeSplitterSashPosResize, static native => new SplitterEvent((WxkEvent*)native));
+	public static EventType<SplitterEvent> SplitterSashPosResize => SplitterSashPosResizeType.Value;
+
+	private static class SplitterSashPosResizeType {
+		public static readonly EventType<SplitterEvent> Value = new(WxKitNative.EventTypeSplitterSashPosResize, static native => new SplitterEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SPLITTER_UNSPLIT.</summary>
-	public static EventType<SplitterEvent> SplitterUnsplit { get; } = new(WxKitNative.EventTypeSplitterUnsplit, static native => new SplitterEvent((WxkEvent*)native));
+	public static EventType<SplitterEvent> SplitterUnsplit => SplitterUnsplitType.Value;
+
+	private static class SplitterUnsplitType {
+		public static readonly EventType<SplitterEvent> Value = new(WxKitNative.EventTypeSplitterUnsplit, static native => new SplitterEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_SYS_COLOUR_CHANGED.</summary>
-	public static EventType<SysColorChangedEvent> SysColorChanged { get; } = new(WxKitNative.EventTypeSysColorChanged, static native => new SysColorChangedEvent((WxkEvent*)native));
+	public static EventType<SysColorChangedEvent> SysColorChanged => SysColorChangedType.Value;
+
+	private static class SysColorChangedType {
+		public static readonly EventType<SysColorChangedEvent> Value = new(WxKitNative.EventTypeSysColorChanged, static native => new SysColorChangedEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TEXT.</summary>
-	public static EventType<CommandEvent> Text { get; } = new(WxKitNative.EventTypeText, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> Text => TextType.Value;
+
+	private static class TextType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeText, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TEXT_COPY.</summary>
-	public static EventType<CommandEvent> TextCopy { get; } = new(WxKitNative.EventTypeTextCopy, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> TextCopy => TextCopyType.Value;
+
+	private static class TextCopyType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeTextCopy, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TEXT_CUT.</summary>
-	public static EventType<CommandEvent> TextCut { get; } = new(WxKitNative.EventTypeTextCut, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> TextCut => TextCutType.Value;
+
+	private static class TextCutType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeTextCut, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TEXT_ENTER.</summary>
-	public static EventType<CommandEvent> TextEnter { get; } = new(WxKitNative.EventTypeTextEnter, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> TextEnter => TextEnterType.Value;
+
+	private static class TextEnterType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeTextEnter, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TEXT_MAXLEN.</summary>
-	public static EventType<CommandEvent> TextMaxlen { get; } = new(WxKitNative.EventTypeTextMaxlen, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> TextMaxlen => TextMaxlenType.Value;
+
+	private static class TextMaxlenType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeTextMaxlen, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TEXT_PASTE.</summary>
-	public static EventType<CommandEvent> TextPaste { get; } = new(WxKitNative.EventTypeTextPaste, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> TextPaste => TextPasteType.Value;
+
+	private static class TextPasteType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeTextPaste, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TEXT_URL.</summary>
-	public static EventType<CommandEvent> TextUrl { get; } = new(WxKitNative.EventTypeTextUrl, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> TextUrl => TextUrlType.Value;
+
+	private static class TextUrlType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeTextUrl, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TIMER.</summary>
-	public static EventType<TimerEvent> Timer { get; } = new(WxKitNative.EventTypeTimer, static native => new TimerEvent((WxkEvent*)native));
+	public static EventType<TimerEvent> Timer => TimerType.Value;
+
+	private static class TimerType {
+		public static readonly EventType<TimerEvent> Value = new(WxKitNative.EventTypeTimer, static native => new TimerEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TOGGLEBUTTON.</summary>
-	public static EventType<CommandEvent> Togglebutton { get; } = new(WxKitNative.EventTypeTogglebutton, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> Togglebutton => TogglebuttonType.Value;
+
+	private static class TogglebuttonType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeTogglebutton, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TOOL.</summary>
-	public static EventType<CommandEvent> Tool { get; } = new(WxKitNative.EventTypeTool, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> Tool => ToolType.Value;
+
+	private static class ToolType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeTool, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TOOL_DROPDOWN.</summary>
-	public static EventType<CommandEvent> ToolDropdown { get; } = new(WxKitNative.EventTypeToolDropdown, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> ToolDropdown => ToolDropdownType.Value;
+
+	private static class ToolDropdownType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeToolDropdown, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TOOL_ENTER.</summary>
-	public static EventType<CommandEvent> ToolEnter { get; } = new(WxKitNative.EventTypeToolEnter, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> ToolEnter => ToolEnterType.Value;
+
+	private static class ToolEnterType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeToolEnter, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TOOL_RCLICKED.</summary>
-	public static EventType<CommandEvent> ToolRclicked { get; } = new(WxKitNative.EventTypeToolRclicked, static native => new CommandEvent((WxkEvent*)native));
+	public static EventType<CommandEvent> ToolRclicked => ToolRclickedType.Value;
+
+	private static class ToolRclickedType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeToolRclicked, static native => new CommandEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TREE_BEGIN_DRAG.</summary>
-	public static EventType<TreeEvent> TreeBeginDrag { get; } = new(WxKitNative.EventTypeTreeBeginDrag, static native => new TreeEvent((WxkEvent*)native));
+	public static EventType<TreeEvent> TreeBeginDrag => TreeBeginDragType.Value;
+
+	private static class TreeBeginDragType {
+		public static readonly EventType<TreeEvent> Value = new(WxKitNative.EventTypeTreeBeginDrag, static native => new TreeEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TREE_BEGIN_LABEL_EDIT.</summary>
-	public static EventType<TreeEvent> TreeBeginLabelEdit { get; } = new(WxKitNative.EventTypeTreeBeginLabelEdit, static native => new TreeEvent((WxkEvent*)native));
+	public static EventType<TreeEvent> TreeBeginLabelEdit => TreeBeginLabelEditType.Value;
+
+	private static class TreeBeginLabelEditType {
+		public static readonly EventType<TreeEvent> Value = new(WxKitNative.EventTypeTreeBeginLabelEdit, static native => new TreeEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TREE_BEGIN_RDRAG.</summary>
-	public static EventType<TreeEvent> TreeBeginRdrag { get; } = new(WxKitNative.EventTypeTreeBeginRdrag, static native => new TreeEvent((WxkEvent*)native));
+	public static EventType<TreeEvent> TreeBeginRdrag => TreeBeginRdragType.Value;
+
+	private static class TreeBeginRdragType {
+		public static readonly EventType<TreeEvent> Value = new(WxKitNative.EventTypeTreeBeginRdrag, static native => new TreeEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TREE_DELETE_ITEM.</summary>
-	public static EventType<TreeEvent> TreeDeleteItem { get; } = new(WxKitNative.EventTypeTreeDeleteItem, static native => new TreeEvent((WxkEvent*)native));
+	public static EventType<TreeEvent> TreeDeleteItem => TreeDeleteItemType.Value;
+
+	private static class TreeDeleteItemType {
+		public static readonly EventType<TreeEvent> Value = new(WxKitNative.EventTypeTreeDeleteItem, static native => new TreeEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TREE_END_DRAG.</summary>
-	public static EventType<TreeEvent> TreeEndDrag { get; } = new(WxKitNative.EventTypeTreeEndDrag, static native => new TreeEvent((WxkEvent*)native));
+	public static EventType<TreeEvent> TreeEndDrag => TreeEndDragType.Value;
+
+	private static class TreeEndDragType {
+		public static readonly EventType<TreeEvent> Value = new(WxKitNative.EventTypeTreeEndDrag, static native => new TreeEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TREE_END_LABEL_EDIT.</summary>
-	public static EventType<TreeEvent> TreeEndLabelEdit { get; } = new(WxKitNative.EventTypeTreeEndLabelEdit, static native => new TreeEvent((WxkEvent*)native));
+	public static EventType<TreeEvent> TreeEndLabelEdit => TreeEndLabelEditType.Value;
+
+	private static class TreeEndLabelEditType {
+		public static readonly EventType<TreeEvent> Value = new(WxKitNative.EventTypeTreeEndLabelEdit, static native => new TreeEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TREE_GET_INFO.</summary>
-	public static EventType<TreeEvent> TreeGetInfo { get; } = new(WxKitNative.EventTypeTreeGetInfo, static native => new TreeEvent((WxkEvent*)native));
+	public static EventType<TreeEvent> TreeGetInfo => TreeGetInfoType.Value;
+
+	private static class TreeGetInfoType {
+		public static readonly EventType<TreeEvent> Value = new(WxKitNative.EventTypeTreeGetInfo, static native => new TreeEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TREE_ITEM_ACTIVATED.</summary>
-	public static EventType<TreeEvent> TreeItemActivated { get; } = new(WxKitNative.EventTypeTreeItemActivated, static native => new TreeEvent((WxkEvent*)native));
+	public static EventType<TreeEvent> TreeItemActivated => TreeItemActivatedType.Value;
+
+	private static class TreeItemActivatedType {
+		public static readonly EventType<TreeEvent> Value = new(WxKitNative.EventTypeTreeItemActivated, static native => new TreeEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TREE_ITEM_COLLAPSED.</summary>
-	public static EventType<TreeEvent> TreeItemCollapsed { get; } = new(WxKitNative.EventTypeTreeItemCollapsed, static native => new TreeEvent((WxkEvent*)native));
+	public static EventType<TreeEvent> TreeItemCollapsed => TreeItemCollapsedType.Value;
+
+	private static class TreeItemCollapsedType {
+		public static readonly EventType<TreeEvent> Value = new(WxKitNative.EventTypeTreeItemCollapsed, static native => new TreeEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TREE_ITEM_COLLAPSING.</summary>
-	public static EventType<TreeEvent> TreeItemCollapsing { get; } = new(WxKitNative.EventTypeTreeItemCollapsing, static native => new TreeEvent((WxkEvent*)native));
+	public static EventType<TreeEvent> TreeItemCollapsing => TreeItemCollapsingType.Value;
+
+	private static class TreeItemCollapsingType {
+		public static readonly EventType<TreeEvent> Value = new(WxKitNative.EventTypeTreeItemCollapsing, static native => new TreeEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TREE_ITEM_EXPANDED.</summary>
-	public static EventType<TreeEvent> TreeItemExpanded { get; } = new(WxKitNative.EventTypeTreeItemExpanded, static native => new TreeEvent((WxkEvent*)native));
+	public static EventType<TreeEvent> TreeItemExpanded => TreeItemExpandedType.Value;
+
+	private static class TreeItemExpandedType {
+		public static readonly EventType<TreeEvent> Value = new(WxKitNative.EventTypeTreeItemExpanded, static native => new TreeEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TREE_ITEM_EXPANDING.</summary>
-	public static EventType<TreeEvent> TreeItemExpanding { get; } = new(WxKitNative.EventTypeTreeItemExpanding, static native => new TreeEvent((WxkEvent*)native));
+	public static EventType<TreeEvent> TreeItemExpanding => TreeItemExpandingType.Value;
+
+	private static class TreeItemExpandingType {
+		public static readonly EventType<TreeEvent> Value = new(WxKitNative.EventTypeTreeItemExpanding, static native => new TreeEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TREE_ITEM_GETTOOLTIP.</summary>
-	public static EventType<TreeEvent> TreeItemGettooltip { get; } = new(WxKitNative.EventTypeTreeItemGettooltip, static native => new TreeEvent((WxkEvent*)native));
+	public static EventType<TreeEvent> TreeItemGettooltip => TreeItemGettooltipType.Value;
+
+	private static class TreeItemGettooltipType {
+		public static readonly EventType<TreeEvent> Value = new(WxKitNative.EventTypeTreeItemGettooltip, static native => new TreeEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TREE_ITEM_MENU.</summary>
-	public static EventType<TreeEvent> TreeItemMenu { get; } = new(WxKitNative.EventTypeTreeItemMenu, static native => new TreeEvent((WxkEvent*)native));
+	public static EventType<TreeEvent> TreeItemMenu => TreeItemMenuType.Value;
+
+	private static class TreeItemMenuType {
+		public static readonly EventType<TreeEvent> Value = new(WxKitNative.EventTypeTreeItemMenu, static native => new TreeEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TREE_ITEM_MIDDLE_CLICK.</summary>
-	public static EventType<TreeEvent> TreeItemMiddleClick { get; } = new(WxKitNative.EventTypeTreeItemMiddleClick, static native => new TreeEvent((WxkEvent*)native));
+	public static EventType<TreeEvent> TreeItemMiddleClick => TreeItemMiddleClickType.Value;
+
+	private static class TreeItemMiddleClickType {
+		public static readonly EventType<TreeEvent> Value = new(WxKitNative.EventTypeTreeItemMiddleClick, static native => new TreeEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TREE_ITEM_RIGHT_CLICK.</summary>
-	public static EventType<TreeEvent> TreeItemRightClick { get; } = new(WxKitNative.EventTypeTreeItemRightClick, static native => new TreeEvent((WxkEvent*)native));
+	public static EventType<TreeEvent> TreeItemRightClick => TreeItemRightClickType.Value;
+
+	private static class TreeItemRightClickType {
+		public static readonly EventType<TreeEvent> Value = new(WxKitNative.EventTypeTreeItemRightClick, static native => new TreeEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TREE_KEY_DOWN.</summary>
-	public static EventType<TreeEvent> TreeKeyDown { get; } = new(WxKitNative.EventTypeTreeKeyDown, static native => new TreeEvent((WxkEvent*)native));
+	public static EventType<TreeEvent> TreeKeyDown => TreeKeyDownType.Value;
+
+	private static class TreeKeyDownType {
+		public static readonly EventType<TreeEvent> Value = new(WxKitNative.EventTypeTreeKeyDown, static native => new TreeEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TREE_SEL_CHANGED.</summary>
-	public static EventType<TreeEvent> TreeSelChanged { get; } = new(WxKitNative.EventTypeTreeSelChanged, static native => new TreeEvent((WxkEvent*)native));
+	public static EventType<TreeEvent> TreeSelChanged => TreeSelChangedType.Value;
+
+	private static class TreeSelChangedType {
+		public static readonly EventType<TreeEvent> Value = new(WxKitNative.EventTypeTreeSelChanged, static native => new TreeEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TREE_SEL_CHANGING.</summary>
-	public static EventType<TreeEvent> TreeSelChanging { get; } = new(WxKitNative.EventTypeTreeSelChanging, static native => new TreeEvent((WxkEvent*)native));
+	public static EventType<TreeEvent> TreeSelChanging => TreeSelChangingType.Value;
+
+	private static class TreeSelChangingType {
+		public static readonly EventType<TreeEvent> Value = new(WxKitNative.EventTypeTreeSelChanging, static native => new TreeEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TREE_SET_INFO.</summary>
-	public static EventType<TreeEvent> TreeSetInfo { get; } = new(WxKitNative.EventTypeTreeSetInfo, static native => new TreeEvent((WxkEvent*)native));
+	public static EventType<TreeEvent> TreeSetInfo => TreeSetInfoType.Value;
+
+	private static class TreeSetInfoType {
+		public static readonly EventType<TreeEvent> Value = new(WxKitNative.EventTypeTreeSetInfo, static native => new TreeEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_TREE_STATE_IMAGE_CLICK.</summary>
-	public static EventType<TreeEvent> TreeStateImageClick { get; } = new(WxKitNative.EventTypeTreeStateImageClick, static native => new TreeEvent((WxkEvent*)native));
+	public static EventType<TreeEvent> TreeStateImageClick => TreeStateImageClickType.Value;
+
+	private static class TreeStateImageClickType {
+		public static readonly EventType<TreeEvent> Value = new(WxKitNative.EventTypeTreeStateImageClick, static native => new TreeEvent((WxkEvent*)native));
+	}
 
 	/// <summary>Wraps wxEVT_UPDATE_UI.</summary>
-	public static EventType<UpdateUIEvent> UpdateUi { get; } = new(WxKitNative.EventTypeUpdateUi, static native => new UpdateUIEvent((WxkEvent*)native));
+	public static EventType<UpdateUIEvent> UpdateUi => UpdateUiType.Value;
+
+	private static class UpdateUiType {
+		public static readonly EventType<UpdateUIEvent> Value = new(WxKitNative.EventTypeUpdateUi, static native => new UpdateUIEvent((WxkEvent*)native));
+	}
 }

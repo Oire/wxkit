@@ -36,6 +36,7 @@ internal static class Naming {
 		["3D"] = "ThreeD",
 		["3DSASH"] = "ThreeDSash",
 		["3DBORDER"] = "ThreeDBorder",
+		["DATAVIEW"] = "DataView",
 		// The accessibility roles, states, and events run their words together.
 		["BUTTONDROPDOWN"] = "ButtonDropDown",
 		["BUTTONDROPDOWNGRID"] = "ButtonDropDownGrid",
@@ -201,6 +202,8 @@ internal static class Naming {
 
 	public static string Parameter(string name) {
 		string renamed = ParameterNames.GetValueOrDefault(name, name);
+		// A snake_case name, such as model_column, becomes modelColumn.
+		if (renamed.Contains('_', StringComparison.Ordinal)) renamed = string.Concat(renamed.Split('_', StringSplitOptions.RemoveEmptyEntries).Select(static (word, index) => index == 0 ? word : char.ToUpperInvariant(word[0]) + word[1..]));
 		string camel = char.ToLowerInvariant(renamed[0]) + Respell(char.ToUpperInvariant(renamed[0]) + renamed[1..])[1..];
 		return Keywords.Contains(camel) ? "@" + camel : camel;
 	}

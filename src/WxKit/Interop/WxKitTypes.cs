@@ -42,6 +42,50 @@ public struct WxkStringArray;
 /// <summary>A list of windows, freed with <see cref="WxKitNative.WindowListFree"/>.</summary>
 public struct WxkWindowList;
 
+/// <summary>A wxVariant, freed with <see cref="WxKitNative.VariantFree"/>.</summary>
+public struct WxkVariant;
+
+/// <summary>A wxVector of wxVariant, freed with <see cref="WxKitNative.VariantListFree"/>.</summary>
+public struct WxkVariantList;
+
+/// <summary>A wxDataViewModel, which is reference counted.</summary>
+public struct WxkDataViewModel;
+
+/// <summary>The wxDataViewItemArray a model fills with an item's children.</summary>
+public struct WxkDataViewItems;
+
+/// <summary>The types of value a wxVariant crosses with, as the shim numbers them.</summary>
+public enum WxkVariantType {
+	Null = 0,
+	String = 1,
+	Bool = 2,
+	Long = 3,
+	Double = 4,
+	Bitmap = 5,
+	Icon = 6,
+	IconText = 7,
+}
+
+/// <summary>The callbacks of every model whose items come from .NET, as wxk_DataViewModelCallbacks lays them out.</summary>
+public unsafe struct WxkDataViewModelCallbacks {
+	public delegate* unmanaged[Cdecl]<void*, nint, uint, WxkVariant*, void> GetValue;
+	public delegate* unmanaged[Cdecl]<void*, WxkVariant*, nint, uint, byte> SetValue;
+	public delegate* unmanaged[Cdecl]<void*, nint, nint> GetParent;
+	public delegate* unmanaged[Cdecl]<void*, nint, byte> IsContainer;
+	public delegate* unmanaged[Cdecl]<void*, nint, WxkDataViewItems*, void> GetChildren;
+	public delegate* unmanaged[Cdecl]<void*, nint, uint, byte> IsEnabled;
+	public delegate* unmanaged[Cdecl]<void*, nint, byte> HasContainerColumns;
+	public delegate* unmanaged[Cdecl]<void*, void> OnFree;
+}
+
+/// <summary>The callbacks of every virtual list model whose rows come from .NET, as wxk_VirtualListModelCallbacks lays them out.</summary>
+public unsafe struct WxkVirtualListModelCallbacks {
+	public delegate* unmanaged[Cdecl]<void*, uint, uint, WxkVariant*, void> GetValue;
+	public delegate* unmanaged[Cdecl]<void*, WxkVariant*, uint, uint, byte> SetValue;
+	public delegate* unmanaged[Cdecl]<void*, uint, uint, byte> IsEnabled;
+	public delegate* unmanaged[Cdecl]<void*, void> OnFree;
+}
+
 /// <summary>An accessible object, which its window owns.</summary>
 public struct WxkAccessible;
 

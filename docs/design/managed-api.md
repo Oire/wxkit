@@ -102,6 +102,39 @@ panel.Paint += (sender, e) => {
 
 They derive from `NativeObject` too, and their finalizers post the delete to the GUI thread, but a drawing context should not wait for the collector. A context that wxWidgets hands back, such as an erase event's, is not WxKit's to delete, so members that return one are not bound yet.
 
+### Data views
+
+A `DataViewCtrl` shows a model: a list or a tree of items, with a value for each column. A `DataViewListCtrl` has a list of its own to fill, and a `DataViewTreeCtrl` a tree:
+
+```csharp
+DataViewListCtrl list = new(panel);
+list.AppendTextColumn("Task");
+list.AppendToggleColumn("Done");
+list.AppendItem(["Buy milk", false]);
+```
+
+For data the application has already, a model shows it where it is. `DataViewTreeModel<T>` makes a tree of the application's own objects, and gives each an item id the first time the control asks for it:
+
+```csharp
+sealed class Folders : DataViewTreeModel<Folder> {
+	protected override object? GetValue(Folder item, int column) => item.Name;
+	protected override Folder? GetParent(Folder item) => item.Parent;
+	protected override bool IsContainer(Folder item) => item.Children.Count > 0;
+	protected override IEnumerable<Folder> GetChildren(Folder? item) => item?.Children ?? _top;
+}
+
+view.AppendTextColumn("Name", 0);
+view.Model = new Folders(top);
+```
+
+A `DataViewVirtualListModel` produces rows as the control shows them, so it can have millions, and `DataViewTreeModel` names its items with ids of its own. A model tells its controls what changed, such as with `ItemAdded` or `RowChanged`, and they ask again. A control keeps its model alive.
+
+A value is an object: a string for a text column, a bool for a toggle column, a number for a progress column, a `DataViewIconText` for an icon and text column, or a `Bitmap`. Numbers come back from wxWidgets as a long or a double, and a value of another type throws `ArgumentException`. An exception in a model goes to `Application.UnhandledException`, and the control gets nothing.
+
+A data view is drawn by wxWidgets itself on Windows, and describes its rows to screen readers, which hear a row's first column as its name, and the others, with their headings, as its description.
+
+The models are written by hand, as directors that call C#, since their members fill in variants, which a C# member says better with a return value.
+
 ### Accessibility
 
 Standard controls are accessible already, since Windows describes them to screen readers itself. A control that draws itself, such as a grid or a game board, is one window to Windows, which cannot see its parts. A class derived from `Accessible` describes it, through Microsoft Active Accessibility:

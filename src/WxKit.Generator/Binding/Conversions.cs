@@ -649,11 +649,22 @@ internal sealed class WindowListConversion : Conversion {
 	public override string ManagedReturn(string expression) => $"global::WxKit.NativeWindowList.Take({expression})";
 }
 
-// A wxTreeItemId wraps one pointer, so it crosses as that pointer and becomes the TreeItemId value type.
-internal sealed class TreeItemIdConversion : Conversion {
-	public static TreeItemIdConversion Instance { get; } = new();
+// An item id that wraps one pointer, as wxTreeItemId and wxDataViewItem do, crosses as that
+// pointer and becomes a value type that holds it, such as TreeItemId.
+internal sealed class ItemIdConversion(string managedName, string cppName) : Conversion {
+	public static ItemIdConversion TreeItem { get; } = new("TreeItemId", "wxTreeItemId");
 
-	public override string Suffix => "TreeItemId";
+	public static ItemIdConversion DataViewItem { get; } = new("DataViewItem", "wxDataViewItem");
+
+	public override string Suffix => managedName;
+
+	public override string? CallbackCType => "void*";
+
+	public override string CallbackInteropType => "nint";
+
+	public override string FromCallback(string expression) => $"{cppName}({expression})";
+
+	public override string ToCallback(string expression) => $"{expression}.Value";
 
 	public override string CReturnType => "void*";
 
@@ -663,15 +674,84 @@ internal sealed class TreeItemIdConversion : Conversion {
 
 	public override IEnumerable<string> CParameters(string name) => [$"void* {name}"];
 
-	public override string ToCpp(string name) => $"wxTreeItemId({name})";
+	public override string ToCpp(string name) => $"{cppName}({name})";
 
 	public override string FromCpp(string expression) => $"({expression}).GetID()";
 
 	public override IEnumerable<string> InteropParameters(string name) => [$"nint {name}"];
 
-	public override string ManagedType(bool nullable) => "TreeItemId";
+	public override string ManagedType(bool nullable) => managedName;
 
 	public override IEnumerable<string> InteropArguments(string name, bool nullable) => [$"{name}.Value"];
 
-	public override string ManagedReturn(string expression) => $"new global::WxKit.TreeItemId({expression})";
+	public override string ManagedReturn(string expression) => $"new global::WxKit.{managedName}({expression})";
+}
+
+// A wxVariant crosses as a handle to one, and is an object in the managed API: null, a string, a
+// bool, a long, a double, or a bitmap, icon, or icon text. One going in is built for the call, and
+// one coming back is read and freed.
+internal sealed class VariantConversion : Conversion {
+	public static VariantConversion Instance { get; } = new();
+
+	public override string Suffix => "Variant";
+
+	public override string CReturnType => "wxk_Variant*";
+
+	public override string Fallback => "nullptr";
+
+	public override string InteropReturnType => "WxkVariant*";
+
+	public override IEnumerable<string> CParameters(string name) => [$"const wxk_Variant* {name}"];
+
+	public override string ToCpp(string name) => $"*wxk::Unwrap(const_cast<wxk_Variant*>({name}))";
+
+	public override string FromCpp(string expression) => $"wxk::Wrap(new wxVariant({expression}))";
+
+	public override IEnumerable<string> InteropParameters(string name) => [$"WxkVariant* {name}"];
+
+	public override string ManagedType(bool nullable) => "object?";
+
+	public override string? Prepare(string name) => $"using NativeVariant {Native(name)} = new({name});";
+
+	public override IEnumerable<string> InteropArguments(string name, bool nullable) => [$"{Native(name)}.Handle"];
+
+	public override string ManagedReturn(string expression) => $"NativeVariant.Take({expression})";
+
+	public override bool AcceptsNull => true;
+
+	private static string Native(string name) => name.TrimStart('@') + "Native";
+}
+
+// A wxVector<wxVariant>, such as a data view list row's values, is built from the managed values
+// for the call.
+internal sealed class VariantListConversion : Conversion {
+	public static VariantListConversion Instance { get; } = new();
+
+	public override string Suffix => "Variants";
+
+	public override string CReturnType => throw new InvalidOperationException("Lists of variants are only parameters.");
+
+	public override string Fallback => "nullptr";
+
+	public override string InteropReturnType => throw new InvalidOperationException("Lists of variants are only parameters.");
+
+	public override IEnumerable<string> CParameters(string name) => [$"const wxk_VariantList* {name}"];
+
+	public override string ToCpp(string name) => $"*wxk::Unwrap(const_cast<wxk_VariantList*>({name}))";
+
+	public override string FromCpp(string expression) => throw new InvalidOperationException("Lists of variants are only parameters.");
+
+	public override IEnumerable<string> InteropParameters(string name) => [$"WxkVariantList* {name}"];
+
+	public override string ManagedType(bool nullable) => "IEnumerable<object?>";
+
+	public override string? Check(string name, bool nullable) => $"ArgumentNullException.ThrowIfNull({name});";
+
+	public override string? Prepare(string name) => $"using NativeVariantList {Native(name)} = new({name});";
+
+	public override IEnumerable<string> InteropArguments(string name, bool nullable) => [$"{Native(name)}.Handle"];
+
+	public override string ManagedReturn(string expression) => throw new InvalidOperationException("Lists of variants are only parameters.");
+
+	private static string Native(string name) => name.TrimStart('@') + "Native";
 }
