@@ -67,12 +67,20 @@ public class ClipboardTests {
 
 	[Fact]
 	public Task GivesNullForAMissingFormat() => Gui.Run(() => {
-		Clipboard.Clear();
+		// Only this format is on the clipboard, unless another application copies something meanwhile.
+		Assert.True(Clipboard.SetData("WxKit.Tests.Only", [1]));
 		Assert.False(Clipboard.HasText);
 		Assert.Null(Clipboard.GetText());
 		Assert.Null(Clipboard.GetBitmap());
 		Assert.Null(Clipboard.GetFiles());
 		Assert.Null(Clipboard.GetHtml());
+	});
+
+	[Fact]
+	public Task Empties() => Gui.Run(() => {
+		Assert.True(Clipboard.SetData("WxKit.Tests.Only", [1]));
+		Clipboard.Clear();
+		Assert.False(Clipboard.HasData("WxKit.Tests.Only"));
 	});
 
 	[Fact]

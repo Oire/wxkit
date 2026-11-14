@@ -7,7 +7,7 @@ namespace WxKit;
 /// <summary>A tree control presents information as a hierarchy, with items that may be expanded to show further items. Wraps wxTreeCtrl.</summary>
 public unsafe partial class TreeCtrl : Control {
 	/// <summary>Constructor, creating and showing a tree control.</summary>
-	public TreeCtrl(Window parent, int id = StandardId.Any, Point? position = null, Size? size = null, TreeCtrlStyle style = TreeCtrlStyle.Default) : this(CreateNative(parent, id, position, size, style)) {
+	public TreeCtrl(Window parent, int id = StandardId.Any, Point? position = null, Size? size = null, TreeCtrlStyle? style = null) : this(CreateNative(parent, id, position, size, style)) {
 	}
 
 	internal TreeCtrl(WxkWindow* native) : base(native) {
@@ -397,9 +397,9 @@ public unsafe partial class TreeCtrl : Control {
 	/// <summary>Unselects the given item.</summary>
 	public void UnselectItem(TreeItemId item) => WxKitNative.TreeCtrlUnselectItem(Native, item.Value);
 
-	private static WxkWindow* CreateNative(Window parent, int id, Point? position, Size? size, TreeCtrlStyle style) {
+	private static WxkWindow* CreateNative(Window parent, int id, Point? position, Size? size, TreeCtrlStyle? style) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(parent);
-		return WxKitNative.TreeCtrlNew((WxkWindow*)parent.Native, id, position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, (long)style);
+		return WxKitNative.TreeCtrlNew((WxkWindow*)parent.Native, id, position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, (long)style.GetValueOrDefault(), style.HasValue ? (byte)1 : (byte)0);
 	}
 }

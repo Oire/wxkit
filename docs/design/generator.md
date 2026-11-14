@@ -90,7 +90,10 @@ These are the decisions it makes without a tweak.
 - A C++ enum becomes a C# enum, with the prefix all its members share dropped. `wxOrientation`, `wxDirection`, and `wxItemKind` map to WxKit's hand-written enums instead.
 - A pointer default of `nullptr`, `NULL`, or `0` is null, and so is `wxDefaultPosition`, `wxDefaultSize`, `wxNullColour`, and the empty object of a value class, such as `wxNullFont`.
 - A few constants the interface headers use are only defined in the real headers, from the same pinned wxWidgets: the deprecated GUI constants in `wx/defs.h`, such as `wxDEFAULT`, and the art provider's ids in `wx/artprov.h`. The art ids are written as the `ArtId` and `ArtClient` constants.
-- An enum value the interface headers list without its initializer takes its value from the real headers, which give it, as for `wxTextValidatorStyle`'s flags and `wxPenStyle`. The interface headers would otherwise number such values from zero. A value the real headers give differently under different platforms is left to its place, and so are the values only the interface headers have.
+- An enum value takes its value from the real headers, which are what the shim compiles against. The interface headers leave some initializers out, as for `wxTextValidatorStyle`'s flags and `wxPenStyle`, which would then count up from zero, and Doxygen cuts others short at a continued line, as for `wxEVT_CATEGORY_ALL`.
+- A constant whose value depends on the platform is left out, since a C# constant has one value. The real headers show which ones those are: an enum value inside an `#if`, a value that follows one without an initializer, as `wxCURSOR_ARROWWAIT` follows wxGTK's `wxCURSOR_DEFAULT`, and a `#define` written more than one way, as `wxTR_DEFAULT_STYLE` is.
+- An enum parameter whose default is such a constant is nullable instead, and null passes the C++ default, as in `new TreeCtrl(parent, style: null)`.
+- The generated shim checks every enum value with a `static_assert`, so a value that is wrong for the platform being built fails the native build rather than passing wxWidgets the wrong number. Styles are compared as the `long` the shim passes them as.
 
 ### Names
 

@@ -19,7 +19,7 @@ public unsafe partial class Cursor : NativeObject {
 	}
 
 	/// <summary>Constructs a cursor by passing a string resource name or filename.</summary>
-	public Cursor(string cursorName) : this(CreateNative(cursorName)) {
+	public Cursor(string cursorName, BitmapType? type = null, int hotSpotX = 0, int hotSpotY = 0) : this(CreateNative(cursorName, type, hotSpotX, hotSpotY)) {
 	}
 
 	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
@@ -63,11 +63,11 @@ public unsafe partial class Cursor : NativeObject {
 		return WxKitNative.CursorNewBitmapPoint(bitmap.Native, hotSpot);
 	}
 
-	private static WxkObject* CreateNative(string cursorName) {
+	private static WxkObject* CreateNative(string cursorName, BitmapType? type, int hotSpotX, int hotSpotY) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(cursorName);
 		fixed (char* cursorNameText = cursorName) {
-			return WxKitNative.CursorNewString(cursorNameText, NativeString.Length(cursorName));
+			return WxKitNative.CursorNewStringBitmapTypeIntInt(cursorNameText, NativeString.Length(cursorName), (int)type.GetValueOrDefault(), type.HasValue ? (byte)1 : (byte)0, hotSpotX, hotSpotY);
 		}
 	}
 

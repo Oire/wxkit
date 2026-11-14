@@ -13,17 +13,16 @@ DoxygenApi read = DoxygenReader.Read(xml);
 // The interface headers use a few constants only the real headers define, such as wxDEFAULT.
 Dictionary<string, string> constants = new(read.Constants);
 foreach ((string name, string value) in HeaderConstants.ReadDeprecatedGuiConstants(Path.Combine(root, "native", "wxWidgets", "include", "wx", "defs.h"))) constants.TryAdd(name, value);
-// The real headers also give the values some interface enums leave to their place, such as
-// wxTextValidatorStyle's flags, and the ones they refer to, such as wxHATCHSTYLE_FIRST.
-foreach ((string name, string value) in HeaderConstants.ReadEnumValues(Path.Combine(root, "native", "wxWidgets", "include", "wx"))) {
-	if (read.ImpliedConstants.Contains(name)) {
-		constants[name] = value;
-	} else {
-		constants.TryAdd(name, value);
-	}
-}
+// The real headers are what the shim compiles against, so their enum values win. The interface
+// headers leave some out, such as wxTextValidatorStyle's flags, and Doxygen cuts others short at a
+// continued line, such as wxEVT_CATEGORY_ALL.
+HeaderValues header = HeaderConstants.ReadValues(Path.Combine(root, "native", "wxWidgets", "include", "wx"));
+foreach ((string name, string value) in header.Values) constants[name] = value;
+// A constant whose value depends on the platform has no one value to give a C# constant, so it is
+// left out, and the C++ default applies where it would have been one.
+foreach (string name in header.Conditional) constants.Remove(name);
 Dictionary<string, string> artIds = HeaderConstants.ReadArtIds(Path.Combine(root, "native", "wxWidgets", "include", "wx", "artprov.h"));
-DoxygenApi api = read with { Constants = constants, StringConstants = artIds };
+DoxygenApi api = read with { Constants = constants, StringConstants = artIds, PlatformConstants = header.Conditional };
 Tweaks tweaks = new();
 WxKit.Generator.Tweaks.Core.Apply(tweaks);
 BindingResult result = new Binder(api, tweaks).Bind();

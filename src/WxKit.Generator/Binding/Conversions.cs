@@ -168,6 +168,36 @@ internal sealed class EnumConversion(string enumName, NumberConversion number, s
 	public override IEnumerable<string> InteropArguments(string name, bool nullable) => [$"({number.ManagedType(false)}){name}"];
 
 	public override string ManagedReturn(string expression) => $"({EnumName}){expression}";
+
+	public NumberConversion Number => number;
+}
+
+/// <summary>
+/// An enum parameter whose C++ default depends on the platform, such as wxTreeCtrl's
+/// wxTR_DEFAULT_STYLE. It is nullable in the managed API, and null passes the C++ default.
+/// </summary>
+internal sealed class PlatformDefaultConversion(EnumConversion inner, string cppDefault) : Conversion {
+	public override string Suffix => inner.Suffix;
+
+	public override string CReturnType => inner.CReturnType;
+
+	public override string Fallback => inner.Fallback;
+
+	public override string InteropReturnType => inner.InteropReturnType;
+
+	public override IEnumerable<string> CParameters(string name) => [.. inner.CParameters(name), $"uint8_t {name}Given"];
+
+	public override string ToCpp(string name) => $"({name}Given != 0 ? {inner.ToCpp(name)} : {cppDefault})";
+
+	public override string FromCpp(string expression) => inner.FromCpp(expression);
+
+	public override IEnumerable<string> InteropParameters(string name) => [.. inner.InteropParameters(name), $"byte {name}Given"];
+
+	public override string ManagedType(bool nullable) => inner.EnumName + "?";
+
+	public override IEnumerable<string> InteropArguments(string name, bool nullable) => [$"({inner.Number.ManagedType(false)}){name}.GetValueOrDefault()", $"{name}.HasValue ? (byte)1 : (byte)0"];
+
+	public override string ManagedReturn(string expression) => inner.ManagedReturn(expression);
 }
 
 // Text goes in as UTF-16 with a length, pinned rather than copied, and comes out as a wxk_String

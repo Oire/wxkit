@@ -23,7 +23,7 @@ public unsafe partial class Bitmap : NativeObject {
 	}
 
 	/// <summary>Loads a bitmap from a file or resource.</summary>
-	public Bitmap(string name) : this(CreateNative(name)) {
+	public Bitmap(string name, BitmapType? type = null) : this(CreateNative(name, type)) {
 	}
 
 	/// <summary>Creates this bitmap object from the given image.</summary>
@@ -144,10 +144,10 @@ public unsafe partial class Bitmap : NativeObject {
 	}
 
 	/// <summary>Loads a bitmap from a file or resource.</summary>
-	public bool LoadFile(string name) {
+	public bool LoadFile(string name, BitmapType? type = null) {
 		ArgumentNullException.ThrowIfNull(name);
 		fixed (char* nameText = name) {
-			return WxKitNative.BitmapLoadFile(Native, nameText, NativeString.Length(name)) != 0;
+			return WxKitNative.BitmapLoadFile(Native, nameText, NativeString.Length(name), (int)type.GetValueOrDefault(), type.HasValue ? (byte)1 : (byte)0) != 0;
 		}
 	}
 
@@ -209,11 +209,11 @@ public unsafe partial class Bitmap : NativeObject {
 		return WxKitNative.BitmapNewIntIntDC(width, height, dc.Native);
 	}
 
-	private static WxkObject* CreateNative(string name) {
+	private static WxkObject* CreateNative(string name, BitmapType? type) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(name);
 		fixed (char* nameText = name) {
-			return WxKitNative.BitmapNewString(nameText, NativeString.Length(name));
+			return WxKitNative.BitmapNewStringBitmapType(nameText, NativeString.Length(name), (int)type.GetValueOrDefault(), type.HasValue ? (byte)1 : (byte)0);
 		}
 	}
 

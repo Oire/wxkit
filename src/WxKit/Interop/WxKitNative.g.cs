@@ -134,9 +134,9 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkObject* BitmapNewIntIntDC(int width, int height, WxkObject* dc);
 
-	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_new_String")]
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_new_StringBitmapType")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial WxkObject* BitmapNewString(char* name, nuint nameLength);
+	public static partial WxkObject* BitmapNewStringBitmapType(char* name, nuint nameLength, int type, byte typeGiven);
 
 	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_new_ImageInt")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -200,7 +200,7 @@ public static unsafe partial class WxKitNative {
 
 	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_LoadFile")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial byte BitmapLoadFile(WxkObject* self, char* name, nuint nameLength);
+	public static partial byte BitmapLoadFile(WxkObject* self, char* name, nuint nameLength, int type, byte typeGiven);
 
 	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_ResetAlpha")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1138,9 +1138,9 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkObject* CursorNewBitmapPoint(WxkObject* bitmap, Point hotSpot);
 
-	[LibraryImport(Library, EntryPoint = "wxk_Cursor_new_String")]
+	[LibraryImport(Library, EntryPoint = "wxk_Cursor_new_StringBitmapTypeIntInt")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial WxkObject* CursorNewString(char* cursorName, nuint cursorNameLength);
+	public static partial WxkObject* CursorNewStringBitmapTypeIntInt(char* cursorName, nuint cursorNameLength, int type, byte typeGiven, int hotSpotX, int hotSpotY);
 
 	[LibraryImport(Library, EntryPoint = "wxk_Cursor_new_StringBitmapTypePoint")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2242,9 +2242,9 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkObject* IconNewDefault();
 
-	[LibraryImport(Library, EntryPoint = "wxk_Icon_new_String")]
+	[LibraryImport(Library, EntryPoint = "wxk_Icon_new_StringBitmapTypeIntInt")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial WxkObject* IconNewString(char* name, nuint nameLength);
+	public static partial WxkObject* IconNewStringBitmapTypeIntInt(char* name, nuint nameLength, int type, byte typeGiven, int desiredWidth, int desiredHeight);
 
 	[LibraryImport(Library, EntryPoint = "wxk_Icon_CopyFromBitmap")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2252,7 +2252,7 @@ public static unsafe partial class WxKitNative {
 
 	[LibraryImport(Library, EntryPoint = "wxk_Icon_LoadFile")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial byte IconLoadFile(WxkObject* self, char* name, nuint nameLength);
+	public static partial byte IconLoadFile(WxkObject* self, char* name, nuint nameLength, int type, byte typeGiven, int desiredWidth, int desiredHeight);
 
 	[LibraryImport(Library, EntryPoint = "wxk_Icon_GetDepth")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5780,7 +5780,7 @@ public static unsafe partial class WxKitNative {
 
 	[LibraryImport(Library, EntryPoint = "wxk_TreeCtrl_new")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial WxkWindow* TreeCtrlNew(WxkWindow* parent, int id, Point position, Size size, long style);
+	public static partial WxkWindow* TreeCtrlNew(WxkWindow* parent, int id, Point position, Size size, long style, byte styleGiven);
 
 	[LibraryImport(Library, EntryPoint = "wxk_TreeCtrl_AddRoot")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

@@ -11,7 +11,7 @@ public unsafe partial class Icon : NativeObject {
 	}
 
 	/// <summary>Loads an icon from a file or resource.</summary>
-	public Icon(string name) : this(CreateNative(name)) {
+	public Icon(string name, BitmapType? type = null, int desiredWidth = -1, int desiredHeight = -1) : this(CreateNative(name, type, desiredWidth, desiredHeight)) {
 	}
 
 	internal Icon(WxkObject* native) : base(native) {
@@ -54,10 +54,10 @@ public unsafe partial class Icon : NativeObject {
 	}
 
 	/// <summary>Loads an icon from a file or resource.</summary>
-	public bool LoadFile(string name) {
+	public bool LoadFile(string name, BitmapType? type = null, int desiredWidth = -1, int desiredHeight = -1) {
 		ArgumentNullException.ThrowIfNull(name);
 		fixed (char* nameText = name) {
-			return WxKitNative.IconLoadFile(Native, nameText, NativeString.Length(name)) != 0;
+			return WxKitNative.IconLoadFile(Native, nameText, NativeString.Length(name), (int)type.GetValueOrDefault(), type.HasValue ? (byte)1 : (byte)0, desiredWidth, desiredHeight) != 0;
 		}
 	}
 
@@ -66,11 +66,11 @@ public unsafe partial class Icon : NativeObject {
 		return WxKitNative.IconNewDefault();
 	}
 
-	private static WxkObject* CreateNative(string name) {
+	private static WxkObject* CreateNative(string name, BitmapType? type, int desiredWidth, int desiredHeight) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(name);
 		fixed (char* nameText = name) {
-			return WxKitNative.IconNewString(nameText, NativeString.Length(name));
+			return WxKitNative.IconNewStringBitmapTypeIntInt(nameText, NativeString.Length(name), (int)type.GetValueOrDefault(), type.HasValue ? (byte)1 : (byte)0, desiredWidth, desiredHeight);
 		}
 	}
 }

@@ -44,7 +44,7 @@ WXK_FUNCTION(wxk_Object*) wxk_Bitmap_new_Default(void) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Bitmap_new_IntIntInt(int32_t width, int32_t height, int32_t depth) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Bitmap_new_SizeInt(wxk_Size size, int32_t depth) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Bitmap_new_IntIntDC(int32_t width, int32_t height, wxk_Object* dc) WXK_NOEXCEPT;
-WXK_FUNCTION(wxk_Object*) wxk_Bitmap_new_String(const char16_t* name, size_t nameLength) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_Bitmap_new_StringBitmapType(const char16_t* name, size_t nameLength, int32_t type, uint8_t typeGiven) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Bitmap_new_ImageInt(const wxk_Object* image, int32_t depth) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Bitmap_new_ImageDC(const wxk_Object* image, wxk_Object* dc) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Bitmap_new_Cursor(const wxk_Object* cursor) WXK_NOEXCEPT;
@@ -60,7 +60,7 @@ WXK_FUNCTION(uint8_t) wxk_Bitmap_CreateWithLogicalSize_SizeDoubleInt(wxk_Object*
 WXK_FUNCTION(uint8_t) wxk_Bitmap_CreateWithLogicalSize_IntIntDoubleInt(wxk_Object* self, int32_t width, int32_t height, double scale, int32_t depth) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Bitmap_CreateScaled(wxk_Object* self, int32_t width, int32_t height, int32_t depth, double logicalScale) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Bitmap_GetSubBitmap(wxk_Object* self, wxk_Rect rect) WXK_NOEXCEPT;
-WXK_FUNCTION(uint8_t) wxk_Bitmap_LoadFile(wxk_Object* self, const char16_t* name, size_t nameLength) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Bitmap_LoadFile(wxk_Object* self, const char16_t* name, size_t nameLength, int32_t type, uint8_t typeGiven) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Bitmap_ResetAlpha(wxk_Object* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Bitmap_SaveFile(wxk_Object* self, const char16_t* name, size_t nameLength, int32_t type) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Bitmap_UseAlpha(wxk_Object* self, uint8_t use) WXK_NOEXCEPT;
@@ -352,7 +352,7 @@ WXK_FUNCTION(uint8_t) wxk_ControlWithItems_SetStringSelection(wxk_Window* self, 
 WXK_FUNCTION(wxk_Object*) wxk_Cursor_new_Default(void) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Cursor_new_BitmapIntInt(const wxk_Object* bitmap, int32_t hotSpotX, int32_t hotSpotY) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Cursor_new_BitmapPoint(const wxk_Object* bitmap, wxk_Point hotSpot) WXK_NOEXCEPT;
-WXK_FUNCTION(wxk_Object*) wxk_Cursor_new_String(const char16_t* cursorName, size_t cursorNameLength) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_Cursor_new_StringBitmapTypeIntInt(const char16_t* cursorName, size_t cursorNameLength, int32_t type, uint8_t typeGiven, int32_t hotSpotX, int32_t hotSpotY) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Cursor_new_StringBitmapTypePoint(const char16_t* name, size_t nameLength, int32_t type, wxk_Point hotSpot) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Cursor_new_StockCursor(int32_t cursorId) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_Cursor_new_Image(const wxk_Object* image) WXK_NOEXCEPT;
@@ -679,9 +679,9 @@ WXK_FUNCTION(void) wxk_HyperlinkEvent_SetURL(wxk_Event* self, const char16_t* ur
 // wxIcon
 
 WXK_FUNCTION(wxk_Object*) wxk_Icon_new_Default(void) WXK_NOEXCEPT;
-WXK_FUNCTION(wxk_Object*) wxk_Icon_new_String(const char16_t* name, size_t nameLength) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_Icon_new_StringBitmapTypeIntInt(const char16_t* name, size_t nameLength, int32_t type, uint8_t typeGiven, int32_t desiredWidth, int32_t desiredHeight) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Icon_CopyFromBitmap(wxk_Object* self, const wxk_Object* bitmap) WXK_NOEXCEPT;
-WXK_FUNCTION(uint8_t) wxk_Icon_LoadFile(wxk_Object* self, const char16_t* name, size_t nameLength) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Icon_LoadFile(wxk_Object* self, const char16_t* name, size_t nameLength, int32_t type, uint8_t typeGiven, int32_t desiredWidth, int32_t desiredHeight) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_Icon_GetDepth(wxk_Object* self) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_Icon_GetHeight(wxk_Object* self) WXK_NOEXCEPT;
 WXK_FUNCTION(double) wxk_Icon_GetLogicalHeight(wxk_Object* self) WXK_NOEXCEPT;
@@ -1734,7 +1734,7 @@ WXK_FUNCTION(wxk_Size) wxk_TopLevelWindow_GetDefaultSize(void) WXK_NOEXCEPT;
 
 // wxTreeCtrl
 
-WXK_FUNCTION(wxk_Window*) wxk_TreeCtrl_new(wxk_Window* parent, int32_t id, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Window*) wxk_TreeCtrl_new(wxk_Window* parent, int32_t id, wxk_Point position, wxk_Size size, int64_t style, uint8_t styleGiven) WXK_NOEXCEPT;
 WXK_FUNCTION(void*) wxk_TreeCtrl_AddRoot(wxk_Window* self, const char16_t* text, size_t textLength, int32_t image, int32_t selImage) WXK_NOEXCEPT;
 WXK_FUNCTION(void*) wxk_TreeCtrl_AppendItem(wxk_Window* self, void* parent, const char16_t* text, size_t textLength, int32_t image, int32_t selImage) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_TreeCtrl_Collapse(wxk_Window* self, void* item) WXK_NOEXCEPT;

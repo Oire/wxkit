@@ -192,7 +192,7 @@ public enum EventCategory {
 	/// <summary>This category is for any event used to send notifications from the secondary threads to the main one or in general for notifications among different threads (which may or may not be user-generated). Wraps wxEVT_CATEGORY_THREAD.</summary>
 	Thread = 16,
 	/// <summary>This mask is used in wxEventLoopBase::YieldFor to specify that all event categories should be processed. Wraps wxEVT_CATEGORY_ALL.</summary>
-	All = 31,
+	All = 127,
 }
 
 /// <summary>Wraps wxFlexSizerGrowMode.</summary>
@@ -403,12 +403,6 @@ public enum FontEncoding {
 	Macmin = 49,
 	/// <summary>Wraps wxFONTENCODING_MACMAX.</summary>
 	Macmax = 88,
-	/// <summary>Native UTF-16. Wraps wxFONTENCODING_UTF16.</summary>
-	Utf16 = 89,
-	/// <summary>Native UTF-32. Wraps wxFONTENCODING_UTF32.</summary>
-	Utf32 = 90,
-	/// <summary>Alias for the native Unicode encoding on this platform (this is used by wxEncodingConverter and wxUTFFile only for now). Wraps wxFONTENCODING_UNICODE.</summary>
-	Unicode = 91,
 	/// <summary>Simplified Chinese. Wraps wxFONTENCODING_GB2312.</summary>
 	Gb2312 = 28,
 	/// <summary>Traditional Chinese. Wraps wxFONTENCODING_BIG5.</summary>
@@ -839,22 +833,6 @@ public enum StockCursor {
 	Watch = 25,
 	/// <summary>Transparent cursor. Wraps wxCURSOR_BLANK.</summary>
 	Blank = 26,
-	/// <summary>Standard X11 cursor (only in wxGTK). Wraps wxCURSOR_DEFAULT.</summary>
-	Default = 27,
-	/// <summary>MacOS Theme Plus arrow (only in wxMac). Wraps wxCURSOR_COPY_ARROW.</summary>
-	CopyArrow = 28,
-	/// <summary>Only available on wxX11. Wraps wxCURSOR_CROSS_REVERSE.</summary>
-	CrossReverse = 29,
-	/// <summary>Only available on wxX11. Wraps wxCURSOR_DOUBLE_ARROW.</summary>
-	DoubleArrow = 30,
-	/// <summary>Only available on wxX11. Wraps wxCURSOR_BASED_ARROW_UP.</summary>
-	BasedArrowUp = 31,
-	/// <summary>Only available on wxX11. Wraps wxCURSOR_BASED_ARROW_DOWN.</summary>
-	BasedArrowDown = 32,
-	/// <summary>A wait cursor with a standard arrow. Wraps wxCURSOR_ARROWWAIT.</summary>
-	Arrowwait = 33,
-	/// <summary>Wraps wxCURSOR_MAX.</summary>
-	Max = 36,
 }
 
 /// <summary>Wraps wxSystemColour.</summary>

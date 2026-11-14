@@ -23,28 +23,49 @@ internal static partial class HeaderConstants {
 
 	// The interface headers sometimes list an enum's values without their initializers, as for
 	// wxTextValidatorStyle's flags, which would then count up from zero. This reads the values of
-	// the enums in the real headers, following C for those without an initializer. A value given
-	// differently in two places, such as under different platforms' #if branches, is left out, since
-	// a regular expression cannot tell which branch applies.
-	public static Dictionary<string, string> ReadEnumValues(string includeDirectory) {
+	// the enums in the real headers, following C for those without an initializer.
+	//
+	// The real headers also show which constants depend on the platform or the build, which a C#
+	// constant cannot: an enum value inside an #if, or one that follows such a value without an
+	// initializer, as wxCURSOR_ARROWWAIT follows wxGTK's wxCURSOR_DEFAULT, and a #define written
+	// more than one way, as wxTR_DEFAULT_STYLE is for each platform.
+	public static HeaderValues ReadValues(string includeDirectory) {
 		Dictionary<string, string> values = new(StringComparer.Ordinal);
-		HashSet<string> ambiguous = new(StringComparer.Ordinal);
+		HashSet<string> conditional = new(StringComparer.Ordinal);
+		Dictionary<string, string> defines = new(StringComparer.Ordinal);
 		foreach (string header in Directory.EnumerateFiles(includeDirectory, "*.h")) {
-			string text = PreprocessorPattern().Replace(CommentPattern().Replace(File.ReadAllText(header), " "), " ");
-			foreach (Match block in AnyEnumPattern().Matches(text)) {
+			string text = ContinuationPattern().Replace(CommentPattern().Replace(File.ReadAllText(header), " "), " ");
+			foreach (Match define in DefinePattern().Matches(text)) {
+				string name = define.Groups[1].Value;
+				string value = WhitespacePattern().Replace(define.Groups[2].Value, " ").Trim();
+				if (defines.TryGetValue(name, out string? existing) && existing != value) conditional.Add(name);
+				defines[name] = value;
+			}
+			// Each directive becomes an entry of its own, so the enum's entries can be read in order with them.
+			string marked = DirectivePattern().Replace(text, static directive => $",#{directive.Groups[1].Value},");
+			foreach (Match block in AnyEnumPattern().Matches(marked)) {
 				string previous = "-1";
+				int depth = 0;
+				bool shifted = false;
 				foreach (string entry in block.Groups[1].Value.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)) {
+					if (entry.StartsWith('#')) {
+						if (entry.StartsWith("#if", StringComparison.Ordinal)) depth++;
+						if (entry == "#endif") depth--;
+						continue;
+					}
 					string[] parts = entry.Split('=', 2, StringSplitOptions.TrimEntries);
 					if (!IdentifierPattern().IsMatch(parts[0])) break;
 					string value = parts.Length == 2 ? WhitespacePattern().Replace(parts[1], " ") : $"({previous}) + 1";
 					previous = parts[0];
-					if (values.TryGetValue(parts[0], out string? existing) && existing != value) ambiguous.Add(parts[0]);
+					if (depth > 0 || (shifted && parts.Length == 1)) conditional.Add(parts[0]);
+					shifted |= depth > 0;
+					if (values.TryGetValue(parts[0], out string? existing) && existing != value) conditional.Add(parts[0]);
 					values[parts[0]] = value;
 				}
 			}
 		}
-		foreach (string name in ambiguous) values.Remove(name);
-		return values;
+		foreach (string name in conditional) values.Remove(name);
+		return new HeaderValues(values, conditional);
 	}
 
 	// The art provider's ids are macros that make strings, which the interface headers only declare
@@ -70,8 +91,15 @@ internal static partial class HeaderConstants {
 	[GeneratedRegex(@"\benum(?:\s+class)?(?:\s+\w+)?(?:\s*:\s*\w+)?\s*\{([^{}]*)\}", RegexOptions.Singleline)]
 	private static partial Regex AnyEnumPattern();
 
-	[GeneratedRegex(@"^\s*#.*$", RegexOptions.Multiline)]
-	private static partial Regex PreprocessorPattern();
+	[GeneratedRegex(@"^[ \t]*#[ \t]*(\w+).*$", RegexOptions.Multiline)]
+	private static partial Regex DirectivePattern();
+
+	[GeneratedRegex(@"^[ \t]*#[ \t]*define[ \t]+(wx\w+)\b(?!\()[ \t]+(.+?)[ \t]*\r?$", RegexOptions.Multiline)]
+	private static partial Regex DefinePattern();
+
+	// A backslash at the end of a line continues it, in a macro or, as for wxEVT_CATEGORY_ALL, an initializer.
+	[GeneratedRegex(@"\\[ \t]*\r?\n")]
+	private static partial Regex ContinuationPattern();
 
 	[GeneratedRegex(@"^wx[A-Z0-9_]+$")]
 	private static partial Regex IdentifierPattern();
@@ -79,3 +107,7 @@ internal static partial class HeaderConstants {
 	[GeneratedRegex(@"\s+")]
 	private static partial Regex WhitespacePattern();
 }
+
+/// <param name="Values">The enum values the real headers give, by name.</param>
+/// <param name="Conditional">The constants whose value depends on the platform or the build.</param>
+internal sealed record HeaderValues(IReadOnlyDictionary<string, string> Values, IReadOnlySet<string> Conditional);

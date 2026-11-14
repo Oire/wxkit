@@ -687,8 +687,6 @@ public enum TreeCtrlStyle : long {
 	Single = 0x0,
 	/// <summary>Use this style to allow a range of items to be selected. If a second range is selected, the current range, if any, is deselected. Wraps wxTR_MULTIPLE.</summary>
 	Multiple = 0x20,
-	/// <summary>The set of flags that are closest to the defaults for the native control for a particular toolkit. Wraps wxTR_DEFAULT_STYLE.</summary>
-	Default = 0x9,
 }
 
 /// <summary>Styles for <see cref="Window"/>.</summary>

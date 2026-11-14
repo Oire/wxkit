@@ -8,8 +8,8 @@ internal sealed record DoxygenApi(IReadOnlyDictionary<string, DoxygenClass> Clas
 	/// <summary>String constants, such as wxART_OTHER, which is "wxART_OTHER_C", by name.</summary>
 	public IReadOnlyDictionary<string, string> StringConstants { get; init; } = new Dictionary<string, string>();
 
-	/// <summary>The enum values whose interface header gives no initializer, so that their value is only implied by their place.</summary>
-	public IReadOnlySet<string> ImpliedConstants { get; init; } = new HashSet<string>();
+	/// <summary>The constants whose value depends on the platform, such as wxTR_DEFAULT_STYLE, which the real headers show.</summary>
+	public IReadOnlySet<string> PlatformConstants { get; init; } = new HashSet<string>();
 }
 
 internal sealed record DoxygenEnum(string Name, IReadOnlyList<DoxygenEnumValue> Values);

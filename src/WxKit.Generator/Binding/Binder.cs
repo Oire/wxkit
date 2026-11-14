@@ -191,6 +191,13 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 			if (conversion is not null && parameter.Default is string cppDefault) {
 				resolved = TryDefault(cppDefault, conversion, out managedDefault, out bool defaultIsNull);
 				nullable |= defaultIsNull;
+				// A default that depends on the platform, such as wxTR_DEFAULT_STYLE, is null, which the shim turns into it.
+				if (!resolved && conversion is EnumConversion platformEnum && api.PlatformConstants.Contains(cppDefault)) {
+					conversion = new PlatformDefaultConversion(platformEnum, cppDefault);
+					managedDefault = "null";
+					nullable = true;
+					resolved = true;
+				}
 			}
 			// A trailing parameter with a default that WxKit cannot convert is left out, and the
 			// rest after it, so the C++ default applies. Anything else makes the function unbindable.
@@ -501,9 +508,10 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		int shared = SharedWords(source);
 		List<BoundStyle> members = [];
 		foreach (DoxygenEnumValue value in source.Values) {
+			// A value that is unknown, or depends on the platform, such as wxCURSOR_ARROWWAIT, is left out.
 			if (_constants.Value(value.Name) is not long number) {
-				_skipped.Add($"enum {cppName}: the value of {value.Name} is unknown");
-				return null;
+				_skipped.Add($"enum {cppName}: the value of {value.Name} is unknown or depends on the platform");
+				continue;
 			}
 			string name = MemberName(value.Name, shared);
 			if (char.IsDigit(name[0])) name = "Value" + name;
