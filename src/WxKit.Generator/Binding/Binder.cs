@@ -32,12 +32,14 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 	public BindingResult Bind() {
 		foreach (ClassTweak tweak in tweaks.Classes.Values) {
 			if (!api.Classes.TryGetValue(tweak.CppName, out DoxygenClass? source)) throw new InvalidOperationException($"A tweak names {tweak.CppName}, which the interface headers do not have.");
-			HandleKind handle = tweak.IsStaticOnly ? HandleKind.Static : tweak.IsValueObject ? HandleKind.Value : HandleFor(source.Name);
+			HandleKind handle = tweak.IsStaticOnly ? HandleKind.Static : tweak.IsValueObject ? HandleKind.Value : tweak.IsOwnedObject ? HandleKind.Owned : HandleFor(source.Name);
 			_classes[tweak.CppName] = new BoundClass(source, tweak, handle);
 		}
 		foreach (BoundClass bound in _classes.Values) {
 			List<string> ancestors = Ancestors(bound.CppName);
-			bound.Base = ancestors.Skip(1).Select(name => _classes.GetValueOrDefault(name)).FirstOrDefault(static candidate => candidate is not null);
+			// A base must share the class's lifetime, so a validator, which WxKit owns, does not
+			// derive from EvtHandler, which wxWidgets owns.
+			bound.Base = ancestors.Skip(1).Select(name => _classes.GetValueOrDefault(name)).FirstOrDefault(candidate => candidate is not null && candidate.Handle.IsOwned == bound.Handle.IsOwned);
 			bound.IsTopLevel = ancestors.Contains("wxTopLevelWindow");
 		}
 		// Bases are bound before the classes derived from them, so a class can leave out the
@@ -235,8 +237,9 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		// A value object passed by a reference that can change, such as the bitmap a wxMemoryDC
 		// draws into, is the managed object's own copy, so the change shows there.
 		if (!isReturn && type.IsReference && !type.IsConst && _classes.TryGetValue(type.Name, out BoundClass? changed) && changed.Handle == HandleKind.Value) return new ValueConversion(changed, mutable: true);
-		// A tweak names an enum by its managed name, or by its C++ one, which is then generated like any other.
-		if (parameter is not null && owner.Tweak.ParameterEnums.TryGetValue((member, parameter), out string? enumName)) {
+		// A tweak names an enum by its managed name, or by its C++ one, which is then generated like
+		// any other. It names a return value as the parameter "return".
+		if (owner.Tweak.ParameterEnums.TryGetValue((member, isReturn ? "return" : parameter ?? string.Empty), out string? enumName)) {
 			string managed = enumName.StartsWith("wx", StringComparison.Ordinal) ? EnumFor(enumName)?.Name ?? throw new InvalidOperationException($"A tweak gives {owner.CppName}::{member} the enum {enumName}, which the headers do not have.") : enumName;
 			return new EnumConversion(managed, type.Name == "long" ? NumberConversion.Long : NumberConversion.Int);
 		}

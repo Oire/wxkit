@@ -12,8 +12,9 @@ internal static class Core {
 		tweaks.Class("wxMenu").Handwritten().Wrappable();
 		tweaks.Class("wxWindow", window => window
 			.NoConstructors()
-			// WxKit tracks the sizer a window owns, and gives the native handle as NativeHandle.
-			.Ignore("SetSizer", "SetSizerAndFit", "GetSizer", "GetHandle")
+			// WxKit tracks the sizer a window owns, gives the native handle as NativeHandle, and
+			// keeps the validator it was given, since the window holds a copy.
+			.Ignore("SetSizer", "SetSizerAndFit", "GetSizer", "GetHandle", "SetValidator", "GetValidator")
 			.Property("IsEnabled", "IsEnabled", "Enable")
 			.ParameterEnum("Centre", "direction", "Orientation"));
 		tweaks.Class("wxTopLevelWindow", window => window
@@ -47,6 +48,14 @@ internal static class Core {
 		]) {
 			tweaks.Class(control);
 		}
+		// Validators, which WxKit creates and windows copy. Custom ones are hand-written, in CustomValidator.
+		tweaks.Class("wxValidator", validator => validator.Owned().NoConstructors().Ignore("SetWindow", "Clone"));
+		tweaks.Class("wxTextValidator", validator => validator
+			.Owned()
+			.Ignore("Clone", "OnChar")
+			.ParameterEnum("wxTextValidator", "style", "wxTextValidatorStyle")
+			.ParameterEnum("SetStyle", "style", "wxTextValidatorStyle")
+			.ParameterEnum("GetStyle", "return", "wxTextValidatorStyle"));
 		// Toolbars. The tools they return are not bound, so adding one gives nothing back; its id names it.
 		tweaks.Class("wxToolBar").DiscardUnboundReturns();
 		// Lists and trees, and what they hold.

@@ -59,6 +59,8 @@
 #include <wx/toolbar.h>
 #include <wx/toplevel.h>
 #include <wx/treectrl.h>
+#include <wx/validate.h>
+#include <wx/valtext.h>
 #include <wx/window.h>
 
 WXK_FUNCTION(uint8_t) wxk_ActivateEvent_GetActive(wxk_Event* self) noexcept {
@@ -5784,7 +5786,11 @@ WXK_FUNCTION(wxk_Window*) wxk_TextEntryDialog_new(wxk_Window* parent, const char
 	});
 }
 
-WXK_FUNCTION(void) wxk_TextEntryDialog_SetTextValidator(wxk_Window* self, int32_t style) noexcept {
+WXK_FUNCTION(void) wxk_TextEntryDialog_SetTextValidator_TextValidator(wxk_Window* self, wxk_Object* validator) noexcept {
+	wxk::Guard([&] { static_cast<wxTextEntryDialog*>(wxk::Unwrap(self))->SetTextValidator(*static_cast<wxTextValidator*>(wxk::Unwrap(validator))); });
+}
+
+WXK_FUNCTION(void) wxk_TextEntryDialog_SetTextValidator_TextValidatorStyle(wxk_Window* self, int32_t style) noexcept {
 	wxk::Guard([&] { static_cast<wxTextEntryDialog*>(wxk::Unwrap(self))->SetTextValidator(static_cast<wxTextValidatorStyle>(style)); });
 }
 
@@ -5802,6 +5808,77 @@ WXK_FUNCTION(wxk_String*) wxk_TextEntryDialog_GetValue(wxk_Window* self) noexcep
 
 WXK_FUNCTION(void) wxk_TextEntryDialog_SetValue(wxk_Window* self, const char16_t* value, size_t valueLength) noexcept {
 	wxk::Guard([&] { static_cast<wxTextEntryDialog*>(wxk::Unwrap(self))->SetValue(wxk::FromUtf16(value, valueLength)); });
+}
+
+WXK_FUNCTION(wxk_Object*) wxk_TextValidator_new(int64_t style) noexcept {
+	return wxk::Guard<wxk_Object*>(nullptr, [&] {
+		wxObject* created = new wxTextValidator(static_cast<long>(style));
+		return wxk::Wrap(created);
+	});
+}
+
+WXK_FUNCTION(uint8_t) wxk_TextValidator_HasFlag(wxk_Object* self, int32_t style) noexcept {
+	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxTextValidator*>(wxk::Unwrap(self))->HasFlag(static_cast<wxTextValidatorStyle>(style))) ? 1 : 0; });
+}
+
+WXK_FUNCTION(void) wxk_TextValidator_AddExclude(wxk_Object* self, const char16_t* exclude, size_t excludeLength) noexcept {
+	wxk::Guard([&] { static_cast<wxTextValidator*>(wxk::Unwrap(self))->AddExclude(wxk::FromUtf16(exclude, excludeLength)); });
+}
+
+WXK_FUNCTION(void) wxk_TextValidator_AddInclude(wxk_Object* self, const char16_t* include, size_t includeLength) noexcept {
+	wxk::Guard([&] { static_cast<wxTextValidator*>(wxk::Unwrap(self))->AddInclude(wxk::FromUtf16(include, includeLength)); });
+}
+
+WXK_FUNCTION(void) wxk_TextValidator_AddCharExcludes(wxk_Object* self, const char16_t* chars, size_t charsLength) noexcept {
+	wxk::Guard([&] { static_cast<wxTextValidator*>(wxk::Unwrap(self))->AddCharExcludes(wxk::FromUtf16(chars, charsLength)); });
+}
+
+WXK_FUNCTION(void) wxk_TextValidator_AddCharIncludes(wxk_Object* self, const char16_t* chars, size_t charsLength) noexcept {
+	wxk::Guard([&] { static_cast<wxTextValidator*>(wxk::Unwrap(self))->AddCharIncludes(wxk::FromUtf16(chars, charsLength)); });
+}
+
+WXK_FUNCTION(wxk_String*) wxk_TextValidator_IsValid(wxk_Object* self, const char16_t* val, size_t valLength) noexcept {
+	return wxk::Guard<wxk_String*>(nullptr, [&]() -> wxk_String* { return wxk::ToUtf16(static_cast<wxTextValidator*>(wxk::Unwrap(self))->IsValid(wxk::FromUtf16(val, valLength))); });
+}
+
+WXK_FUNCTION(wxk_String*) wxk_TextValidator_GetCharExcludes(wxk_Object* self) noexcept {
+	return wxk::Guard<wxk_String*>(nullptr, [&]() -> wxk_String* { return wxk::ToUtf16(static_cast<wxTextValidator*>(wxk::Unwrap(self))->GetCharExcludes()); });
+}
+
+WXK_FUNCTION(void) wxk_TextValidator_SetCharExcludes(wxk_Object* self, const char16_t* chars, size_t charsLength) noexcept {
+	wxk::Guard([&] { static_cast<wxTextValidator*>(wxk::Unwrap(self))->SetCharExcludes(wxk::FromUtf16(chars, charsLength)); });
+}
+
+WXK_FUNCTION(wxk_String*) wxk_TextValidator_GetCharIncludes(wxk_Object* self) noexcept {
+	return wxk::Guard<wxk_String*>(nullptr, [&]() -> wxk_String* { return wxk::ToUtf16(static_cast<wxTextValidator*>(wxk::Unwrap(self))->GetCharIncludes()); });
+}
+
+WXK_FUNCTION(void) wxk_TextValidator_SetCharIncludes(wxk_Object* self, const char16_t* chars, size_t charsLength) noexcept {
+	wxk::Guard([&] { static_cast<wxTextValidator*>(wxk::Unwrap(self))->SetCharIncludes(wxk::FromUtf16(chars, charsLength)); });
+}
+
+WXK_FUNCTION(wxk_StringArray*) wxk_TextValidator_GetExcludes(wxk_Object* self) noexcept {
+	return wxk::Guard<wxk_StringArray*>(nullptr, [&]() -> wxk_StringArray* { return wxk::Wrap(new wxArrayString(static_cast<wxTextValidator*>(wxk::Unwrap(self))->GetExcludes())); });
+}
+
+WXK_FUNCTION(void) wxk_TextValidator_SetExcludes(wxk_Object* self, const wxk_StringArray* stringList) noexcept {
+	wxk::Guard([&] { static_cast<wxTextValidator*>(wxk::Unwrap(self))->SetExcludes(*wxk::Unwrap(stringList)); });
+}
+
+WXK_FUNCTION(wxk_StringArray*) wxk_TextValidator_GetIncludes(wxk_Object* self) noexcept {
+	return wxk::Guard<wxk_StringArray*>(nullptr, [&]() -> wxk_StringArray* { return wxk::Wrap(new wxArrayString(static_cast<wxTextValidator*>(wxk::Unwrap(self))->GetIncludes())); });
+}
+
+WXK_FUNCTION(void) wxk_TextValidator_SetIncludes(wxk_Object* self, const wxk_StringArray* stringList) noexcept {
+	wxk::Guard([&] { static_cast<wxTextValidator*>(wxk::Unwrap(self))->SetIncludes(*wxk::Unwrap(stringList)); });
+}
+
+WXK_FUNCTION(int64_t) wxk_TextValidator_GetStyle(wxk_Object* self) noexcept {
+	return wxk::Guard<int64_t>(0, [&]() -> int64_t { return static_cast<int64_t>(static_cast<wxTextValidator*>(wxk::Unwrap(self))->GetStyle()); });
+}
+
+WXK_FUNCTION(void) wxk_TextValidator_SetStyle(wxk_Object* self, int64_t style) noexcept {
+	wxk::Guard([&] { static_cast<wxTextValidator*>(wxk::Unwrap(self))->SetStyle(static_cast<long>(style)); });
 }
 
 WXK_FUNCTION(int32_t) wxk_TimerEvent_GetInterval(wxk_Event* self) noexcept {
@@ -6593,6 +6670,30 @@ WXK_FUNCTION(int64_t) wxk_UpdateUIEvent_GetUpdateInterval(void) noexcept {
 
 WXK_FUNCTION(void) wxk_UpdateUIEvent_SetUpdateInterval(int64_t updateInterval) noexcept {
 	wxk::Guard([&] { wxUpdateUIEvent::SetUpdateInterval(static_cast<long>(updateInterval)); });
+}
+
+WXK_FUNCTION(uint8_t) wxk_Validator_TransferFromWindow(wxk_Object* self) noexcept {
+	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxValidator*>(wxk::Unwrap(self))->TransferFromWindow()) ? 1 : 0; });
+}
+
+WXK_FUNCTION(uint8_t) wxk_Validator_TransferToWindow(wxk_Object* self) noexcept {
+	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxValidator*>(wxk::Unwrap(self))->TransferToWindow()) ? 1 : 0; });
+}
+
+WXK_FUNCTION(uint8_t) wxk_Validator_Validate(wxk_Object* self, wxk_Window* parent) noexcept {
+	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxValidator*>(wxk::Unwrap(self))->Validate(static_cast<wxWindow*>(wxk::Unwrap(parent)))) ? 1 : 0; });
+}
+
+WXK_FUNCTION(void) wxk_Validator_SuppressBellOnError(uint8_t suppress) noexcept {
+	wxk::Guard([&] { wxValidator::SuppressBellOnError(suppress != 0); });
+}
+
+WXK_FUNCTION(wxk_Window*) wxk_Validator_GetWindow(wxk_Object* self) noexcept {
+	return wxk::Guard<wxk_Window*>(nullptr, [&]() -> wxk_Window* { return wxk::Wrap(static_cast<wxWindow*>(static_cast<wxValidator*>(wxk::Unwrap(self))->GetWindow())); });
+}
+
+WXK_FUNCTION(uint8_t) wxk_Validator_IsSilent(void) noexcept {
+	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (wxValidator::IsSilent()) ? 1 : 0; });
 }
 
 WXK_FUNCTION(uint8_t) wxk_Window_AcceptsFocus(wxk_Window* self) noexcept {

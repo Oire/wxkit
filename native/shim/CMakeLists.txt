@@ -49,6 +49,7 @@ set(WXK_SOURCES
 	src/sizer.cpp
 	src/string.cpp
 	src/timer.cpp
+	src/validator.cpp
 	src/window.cpp
 )
 

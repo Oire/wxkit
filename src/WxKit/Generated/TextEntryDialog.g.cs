@@ -36,7 +36,13 @@ public unsafe partial class TextEntryDialog : Dialog {
 	}
 
 	/// <summary>Associate a validator with the text control used by the dialog.</summary>
-	public void SetTextValidator(TextValidatorStyle style = TextValidatorStyle.None) => WxKitNative.TextEntryDialogSetTextValidator(Native, (int)style);
+	public void SetTextValidator(TextValidator validator) {
+		ArgumentNullException.ThrowIfNull(validator);
+		WxKitNative.TextEntryDialogSetTextValidatorTextValidator(Native, validator.Native);
+	}
+
+	/// <summary>Associate a validator with the text control used by the dialog.</summary>
+	public void SetTextValidator(TextValidatorStyle style = TextValidatorStyle.None) => WxKitNative.TextEntryDialogSetTextValidatorTextValidatorStyle(Native, (int)style);
 
 	private static WxkWindow* CreateNative(Window? parent, string message) {
 		Application.VerifyAccess();

@@ -134,6 +134,14 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void ImageAddAllHandlers();
 
+	[LibraryImport(Library, EntryPoint = "wxk_ManagedValidator_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* ManagedValidatorNew(delegate* unmanaged[Cdecl]<void*, WxkWindow*, WxkWindow*, byte> validate, delegate* unmanaged[Cdecl]<void*, WxkWindow*, byte> toWindow, delegate* unmanaged[Cdecl]<void*, WxkWindow*, byte> fromWindow, delegate* unmanaged[Cdecl]<void*, void> retain, delegate* unmanaged[Cdecl]<void*, void> release, delegate* unmanaged[Cdecl]<void*, void> onFree, void* userdata);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Window_SetValidator")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void WindowSetValidator(WxkWindow* window, WxkObject* validator);
+
 	// Objects
 
 	[LibraryImport(Library, EntryPoint = "wxk_EvtHandler_Track")]

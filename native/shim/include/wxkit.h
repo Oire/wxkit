@@ -72,6 +72,8 @@ typedef struct wxk_Colour {
 } wxk_Colour;
 
 typedef uint8_t (*wxk_AppInitCallback)(void* userdata);
+typedef uint8_t (*wxk_ValidateCallback)(void* userdata, wxk_Window* window, wxk_Window* parent);
+typedef uint8_t (*wxk_TransferCallback)(void* userdata, wxk_Window* window);
 typedef void (*wxk_Callback)(void* userdata);
 typedef void (*wxk_EventCallback)(void* userdata, wxk_Event* event);
 
@@ -144,6 +146,14 @@ WXK_FUNCTION(void) wxk_Image_AddTgaHandler(void) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Image_AddXpmHandler(void) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Image_AddIconHandler(void) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Image_AddAllHandlers(void) WXK_NOEXCEPT;
+
+// Validators
+
+// A validator whose checks call back into .NET. retain and release are called as windows take
+// and drop copies of it, and onFree once the last copy is gone.
+WXK_FUNCTION(wxk_Object*) wxk_ManagedValidator_new(wxk_ValidateCallback validate, wxk_TransferCallback toWindow, wxk_TransferCallback fromWindow, wxk_Callback retain, wxk_Callback release, wxk_Callback onFree, void* userdata) WXK_NOEXCEPT;
+// Gives the window a copy of the validator. Null removes the window's validator.
+WXK_FUNCTION(void) wxk_Window_SetValidator(wxk_Window* window, wxk_Object* validator) WXK_NOEXCEPT;
 
 // Events
 

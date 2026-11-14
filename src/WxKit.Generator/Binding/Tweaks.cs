@@ -66,6 +66,14 @@ internal sealed class ClassTweak(string name) {
 	/// <summary>The class only has static members, such as wxSystemSettings, and becomes a static class.</summary>
 	public bool IsStaticOnly { get; private set; }
 
+	/// <summary>The managed side creates and deletes objects of the class, though its ancestry says otherwise, as for wxValidator, an event handler.</summary>
+	public bool IsOwnedObject { get; private set; }
+
+	public ClassTweak Owned() {
+		IsOwnedObject = true;
+		return this;
+	}
+
 	/// <summary>The class is copied like a value, though it is not one of the classes that are by their ancestry, such as wxListItem.</summary>
 	public bool IsValueObject { get; private set; }
 
@@ -126,7 +134,7 @@ internal sealed class ClassTweak(string name) {
 		return this;
 	}
 
-	/// <summary>Gives a number parameter an enum type, such as an orientation.</summary>
+	/// <summary>Gives a number parameter an enum type, such as an orientation. The parameter "return" names the return value.</summary>
 	public ClassTweak ParameterEnum(string member, string parameter, string enumName) {
 		ParameterEnums[(member, parameter)] = enumName;
 		return this;

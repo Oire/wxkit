@@ -1604,11 +1604,32 @@ WXK_FUNCTION(uint8_t) wxk_TextCtrl_SetMargins_Point(wxk_Window* self, wxk_Point 
 // wxTextEntryDialog
 
 WXK_FUNCTION(wxk_Window*) wxk_TextEntryDialog_new(wxk_Window* parent, const char16_t* message, size_t messageLength) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_TextEntryDialog_SetTextValidator(wxk_Window* self, int32_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TextEntryDialog_SetTextValidator_TextValidator(wxk_Window* self, wxk_Object* validator) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TextEntryDialog_SetTextValidator_TextValidatorStyle(wxk_Window* self, int32_t style) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_TextEntryDialog_SetHint(wxk_Window* self, const char16_t* hint, size_t hintLength) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_TextEntryDialog_ForceUpper(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_String*) wxk_TextEntryDialog_GetValue(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_TextEntryDialog_SetValue(wxk_Window* self, const char16_t* value, size_t valueLength) WXK_NOEXCEPT;
+
+// wxTextValidator
+
+WXK_FUNCTION(wxk_Object*) wxk_TextValidator_new(int64_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_TextValidator_HasFlag(wxk_Object* self, int32_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TextValidator_AddExclude(wxk_Object* self, const char16_t* exclude, size_t excludeLength) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TextValidator_AddInclude(wxk_Object* self, const char16_t* include, size_t includeLength) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TextValidator_AddCharExcludes(wxk_Object* self, const char16_t* chars, size_t charsLength) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TextValidator_AddCharIncludes(wxk_Object* self, const char16_t* chars, size_t charsLength) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_String*) wxk_TextValidator_IsValid(wxk_Object* self, const char16_t* val, size_t valLength) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_String*) wxk_TextValidator_GetCharExcludes(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TextValidator_SetCharExcludes(wxk_Object* self, const char16_t* chars, size_t charsLength) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_String*) wxk_TextValidator_GetCharIncludes(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TextValidator_SetCharIncludes(wxk_Object* self, const char16_t* chars, size_t charsLength) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_StringArray*) wxk_TextValidator_GetExcludes(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TextValidator_SetExcludes(wxk_Object* self, const wxk_StringArray* stringList) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_StringArray*) wxk_TextValidator_GetIncludes(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TextValidator_SetIncludes(wxk_Object* self, const wxk_StringArray* stringList) WXK_NOEXCEPT;
+WXK_FUNCTION(int64_t) wxk_TextValidator_GetStyle(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TextValidator_SetStyle(wxk_Object* self, int64_t style) WXK_NOEXCEPT;
 
 // wxTimerEvent
 
@@ -1824,6 +1845,15 @@ WXK_FUNCTION(int32_t) wxk_UpdateUIEvent_GetMode(void) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_UpdateUIEvent_SetMode(int32_t mode) WXK_NOEXCEPT;
 WXK_FUNCTION(int64_t) wxk_UpdateUIEvent_GetUpdateInterval(void) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_UpdateUIEvent_SetUpdateInterval(int64_t updateInterval) WXK_NOEXCEPT;
+
+// wxValidator
+
+WXK_FUNCTION(uint8_t) wxk_Validator_TransferFromWindow(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Validator_TransferToWindow(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Validator_Validate(wxk_Object* self, wxk_Window* parent) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Validator_SuppressBellOnError(uint8_t suppress) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Window*) wxk_Validator_GetWindow(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Validator_IsSilent(void) WXK_NOEXCEPT;
 
 // wxWindow
 

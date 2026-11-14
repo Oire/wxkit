@@ -97,6 +97,8 @@ On the managed side, the class has a matching `protected virtual` method. Its de
 
 Only the virtual methods a binding tweak lists get directors. Most wxWidgets virtual methods are implementation details, and overriding them from .NET is a way to break things.
 
+The first director is written by hand: `ManagedValidator`, in `native/shim/src/validator.cpp`, which `CustomValidator` creates. A validator is copied, since a window clones the one it is given, so the copies share their table and userdata, a weak `GCHandle`, through a `shared_ptr`. Each clone a window holds asks .NET to make the handle strong while it lives, so the managed validator lives as long as a window uses it, and the last copy to go frees the handle. Its methods call into .NET without a base implementation to fall back on, since `wxValidator`'s own checks only return true.
+
 ## Platform-specific functions
 
 Some wxWidgets functions exist on only one port. For example, `wxWindow::MSWGetBgBrush`. The shim exports every function on every platform. On a platform that lacks the function, the export is a stub that stores an error and returns a default value. This matters for static linking: if a symbol were missing on one platform, every Native AOT application that references it would fail to link there, even if it never calls it.

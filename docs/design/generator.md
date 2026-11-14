@@ -61,7 +61,7 @@ These are the decisions it makes without a tweak.
 ### Classes
 
 - A class's handle depends on its ancestry. Windows cross as `wxk_Window`, sizers as `wxk_Sizer`, menus as `wxk_Menu`, events as `wxk_Event`, and other event handlers as `wxk_EvtHandler`. Value objects, which are `wxGDIObject`s and `wxImage`, and drawing contexts, which are `wxDC`s, cross as `wxk_Object`. A class a tweak marks static-only, such as `wxSystemSettings`, becomes a C# static class.
-- A class's managed base is its nearest ancestor that is also bound. Value objects and drawing contexts that have none derive from the hand-written `NativeObject`.
+- A class's managed base is its nearest ancestor that is also bound and has the same lifetime: WxKit owns value objects and drawing contexts, and wxWidgets owns the others. Those WxKit owns that have no such ancestor derive from the hand-written `NativeObject`. A tweak can mark a class as one WxKit owns, as validators are, though they are event handlers.
 - The members of a secondary base, such as `wxTextEntry` under `wxTextCtrl`, are bound on the class itself, with the secondary base's own bases, as `wxItemContainer` brings `wxItemContainerImmutable`. The shim calls them through a cast to that base, which picks the right one when two bases both have a member, and still calls overrides.
 - A class that declares a pure virtual member gets no constructors.
 
@@ -84,6 +84,7 @@ These are the decisions it makes without a tweak.
 
 ### Types and defaults
 
+- A tweak can give a number parameter, or a return value, an enum, as `wxTextValidator`'s style takes `TextValidatorStyle`.
 - A `style` parameter of a class with a style table takes that class's style enum, such as `ButtonStyle`, and so does a getter named for the style, such as `GetMessageDialogStyle`. A default made of constants the enum has is written with its members, such as `MessageDialogStyle.Ok | MessageDialogStyle.Center`.
 - A number whose default is `wxBOTH`, `wxHORIZONTAL`, or `wxVERTICAL` is an `Orientation`.
 - A C++ enum becomes a C# enum, with the prefix all its members share dropped. `wxOrientation`, `wxDirection`, and `wxItemKind` map to WxKit's hand-written enums instead.
@@ -106,7 +107,7 @@ These are the decisions it makes without a tweak.
 
 ## Current coverage
 
-105 classes bind 1806 functions and 167 event types. They are windows and top-level windows, the common controls, list and tree controls, toolbars, sizers, menus, the standard dialogs, the event classes the core and those controls send, fonts, pens, brushes, bitmaps, icons, cursors, images, drawing contexts, system settings, and the art provider. The tweaks are in `src/WxKit.Generator/Tweaks/Core.cs`. The clipboard's text is written by hand, in `Clipboard`, since `wxClipboard` hands data objects over in ways the generator cannot express. The report lists about 400 members the generator still cannot bind, most often because of C arrays, per-item client data, raw image buffers, and classes not bound yet, such as validators and the objects a toolbar's tools are.
+107 classes bind 1829 functions and 167 event types. They are windows and top-level windows, the common controls, list and tree controls, toolbars, sizers, menus, the standard dialogs, the event classes the core and those controls send, fonts, pens, brushes, bitmaps, icons, cursors, images, drawing contexts, system settings, the art provider, and validators. The tweaks are in `src/WxKit.Generator/Tweaks/Core.cs`. The clipboard's text is written by hand, in `Clipboard`, since `wxClipboard` hands data objects over in ways the generator cannot express, and so is `CustomValidator`, whose checks wxWidgets calls as virtual functions. The report lists about 400 members the generator still cannot bind, most often because of C arrays, per-item client data, raw image buffers, and classes not bound yet, such as the objects a toolbar's tools are.
 
 ## Type conversions
 

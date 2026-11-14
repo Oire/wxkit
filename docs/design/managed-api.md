@@ -102,6 +102,24 @@ panel.Paint += (sender, e) => {
 
 They derive from `NativeObject` too, and their finalizers post the delete to the GUI thread, but a drawing context should not wait for the collector. A context that wxWidgets hands back, such as an erase event's, is not WxKit's to delete, so members that return one are not bound yet.
 
+### Validators
+
+A validator checks a control's value, and moves data between the control and the application, when a dialog's OK button is pressed or `Window.Validate`, `TransferDataToWindow`, or `TransferDataFromWindow` runs. `TextValidator` is wxWidgets's, with its filters as `TextValidatorStyle`. A validator written in C# derives from `CustomValidator` and overrides the checks it needs:
+
+```csharp
+sealed class Required : CustomValidator {
+	protected override bool OnValidate(Window window, Window? parent) {
+		if (((TextCtrl)window).Value.Length > 0) return true;
+		MessageBox.Show("Fill this in first.");
+		return false;
+	}
+}
+
+name.Validator = new Required();
+```
+
+A control holds its own copy of the validator, as in wxWidgets, so one validator can serve several controls, and a change to a `TextValidator` after it is set does not reach the control until it is set again. Validators derive from `NativeObject`, though `wxValidator` is an event handler, since WxKit creates and deletes them. A `CustomValidator` stays alive while any control holds a copy of it, and can be collected after that. An exception in one of its checks goes to `Application.UnhandledException`, and the check fails.
+
 ## Opting in to features
 
 WxKit has no switches for optional features, as wxDragon has Cargo features. Native AOT only compiles the methods an application can reach, so a shim function nothing calls is never referenced, and the linker leaves out its object file and the libraries behind it. Opting in is calling the API.

@@ -5330,9 +5330,13 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkWindow* TextEntryDialogNew(WxkWindow* parent, char* message, nuint messageLength);
 
-	[LibraryImport(Library, EntryPoint = "wxk_TextEntryDialog_SetTextValidator")]
+	[LibraryImport(Library, EntryPoint = "wxk_TextEntryDialog_SetTextValidator_TextValidator")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void TextEntryDialogSetTextValidator(WxkWindow* self, int style);
+	public static partial void TextEntryDialogSetTextValidatorTextValidator(WxkWindow* self, WxkObject* validator);
+
+	[LibraryImport(Library, EntryPoint = "wxk_TextEntryDialog_SetTextValidator_TextValidatorStyle")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void TextEntryDialogSetTextValidatorTextValidatorStyle(WxkWindow* self, int style);
 
 	[LibraryImport(Library, EntryPoint = "wxk_TextEntryDialog_SetHint")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5349,6 +5353,74 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_TextEntryDialog_SetValue")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void TextEntryDialogSetValue(WxkWindow* self, char* value, nuint valueLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_TextValidator_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* TextValidatorNew(long style);
+
+	[LibraryImport(Library, EntryPoint = "wxk_TextValidator_HasFlag")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte TextValidatorHasFlag(WxkObject* self, int style);
+
+	[LibraryImport(Library, EntryPoint = "wxk_TextValidator_AddExclude")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void TextValidatorAddExclude(WxkObject* self, char* exclude, nuint excludeLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_TextValidator_AddInclude")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void TextValidatorAddInclude(WxkObject* self, char* include, nuint includeLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_TextValidator_AddCharExcludes")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void TextValidatorAddCharExcludes(WxkObject* self, char* chars, nuint charsLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_TextValidator_AddCharIncludes")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void TextValidatorAddCharIncludes(WxkObject* self, char* chars, nuint charsLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_TextValidator_IsValid")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkString* TextValidatorIsValid(WxkObject* self, char* val, nuint valLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_TextValidator_GetCharExcludes")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkString* TextValidatorGetCharExcludes(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_TextValidator_SetCharExcludes")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void TextValidatorSetCharExcludes(WxkObject* self, char* chars, nuint charsLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_TextValidator_GetCharIncludes")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkString* TextValidatorGetCharIncludes(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_TextValidator_SetCharIncludes")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void TextValidatorSetCharIncludes(WxkObject* self, char* chars, nuint charsLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_TextValidator_GetExcludes")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkStringArray* TextValidatorGetExcludes(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_TextValidator_SetExcludes")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void TextValidatorSetExcludes(WxkObject* self, WxkStringArray* stringList);
+
+	[LibraryImport(Library, EntryPoint = "wxk_TextValidator_GetIncludes")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkStringArray* TextValidatorGetIncludes(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_TextValidator_SetIncludes")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void TextValidatorSetIncludes(WxkObject* self, WxkStringArray* stringList);
+
+	[LibraryImport(Library, EntryPoint = "wxk_TextValidator_GetStyle")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial long TextValidatorGetStyle(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_TextValidator_SetStyle")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void TextValidatorSetStyle(WxkObject* self, long style);
 
 	[LibraryImport(Library, EntryPoint = "wxk_TimerEvent_GetInterval")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -6125,6 +6197,30 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_UpdateUIEvent_SetUpdateInterval")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void UpdateUIEventSetUpdateInterval(long updateInterval);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Validator_TransferFromWindow")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ValidatorTransferFromWindow(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Validator_TransferToWindow")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ValidatorTransferToWindow(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Validator_Validate")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ValidatorValidate(WxkObject* self, WxkWindow* parent);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Validator_SuppressBellOnError")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ValidatorSuppressBellOnError(byte suppress);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Validator_GetWindow")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* ValidatorGetWindow(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Validator_IsSilent")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ValidatorIsSilent();
 
 	[LibraryImport(Library, EntryPoint = "wxk_Window_AcceptsFocus")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
