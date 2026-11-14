@@ -1,0 +1,62 @@
+<Project>
+
+	<!-- Native AOT links wxWidgets and the shim into the executable, so nothing ships beside it. Everything else loads wxkitnative.dll from the package's runtimes folder. -->
+	<PropertyGroup>
+		<WxKitStaticLink Condition="'$(WxKitStaticLink)' == '' and '$(PublishAot)' == 'true'">true</WxKitStaticLink>
+		<WxKitNativeDirectory Condition="'$(WxKitNativeDirectory)' == ''">$(MSBuildThisFileDirectory)../native/$(RuntimeIdentifier)/</WxKitNativeDirectory>
+		<_WxKitLinkTargets>$(WxKitNativeDirectory)WxKit.Native.targets</_WxKitLinkTargets>
+	</PropertyGroup>
+
+	<!-- wxMSW needs version 6 of the common controls for themed controls, and per-monitor DPI awareness. An application with a manifest of its own has to declare both itself. -->
+	<PropertyGroup Condition="'$(ApplicationManifest)' == '' and '$(NoWin32Manifest)' != 'true' and ('$(OutputType)' == 'Exe' or '$(OutputType)' == 'WinExe')">
+		<ApplicationManifest>$(MSBuildThisFileDirectory)wxkit.manifest</ApplicationManifest>
+	</PropertyGroup>
+
+	<ItemGroup Condition="'$(WxKitStaticLink)' == 'true'">
+		<DirectPInvoke Include="wxkitnative" />
+	</ItemGroup>
+
+	<Import Project="$(_WxKitLinkTargets)" Condition="'$(WxKitStaticLink)' == 'true' and Exists('$(_WxKitLinkTargets)')" />
+
+	<!-- The linker takes one set of Win32 resources, so the application's own and wxWidgets's are merged into one file, which replaces the copy Native AOT would make of the application's. -->
+	<PropertyGroup Condition="'$(WxKitStaticLink)' == 'true' and $(RuntimeIdentifier.StartsWith('win'))">
+		<IlcGenerateWin32Resources>false</IlcGenerateWin32Resources>
+		<_WxKitMergeWin32Resources>true</_WxKitMergeWin32Resources>
+	</PropertyGroup>
+
+	<UsingTask TaskName="WxKitMergeResources" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)/Microsoft.Build.Tasks.Core.dll">
+		<ParameterGroup>
+			<Assembly ParameterType="System.String" Required="true" />
+			<Resources ParameterType="Microsoft.Build.Framework.ITaskItem[]" />
+			<Output ParameterType="System.String" Required="true" />
+		</ParameterGroup>
+		<Task>
+			<Code Type="Class" Language="cs" Source="$(MSBuildThisFileDirectory)WxKitMergeResources.cs" />
+		</Task>
+	</UsingTask>
+
+	<!-- Native AOT turns NativeLibrary items into linker arguments in SetupOSSpecificProps, so the merged file has to be named before that. This is a target of its own, rather than part of the merge, so the file is still linked when the merge is skipped as up to date. The path is resolved here rather than at evaluation, because a project can import this file before the SDK sets IntermediateOutputPath. -->
+	<Target Name="_WxKitResolveResources" Condition="'$(_WxKitMergeWin32Resources)' == 'true'">
+		<PropertyGroup>
+			<_WxKitMergedResources>$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)wxkit-application.res'))</_WxKitMergedResources>
+		</PropertyGroup>
+		<ItemGroup>
+			<NativeLibrary Include="$(_WxKitMergedResources)" />
+		</ItemGroup>
+	</Target>
+
+	<Target Name="_WxKitMergeResources" BeforeTargets="SetupOSSpecificProps" DependsOnTargets="_WxKitResolveResources" Condition="'$(_WxKitMergeWin32Resources)' == 'true'" Inputs="@(IntermediateAssembly);@(WxKitResource)" Outputs="$(_WxKitMergedResources)">
+		<WxKitMergeResources Assembly="@(IntermediateAssembly->'%(FullPath)')" Resources="@(WxKitResource)" Output="$(_WxKitMergedResources)" />
+	</Target>
+
+	<Target Name="_WxKitCheckStaticLink" BeforeTargets="PrepareForPublish" Condition="'$(WxKitStaticLink)' == 'true' and !Exists('$(_WxKitLinkTargets)')">
+		<Error Text="WxKit has no static build for '$(RuntimeIdentifier)'. Set WxKitStaticLink to false to ship wxkitnative beside the executable instead." />
+	</Target>
+
+	<Target Name="_WxKitDropSharedLibrary" AfterTargets="ComputeResolvedFilesToPublishList" Condition="'$(WxKitStaticLink)' == 'true'">
+		<ItemGroup>
+			<ResolvedFileToPublish Remove="@(ResolvedFileToPublish)" Condition="'%(Filename)%(Extension)' == 'wxkitnative.dll' or '%(Filename)%(Extension)' == 'libwxkitnative.dylib' or '%(Filename)%(Extension)' == 'libwxkitnative.so'" />
+		</ItemGroup>
+	</Target>
+
+</Project>

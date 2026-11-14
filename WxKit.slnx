@@ -1,0 +1,8 @@
+<Solution>
+	<Folder Name="/src/">
+		<Project Path="src/WxKit/WxKit.csproj" />
+	</Folder>
+	<Folder Name="/samples/">
+		<Project Path="samples/Hello/Hello.csproj" />
+	</Folder>
+</Solution>

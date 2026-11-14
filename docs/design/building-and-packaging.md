@@ -13,7 +13,7 @@ This document describes how WxKit builds wxWidgets and its shim, how Native AOT 
 For each runtime it makes two builds:
 
 - A static build, for Native AOT. wxWidgets and the shim are built as static libraries, and the script writes a `WxKit.Native.targets` file beside them that lists everything the final link needs. This keeps platform details out of the package's own targets file.
-- A shared build, for everything else. wxWidgets is linked statically into one shared library, `wxkit.dll`, `libwxkit.dylib`, or `libwxkit.so`, which exports only the shim's functions. An application that does not use Native AOT loads this library from the package's `runtimes` folder.
+- A shared build, for everything else. wxWidgets is linked statically into one shared library, `wxkitnative.dll`, `libwxkitnative.dylib`, or `libwxkitnative.so`, which exports only the shim's functions. An application that does not use Native AOT loads this library from the package's `runtimes` folder.
 
 Output goes to `artifacts/native/<runtime>/static` and `artifacts/native/<runtime>/shared`.
 
@@ -21,8 +21,9 @@ Output goes to `artifacts/native/<runtime>/static` and `artifacts/native/<runtim
 
 - wxWidgets and the shim are built with the static C runtime, `/MT`, because that is what Native AOT links. The script finds the newest Visual Studio with the C++ tools and names its CMake generator explicitly.
 - The static link lists the Windows libraries that wxMSW uses, such as `comctl32`, `uxtheme`, `oleacc`, `gdiplus`, `shlwapi`, and `version`.
-- wxMSW needs version 6 of the common controls for themed controls, and wants per-monitor DPI awareness. Both come from the application manifest. The package's targets give the application a default manifest that declares both, unless it sets its own with `ApplicationManifest`. Whether the .NET SDK's own default manifest gets in the way needs to be checked in the prototype.
-- wxMSW's resources, such as its cursors, live in `wx.rc`. With a static link, the application has to contain them. The script compiles them to a `.res` file, and the link targets pass it to the linker.
+- wxMSW needs version 6 of the common controls for themed controls, and wants per-monitor DPI awareness. Both come from the application manifest. The package's targets set `ApplicationManifest` to WxKit's own manifest, which declares both, unless the application sets its own. The compiler embeds it in the managed assembly, as it would any manifest, and Native AOT copies it into the executable from there.
+- wxMSW's resources, such as its cursors, its default icons, and the menu that MDI frames use, live in `wx.rc`. With a static link, the application has to contain them. The script compiles them, without a manifest, to `wxkit.res`. The linker only accepts one set of Win32 resources, though, and Native AOT already gives it the application's own, which hold its icon, version, and manifest. So the package's targets turn off Native AOT's copy with `IlcGenerateWin32Resources`, and a small build task reads the application's resources out of its managed assembly and writes them, with WxKit's, into one `.res` file for the linker. The application's resources win wherever both have one with the same type, name, and language.
+- Native AOT finds the linker through `vcvarsall.bat`. In the Visual Studio 2026 Build Tools, that script runs `vswhere.exe` by name, so if the Visual Studio Installer folder is not on `PATH`, its error message ends up inside the linker's path and the link fails. Until that is fixed upstream, add `%ProgramFiles(x86)%\Microsoft Visual Studio\Installer` to `PATH`.
 
 ### macOS
 
@@ -41,7 +42,7 @@ Output goes to `artifacts/native/<runtime>/static` and `artifacts/native/<runtim
 
 The package's `buildTransitive/WxKit.targets` works like this:
 
-- With `PublishAot` on, `WxKitStaticLink` defaults to `true`. The targets add `DirectPInvoke` for `wxkit` and import the runtime's `WxKit.Native.targets`, so the shim's functions are linked into the executable and called directly, without loading anything at run time.
+- With `PublishAot` on, `WxKitStaticLink` defaults to `true`. The targets add `DirectPInvoke` for `wxkitnative` and import the runtime's `WxKit.Native.targets`, so the shim's functions are linked into the executable and called directly, without loading anything at run time.
 - With `WxKitStaticLink` set to `false`, the shared library ships beside the executable instead.
 - Without Native AOT, the shared library loads from the package's `runtimes` folder.
 - The targets fail with a clear message when there is no static build for the runtime being published.
@@ -52,15 +53,15 @@ CI publishes the C# sample with Native AOT on each platform and runs it in a smo
 
 ## Packages
 
-wxWidgets is large. A static build of the core libraries for one runtime is likely tens of megabytes, and nuget.org limits a package to 250 megabytes. One package holding every runtime probably will not fit.
+wxWidgets is large. On `win-x64`, the static libraries for just the base and core libraries come to about 150 megabytes, most of it in the core library, and nuget.org limits a package to 250 megabytes. An application that links them is much smaller: the Hello sample publishes as a single executable of about 4.6 megabytes.
 
-The proposal is:
+One package per operating system will not fit, since one runtime's static libraries already take more than half the limit, before the optional libraries are added. The proposal is:
 
 - `WxKit`, the managed library and its targets, with no native files.
-- One native package per operating system, `WxKit.Native.Windows`, `WxKit.Native.macOS`, and `WxKit.Native.Linux`, each holding the static and shared builds for that system's runtimes.
-- `WxKit` depends on all three native packages, so an application only references `WxKit`.
+- One native package per runtime, such as `WxKit.Native.win-x64`, holding that runtime's static and shared builds.
+- `WxKit` depends on every native package, so an application only references `WxKit`.
 
-The first native builds will show real sizes, and the split can change then. Whether to split further, such as one package per runtime, is an open question.
+Making the libraries smaller, for example by checking what debug information they carry, may change this.
 
 ## Target framework
 
@@ -81,4 +82,4 @@ CI runs on GitHub Actions:
 - A pack job on tags builds the packages from every runtime's native build.
 - A newer run for the same branch cancels an older one.
 
-wxWidgets takes a long time to build, so the cache matters. A cold build of every runtime may take an hour or more.
+wxWidgets takes a long time to build, so the cache matters. A cold build of one runtime takes about 10 to 20 minutes on a desktop machine, and CI runners are slower.

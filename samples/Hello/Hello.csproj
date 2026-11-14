@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net10.0</TargetFramework>
+		<RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">win-x64</RuntimeIdentifier>
+		<PublishAot>true</PublishAot>
+		<IsPackable>false</IsPackable>
+		<WxKitNativeDirectory>$(WxKitNativeRoot)/$(RuntimeIdentifier)/static/</WxKitNativeDirectory>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\src\WxKit\WxKit.csproj" />
+	</ItemGroup>
+
+	<!-- A package reference brings these in on its own. A project reference has to ask. -->
+	<Import Project="..\..\src\WxKit\build\WxKit.targets" />
+
+	<ItemGroup>
+		<None Include="$(WxKitNativeRoot)/$(RuntimeIdentifier)/shared/*.dll" Link="%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+	</ItemGroup>
+
+</Project>

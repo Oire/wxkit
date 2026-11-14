@@ -14,7 +14,7 @@ This document lists the design decisions made so far, and the ones still open. E
 - XML documentation comments are generated from the wxWidgets brief descriptions, and each type links to its wxWidgets reference page.
 - XRC is the last optional library to be bound.
 - Tests use xUnit v3 with a custom entry point that runs them on the main thread, with a runner of WxKit's own as the fallback. See [Testing](testing.md).
-- Names follow .NET conventions. Package IDs and namespaces are Pascal case and dotted: `WxKit` for the managed library, and `WxKit.Native.Windows`, `WxKit.Native.macOS`, and `WxKit.Native.Linux` for native files. The GitHub repository is `trypsynth/wxkit`, and the native library is `wxkit`.
+- Names follow .NET conventions. Package IDs and namespaces are Pascal case and dotted: `WxKit` for the managed library, and `WxKit.Native.*` packages for native files. The GitHub repository is `trypsynth/wxkit`, and the native library is `wxkitnative`, because on Windows a native `wxkit.dll` would have the same file name as the managed `WxKit.dll`.
 
 ## Open
 
@@ -28,7 +28,7 @@ wxWidgets lets a custom-drawn control describe itself to screen readers on Windo
 
 ### Package split
 
-Recommendation: one managed package and one native package per operating system, revisited once real build sizes are known. See [Building and packaging](building-and-packaging.md).
+The first static build of the base and core libraries for `win-x64` is about 150 megabytes, against nuget.org's limit of 250 megabytes per package, so one package per operating system will not fit. Recommendation: one managed package and one native package per runtime, such as `WxKit.Native.win-x64`, after checking whether the libraries can be made smaller. See [Building and packaging](building-and-packaging.md).
 
 ### An F# helper package
 

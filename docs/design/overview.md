@@ -2,7 +2,7 @@
 
 WxKit is a set of .NET bindings to [wxWidgets](https://wxwidgets.org), the C++ library for native desktop user interfaces. This document describes what WxKit is for, how its parts fit together, and the order in which they get built. The other documents in this folder cover each part in detail.
 
-Status: draft. Nothing is built yet. Decisions that still need an answer are listed in [Open questions](open-questions.md).
+Status: draft. The first milestone is under way, and a spike on Windows has confirmed the static Native AOT link. Decisions made so far, and the ones still open, are in [Open questions](open-questions.md).
 
 ## Goals
 
@@ -34,7 +34,7 @@ Windows comes first. macOS and Linux follow together once the generator works.
 WxKit has four layers. Each one only talks to the layer directly below it.
 
 1. wxWidgets itself. It is a git submodule under `native/wxWidgets`, pinned to a release tag, and built with CMake as static libraries.
-2. The native shim, under `native/shim`. This is C++ code that exposes wxWidgets through a flat C interface, because .NET cannot call C++ directly. Every function has a `wxk_` prefix, takes and returns only C types, and never lets a C++ exception escape. Most of the shim is generated. The rest, such as the application object and event dispatch, is written by hand. The shim and wxWidgets build together into one library, called `wxkit`.
+2. The native shim, under `native/shim`. This is C++ code that exposes wxWidgets through a flat C interface, because .NET cannot call C++ directly. Every function has a `wxk_` prefix, takes and returns only C types, and never lets a C++ exception escape. Most of the shim is generated. The rest, such as the application object and event dispatch, is written by hand. The shim and wxWidgets build together into one library, called `wxkitnative`.
 3. The raw interop layer, in the `WxKit.Interop` namespace. It declares every shim function with `LibraryImport`, one to one. It is generated.
 4. The managed API, in the `WxKit` namespace. These are the classes that applications use, such as `Frame`, `Button`, and `BoxSizer`. Each class is a generated partial class, with a hand-written partial beside it wherever the generated part needs help.
 
