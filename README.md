@@ -19,10 +19,13 @@ wxWidgets is a git submodule, built with CMake. The build script builds it, and 
 git clone --recurse-submodules https://github.com/trypsynth/wxkit
 cd wxkit
 ./scripts/build-native.ps1
-dotnet publish samples/Hello
+dotnet test --project tests/WxKit.Tests
+./scripts/test-aot.ps1
 ```
 
-If the publish fails with "'vswhere.exe' is not recognized", add `%ProgramFiles(x86)%\Microsoft Visual Studio\Installer` to `PATH`. The Visual Studio 2026 Build Tools need it there for Native AOT to find the linker.
+The tests create real windows, so they need a desktop session. `test-aot.ps1` publishes the Hello sample with Native AOT and checks that it starts and exits cleanly.
+
+If you publish with Native AOT yourself and it fails with "'vswhere.exe' is not recognized", add `%ProgramFiles(x86)%\Microsoft Visual Studio\Installer` to `PATH`. The Visual Studio 2026 Build Tools need it there for Native AOT to find the linker. `test-aot.ps1` does this for you.
 
 ## How this was made
 
