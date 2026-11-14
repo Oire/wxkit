@@ -108,6 +108,9 @@ WXK_FUNCTION(const char16_t*) wxk_String_GetData(const wxk_String* text, size_t*
 
 WXK_FUNCTION(void) wxk_String_Free(wxk_String* text) WXK_NOEXCEPT;
 
+// Text that .NET hands to the shim, such as what a director's callback returns. The shim frees it.
+WXK_FUNCTION(wxk_String*) wxk_String_new(const char16_t* text, size_t textLength) WXK_NOEXCEPT;
+
 WXK_FUNCTION(wxk_StringArray*) wxk_StringArray_new(void) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_StringArray_Add(wxk_StringArray* array, const char16_t* text, size_t textLength) WXK_NOEXCEPT;
 WXK_FUNCTION(size_t) wxk_StringArray_GetCount(const wxk_StringArray* array) WXK_NOEXCEPT;

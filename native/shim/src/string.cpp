@@ -13,6 +13,10 @@ WXK_FUNCTION(void) wxk_String_Free(wxk_String* text) noexcept {
 	delete text;
 }
 
+WXK_FUNCTION(wxk_String*) wxk_String_new(const char16_t* text, size_t textLength) noexcept {
+	return wxk::Guard<wxk_String*>(nullptr, [&] { return new wxk_String{std::u16string(text, textLength)}; });
+}
+
 WXK_FUNCTION(wxk_StringArray*) wxk_StringArray_new(void) noexcept {
 	return wxk::Guard<wxk_StringArray*>(nullptr, [] { return wxk::Wrap(new wxArrayString()); });
 }

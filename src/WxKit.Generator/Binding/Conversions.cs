@@ -32,6 +32,21 @@ internal abstract class Conversion {
 	/// <summary>The managed type of a value coming back, which can be more specific than the type going in.</summary>
 	public virtual string ManagedReturnType(bool nullable) => ManagedType(nullable);
 
+	// A director's callback, which wxWidgets calls through an overridden virtual member. Its
+	// parameters come from C++ the way a return value does, so they use FromCpp and ManagedReturn,
+	// and its result goes back the way a parameter does, through these.
+
+	/// <summary>The C type a director's callback returns this as, or null when a callback cannot return it.</summary>
+	public virtual string? CallbackCType => null;
+
+	public virtual string CallbackInteropType => InteropReturnType;
+
+	/// <summary>C++ that turns what a callback returned into the C++ value.</summary>
+	public virtual string FromCallback(string expression) => expression;
+
+	/// <summary>C# that turns the managed value into what a callback returns.</summary>
+	public virtual string ToCallback(string expression) => expression;
+
 	/// <summary>A null check, for parameters that cannot be null.</summary>
 	public virtual string? Check(string name, bool nullable) => null;
 
@@ -53,6 +68,8 @@ internal sealed class VoidConversion : Conversion {
 	public static VoidConversion Instance { get; } = new();
 
 	public override string Suffix => "Void";
+
+	public override string? CallbackCType => "void";
 
 	public override string CReturnType => "void";
 
@@ -80,6 +97,12 @@ internal sealed class BoolConversion : Conversion {
 	public static BoolConversion Instance { get; } = new();
 
 	public override string Suffix => "Bool";
+
+	public override string? CallbackCType => "uint8_t";
+
+	public override string FromCallback(string expression) => $"{expression} != 0";
+
+	public override string ToCallback(string expression) => $"{expression} ? (byte)1 : (byte)0";
 
 	public override string CReturnType => "uint8_t";
 
@@ -116,6 +139,10 @@ internal sealed class NumberConversion(string suffix, string cType, string cppTy
 
 	public override string Suffix => suffix;
 
+	public override string? CallbackCType => cType;
+
+	public override string FromCallback(string expression) => $"static_cast<{cppType}>({expression})";
+
 	public override string CReturnType => cType;
 
 	public override string Fallback => "0";
@@ -148,6 +175,12 @@ internal sealed class EnumConversion(string enumName, NumberConversion number, s
 	public string? CppType { get; } = cppType;
 
 	public override string Suffix => EnumName;
+
+	public override string? CallbackCType => number.CallbackCType;
+
+	public override string FromCallback(string expression) => CppType is null ? number.FromCallback(expression) : $"static_cast<{CppType}>({expression})";
+
+	public override string ToCallback(string expression) => $"({number.ManagedType(false)}){expression}";
 
 	public override string CReturnType => number.CReturnType;
 
@@ -206,6 +239,12 @@ internal sealed class StringConversion : Conversion {
 	public static StringConversion Instance { get; } = new();
 
 	public override string Suffix => "String";
+
+	public override string? CallbackCType => "wxk_String*";
+
+	public override string FromCallback(string expression) => $"wxk::TakeString({expression})";
+
+	public override string ToCallback(string expression) => $"NativeString.Create({expression})";
 
 	public override string CReturnType => "wxk_String*";
 

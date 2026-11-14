@@ -74,7 +74,16 @@ internal sealed class BoundClass(DoxygenClass source, ClassTweak tweak, HandleKi
 
 	public BoundStyles? Styles { get; set; }
 
-	public IEnumerable<BoundFunction> Functions => Constructors.Concat(Methods.Select(static method => method.Function)).Concat(Properties.SelectMany(static property => property.Setter is null ? [property.Getter] : new[] { property.Getter, property.Setter }));
+	/// <summary>The virtual members C# can override, each bound as a call to wxWidgets's own implementation.</summary>
+	public List<BoundFunction> Directors { get; } = [];
+
+	/// <summary>The overridable members of the class and its bases, which its director overrides.</summary>
+	public IEnumerable<BoundFunction> AllDirectors => (Base?.AllDirectors ?? []).Concat(Directors);
+
+	/// <summary>Whether WxKit creates a director, a subclass whose virtual members call into .NET, instead of the class itself.</summary>
+	public bool HasDirector => Constructors.Count > 0 && AllDirectors.Any();
+
+	public IEnumerable<BoundFunction> Functions => Constructors.Concat(Directors).Concat(Methods.Select(static method => method.Function)).Concat(Properties.SelectMany(static property => property.Setter is null ? [property.Getter] : new[] { property.Getter, property.Setter }));
 }
 
 internal sealed record BoundParameter(string CppName, string Name, Conversion Conversion, bool Nullable, string? Default);
@@ -104,6 +113,9 @@ internal sealed class BoundFunction(BoundClass owner, DoxygenMember source, Conv
 	public string InteropName => Naming.Type(Owner.CppName) + char.ToUpperInvariant(ExportName[0]) + ExportName[1..].Replace("_", string.Empty);
 
 	public IReadOnlyList<string> OnlyFor => Source.OnlyFor;
+
+	/// <summary>Whether this calls wxWidgets's own implementation of an overridable member, which a managed override's default calls.</summary>
+	public bool IsDirectorBase { get; set; }
 }
 
 internal sealed record BoundMethod(string Name, BoundFunction Function) {

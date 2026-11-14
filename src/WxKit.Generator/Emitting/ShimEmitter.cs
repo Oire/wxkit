@@ -25,6 +25,7 @@ internal static class ShimEmitter {
 			if (functions.Count == 0) continue;
 			writer.Line($"// {bound.CppName}").Line();
 			foreach (BoundFunction function in functions) writer.Line(Signature(function) + " WXK_NOEXCEPT;");
+			if (bound.Directors.Count > 0) writer.Line(SetDirectorsSignature(bound) + " WXK_NOEXCEPT;");
 			writer.Line();
 		}
 		writer.Line("// Event types").Line();
@@ -47,10 +48,16 @@ internal static class ShimEmitter {
 			writer.Line($"static_assert(static_cast<{type}>({value.Constant}) == static_cast<{type}>({value.Value}LL), \"{value.Constant} is not {value.Value}\");");
 		}
 		writer.Line();
+		WriteDirectors(writer, result);
 		foreach (BoundClass bound in result.Classes.Where(static bound => !bound.Tweak.IsHandwritten)) {
 			foreach (BoundFunction function in bound.Functions) {
 				WriteFunction(writer, function);
 				writer.Line();
+			}
+			if (bound.Directors.Count > 0) {
+				writer.Open(SetDirectorsSignature(bound) + " noexcept");
+				foreach (BoundFunction director in bound.Directors) writer.Line($"{CallbackName(director)} = {Camel(director.Source.Name)};");
+				writer.Close().Line();
 			}
 		}
 		foreach (BoundEventType type in result.EventTypes) {
@@ -60,6 +67,64 @@ internal static class ShimEmitter {
 		}
 		return writer.ToString();
 	}
+
+	// A director is a subclass WxKit creates instead of a class, whose overridable members call
+	// into .NET through callbacks it sets once, or the class's own when it has not. A struct that
+	// derives from the class that declares them calls the class's own, since they are often
+	// protected, for the managed defaults.
+	private static void WriteDirectors(CodeWriter writer, BindingResult result) {
+		List<BoundClass> declaring = [.. result.Classes.Where(static bound => bound.Directors.Count > 0)];
+		if (declaring.Count == 0) return;
+		writer.Line("namespace {").Line();
+		foreach (BoundClass bound in declaring) {
+			writer.Line($"// {bound.CppName}'s overridable members call into .NET through these, once it sets them.");
+			foreach (BoundFunction director in bound.Directors) writer.Line($"{CallbackPointer(director, CallbackName(director))} = nullptr;");
+			writer.Line();
+			writer.Open($"struct {Access(bound)} : {bound.CppName}");
+			foreach (BoundFunction director in bound.Directors) {
+				string constness = director.Source.IsConst ? "const " : string.Empty;
+				writer.Open($"static {director.Source.Type} {director.Source.Name}({constness}{bound.CppName}* self{string.Concat(director.Source.Parameters.Select(static parameter => $", {parameter.Type} {parameter.Name}"))})");
+				writer.Line($"return static_cast<{constness}{Access(bound)}*>(self)->{bound.CppName}::{director.Source.Name}({Arguments(director)});");
+				writer.Close();
+			}
+			writer.Close("};").Line();
+		}
+		foreach (BoundClass bound in result.Classes.Where(static bound => !bound.Tweak.IsHandwritten && bound.HasDirector)) {
+			writer.Open($"struct {Director(bound)} final : {bound.CppName}");
+			writer.Line($"using {bound.CppName}::{bound.CppName};");
+			foreach (BoundFunction director in bound.AllDirectors) {
+				writer.Line();
+				string parameters = string.Join(", ", director.Source.Parameters.Select(static parameter => $"{parameter.Type} {parameter.Name}"));
+				writer.Open($"{director.Source.Type} {director.Source.Name}({parameters}){(director.Source.IsConst ? " const" : string.Empty)} override");
+				string callback = CallbackName(director);
+				writer.Line($"if ({callback} == nullptr) return {bound.CppName}::{director.Source.Name}({Arguments(director)});");
+				string self = $"wxk::Wrap(static_cast<{bound.Handle.CppBase}*>(const_cast<{Director(bound)}*>(this)))";
+				string call = $"{callback}({string.Join(", ", director.Parameters.Select(static parameter => parameter.Conversion.FromCpp(parameter.CppName)).Prepend(self))})";
+				writer.Line(director.Returns is VoidConversion ? $"{call};" : $"return {director.Returns.FromCallback(call)};");
+				writer.Close();
+			}
+			writer.Close("};").Line();
+		}
+		writer.Line("} // namespace").Line();
+	}
+
+	private static string Access(BoundClass bound) => Naming.Type(bound.CppName) + "Access";
+
+	private static string Director(BoundClass bound) => Naming.Type(bound.CppName) + "Director";
+
+	private static string CallbackName(BoundFunction director) => $"{Naming.Type(director.Owner.CppName)}_{director.Source.Name}";
+
+	private static string Camel(string name) => char.ToLowerInvariant(name[0]) + name[1..];
+
+	private static string Arguments(BoundFunction director) => string.Join(", ", director.Source.Parameters.Select(static parameter => parameter.Name));
+
+	// A callback takes the object, then each parameter as C++ hands it out.
+	private static string CallbackPointer(BoundFunction director, string name) {
+		IEnumerable<string> parameters = director.Parameters.Select(static parameter => $"{parameter.Conversion.CReturnType} {parameter.CppName}").Prepend($"{director.Owner.Handle.CType}* self");
+		return $"{director.Returns.CallbackCType} (*{name})({string.Join(", ", parameters)})";
+	}
+
+	private static string SetDirectorsSignature(BoundClass bound) => $"WXK_FUNCTION(void) wxk_{Naming.Type(bound.CppName)}_SetDirectors({string.Join(", ", bound.Directors.Select(static director => CallbackPointer(director, Camel(director.Source.Name))))})";
 
 	private static string Signature(BoundFunction function) {
 		BoundClass owner = function.Owner;
@@ -80,7 +145,7 @@ internal static class ShimEmitter {
 		if (guard is not null) writer.Line($"#if {guard}");
 		if (function.IsConstructor) {
 			writer.Open($"return wxk::Guard<{returns}>(nullptr, [&]");
-			writer.Line($"{owner.Handle.CppBase}* created = new {owner.CppName}({arguments});");
+			writer.Line($"{owner.Handle.CppBase}* created = new {(owner.HasDirector ? Director(owner) : owner.CppName)}({arguments});");
 			writer.Line("return wxk::Wrap(created);");
 			writer.Close("});");
 		} else {
@@ -89,6 +154,7 @@ internal static class ShimEmitter {
 			string target = $"static_cast<{owner.CppName}*>(wxk::Unwrap(self))";
 			if (function.Source.Mixin is string mixin) target = $"static_cast<{mixin}*>({target})";
 			string call = function.IsStatic ? $"{function.Source.Mixin ?? owner.CppName}::{function.Source.Name}({arguments})" : $"{target}->{function.Source.Name}({arguments})";
+			if (function.IsDirectorBase) call = $"{Access(owner)}::{function.Source.Name}({string.Join(", ", function.Parameters.Select(static parameter => parameter.Conversion.ToCpp(parameter.Name.TrimStart('@'))).Prepend(target))})";
 			if (function.Returns is VoidConversion or SelfConversion) {
 				writer.Line($"wxk::Guard([&] {{ {call}; }});");
 			} else {

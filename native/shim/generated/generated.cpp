@@ -741,6 +741,79 @@ static_assert(static_cast<long long>(wxXOR) == static_cast<long long>(1LL), "wxX
 static_assert(static_cast<long>(wxYES_DEFAULT) == static_cast<long>(0LL), "wxYES_DEFAULT is not 0");
 static_assert(static_cast<long>(wxYES_NO) == static_cast<long>(10LL), "wxYES_NO is not 10");
 
+namespace {
+
+// wxListCtrl's overridable members call into .NET through these, once it sets them.
+wxk_String* (*ListCtrl_OnGetItemText)(wxk_Window* self, int64_t item, int64_t column) = nullptr;
+int32_t (*ListCtrl_OnGetItemImage)(wxk_Window* self, int64_t item) = nullptr;
+int32_t (*ListCtrl_OnGetItemColumnImage)(wxk_Window* self, int64_t item, int64_t column) = nullptr;
+uint8_t (*ListCtrl_OnGetItemIsChecked)(wxk_Window* self, int64_t item) = nullptr;
+
+struct ListCtrlAccess : wxListCtrl {
+	static wxString OnGetItemText(const wxListCtrl* self, long item, long column) {
+		return static_cast<const ListCtrlAccess*>(self)->wxListCtrl::OnGetItemText(item, column);
+	}
+	static int OnGetItemImage(const wxListCtrl* self, long item) {
+		return static_cast<const ListCtrlAccess*>(self)->wxListCtrl::OnGetItemImage(item);
+	}
+	static int OnGetItemColumnImage(const wxListCtrl* self, long item, long column) {
+		return static_cast<const ListCtrlAccess*>(self)->wxListCtrl::OnGetItemColumnImage(item, column);
+	}
+	static bool OnGetItemIsChecked(const wxListCtrl* self, long item) {
+		return static_cast<const ListCtrlAccess*>(self)->wxListCtrl::OnGetItemIsChecked(item);
+	}
+};
+
+struct ListCtrlDirector final : wxListCtrl {
+	using wxListCtrl::wxListCtrl;
+
+	wxString OnGetItemText(long item, long column) const override {
+		if (ListCtrl_OnGetItemText == nullptr) return wxListCtrl::OnGetItemText(item, column);
+		return wxk::TakeString(ListCtrl_OnGetItemText(wxk::Wrap(static_cast<wxWindow*>(const_cast<ListCtrlDirector*>(this))), static_cast<int64_t>(item), static_cast<int64_t>(column)));
+	}
+
+	int OnGetItemImage(long item) const override {
+		if (ListCtrl_OnGetItemImage == nullptr) return wxListCtrl::OnGetItemImage(item);
+		return static_cast<int>(ListCtrl_OnGetItemImage(wxk::Wrap(static_cast<wxWindow*>(const_cast<ListCtrlDirector*>(this))), static_cast<int64_t>(item)));
+	}
+
+	int OnGetItemColumnImage(long item, long column) const override {
+		if (ListCtrl_OnGetItemColumnImage == nullptr) return wxListCtrl::OnGetItemColumnImage(item, column);
+		return static_cast<int>(ListCtrl_OnGetItemColumnImage(wxk::Wrap(static_cast<wxWindow*>(const_cast<ListCtrlDirector*>(this))), static_cast<int64_t>(item), static_cast<int64_t>(column)));
+	}
+
+	bool OnGetItemIsChecked(long item) const override {
+		if (ListCtrl_OnGetItemIsChecked == nullptr) return wxListCtrl::OnGetItemIsChecked(item);
+		return ListCtrl_OnGetItemIsChecked(wxk::Wrap(static_cast<wxWindow*>(const_cast<ListCtrlDirector*>(this))), static_cast<int64_t>(item)) != 0;
+	}
+};
+
+struct ListViewDirector final : wxListView {
+	using wxListView::wxListView;
+
+	wxString OnGetItemText(long item, long column) const override {
+		if (ListCtrl_OnGetItemText == nullptr) return wxListView::OnGetItemText(item, column);
+		return wxk::TakeString(ListCtrl_OnGetItemText(wxk::Wrap(static_cast<wxWindow*>(const_cast<ListViewDirector*>(this))), static_cast<int64_t>(item), static_cast<int64_t>(column)));
+	}
+
+	int OnGetItemImage(long item) const override {
+		if (ListCtrl_OnGetItemImage == nullptr) return wxListView::OnGetItemImage(item);
+		return static_cast<int>(ListCtrl_OnGetItemImage(wxk::Wrap(static_cast<wxWindow*>(const_cast<ListViewDirector*>(this))), static_cast<int64_t>(item)));
+	}
+
+	int OnGetItemColumnImage(long item, long column) const override {
+		if (ListCtrl_OnGetItemColumnImage == nullptr) return wxListView::OnGetItemColumnImage(item, column);
+		return static_cast<int>(ListCtrl_OnGetItemColumnImage(wxk::Wrap(static_cast<wxWindow*>(const_cast<ListViewDirector*>(this))), static_cast<int64_t>(item), static_cast<int64_t>(column)));
+	}
+
+	bool OnGetItemIsChecked(long item) const override {
+		if (ListCtrl_OnGetItemIsChecked == nullptr) return wxListView::OnGetItemIsChecked(item);
+		return ListCtrl_OnGetItemIsChecked(wxk::Wrap(static_cast<wxWindow*>(const_cast<ListViewDirector*>(this))), static_cast<int64_t>(item)) != 0;
+	}
+};
+
+} // namespace
+
 WXK_FUNCTION(uint8_t) wxk_ActivateEvent_GetActive(wxk_Event* self) noexcept {
 	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxActivateEvent*>(wxk::Unwrap(self))->GetActive()) ? 1 : 0; });
 }
@@ -3785,9 +3858,25 @@ WXK_FUNCTION(uint8_t) wxk_ListBox_SetStringSelection_String(wxk_Window* self, co
 
 WXK_FUNCTION(wxk_Window*) wxk_ListCtrl_new(wxk_Window* parent, int32_t id, wxk_Point position, wxk_Size size, int64_t style) noexcept {
 	return wxk::Guard<wxk_Window*>(nullptr, [&] {
-		wxWindow* created = new wxListCtrl(static_cast<wxWindow*>(wxk::Unwrap(parent)), static_cast<int>(id), wxk::FromPoint(position), wxk::FromSize(size), static_cast<long>(style));
+		wxWindow* created = new ListCtrlDirector(static_cast<wxWindow*>(wxk::Unwrap(parent)), static_cast<int>(id), wxk::FromPoint(position), wxk::FromSize(size), static_cast<long>(style));
 		return wxk::Wrap(created);
 	});
+}
+
+WXK_FUNCTION(wxk_String*) wxk_ListCtrl_base_OnGetItemText(wxk_Window* self, int64_t item, int64_t column) noexcept {
+	return wxk::Guard<wxk_String*>(nullptr, [&]() -> wxk_String* { return wxk::ToUtf16(ListCtrlAccess::OnGetItemText(static_cast<wxListCtrl*>(wxk::Unwrap(self)), static_cast<long>(item), static_cast<long>(column))); });
+}
+
+WXK_FUNCTION(int32_t) wxk_ListCtrl_base_OnGetItemImage(wxk_Window* self, int64_t item) noexcept {
+	return wxk::Guard<int32_t>(0, [&]() -> int32_t { return static_cast<int32_t>(ListCtrlAccess::OnGetItemImage(static_cast<wxListCtrl*>(wxk::Unwrap(self)), static_cast<long>(item))); });
+}
+
+WXK_FUNCTION(int32_t) wxk_ListCtrl_base_OnGetItemColumnImage(wxk_Window* self, int64_t item, int64_t column) noexcept {
+	return wxk::Guard<int32_t>(0, [&]() -> int32_t { return static_cast<int32_t>(ListCtrlAccess::OnGetItemColumnImage(static_cast<wxListCtrl*>(wxk::Unwrap(self)), static_cast<long>(item), static_cast<long>(column))); });
+}
+
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_base_OnGetItemIsChecked(wxk_Window* self, int64_t item) noexcept {
+	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (ListCtrlAccess::OnGetItemIsChecked(static_cast<wxListCtrl*>(wxk::Unwrap(self)), static_cast<long>(item))) ? 1 : 0; });
 }
 
 WXK_FUNCTION(int64_t) wxk_ListCtrl_AppendColumn(wxk_Window* self, const char16_t* heading, size_t headingLength, int32_t format, int32_t width) noexcept {
@@ -4098,6 +4187,13 @@ WXK_FUNCTION(uint8_t) wxk_ListCtrl_IsAscendingSortIndicator(wxk_Window* self) no
 	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxListCtrl*>(wxk::Unwrap(self))->IsAscendingSortIndicator()) ? 1 : 0; });
 }
 
+WXK_FUNCTION(void) wxk_ListCtrl_SetDirectors(wxk_String* (*onGetItemText)(wxk_Window* self, int64_t item, int64_t column), int32_t (*onGetItemImage)(wxk_Window* self, int64_t item), int32_t (*onGetItemColumnImage)(wxk_Window* self, int64_t item, int64_t column), uint8_t (*onGetItemIsChecked)(wxk_Window* self, int64_t item)) noexcept {
+	ListCtrl_OnGetItemText = onGetItemText;
+	ListCtrl_OnGetItemImage = onGetItemImage;
+	ListCtrl_OnGetItemColumnImage = onGetItemColumnImage;
+	ListCtrl_OnGetItemIsChecked = onGetItemIsChecked;
+}
+
 WXK_FUNCTION(int64_t) wxk_ListEvent_GetCacheFrom(wxk_Event* self) noexcept {
 	return wxk::Guard<int64_t>(0, [&]() -> int64_t { return static_cast<int64_t>(static_cast<wxListEvent*>(wxk::Unwrap(self))->GetCacheFrom()); });
 }
@@ -4283,7 +4379,7 @@ WXK_FUNCTION(void) wxk_ListItem_SetWidth(wxk_Object* self, int32_t width) noexce
 
 WXK_FUNCTION(wxk_Window*) wxk_ListView_new(wxk_Window* parent, int32_t id, wxk_Point position, wxk_Size size, int64_t style) noexcept {
 	return wxk::Guard<wxk_Window*>(nullptr, [&] {
-		wxWindow* created = new wxListView(static_cast<wxWindow*>(wxk::Unwrap(parent)), static_cast<int>(id), wxk::FromPoint(position), wxk::FromSize(size), static_cast<long>(style));
+		wxWindow* created = new ListViewDirector(static_cast<wxWindow*>(wxk::Unwrap(parent)), static_cast<int>(id), wxk::FromPoint(position), wxk::FromSize(size), static_cast<long>(style));
 		return wxk::Wrap(created);
 	});
 }

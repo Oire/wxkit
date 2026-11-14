@@ -24,6 +24,14 @@ internal static class InteropEmitter {
 				string returns = function.IsConstructor ? $"{bound.Handle.InteropType}*" : function.Returns.InteropReturnType;
 				Import(writer, function.ShimName, $"public static partial {returns} {function.InteropName}({string.Join(", ", parameters)});");
 			}
+			if (bound.Directors.Count > 0) {
+				writer.Line();
+				IEnumerable<string> callbacks = bound.Directors.Select(director => {
+					IEnumerable<string> types = director.Parameters.Select(static parameter => parameter.Conversion.InteropReturnType).Prepend($"{bound.Handle.InteropType}*").Append(director.Returns.CallbackInteropType);
+					return $"delegate* unmanaged[Cdecl]<{string.Join(", ", types)}> {char.ToLowerInvariant(director.Source.Name[0])}{director.Source.Name[1..]}";
+				});
+				Import(writer, $"wxk_{Naming.Type(bound.CppName)}_SetDirectors", $"public static partial void {Naming.Type(bound.CppName)}SetDirectors({string.Join(", ", callbacks)});");
+			}
 		}
 		foreach (BoundEventType type in result.EventTypes) {
 			writer.Line();

@@ -432,8 +432,73 @@ public unsafe partial class ListCtrl : Control {
 	/// <summary>Show the sort indicator of a specific column in a specific direction.</summary>
 	public void ShowSortIndicator(int column, bool ascending = true) => WxKitNative.ListCtrlShowSortIndicator(Native, column, ascending ? (byte)1 : (byte)0);
 
+	/// <summary>Override this function in the derived class for a control with wxLC_VIRTUAL and wxLC_REPORT styles in order to specify the image index for the given line and column.</summary>
+	protected virtual int OnGetItemColumnImage(long item, long column) => WxKitNative.ListCtrlBaseOnGetItemColumnImage(Native, item, column);
+
+	/// <summary>This function must be overridden in the derived class for a control with wxLC_VIRTUAL style using images.</summary>
+	protected virtual int OnGetItemImage(long item) => WxKitNative.ListCtrlBaseOnGetItemImage(Native, item);
+
+	/// <summary>This function must be overridden in the derived class for a control with wxLC_VIRTUAL style that uses checkboxes.</summary>
+	protected virtual bool OnGetItemIsChecked(long item) => WxKitNative.ListCtrlBaseOnGetItemIsChecked(Native, item) != 0;
+
+	/// <summary>This function must be overridden in the derived class for a control with wxLC_VIRTUAL style.</summary>
+	protected virtual string OnGetItemText(long item, long column) => NativeString.Take(WxKitNative.ListCtrlBaseOnGetItemText(Native, item, column));
+
+	[global::System.Runtime.InteropServices.UnmanagedCallersOnly(CallConvs = [typeof(global::System.Runtime.CompilerServices.CallConvCdecl)])]
+	private static int DirectorOnGetItemColumnImage(WxkWindow* self, long item, long column) {
+		try {
+			if (ObjectRegistry.Find(self) is not ListCtrl owner) return WxKitNative.ListCtrlBaseOnGetItemColumnImage(self, item, column);
+			return owner.OnGetItemColumnImage(item, column);
+		} catch (Exception error) {
+			Application.ReportException(error);
+			return default;
+		}
+	}
+
+	[global::System.Runtime.InteropServices.UnmanagedCallersOnly(CallConvs = [typeof(global::System.Runtime.CompilerServices.CallConvCdecl)])]
+	private static int DirectorOnGetItemImage(WxkWindow* self, long item) {
+		try {
+			if (ObjectRegistry.Find(self) is not ListCtrl owner) return WxKitNative.ListCtrlBaseOnGetItemImage(self, item);
+			return owner.OnGetItemImage(item);
+		} catch (Exception error) {
+			Application.ReportException(error);
+			return default;
+		}
+	}
+
+	[global::System.Runtime.InteropServices.UnmanagedCallersOnly(CallConvs = [typeof(global::System.Runtime.CompilerServices.CallConvCdecl)])]
+	private static byte DirectorOnGetItemIsChecked(WxkWindow* self, long item) {
+		try {
+			if (ObjectRegistry.Find(self) is not ListCtrl owner) return WxKitNative.ListCtrlBaseOnGetItemIsChecked(self, item);
+			return owner.OnGetItemIsChecked(item) ? (byte)1 : (byte)0;
+		} catch (Exception error) {
+			Application.ReportException(error);
+			return default;
+		}
+	}
+
+	[global::System.Runtime.InteropServices.UnmanagedCallersOnly(CallConvs = [typeof(global::System.Runtime.CompilerServices.CallConvCdecl)])]
+	private static WxkString* DirectorOnGetItemText(WxkWindow* self, long item, long column) {
+		try {
+			if (ObjectRegistry.Find(self) is not ListCtrl owner) return WxKitNative.ListCtrlBaseOnGetItemText(self, item, column);
+			return NativeString.Create(owner.OnGetItemText(item, column));
+		} catch (Exception error) {
+			Application.ReportException(error);
+			return default;
+		}
+	}
+
+	private static bool _directorsInstalled;
+
+	internal static void InstallListCtrlDirectors() {
+		if (_directorsInstalled) return;
+		_directorsInstalled = true;
+		WxKitNative.ListCtrlSetDirectors(&DirectorOnGetItemText, &DirectorOnGetItemImage, &DirectorOnGetItemColumnImage, &DirectorOnGetItemIsChecked);
+	}
+
 	private static WxkWindow* CreateNative(Window parent, int id, Point? position, Size? size, ListCtrlStyle style) {
 		Application.VerifyAccess();
+		ListCtrl.InstallListCtrlDirectors();
 		ArgumentNullException.ThrowIfNull(parent);
 		return WxKitNative.ListCtrlNew((WxkWindow*)parent.Native, id, position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, (long)style);
 	}

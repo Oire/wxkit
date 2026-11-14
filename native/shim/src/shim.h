@@ -45,6 +45,14 @@ inline wxString FromUtf16(const char16_t* text, size_t length) {
 	}
 }
 
+// Takes a string .NET handed over, which can be null for an empty one, and frees it.
+inline wxString TakeString(wxk_String* text) {
+	if (text == nullptr) return wxString();
+	wxString result = FromUtf16(text->text.data(), text->text.size());
+	delete text;
+	return result;
+}
+
 inline wxk_String* ToUtf16(const wxString& text) {
 	auto* result = new wxk_String();
 	if constexpr (sizeof(wchar_t) == sizeof(char16_t)) {

@@ -66,6 +66,14 @@ internal sealed class ClassTweak(string name) {
 	/// <summary>The class only has static members, such as wxSystemSettings, and becomes a static class.</summary>
 	public bool IsStaticOnly { get; private set; }
 
+	/// <summary>The virtual members C# can override, such as a virtual list's OnGetItemText, which a director in the shim calls.</summary>
+	public List<string> DirectorMembers { get; } = [];
+
+	public ClassTweak Director(params string[] members) {
+		DirectorMembers.AddRange(members);
+		return this;
+	}
+
 	/// <summary>The managed side creates and deletes objects of the class, though its ancestry says otherwise, as for wxValidator, an event handler.</summary>
 	public bool IsOwnedObject { get; private set; }
 

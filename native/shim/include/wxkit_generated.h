@@ -854,6 +854,10 @@ WXK_FUNCTION(uint8_t) wxk_ListBox_SetStringSelection_String(wxk_Window* self, co
 // wxListCtrl
 
 WXK_FUNCTION(wxk_Window*) wxk_ListCtrl_new(wxk_Window* parent, int32_t id, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_String*) wxk_ListCtrl_base_OnGetItemText(wxk_Window* self, int64_t item, int64_t column) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_ListCtrl_base_OnGetItemImage(wxk_Window* self, int64_t item) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_ListCtrl_base_OnGetItemColumnImage(wxk_Window* self, int64_t item, int64_t column) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_base_OnGetItemIsChecked(wxk_Window* self, int64_t item) WXK_NOEXCEPT;
 WXK_FUNCTION(int64_t) wxk_ListCtrl_AppendColumn(wxk_Window* self, const char16_t* heading, size_t headingLength, int32_t format, int32_t width) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_ListCtrl_Arrange(wxk_Window* self, int32_t flag) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_ListCtrl_ClearAll(wxk_Window* self) WXK_NOEXCEPT;
@@ -931,6 +935,7 @@ WXK_FUNCTION(uint8_t) wxk_ListCtrl_IsVirtual(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_ListCtrl_HasCheckBoxes(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_ListCtrl_GetSortIndicator(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_ListCtrl_IsAscendingSortIndicator(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListCtrl_SetDirectors(wxk_String* (*onGetItemText)(wxk_Window* self, int64_t item, int64_t column), int32_t (*onGetItemImage)(wxk_Window* self, int64_t item), int32_t (*onGetItemColumnImage)(wxk_Window* self, int64_t item, int64_t column), uint8_t (*onGetItemIsChecked)(wxk_Window* self, int64_t item)) WXK_NOEXCEPT;
 
 // wxListEvent
 

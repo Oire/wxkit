@@ -38,6 +38,10 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void StringFree(WxkString* text);
 
+	[LibraryImport(Library, EntryPoint = "wxk_String_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkString* StringNew(char* text, nuint textLength);
+
 	[LibraryImport(Library, EntryPoint = "wxk_StringArray_new")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkStringArray* StringArrayNew();

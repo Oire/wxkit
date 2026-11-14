@@ -6,6 +6,9 @@ namespace WxKit.Generator.Tests;
 public class BinderTests {
 	private static DoxygenMember Function(string name, string type = "void", params DoxygenParameter[] parameters) => new(name, type, parameters, IsConst: false, IsStatic: false, IsVirtual: false, IsPublic: true, IsDeprecated: false, OnlyFor: [], Brief: string.Empty);
 
+	// A protected virtual member, as a virtual list's OnGetItemText is.
+	private static DoxygenMember Overridable(string name, string type, params DoxygenParameter[] parameters) => Function(name, type, parameters) with { IsVirtual = true, IsPublic = false, IsConst = true };
+
 	private static DoxygenParameter Parameter(string type, string name, string? defaultValue = null) => new(type, name, defaultValue);
 
 	private static DoxygenClass Class(string name, string? baseName, DoxygenMember[]? members = null, DoxygenStyle[]? styles = null, DoxygenEvent[]? events = null) =>
@@ -28,6 +31,9 @@ public class BinderTests {
 				[
 					Function("wxButton"),
 					Function("wxButton", "", Parameter("wxWindow *", "parent"), Parameter("wxWindowID", "id"), Parameter("const wxString &", "label", "wxEmptyString"), Parameter("const wxPoint &", "pos", "wxDefaultPosition"), Parameter("long", "style", "0"), Parameter("const wxValidator &", "validator", "wxDefaultValidator")),
+					Overridable("OnGetLabel", "wxString", Parameter("long", "index")),
+					Overridable("OnGetNamed", "bool", Parameter("const wxString &", "name")),
+					Function("Press"),
 				],
 				[new DoxygenStyle("wxBU_LEFT", "Left-justifies the label."), new DoxygenStyle("wxBU_TOP", "Aligns the label to the top.")],
 				[new DoxygenEvent("EVT_BUTTON", "wxEVT_BUTTON", "wxCommandEvent", "Clicked.")]),
@@ -115,4 +121,21 @@ public class BinderTests {
 		Assert.Throws<InvalidOperationException>(() => Bind(static tweaks => tweaks.Class("wxButton").Only("NoSuchMember")));
 		Assert.Throws<InvalidOperationException>(() => Bind(static tweaks => tweaks.Class("wxButton").Event("EVT_NO_SUCH", "Nothing")));
 	}
+
+	[Fact]
+	public void BindsOverridableMembersAsCallsToTheOriginal() {
+		BoundClass button = Bound(Bind(tweaks => tweaks.Class("wxButton").Director("OnGetLabel")), "wxButton");
+		BoundFunction label = Assert.Single(button.Directors);
+		Assert.True(label.IsDirectorBase);
+		Assert.Equal("wxk_Button_base_OnGetLabel", label.ShimName);
+		Assert.IsType<StringConversion>(label.Returns);
+		Assert.True(button.HasDirector);
+		Assert.DoesNotContain(button.Methods, static method => method.Name == "OnGetLabel");
+	}
+
+	[Fact]
+	public void RefusesToOverrideWhatIsNotVirtual() => Assert.Throws<InvalidOperationException>(() => Bind(tweaks => tweaks.Class("wxButton").Director("Press")));
+
+	[Fact]
+	public void RefusesToOverrideWhatADirectorCannotConvert() => Assert.Throws<InvalidOperationException>(() => Bind(tweaks => tweaks.Class("wxButton").Director("OnGetNamed")));
 }

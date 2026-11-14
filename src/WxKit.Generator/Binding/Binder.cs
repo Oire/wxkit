@@ -135,6 +135,25 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		bound.Constructors.AddRange(functions.Where(static function => function.IsConstructor).DistinctBy(static function => string.Join(",", function.ManagedParameters.Select(static parameter => parameter.Conversion.ManagedType(parameter.Nullable)))));
 		PairProperties(bound, [.. functions.Where(static function => !function.IsConstructor)]);
 		RemoveRedeclarations(bound);
+		BindDirectors(bound);
+	}
+
+	// The virtual members a tweak lets C# override, such as a virtual list's OnGetItemText, which
+	// are often protected. Each is bound as a call to wxWidgets's own implementation, which the
+	// managed override's default calls. Their parameters only take numbers, enums, and booleans for
+	// now, which a callback can pass on to that implementation as they are.
+	private void BindDirectors(BoundClass bound) {
+		foreach (string name in bound.Tweak.DirectorMembers) {
+			DoxygenMember member = bound.Source.Members.FirstOrDefault(member => member.Name == name && member.IsVirtual && !member.IsStatic) ?? throw new InvalidOperationException($"A tweak lets C# override {bound.CppName}::{name}, which is not one of its virtual members.");
+			BoundFunction? function = BindFunction(bound, member, isConstructor: false);
+			if (function is null || function.Parameters.Count != member.Parameters.Count || function.Returns.CallbackCType is null || function.Parameters.Any(static parameter => parameter.Conversion is not (BoolConversion or NumberConversion or EnumConversion))) {
+				throw new InvalidOperationException($"C# cannot override {bound.CppName}::{name} yet: a director cannot convert its types.");
+			}
+			function.ExportName = "base_" + name;
+			function.ManagedParameters = function.Parameters;
+			function.IsDirectorBase = true;
+			bound.Directors.Add(function);
+		}
 	}
 
 	// The interface headers repeat a virtual function in each class that overrides it, such as

@@ -120,6 +120,27 @@ name.Validator = new Required();
 
 A control holds its own copy of the validator, as in wxWidgets, so one validator can serve several controls, and a change to a `TextValidator` after it is set does not reach the control until it is set again. Validators derive from `NativeObject`, though `wxValidator` is an event handler, since WxKit creates and deletes them. A `CustomValidator` stays alive while any control holds a copy of it, and can be collected after that. An exception in one of its checks goes to `Application.UnhandledException`, and the check fails.
 
+### Overriding virtual members
+
+A few wxWidgets classes ask the application for things through virtual members, which a C# class overrides like any other. A virtual list control, for example, asks for each row as it shows it, so it can show a million rows without holding them:
+
+```csharp
+sealed class LogView : ListCtrl {
+	private readonly List<LogEntry> _entries;
+
+	public LogView(Window parent, List<LogEntry> entries) : base(parent, style: ListCtrlStyle.Report | ListCtrlStyle.Virtual) {
+		_entries = entries;
+		InsertColumn(0, "Time");
+		InsertColumn(1, "Message");
+		SetItemCount(entries.Count);
+	}
+
+	protected override string OnGetItemText(long item, long column) => column == 0 ? _entries[(int)item].Time : _entries[(int)item].Message;
+}
+```
+
+A member that is not overridden does what wxWidgets does. Only the members a binding tweak lists can be overridden, and only on objects WxKit creates, not ones wxWidgets creates itself. An exception in an override goes to `Application.UnhandledException`, and wxWidgets gets an empty result. [The native layer](native-layer.md) describes how the calls reach C#.
+
 ## Opting in to features
 
 WxKit has no switches for optional features, as wxDragon has Cargo features. Native AOT only compiles the methods an application can reach, so a shim function nothing calls is never referenced, and the linker leaves out its object file and the libraries behind it. Opting in is calling the API.

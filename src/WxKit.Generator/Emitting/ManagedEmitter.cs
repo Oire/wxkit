@@ -68,11 +68,24 @@ internal static class ManagedEmitter {
 			Gap();
 			WriteMethod(writer, bound, method);
 		}
+		foreach (BoundFunction director in bound.Directors.OrderBy(static director => director.Source.Name, StringComparer.Ordinal)) {
+			Gap();
+			WriteMethod(writer, bound, new BoundMethod(director.Source.Name, director), "protected virtual");
+		}
+		if (bound.Directors.Count > 0) {
+			Gap();
+			WriteDirectorCallbacks(writer, bound);
+		}
 		foreach (BoundFunction constructor in bound.Constructors) {
 			Gap();
 			writer.Open($"private static {bound.Handle.InteropType}* CreateNative({ParameterList(constructor.ManagedParameters, withDefaults: false)})");
 			// The thread is checked before anything is created, so a call on the wrong thread leaves nothing behind.
 			writer.Line("Application.VerifyAccess();");
+			if (bound.HasDirector) {
+				for (BoundClass? declaring = bound; declaring is not null; declaring = declaring.Base) {
+					if (declaring.Directors.Count > 0) writer.Line($"{declaring.Name}.Install{declaring.Name}Directors();");
+				}
+			}
 			WriteCall(writer, constructor, self: null, result => $"return {result};");
 			writer.Close();
 		}
@@ -111,11 +124,11 @@ internal static class ManagedEmitter {
 		writer.Close();
 	}
 
-	private static void WriteMethod(CodeWriter writer, BoundClass bound, BoundMethod method) {
+	private static void WriteMethod(CodeWriter writer, BoundClass bound, BoundMethod method, string? modifiers = null) {
 		BoundFunction function = method.Function;
 		Summary(writer, function.Source.Brief);
 		string returns = function.Returns.ManagedReturnType(nullable: function.Returns is ObjectConversion or AnyObjectConversion);
-		string signature = $"{Modifiers(function, method.Hides)} {returns} {method.Name}({ParameterList(function.ManagedParameters, withDefaults: true)})";
+		string signature = $"{modifiers ?? Modifiers(function, method.Hides)} {returns} {method.Name}({ParameterList(function.ManagedParameters, withDefaults: true)})";
 		bool isVoid = function.Returns is VoidConversion;
 		if (function.Returns is SelfConversion) {
 			writer.Open(signature);
@@ -130,6 +143,45 @@ internal static class ManagedEmitter {
 		}
 		writer.Open(signature);
 		WriteCall(writer, function, Self(bound, function), result => isVoid ? $"{result};" : $"return {function.Returns.ManagedReturn(result)};");
+		writer.Close();
+	}
+
+	// The shim's director calls these, which call the managed object's override. When there is no
+	// managed object yet, or any more, as while it is created or destroyed, they call wxWidgets's
+	// own implementation. They are set once, before the first object of the class is created.
+	private static void WriteDirectorCallbacks(CodeWriter writer, BoundClass bound) {
+		foreach (BoundFunction director in bound.Directors.OrderBy(static director => director.Source.Name, StringComparer.Ordinal)) {
+			IEnumerable<string> parameters = director.Parameters.Select(static parameter => $"{parameter.Conversion.InteropReturnType} {parameter.Name}").Prepend($"{bound.Handle.InteropType}* self");
+			writer.Line("[global::System.Runtime.InteropServices.UnmanagedCallersOnly(CallConvs = [typeof(global::System.Runtime.CompilerServices.CallConvCdecl)])]");
+			writer.Open($"private static {director.Returns.CallbackInteropType} Director{director.Source.Name}({string.Join(", ", parameters)})");
+			writer.Open("try");
+			string original = $"WxKitNative.{director.InteropName}({string.Join(", ", director.Parameters.Select(static parameter => parameter.Name).Prepend("self"))})";
+			string call = $"owner.{director.Source.Name}({string.Join(", ", director.Parameters.Select(static parameter => parameter.Conversion.ManagedReturn(parameter.Name)))})";
+			if (director.Returns is VoidConversion) {
+				writer.Open($"if (ObjectRegistry.Find(self) is not {bound.Name} owner)");
+				writer.Line($"{original};");
+				writer.Line("return;");
+				writer.Close();
+				writer.Line($"{call};");
+				writer.Continue("catch (Exception error)");
+				writer.Line("Application.ReportException(error);");
+			} else {
+				writer.Line($"if (ObjectRegistry.Find(self) is not {bound.Name} owner) return {original};");
+				writer.Line($"return {director.Returns.ToCallback(call)};");
+				writer.Continue("catch (Exception error)");
+				writer.Line("Application.ReportException(error);");
+				writer.Line("return default;");
+			}
+			writer.Close();
+			writer.Close();
+			writer.Line();
+		}
+		writer.Line("private static bool _directorsInstalled;");
+		writer.Line();
+		writer.Open($"internal static void Install{bound.Name}Directors()");
+		writer.Line("if (_directorsInstalled) return;");
+		writer.Line("_directorsInstalled = true;");
+		writer.Line($"WxKitNative.{Naming.Type(bound.CppName)}SetDirectors({string.Join(", ", bound.Directors.Select(static director => "&Director" + director.Source.Name))});");
 		writer.Close();
 	}
 

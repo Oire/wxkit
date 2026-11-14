@@ -15,5 +15,11 @@ internal static unsafe class NativeString {
 		}
 	}
 
+	// Hands the shim a copy of the text, which the shim frees, as a director's callback returns it.
+	internal static WxkString* Create(string? text) {
+		if (string.IsNullOrEmpty(text)) return null;
+		fixed (char* data = text) return WxKitNative.StringNew(data, Length(text));
+	}
+
 	internal static nuint Length(string text) => (nuint)text.Length;
 }

@@ -20,6 +20,14 @@ internal sealed class CodeWriter {
 		return this;
 	}
 
+	/// <summary>Ends a block and opens the next one on the same line, as in "} catch (Exception error) {".</summary>
+	public CodeWriter Continue(string line) {
+		_depth--;
+		Line("} " + line + " {");
+		_depth++;
+		return this;
+	}
+
 	public CodeWriter Close(string closing = "}") {
 		_depth--;
 		return Line(closing);

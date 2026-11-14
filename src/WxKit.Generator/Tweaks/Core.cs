@@ -59,7 +59,10 @@ internal static class Core {
 		// Toolbars. The tools they return are not bound, so adding one gives nothing back; its id names it.
 		tweaks.Class("wxToolBar").DiscardUnboundReturns();
 		// Lists and trees, and what they hold.
-		tweaks.Class("wxListCtrl", list => list.ParameterEnum("InsertColumn", "format", "wxListColumnFormat"));
+		// A virtual list asks for each row as it shows it, through members C# overrides.
+		tweaks.Class("wxListCtrl", list => list
+			.ParameterEnum("InsertColumn", "format", "wxListColumnFormat")
+			.Director("OnGetItemText", "OnGetItemImage", "OnGetItemColumnImage", "OnGetItemIsChecked"));
 		tweaks.Class("wxListView");
 		tweaks.Class("wxTreeCtrl");
 		tweaks.Class("wxListItem").ValueObject();

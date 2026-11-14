@@ -91,13 +91,17 @@ Objects that are not trackable, such as sizers, are tracked through the window t
 
 Some wxWidgets classes are only useful if you override a virtual method. For example, a virtual list control calls `OnGetItemText` for each visible row, and a `wxDataViewModel` is entirely virtual methods.
 
-For these classes, the generator emits a director: a C++ class that derives from the wxWidgets class, holds a table of function pointers and a userdata, and overrides each chosen virtual method to call through the table. For example, `wxk::ListCtrlDirector` derives from `wxListCtrl` and overrides `OnGetItemText`.
+For these classes, the generator emits a director: a C++ class that derives from the wxWidgets class and overrides each virtual member a tweak lists. WxKit creates the director instead of the class, so the constructor exports only change which class they create, and inheriting constructors give the director all of the class's. For example, `ListCtrlDirector` derives from `wxListCtrl` and overrides `OnGetItemText`, and a class derived from it, such as `wxListView`, gets a director of its own with the same overrides.
 
-On the managed side, the class has a matching `protected virtual` method. Its default implementation calls the base wxWidgets implementation through an exported `wxk_ListCtrl_base_OnGetItemText` function. The director always calls into managed code, whether or not the method is overridden. This costs one transition per call, but it avoids reflection to detect overrides, which does not fit Native AOT well.
+Each override calls a function pointer into .NET, which the managed class sets once, before it creates the first object, through `wxk_ListCtrl_SetDirectors`. The callback takes the object's handle, and finds the managed object through the registry, so the director keeps no handle of its own. Until the pointers are set, an override calls the class's own implementation.
+
+On the managed side, the class has a matching `protected virtual` method. Its default calls the class's own implementation through an exported `wxk_ListCtrl_base_OnGetItemText` function, which reaches the member, often protected, through a struct derived from the class. The callback also calls that implementation when there is no managed object yet, or no longer, as while one is created or destroyed. The director always calls into managed code, whether or not the method is overridden. This costs one transition per call, but it avoids reflection to detect overrides, which does not fit Native AOT well.
+
+A director's parameters can only be numbers, enums, and booleans for now, and its result can also be a string.
 
 Only the virtual methods a binding tweak lists get directors. Most wxWidgets virtual methods are implementation details, and overriding them from .NET is a way to break things.
 
-The first director is written by hand: `ManagedValidator`, in `native/shim/src/validator.cpp`, which `CustomValidator` creates. A validator is copied, since a window clones the one it is given, so the copies share their table and userdata, a weak `GCHandle`, through a `shared_ptr`. Each clone a window holds asks .NET to make the handle strong while it lives, so the managed validator lives as long as a window uses it, and the last copy to go frees the handle. Its methods call into .NET without a base implementation to fall back on, since `wxValidator`'s own checks only return true.
+One director is written by hand: `ManagedValidator`, in `native/shim/src/validator.cpp`, which `CustomValidator` creates. A validator is copied, since a window clones the one it is given, so the copies share their table and userdata, a weak `GCHandle`, through a `shared_ptr`. Each clone a window holds asks .NET to make the handle strong while it lives, so the managed validator lives as long as a window uses it, and the last copy to go frees the handle. Its methods call into .NET without a base implementation to fall back on, since `wxValidator`'s own checks only return true.
 
 ## Platform-specific functions
 

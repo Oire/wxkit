@@ -2870,6 +2870,22 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkWindow* ListCtrlNew(WxkWindow* parent, int id, Point position, Size size, long style);
 
+	[LibraryImport(Library, EntryPoint = "wxk_ListCtrl_base_OnGetItemText")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkString* ListCtrlBaseOnGetItemText(WxkWindow* self, long item, long column);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ListCtrl_base_OnGetItemImage")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int ListCtrlBaseOnGetItemImage(WxkWindow* self, long item);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ListCtrl_base_OnGetItemColumnImage")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int ListCtrlBaseOnGetItemColumnImage(WxkWindow* self, long item, long column);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ListCtrl_base_OnGetItemIsChecked")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ListCtrlBaseOnGetItemIsChecked(WxkWindow* self, long item);
+
 	[LibraryImport(Library, EntryPoint = "wxk_ListCtrl_AppendColumn")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial long ListCtrlAppendColumn(WxkWindow* self, char* heading, nuint headingLength, int format, int width);
@@ -3177,6 +3193,10 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_ListCtrl_IsAscendingSortIndicator")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte ListCtrlIsAscendingSortIndicator(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ListCtrl_SetDirectors")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ListCtrlSetDirectors(delegate* unmanaged[Cdecl]<WxkWindow*, long, long, WxkString*> onGetItemText, delegate* unmanaged[Cdecl]<WxkWindow*, long, int> onGetItemImage, delegate* unmanaged[Cdecl]<WxkWindow*, long, long, int> onGetItemColumnImage, delegate* unmanaged[Cdecl]<WxkWindow*, long, byte> onGetItemIsChecked);
 
 	[LibraryImport(Library, EntryPoint = "wxk_ListEvent_GetCacheFrom")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

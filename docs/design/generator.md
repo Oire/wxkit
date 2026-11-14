@@ -64,6 +64,7 @@ These are the decisions it makes without a tweak.
 - A class's managed base is its nearest ancestor that is also bound and has the same lifetime: WxKit owns value objects and drawing contexts, and wxWidgets owns the others. Those WxKit owns that have no such ancestor derive from the hand-written `NativeObject`. A tweak can mark a class as one WxKit owns, as validators are, though they are event handlers.
 - The members of a secondary base, such as `wxTextEntry` under `wxTextCtrl`, are bound on the class itself, with the secondary base's own bases, as `wxItemContainer` brings `wxItemContainerImmutable`. The shim calls them through a cast to that base, which picks the right one when two bases both have a member, and still calls overrides.
 - A class that declares a pure virtual member gets no constructors.
+- A virtual member a tweak lists, which is often protected, becomes a `protected virtual` method C# can override, and the class and the classes derived from it get directors, which the shim creates instead of them. A director's parameters can only be numbers, enums, and booleans for now.
 
 ### Members
 
@@ -110,7 +111,7 @@ These are the decisions it makes without a tweak.
 
 ## Current coverage
 
-107 classes bind 1829 functions and 167 event types. They are windows and top-level windows, the common controls, list and tree controls, toolbars, sizers, menus, the standard dialogs, the event classes the core and those controls send, fonts, pens, brushes, bitmaps, icons, cursors, images, drawing contexts, system settings, the art provider, and validators. The tweaks are in `src/WxKit.Generator/Tweaks/Core.cs`. The clipboard is written by hand, in `Clipboard` and `ClipboardContent`, since `wxClipboard` hands data objects over in ways the generator cannot express, and so is `CustomValidator`, whose checks wxWidgets calls as virtual functions. The report lists about 400 members the generator still cannot bind, most often because of C arrays, per-item client data, raw image buffers, and classes not bound yet, such as the objects a toolbar's tools are.
+107 classes bind 1833 functions and 167 event types. They are windows and top-level windows, the common controls, list and tree controls, toolbars, sizers, menus, the standard dialogs, the event classes the core and those controls send, fonts, pens, brushes, bitmaps, icons, cursors, images, drawing contexts, system settings, the art provider, and validators. The virtual list's members are overridable. The tweaks are in `src/WxKit.Generator/Tweaks/Core.cs`. The clipboard is written by hand, in `Clipboard` and `ClipboardContent`, since `wxClipboard` hands data objects over in ways the generator cannot express, and so is `CustomValidator`, whose checks wxWidgets calls as virtual functions. The report lists about 400 members the generator still cannot bind, most often because of C arrays, per-item client data, raw image buffers, and classes not bound yet, such as the objects a toolbar's tools are.
 
 ## Type conversions
 

@@ -39,6 +39,7 @@ public unsafe partial class ListView : ListCtrl {
 
 	private static WxkWindow* CreateNative(Window parent, int id, Point? position, Size? size, ListCtrlStyle style) {
 		Application.VerifyAccess();
+		ListCtrl.InstallListCtrlDirectors();
 		ArgumentNullException.ThrowIfNull(parent);
 		return WxKitNative.ListViewNew((WxkWindow*)parent.Native, id, position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, (long)style);
 	}
