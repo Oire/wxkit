@@ -12,9 +12,9 @@ public enum BackgroundStyle {
 	/// <summary>Indicates that the background is only erased in the user-defined EVT_PAINT handler. Wraps wxBG_STYLE_PAINT.</summary>
 	Paint = 2,
 	/// <summary>Wraps wxBG_STYLE_COLOUR.</summary>
-	Color = 3,
+	Color = 4,
 	/// <summary>Indicates that the window background is not erased, letting the parent window show through. Wraps wxBG_STYLE_TRANSPARENT.</summary>
-	Transparent = 4,
+	Transparent = 3,
 }
 
 /// <summary>Wraps wxBitmapType.</summary>
@@ -146,9 +146,9 @@ public enum BrushStyle {
 	/// <summary>Vertical hatch. Wraps wxBRUSHSTYLE_VERTICAL_HATCH.</summary>
 	VerticalHatch = 116,
 	/// <summary>First of the hatch styles (inclusive). Wraps wxBRUSHSTYLE_FIRST_HATCH.</summary>
-	FirstHatch = 117,
+	FirstHatch = 111,
 	/// <summary>Last of the hatch styles (inclusive). Wraps wxBRUSHSTYLE_LAST_HATCH.</summary>
-	LastHatch = 118,
+	LastHatch = 116,
 }
 
 /// <summary>Wraps wxCheckBoxState.</summary>
@@ -558,7 +558,7 @@ public enum ImageAlphaBlendMode {
 /// <summary>Wraps wxImageResizeQuality.</summary>
 public enum ImageResizeQuality {
 	/// <summary>Simplest and fastest algorithm. Wraps wxIMAGE_QUALITY_NEAREST.</summary>
-	Nearest = 0,
+	Nearest = 5,
 	/// <summary>Compromise between wxIMAGE_QUALITY_NEAREST and wxIMAGE_QUALITY_BICUBIC. Wraps wxIMAGE_QUALITY_BILINEAR.</summary>
 	Bilinear = 1,
 	/// <summary>Highest quality but slowest execution time. Wraps wxIMAGE_QUALITY_BICUBIC.</summary>
@@ -566,11 +566,11 @@ public enum ImageResizeQuality {
 	/// <summary>Use surrounding pixels to calculate an average that will be used for new pixels. Wraps wxIMAGE_QUALITY_BOX_AVERAGE.</summary>
 	BoxAverage = 3,
 	/// <summary>Default image resizing algorithm used by wxImage::Scale(). Wraps wxIMAGE_QUALITY_NORMAL.</summary>
-	Normal = 4,
+	Normal = 0,
 	/// <summary>Fastest image resizing algorithm. Wraps wxIMAGE_QUALITY_FAST.</summary>
-	Fast = 5,
+	Fast = 6,
 	/// <summary>Best image resizing algorithm. Wraps wxIMAGE_QUALITY_HIGH.</summary>
-	High = 6,
+	High = 4,
 }
 
 /// <summary>Wraps wxLayoutDirection.</summary>
@@ -670,37 +670,37 @@ public enum PenStyle {
 	/// <summary>Wraps wxPENSTYLE_INVALID.</summary>
 	Invalid = -1,
 	/// <summary>Solid style. Wraps wxPENSTYLE_SOLID.</summary>
-	Solid = 0,
+	Solid = 100,
 	/// <summary>Dotted style. Wraps wxPENSTYLE_DOT.</summary>
-	Dot = 1,
+	Dot = 101,
 	/// <summary>Long dashed style. Wraps wxPENSTYLE_LONG_DASH.</summary>
-	LongDash = 2,
+	LongDash = 102,
 	/// <summary>Short dashed style. Wraps wxPENSTYLE_SHORT_DASH.</summary>
-	ShortDash = 3,
+	ShortDash = 103,
 	/// <summary>Dot and dash style. Wraps wxPENSTYLE_DOT_DASH.</summary>
-	DotDash = 4,
+	DotDash = 104,
 	/// <summary>Use the user dashes: see wxPen::SetDashes. Wraps wxPENSTYLE_USER_DASH.</summary>
-	UserDash = 5,
+	UserDash = 105,
 	/// <summary>No pen is used. Wraps wxPENSTYLE_TRANSPARENT.</summary>
-	Transparent = 6,
+	Transparent = 106,
 	/// <summary>Use the stipple bitmap. Wraps wxPENSTYLE_STIPPLE.</summary>
-	Stipple = 7,
+	Stipple = 110,
 	/// <summary>Backward diagonal hatch. Wraps wxPENSTYLE_BDIAGONAL_HATCH.</summary>
-	BdiagonalHatch = 8,
+	BdiagonalHatch = 111,
 	/// <summary>Cross-diagonal hatch. Wraps wxPENSTYLE_CROSSDIAG_HATCH.</summary>
-	CrossdiagHatch = 9,
+	CrossdiagHatch = 112,
 	/// <summary>Forward diagonal hatch. Wraps wxPENSTYLE_FDIAGONAL_HATCH.</summary>
-	FdiagonalHatch = 10,
+	FdiagonalHatch = 113,
 	/// <summary>Cross hatch. Wraps wxPENSTYLE_CROSS_HATCH.</summary>
-	CrossHatch = 11,
+	CrossHatch = 114,
 	/// <summary>Horizontal hatch. Wraps wxPENSTYLE_HORIZONTAL_HATCH.</summary>
-	HorizontalHatch = 12,
+	HorizontalHatch = 115,
 	/// <summary>Vertical hatch. Wraps wxPENSTYLE_VERTICAL_HATCH.</summary>
-	VerticalHatch = 13,
+	VerticalHatch = 116,
 	/// <summary>First of the hatch styles (inclusive). Wraps wxPENSTYLE_FIRST_HATCH.</summary>
-	FirstHatch = 14,
+	FirstHatch = 111,
 	/// <summary>Last of the hatch styles (inclusive). Wraps wxPENSTYLE_LAST_HATCH.</summary>
-	LastHatch = 15,
+	LastHatch = 116,
 }
 
 /// <summary>Wraps wxRasterOperationMode.</summary>
@@ -854,7 +854,7 @@ public enum StockCursor {
 	/// <summary>A wait cursor with a standard arrow. Wraps wxCURSOR_ARROWWAIT.</summary>
 	Arrowwait = 33,
 	/// <summary>Wraps wxCURSOR_MAX.</summary>
-	Max = 34,
+	Max = 36,
 }
 
 /// <summary>Wraps wxSystemColour.</summary>
@@ -968,21 +968,21 @@ public enum SystemFont {
 	/// <summary>Device-dependent font. Wraps wxSYS_DEVICE_DEFAULT_FONT.</summary>
 	DeviceDefaultFont = 14,
 	/// <summary>Default font for user interface objects such as menus and dialog boxes. Wraps wxSYS_DEFAULT_GUI_FONT.</summary>
-	DefaultGuiFont = 15,
+	DefaultGuiFont = 17,
 }
 
 /// <summary>Wraps wxSystemMetric.</summary>
 public enum SystemMetric {
 	/// <summary>Number of buttons on mouse, or zero if no mouse was installed. Wraps wxSYS_MOUSE_BUTTONS.</summary>
-	MouseButtons = 0,
+	MouseButtons = 1,
 	/// <summary>Width of single border. Wraps wxSYS_BORDER_X.</summary>
-	BorderX = 1,
+	BorderX = 2,
 	/// <summary>Height of single border. Wraps wxSYS_BORDER_Y.</summary>
-	BorderY = 2,
+	BorderY = 3,
 	/// <summary>Width of cursor in logical pixels. Wraps wxSYS_CURSOR_X.</summary>
-	CursorX = 3,
+	CursorX = 4,
 	/// <summary>Height of cursor in logical pixels. Wraps wxSYS_CURSOR_Y.</summary>
-	CursorY = 4,
+	CursorY = 5,
 	/// <summary>Width or height of cursor in logical pixels. Wraps wxSYS_CURSOR_SIZE.</summary>
 	CursorSize = 5,
 	/// <summary>Width in pixels of rectangle within which two successive mouse clicks must fall to generate a double-click. Wraps wxSYS_DCLICK_X.</summary>
@@ -1096,25 +1096,25 @@ public enum TextValidatorStyle {
 	/// <summary>Non-ASCII characters are filtered out. See wxString::IsAscii. Wraps wxFILTER_ASCII.</summary>
 	Ascii = 2,
 	/// <summary>Non-alpha characters are filtered out. Wraps wxFILTER_ALPHA.</summary>
-	Alpha = 3,
+	Alpha = 4,
 	/// <summary>Non-alphanumeric characters are filtered out. Wraps wxFILTER_ALPHANUMERIC.</summary>
-	Alphanumeric = 4,
+	Alphanumeric = 8,
 	/// <summary>Non-digit characters are filtered out. Wraps wxFILTER_DIGITS.</summary>
-	Digits = 5,
+	Digits = 16,
 	/// <summary>Non-numeric characters are filtered out. Wraps wxFILTER_NUMERIC.</summary>
-	Numeric = 6,
+	Numeric = 32,
 	/// <summary>Use an include list. Wraps wxFILTER_INCLUDE_LIST.</summary>
-	IncludeList = 7,
+	IncludeList = 64,
 	/// <summary>Use an include char list. Wraps wxFILTER_INCLUDE_CHAR_LIST.</summary>
-	IncludeCharList = 8,
+	IncludeCharList = 128,
 	/// <summary>Use an exclude list. Wraps wxFILTER_EXCLUDE_LIST.</summary>
-	ExcludeList = 9,
+	ExcludeList = 256,
 	/// <summary>Use an exclude char list. Wraps wxFILTER_EXCLUDE_CHAR_LIST.</summary>
-	ExcludeCharList = 10,
+	ExcludeCharList = 512,
 	/// <summary>Non-hexadecimal characters are filtered out. Wraps wxFILTER_XDIGITS.</summary>
-	Xdigits = 11,
+	Xdigits = 1024,
 	/// <summary>A convenience flag for use with the other flags. Wraps wxFILTER_SPACE.</summary>
-	Space = 12,
+	Space = 2048,
 }
 
 /// <summary>Wraps wxTreeItemIcon.</summary>

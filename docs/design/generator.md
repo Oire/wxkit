@@ -89,6 +89,7 @@ These are the decisions it makes without a tweak.
 - A C++ enum becomes a C# enum, with the prefix all its members share dropped. `wxOrientation`, `wxDirection`, and `wxItemKind` map to WxKit's hand-written enums instead.
 - A pointer default of `nullptr`, `NULL`, or `0` is null, and so is `wxDefaultPosition`, `wxDefaultSize`, `wxNullColour`, and the empty object of a value class, such as `wxNullFont`.
 - A few constants the interface headers use are only defined in the real headers, from the same pinned wxWidgets: the deprecated GUI constants in `wx/defs.h`, such as `wxDEFAULT`, and the art provider's ids in `wx/artprov.h`. The art ids are written as the `ArtId` and `ArtClient` constants.
+- An enum value the interface headers list without its initializer takes its value from the real headers, which give it, as for `wxTextValidatorStyle`'s flags and `wxPenStyle`. The interface headers would otherwise number such values from zero. A value the real headers give differently under different platforms is left to its place, and so are the values only the interface headers have.
 
 ### Names
 

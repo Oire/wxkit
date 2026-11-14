@@ -16,6 +16,7 @@ internal static partial class DoxygenReader {
 		Dictionary<string, string> constants = new(StringComparer.Ordinal);
 		Dictionary<string, string> eventTypes = new(StringComparer.Ordinal);
 		Dictionary<string, DoxygenEnum> enums = new(StringComparer.Ordinal);
+		HashSet<string> implied = new(StringComparer.Ordinal);
 		foreach (XElement compound in index.Elements("compound")) {
 			string kind = (string)compound.Attribute("kind")!;
 			if (kind is not ("class" or "struct" or "file" or "group")) continue;
@@ -29,13 +30,13 @@ internal static partial class DoxygenReader {
 				if (name.StartsWith("wxEVT_", StringComparison.Ordinal) && file is not null && file.StartsWith("interface/", StringComparison.Ordinal)) eventTypes.TryAdd(name, file["interface/".Length..]);
 			}
 			if (kind == "group") continue;
-			ReadConstants(definition, constants, enums, kind == "file" ? null : (string)definition.Element("compoundname")!);
+			ReadConstants(definition, constants, implied, enums, kind == "file" ? null : (string)definition.Element("compoundname")!);
 			if (kind == "file") continue;
 			DoxygenClass read = ReadClass(definition);
 			// A class documented twice, which wxWidgets does for a few platform-specific ones, keeps its first entry.
 			classes.TryAdd(read.Name, read);
 		}
-		return new DoxygenApi(classes, constants, eventTypes, enums);
+		return new DoxygenApi(classes, constants, eventTypes, enums) { ImpliedConstants = implied };
 	}
 
 	internal static DoxygenClass ReadClass(XElement definition) {
@@ -126,7 +127,7 @@ internal static partial class DoxygenReader {
 		return (text[..colon].Trim(), text[(colon + 1)..].Trim());
 	}
 
-	private static void ReadConstants(XElement definition, Dictionary<string, string> constants, Dictionary<string, DoxygenEnum> enums, string? owner) {
+	private static void ReadConstants(XElement definition, Dictionary<string, string> constants, HashSet<string> implied, Dictionary<string, DoxygenEnum> enums, string? owner) {
 		foreach (XElement member in definition.Descendants("memberdef")) {
 			string? kind = (string?)member.Attribute("kind");
 			if (kind == "define" && member.Element("initializer") is XElement initializer) {
@@ -139,13 +140,13 @@ internal static partial class DoxygenReader {
 					enums.TryAdd(enumName, read);
 					if (owner is not null) enums.TryAdd($"{owner}::{enumName}", read);
 				}
-				// Values without an initializer follow the one before, as in C.
+				// Values without an initializer follow the one before, as in C. The interface headers
+				// leave some out that the real ones give, so those are marked as implied.
 				string previous = "-1";
 				foreach (XElement value in member.Elements("enumvalue")) {
 					string name = (string)value.Element("name")!;
 					string given = Normalize((string?)value.Element("initializer") ?? string.Empty).TrimStart('=').Trim();
-					string expression = given.Length > 0 ? given : $"({previous}) + 1";
-					constants.TryAdd(name, expression);
+					if (constants.TryAdd(name, given.Length > 0 ? given : $"({previous}) + 1") && given.Length == 0) implied.Add(name);
 					previous = name;
 				}
 			}

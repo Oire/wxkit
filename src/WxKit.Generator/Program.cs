@@ -13,6 +13,15 @@ DoxygenApi read = DoxygenReader.Read(xml);
 // The interface headers use a few constants only the real headers define, such as wxDEFAULT.
 Dictionary<string, string> constants = new(read.Constants);
 foreach ((string name, string value) in HeaderConstants.ReadDeprecatedGuiConstants(Path.Combine(root, "native", "wxWidgets", "include", "wx", "defs.h"))) constants.TryAdd(name, value);
+// The real headers also give the values some interface enums leave to their place, such as
+// wxTextValidatorStyle's flags, and the ones they refer to, such as wxHATCHSTYLE_FIRST.
+foreach ((string name, string value) in HeaderConstants.ReadEnumValues(Path.Combine(root, "native", "wxWidgets", "include", "wx"))) {
+	if (read.ImpliedConstants.Contains(name)) {
+		constants[name] = value;
+	} else {
+		constants.TryAdd(name, value);
+	}
+}
 Dictionary<string, string> artIds = HeaderConstants.ReadArtIds(Path.Combine(root, "native", "wxWidgets", "include", "wx", "artprov.h"));
 DoxygenApi api = read with { Constants = constants, StringConstants = artIds };
 Tweaks tweaks = new();

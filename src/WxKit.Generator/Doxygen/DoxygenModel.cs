@@ -7,6 +7,9 @@ namespace WxKit.Generator.Doxygen;
 internal sealed record DoxygenApi(IReadOnlyDictionary<string, DoxygenClass> Classes, IReadOnlyDictionary<string, string> Constants, IReadOnlyDictionary<string, string> EventTypes, IReadOnlyDictionary<string, DoxygenEnum> Enums) {
 	/// <summary>String constants, such as wxART_OTHER, which is "wxART_OTHER_C", by name.</summary>
 	public IReadOnlyDictionary<string, string> StringConstants { get; init; } = new Dictionary<string, string>();
+
+	/// <summary>The enum values whose interface header gives no initializer, so that their value is only implied by their place.</summary>
+	public IReadOnlySet<string> ImpliedConstants { get; init; } = new HashSet<string>();
 }
 
 internal sealed record DoxygenEnum(string Name, IReadOnlyList<DoxygenEnumValue> Values);
