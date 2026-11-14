@@ -27,6 +27,23 @@ Beyond the core libraries, wxWidgets has AUI docking, the styled text control, t
 
 wxWidgets lets a custom-drawn control describe itself to screen readers on Windows through `wxAccessible`. This needs a director with many virtual methods, and only works on Windows. Recommendation: include it right after virtual list controls, since custom controls are where accessibility usually breaks.
 
+### Localization
+
+WxKit does not bind any of wxWidgets' localization yet. Until an application sets a language and loads wxWidgets' message catalogs, the text wxWidgets supplies itself, such as stock button labels and the strings in its own dialogs, stays in English. wxWidgets has translations for 46 languages, as `.po` files in `native/wxWidgets/locale`, and they have to be compiled to `.mo` files before they can ship.
+
+wxWidgets translates with gettext, and its support covers applications' own strings too. `wxTranslations` loads `.mo` catalogs for several domains, picks the best language from the user's preferred languages, and falls back to the original strings, and `wxGetTranslation` handles plural forms and contexts. An application that uses it gets its own strings and wxWidgets' strings in the same language from one setting, with no second translation system to keep in step. Translators work in `.po` files, which are plain text that any editor or gettext tool can open.
+
+Recommendation:
+
+- Bind `wxUILocale`, `wxTranslations`, which wxWidgets recommends over `wxLocale` for new code, and `wxGetTranslation` in its singular, plural, and context forms, under .NET names. Applications choose the language themselves, as they do with wxWidgets.
+- Add shortcuts with the usual gettext names: `_` for a string, `_n` for plural forms, `_p` for a string in a context, and `_pn` for both. The full names stay the API for every language. Neither Visual Basic nor F# accepts `_` alone as a name, but both can use `_n`, `_p`, and `_pn`.
+- Add the application's `locale` folder as a lookup prefix, so catalogs are found at `locale/<language>/<domain>.mo`. wxWidgets also looks in `<language>/LC_MESSAGES` and in its standard places.
+- Compile wxWidgets' catalogs when the native library is built, ship them in the native packages, and have WxKit's MSBuild targets copy them to `locale/<language>/wxstd.mo` in the output.
+- Use the GNU gettext tools to compile and merge catalogs: [mlocati's build](https://github.com/mlocati/gettext-iconv-windows) on Windows (`winget install mlocati.GetText`), Homebrew's `gettext` on macOS, and the distribution's `gettext` package on Linux. Building the native library needs `msgfmt`. An application needs the tools only if it translates its own strings.
+- Extract strings from C# with [GetText.NET.Extractor](https://github.com/perpetualKid/GetText.NET), with the shortcuts as its aliases, as [SIC!](https://github.com/Oire/sic) does.
+
+Still open: neither GNU `xgettext` nor GetText.NET.Extractor reads F# or Visual Basic, so those two languages have no way to extract strings yet.
+
 ### Package split
 
 The first static build of the base and core libraries for `win-x64` is about 150 megabytes, against nuget.org's limit of 250 megabytes per package, so one package per operating system will not fit. Recommendation: one managed package and one native package per runtime, such as `WxKit.Native.win-x64`, after checking whether the libraries can be made smaller. See [Building and packaging](building-and-packaging.md).
