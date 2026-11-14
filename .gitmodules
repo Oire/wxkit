@@ -1,0 +1,3 @@
+[submodule "native/wxWidgets"]
+	path = native/wxWidgets
+	url = https://github.com/wxWidgets/wxWidgets

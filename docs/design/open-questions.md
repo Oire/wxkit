@@ -1,0 +1,43 @@
+# Open questions
+
+This document lists the design decisions made so far, and the ones still open. Each open question has a recommendation, which the other design documents assume until it is answered.
+
+## Decided
+
+- Bindings are generated from the Doxygen XML of the wxWidgets interface headers, with tweak files in C#, after a small slice is hand-written first. See [Generator](generator.md).
+- WxKit tracks the wxWidgets 3.3 series, starting from the `v3.3.4` tag, and moves to 3.4.0 when it comes out.
+- Windows comes first, for the hand-written slice and the generator. macOS and Linux follow together.
+- Types drop the `wx` prefix and use .NET spellings, such as `Color` and `Center`. Names that collide with common .NET types, such as `Timer` and `Font`, are kept. See the naming section of [Managed API](managed-api.md).
+- An exception that an event handler throws raises `Application.UnhandledException`. If nothing marks it handled, `Application.Run` rethrows it.
+- wxWidgets assertions stay on in debug builds of the native library, where they raise `Application.AssertFailed`, and are compiled out of release builds. See [Native layer](native-layer.md).
+- The raw interop layer, `WxKit.Interop.WxKitNative`, is public, as an escape hatch for anything the managed API does not wrap yet.
+- XML documentation comments are generated from the wxWidgets brief descriptions, and each type links to its wxWidgets reference page.
+- XRC is the last optional library to be bound.
+- Tests use xUnit v3 with a custom entry point that runs them on the main thread, with a runner of WxKit's own as the fallback. See [Testing](testing.md).
+- Names follow .NET conventions. Package IDs and namespaces are Pascal case and dotted: `WxKit` for the managed library, and `WxKit.Native.Windows`, `WxKit.Native.macOS` and `WxKit.Native.Linux` for native files. The GitHub repository is `trypsynth/wxkit`, and the native library is `wxkit`.
+
+## Open
+
+### Order of the optional libraries
+
+Beyond the core libraries, wxWidgets has AUI docking, the styled text control, the property grid, the web view, rich text, the ribbon, OpenGL, the media control and HTML help. Recommendation: the styled text control and AUI first, since editors and tool windows use them most, then the web view and the property grid.
+
+### Custom accessibility on Windows
+
+wxWidgets lets a custom-drawn control describe itself to screen readers on Windows through `wxAccessible`. This needs a director with many virtual methods, and only works on Windows. Recommendation: include it right after virtual list controls, since custom controls are where accessibility usually breaks.
+
+### Package split
+
+Recommendation: one managed package and one native package per operating system, revisited once real build sizes are known. See [Building and packaging](building-and-packaging.md).
+
+### An F# helper package
+
+Recommendation: decide after the C# API is stable, based on what the F# sample shows is awkward.
+
+### macOS app bundles
+
+A published executable is not an app bundle. Should WxKit provide MSBuild targets that make one, with an `Info.plist` and icon, or leave that to the application?
+
+### Versioning
+
+Recommendation: start at `0.1.0-preview.1`, and keep WxKit's version independent of the wxWidgets version it bundles. The README and package description name the bundled wxWidgets version.
