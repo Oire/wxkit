@@ -39,7 +39,7 @@ WxKit uses the wxWidgets names, adjusted to .NET conventions:
 
 - Names use the American spellings that .NET uses, not the British ones that wxWidgets uses. `wxColour` becomes `Color`, `Centre` becomes `Center`, and `wxEVT_COLOUR_CHANGED` becomes `ColorChanged`. The generator applies a fixed list of these respellings, so a search of the wxWidgets documentation for a WxKit name only needs the British spelling put back. Each type's documentation comment names its wxWidgets class, so the original is always one step away.
 
-Type names that collide with common .NET types, such as `Timer`, `Font`, `Image` and `Menu`, are kept. The `WxKit` namespace separates them, and code that also imports a colliding namespace, such as `System.Threading`, can use an alias.
+Type names that collide with common .NET types, such as `Timer`, `Font`, `Image`, and `Menu`, are kept. The `WxKit` namespace separates them, and code that also imports a colliding namespace, such as `System.Threading`, can use an alias.
 
 ## Construction
 
@@ -51,7 +51,7 @@ Constructors use optional parameters with the same defaults as wxWidgets. `wxDef
 
 Small wxWidgets classes that are values in practice become `readonly record struct` types with the same layout as their shim structs, so they cross the boundary without conversion:
 
-- `Point`, `Size` and `Rect`.
+- `Point`, `Size`, and `Rect`.
 - `Color`, with its alpha channel.
 - `SizerFlags`, which is built on the managed side and only converted to a `wxSizerFlags` when added.
 
@@ -79,7 +79,7 @@ A sizer belongs to the window it is set on, and is destroyed with that window. S
 
 ### Reference-counted objects
 
-Bitmaps, fonts, pens, brushes, images, icons and cursors are reference counted in wxWidgets, and copying one is cheap. In WxKit, each of these holds a `SafeHandle` that owns one reference, and implements `IDisposable`. Each wrapper holds a lease on its handle across every native call, so the object cannot be freed by `Dispose` on another thread, or by the finalizer, while the call is still using it.
+Bitmaps, fonts, pens, brushes, images, icons, and cursors are reference counted in wxWidgets, and copying one is cheap. In WxKit, each of these holds a `SafeHandle` that owns one reference, and implements `IDisposable`. Each wrapper holds a lease on its handle across every native call, so the object cannot be freed by `Dispose` on another thread, or by the finalizer, while the call is still using it.
 
 wxWidgets reference counting is not thread safe, and these objects must only be freed on the GUI thread. A finalizer runs on the finalizer thread, so when a handle is released there, WxKit queues the release and the GUI thread performs it the next time it is idle. Calling `Dispose` on the GUI thread releases at once.
 

@@ -1,13 +1,13 @@
 # Testing
 
-Testing GUI code is harder than testing most libraries. The code needs a display, an event loop and, on macOS, the process's main thread. This document describes how WxKit gets tests running anyway.
+Testing GUI code is harder than testing most libraries. The code needs a display, an event loop, and, on macOS, the process's main thread. This document describes how WxKit gets tests running anyway.
 
 ## Kinds of tests
 
 WxKit has three kinds of tests:
 
 - Generator tests, in `tests/WxKit.Generator.Tests`. These check that the generator turns sample Doxygen XML into the expected output. They are plain unit tests with no GUI, and they run anywhere.
-- Managed API tests, in `tests/WxKit.Tests`. These create real windows and check lifetime, events, threading, strings and the rest of the managed API against real wxWidgets.
+- Managed API tests, in `tests/WxKit.Tests`. These create real windows and check lifetime, events, threading, strings, and the rest of the managed API against real wxWidgets.
 - Native AOT smoke tests. CI publishes the samples with Native AOT and runs each one in a mode that shows a window, waits for the event loop to start, and exits with a success code.
 
 ## The main thread problem
@@ -26,7 +26,7 @@ WxKit uses xUnit v3, whose test projects are already executables. The test proje
 
 ## What tests avoid
 
-- Tests do not depend on the pixel layout of native controls, which differs between platforms, themes and DPI settings.
+- Tests do not depend on the pixel layout of native controls, which differs between platforms, themes, and DPI settings.
 - Tests do not show modal dialogs, which would block the run. Dialog code is tested by creating dialogs and inspecting them without calling `ShowModal`.
 - A hung test must not hold a runner for hours. The test job has a timeout, and the runner can also stop a test that pumps the event loop for too long.
 

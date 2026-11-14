@@ -14,13 +14,13 @@ This document lists the design decisions made so far, and the ones still open. E
 - XML documentation comments are generated from the wxWidgets brief descriptions, and each type links to its wxWidgets reference page.
 - XRC is the last optional library to be bound.
 - Tests use xUnit v3 with a custom entry point that runs them on the main thread, with a runner of WxKit's own as the fallback. See [Testing](testing.md).
-- Names follow .NET conventions. Package IDs and namespaces are Pascal case and dotted: `WxKit` for the managed library, and `WxKit.Native.Windows`, `WxKit.Native.macOS` and `WxKit.Native.Linux` for native files. The GitHub repository is `trypsynth/wxkit`, and the native library is `wxkit`.
+- Names follow .NET conventions. Package IDs and namespaces are Pascal case and dotted: `WxKit` for the managed library, and `WxKit.Native.Windows`, `WxKit.Native.macOS`, and `WxKit.Native.Linux` for native files. The GitHub repository is `trypsynth/wxkit`, and the native library is `wxkit`.
 
 ## Open
 
 ### Order of the optional libraries
 
-Beyond the core libraries, wxWidgets has AUI docking, the styled text control, the property grid, the web view, rich text, the ribbon, OpenGL, the media control and HTML help. Recommendation: the styled text control and AUI first, since editors and tool windows use them most, then the web view and the property grid.
+Beyond the core libraries, wxWidgets has AUI docking, the styled text control, the property grid, the web view, rich text, the ribbon, OpenGL, the media control, and HTML help. Recommendation: the styled text control and AUI first, since editors and tool windows use them most, then the web view and the property grid.
 
 ### Custom accessibility on Windows
 

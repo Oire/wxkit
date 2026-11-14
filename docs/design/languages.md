@@ -34,7 +34,7 @@ Application.Run(fun () ->
     frame.Show() |> ignore)
 ```
 
-Events appear as F# events, so `Add`, `Subscribe` and the `Observable` functions work on them.
+Events appear as F# events, so `Add`, `Subscribe`, and the `Observable` functions work on them.
 
 The F# compiler does not accept tabs for indentation, so F# files are the one place WxKit indents with spaces. The `.editorconfig` gets a section for `*.{fs,fsi,fsx}` that sets `indent_style = space` and `indent_size = 4`.
 
@@ -68,4 +68,4 @@ Visual Basic gets no package of its own.
 
 ## Keeping it working
 
-The F# and Visual Basic samples build in CI, so a change that breaks either language fails the build. Each sample uses a few features that are known to be fragile across languages, such as events, optional parameters and enum flags. The F# sample also publishes with Native AOT, since F# has its own trimming warnings to watch for.
+The F# and Visual Basic samples build in CI, so a change that breaks either language fails the build. Each sample uses a few features that are known to be fragile across languages, such as events, optional parameters, and enum flags. The F# sample also publishes with Native AOT, since F# has its own trimming warnings to watch for.

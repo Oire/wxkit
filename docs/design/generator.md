@@ -4,14 +4,14 @@ wxWidgets has hundreds of GUI classes and thousands of methods. Binding them by 
 
 ## Input
 
-wxWidgets keeps a second copy of its public API in the `interface/wx` folder. These headers hold every class, method, enum and event with its documentation, written for Doxygen and without the platform-specific implementation details of the real headers. They are what the official reference documentation is built from.
+wxWidgets keeps a second copy of its public API in the `interface/wx` folder. These headers hold every class, method, enum, and event with its documentation, written for Doxygen and without the platform-specific implementation details of the real headers. They are what the official reference documentation is built from.
 
 The generator does not parse C++. Doxygen parses the interface headers and writes XML, and the generator reads that XML. wxPython and wxRuby3 generate their bindings the same way, which shows that the XML carries enough detail.
 
 The XML records what the generator needs:
 
 - Classes, their base classes, and which header defines them.
-- Methods with their parameter types, default values, constness and whether they are virtual or static.
+- Methods with their parameter types, default values, constness, and whether they are virtual or static.
 - Enums and constants.
 - The styles each class supports, from its style table.
 - The events each class sends, from its event table, including the event class each one uses.
@@ -38,15 +38,15 @@ Class("wxListCtrl", list => {
 });
 ```
 
-Tweaks are code rather than a data format such as YAML so that they get compile-time checking, refactoring support and the ability to share helpers. The generator fails when a tweak names a class or method that does not exist, so tweaks cannot quietly rot when wxWidgets changes.
+Tweaks are code rather than a data format such as YAML so that they get compile-time checking, refactoring support, and the ability to share helpers. The generator fails when a tweak names a class or method that does not exist, so tweaks cannot quietly rot when wxWidgets changes.
 
 ## Pipeline
 
 The generator runs in four stages:
 
-1. Read. It loads the Doxygen XML into a model of classes, methods, enums and events.
+1. Read. It loads the Doxygen XML into a model of classes, methods, enums, and events.
 2. Filter. It drops what WxKit does not bind: the non-GUI classes listed in the overview's non-goals, deprecated methods, and anything a tweak ignores. It also drops methods whose types it does not know how to convert, and lists them in a report, so the gaps are visible.
-3. Shape. It applies naming rules and tweaks, groups getters and setters into properties, picks overload suffixes and turns style tables and event tables into enums and events.
+3. Shape. It applies naming rules and tweaks, groups getters and setters into properties, picks overload suffixes, and turns style tables and event tables into enums and events.
 4. Emit. It writes three sets of files from the shaped model:
    - C++ shim sources and headers in `native/shim/generated`.
    - `LibraryImport` declarations in `src/WxKit/Interop/Generated`.

@@ -4,7 +4,7 @@ This document describes the C interface that WxKit's native shim exposes over wx
 
 ## Why a shim
 
-.NET can call C functions, but not C++ ones. C++ has name mangling that differs by compiler, classes with virtual tables, overloads, exceptions and templates, none of which `LibraryImport` understands. The shim wraps each wxWidgets function that WxKit uses in a plain `extern "C"` function with a stable name and only C types in its signature.
+.NET can call C functions, but not C++ ones. C++ has name mangling that differs by compiler, classes with virtual tables, overloads, exceptions, and templates, none of which `LibraryImport` understands. The shim wraps each wxWidgets function that WxKit uses in a plain `extern "C"` function with a stable name and only C types in its signature.
 
 wxDragon, the Rust binding, takes the same approach with its `wxd_` functions. WxKit uses its own shim rather than wxDragon's, because WxKit's is generated and shaped for .NET. wxDragon's lessons still apply, such as the order in which destroy handlers run.
 
@@ -24,11 +24,11 @@ Opaque handle types are declared as incomplete structs, such as `typedef struct 
 
 Only these kinds of values cross the boundary:
 
-- Integers of a fixed width, such as `int32_t`, `int64_t` and `size_t`.
+- Integers of a fixed width, such as `int32_t`, `int64_t`, and `size_t`.
 - `float` and `double`.
 - Booleans as `uint8_t`, because the size of C's `bool` is not guaranteed to match what .NET expects.
 - Pointers to opaque handles.
-- Small value structs that both sides lay out the same way: `wxk_Point`, `wxk_Size`, `wxk_Rect` and `wxk_Colour`. The shim converts these to and from `wxPoint`, `wxSize`, `wxRect` and `wxColour`.
+- Small value structs that both sides lay out the same way: `wxk_Point`, `wxk_Size`, `wxk_Rect`, and `wxk_Colour`. The shim converts these to and from `wxPoint`, `wxSize`, `wxRect`, and `wxColour`.
 - Function pointers with the C calling convention, for callbacks.
 - Text, as described in the next section.
 
@@ -56,7 +56,7 @@ Most wxWidgets failures are not exceptions. They are `false` return values, such
 
 wxWidgets checks its preconditions with `wxASSERT` and `wxCHECK`. When one fails, it calls `wxApp::OnAssertFailure`. By default, a debug build of wxWidgets then shows a dialog.
 
-The shim's application class overrides `OnAssertFailure` and forwards the failure to managed code with the file, line, function, condition and message. WxKit handles it like this:
+The shim's application class overrides `OnAssertFailure` and forwards the failure to managed code with the file, line, function, condition, and message. WxKit handles it like this:
 
 - Debug builds of the native library keep assertions on. A failure raises the `Application.AssertFailed` event, and by default writes the failure to the debug output, instead of showing the wxWidgets assertion dialog.
 - Release builds compile assertions out, with `wxDEBUG_LEVEL` set to 0, so a shipped application never stops on one.
@@ -109,7 +109,7 @@ WxKit builds wxWidgets with a fixed set of options, so the generator knows which
 
 - Unicode, which is the only mode in wxWidgets 3.3.
 - `wxUSE_ACCESSIBILITY` on, on Windows.
-- The built-in copies of zlib, libpng, libjpeg, libtiff, expat, PCRE2 and libwebp, rather than system copies, so that builds are the same on every machine. GTK and its dependencies are the exception on Linux, because those must come from the system.
+- The built-in copies of zlib, libpng, libjpeg, libtiff, expat, PCRE2, and libwebp, rather than system copies, so that builds are the same on every machine. GTK and its dependencies are the exception on Linux, because those must come from the system.
 - No compatibility with wxWidgets 3.0 or 3.2 APIs, so that deprecated functions are not exposed.
 
 The exact list lives in `scripts/build-native.ps1` and is documented beside each option.
