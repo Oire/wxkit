@@ -32,7 +32,7 @@ public unsafe partial class CheckListBox : ListBox {
 	private static WxkWindow* CreateNative(Window parent, int id, Point? position, Size? size) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(parent);
-		return WxKitNative.CheckListBoxNewWindowIntPointSize((WxkWindow*)parent.Native, id, position ?? Point.Default, size ?? Size.Default);
+		return WxKitNative.CheckListBoxNewWindowIntPointSize((WxkWindow*)parent.Native, id, position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default);
 	}
 
 	private static WxkWindow* CreateNative(Window parent, IEnumerable<string> choices, int id, Point? position, Size? size, long style) {
@@ -40,6 +40,6 @@ public unsafe partial class CheckListBox : ListBox {
 		ArgumentNullException.ThrowIfNull(parent);
 		ArgumentNullException.ThrowIfNull(choices);
 		using NativeStringArray choicesNative = new(choices);
-		return WxKitNative.CheckListBoxNewWindowIntPointSizeStringsLong((WxkWindow*)parent.Native, id, position ?? Point.Default, size ?? Size.Default, choicesNative.Handle, style);
+		return WxKitNative.CheckListBoxNewWindowIntPointSizeStringsLong((WxkWindow*)parent.Native, id, position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, choicesNative.Handle, style);
 	}
 }

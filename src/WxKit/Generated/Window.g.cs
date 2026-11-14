@@ -17,8 +17,8 @@ public unsafe partial class Window : EvtHandler {
 
 	/// <summary>Returns the background colour of the window.</summary>
 	public Color? BackgroundColor {
-		get => Color.FromNative(WxKitNative.WindowGetBackgroundColour(Native));
-		set => WxKitNative.WindowSetBackgroundColour(Native, Color.ToNative(value));
+		get => global::WxKit.Color.FromNative(WxKitNative.WindowGetBackgroundColour(Native));
+		set => WxKitNative.WindowSetBackgroundColour(Native, global::WxKit.Color.ToNative(value));
 	}
 
 	/// <summary>Returns the background style of the window.</summary>
@@ -66,6 +66,12 @@ public unsafe partial class Window : EvtHandler {
 	/// <summary>Returns the factor mapping logical pixels of this window to physical pixels.</summary>
 	public double ContentScaleFactor => WxKitNative.WindowGetContentScaleFactor(Native);
 
+	/// <summary>Return the cursor associated with this window.</summary>
+	public Cursor? Cursor {
+		get => global::WxKit.Cursor.Take(WxKitNative.WindowGetCursor(Native));
+		set => WxKitNative.WindowSetCursor(Native, value is null ? null : value.Native);
+	}
+
 	/// <summary>Return the DPI of the display used by this window.</summary>
 	public Size DPI => WxKitNative.WindowGetDPI(Native);
 
@@ -87,10 +93,16 @@ public unsafe partial class Window : EvtHandler {
 	/// <summary>Returns the extra style bits for the window.</summary>
 	public WindowStyle ExtraStyle => (WindowStyle)WxKitNative.WindowGetExtraStyle(Native);
 
+	/// <summary>Returns the font for this window.</summary>
+	public Font? Font {
+		get => global::WxKit.Font.Take(WxKitNative.WindowGetFont(Native));
+		set => WxKitNative.WindowSetFont(Native, value is null ? null : value.Native);
+	}
+
 	/// <summary>Returns the foreground colour of the window.</summary>
 	public Color? ForegroundColor {
-		get => Color.FromNative(WxKitNative.WindowGetForegroundColour(Native));
-		set => WxKitNative.WindowSetForegroundColour(Native, Color.ToNative(value));
+		get => global::WxKit.Color.FromNative(WxKitNative.WindowGetForegroundColour(Native));
+		set => WxKitNative.WindowSetForegroundColour(Native, global::WxKit.Color.ToNative(value));
 	}
 
 	/// <summary>Returns the grandparent of a window, or nullptr if there isn't one.</summary>
@@ -694,7 +706,7 @@ public unsafe partial class Window : EvtHandler {
 	/// <summary>Pops up the given menu at the specified coordinates, relative to this window, and returns control when the user has dismissed the menu.</summary>
 	public bool PopupMenu(Menu menu, Point? position = null) {
 		ArgumentNullException.ThrowIfNull(menu);
-		return WxKitNative.WindowPopupMenuMenuPoint(Native, (WxkMenu*)menu.Native, position ?? Point.Default) != 0;
+		return WxKitNative.WindowPopupMenuMenuPoint(Native, (WxkMenu*)menu.Native, position ?? global::WxKit.Point.Default) != 0;
 	}
 
 	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
@@ -799,7 +811,7 @@ public unsafe partial class Window : EvtHandler {
 	public void SetFocusFromKbd() => WxKitNative.WindowSetFocusFromKbd(Native);
 
 	/// <summary>A smart SetSize that will fill in default size components with the window's best size values.</summary>
-	public bool SetInitialSize(Size? size = null) => WxKitNative.WindowSetInitialSize(Native, size ?? Size.Default) != 0;
+	public bool SetInitialSize(Size? size = null) => WxKitNative.WindowSetInitialSize(Native, size ?? global::WxKit.Size.Default) != 0;
 
 	/// <summary>wxWindows cannot be used to form event handler chains; this function thus will assert when called.</summary>
 	public void SetNextHandler(EvtHandler handler) {
@@ -808,10 +820,16 @@ public unsafe partial class Window : EvtHandler {
 	}
 
 	/// <summary>Sets the background colour of the window but prevents it from being inherited by the children of this window.</summary>
-	public void SetOwnBackgroundColor(Color? color) => WxKitNative.WindowSetOwnBackgroundColour(Native, Color.ToNative(color));
+	public void SetOwnBackgroundColor(Color? color) => WxKitNative.WindowSetOwnBackgroundColour(Native, global::WxKit.Color.ToNative(color));
+
+	/// <summary>Sets the font of the window but prevents it from being inherited by the children of this window.</summary>
+	public void SetOwnFont(Font font) {
+		ArgumentNullException.ThrowIfNull(font);
+		WxKitNative.WindowSetOwnFont(Native, font.Native);
+	}
 
 	/// <summary>Sets the foreground colour of the window but prevents it from being inherited by the children of this window.</summary>
-	public void SetOwnForegroundColor(Color? color) => WxKitNative.WindowSetOwnForegroundColour(Native, Color.ToNative(color));
+	public void SetOwnForegroundColor(Color? color) => WxKitNative.WindowSetOwnForegroundColour(Native, global::WxKit.Color.ToNative(color));
 
 	/// <summary>wxWindows cannot be used to form event handler chains; this function thus will assert when called.</summary>
 	public void SetPreviousHandler(EvtHandler handler) {
@@ -835,7 +853,7 @@ public unsafe partial class Window : EvtHandler {
 	public void SetSize(int width, int height) => WxKitNative.WindowSetSizeIntInt(Native, width, height);
 
 	/// <summary>Use of this function for windows which are not toplevel windows (such as wxDialog or wxFrame) is discouraged.</summary>
-	public void SetSizeHints(Size minSize, Size? maxSize = null, Size? incSize = null) => WxKitNative.WindowSetSizeHintsSizeSizeSize(Native, minSize, maxSize ?? Size.Default, incSize ?? Size.Default);
+	public void SetSizeHints(Size minSize, Size? maxSize = null, Size? incSize = null) => WxKitNative.WindowSetSizeHintsSizeSizeSize(Native, minSize, maxSize ?? global::WxKit.Size.Default, incSize ?? global::WxKit.Size.Default);
 
 	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
 	public void SetSizeHints(int minW, int minH, int maxW = -1, int maxH = -1, int incW = -1, int incH = -1) => WxKitNative.WindowSetSizeHintsIntIntIntIntIntInt(Native, minW, minH, maxW, maxH, incW, incH);

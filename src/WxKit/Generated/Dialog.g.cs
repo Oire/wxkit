@@ -76,6 +76,12 @@ public unsafe partial class Dialog : TopLevelWindow {
 	/// <summary>Returns true if id is in the array of identifiers to be regarded as the main buttons for the non-scrolling area of a dialog.</summary>
 	public bool IsMainButtonId(int id = StandardId.Any) => WxKitNative.DialogIsMainButtonId(Native, id) != 0;
 
+	/// <summary>Sets the icon for this dialog.</summary>
+	public void SetIcon(Icon icon) {
+		ArgumentNullException.ThrowIfNull(icon);
+		WxKitNative.DialogSetIcon(Native, icon.Native);
+	}
+
 	/// <summary>Shows an application-modal dialog.</summary>
 	public int ShowModal() => WxKitNative.DialogShowModal(Native);
 
@@ -86,7 +92,7 @@ public unsafe partial class Dialog : TopLevelWindow {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(title);
 		fixed (char* titleText = title) {
-			return WxKitNative.DialogNew(parent is null ? null : (WxkWindow*)parent.Native, id, titleText, NativeString.Length(title), position ?? Point.Default, size ?? Size.Default, (long)style);
+			return WxKitNative.DialogNew(parent is null ? null : (WxkWindow*)parent.Native, id, titleText, NativeString.Length(title), position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, (long)style);
 		}
 	}
 }

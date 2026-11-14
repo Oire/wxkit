@@ -68,6 +68,10 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkClassInfo* ObjectGetClassInfo(WxkObject* obj);
 
+	[LibraryImport(Library, EntryPoint = "wxk_Object_Free")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ObjectFree(WxkObject* obj);
+
 	[LibraryImport(Library, EntryPoint = "wxk_ClassInfo_GetClassName")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkString* ClassInfoGetClassName(WxkClassInfo* info);

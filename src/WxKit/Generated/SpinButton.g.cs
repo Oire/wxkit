@@ -55,6 +55,6 @@ public unsafe partial class SpinButton : Control {
 	private static WxkWindow* CreateNative(Window parent, int id, Point? position, Size? size, SpinButtonStyle style) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(parent);
-		return WxKitNative.SpinButtonNew((WxkWindow*)parent.Native, id, position ?? Point.Default, size ?? Size.Default, (long)style);
+		return WxKitNative.SpinButtonNew((WxkWindow*)parent.Native, id, position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, (long)style);
 	}
 }

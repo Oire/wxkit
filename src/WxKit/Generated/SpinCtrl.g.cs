@@ -65,7 +65,7 @@ public unsafe partial class SpinCtrl : Control {
 		ArgumentNullException.ThrowIfNull(parent);
 		ArgumentNullException.ThrowIfNull(value);
 		fixed (char* valueText = value) {
-			return WxKitNative.SpinCtrlNew((WxkWindow*)parent.Native, id, valueText, NativeString.Length(value), position ?? Point.Default, size ?? Size.Default, (long)style, min, max, initial);
+			return WxKitNative.SpinCtrlNew((WxkWindow*)parent.Native, id, valueText, NativeString.Length(value), position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, (long)style, min, max, initial);
 		}
 	}
 }

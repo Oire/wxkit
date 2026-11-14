@@ -22,7 +22,8 @@ internal static class ManagedEmitter {
 	private static string Class(BoundClass bound) {
 		CodeWriter writer = Start();
 		Summary(writer, $"{Sentence(bound.Source.Brief)}Wraps {bound.CppName}.");
-		writer.Open($"public unsafe partial class {bound.Name}{(bound.Base is null ? string.Empty : " : " + bound.Base.Name)}");
+		string baseList = bound.Base is not null ? " : " + bound.Base.Name : bound.Handle == HandleKind.Value ? " : NativeValue" : string.Empty;
+		writer.Open($"public unsafe partial class {bound.Name}{baseList}");
 		bool first = true;
 		void Gap() {
 			if (!first) writer.Line();
@@ -34,7 +35,13 @@ internal static class ManagedEmitter {
 			string arguments = string.Join(", ", constructor.ManagedParameters.Select(static parameter => parameter.Name));
 			writer.Open($"public {bound.Name}({ParameterList(constructor.ManagedParameters, withDefaults: true)}) : this(CreateNative({arguments}))").Close();
 		}
-		if (bound.Base is not null) {
+		if (bound.Handle == HandleKind.Value) {
+			Gap();
+			writer.Open($"internal {bound.Name}(WxkObject* native) : base(native)").Close();
+			writer.Line();
+			writer.Line("// Takes ownership of a copy the shim hands out, which is null when the value was empty.");
+			writer.Line($"internal static {(bound.Base is null ? string.Empty : "new ")}{bound.Name}? Take(WxkObject* native) => native is null ? null : new {bound.Name}(native);");
+		} else if (bound.Base is not null) {
 			Gap();
 			// A base with another kind of handle, such as EvtHandler under Window, takes it as its own kind.
 			string handle = bound.Base.Handle == bound.Handle ? "native" : $"({bound.Base.Handle.InteropType}*)native";
@@ -85,7 +92,8 @@ internal static class ManagedEmitter {
 			writer.Close();
 		}
 		if (property.Setter is BoundFunction setter) {
-			BoundParameter value = setter.Parameters[0] with { Name = "value" };
+			// A value object set to null is set to its empty one, which for a window's font or cursor restores the default.
+			BoundParameter value = setter.Parameters[0] with { Name = "value", Nullable = setter.Parameters[0].Nullable || setter.Parameters[0].Conversion is ValueConversion };
 			BoundFunction renamed = new(setter.Owner, setter.Source, setter.Returns, [value], isConstructor: false) { ExportName = setter.ExportName };
 			if (IsSimple(renamed)) {
 				writer.Line($"set => {Call(bound, renamed, static result => result)};");

@@ -24,6 +24,12 @@ public unsafe partial class TopLevelWindow : Window {
 		}
 	}
 
+	/// <summary>Returns the standard icon of the window.</summary>
+	public Icon? Icon {
+		get => global::WxKit.Icon.Take(WxKitNative.TopLevelWindowGetIcon(Native));
+		set => WxKitNative.TopLevelWindowSetIcon(Native, value is null ? null : value.Native);
+	}
+
 	/// <summary>Returns true if this window is currently active, i.e. if the user is currently working with it.</summary>
 	public bool IsActive => WxKitNative.TopLevelWindowIsActive(Native) != 0;
 
@@ -134,6 +140,12 @@ public unsafe partial class TopLevelWindow : Window {
 
 	/// <summary>Restore a previously iconized or maximized window to its normal state.</summary>
 	public void Restore() => WxKitNative.TopLevelWindowRestore(Native);
+
+	/// <summary>Sets several icons of different sizes for this window: this allows using different icons for different situations (e.g.</summary>
+	public void SetIcons(Icon icons) {
+		ArgumentNullException.ThrowIfNull(icons);
+		WxKitNative.TopLevelWindowSetIcons(Native, icons.Native);
+	}
 
 	/// <summary>A simpler interface for setting the size hints than SetSizeHints().</summary>
 	public void SetMaxSize(Size size) => WxKitNative.TopLevelWindowSetMaxSize(Native, size);

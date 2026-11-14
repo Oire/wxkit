@@ -21,7 +21,7 @@ public unsafe partial class MultiChoiceDialog : Dialog {
 		using NativeStringArray choicesNative = new(choices);
 		fixed (char* messageText = message)
 		fixed (char* captionText = caption) {
-			return WxKitNative.MultiChoiceDialogNew(parent is null ? null : (WxkWindow*)parent.Native, messageText, NativeString.Length(message), captionText, NativeString.Length(caption), choicesNative.Handle, (long)style, position ?? Point.Default);
+			return WxKitNative.MultiChoiceDialogNew(parent is null ? null : (WxkWindow*)parent.Native, messageText, NativeString.Length(message), captionText, NativeString.Length(caption), choicesNative.Handle, (long)style, position ?? global::WxKit.Point.Default);
 		}
 	}
 }

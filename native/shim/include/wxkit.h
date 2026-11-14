@@ -106,6 +106,9 @@ WXK_FUNCTION(uint8_t) wxk_EvtHandler_Track(wxk_EvtHandler* handler, wxk_Callback
 
 WXK_FUNCTION(const wxk_ClassInfo*) wxk_Object_GetClassInfo(wxk_Object* object) WXK_NOEXCEPT;
 
+// Deletes an object the shim copied out, such as a font or a bitmap, which releases its reference.
+WXK_FUNCTION(void) wxk_Object_Free(wxk_Object* object) WXK_NOEXCEPT;
+
 WXK_FUNCTION(wxk_String*) wxk_ClassInfo_GetClassName(const wxk_ClassInfo* info) WXK_NOEXCEPT;
 
 // The first base class, or null for wxObject.

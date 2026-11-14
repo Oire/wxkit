@@ -25,7 +25,7 @@ public unsafe partial class StaticBox : Control {
 		ArgumentNullException.ThrowIfNull(parent);
 		ArgumentNullException.ThrowIfNull(label);
 		fixed (char* labelText = label) {
-			return WxKitNative.StaticBoxNewWindowIntStringPointSizeLong((WxkWindow*)parent.Native, id, labelText, NativeString.Length(label), position ?? Point.Default, size ?? Size.Default, style);
+			return WxKitNative.StaticBoxNewWindowIntStringPointSizeLong((WxkWindow*)parent.Native, id, labelText, NativeString.Length(label), position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, style);
 		}
 	}
 
@@ -33,6 +33,6 @@ public unsafe partial class StaticBox : Control {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(parent);
 		ArgumentNullException.ThrowIfNull(label);
-		return WxKitNative.StaticBoxNewWindowIntWindowPointSizeLong((WxkWindow*)parent.Native, id, (WxkWindow*)label.Native, position ?? Point.Default, size ?? Size.Default, style);
+		return WxKitNative.StaticBoxNewWindowIntWindowPointSizeLong((WxkWindow*)parent.Native, id, (WxkWindow*)label.Native, position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, style);
 	}
 }

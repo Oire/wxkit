@@ -105,7 +105,7 @@ public unsafe partial class MessageDialog : Dialog {
 		ArgumentNullException.ThrowIfNull(caption);
 		fixed (char* messageText = message)
 		fixed (char* captionText = caption) {
-			return WxKitNative.MessageDialogNew(parent is null ? null : (WxkWindow*)parent.Native, messageText, NativeString.Length(message), captionText, NativeString.Length(caption), (long)style, position ?? Point.Default);
+			return WxKitNative.MessageDialogNew(parent is null ? null : (WxkWindow*)parent.Native, messageText, NativeString.Length(message), captionText, NativeString.Length(caption), (long)style, position ?? global::WxKit.Point.Default);
 		}
 	}
 }

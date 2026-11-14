@@ -9,10 +9,49 @@ public unsafe partial class AnyButton : Control {
 	internal AnyButton(WxkWindow* native) : base(native) {
 	}
 
+	/// <summary>Return the bitmap shown by the button.</summary>
+	public Bitmap? Bitmap => global::WxKit.Bitmap.Take(WxKitNative.AnyButtonGetBitmap(Native));
+
+	/// <summary>Returns the bitmap used when the mouse is over the button.</summary>
+	public Bitmap? BitmapCurrent {
+		get => global::WxKit.Bitmap.Take(WxKitNative.AnyButtonGetBitmapCurrent(Native));
+		set => WxKitNative.AnyButtonSetBitmapCurrent(Native, value is null ? null : value.Native);
+	}
+
+	/// <summary>Returns the bitmap used for the disabled state.</summary>
+	public Bitmap? BitmapDisabled {
+		get => global::WxKit.Bitmap.Take(WxKitNative.AnyButtonGetBitmapDisabled(Native));
+		set => WxKitNative.AnyButtonSetBitmapDisabled(Native, value is null ? null : value.Native);
+	}
+
+	/// <summary>Returns the bitmap used for the focused state.</summary>
+	public Bitmap? BitmapFocus {
+		get => global::WxKit.Bitmap.Take(WxKitNative.AnyButtonGetBitmapFocus(Native));
+		set => WxKitNative.AnyButtonSetBitmapFocus(Native, value is null ? null : value.Native);
+	}
+
+	/// <summary>Returns the bitmap for the normal state.</summary>
+	public Bitmap? BitmapLabel {
+		get => global::WxKit.Bitmap.Take(WxKitNative.AnyButtonGetBitmapLabel(Native));
+		set => WxKitNative.AnyButtonSetBitmapLabel(Native, value is null ? null : value.Native);
+	}
+
 	/// <summary>Get the margins between the bitmap and the text of the button.</summary>
 	public Size BitmapMargins {
 		get => WxKitNative.AnyButtonGetBitmapMargins(Native);
 		set => WxKitNative.AnyButtonSetBitmapMarginsSize(Native, value);
+	}
+
+	/// <summary>Returns the bitmap used when the button is pressed.</summary>
+	public Bitmap? BitmapPressed {
+		get => global::WxKit.Bitmap.Take(WxKitNative.AnyButtonGetBitmapPressed(Native));
+		set => WxKitNative.AnyButtonSetBitmapPressed(Native, value is null ? null : value.Native);
+	}
+
+	/// <summary>Sets the bitmap to display in the button.</summary>
+	public void SetBitmap(Bitmap bitmap, Direction direction = Direction.Left) {
+		ArgumentNullException.ThrowIfNull(bitmap);
+		WxKitNative.AnyButtonSetBitmap(Native, bitmap.Native, (int)direction);
 	}
 
 	/// <summary>Set the margins between the bitmap and the text of the button.</summary>

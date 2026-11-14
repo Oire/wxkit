@@ -29,6 +29,9 @@ internal sealed record HandleKind(string CType, string CppBase, string InteropTy
 
 	public static HandleKind EvtHandler { get; } = new("wxk_EvtHandler", "wxEvtHandler", "WxkEvtHandler", "NativeHandler");
 
+	/// <summary>A value object, such as a font or a bitmap, which the managed side owns a copy of.</summary>
+	public static HandleKind Value { get; } = new("wxk_Object", "wxObject", "WxkObject", "Native");
+
 	public bool IsEvtHandler => this == Window || this == Menu || this == EvtHandler;
 }
 

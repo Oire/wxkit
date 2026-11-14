@@ -306,7 +306,7 @@ public unsafe partial class ComboBox : Control {
 		ArgumentNullException.ThrowIfNull(parent);
 		ArgumentNullException.ThrowIfNull(value);
 		fixed (char* valueText = value) {
-			return WxKitNative.ComboBoxNewWindowIntStringPointSize((WxkWindow*)parent.Native, id, valueText, NativeString.Length(value), position ?? Point.Default, size ?? Size.Default);
+			return WxKitNative.ComboBoxNewWindowIntStringPointSize((WxkWindow*)parent.Native, id, valueText, NativeString.Length(value), position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default);
 		}
 	}
 
@@ -317,7 +317,7 @@ public unsafe partial class ComboBox : Control {
 		ArgumentNullException.ThrowIfNull(choices);
 		using NativeStringArray choicesNative = new(choices);
 		fixed (char* valueText = value) {
-			return WxKitNative.ComboBoxNewWindowIntStringPointSizeStringsComboBoxStyle((WxkWindow*)parent.Native, id, valueText, NativeString.Length(value), position ?? Point.Default, size ?? Size.Default, choicesNative.Handle, (long)style);
+			return WxKitNative.ComboBoxNewWindowIntStringPointSizeStringsComboBoxStyle((WxkWindow*)parent.Native, id, valueText, NativeString.Length(value), position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, choicesNative.Handle, (long)style);
 		}
 	}
 }

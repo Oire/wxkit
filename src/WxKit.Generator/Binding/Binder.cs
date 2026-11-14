@@ -67,6 +67,8 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		if (ancestors.Contains("wxSizer")) return HandleKind.Sizer;
 		if (ancestors.Contains("wxMenu")) return HandleKind.Menu;
 		if (ancestors.Contains("wxEvent")) return HandleKind.Event;
+		// Fonts, pens, brushes, bitmaps, icons, and cursors are wxGDIObjects; images are copied the same way.
+		if (ancestors.Contains("wxGDIObject") || ancestors.Contains("wxImage")) return HandleKind.Value;
 		if (ancestors.Contains(EventObjectClass)) return HandleKind.EvtHandler;
 		throw new InvalidOperationException($"{name} is not a kind of class WxKit can bind yet.");
 	}
@@ -124,7 +126,9 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		// and wxTextEntry. The class's own, which comes first, is kept.
 		functions = [.. functions.DistinctBy(static function => $"{function.Source.Name}({string.Join(",", function.Source.Parameters.Select(static parameter => parameter.Type))})")];
 		NameOverloads(functions);
-		bound.Constructors.AddRange(functions.Where(static function => function.IsConstructor));
+		// Two C++ constructors can have the same managed signature, as an int and a long do, and C#
+		// allows only one.
+		bound.Constructors.AddRange(functions.Where(static function => function.IsConstructor).DistinctBy(static function => string.Join(",", function.ManagedParameters.Select(static parameter => parameter.Conversion.ManagedType(parameter.Nullable)))));
 		PairProperties(bound, [.. functions.Where(static function => !function.IsConstructor)]);
 		RemoveRedeclarations(bound);
 	}
@@ -188,7 +192,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 			}
 			// A constructor's position or size can always be left to wxWidgets: the overloads that
 			// require one, such as the one of wxChoice that takes a list, mean the same by the default.
-			if (isConstructor && managedDefault is null && conversion is GeometryConversion) {
+			if (isConstructor && owner.Handle == HandleKind.Window && managedDefault is null && conversion is GeometryConversion) {
 				managedDefault = "null";
 				nullable = true;
 			}
@@ -228,6 +232,10 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 			return isReturn && !target.Handle.IsEvtHandler ? null : new ObjectConversion(target);
 		}
 		if (!type.IsValueOrConstReference) return null;
+		if (_classes.TryGetValue(type.Name, out BoundClass? value) && value.Handle == HandleKind.Value) return new ValueConversion(value);
+		// Bundles of bitmaps or icons, which wxWidgets uses for every resolution, convert from one.
+		if (!isReturn && type.Name == "wxBitmapBundle" && _classes.TryGetValue("wxBitmap", out BoundClass? bitmap)) return new ValueConversion(bitmap, "wxBitmapBundle");
+		if (!isReturn && type.Name == "wxIconBundle" && _classes.TryGetValue("wxIcon", out BoundClass? icon)) return new ValueConversion(icon, "wxIconBundle");
 		if (HandwrittenEnums.TryGetValue(type.Name, out string? handwritten)) return new EnumConversion(handwritten, NumberConversion.Int, type.Name);
 		if (EnumFor(type.Name) is BoundEnum bound) return new EnumConversion(bound.Name, NumberConversion.Int, type.Name);
 		return type.Name switch {
@@ -253,7 +261,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		managed = null;
 		isNull = false;
 		string value = cppDefault.Trim();
-		if (conversion is GeometryConversion geometry && geometry.IsDefault(value) || value is "nullptr" or "NULL" && conversion.AcceptsNull || conversion is ColorConversion && value == "wxNullColour") {
+		if (conversion is GeometryConversion geometry && geometry.IsDefault(value) || value is "nullptr" or "NULL" && conversion.AcceptsNull || conversion is ColorConversion && value == "wxNullColour" || conversion is ValueConversion && (value.StartsWith("wxNull", StringComparison.Ordinal) || value.EndsWith("()", StringComparison.Ordinal))) {
 			managed = "null";
 			isNull = true;
 			return true;

@@ -18,9 +18,57 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void AnyButtonSetBitmapMarginsIntInt(WxkWindow* self, int x, int y);
 
+	[LibraryImport(Library, EntryPoint = "wxk_AnyButton_SetBitmap")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void AnyButtonSetBitmap(WxkWindow* self, WxkObject* bitmap, int direction);
+
 	[LibraryImport(Library, EntryPoint = "wxk_AnyButton_SetBitmapPosition")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void AnyButtonSetBitmapPosition(WxkWindow* self, int direction);
+
+	[LibraryImport(Library, EntryPoint = "wxk_AnyButton_GetBitmap")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* AnyButtonGetBitmap(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_AnyButton_GetBitmapCurrent")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* AnyButtonGetBitmapCurrent(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_AnyButton_SetBitmapCurrent")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void AnyButtonSetBitmapCurrent(WxkWindow* self, WxkObject* bitmap);
+
+	[LibraryImport(Library, EntryPoint = "wxk_AnyButton_GetBitmapDisabled")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* AnyButtonGetBitmapDisabled(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_AnyButton_SetBitmapDisabled")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void AnyButtonSetBitmapDisabled(WxkWindow* self, WxkObject* bitmap);
+
+	[LibraryImport(Library, EntryPoint = "wxk_AnyButton_GetBitmapFocus")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* AnyButtonGetBitmapFocus(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_AnyButton_SetBitmapFocus")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void AnyButtonSetBitmapFocus(WxkWindow* self, WxkObject* bitmap);
+
+	[LibraryImport(Library, EntryPoint = "wxk_AnyButton_GetBitmapLabel")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* AnyButtonGetBitmapLabel(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_AnyButton_SetBitmapLabel")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void AnyButtonSetBitmapLabel(WxkWindow* self, WxkObject* bitmap);
+
+	[LibraryImport(Library, EntryPoint = "wxk_AnyButton_GetBitmapPressed")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* AnyButtonGetBitmapPressed(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_AnyButton_SetBitmapPressed")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void AnyButtonSetBitmapPressed(WxkWindow* self, WxkObject* bitmap);
 
 	[LibraryImport(Library, EntryPoint = "wxk_AnyButton_GetBitmapMargins")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -29,6 +77,150 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_AnyButton_SetBitmapMargins_Size")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void AnyButtonSetBitmapMarginsSize(WxkWindow* self, Size size);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_new_Default")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* BitmapNewDefault();
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_new_IntIntInt")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* BitmapNewIntIntInt(int width, int height, int depth);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_new_SizeInt")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* BitmapNewSizeInt(Size size, int depth);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_new_String")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* BitmapNewString(char* name, nuint nameLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_new_ImageInt")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* BitmapNewImageInt(WxkObject* image, int depth);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_new_Cursor")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* BitmapNewCursor(WxkObject* cursor);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_ConvertToDisabled")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* BitmapConvertToDisabled(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_ConvertToImage")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* BitmapConvertToImage(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_CopyFromIcon")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte BitmapCopyFromIcon(WxkObject* self, WxkObject* icon);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_Create_IntIntInt")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte BitmapCreateIntIntInt(WxkObject* self, int width, int height, int depth);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_Create_SizeInt")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte BitmapCreateSizeInt(WxkObject* self, Size size, int depth);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_CreateWithDIPSize_SizeDoubleInt")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte BitmapCreateWithDIPSizeSizeDoubleInt(WxkObject* self, Size size, double scale, int depth);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_CreateWithDIPSize_IntIntDoubleInt")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte BitmapCreateWithDIPSizeIntIntDoubleInt(WxkObject* self, int width, int height, double scale, int depth);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_CreateWithLogicalSize_SizeDoubleInt")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte BitmapCreateWithLogicalSizeSizeDoubleInt(WxkObject* self, Size size, double scale, int depth);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_CreateWithLogicalSize_IntIntDoubleInt")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte BitmapCreateWithLogicalSizeIntIntDoubleInt(WxkObject* self, int width, int height, double scale, int depth);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_CreateScaled")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte BitmapCreateScaled(WxkObject* self, int width, int height, int depth, double logicalScale);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_GetSubBitmap")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* BitmapGetSubBitmap(WxkObject* self, Rect rect);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_LoadFile")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte BitmapLoadFile(WxkObject* self, char* name, nuint nameLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_ResetAlpha")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void BitmapResetAlpha(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_SaveFile")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte BitmapSaveFile(WxkObject* self, char* name, nuint nameLength, int type);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_UseAlpha")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte BitmapUseAlpha(WxkObject* self, byte use);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_GetDepth")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int BitmapGetDepth(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_GetDIPSize")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Size BitmapGetDIPSize(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_GetHeight")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int BitmapGetHeight(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_GetLogicalHeight")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial double BitmapGetLogicalHeight(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_GetLogicalSize")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Size BitmapGetLogicalSize(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_GetLogicalWidth")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial double BitmapGetLogicalWidth(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_GetScaleFactor")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial double BitmapGetScaleFactor(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_SetScaleFactor")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void BitmapSetScaleFactor(WxkObject* self, double scale);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_GetScaledHeight")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial double BitmapGetScaledHeight(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_GetScaledSize")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Size BitmapGetScaledSize(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_GetScaledWidth")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial double BitmapGetScaledWidth(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_GetSize")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Size BitmapGetSize(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_GetWidth")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int BitmapGetWidth(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_HasAlpha")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte BitmapHasAlpha(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_IsOk")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte BitmapIsOk(WxkObject* self);
 
 	[LibraryImport(Library, EntryPoint = "wxk_BookCtrlBase_GetPageImage")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -141,6 +333,54 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_BoxSizer_SetOrientation")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void BoxSizerSetOrientation(WxkSizer* self, int orientation);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Brush_new_Default")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* BrushNewDefault();
+
+	[LibraryImport(Library, EntryPoint = "wxk_Brush_new_ColorBrushStyle")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* BrushNewColorBrushStyle(WxkColor color, int style);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Brush_new_Bitmap")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* BrushNewBitmap(WxkObject* stippleBitmap);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Brush_SetStipple")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void BrushSetStipple(WxkObject* self, WxkObject* bitmap);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Brush_GetColour")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkColor BrushGetColour(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Brush_SetColour")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void BrushSetColour(WxkObject* self, WxkColor color);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Brush_GetStyle")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int BrushGetStyle(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Brush_SetStyle")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void BrushSetStyle(WxkObject* self, int style);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Brush_IsHatch")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte BrushIsHatch(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Brush_IsOk")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte BrushIsOk(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Brush_IsNonTransparent")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte BrushIsNonTransparent(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Brush_IsTransparent")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte BrushIsTransparent(WxkObject* self);
 
 	[LibraryImport(Library, EntryPoint = "wxk_Button_new")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -782,6 +1022,42 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte ControlWithItemsSetStringSelection(WxkWindow* self, char* text, nuint textLength);
 
+	[LibraryImport(Library, EntryPoint = "wxk_Cursor_new_Default")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* CursorNewDefault();
+
+	[LibraryImport(Library, EntryPoint = "wxk_Cursor_new_BitmapIntInt")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* CursorNewBitmapIntInt(WxkObject* bitmap, int hotSpotX, int hotSpotY);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Cursor_new_BitmapPoint")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* CursorNewBitmapPoint(WxkObject* bitmap, Point hotSpot);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Cursor_new_String")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* CursorNewString(char* cursorName, nuint cursorNameLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Cursor_new_StringBitmapTypePoint")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* CursorNewStringBitmapTypePoint(char* name, nuint nameLength, int type, Point hotSpot);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Cursor_new_StockCursor")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* CursorNewStockCursor(int cursorId);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Cursor_new_Image")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* CursorNewImage(WxkObject* image);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Cursor_IsOk")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte CursorIsOk(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Cursor_GetHotSpot")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Point CursorGetHotSpot(WxkObject* self);
+
 	[LibraryImport(Library, EntryPoint = "wxk_DPIChangedEvent_Scale_Size")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial Size DPIChangedEventScaleSize(WxkEvent* self, Size size);
@@ -829,6 +1105,10 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_Dialog_IsMainButtonId")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte DialogIsMainButtonId(WxkWindow* self, int id);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Dialog_SetIcon")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DialogSetIcon(WxkWindow* self, WxkObject* icon);
 
 	[LibraryImport(Library, EntryPoint = "wxk_Dialog_ShowModal")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1102,6 +1382,174 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void FocusEventSetWindow(WxkEvent* self, WxkWindow* window);
 
+	[LibraryImport(Library, EntryPoint = "wxk_Font_new_Default")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* FontNewDefault();
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_new_IntFontFamilyFontStyleFontWeightBoolStringFontEncoding")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* FontNewIntFontFamilyFontStyleFontWeightBoolStringFontEncoding(int pointSize, int family, int style, int weight, byte underline, char* faceName, nuint faceNameLength, int encoding);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_new_SizeFontFamilyFontStyleFontWeightBoolStringFontEncoding")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* FontNewSizeFontFamilyFontStyleFontWeightBoolStringFontEncoding(Size pixelSize, int family, int style, int weight, byte underline, char* faceName, nuint faceNameLength, int encoding);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_new_String")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* FontNewString(char* nativeInfoString, nuint nativeInfoStringLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_Bold")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* FontBold(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_Italic")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* FontItalic(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_Larger")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* FontLarger(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_Smaller")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* FontSmaller(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_Underlined")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* FontUnderlined(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_Strikethrough")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* FontStrikethrough(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_Scaled")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* FontScaled(WxkObject* self, float x);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_SetNativeFontInfo")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte FontSetNativeFontInfo(WxkObject* self, char* info, nuint infoLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_SetSymbolicSize")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void FontSetSymbolicSize(WxkObject* self, int size);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_SetSymbolicSizeRelativeTo")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void FontSetSymbolicSizeRelativeTo(WxkObject* self, int size, int @base);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_GetBaseFont")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* FontGetBaseFont(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_GetEncoding")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int FontGetEncoding(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_SetEncoding")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void FontSetEncoding(WxkObject* self, int encoding);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_GetFaceName")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkString* FontGetFaceName(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_SetFaceName")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte FontSetFaceName(WxkObject* self, char* faceName, nuint faceNameLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_GetFamily")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int FontGetFamily(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_SetFamily")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void FontSetFamily(WxkObject* self, int family);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_GetNativeFontInfoDesc")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkString* FontGetNativeFontInfoDesc(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_GetNativeFontInfoUserDesc")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkString* FontGetNativeFontInfoUserDesc(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_SetNativeFontInfoUserDesc")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte FontSetNativeFontInfoUserDesc(WxkObject* self, char* info, nuint infoLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_GetPointSize")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int FontGetPointSize(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_SetPointSize")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void FontSetPointSize(WxkObject* self, int pointSize);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_GetFractionalPointSize")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial double FontGetFractionalPointSize(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_SetFractionalPointSize")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void FontSetFractionalPointSize(WxkObject* self, double pointSize);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_GetPixelSize")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Size FontGetPixelSize(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_SetPixelSize")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void FontSetPixelSize(WxkObject* self, Size pixelSize);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_GetStyle")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int FontGetStyle(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_SetStyle")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void FontSetStyle(WxkObject* self, int style);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_GetUnderlined")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte FontGetUnderlined(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_SetUnderlined")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void FontSetUnderlined(WxkObject* self, byte underlined);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_GetStrikethrough")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte FontGetStrikethrough(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_SetStrikethrough")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void FontSetStrikethrough(WxkObject* self, byte strikethrough);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_GetWeight")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int FontGetWeight(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_SetWeight")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void FontSetWeight(WxkObject* self, int weight);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_GetNumericWeight")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int FontGetNumericWeight(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_SetNumericWeight")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void FontSetNumericWeight(WxkObject* self, int weight);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_IsFixedWidth")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte FontIsFixedWidth(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Font_IsOk")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte FontIsOk(WxkObject* self);
+
 	[LibraryImport(Library, EntryPoint = "wxk_Frame_new")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkWindow* FrameNew(WxkWindow* parent, int id, char* title, nuint titleLength, Point position, Size size, long style);
@@ -1318,6 +1766,58 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void HyperlinkEventSetURL(WxkEvent* self, char* url, nuint urlLength);
 
+	[LibraryImport(Library, EntryPoint = "wxk_Icon_new_Default")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* IconNewDefault();
+
+	[LibraryImport(Library, EntryPoint = "wxk_Icon_new_String")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* IconNewString(char* name, nuint nameLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Icon_CopyFromBitmap")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void IconCopyFromBitmap(WxkObject* self, WxkObject* bitmap);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Icon_LoadFile")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte IconLoadFile(WxkObject* self, char* name, nuint nameLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Icon_GetDepth")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int IconGetDepth(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Icon_GetHeight")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int IconGetHeight(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Icon_GetLogicalHeight")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial double IconGetLogicalHeight(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Icon_GetLogicalSize")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Size IconGetLogicalSize(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Icon_GetLogicalWidth")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial double IconGetLogicalWidth(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Icon_GetScaleFactor")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial double IconGetScaleFactor(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Icon_GetSize")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Size IconGetSize(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Icon_GetWidth")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int IconGetWidth(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Icon_IsOk")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte IconIsOk(WxkObject* self);
+
 	[LibraryImport(Library, EntryPoint = "wxk_IconizeEvent_IsIconized")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte IconizeEventIsIconized(WxkEvent* self);
@@ -1329,6 +1829,230 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_IdleEvent_RequestMore")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void IdleEventRequestMore(WxkEvent* self, byte needMore);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_new_Default")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* ImageNewDefault();
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_new_IntIntBool")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* ImageNewIntIntBool(int width, int height, byte clear);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_new_SizeBool")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* ImageNewSizeBool(Size size, byte clear);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_new_StringBitmapTypeInt")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* ImageNewStringBitmapTypeInt(char* name, nuint nameLength, int type, int index);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_new_StringStringInt")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* ImageNewStringStringInt(char* name, nuint nameLength, char* mimetype, nuint mimetypeLength, int index);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_Copy")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* ImageCopy(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_Create_IntIntBool")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ImageCreateIntIntBool(WxkObject* self, int width, int height, byte clear);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_Create_SizeBool")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ImageCreateSizeBool(WxkObject* self, Size size, byte clear);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_Clear")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ImageClear(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_Destroy")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ImageDestroy(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_InitAlpha")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ImageInitAlpha(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_Blur")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* ImageBlur(WxkObject* self, int blurRadius);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_BlurHorizontal")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* ImageBlurHorizontal(WxkObject* self, int blurRadius);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_BlurVertical")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* ImageBlurVertical(WxkObject* self, int blurRadius);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_Mirror")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* ImageMirror(WxkObject* self, byte horizontally);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_Paste")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ImagePaste(WxkObject* self, WxkObject* image, int x, int y, int alphaBlend);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_Rotate")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* ImageRotate(WxkObject* self, double angle, Point rotationCenter, byte interpolating);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_Rotate90")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* ImageRotate90(WxkObject* self, byte clockwise);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_Rotate180")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* ImageRotate180(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_RotateHue")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ImageRotateHue(WxkObject* self, double angle);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_ChangeSaturation")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ImageChangeSaturation(WxkObject* self, double factor);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_ChangeBrightness")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ImageChangeBrightness(WxkObject* self, double factor);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_ChangeHSV")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ImageChangeHSV(WxkObject* self, double angleH, double factorS, double factorV);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_Scale_IntIntImageResizeQuality")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* ImageScaleIntIntImageResizeQuality(WxkObject* self, int width, int height, int quality);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_Scale_SizeImageResizeQuality")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* ImageScaleSizeImageResizeQuality(WxkObject* self, Size size, int quality);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_Size")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* ImageSize(WxkObject* self, Size size, Point position, int red, int green, int blue);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_ConvertAlphaToMask")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ImageConvertAlphaToMask(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_ConvertToGreyscale_DoubleDoubleDouble")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* ImageConvertToGreyscaleDoubleDoubleDouble(WxkObject* self, double weight_r, double weight_g, double weight_b);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_ConvertToGreyscale_Default")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* ImageConvertToGreyscaleDefault(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_ConvertToDisabled")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* ImageConvertToDisabled(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_ChangeLightness")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* ImageChangeLightness(WxkObject* self, int alpha);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_GetOption")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkString* ImageGetOption(WxkObject* self, char* name, nuint nameLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_GetOptionInt")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int ImageGetOptionInt(WxkObject* self, char* name, nuint nameLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_GetSubImage")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* ImageGetSubImage(WxkObject* self, Rect rect);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_HasOption")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ImageHasOption(WxkObject* self, char* name, nuint nameLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_IsTransparent")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ImageIsTransparent(WxkObject* self, int x, int y);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_LoadFile_StringBitmapTypeInt")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ImageLoadFileStringBitmapTypeInt(WxkObject* self, char* name, nuint nameLength, int type, int index);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_LoadFile_StringStringInt")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ImageLoadFileStringStringInt(WxkObject* self, char* name, nuint nameLength, char* mimetype, nuint mimetypeLength, int index);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_SaveFile_StringBitmapType")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ImageSaveFileStringBitmapType(WxkObject* self, char* name, nuint nameLength, int type);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_SaveFile_StringString")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ImageSaveFileStringString(WxkObject* self, char* name, nuint nameLength, char* mimetype, nuint mimetypeLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_SaveFile_String")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ImageSaveFileString(WxkObject* self, char* name, nuint nameLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_SetAlpha")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ImageSetAlpha(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_ClearAlpha")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ImageClearAlpha(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_SetMask")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ImageSetMask(WxkObject* self, byte hasMask);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_SetOption_StringString")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ImageSetOptionStringString(WxkObject* self, char* name, nuint nameLength, char* value, nuint valueLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_SetOption_StringInt")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ImageSetOptionStringInt(WxkObject* self, char* name, nuint nameLength, int value);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_GetWidth")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int ImageGetWidth(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_GetHeight")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int ImageGetHeight(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_GetSize")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Size ImageGetSize(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_GetType")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int ImageGetType(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_SetType")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ImageSetType(WxkObject* self, int type);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_HasAlpha")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ImageHasAlpha(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_HasMask")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ImageHasMask(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_IsOk")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ImageIsOk(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_GetLoadFlags")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int ImageGetLoadFlags(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Image_SetLoadFlags")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ImageSetLoadFlags(WxkObject* self, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_KeyEvent_IsKeyInCategory")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2117,6 +2841,78 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_PasswordEntryDialog_new")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkWindow* PasswordEntryDialogNew(WxkWindow* parent, char* message, nuint messageLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Pen_new_Default")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* PenNewDefault();
+
+	[LibraryImport(Library, EntryPoint = "wxk_Pen_new_ColorIntPenStyle")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* PenNewColorIntPenStyle(WxkColor color, int width, int style);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Pen_new_BitmapInt")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* PenNewBitmapInt(WxkObject* stipple, int width);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Pen_SetStipple")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PenSetStipple(WxkObject* self, WxkObject* stipple);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Pen_GetCap")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int PenGetCap(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Pen_SetCap")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PenSetCap(WxkObject* self, int capStyle);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Pen_GetQuality")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int PenGetQuality(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Pen_SetQuality")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PenSetQuality(WxkObject* self, int quality);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Pen_GetColour")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkColor PenGetColour(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Pen_GetJoin")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int PenGetJoin(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Pen_SetJoin")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PenSetJoin(WxkObject* self, int join_style);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Pen_GetStyle")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int PenGetStyle(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Pen_SetStyle")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PenSetStyle(WxkObject* self, int style);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Pen_GetWidth")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int PenGetWidth(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Pen_SetWidth")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PenSetWidth(WxkObject* self, int width);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Pen_IsOk")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte PenIsOk(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Pen_IsNonTransparent")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte PenIsNonTransparent(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Pen_IsTransparent")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte PenIsTransparent(WxkObject* self);
 
 	[LibraryImport(Library, EntryPoint = "wxk_ProgressDialog_new")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -3378,6 +4174,10 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void TopLevelWindowRestore(WxkWindow* self);
 
+	[LibraryImport(Library, EntryPoint = "wxk_TopLevelWindow_SetIcons")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void TopLevelWindowSetIcons(WxkWindow* self, WxkObject* icons);
+
 	[LibraryImport(Library, EntryPoint = "wxk_TopLevelWindow_SetMaxSize")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void TopLevelWindowSetMaxSize(WxkWindow* self, Size size);
@@ -3421,6 +4221,14 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_TopLevelWindow_SetDefaultItem")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkWindow* TopLevelWindowSetDefaultItem(WxkWindow* self, WxkWindow* window);
+
+	[LibraryImport(Library, EntryPoint = "wxk_TopLevelWindow_GetIcon")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* TopLevelWindowGetIcon(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_TopLevelWindow_SetIcon")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void TopLevelWindowSetIcon(WxkWindow* self, WxkObject* icon);
 
 	[LibraryImport(Library, EntryPoint = "wxk_TopLevelWindow_GetTitle")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -3906,6 +4714,10 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte WindowUseBackgroundColour(WxkWindow* self);
 
+	[LibraryImport(Library, EntryPoint = "wxk_Window_SetOwnFont")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void WindowSetOwnFont(WxkWindow* self, WxkObject* font);
+
 	[LibraryImport(Library, EntryPoint = "wxk_Window_SetOwnForegroundColour")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void WindowSetOwnForegroundColour(WxkWindow* self, WxkColor color);
@@ -4330,6 +5142,14 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial Size WindowGetDPI(WxkWindow* self);
 
+	[LibraryImport(Library, EntryPoint = "wxk_Window_GetFont")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* WindowGetFont(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Window_SetFont")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte WindowSetFont(WxkWindow* self, WxkObject* font);
+
 	[LibraryImport(Library, EntryPoint = "wxk_Window_GetForegroundColour")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkColor WindowGetForegroundColour(WxkWindow* self);
@@ -4457,6 +5277,14 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_Window_SetAutoLayout")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void WindowSetAutoLayout(WxkWindow* self, byte autoLayout);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Window_GetCursor")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* WindowGetCursor(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Window_SetCursor")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte WindowSetCursor(WxkWindow* self, WxkObject* cursor);
 
 	[LibraryImport(Library, EntryPoint = "wxk_Window_HasCapture")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

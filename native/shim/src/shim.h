@@ -119,6 +119,22 @@ inline const wxk_ClassInfo* Wrap(const wxClassInfo* value) {
 	return reinterpret_cast<const wxk_ClassInfo*>(value);
 }
 
+// A value object, such as a font, crosses as a handle to a heap copy of it. Null stands for the
+// class's empty object, as wxNullFont is wxFont().
+template <typename T>
+const T& ValueOf(const wxk_Object* object) {
+	static const T none;
+	return object != nullptr ? *static_cast<const T*>(reinterpret_cast<const wxObject*>(object)) : none;
+}
+
+// Copies a value object out, which only adds a reference to its data. An empty one is null.
+template <typename T>
+wxk_Object* CopyValue(const T& value) {
+	if (!value.IsOk()) return nullptr;
+	wxObject* copy = new T(value);
+	return reinterpret_cast<wxk_Object*>(copy);
+}
+
 template <typename T>
 T* As(wxk_Window* window) {
 	return static_cast<T*>(Unwrap(window));

@@ -193,6 +193,6 @@ public unsafe partial class Slider : Control {
 	private static WxkWindow* CreateNative(Window parent, int value, int minValue, int maxValue, int id, Point? position, Size? size, SliderStyle style) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(parent);
-		return WxKitNative.SliderNew((WxkWindow*)parent.Native, id, value, minValue, maxValue, position ?? Point.Default, size ?? Size.Default, (long)style);
+		return WxKitNative.SliderNew((WxkWindow*)parent.Native, id, value, minValue, maxValue, position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, (long)style);
 	}
 }

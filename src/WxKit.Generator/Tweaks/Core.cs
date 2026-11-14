@@ -48,6 +48,16 @@ internal static class Core {
 		}
 		// IsEmpty is ambiguous on purpose, between the list and the text. IsListEmpty and IsTextEmpty say which.
 		tweaks.Class("wxComboBox").Ignore("IsEmpty");
+		// Fonts, pens, brushes, bitmaps, icons, cursors, and images, which are copied like values.
+		foreach (string value in (string[])["wxFont", "wxPen", "wxBrush", "wxBitmap", "wxIcon", "wxCursor", "wxImage"]) {
+			tweaks.Class(value);
+		}
+		// Size returns a resized copy, beside the Size property, as Resize resizes the image itself.
+		tweaks.Class("wxImage").Rename("Size", "Resized");
+		// wxMSW's wxIcon has no ConvertToDisabled, though the documentation gives it one.
+		tweaks.Class("wxIcon").Ignore("ConvertToDisabled");
+		// Underlined and Strikethrough return changed copies, beside the properties of the same names.
+		tweaks.Class("wxFont").Rename("Underlined", "WithUnderline").Rename("Strikethrough", "WithStrikethrough");
 		// The standard dialogs.
 		foreach (string dialog in (string[])["wxTextEntryDialog", "wxPasswordEntryDialog", "wxFileDialog", "wxDirDialog", "wxProgressDialog", "wxSingleChoiceDialog", "wxMultiChoiceDialog"]) {
 			tweaks.Class(dialog);

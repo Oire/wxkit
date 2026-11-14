@@ -98,7 +98,7 @@ public unsafe partial class Frame : TopLevelWindow {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(title);
 		fixed (char* titleText = title) {
-			return WxKitNative.FrameNew(parent is null ? null : (WxkWindow*)parent.Native, id, titleText, NativeString.Length(title), position ?? Point.Default, size ?? Size.Default, (long)style);
+			return WxKitNative.FrameNew(parent is null ? null : (WxkWindow*)parent.Native, id, titleText, NativeString.Length(title), position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, (long)style);
 		}
 	}
 }

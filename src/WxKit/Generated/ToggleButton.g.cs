@@ -30,7 +30,7 @@ public unsafe partial class ToggleButton : AnyButton {
 		ArgumentNullException.ThrowIfNull(parent);
 		ArgumentNullException.ThrowIfNull(label);
 		fixed (char* labelText = label) {
-			return WxKitNative.ToggleButtonNew((WxkWindow*)parent.Native, id, labelText, NativeString.Length(label), position ?? Point.Default, size ?? Size.Default, style);
+			return WxKitNative.ToggleButtonNew((WxkWindow*)parent.Native, id, labelText, NativeString.Length(label), position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, style);
 		}
 	}
 }

@@ -282,7 +282,7 @@ public unsafe partial class TextCtrl : Control {
 		ArgumentNullException.ThrowIfNull(parent);
 		ArgumentNullException.ThrowIfNull(value);
 		fixed (char* valueText = value) {
-			return WxKitNative.TextCtrlNew((WxkWindow*)parent.Native, id, valueText, NativeString.Length(value), position ?? Point.Default, size ?? Size.Default, (long)style);
+			return WxKitNative.TextCtrlNew((WxkWindow*)parent.Native, id, valueText, NativeString.Length(value), position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, (long)style);
 		}
 	}
 }

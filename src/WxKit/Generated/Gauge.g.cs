@@ -34,6 +34,6 @@ public unsafe partial class Gauge : Control {
 	private static WxkWindow* CreateNative(Window parent, int range, int id, Point? position, Size? size, GaugeStyle style) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(parent);
-		return WxKitNative.GaugeNew((WxkWindow*)parent.Native, id, range, position ?? Point.Default, size ?? Size.Default, (long)style);
+		return WxKitNative.GaugeNew((WxkWindow*)parent.Native, id, range, position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, (long)style);
 	}
 }

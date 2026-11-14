@@ -15,14 +15,14 @@ public unsafe partial class HyperlinkCtrl : Control {
 
 	/// <summary>Returns the colour used to print the label of the hyperlink when the mouse is over the control.</summary>
 	public Color? HoverColor {
-		get => Color.FromNative(WxKitNative.HyperlinkCtrlGetHoverColour(Native));
-		set => WxKitNative.HyperlinkCtrlSetHoverColour(Native, Color.ToNative(value));
+		get => global::WxKit.Color.FromNative(WxKitNative.HyperlinkCtrlGetHoverColour(Native));
+		set => WxKitNative.HyperlinkCtrlSetHoverColour(Native, global::WxKit.Color.ToNative(value));
 	}
 
 	/// <summary>Returns the colour used to print the label when the link has never been clicked before (i.e. the link has not been visited) and the mouse is not over the control.</summary>
 	public Color? NormalColor {
-		get => Color.FromNative(WxKitNative.HyperlinkCtrlGetNormalColour(Native));
-		set => WxKitNative.HyperlinkCtrlSetNormalColour(Native, Color.ToNative(value));
+		get => global::WxKit.Color.FromNative(WxKitNative.HyperlinkCtrlGetNormalColour(Native));
+		set => WxKitNative.HyperlinkCtrlSetNormalColour(Native, global::WxKit.Color.ToNative(value));
 	}
 
 	/// <summary>Returns the URL associated with the hyperlink.</summary>
@@ -44,8 +44,8 @@ public unsafe partial class HyperlinkCtrl : Control {
 
 	/// <summary>Returns the colour used to print the label when the mouse is not over the control and the link has already been clicked before (i.e. the link has been visited).</summary>
 	public Color? VisitedColor {
-		get => Color.FromNative(WxKitNative.HyperlinkCtrlGetVisitedColour(Native));
-		set => WxKitNative.HyperlinkCtrlSetVisitedColour(Native, Color.ToNative(value));
+		get => global::WxKit.Color.FromNative(WxKitNative.HyperlinkCtrlGetVisitedColour(Native));
+		set => WxKitNative.HyperlinkCtrlSetVisitedColour(Native, global::WxKit.Color.ToNative(value));
 	}
 
 	/// <summary>The hyperlink was (left) clicked. If this event is not handled in user's code (or it's skipped; see wxEvent::Skip), then a call to wxLaunchDefaultBrowser is done with the hyperlink's URL.</summary>
@@ -61,7 +61,7 @@ public unsafe partial class HyperlinkCtrl : Control {
 		ArgumentNullException.ThrowIfNull(url);
 		fixed (char* labelText = label)
 		fixed (char* urlText = url) {
-			return WxKitNative.HyperlinkCtrlNew((WxkWindow*)parent.Native, id, labelText, NativeString.Length(label), urlText, NativeString.Length(url), position ?? Point.Default, size ?? Size.Default, (long)style);
+			return WxKitNative.HyperlinkCtrlNew((WxkWindow*)parent.Native, id, labelText, NativeString.Length(label), urlText, NativeString.Length(url), position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, (long)style);
 		}
 	}
 }

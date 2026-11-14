@@ -142,6 +142,6 @@ public unsafe partial class SplitterWindow : Window {
 	private static WxkWindow* CreateNative(Window parent, int id, Point? position, Size? size, SplitterWindowStyle style) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(parent);
-		return WxKitNative.SplitterWindowNew((WxkWindow*)parent.Native, id, position ?? Point.Default, size ?? Size.Default, (long)style);
+		return WxKitNative.SplitterWindowNew((WxkWindow*)parent.Native, id, position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, (long)style);
 	}
 }

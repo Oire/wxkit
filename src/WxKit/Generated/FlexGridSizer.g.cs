@@ -19,7 +19,7 @@ public unsafe partial class FlexGridSizer : GridSizer {
 	}
 
 	/// <summary>wxFlexGridSizer constructors.</summary>
-	public FlexGridSizer(int rows, int cols, Size? gap = null) : this(CreateNative(rows, cols, gap)) {
+	public FlexGridSizer(int rows, int cols, Size gap) : this(CreateNative(rows, cols, gap)) {
 	}
 
 	internal FlexGridSizer(WxkSizer* native) : base(native) {
@@ -70,8 +70,8 @@ public unsafe partial class FlexGridSizer : GridSizer {
 		return WxKitNative.FlexGridSizerNewIntIntIntInt(rows, cols, vgap, hgap);
 	}
 
-	private static WxkSizer* CreateNative(int rows, int cols, Size? gap) {
+	private static WxkSizer* CreateNative(int rows, int cols, Size gap) {
 		Application.VerifyAccess();
-		return WxKitNative.FlexGridSizerNewIntIntSize(rows, cols, gap ?? Size.Default);
+		return WxKitNative.FlexGridSizerNewIntIntSize(rows, cols, gap);
 	}
 }

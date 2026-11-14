@@ -19,6 +19,6 @@ public unsafe partial class StaticLine : Control {
 	private static WxkWindow* CreateNative(Window parent, int id, Point? position, Size? size, StaticLineStyle style) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(parent);
-		return WxKitNative.StaticLineNew((WxkWindow*)parent.Native, id, position ?? Point.Default, size ?? Size.Default, (long)style);
+		return WxKitNative.StaticLineNew((WxkWindow*)parent.Native, id, position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, (long)style);
 	}
 }

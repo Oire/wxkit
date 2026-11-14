@@ -25,6 +25,6 @@ public unsafe partial class Panel : Window {
 	private static WxkWindow* CreateNative(Window parent, int id, Point? position, Size? size, long style) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(parent);
-		return WxKitNative.PanelNew((WxkWindow*)parent.Native, id, position ?? Point.Default, size ?? Size.Default, style);
+		return WxKitNative.PanelNew((WxkWindow*)parent.Native, id, position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, style);
 	}
 }

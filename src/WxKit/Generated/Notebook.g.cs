@@ -20,7 +20,7 @@ public unsafe partial class Notebook : BookCtrlBase {
 	public Direction TabOrientation => (Direction)WxKitNative.NotebookGetTabOrientation(Native);
 
 	/// <summary>If running under Windows and themes are enabled for the application, this function returns a suitable colour for painting the background of a notebook page, and can be passed to SetBackgroundColour().</summary>
-	public Color? ThemeBackgroundColor => Color.FromNative(WxKitNative.NotebookGetThemeBackgroundColour(Native));
+	public Color? ThemeBackgroundColor => global::WxKit.Color.FromNative(WxKitNative.NotebookGetThemeBackgroundColour(Native));
 
 	/// <summary>The page selection was changed. Processes a wxEVT_NOTEBOOK_PAGE_CHANGED event.</summary>
 	public event EventHandler<BookCtrlEvent>? PageChanged {
@@ -43,6 +43,6 @@ public unsafe partial class Notebook : BookCtrlBase {
 	private static WxkWindow* CreateNative(Window parent, int id, Point? position, Size? size, NotebookStyle style) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(parent);
-		return WxKitNative.NotebookNew((WxkWindow*)parent.Native, id, position ?? Point.Default, size ?? Size.Default, (long)style);
+		return WxKitNative.NotebookNew((WxkWindow*)parent.Native, id, position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, (long)style);
 	}
 }

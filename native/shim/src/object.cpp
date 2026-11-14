@@ -43,3 +43,7 @@ WXK_FUNCTION(wxk_String*) wxk_ClassInfo_GetClassName(const wxk_ClassInfo* info) 
 WXK_FUNCTION(const wxk_ClassInfo*) wxk_ClassInfo_GetBaseClass(const wxk_ClassInfo* info) noexcept {
 	return wxk::Guard<const wxk_ClassInfo*>(nullptr, [&] { return wxk::Wrap(wxk::Unwrap(info)->GetBaseClass1()); });
 }
+
+WXK_FUNCTION(void) wxk_Object_Free(wxk_Object* object) noexcept {
+	wxk::Guard([&] { delete wxk::Unwrap(object); });
+}

@@ -17,6 +17,86 @@ public enum BackgroundStyle {
 	Transparent = 4,
 }
 
+/// <summary>Wraps wxBitmapType.</summary>
+public enum BitmapType {
+	/// <summary>Wraps wxBITMAP_TYPE_INVALID.</summary>
+	Invalid = 0,
+	/// <summary>Wraps wxBITMAP_TYPE_BMP.</summary>
+	Bmp = 1,
+	/// <summary>Wraps wxBITMAP_TYPE_BMP_RESOURCE.</summary>
+	BmpResource = 2,
+	/// <summary>Wraps wxBITMAP_TYPE_RESOURCE.</summary>
+	Resource = 2,
+	/// <summary>Wraps wxBITMAP_TYPE_ICO.</summary>
+	Ico = 3,
+	/// <summary>Wraps wxBITMAP_TYPE_ICO_RESOURCE.</summary>
+	IcoResource = 4,
+	/// <summary>Wraps wxBITMAP_TYPE_CUR.</summary>
+	Cur = 5,
+	/// <summary>Wraps wxBITMAP_TYPE_CUR_RESOURCE.</summary>
+	CurResource = 6,
+	/// <summary>Wraps wxBITMAP_TYPE_XBM.</summary>
+	Xbm = 7,
+	/// <summary>Wraps wxBITMAP_TYPE_XBM_DATA.</summary>
+	XbmData = 8,
+	/// <summary>Wraps wxBITMAP_TYPE_XPM.</summary>
+	Xpm = 9,
+	/// <summary>Wraps wxBITMAP_TYPE_XPM_DATA.</summary>
+	XpmData = 10,
+	/// <summary>Wraps wxBITMAP_TYPE_TIFF.</summary>
+	Tiff = 11,
+	/// <summary>Wraps wxBITMAP_TYPE_TIF.</summary>
+	Tif = 11,
+	/// <summary>Wraps wxBITMAP_TYPE_TIFF_RESOURCE.</summary>
+	TiffResource = 12,
+	/// <summary>Wraps wxBITMAP_TYPE_TIF_RESOURCE.</summary>
+	TifResource = 12,
+	/// <summary>Wraps wxBITMAP_TYPE_GIF.</summary>
+	Gif = 13,
+	/// <summary>Wraps wxBITMAP_TYPE_GIF_RESOURCE.</summary>
+	GifResource = 14,
+	/// <summary>Wraps wxBITMAP_TYPE_PNG.</summary>
+	Png = 15,
+	/// <summary>Wraps wxBITMAP_TYPE_PNG_RESOURCE.</summary>
+	PngResource = 16,
+	/// <summary>Wraps wxBITMAP_TYPE_JPEG.</summary>
+	Jpeg = 17,
+	/// <summary>Wraps wxBITMAP_TYPE_JPEG_RESOURCE.</summary>
+	JpegResource = 18,
+	/// <summary>Wraps wxBITMAP_TYPE_PNM.</summary>
+	Pnm = 19,
+	/// <summary>Wraps wxBITMAP_TYPE_PNM_RESOURCE.</summary>
+	PnmResource = 20,
+	/// <summary>Wraps wxBITMAP_TYPE_PCX.</summary>
+	Pcx = 21,
+	/// <summary>Wraps wxBITMAP_TYPE_PCX_RESOURCE.</summary>
+	PcxResource = 22,
+	/// <summary>Wraps wxBITMAP_TYPE_PICT.</summary>
+	Pict = 23,
+	/// <summary>Wraps wxBITMAP_TYPE_PICT_RESOURCE.</summary>
+	PictResource = 24,
+	/// <summary>Wraps wxBITMAP_TYPE_ICON.</summary>
+	Icon = 25,
+	/// <summary>Wraps wxBITMAP_TYPE_ICON_RESOURCE.</summary>
+	IconResource = 26,
+	/// <summary>Wraps wxBITMAP_TYPE_ANI.</summary>
+	Ani = 27,
+	/// <summary>Wraps wxBITMAP_TYPE_IFF.</summary>
+	Iff = 28,
+	/// <summary>Wraps wxBITMAP_TYPE_TGA.</summary>
+	Tga = 29,
+	/// <summary>Wraps wxBITMAP_TYPE_MACCURSOR.</summary>
+	Maccursor = 30,
+	/// <summary>Wraps wxBITMAP_TYPE_MACCURSOR_RESOURCE.</summary>
+	MaccursorResource = 31,
+	/// <summary>Wraps wxBITMAP_TYPE_WEBP.</summary>
+	Webp = 32,
+	/// <summary>Wraps wxBITMAP_TYPE_WEBP_RESOURCE.</summary>
+	WebpResource = 33,
+	/// <summary>Wraps wxBITMAP_TYPE_ANY.</summary>
+	Any = 50,
+}
+
 /// <summary>Wraps wxBorder.</summary>
 public enum Border {
 	/// <summary>This is different from wxBORDER_NONE as by default the controls do have a border. Wraps wxBORDER_DEFAULT.</summary>
@@ -37,6 +117,38 @@ public enum Border {
 	Theme = 268435456,
 	/// <summary>Wraps wxBORDER_MASK.</summary>
 	Mask = 522190848,
+}
+
+/// <summary>Wraps wxBrushStyle.</summary>
+public enum BrushStyle {
+	/// <summary>Wraps wxBRUSHSTYLE_INVALID.</summary>
+	Invalid = -1,
+	/// <summary>Solid. Wraps wxBRUSHSTYLE_SOLID.</summary>
+	Solid = 100,
+	/// <summary>Transparent (no fill). Wraps wxBRUSHSTYLE_TRANSPARENT.</summary>
+	Transparent = 106,
+	/// <summary>Uses a bitmap as a stipple; the mask is used for blitting monochrome using text foreground and background colors. Wraps wxBRUSHSTYLE_STIPPLE_MASK_OPAQUE.</summary>
+	StippleMaskOpaque = 107,
+	/// <summary>Uses a bitmap as a stipple; mask is used for masking areas in the stipple bitmap. Wraps wxBRUSHSTYLE_STIPPLE_MASK.</summary>
+	StippleMask = 108,
+	/// <summary>Uses a bitmap as a stipple. Wraps wxBRUSHSTYLE_STIPPLE.</summary>
+	Stipple = 110,
+	/// <summary>Backward diagonal hatch. Wraps wxBRUSHSTYLE_BDIAGONAL_HATCH.</summary>
+	BdiagonalHatch = 111,
+	/// <summary>Cross-diagonal hatch. Wraps wxBRUSHSTYLE_CROSSDIAG_HATCH.</summary>
+	CrossdiagHatch = 112,
+	/// <summary>Forward diagonal hatch. Wraps wxBRUSHSTYLE_FDIAGONAL_HATCH.</summary>
+	FdiagonalHatch = 113,
+	/// <summary>Cross hatch. Wraps wxBRUSHSTYLE_CROSS_HATCH.</summary>
+	CrossHatch = 114,
+	/// <summary>Horizontal hatch. Wraps wxBRUSHSTYLE_HORIZONTAL_HATCH.</summary>
+	HorizontalHatch = 115,
+	/// <summary>Vertical hatch. Wraps wxBRUSHSTYLE_VERTICAL_HATCH.</summary>
+	VerticalHatch = 116,
+	/// <summary>First of the hatch styles (inclusive). Wraps wxBRUSHSTYLE_FIRST_HATCH.</summary>
+	FirstHatch = 117,
+	/// <summary>Last of the hatch styles (inclusive). Wraps wxBRUSHSTYLE_LAST_HATCH.</summary>
+	LastHatch = 118,
 }
 
 /// <summary>Wraps wxCheckBoxState.</summary>
@@ -93,6 +205,296 @@ public enum FlexSizerGrowMode {
 	All = 2,
 }
 
+/// <summary>Wraps wxFontEncoding.</summary>
+public enum FontEncoding {
+	/// <summary>Default system encoding. Wraps wxFONTENCODING_SYSTEM.</summary>
+	System = -1,
+	/// <summary>Default application encoding: this is the encoding set by calls to wxFont::SetDefaultEncoding(). Wraps wxFONTENCODING_DEFAULT.</summary>
+	Default = 0,
+	/// <summary>West European (Latin 1). Wraps wxFONTENCODING_ISO8859_1.</summary>
+	Iso8859One = 1,
+	/// <summary>Central and East European (Latin 2). Wraps wxFONTENCODING_ISO8859_2.</summary>
+	Iso8859Two = 2,
+	/// <summary>Esperanto (Latin 3). Wraps wxFONTENCODING_ISO8859_3.</summary>
+	Iso8859Three = 3,
+	/// <summary>Baltic (old) (Latin 4). Wraps wxFONTENCODING_ISO8859_4.</summary>
+	Iso8859Four = 4,
+	/// <summary>Cyrillic. Wraps wxFONTENCODING_ISO8859_5.</summary>
+	Iso8859Five = 5,
+	/// <summary>Arabic. Wraps wxFONTENCODING_ISO8859_6.</summary>
+	Iso8859Six = 6,
+	/// <summary>Greek. Wraps wxFONTENCODING_ISO8859_7.</summary>
+	Iso8859Seven = 7,
+	/// <summary>Hebrew. Wraps wxFONTENCODING_ISO8859_8.</summary>
+	Iso8859Eight = 8,
+	/// <summary>Turkish (Latin 5). Wraps wxFONTENCODING_ISO8859_9.</summary>
+	Iso8859Nine = 9,
+	/// <summary>Variation of Latin 4 (Latin 6). Wraps wxFONTENCODING_ISO8859_10.</summary>
+	Iso8859One0 = 10,
+	/// <summary>Thai. Wraps wxFONTENCODING_ISO8859_11.</summary>
+	Iso8859One1 = 11,
+	/// <summary>Wraps wxFONTENCODING_ISO8859_12.</summary>
+	Iso8859One2 = 12,
+	/// <summary>Baltic (Latin 7). Wraps wxFONTENCODING_ISO8859_13.</summary>
+	Iso8859One3 = 13,
+	/// <summary>Latin 8. Wraps wxFONTENCODING_ISO8859_14.</summary>
+	Iso8859One4 = 14,
+	/// <summary>Latin 9 (a.k.a. Latin 0, includes Euro symbol). Wraps wxFONTENCODING_ISO8859_15.</summary>
+	Iso8859One5 = 15,
+	/// <summary>Wraps wxFONTENCODING_ISO8859_MAX.</summary>
+	Iso8859Max = 16,
+	/// <summary>KOI8 Russian. Wraps wxFONTENCODING_KOI8.</summary>
+	Koi8 = 17,
+	/// <summary>KOI8 Ukrainian. Wraps wxFONTENCODING_KOI8_U.</summary>
+	Koi8U = 18,
+	/// <summary>Same as MS-DOS CP866. Wraps wxFONTENCODING_ALTERNATIVE.</summary>
+	Alternative = 19,
+	/// <summary>Used under Linux in Bulgaria. Wraps wxFONTENCODING_BULGARIAN.</summary>
+	Bulgarian = 20,
+	/// <summary>United States (DOS). Wraps wxFONTENCODING_CP437.</summary>
+	Cp437 = 21,
+	/// <summary>Multilingual Latin 1; Western European (DOS). Wraps wxFONTENCODING_CP850.</summary>
+	Cp850 = 22,
+	/// <summary>Latin 2; Central European (DOS). Wraps wxFONTENCODING_CP852.</summary>
+	Cp852 = 23,
+	/// <summary>Cyrillic (primarily Russian). Wraps wxFONTENCODING_CP855.</summary>
+	Cp855 = 24,
+	/// <summary>Russian; Cyrillic (DOS). Wraps wxFONTENCODING_CP866.</summary>
+	Cp866 = 25,
+	/// <summary>Thai (Windows). Wraps wxFONTENCODING_CP874.</summary>
+	Cp874 = 26,
+	/// <summary>Japanese (shift-JIS). Wraps wxFONTENCODING_CP932.</summary>
+	Cp932 = 27,
+	/// <summary>Simplified Chinese (GB2312). Wraps wxFONTENCODING_CP936.</summary>
+	Cp936 = 28,
+	/// <summary>Korean (Unified Hangul Code). Wraps wxFONTENCODING_CP949.</summary>
+	Cp949 = 29,
+	/// <summary>Traditional Chinese (Big5). Wraps wxFONTENCODING_CP950.</summary>
+	Cp950 = 30,
+	/// <summary>Central European (Windows). Wraps wxFONTENCODING_CP1250.</summary>
+	Cp1250 = 31,
+	/// <summary>Cyrillic (Windows). Wraps wxFONTENCODING_CP1251.</summary>
+	Cp1251 = 32,
+	/// <summary>Latin 1; Western European (Windows). Wraps wxFONTENCODING_CP1252.</summary>
+	Cp1252 = 33,
+	/// <summary>Greek (Windows) (8859-7). Wraps wxFONTENCODING_CP1253.</summary>
+	Cp1253 = 34,
+	/// <summary>Turkish (Windows). Wraps wxFONTENCODING_CP1254.</summary>
+	Cp1254 = 35,
+	/// <summary>Hebrew (Windows). Wraps wxFONTENCODING_CP1255.</summary>
+	Cp1255 = 36,
+	/// <summary>Arabic (Windows). Wraps wxFONTENCODING_CP1256.</summary>
+	Cp1256 = 37,
+	/// <summary>Baltic (Windows) (same as Latin 7). Wraps wxFONTENCODING_CP1257.</summary>
+	Cp1257 = 38,
+	/// <summary>Vietnamese (Windows) (since 2.9.4). Wraps wxFONTENCODING_CP1258.</summary>
+	Cp1258 = 39,
+	/// <summary>Korean (Johab) (since 2.9.4). Wraps wxFONTENCODING_CP1361.</summary>
+	Cp1361 = 40,
+	/// <summary>Wraps wxFONTENCODING_CP12_MAX.</summary>
+	Cp12Max = 41,
+	/// <summary>UTF-7 Unicode encoding. Wraps wxFONTENCODING_UTF7.</summary>
+	Utf7 = 42,
+	/// <summary>UTF-8 Unicode encoding. Wraps wxFONTENCODING_UTF8.</summary>
+	Utf8 = 43,
+	/// <summary>Extended Unix Codepage for Japanese. Wraps wxFONTENCODING_EUC_JP.</summary>
+	EucJp = 44,
+	/// <summary>UTF-16 Big Endian Unicode encoding. Wraps wxFONTENCODING_UTF16BE.</summary>
+	Utf16be = 45,
+	/// <summary>UTF-16 Little Endian Unicode encoding. Wraps wxFONTENCODING_UTF16LE.</summary>
+	Utf16le = 46,
+	/// <summary>UTF-32 Big Endian Unicode encoding. Wraps wxFONTENCODING_UTF32BE.</summary>
+	Utf32be = 47,
+	/// <summary>UTF-32 Little Endian Unicode encoding. Wraps wxFONTENCODING_UTF32LE.</summary>
+	Utf32le = 48,
+	/// <summary>Roman; Western European (Mac). Wraps wxFONTENCODING_MACROMAN.</summary>
+	Macroman = 49,
+	/// <summary>Japanese (Mac). Wraps wxFONTENCODING_MACJAPANESE.</summary>
+	Macjapanese = 50,
+	/// <summary>Traditional Chinese (Big5, Mac). Wraps wxFONTENCODING_MACCHINESETRAD.</summary>
+	Macchinesetrad = 51,
+	/// <summary>Korean (Mac). Wraps wxFONTENCODING_MACKOREAN.</summary>
+	Mackorean = 52,
+	/// <summary>Arabic (Mac). Wraps wxFONTENCODING_MACARABIC.</summary>
+	Macarabic = 53,
+	/// <summary>Hebrew (Mac). Wraps wxFONTENCODING_MACHEBREW.</summary>
+	Machebrew = 54,
+	/// <summary>Greek (Mac). Wraps wxFONTENCODING_MACGREEK.</summary>
+	Macgreek = 55,
+	/// <summary>Cyrillic (Mac). Wraps wxFONTENCODING_MACCYRILLIC.</summary>
+	Maccyrillic = 56,
+	/// <summary>Devanagari (Mac). Wraps wxFONTENCODING_MACDEVANAGARI.</summary>
+	Macdevanagari = 57,
+	/// <summary>Gurmukhi (Mac). Wraps wxFONTENCODING_MACGURMUKHI.</summary>
+	Macgurmukhi = 58,
+	/// <summary>Gujarati (Mac). Wraps wxFONTENCODING_MACGUJARATI.</summary>
+	Macgujarati = 59,
+	/// <summary>Oriya (Mac). Wraps wxFONTENCODING_MACORIYA.</summary>
+	Macoriya = 60,
+	/// <summary>Bengali (Mac). Wraps wxFONTENCODING_MACBENGALI.</summary>
+	Macbengali = 61,
+	/// <summary>Tamil (Mac). Wraps wxFONTENCODING_MACTAMIL.</summary>
+	Mactamil = 62,
+	/// <summary>Telugu (Mac). Wraps wxFONTENCODING_MACTELUGU.</summary>
+	Mactelugu = 63,
+	/// <summary>Kannada (Mac). Wraps wxFONTENCODING_MACKANNADA.</summary>
+	Mackannada = 64,
+	/// <summary>Malajalam (Mac). Wraps wxFONTENCODING_MACMALAJALAM.</summary>
+	Macmalajalam = 65,
+	/// <summary>Sinhalese (Mac). Wraps wxFONTENCODING_MACSINHALESE.</summary>
+	Macsinhalese = 66,
+	/// <summary>Burmese (Mac). Wraps wxFONTENCODING_MACBURMESE.</summary>
+	Macburmese = 67,
+	/// <summary>Khmer (Mac). Wraps wxFONTENCODING_MACKHMER.</summary>
+	Mackhmer = 68,
+	/// <summary>Thai (Mac). Wraps wxFONTENCODING_MACTHAI.</summary>
+	Macthai = 69,
+	/// <summary>Laotian (Mac). Wraps wxFONTENCODING_MACLAOTIAN.</summary>
+	Maclaotian = 70,
+	/// <summary>Georgian (Mac). Wraps wxFONTENCODING_MACGEORGIAN.</summary>
+	Macgeorgian = 71,
+	/// <summary>Armenian (Mac). Wraps wxFONTENCODING_MACARMENIAN.</summary>
+	Macarmenian = 72,
+	/// <summary>Simplified Chinese (GB 2312, Mac). Wraps wxFONTENCODING_MACCHINESESIMP.</summary>
+	Macchinesesimp = 73,
+	/// <summary>Tibetan (Mac). Wraps wxFONTENCODING_MACTIBETAN.</summary>
+	Mactibetan = 74,
+	/// <summary>Mongolian (Mac). Wraps wxFONTENCODING_MACMONGOLIAN.</summary>
+	Macmongolian = 75,
+	/// <summary>Ethiopic (Mac). Wraps wxFONTENCODING_MACETHIOPIC.</summary>
+	Macethiopic = 76,
+	/// <summary>Latin 2; Central European (Mac). Wraps wxFONTENCODING_MACCENTRALEUR.</summary>
+	Maccentraleur = 77,
+	/// <summary>Vietnamese (Mac). Wraps wxFONTENCODING_MACVIETNAMESE.</summary>
+	Macvietnamese = 78,
+	/// <summary>Arabic (Mac). Wraps wxFONTENCODING_MACARABICEXT.</summary>
+	Macarabicext = 79,
+	/// <summary>Symbol (Mac). Wraps wxFONTENCODING_MACSYMBOL.</summary>
+	Macsymbol = 80,
+	/// <summary>Dingbats (Mac). Wraps wxFONTENCODING_MACDINGBATS.</summary>
+	Macdingbats = 81,
+	/// <summary>Turkish (Mac). Wraps wxFONTENCODING_MACTURKISH.</summary>
+	Macturkish = 82,
+	/// <summary>Croatian (Mac). Wraps wxFONTENCODING_MACCROATIAN.</summary>
+	Maccroatian = 83,
+	/// <summary>Icelandic (Mac). Wraps wxFONTENCODING_MACICELANDIC.</summary>
+	Macicelandic = 84,
+	/// <summary>Romanian (Mac). Wraps wxFONTENCODING_MACROMANIAN.</summary>
+	Macromanian = 85,
+	/// <summary>Celtic (Mac). Wraps wxFONTENCODING_MACCELTIC.</summary>
+	Macceltic = 86,
+	/// <summary>Gaelic (Mac). Wraps wxFONTENCODING_MACGAELIC.</summary>
+	Macgaelic = 87,
+	/// <summary>Wraps wxFONTENCODING_MACKEYBOARD.</summary>
+	Mackeyboard = 88,
+	/// <summary>ISO-2022-JP JIS encoding. Wraps wxFONTENCODING_ISO2022_JP.</summary>
+	Iso2022Jp = 89,
+	/// <summary>Highest enumerated encoding value. Wraps wxFONTENCODING_MAX.</summary>
+	Max = 90,
+	/// <summary>Wraps wxFONTENCODING_MACMIN.</summary>
+	Macmin = 49,
+	/// <summary>Wraps wxFONTENCODING_MACMAX.</summary>
+	Macmax = 88,
+	/// <summary>Native UTF-16. Wraps wxFONTENCODING_UTF16.</summary>
+	Utf16 = 89,
+	/// <summary>Native UTF-32. Wraps wxFONTENCODING_UTF32.</summary>
+	Utf32 = 90,
+	/// <summary>Alias for the native Unicode encoding on this platform (this is used by wxEncodingConverter and wxUTFFile only for now). Wraps wxFONTENCODING_UNICODE.</summary>
+	Unicode = 91,
+	/// <summary>Simplified Chinese. Wraps wxFONTENCODING_GB2312.</summary>
+	Gb2312 = 28,
+	/// <summary>Traditional Chinese. Wraps wxFONTENCODING_BIG5.</summary>
+	Big5 = 30,
+	/// <summary>Japanese Shift JIS. Wraps wxFONTENCODING_SHIFT_JIS.</summary>
+	ShiftJis = 27,
+	/// <summary>Korean. Wraps wxFONTENCODING_EUC_KR.</summary>
+	EucKr = 29,
+	/// <summary>Korean Johab (since 2.9.4). Wraps wxFONTENCODING_JOHAB.</summary>
+	Johab = 40,
+	/// <summary>Vietnamese (since 2.9.4). Wraps wxFONTENCODING_VIETNAMESE.</summary>
+	Vietnamese = 39,
+}
+
+/// <summary>Wraps wxFontFamily.</summary>
+public enum FontFamily {
+	/// <summary>Chooses a default font. Wraps wxFONTFAMILY_DEFAULT.</summary>
+	Default = 70,
+	/// <summary>A decorative font. Wraps wxFONTFAMILY_DECORATIVE.</summary>
+	Decorative = 71,
+	/// <summary>A formal, serif font. Wraps wxFONTFAMILY_ROMAN.</summary>
+	Roman = 72,
+	/// <summary>A handwriting font. Wraps wxFONTFAMILY_SCRIPT.</summary>
+	Script = 73,
+	/// <summary>A sans-serif font. Wraps wxFONTFAMILY_SWISS.</summary>
+	Swiss = 74,
+	/// <summary>A fixed pitch font. Wraps wxFONTFAMILY_MODERN.</summary>
+	Modern = 75,
+	/// <summary>A teletype (i.e. monospaced) font. Wraps wxFONTFAMILY_TELETYPE.</summary>
+	Teletype = 76,
+	/// <summary>Wraps wxFONTFAMILY_MAX.</summary>
+	Max = 77,
+	/// <summary>Invalid font family value, returned by wxFont::GetFamily() when the font is invalid for example. Wraps wxFONTFAMILY_UNKNOWN.</summary>
+	Unknown = 77,
+}
+
+/// <summary>Wraps wxFontStyle.</summary>
+public enum FontStyle {
+	/// <summary>The font is drawn without slant. Wraps wxFONTSTYLE_NORMAL.</summary>
+	Normal = 90,
+	/// <summary>The font is slanted in an italic style. Wraps wxFONTSTYLE_ITALIC.</summary>
+	Italic = 93,
+	/// <summary>The font is slanted, but in a roman style. Wraps wxFONTSTYLE_SLANT.</summary>
+	Slant = 94,
+	/// <summary>Wraps wxFONTSTYLE_MAX.</summary>
+	Max = 95,
+}
+
+/// <summary>Wraps wxFontSymbolicSize.</summary>
+public enum FontSymbolicSize {
+	/// <summary>Extra small. Wraps wxFONTSIZE_XX_SMALL.</summary>
+	XxSmall = -3,
+	/// <summary>Very small. Wraps wxFONTSIZE_X_SMALL.</summary>
+	XSmall = -2,
+	/// <summary>Small. Wraps wxFONTSIZE_SMALL.</summary>
+	Small = -1,
+	/// <summary>Normal. Wraps wxFONTSIZE_MEDIUM.</summary>
+	Medium = 0,
+	/// <summary>Large. Wraps wxFONTSIZE_LARGE.</summary>
+	Large = 1,
+	/// <summary>Very large. Wraps wxFONTSIZE_X_LARGE.</summary>
+	XLarge = 2,
+	/// <summary>Extra large. Wraps wxFONTSIZE_XX_LARGE.</summary>
+	XxLarge = 3,
+}
+
+/// <summary>Wraps wxFontWeight.</summary>
+public enum FontWeight {
+	/// <summary>Invalid font weight. Wraps wxFONTWEIGHT_INVALID.</summary>
+	Invalid = 0,
+	/// <summary>Thin font (weight = 100). Wraps wxFONTWEIGHT_THIN.</summary>
+	Thin = 100,
+	/// <summary>Extra Light (Ultra Light) font (weight = 200). Wraps wxFONTWEIGHT_EXTRALIGHT.</summary>
+	Extralight = 200,
+	/// <summary>Light font (weight = 300). Wraps wxFONTWEIGHT_LIGHT.</summary>
+	Light = 300,
+	/// <summary>Normal font (weight = 400). Wraps wxFONTWEIGHT_NORMAL.</summary>
+	Normal = 400,
+	/// <summary>Medium font (weight = 500). Wraps wxFONTWEIGHT_MEDIUM.</summary>
+	Medium = 500,
+	/// <summary>Semi Bold (Demi Bold) font (weight = 600). Wraps wxFONTWEIGHT_SEMIBOLD.</summary>
+	Semibold = 600,
+	/// <summary>Bold font (weight = 700). Wraps wxFONTWEIGHT_BOLD.</summary>
+	Bold = 700,
+	/// <summary>Extra Bold (Ultra Bold) font (weight = 800). Wraps wxFONTWEIGHT_EXTRABOLD.</summary>
+	Extrabold = 800,
+	/// <summary>Heavy (Black) font (weight = 900). Wraps wxFONTWEIGHT_HEAVY.</summary>
+	Heavy = 900,
+	/// <summary>Extra Heavy font (weight = 1000). Wraps wxFONTWEIGHT_EXTRAHEAVY.</summary>
+	Extraheavy = 1000,
+	/// <summary>Wraps wxFONTWEIGHT_MAX.</summary>
+	Max = 1000,
+}
+
 /// <summary>Wraps wxHitTest.</summary>
 public enum HitTest {
 	/// <summary>Wraps wxHT_NOWHERE.</summary>
@@ -127,6 +529,32 @@ public enum HitTest {
 	WindowCorner = 13,
 	/// <summary>Wraps wxHT_MAX.</summary>
 	Max = 14,
+}
+
+/// <summary>Wraps wxImageAlphaBlendMode.</summary>
+public enum ImageAlphaBlendMode {
+	/// <summary>Overwrite the original alpha values with the ones being pasted. Wraps wxIMAGE_ALPHA_BLEND_OVER.</summary>
+	Over = 0,
+	/// <summary>Compose the original alpha values with the ones being pasted. Wraps wxIMAGE_ALPHA_BLEND_COMPOSE.</summary>
+	Compose = 1,
+}
+
+/// <summary>Wraps wxImageResizeQuality.</summary>
+public enum ImageResizeQuality {
+	/// <summary>Simplest and fastest algorithm. Wraps wxIMAGE_QUALITY_NEAREST.</summary>
+	Nearest = 0,
+	/// <summary>Compromise between wxIMAGE_QUALITY_NEAREST and wxIMAGE_QUALITY_BICUBIC. Wraps wxIMAGE_QUALITY_BILINEAR.</summary>
+	Bilinear = 1,
+	/// <summary>Highest quality but slowest execution time. Wraps wxIMAGE_QUALITY_BICUBIC.</summary>
+	Bicubic = 2,
+	/// <summary>Use surrounding pixels to calculate an average that will be used for new pixels. Wraps wxIMAGE_QUALITY_BOX_AVERAGE.</summary>
+	BoxAverage = 3,
+	/// <summary>Default image resizing algorithm used by wxImage::Scale(). Wraps wxIMAGE_QUALITY_NORMAL.</summary>
+	Normal = 4,
+	/// <summary>Fastest image resizing algorithm. Wraps wxIMAGE_QUALITY_FAST.</summary>
+	Fast = 5,
+	/// <summary>Best image resizing algorithm. Wraps wxIMAGE_QUALITY_HIGH.</summary>
+	High = 6,
 }
 
 /// <summary>Wraps wxLayoutDirection.</summary>
@@ -177,6 +605,78 @@ public enum Origin {
 	HelpButton = 2,
 }
 
+/// <summary>Wraps wxPenCap.</summary>
+public enum PenCap {
+	/// <summary>Wraps wxCAP_INVALID.</summary>
+	Invalid = -1,
+	/// <summary>The pen will have a rounded edge and will extend beyond the start and end of a line. Wraps wxCAP_ROUND.</summary>
+	Round = 130,
+	/// <summary>The pen's edge will be square and will extend beyond the start and end of a line. Wraps wxCAP_PROJECTING.</summary>
+	Projecting = 131,
+	/// <summary>The pen's edge will be square and will not extend beyond the start and end of a line. Wraps wxCAP_BUTT.</summary>
+	Butt = 132,
+}
+
+/// <summary>Wraps wxPenJoin.</summary>
+public enum PenJoin {
+	/// <summary>Wraps wxJOIN_INVALID.</summary>
+	Invalid = -1,
+	/// <summary>The intersection of two lines will have a diagonal edge "cut" into it. Wraps wxJOIN_BEVEL.</summary>
+	Bevel = 120,
+	/// <summary>The intersection of two lines will have a sharp corner. Wraps wxJOIN_MITER.</summary>
+	Miter = 121,
+	/// <summary>The intersection of two lines will have a rounded edge. Wraps wxJOIN_ROUND.</summary>
+	Round = 122,
+}
+
+/// <summary>Wraps wxPenQuality.</summary>
+public enum PenQuality {
+	/// <summary>Select the appropriate quality automatically. Wraps wxPEN_QUALITY_DEFAULT.</summary>
+	Default = 0,
+	/// <summary>Less good looking but faster. Wraps wxPEN_QUALITY_LOW.</summary>
+	Low = 1,
+	/// <summary>Best looking, at the expense of speed. Wraps wxPEN_QUALITY_HIGH.</summary>
+	High = 2,
+}
+
+/// <summary>Wraps wxPenStyle.</summary>
+public enum PenStyle {
+	/// <summary>Wraps wxPENSTYLE_INVALID.</summary>
+	Invalid = -1,
+	/// <summary>Solid style. Wraps wxPENSTYLE_SOLID.</summary>
+	Solid = 0,
+	/// <summary>Dotted style. Wraps wxPENSTYLE_DOT.</summary>
+	Dot = 1,
+	/// <summary>Long dashed style. Wraps wxPENSTYLE_LONG_DASH.</summary>
+	LongDash = 2,
+	/// <summary>Short dashed style. Wraps wxPENSTYLE_SHORT_DASH.</summary>
+	ShortDash = 3,
+	/// <summary>Dot and dash style. Wraps wxPENSTYLE_DOT_DASH.</summary>
+	DotDash = 4,
+	/// <summary>Use the user dashes: see wxPen::SetDashes. Wraps wxPENSTYLE_USER_DASH.</summary>
+	UserDash = 5,
+	/// <summary>No pen is used. Wraps wxPENSTYLE_TRANSPARENT.</summary>
+	Transparent = 6,
+	/// <summary>Use the stipple bitmap. Wraps wxPENSTYLE_STIPPLE.</summary>
+	Stipple = 7,
+	/// <summary>Backward diagonal hatch. Wraps wxPENSTYLE_BDIAGONAL_HATCH.</summary>
+	BdiagonalHatch = 8,
+	/// <summary>Cross-diagonal hatch. Wraps wxPENSTYLE_CROSSDIAG_HATCH.</summary>
+	CrossdiagHatch = 9,
+	/// <summary>Forward diagonal hatch. Wraps wxPENSTYLE_FDIAGONAL_HATCH.</summary>
+	FdiagonalHatch = 10,
+	/// <summary>Cross hatch. Wraps wxPENSTYLE_CROSS_HATCH.</summary>
+	CrossHatch = 11,
+	/// <summary>Horizontal hatch. Wraps wxPENSTYLE_HORIZONTAL_HATCH.</summary>
+	HorizontalHatch = 12,
+	/// <summary>Vertical hatch. Wraps wxPENSTYLE_VERTICAL_HATCH.</summary>
+	VerticalHatch = 13,
+	/// <summary>First of the hatch styles (inclusive). Wraps wxPENSTYLE_FIRST_HATCH.</summary>
+	FirstHatch = 14,
+	/// <summary>Last of the hatch styles (inclusive). Wraps wxPENSTYLE_LAST_HATCH.</summary>
+	LastHatch = 15,
+}
+
 /// <summary>Wraps Reason.</summary>
 public enum Reason {
 	/// <summary>Window activated by mouse click. Wraps Reason_Mouse.</summary>
@@ -219,6 +719,80 @@ public enum SplitMode {
 	Horizontal = 1,
 	/// <summary>Wraps wxSPLIT_VERTICAL.</summary>
 	Vertical = 2,
+}
+
+/// <summary>Wraps wxStockCursor.</summary>
+public enum StockCursor {
+	/// <summary>Wraps wxCURSOR_NONE.</summary>
+	None = 0,
+	/// <summary>A standard arrow cursor. Wraps wxCURSOR_ARROW.</summary>
+	Arrow = 1,
+	/// <summary>A standard arrow cursor pointing to the right. Wraps wxCURSOR_RIGHT_ARROW.</summary>
+	RightArrow = 2,
+	/// <summary>Bullseye cursor. Wraps wxCURSOR_BULLSEYE.</summary>
+	Bullseye = 3,
+	/// <summary>Rectangular character cursor. Wraps wxCURSOR_CHAR.</summary>
+	Char = 4,
+	/// <summary>A cross cursor. Wraps wxCURSOR_CROSS.</summary>
+	Cross = 5,
+	/// <summary>A hand cursor. Wraps wxCURSOR_HAND.</summary>
+	Hand = 6,
+	/// <summary>An I-beam cursor (vertical line). Wraps wxCURSOR_IBEAM.</summary>
+	Ibeam = 7,
+	/// <summary>Represents a mouse with the left button depressed. Wraps wxCURSOR_LEFT_BUTTON.</summary>
+	LeftButton = 8,
+	/// <summary>A magnifier icon. Wraps wxCURSOR_MAGNIFIER.</summary>
+	Magnifier = 9,
+	/// <summary>Represents a mouse with the middle button depressed. Wraps wxCURSOR_MIDDLE_BUTTON.</summary>
+	MiddleButton = 10,
+	/// <summary>A no-entry sign cursor. Wraps wxCURSOR_NO_ENTRY.</summary>
+	NoEntry = 11,
+	/// <summary>A paintbrush cursor. Wraps wxCURSOR_PAINT_BRUSH.</summary>
+	PaintBrush = 12,
+	/// <summary>A pencil cursor. Wraps wxCURSOR_PENCIL.</summary>
+	Pencil = 13,
+	/// <summary>A cursor that points left. Wraps wxCURSOR_POINT_LEFT.</summary>
+	PointLeft = 14,
+	/// <summary>A cursor that points right. Wraps wxCURSOR_POINT_RIGHT.</summary>
+	PointRight = 15,
+	/// <summary>An arrow and question mark. Wraps wxCURSOR_QUESTION_ARROW.</summary>
+	QuestionArrow = 16,
+	/// <summary>Represents a mouse with the right button depressed. Wraps wxCURSOR_RIGHT_BUTTON.</summary>
+	RightButton = 17,
+	/// <summary>A sizing cursor pointing NE-SW. Wraps wxCURSOR_SIZENESW.</summary>
+	Sizenesw = 18,
+	/// <summary>A sizing cursor pointing N-S. Wraps wxCURSOR_SIZENS.</summary>
+	Sizens = 19,
+	/// <summary>A sizing cursor pointing NW-SE. Wraps wxCURSOR_SIZENWSE.</summary>
+	Sizenwse = 20,
+	/// <summary>A sizing cursor pointing W-E. Wraps wxCURSOR_SIZEWE.</summary>
+	Sizewe = 21,
+	/// <summary>A general sizing cursor. Wraps wxCURSOR_SIZING.</summary>
+	Sizing = 22,
+	/// <summary>A spraycan cursor. Wraps wxCURSOR_SPRAYCAN.</summary>
+	Spraycan = 23,
+	/// <summary>A wait cursor. Wraps wxCURSOR_WAIT.</summary>
+	Wait = 24,
+	/// <summary>A watch cursor. Wraps wxCURSOR_WATCH.</summary>
+	Watch = 25,
+	/// <summary>Transparent cursor. Wraps wxCURSOR_BLANK.</summary>
+	Blank = 26,
+	/// <summary>Standard X11 cursor (only in wxGTK). Wraps wxCURSOR_DEFAULT.</summary>
+	Default = 27,
+	/// <summary>MacOS Theme Plus arrow (only in wxMac). Wraps wxCURSOR_COPY_ARROW.</summary>
+	CopyArrow = 28,
+	/// <summary>Only available on wxX11. Wraps wxCURSOR_CROSS_REVERSE.</summary>
+	CrossReverse = 29,
+	/// <summary>Only available on wxX11. Wraps wxCURSOR_DOUBLE_ARROW.</summary>
+	DoubleArrow = 30,
+	/// <summary>Only available on wxX11. Wraps wxCURSOR_BASED_ARROW_UP.</summary>
+	BasedArrowUp = 31,
+	/// <summary>Only available on wxX11. Wraps wxCURSOR_BASED_ARROW_DOWN.</summary>
+	BasedArrowDown = 32,
+	/// <summary>A wait cursor with a standard arrow. Wraps wxCURSOR_ARROWWAIT.</summary>
+	Arrowwait = 33,
+	/// <summary>Wraps wxCURSOR_MAX.</summary>
+	Max = 34,
 }
 
 /// <summary>Wraps wxTextCtrlHitTestResult.</summary>

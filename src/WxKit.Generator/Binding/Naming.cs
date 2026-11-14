@@ -49,6 +49,8 @@ internal static class Naming {
 		["string"] = "text",
 		["str"] = "text",
 		["n"] = "index",
+		["img"] = "image",
+		["bmp"] = "bitmap",
 		["idx"] = "index",
 	};
 

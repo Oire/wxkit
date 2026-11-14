@@ -178,7 +178,7 @@ public unsafe partial class ListBox : Control {
 	private static WxkWindow* CreateNative(Window parent, int id, Point? position, Size? size) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(parent);
-		return WxKitNative.ListBoxNewWindowIntPointSize((WxkWindow*)parent.Native, id, position ?? Point.Default, size ?? Size.Default);
+		return WxKitNative.ListBoxNewWindowIntPointSize((WxkWindow*)parent.Native, id, position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default);
 	}
 
 	private static WxkWindow* CreateNative(Window parent, IEnumerable<string> choices, int id, Point? position, Size? size, ListBoxStyle style) {
@@ -186,6 +186,6 @@ public unsafe partial class ListBox : Control {
 		ArgumentNullException.ThrowIfNull(parent);
 		ArgumentNullException.ThrowIfNull(choices);
 		using NativeStringArray choicesNative = new(choices);
-		return WxKitNative.ListBoxNewWindowIntPointSizeStringsListBoxStyle((WxkWindow*)parent.Native, id, position ?? Point.Default, size ?? Size.Default, choicesNative.Handle, (long)style);
+		return WxKitNative.ListBoxNewWindowIntPointSizeStringsListBoxStyle((WxkWindow*)parent.Native, id, position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, choicesNative.Handle, (long)style);
 	}
 }

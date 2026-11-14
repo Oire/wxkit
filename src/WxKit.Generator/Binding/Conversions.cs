@@ -3,7 +3,8 @@ namespace WxKit.Generator.Binding;
 // How a value crosses from managed code through the shim to wxWidgets and back. Each kind of
 // type has one conversion, which knows its form in all three places and the code that converts
 // between them: the C parameters and return type in the shim, the C# types in the interop layer,
-// and the C# type in the managed API.
+// and the C# type in the managed API. Managed code names WxKit's own types with global::WxKit,
+// since a generated member can hide one, as Pen's Color property hides the Color type.
 internal abstract class Conversion {
 	/// <summary>A short name used to tell overloads apart, such as String or Int.</summary>
 	public abstract string Suffix { get; }
@@ -223,7 +224,7 @@ internal sealed class GeometryConversion(string suffix, string cType, string cpp
 
 	public override string ManagedType(bool nullable) => nullable ? managedType + "?" : managedType;
 
-	public override IEnumerable<string> InteropArguments(string name, bool nullable) => [nullable ? $"{name} ?? {managedType}.Default" : name];
+	public override IEnumerable<string> InteropArguments(string name, bool nullable) => [nullable ? $"{name} ?? global::WxKit.{managedType}.Default" : name];
 
 	public override string ManagedReturn(string expression) => expression;
 
@@ -374,9 +375,9 @@ internal sealed class ColorConversion : Conversion {
 
 	public override string ManagedType(bool nullable) => "Color?";
 
-	public override IEnumerable<string> InteropArguments(string name, bool nullable) => [$"Color.ToNative({name})"];
+	public override IEnumerable<string> InteropArguments(string name, bool nullable) => [$"global::WxKit.Color.ToNative({name})"];
 
-	public override string ManagedReturn(string expression) => $"Color.FromNative({expression})";
+	public override string ManagedReturn(string expression) => $"global::WxKit.Color.FromNative({expression})";
 
 	public override bool AcceptsNull => true;
 }
@@ -415,4 +416,39 @@ internal sealed class StringArrayConversion : Conversion {
 	public override string ManagedReturn(string expression) => $"NativeStringArray.Take({expression})";
 
 	private static string Native(string name) => name.TrimStart('@') + "Native";
+}
+
+// A value object, such as a font, crosses as a handle to a heap copy the managed side owns. One
+// going in can be null, for the class's empty object; one coming back empty is null. A bundle of
+// bitmaps or icons is made from one, as C++ would convert it.
+internal sealed class ValueConversion(BoundClass target, string? wrapper = null) : Conversion {
+	public BoundClass Target { get; } = target;
+
+	public override string Suffix => Target.Name;
+
+	public override string CReturnType => "wxk_Object*";
+
+	public override string Fallback => "nullptr";
+
+	public override string InteropReturnType => "WxkObject*";
+
+	public override IEnumerable<string> CParameters(string name) => [$"const wxk_Object* {name}"];
+
+	public override string ToCpp(string name) => wrapper is null ? $"wxk::ValueOf<{Target.CppName}>({name})" : $"{wrapper}(wxk::ValueOf<{Target.CppName}>({name}))";
+
+	public override string FromCpp(string expression) => $"wxk::CopyValue<{Target.CppName}>({expression})";
+
+	public override IEnumerable<string> InteropParameters(string name) => [$"WxkObject* {name}"];
+
+	public override string ManagedType(bool nullable) => nullable ? Target.Name + "?" : Target.Name;
+
+	public override string ManagedReturnType(bool nullable) => Target.Name + "?";
+
+	public override string? Check(string name, bool nullable) => nullable ? null : $"ArgumentNullException.ThrowIfNull({name});";
+
+	public override IEnumerable<string> InteropArguments(string name, bool nullable) => [nullable ? $"{name} is null ? null : {name}.Native" : $"{name}.Native"];
+
+	public override string ManagedReturn(string expression) => $"global::WxKit.{Target.Name}.Take({expression})";
+
+	public override bool AcceptsNull => true;
 }

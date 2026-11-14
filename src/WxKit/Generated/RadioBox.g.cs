@@ -116,7 +116,7 @@ public unsafe partial class RadioBox : Control {
 		ArgumentNullException.ThrowIfNull(parent);
 		ArgumentNullException.ThrowIfNull(label);
 		fixed (char* labelText = label) {
-			return WxKitNative.RadioBoxNewWindowIntStringPointSize((WxkWindow*)parent.Native, id, labelText, NativeString.Length(label), position ?? Point.Default, size ?? Size.Default);
+			return WxKitNative.RadioBoxNewWindowIntStringPointSize((WxkWindow*)parent.Native, id, labelText, NativeString.Length(label), position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default);
 		}
 	}
 
@@ -127,7 +127,7 @@ public unsafe partial class RadioBox : Control {
 		ArgumentNullException.ThrowIfNull(choices);
 		using NativeStringArray choicesNative = new(choices);
 		fixed (char* labelText = label) {
-			return WxKitNative.RadioBoxNewWindowIntStringPointSizeStringsIntRadioBoxStyle((WxkWindow*)parent.Native, id, labelText, NativeString.Length(label), position ?? Point.Default, size ?? Size.Default, choicesNative.Handle, majorDimension, (long)style);
+			return WxKitNative.RadioBoxNewWindowIntStringPointSizeStringsIntRadioBoxStyle((WxkWindow*)parent.Native, id, labelText, NativeString.Length(label), position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default, choicesNative.Handle, majorDimension, (long)style);
 		}
 	}
 }
