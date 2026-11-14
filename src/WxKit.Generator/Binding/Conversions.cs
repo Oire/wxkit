@@ -157,7 +157,7 @@ internal sealed class EnumConversion(string enumName, NumberConversion number, s
 
 	public override IEnumerable<string> CParameters(string name) => number.CParameters(name);
 
-	public override string ToCpp(string name) => cppType is null ? number.ToCpp(name) : $"static_cast<{cppType}>({name})";
+	public override string ToCpp(string name) => CppType is null ? number.ToCpp(name) : $"static_cast<{CppType}>({name})";
 
 	public override string FromCpp(string expression) => number.FromCpp(expression);
 
