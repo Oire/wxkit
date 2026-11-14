@@ -13,18 +13,11 @@ This document lists the design decisions made so far, and the ones still open. E
 - The raw interop layer, `WxKit.Interop.WxKitNative`, is public, as an escape hatch for anything the managed API does not wrap yet.
 - XML documentation comments are generated from the wxWidgets brief descriptions, and each type links to its wxWidgets reference page.
 - XRC is the last optional library to be bound.
+- `Timer` keeps its name. WxKit's MSBuild targets alias it with `global using Timer = WxKit.Timer;` when implicit usings are on, so it does not clash with `System.Threading.Timer`, and `WxKitTimerAlias=false` turns that off.
 - Tests use xUnit v3 with a custom entry point that runs them on the main thread, with a runner of WxKit's own as the fallback. See [Testing](testing.md).
 - Names follow .NET conventions. Package IDs and namespaces are Pascal case and dotted: `WxKit` for the managed library, and `WxKit.Native.*` packages for native files. The GitHub repository is `trypsynth/wxkit`, and the native library is `wxkitnative`, because on Windows a native `wxkit.dll` would have the same file name as the managed `WxKit.dll`.
 
 ## Open
-
-### The Timer name
-
-Implicit usings, which new projects turn on, import `System.Threading`, so `Timer` is ambiguous between `WxKit.Timer` and `System.Threading.Timer` in nearly every WxKit application. The choices are:
-
-- Keep `Timer`, and have WxKit's MSBuild targets add `global using Timer = WxKit.Timer;` when implicit usings are on. An alias wins over imported namespaces, so the bare name works. This is the recommendation, with a property to turn it off.
-- Keep `Timer`, and leave it to applications, as Windows Forms does with its own `Timer`.
-- Rename it, for example to `GuiTimer`, which breaks the rule of keeping wxWidgets names.
 
 ### Order of the optional libraries
 

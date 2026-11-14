@@ -39,7 +39,7 @@ WxKit uses the wxWidgets names, adjusted to .NET conventions:
 
 - Names use the American spellings that .NET uses, not the British ones that wxWidgets uses. `wxColour` becomes `Color`, `Centre` becomes `Center`, and `wxEVT_COLOUR_CHANGED` becomes `ColorChanged`. The generator applies a fixed list of these respellings, so a search of the wxWidgets documentation for a WxKit name only needs the British spelling put back. Each type's documentation comment names its wxWidgets class, so the original is always one step away.
 
-Type names that collide with common .NET types, such as `Timer`, `Font`, `Image`, and `Menu`, are kept. The `WxKit` namespace separates them. `Timer` needs care: implicit usings import `System.Threading` into every new project, so a bare `Timer` is ambiguous there, and code has to write `WxKit.Timer` or add an alias. How to handle this is an open question.
+Type names that collide with common .NET types, such as `Timer`, `Font`, `Image`, and `Menu`, are kept. The `WxKit` namespace separates them. `Timer` needs care: implicit usings import `System.Threading` into every new project, so a bare `Timer` would be ambiguous there. When a C# project has implicit usings on, WxKit's MSBuild targets add `global using Timer = WxKit.Timer;`. An alias wins over an imported namespace, so the bare name means WxKit's timer. Set the `WxKitTimerAlias` property to `false` to leave the alias out.
 
 ## Construction
 

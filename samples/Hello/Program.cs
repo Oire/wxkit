@@ -36,7 +36,7 @@ return Application.Run(() => {
 	};
 
 	int seconds = 0;
-	WxKit.Timer timer = new();
+	Timer timer = new();
 	timer.Tick += (_, _) => uptime.Label = $"Running for {++seconds} seconds";
 	timer.Start(TimeSpan.FromSeconds(1));
 

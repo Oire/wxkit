@@ -16,6 +16,11 @@
 		<DirectPInvoke Include="wxkitnative" />
 	</ItemGroup>
 
+	<!-- Implicit usings import System.Threading, whose Timer makes WxKit's ambiguous. An alias wins over an imported namespace, so this makes a bare Timer mean WxKit's. Set WxKitTimerAlias to false to leave it out. The project's extension stands in for its language, which the SDK has not set yet when a project imports this file itself. -->
+	<ItemGroup Condition="'$(WxKitTimerAlias)' != 'false' and '$(MSBuildProjectExtension)' == '.csproj' and ('$(ImplicitUsings)' == 'true' or '$(ImplicitUsings)' == 'enable')">
+		<Using Include="WxKit.Timer" Alias="Timer" />
+	</ItemGroup>
+
 	<Import Project="$(_WxKitLinkTargets)" Condition="'$(WxKitStaticLink)' == 'true' and Exists('$(_WxKitLinkTargets)')" />
 
 	<!-- The linker takes one set of Win32 resources, so the application's own and wxWidgets's are merged into one file, which replaces the copy Native AOT would make of the application's. -->
