@@ -7,7 +7,11 @@ namespace WxKit.Generator.Binding;
 internal sealed record BindingResult(
 	IReadOnlyList<BoundClass> Classes,
 	IReadOnlyList<BoundEventType> EventTypes,
+	IReadOnlyList<BoundEnum> Enums,
 	IReadOnlyList<string> Skipped);
+
+/// <summary>A C++ enum the managed API shows as a C# one, such as wxShowEffect as ShowEffect.</summary>
+internal sealed record BoundEnum(string Name, string CppName, IReadOnlyList<BoundStyle> Members);
 
 /// <summary>How objects of a class cross the boundary: the handle type and what it points at.</summary>
 /// <param name="CType">The shim's handle type, such as wxk_Window.</param>

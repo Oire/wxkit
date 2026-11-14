@@ -31,7 +31,15 @@ public unsafe partial class MessageDialog : Dialog {
 
 	public bool HasCustomLabels => WxKitNative.MessageDialogHasCustomLabels(Native) != 0;
 
-	public string HelpLabel => Text.Take(WxKitNative.MessageDialogGetHelpLabel(Native));
+	public string HelpLabel {
+		get => Text.Take(WxKitNative.MessageDialogGetHelpLabel(Native));
+		set {
+			ArgumentNullException.ThrowIfNull(value);
+			fixed (char* valueText = value) {
+				WxKitNative.MessageDialogSetHelpLabel(Native, valueText, Text.Length(value));
+			}
+		}
+	}
 
 	public string Message {
 		get => Text.Take(WxKitNative.MessageDialogGetMessage(Native));
@@ -47,9 +55,49 @@ public unsafe partial class MessageDialog : Dialog {
 
 	public string NoLabel => Text.Take(WxKitNative.MessageDialogGetNoLabel(Native));
 
-	public string OKLabel => Text.Take(WxKitNative.MessageDialogGetOKLabel(Native));
+	public string OKLabel {
+		get => Text.Take(WxKitNative.MessageDialogGetOKLabel(Native));
+		set {
+			ArgumentNullException.ThrowIfNull(value);
+			fixed (char* valueText = value) {
+				WxKitNative.MessageDialogSetOKLabel(Native, valueText, Text.Length(value));
+			}
+		}
+	}
 
 	public string YesLabel => Text.Take(WxKitNative.MessageDialogGetYesLabel(Native));
+
+	/// <summary>Overrides the default labels of the OK and Cancel buttons.</summary>
+	public bool SetOKCancelLabels(string ok, string cancel) {
+		ArgumentNullException.ThrowIfNull(ok);
+		ArgumentNullException.ThrowIfNull(cancel);
+		fixed (char* okText = ok)
+		fixed (char* cancelText = cancel) {
+			return WxKitNative.MessageDialogSetOKCancelLabels(Native, okText, Text.Length(ok), cancelText, Text.Length(cancel)) != 0;
+		}
+	}
+
+	/// <summary>Overrides the default labels of the Yes, No and Cancel buttons.</summary>
+	public bool SetYesNoCancelLabels(string yes, string no, string cancel) {
+		ArgumentNullException.ThrowIfNull(yes);
+		ArgumentNullException.ThrowIfNull(no);
+		ArgumentNullException.ThrowIfNull(cancel);
+		fixed (char* yesText = yes)
+		fixed (char* noText = no)
+		fixed (char* cancelText = cancel) {
+			return WxKitNative.MessageDialogSetYesNoCancelLabels(Native, yesText, Text.Length(yes), noText, Text.Length(no), cancelText, Text.Length(cancel)) != 0;
+		}
+	}
+
+	/// <summary>Overrides the default labels of the Yes and No buttons.</summary>
+	public bool SetYesNoLabels(string yes, string no) {
+		ArgumentNullException.ThrowIfNull(yes);
+		ArgumentNullException.ThrowIfNull(no);
+		fixed (char* yesText = yes)
+		fixed (char* noText = no) {
+			return WxKitNative.MessageDialogSetYesNoLabels(Native, yesText, Text.Length(yes), noText, Text.Length(no)) != 0;
+		}
+	}
 
 	private static WxkWindow* CreateNative(Window? parent, string message, string caption, MessageDialogStyle style, Point? position) {
 		Application.VerifyAccess();

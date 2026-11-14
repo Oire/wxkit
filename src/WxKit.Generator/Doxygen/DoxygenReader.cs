@@ -15,6 +15,7 @@ internal static partial class DoxygenReader {
 		Dictionary<string, DoxygenClass> classes = new(StringComparer.Ordinal);
 		Dictionary<string, string> constants = new(StringComparer.Ordinal);
 		Dictionary<string, string> eventTypes = new(StringComparer.Ordinal);
+		Dictionary<string, DoxygenEnum> enums = new(StringComparer.Ordinal);
 		foreach (XElement compound in index.Elements("compound")) {
 			string kind = (string)compound.Attribute("kind")!;
 			if (kind is not ("class" or "struct" or "file" or "group")) continue;
@@ -28,13 +29,13 @@ internal static partial class DoxygenReader {
 				if (name.StartsWith("wxEVT_", StringComparison.Ordinal) && file is not null && file.StartsWith("interface/", StringComparison.Ordinal)) eventTypes.TryAdd(name, file["interface/".Length..]);
 			}
 			if (kind == "group") continue;
-			ReadConstants(definition, constants);
+			ReadConstants(definition, constants, enums, kind == "file" ? null : (string)definition.Element("compoundname")!);
 			if (kind == "file") continue;
 			DoxygenClass read = ReadClass(definition);
 			// A class documented twice, which wxWidgets does for a few platform-specific ones, keeps its first entry.
 			classes.TryAdd(read.Name, read);
 		}
-		return new DoxygenApi(classes, constants, eventTypes);
+		return new DoxygenApi(classes, constants, eventTypes, enums);
 	}
 
 	internal static DoxygenClass ReadClass(XElement definition) {
@@ -54,7 +55,9 @@ internal static partial class DoxygenReader {
 	private static DoxygenMember ReadMember(XElement member) {
 		List<DoxygenParameter> parameters = [];
 		foreach (XElement parameter in member.Elements("param")) {
-			string type = Text(parameter.Element("type"));
+			// Doxygen gives an array parameter's brackets apart from its type, as in wxMenu* menus[]. They
+			// stay part of the type, which no conversion accepts, so the parameter is not bound as a pointer.
+			string type = Text(parameter.Element("type")) + (parameter.Element("array") is XElement array ? " " + array.Value : string.Empty);
 			// A parameter list of just "void" has no parameters.
 			if (type == "void" && parameter.Element("declname") is null) continue;
 			XElement? defaultValue = parameter.Element("defval");
@@ -121,12 +124,19 @@ internal static partial class DoxygenReader {
 		return (text[..colon].Trim(), text[(colon + 1)..].Trim());
 	}
 
-	private static void ReadConstants(XElement definition, Dictionary<string, string> constants) {
+	private static void ReadConstants(XElement definition, Dictionary<string, string> constants, Dictionary<string, DoxygenEnum> enums, string? owner) {
 		foreach (XElement member in definition.Descendants("memberdef")) {
 			string? kind = (string?)member.Attribute("kind");
 			if (kind == "define" && member.Element("initializer") is XElement initializer) {
 				constants.TryAdd((string)member.Element("name")!, Normalize(initializer.Value));
 			} else if (kind == "enum") {
+				string enumName = (string)member.Element("name")!;
+				// An anonymous enum only holds constants, which the loop below still reads.
+				if (!enumName.StartsWith('@')) {
+					DoxygenEnum read = new(enumName, [.. member.Elements("enumvalue").Select(static value => new DoxygenEnumValue((string)value.Element("name")!, Text(value.Element("briefdescription"))))]);
+					enums.TryAdd(enumName, read);
+					if (owner is not null) enums.TryAdd($"{owner}::{enumName}", read);
+				}
 				// Values without an initializer follow the one before, as in C.
 				string previous = "-1";
 				foreach (XElement value in member.Elements("enumvalue")) {

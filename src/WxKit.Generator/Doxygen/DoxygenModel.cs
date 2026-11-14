@@ -3,7 +3,12 @@ namespace WxKit.Generator.Doxygen;
 // What Doxygen says about the wxWidgets interface headers, before any decision about binding it.
 
 /// <param name="EventTypes">Every wxEVT_ constant the headers declare, and the header that declares it, such as wx/textctrl.h.</param>
-internal sealed record DoxygenApi(IReadOnlyDictionary<string, DoxygenClass> Classes, IReadOnlyDictionary<string, string> Constants, IReadOnlyDictionary<string, string> EventTypes);
+/// <param name="Enums">Every enum, by its name and, for one inside a class, also by Class::Name.</param>
+internal sealed record DoxygenApi(IReadOnlyDictionary<string, DoxygenClass> Classes, IReadOnlyDictionary<string, string> Constants, IReadOnlyDictionary<string, string> EventTypes, IReadOnlyDictionary<string, DoxygenEnum> Enums);
+
+internal sealed record DoxygenEnum(string Name, IReadOnlyList<DoxygenEnumValue> Values);
+
+internal sealed record DoxygenEnumValue(string Name, string Brief);
 
 internal sealed record DoxygenClass(
 	string Name,

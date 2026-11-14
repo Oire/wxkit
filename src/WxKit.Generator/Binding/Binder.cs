@@ -19,6 +19,14 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 	private readonly Constants _constants = new(api.Constants);
 	private readonly Dictionary<string, BoundClass> _classes = new(StringComparer.Ordinal);
 	private readonly Dictionary<string, BoundEventType> _eventTypes = new(StringComparer.Ordinal);
+	private readonly Dictionary<string, BoundEnum?> _enums = new(StringComparer.Ordinal);
+
+	// C++ enums WxKit writes by hand, because their wxWidgets form is not the one .NET code wants.
+	private static readonly Dictionary<string, string> HandwrittenEnums = new(StringComparer.Ordinal) {
+		["wxOrientation"] = "Orientation",
+		["wxDirection"] = "Direction",
+		["wxItemKind"] = "MenuItemKind",
+	};
 	private readonly List<string> _skipped = [];
 
 	public BindingResult Bind() {
@@ -42,6 +50,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		return new BindingResult(
 			[.. _classes.Values.OrderBy(static bound => bound.CppName, StringComparer.Ordinal)],
 			[.. _eventTypes.Values.OrderBy(static type => type.Name, StringComparer.Ordinal)],
+			[.. _enums.Values.OfType<BoundEnum>().OrderBy(static bound => bound.Name, StringComparer.Ordinal)],
 			_skipped);
 	}
 
@@ -194,13 +203,20 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 			return isReturn && !target.Handle.IsEvtHandler ? null : new ObjectConversion(target);
 		}
 		if (!type.IsValueOrConstReference) return null;
+		if (HandwrittenEnums.TryGetValue(type.Name, out string? handwritten)) return new EnumConversion(handwritten, NumberConversion.Int, type.Name);
+		if (EnumFor(type.Name) is BoundEnum bound) return new EnumConversion(bound.Name, NumberConversion.Int, type.Name);
 		return type.Name switch {
 			"bool" => BoolConversion.Instance,
 			"int" or "wxWindowID" or "wxCoord" => NumberConversion.Int,
 			"long" => NumberConversion.Long,
 			"double" => NumberConversion.Double,
 			"float" => NumberConversion.Float,
-			"wxString" => StringConversion.Instance,
+			// A wxMessageDialog button label converts from a string, which is how WxKit gives it.
+			"wxString" or "ButtonLabel" => StringConversion.Instance,
+			"size_t" => CountConversion.Size,
+			"unsigned" or "unsigned int" => CountConversion.Unsigned,
+			"wxRect" => RectConversion.Instance,
+			"wxColour" => ColorConversion.Instance,
 			"wxPoint" => GeometryConversion.Point,
 			"wxSize" => GeometryConversion.Size,
 			_ => null,
@@ -211,7 +227,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		managed = null;
 		isNull = false;
 		string value = cppDefault.Trim();
-		if (conversion is GeometryConversion geometry && geometry.IsDefault(value) || value is "nullptr" or "NULL" && conversion.AcceptsNull) {
+		if (conversion is GeometryConversion geometry && geometry.IsDefault(value) || value is "nullptr" or "NULL" && conversion.AcceptsNull || conversion is ColorConversion && value == "wxNullColour") {
 			managed = "null";
 			isNull = true;
 			return true;
@@ -233,7 +249,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 				if (!double.TryParse(value.TrimEnd('f'), NumberStyles.Float, CultureInfo.InvariantCulture, out double floating)) return false;
 				managed = number == NumberConversion.Float ? $"{floating.ToString(CultureInfo.InvariantCulture)}f" : floating.ToString(CultureInfo.InvariantCulture);
 				return true;
-			case NumberConversion:
+			case NumberConversion or CountConversion:
 				if (_constants.Evaluate(value) is not long integer) return false;
 				managed = integer.ToString(CultureInfo.InvariantCulture);
 				return true;
@@ -248,7 +264,8 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 	// A default made of constants the enum has, such as wxOK | wxCENTRE, is written with its
 	// members, so it reads as MessageDialogStyle.Ok | MessageDialogStyle.Center.
 	private string? EnumDefault(string value, EnumConversion enumeration) {
-		BoundStyles? styles = _classes.Values.Select(static bound => bound.Styles).FirstOrDefault(found => found?.Name == enumeration.EnumName);
+		BoundStyles? styles = _classes.Values.Select(static bound => bound.Styles).FirstOrDefault(found => found?.Name == enumeration.EnumName)
+			?? _enums.Values.OfType<BoundEnum>().Where(found => found.Name == enumeration.EnumName).Select(static found => new BoundStyles(found.Name, found.Members)).FirstOrDefault();
 		string[] parts = [.. value.Split('|', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)];
 		List<string> members = [];
 		foreach (string part in parts) {
@@ -389,6 +406,31 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		// Every style enum has None, even when a style such as wxTE_LEFT is also 0, so a default of 0 reads as None.
 		if (!members.Any(static member => member.Name == "None")) members.Insert(0, new BoundStyle("None", "0", 0, "No styles."));
 		return new BoundStyles(bound.Name + "Style", members);
+	}
+
+	// The C# enum for a C++ one, made the first time a bound member uses it. Its members drop the
+	// prefix they all share, so wxSHOW_EFFECT_ROLL_TO_LEFT becomes ShowEffect.RollToLeft.
+	private BoundEnum? EnumFor(string cppName) {
+		if (_enums.TryGetValue(cppName, out BoundEnum? cached)) return cached;
+		_enums[cppName] = null;
+		if (!api.Enums.TryGetValue(cppName, out DoxygenEnum? source) || source.Values.Count == 0) return null;
+		List<string[]> words = [.. source.Values.Select(static value => value.Name.StartsWith("wx", StringComparison.Ordinal) ? value.Name[2..].Split('_') : value.Name.Split('_'))];
+		int shared = 0;
+		while (words.All(found => found.Length > shared + 1 && found[shared] == words[0][shared])) shared++;
+		List<BoundStyle> members = [];
+		foreach ((DoxygenEnumValue value, string[] parts) in source.Values.Zip(words)) {
+			if (_constants.Value(value.Name) is not long number) {
+				_skipped.Add($"enum {cppName}: the value of {value.Name} is unknown");
+				return null;
+			}
+			string name = Naming.Words(string.Join('_', parts[shared..]));
+			if (char.IsDigit(name[0])) name = "Value" + name;
+			if (members.All(existing => existing.Name != name)) members.Add(new BoundStyle(name, value.Name, number, value.Brief));
+		}
+		string managed = Naming.Type(cppName.Contains("::", StringComparison.Ordinal) ? cppName[(cppName.LastIndexOf(':') + 1)..] : cppName);
+		BoundEnum bound = new(managed, cppName, members);
+		_enums[cppName] = bound;
+		return bound;
 	}
 
 	private void Skip(BoundClass bound, DoxygenMember member, string reason) => _skipped.Add($"{bound.CppName}::{member.Name}({string.Join(", ", member.Parameters.Select(static parameter => parameter.Type))}): {reason}");

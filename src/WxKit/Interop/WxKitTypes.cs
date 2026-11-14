@@ -32,3 +32,6 @@ public struct WxkClassInfo;
 
 /// <summary>Text the shim hands out, freed with <see cref="WxKitNative.StringFree"/>.</summary>
 public struct WxkString;
+
+/// <summary>A wxColour's channels, and whether it is set, as the shim passes them.</summary>
+public readonly record struct WxkColor(byte Red, byte Green, byte Blue, byte Alpha, byte Valid);

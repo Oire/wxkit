@@ -13,6 +13,7 @@ internal static class ManagedEmitter {
 		foreach (BoundClass bound in result.Classes.Where(static bound => !bound.Tweak.IsHandwritten)) yield return ($"{bound.Name}.g.cs", Class(bound));
 		yield return ("EventType.g.cs", EventTypes(result));
 		yield return ("Styles.g.cs", Styles(result));
+		yield return ("Enums.g.cs", Enums(result));
 		yield return ("ObjectRegistry.g.cs", Factories(result));
 	}
 
@@ -169,6 +170,21 @@ internal static class ManagedEmitter {
 			foreach (BoundStyle style in styles.Members) {
 				Summary(writer, style.Description.Length > 0 ? $"{Sentence(style.Description)}Wraps {style.Constant}." : $"Wraps {style.Constant}.");
 				writer.Line($"{style.Name} = 0x{style.Value:X},");
+			}
+			writer.Close();
+		}
+		return writer.ToString();
+	}
+
+	private static string Enums(BindingResult result) {
+		CodeWriter writer = new CodeWriter().Line(Banner).Line().Line("namespace WxKit;");
+		foreach (BoundEnum bound in result.Enums) {
+			writer.Line();
+			Summary(writer, $"Wraps {bound.CppName}.");
+			writer.Open($"public enum {bound.Name}");
+			foreach (BoundStyle member in bound.Members) {
+				Summary(writer, member.Description.Length > 0 ? $"{Sentence(member.Description)}Wraps {member.Constant}." : $"Wraps {member.Constant}.");
+				writer.Line($"{member.Name} = {member.Value},");
 			}
 			writer.Close();
 		}

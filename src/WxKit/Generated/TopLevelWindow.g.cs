@@ -9,6 +9,12 @@ public unsafe partial class TopLevelWindow : Window {
 	internal TopLevelWindow(WxkWindow* native) : base(native) {
 	}
 
+	/// <summary>Get the current content protection of the window.</summary>
+	public ContentProtection ContentProtection {
+		get => (ContentProtection)WxKitNative.TopLevelWindowGetContentProtection(Native);
+		set => WxKitNative.TopLevelWindowSetContentProtection(Native, (int)value);
+	}
+
 	/// <summary>Returns a pointer to the button which is the default for this window, or nullptr.</summary>
 	public Window? DefaultItem {
 		get => ObjectRegistry.Wrap<Window>(WxKitNative.TopLevelWindowGetDefaultItem(Native));

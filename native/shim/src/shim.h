@@ -72,6 +72,23 @@ inline wxk_Size ToSize(const wxSize& size) {
 	return wxk_Size{size.x, size.y};
 }
 
+inline wxRect FromRect(wxk_Rect rect) {
+	return wxRect(rect.x, rect.y, rect.width, rect.height);
+}
+
+inline wxk_Rect ToRect(const wxRect& rect) {
+	return wxk_Rect{rect.x, rect.y, rect.width, rect.height};
+}
+
+inline wxColour FromColour(wxk_Colour colour) {
+	return colour.valid != 0 ? wxColour(colour.red, colour.green, colour.blue, colour.alpha) : wxNullColour;
+}
+
+inline wxk_Colour ToColour(const wxColour& colour) {
+	if (!colour.IsOk()) return wxk_Colour{0, 0, 0, 0, 0};
+	return wxk_Colour{colour.Red(), colour.Green(), colour.Blue(), colour.Alpha(), 1};
+}
+
 // Each handle type converts to and from the wxWidgets class it names. A pointer to a derived
 // class is first converted to that class, so the handle always points where the C interface says.
 #define WXK_HANDLE(handle, type) \

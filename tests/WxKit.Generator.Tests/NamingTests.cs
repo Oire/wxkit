@@ -27,6 +27,12 @@ public class NamingTests {
 	[InlineData("wxEVT_CLOSE_WINDOW", "CloseWindow")]
 	public void NamesEventTypes(string constant, string name) => Assert.Equal(name, Naming.EventType(constant));
 
+	[Theory]
+	[InlineData("CLOSE_WINDOW", "CloseWindow")]
+	[InlineData("Layout_RightToLeft", "LayoutRightToLeft")]
+	[InlineData("SHOW_EFFECT_NONE", "ShowEffectNone")]
+	public void JoinsWordsInPascalCase(string upper, string pascal) => Assert.Equal(pascal, Naming.Words(upper));
+
 	[Fact]
 	public void FindsThePrefixMostStylesShare() {
 		Assert.Equal("TE", Naming.SharedStylePrefix(["wxTE_MULTILINE", "wxTE_READONLY", "wxHSCROLL"]));

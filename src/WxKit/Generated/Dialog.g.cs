@@ -46,6 +46,12 @@ public unsafe partial class Dialog : TopLevelWindow {
 		set => WxKitNative.DialogSetLayoutAdaptationLevel(Native, value);
 	}
 
+	/// <summary>Gets the adaptation mode, overriding the global adaptation flag.</summary>
+	public DialogLayoutAdaptationMode LayoutAdaptationMode {
+		get => (DialogLayoutAdaptationMode)WxKitNative.DialogGetLayoutAdaptationMode(Native);
+		set => WxKitNative.DialogSetLayoutAdaptationMode(Native, (int)value);
+	}
+
 	/// <summary>Gets the return code for this window.</summary>
 	public int ReturnCode {
 		get => WxKitNative.DialogGetReturnCode(Native);

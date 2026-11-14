@@ -6,6 +6,9 @@ namespace WxKit;
 
 /// <summary>An event is a structure holding information about an event passed to a callback or member function. Wraps wxEvent.</summary>
 public unsafe partial class Event {
+	/// <summary>Returns a generic category for this event.</summary>
+	public EventCategory EventCategory => (EventCategory)WxKitNative.EventGetEventCategory(Handle);
+
 	/// <summary>Returns the object (usually a window) associated with the event, if any.</summary>
 	public EvtHandler? EventObject => ObjectRegistry.Wrap<EvtHandler>(WxKitNative.EventGetEventObject(Handle));
 

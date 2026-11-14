@@ -128,8 +128,11 @@ internal sealed class NumberConversion(string suffix, string cType, string cppTy
 	public override string ManagedReturn(string expression) => expression;
 }
 
-/// <summary>A number the managed API shows as an enum, such as a style or an orientation.</summary>
-internal sealed class EnumConversion(string enumName, NumberConversion number) : Conversion {
+/// <summary>
+/// A number the managed API shows as an enum, such as a style or an orientation. When the C++
+/// parameter is an enum itself, <paramref name="cppType"/> names it, so the shim casts to it.
+/// </summary>
+internal sealed class EnumConversion(string enumName, NumberConversion number, string? cppType = null) : Conversion {
 	public string EnumName { get; } = enumName;
 
 	public override string Suffix => EnumName;
@@ -142,7 +145,7 @@ internal sealed class EnumConversion(string enumName, NumberConversion number) :
 
 	public override IEnumerable<string> CParameters(string name) => number.CParameters(name);
 
-	public override string ToCpp(string name) => number.ToCpp(name);
+	public override string ToCpp(string name) => cppType is null ? number.ToCpp(name) : $"static_cast<{cppType}>({name})";
 
 	public override string FromCpp(string expression) => number.FromCpp(expression);
 
@@ -283,4 +286,91 @@ internal sealed class AnyObjectConversion : Conversion {
 	public override IEnumerable<string> InteropArguments(string name, bool nullable) => throw new InvalidOperationException("wxObject is only bound as a return type.");
 
 	public override string ManagedReturn(string expression) => $"ObjectRegistry.Wrap<EvtHandler>({expression})";
+}
+
+// An unsigned C++ size or count, such as size_t, which the managed API shows as int, the way .NET
+// shows counts. A negative value going in, or one too large for int coming back, throws.
+internal sealed class CountConversion(string suffix, string cType, string interopType) : Conversion {
+	public static CountConversion Size { get; } = new("SizeT", "size_t", "nuint");
+
+	public static CountConversion Unsigned { get; } = new("UInt", "uint32_t", "uint");
+
+	public override string Suffix => suffix;
+
+	public override string CReturnType => cType;
+
+	public override string Fallback => "0";
+
+	public override string InteropReturnType => interopType;
+
+	public override IEnumerable<string> CParameters(string name) => [$"{cType} {name}"];
+
+	public override string ToCpp(string name) => name;
+
+	public override string FromCpp(string expression) => $"static_cast<{cType}>({expression})";
+
+	public override IEnumerable<string> InteropParameters(string name) => [$"{interopType} {name}"];
+
+	public override string ManagedType(bool nullable) => "int";
+
+	public override IEnumerable<string> InteropArguments(string name, bool nullable) => [$"checked(({interopType}){name})"];
+
+	public override string ManagedReturn(string expression) => $"checked((int){expression})";
+}
+
+// wxRect crosses as a struct with the same layout on both sides.
+internal sealed class RectConversion : Conversion {
+	public static RectConversion Instance { get; } = new();
+
+	public override string Suffix => "Rect";
+
+	public override string CReturnType => "wxk_Rect";
+
+	public override string Fallback => "wxk_Rect{0, 0, 0, 0}";
+
+	public override string InteropReturnType => "Rect";
+
+	public override IEnumerable<string> CParameters(string name) => [$"wxk_Rect {name}"];
+
+	public override string ToCpp(string name) => $"wxk::FromRect({name})";
+
+	public override string FromCpp(string expression) => $"wxk::ToRect({expression})";
+
+	public override IEnumerable<string> InteropParameters(string name) => [$"Rect {name}"];
+
+	public override string ManagedType(bool nullable) => "Rect";
+
+	public override IEnumerable<string> InteropArguments(string name, bool nullable) => [name];
+
+	public override string ManagedReturn(string expression) => expression;
+}
+
+// A wxColour crosses as its channels and whether it is set. An unset one, wxNullColour, is null in
+// the managed API, so setting a window's color to null restores its default.
+internal sealed class ColorConversion : Conversion {
+	public static ColorConversion Instance { get; } = new();
+
+	public override string Suffix => "Color";
+
+	public override string CReturnType => "wxk_Colour";
+
+	public override string Fallback => "wxk_Colour{0, 0, 0, 0, 0}";
+
+	public override string InteropReturnType => "WxkColor";
+
+	public override IEnumerable<string> CParameters(string name) => [$"wxk_Colour {name}"];
+
+	public override string ToCpp(string name) => $"wxk::FromColour({name})";
+
+	public override string FromCpp(string expression) => $"wxk::ToColour({expression})";
+
+	public override IEnumerable<string> InteropParameters(string name) => [$"WxkColor {name}"];
+
+	public override string ManagedType(bool nullable) => "Color?";
+
+	public override IEnumerable<string> InteropArguments(string name, bool nullable) => [$"Color.ToNative({name})"];
+
+	public override string ManagedReturn(string expression) => $"Color.FromNative({expression})";
+
+	public override bool AcceptsNull => true;
 }

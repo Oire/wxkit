@@ -49,6 +49,22 @@ typedef struct wxk_Size {
 	int32_t height;
 } wxk_Size;
 
+typedef struct wxk_Rect {
+	int32_t x;
+	int32_t y;
+	int32_t width;
+	int32_t height;
+} wxk_Rect;
+
+// A wxColour's channels, and whether it is set: wxNullColour has valid 0.
+typedef struct wxk_Colour {
+	uint8_t red;
+	uint8_t green;
+	uint8_t blue;
+	uint8_t alpha;
+	uint8_t valid;
+} wxk_Colour;
+
 typedef uint8_t (*wxk_AppInitCallback)(void* userdata);
 typedef void (*wxk_Callback)(void* userdata);
 typedef void (*wxk_EventCallback)(void* userdata, wxk_Event* event);

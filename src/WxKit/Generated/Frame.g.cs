@@ -71,6 +71,9 @@ public unsafe partial class Frame : TopLevelWindow {
 		}
 	}
 
+	/// <summary>Set the frame modality.</summary>
+	public void SetWindowModality(WindowMode modality) => WxKitNative.FrameSetWindowModality(Native, (int)modality);
+
 	private static WxkWindow* CreateNative(Window? parent, string title, int id, Point? position, Size? size, FrameStyle style) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(title);

@@ -123,7 +123,9 @@ internal static class Naming {
 				result.Append(compound);
 				continue;
 			}
-			result.Append(char.ToUpperInvariant(word[0])).Append(word[1..].ToLower(CultureInfo.InvariantCulture));
+			// A word already in mixed case, such as RightToLeft in wxLayout_RightToLeft, keeps its own casing.
+			string rest = word.Any(char.IsLower) ? word[1..] : word[1..].ToLower(CultureInfo.InvariantCulture);
+			result.Append(char.ToUpperInvariant(word[0])).Append(rest);
 		}
 		return Respell(result.ToString());
 	}

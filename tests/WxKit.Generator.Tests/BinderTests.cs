@@ -35,7 +35,7 @@ public class BinderTests {
 			Class("wxCommandEvent", "wxEvent", [Function("GetString", "wxString")]),
 		];
 		Dictionary<string, string> constants = new() { ["wxBU_LEFT"] = "0x0040", ["wxBU_TOP"] = "0x0080", ["wxBOTH"] = "0x000C" };
-		return new DoxygenApi(classes.ToDictionary(static found => found.Name), constants, new Dictionary<string, string> { ["wxEVT_BUTTON"] = "wx/button.h" });
+		return new DoxygenApi(classes.ToDictionary(static found => found.Name), constants, new Dictionary<string, string> { ["wxEVT_BUTTON"] = "wx/button.h" }, new Dictionary<string, DoxygenEnum>());
 	}
 
 	private static BindingResult Bind(Action<Binding.Tweaks>? configure = null) {

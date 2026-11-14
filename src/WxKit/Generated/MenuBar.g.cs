@@ -17,6 +17,9 @@ public unsafe partial class MenuBar : Window {
 
 	public bool IsAttached => WxKitNative.MenuBarIsAttached(Native) != 0;
 
+	/// <summary>Returns the number of menus in this menubar.</summary>
+	public int MenuCount => checked((int)WxKitNative.MenuBarGetMenuCount(Native));
+
 	/// <summary>Adds the item to the end of the menu bar.</summary>
 	public bool Append(Menu menu, string title) {
 		ArgumentNullException.ThrowIfNull(menu);
@@ -38,6 +41,9 @@ public unsafe partial class MenuBar : Window {
 
 	/// <summary>Enables or disables (greys out) a menu item.</summary>
 	public void EnableItem(bool enable, int id = StandardId.Any) => WxKitNative.MenuBarEnable(Native, id, enable ? (byte)1 : (byte)0);
+
+	/// <summary>Enables or disables a whole menu.</summary>
+	public void EnableTop(int position, bool enable) => WxKitNative.MenuBarEnableTop(Native, checked((nuint)position), enable ? (byte)1 : (byte)0);
 
 	/// <summary>Returns the index of the menu with the given title or wxNOT_FOUND if no such menu exists in this menubar.</summary>
 	public int FindMenu(string title) {
@@ -63,14 +69,47 @@ public unsafe partial class MenuBar : Window {
 	/// <summary>Gets the label associated with a menu item.</summary>
 	public string GetLabel(int id = StandardId.Any) => Text.Take(WxKitNative.MenuBarGetLabel(Native, id));
 
+	/// <summary>Returns the menu at menuIndex (zero-based).</summary>
+	public Menu? GetMenu(int menuIndex) => ObjectRegistry.Wrap<Menu>(WxKitNative.MenuBarGetMenu(Native, checked((nuint)menuIndex)));
+
+	/// <summary>Returns the label of a top-level menu.</summary>
+	public string GetMenuLabel(int position) => Text.Take(WxKitNative.MenuBarGetMenuLabel(Native, checked((nuint)position)));
+
+	/// <summary>Returns the label of a top-level menu.</summary>
+	public string GetMenuLabelText(int position) => Text.Take(WxKitNative.MenuBarGetMenuLabelText(Native, checked((nuint)position)));
+
+	/// <summary>Inserts the menu at the given position into the menu bar.</summary>
+	public bool Insert(int position, Menu menu, string title) {
+		ArgumentNullException.ThrowIfNull(menu);
+		ArgumentNullException.ThrowIfNull(title);
+		fixed (char* titleText = title) {
+			return WxKitNative.MenuBarInsert(Native, checked((nuint)position), (WxkMenu*)menu.Native, titleText, Text.Length(title)) != 0;
+		}
+	}
+
 	/// <summary>Determines whether an item is checked.</summary>
 	public bool IsChecked(int id = StandardId.Any) => WxKitNative.MenuBarIsChecked(Native, id) != 0;
+
+	/// <summary>Returns true if the menu with the given index is enabled.</summary>
+	public bool IsEnabledTop(int position) => WxKitNative.MenuBarIsEnabledTop(Native, checked((nuint)position)) != 0;
 
 	/// <summary>Determines whether an item is enabled.</summary>
 	public bool IsItemEnabled(int id = StandardId.Any) => WxKitNative.MenuBarIsEnabled(Native, id) != 0;
 
 	/// <summary>Returns the Apple menu.</summary>
 	public Menu? OSXGetAppleMenu() => ObjectRegistry.Wrap<Menu>(WxKitNative.MenuBarOSXGetAppleMenu(Native));
+
+	/// <summary>Removes the menu from the menu bar and returns the menu object - the caller is responsible for deleting it.</summary>
+	public Menu? Remove(int position) => ObjectRegistry.Wrap<Menu>(WxKitNative.MenuBarRemove(Native, checked((nuint)position)));
+
+	/// <summary>Replaces the menu at the given position with another one.</summary>
+	public Menu? Replace(int position, Menu menu, string title) {
+		ArgumentNullException.ThrowIfNull(menu);
+		ArgumentNullException.ThrowIfNull(title);
+		fixed (char* titleText = title) {
+			return ObjectRegistry.Wrap<Menu>(WxKitNative.MenuBarReplace(Native, checked((nuint)position), (WxkMenu*)menu.Native, titleText, Text.Length(title)));
+		}
+	}
 
 	/// <summary>Sets the help string associated with a menu item.</summary>
 	public void SetHelpString(string helpString, int id = StandardId.Any) {
@@ -85,6 +124,14 @@ public unsafe partial class MenuBar : Window {
 		ArgumentNullException.ThrowIfNull(label);
 		fixed (char* labelText = label) {
 			WxKitNative.MenuBarSetLabel(Native, id, labelText, Text.Length(label));
+		}
+	}
+
+	/// <summary>Sets the label of a top-level menu.</summary>
+	public void SetMenuLabel(int position, string label) {
+		ArgumentNullException.ThrowIfNull(label);
+		fixed (char* labelText = label) {
+			WxKitNative.MenuBarSetMenuLabel(Native, checked((nuint)position), labelText, Text.Length(label));
 		}
 	}
 

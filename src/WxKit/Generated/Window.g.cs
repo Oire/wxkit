@@ -15,11 +15,26 @@ public unsafe partial class Window : EvtHandler {
 		set => WxKitNative.WindowSetAutoLayout(Native, value ? (byte)1 : (byte)0);
 	}
 
+	/// <summary>Returns the background colour of the window.</summary>
+	public Color? BackgroundColor {
+		get => Color.FromNative(WxKitNative.WindowGetBackgroundColour(Native));
+		set => WxKitNative.WindowSetBackgroundColour(Native, Color.ToNative(value));
+	}
+
+	/// <summary>Returns the background style of the window.</summary>
+	public BackgroundStyle BackgroundStyle {
+		get => (BackgroundStyle)WxKitNative.WindowGetBackgroundStyle(Native);
+		set => WxKitNative.WindowSetBackgroundStyle(Native, (int)value);
+	}
+
 	/// <summary>This functions returns the best acceptable minimal size for the window.</summary>
 	public Size BestSize => WxKitNative.WindowGetBestSize(Native);
 
 	/// <summary>Return the largest of ClientSize and BestSize (as determined by a sizer, interior children, or other means).</summary>
 	public Size BestVirtualSize => WxKitNative.WindowGetBestVirtualSize(Native);
+
+	/// <summary>Get border for the flags of this window.</summary>
+	public Border Border => (Border)WxKitNative.WindowGetBorderDefault(Native);
 
 	/// <summary>Can this window have focus right now?</summary>
 	public bool CanAcceptFocus => WxKitNative.WindowCanAcceptFocus(Native) != 0;
@@ -38,6 +53,9 @@ public unsafe partial class Window : EvtHandler {
 
 	/// <summary>Get the origin of the client area of the window relative to the window top left corner (the client area may be shifted because of the borders, scrollbars, other decorations...).</summary>
 	public Point ClientAreaOrigin => WxKitNative.WindowGetClientAreaOrigin(Native);
+
+	/// <summary>Get the client rectangle in window (i.e. client) coordinates.</summary>
+	public Rect ClientRect => WxKitNative.WindowGetClientRect(Native);
 
 	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
 	public Size ClientSize {
@@ -68,6 +86,12 @@ public unsafe partial class Window : EvtHandler {
 
 	/// <summary>Returns the extra style bits for the window.</summary>
 	public WindowStyle ExtraStyle => (WindowStyle)WxKitNative.WindowGetExtraStyle(Native);
+
+	/// <summary>Returns the foreground colour of the window.</summary>
+	public Color? ForegroundColor {
+		get => Color.FromNative(WxKitNative.WindowGetForegroundColour(Native));
+		set => WxKitNative.WindowSetForegroundColour(Native, Color.ToNative(value));
+	}
 
 	/// <summary>Returns the grandparent of a window, or nullptr if there isn't one.</summary>
 	public Window? GrandParent => ObjectRegistry.Wrap<Window>(WxKitNative.WindowGetGrandParent(Native));
@@ -100,6 +124,9 @@ public unsafe partial class Window : EvtHandler {
 		get => WxKitNative.WindowGetId(Native);
 		set => WxKitNative.WindowSetId(Native, value);
 	}
+
+	/// <summary>Return the area where the text is being entered.</summary>
+	public Rect InputMethodCursorRect => WxKitNative.WindowGetInputMethodCursorRect(Native);
 
 	/// <summary>Returns true if this window is in process of being destroyed.</summary>
 	public bool IsBeingDeleted => WxKitNative.WindowIsBeingDeleted(Native) != 0;
@@ -152,6 +179,12 @@ public unsafe partial class Window : EvtHandler {
 				WxKitNative.WindowSetLabel(Native, valueText, Text.Length(value));
 			}
 		}
+	}
+
+	/// <summary>Returns the layout direction for this window, Note that wxLayout_Default is returned if layout direction is not supported.</summary>
+	public LayoutDirection LayoutDirection {
+		get => (LayoutDirection)WxKitNative.WindowGetLayoutDirection(Native);
+		set => WxKitNative.WindowSetLayoutDirection(Native, (int)value);
 	}
 
 	/// <summary>Returns the maximum size of window's client area.</summary>
@@ -216,8 +249,14 @@ public unsafe partial class Window : EvtHandler {
 	/// <summary>Returns the previous window before this one among the parent's children or nullptr if this window is the first child.</summary>
 	public Window? PrevSibling => ObjectRegistry.Wrap<Window>(WxKitNative.WindowGetPrevSibling(Native));
 
+	/// <summary>Returns the position and size of the window as a wxRect object.</summary>
+	public Rect Rect => WxKitNative.WindowGetRect(Native);
+
 	/// <summary>Returns the window position in screen coordinates, whether the window is a child window or a top level one.</summary>
 	public Point ScreenPosition => WxKitNative.WindowGetScreenPosition(Native);
+
+	/// <summary>Returns the position and size of the window on the screen as a wxRect object.</summary>
+	public Rect ScreenRect => WxKitNative.WindowGetScreenRect(Native);
 
 	/// <summary>See the GetSize(int*,int*) overload for more info.</summary>
 	public Size Size {
@@ -233,6 +272,9 @@ public unsafe partial class Window : EvtHandler {
 
 	/// <summary>Get the text of the associated tooltip or empty string if none.</summary>
 	public string ToolTipText => Text.Take(WxKitNative.WindowGetToolTipText(Native));
+
+	/// <summary>Get the update rectangle bounding box in client coords.</summary>
+	public Rect UpdateClientRect => WxKitNative.WindowGetUpdateClientRect(Native);
 
 	/// <summary>This gets the virtual size of the window in pixels.</summary>
 	public Size VirtualSize {
@@ -250,6 +292,12 @@ public unsafe partial class Window : EvtHandler {
 	public long WindowStyleFlag {
 		get => WxKitNative.WindowGetWindowStyleFlag(Native);
 		set => WxKitNative.WindowSetWindowStyleFlag(Native, value);
+	}
+
+	/// <summary>Returns the value previously passed to SetWindowVariant().</summary>
+	public WindowVariant WindowVariant {
+		get => (WindowVariant)WxKitNative.WindowGetWindowVariant(Native);
+		set => WxKitNative.WindowSetWindowVariant(Native, (int)value);
 	}
 
 	/// <summary>Process a wxEVT_ACTIVATE event. See wxActivateEvent.</summary>
@@ -509,8 +557,14 @@ public unsafe partial class Window : EvtHandler {
 	/// <summary>Returns the best width needed by this window if it had the given height.</summary>
 	public int GetBestWidth(int height) => WxKitNative.WindowGetBestWidth(Native, height);
 
+	/// <summary>Get the window border style from the given flags: this is different from simply doing flags &amp; wxBORDER_MASK because it uses GetDefaultBorder() to translate wxBORDER_DEFAULT to something reasonable.</summary>
+	public Border GetBorder(long flags) => (Border)WxKitNative.WindowGetBorderLong(Native, flags);
+
 	/// <summary>Get the ID to be used for help events generated at the given point.</summary>
 	public int GetHelpIdAtPoint(Point point) => WxKitNative.WindowGetHelpIdAtPoint(Native, point);
+
+	/// <summary>Gets the help text to be used as context-sensitive help for this window.</summary>
+	public string GetHelpTextAtPoint(Point point, Origin origin) => Text.Take(WxKitNative.WindowGetHelpTextAtPoint(Native, point, (int)origin));
 
 	/// <summary>May be overridden if the control minimal size depends on the layout direction.</summary>
 	public Size GetMinSizeFromKnownDirection(int direction, int size, int availableOtherDir) => WxKitNative.WindowGetMinSizeFromKnownDirection(Native, direction, size, availableOtherDir);
@@ -546,6 +600,15 @@ public unsafe partial class Window : EvtHandler {
 
 	/// <summary>Equivalent to calling wxWindow::Show(false).</summary>
 	public bool Hide() => WxKitNative.WindowHide(Native) != 0;
+
+	/// <summary>This function hides a window, like Hide(), but using a special visual effect if possible.</summary>
+	public bool HideWithEffect(ShowEffect effect, int timeout = 0) => WxKitNative.WindowHideWithEffect(Native, (int)effect, checked((uint)timeout)) != 0;
+
+	/// <summary>Return where the given point lies, exactly.</summary>
+	public HitTest HitTest(int x, int y) => (HitTest)WxKitNative.WindowHitTestIntInt(Native, x, y);
+
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public HitTest HitTest(Point point) => (HitTest)WxKitNative.WindowHitTestPoint(Native, point);
 
 	/// <summary>Compatibility function called by GetMinSizeFromKnownDirection().</summary>
 	public bool InformFirstDirection(int direction, int size, int availableOtherDir) => WxKitNative.WindowInformFirstDirection(Native, direction, size, availableOtherDir) != 0;
@@ -658,6 +721,9 @@ public unsafe partial class Window : EvtHandler {
 	/// <summary>Causes this window, and all of its children recursively, to be repainted.</summary>
 	public void Refresh(bool eraseBackground = true) => WxKitNative.WindowRefresh(Native, eraseBackground ? (byte)1 : (byte)0);
 
+	/// <summary>Redraws the contents of the given rectangle: only the area inside it will be repainted.</summary>
+	public void RefreshRect(Rect rect, bool eraseBackground = true) => WxKitNative.WindowRefreshRect(Native, rect, eraseBackground ? (byte)1 : (byte)0);
+
 	/// <summary>Registers a system wide hotkey.</summary>
 	public bool RegisterHotKey(int hotkeyId, int modifiers, int virtualKeyCode) => WxKitNative.WindowRegisterHotKey(Native, hotkeyId, modifiers, virtualKeyCode) != 0;
 
@@ -714,6 +780,9 @@ public unsafe partial class Window : EvtHandler {
 	/// <summary>This sets the size of the window client area in pixels.</summary>
 	public void SetClientSize(int width, int height) => WxKitNative.WindowSetClientSizeIntInt(Native, width, height);
 
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public void SetClientSize(Rect rect) => WxKitNative.WindowSetClientSizeRect(Native, rect);
+
 	/// <summary>Used by wxSizer internally to notify the window about being managed by the given sizer.</summary>
 	public void SetContainingSizer(Sizer sizer) {
 		ArgumentNullException.ThrowIfNull(sizer);
@@ -738,6 +807,12 @@ public unsafe partial class Window : EvtHandler {
 		WxKitNative.WindowSetNextHandler(Native, (WxkEvtHandler*)handler.NativeHandler);
 	}
 
+	/// <summary>Sets the background colour of the window but prevents it from being inherited by the children of this window.</summary>
+	public void SetOwnBackgroundColor(Color? color) => WxKitNative.WindowSetOwnBackgroundColour(Native, Color.ToNative(color));
+
+	/// <summary>Sets the foreground colour of the window but prevents it from being inherited by the children of this window.</summary>
+	public void SetOwnForegroundColor(Color? color) => WxKitNative.WindowSetOwnForegroundColour(Native, Color.ToNative(color));
+
 	/// <summary>wxWindows cannot be used to form event handler chains; this function thus will assert when called.</summary>
 	public void SetPreviousHandler(EvtHandler handler) {
 		ArgumentNullException.ThrowIfNull(handler);
@@ -752,6 +827,9 @@ public unsafe partial class Window : EvtHandler {
 
 	/// <summary>Sets the size of the window in pixels.</summary>
 	public void SetSize(int x, int y, int width, int height, int sizeFlags = 3) => WxKitNative.WindowSetSizeIntIntIntIntInt(Native, x, y, width, height, sizeFlags);
+
+	/// <summary>Sets the size of the window in pixels.</summary>
+	public void SetSize(Rect rect) => WxKitNative.WindowSetSizeRect(Native, rect);
 
 	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
 	public void SetSize(int width, int height) => WxKitNative.WindowSetSizeIntInt(Native, width, height);
@@ -781,6 +859,9 @@ public unsafe partial class Window : EvtHandler {
 
 	/// <summary>Shows or hides the window.</summary>
 	public bool Show(bool show = true) => WxKitNative.WindowShow(Native, show ? (byte)1 : (byte)0) != 0;
+
+	/// <summary>This function shows a window, like Show(), but using a special visual effect if possible.</summary>
+	public bool ShowWithEffect(ShowEffect effect, int timeout = 0) => WxKitNative.WindowShowWithEffect(Native, (int)effect, checked((uint)timeout)) != 0;
 
 	/// <summary>Re-enables window updating after a previous call to Freeze().</summary>
 	public void Thaw() => WxKitNative.WindowThaw(Native);
@@ -820,6 +901,9 @@ public unsafe partial class Window : EvtHandler {
 
 	/// <summary>Immediately repaints the invalidated area of the window and all of its children recursively.</summary>
 	public void Update() => WxKitNative.WindowUpdate(Native);
+
+	/// <summary>Set the area where the text is being entered.</summary>
+	public void UpdateInputMethodCursorRect(Rect rect) => WxKitNative.WindowUpdateInputMethodCursorRect(Native, rect);
 
 	/// <summary>This function sends one or more wxUpdateUIEvent to the window.</summary>
 	public void UpdateWindowUI(long flags = 0) => WxKitNative.WindowUpdateWindowUI(Native, flags);
