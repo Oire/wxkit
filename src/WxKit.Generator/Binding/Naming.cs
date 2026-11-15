@@ -28,6 +28,14 @@ internal static class Naming {
 		["CHARWRAP"] = "CharWrap",
 		["WORDWRAP"] = "WordWrap",
 		["BESTWRAP"] = "BestWrap",
+		// The pickers, their styles, and their events.
+		["COLOURPICKER"] = "ColorPicker",
+		["FILEPICKER"] = "FilePicker",
+		["DIRPICKER"] = "DirPicker",
+		["FONTPICKER"] = "FontPicker",
+		["TEXTCTRL"] = "TextCtrl",
+		["FONTDESC"] = "FontDesc",
+		["USEFONT"] = "UseFont",
 		// The full screen styles and the update UI flags.
 		["FULLSCREEN"] = "FullScreen",
 		["NOMENUBAR"] = "NoMenuBar",

@@ -766,6 +766,26 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkColor ColorDialogEventGetColour(WxkEvent* self);
 
+	[LibraryImport(Library, EntryPoint = "wxk_ColorPickerCtrl_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* ColorPickerCtrlNew(WxkWindow* parent, int id, WxkColor color, Point position, Size size, long style);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ColorPickerCtrl_SetColour_String")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ColorPickerCtrlSetColourString(WxkWindow* self, char* colname, nuint colnameLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ColorPickerCtrl_GetColour")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkColor ColorPickerCtrlGetColour(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ColorPickerCtrl_SetColour_Color")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ColorPickerCtrlSetColourColor(WxkWindow* self, WxkColor column);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ColorPickerEvent_GetColour")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkColor ColorPickerEventGetColour(WxkEvent* self);
+
 	[LibraryImport(Library, EntryPoint = "wxk_ComboBox_new_WindowIntStringPointSize")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkWindow* ComboBoxNewWindowIntStringPointSize(WxkWindow* parent, int id, char* value, nuint valueLength, Point position, Size size);
@@ -2342,6 +2362,22 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void DirDialogSetPath(WxkWindow* self, char* path, nuint pathLength);
 
+	[LibraryImport(Library, EntryPoint = "wxk_DirPickerCtrl_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* DirPickerCtrlNew(WxkWindow* parent, int id, char* path, nuint pathLength, char* message, nuint messageLength, Point position, Size size, long style, byte styleGiven);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DirPickerCtrl_SetInitialDirectory")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DirPickerCtrlSetInitialDirectory(WxkWindow* self, char* directory, nuint directoryLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DirPickerCtrl_GetPath")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkString* DirPickerCtrlGetPath(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DirPickerCtrl_SetPath")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DirPickerCtrlSetPath(WxkWindow* self, char* dirname, nuint dirnameLength);
+
 	[LibraryImport(Library, EntryPoint = "wxk_Event_ResumePropagation")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void EventResumePropagation(WxkEvent* self, int propagationLevel);
@@ -2461,6 +2497,26 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_FileDialog_SetWildcard")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void FileDialogSetWildcard(WxkWindow* self, char* wildCard, nuint wildCardLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FileDirPickerEvent_GetPath")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkString* FileDirPickerEventGetPath(WxkEvent* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FilePickerCtrl_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* FilePickerCtrlNew(WxkWindow* parent, int id, char* path, nuint pathLength, char* message, nuint messageLength, char* wildcard, nuint wildcardLength, Point position, Size size, long style, byte styleGiven);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FilePickerCtrl_SetInitialDirectory")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void FilePickerCtrlSetInitialDirectory(WxkWindow* self, char* directory, nuint directoryLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FilePickerCtrl_GetPath")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkString* FilePickerCtrlGetPath(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FilePickerCtrl_SetPath")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void FilePickerCtrlSetPath(WxkWindow* self, char* filename, nuint filenameLength);
 
 	[LibraryImport(Library, EntryPoint = "wxk_FindDialogEvent_GetDialog")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2861,6 +2917,46 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_FontDialog_GetFontData")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkObject* FontDialogGetFontData(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FontPickerCtrl_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* FontPickerCtrlNew(WxkWindow* parent, int id, WxkObject* font, Point position, Size size, long style);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FontPickerCtrl_GetMaxPointSize")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial uint FontPickerCtrlGetMaxPointSize(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FontPickerCtrl_SetMaxPointSize")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void FontPickerCtrlSetMaxPointSize(WxkWindow* self, uint max);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FontPickerCtrl_GetMinPointSize")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial uint FontPickerCtrlGetMinPointSize(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FontPickerCtrl_SetMinPointSize")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void FontPickerCtrlSetMinPointSize(WxkWindow* self, uint min);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FontPickerCtrl_GetSelectedColour")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkColor FontPickerCtrlGetSelectedColour(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FontPickerCtrl_SetSelectedColour")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void FontPickerCtrlSetSelectedColour(WxkWindow* self, WxkColor color);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FontPickerCtrl_GetSelectedFont")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* FontPickerCtrlGetSelectedFont(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FontPickerCtrl_SetSelectedFont")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void FontPickerCtrlSetSelectedFont(WxkWindow* self, WxkObject* font);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FontPickerEvent_GetFont")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* FontPickerEventGetFont(WxkEvent* self);
 
 	[LibraryImport(Library, EntryPoint = "wxk_Frame_new")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4977,6 +5073,66 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_Pen_IsTransparent")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte PenIsTransparent(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PickerBase_UpdatePickerFromTextCtrl")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PickerBaseUpdatePickerFromTextCtrl(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PickerBase_UpdateTextCtrlFromPicker")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PickerBaseUpdateTextCtrlFromPicker(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PickerBase_GetInternalMargin")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int PickerBaseGetInternalMargin(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PickerBase_SetInternalMargin")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PickerBaseSetInternalMargin(WxkWindow* self, int margin);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PickerBase_GetPickerCtrlProportion")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int PickerBaseGetPickerCtrlProportion(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PickerBase_SetPickerCtrlProportion")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PickerBaseSetPickerCtrlProportion(WxkWindow* self, int prop);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PickerBase_GetTextCtrl")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* PickerBaseGetTextCtrl(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PickerBase_GetPickerCtrl")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* PickerBaseGetPickerCtrl(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PickerBase_GetTextCtrlProportion")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int PickerBaseGetTextCtrlProportion(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PickerBase_SetTextCtrlProportion")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PickerBaseSetTextCtrlProportion(WxkWindow* self, int prop);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PickerBase_HasTextCtrl")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte PickerBaseHasTextCtrl(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PickerBase_IsPickerCtrlGrowable")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte PickerBaseIsPickerCtrlGrowable(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PickerBase_SetPickerCtrlGrowable")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PickerBaseSetPickerCtrlGrowable(WxkWindow* self, byte grow);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PickerBase_IsTextCtrlGrowable")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte PickerBaseIsTextCtrlGrowable(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PickerBase_SetTextCtrlGrowable")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PickerBaseSetTextCtrlGrowable(WxkWindow* self, byte grow);
 
 	[LibraryImport(Library, EntryPoint = "wxk_ProgressDialog_new")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -8318,6 +8474,18 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeColorChanged();
 
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_ColorPickerChanged")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeColorPickerChanged();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_ColorPickerCurrentChanged")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeColorPickerCurrentChanged();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_ColorPickerDialogCancelled")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeColorPickerDialogCancelled();
+
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_ComboBox")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeComboBox();
@@ -8434,6 +8602,10 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeDataViewSelectionChanged();
 
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_DirPickerChanged")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeDirPickerChanged();
+
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_DpiChanged")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeDpiChanged();
@@ -8454,6 +8626,10 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeEraseBackground();
 
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_FilePickerChanged")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeFilePickerChanged();
+
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_Find")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeFind();
@@ -8473,6 +8649,10 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_FindReplaceAll")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeFindReplaceAll();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_FontPickerChanged")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeFontPickerChanged();
 
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_FullScreen")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

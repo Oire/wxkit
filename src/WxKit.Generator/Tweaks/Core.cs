@@ -104,6 +104,28 @@ internal static class Core {
 		// An item's data is an object, which the control deletes with the item. Detaching it would
 		// leave no one to free it.
 		foreach (string container in (string[])["wxControlWithItems", "wxChoice", "wxComboBox", "wxListBox"]) tweaks.Class(container).Ignore("DetachClientObject");
+		// Pickers: a button, and optionally a text box, that choose a color, a file, a folder, or a
+		// font. Events are only received, so the events' values are only read.
+		// CreateBase is for a picker's own Create.
+		tweaks.Class("wxPickerBase", picker => picker.Ignore("CreateBase"));
+		tweaks.Class("wxColourPickerCtrl", picker => picker
+			.StylesPrefixed("CLRP")
+			.Event("EVT_COLOURPICKER_CHANGED", "ColorChanged")
+			.Event("EVT_COLOURPICKER_CURRENT_CHANGED", "CurrentColorChanged")
+			.Event("EVT_COLOURPICKER_DIALOG_CANCELLED", "DialogCancelled"));
+		tweaks.Class("wxFilePickerCtrl", picker => picker
+			.Event("EVT_FILEPICKER_CHANGED", "PathChanged")
+			.ParameterName("SetInitialDirectory", "dir", "directory"));
+		tweaks.Class("wxDirPickerCtrl", picker => picker
+			.StylesPrefixed("DIRP")
+			.Event("EVT_DIRPICKER_CHANGED", "PathChanged")
+			.ParameterName("SetInitialDirectory", "dir", "directory"));
+		tweaks.Class("wxFontPickerCtrl", picker => picker
+			.StylesPrefixed("FNTP")
+			.Event("EVT_FONTPICKER_CHANGED", "FontChanged"));
+		tweaks.Class("wxColourPickerEvent", e => e.Ignore("SetColour"));
+		tweaks.Class("wxFileDirPickerEvent", e => e.Ignore("SetPath"));
+		tweaks.Class("wxFontPickerEvent", e => e.Ignore("SetFont"));
 		// wxOSX has no static box with a window as its label.
 		tweaks.Class("wxStaticBox").GuardOverload("defined(wxHAS_WINDOW_LABEL_IN_STATIC_BOX)", "wxStaticBox", "label", "wxWindow *");
 		// Validators, which WxKit creates and windows copy. Custom ones are hand-written, in CustomValidator.

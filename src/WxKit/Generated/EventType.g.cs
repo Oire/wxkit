@@ -131,6 +131,27 @@ public static unsafe partial class EventType {
 		public static readonly EventType<ColorDialogEvent> Value = new(WxKitNative.EventTypeColorChanged, static native => new ColorDialogEvent((WxkEvent*)native));
 	}
 
+	/// <summary>Wraps wxEVT_COLOURPICKER_CHANGED.</summary>
+	public static EventType<ColorPickerEvent> ColorPickerChanged => ColorPickerChangedType.Value;
+
+	private static class ColorPickerChangedType {
+		public static readonly EventType<ColorPickerEvent> Value = new(WxKitNative.EventTypeColorPickerChanged, static native => new ColorPickerEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_COLOURPICKER_CURRENT_CHANGED.</summary>
+	public static EventType<ColorPickerEvent> ColorPickerCurrentChanged => ColorPickerCurrentChangedType.Value;
+
+	private static class ColorPickerCurrentChangedType {
+		public static readonly EventType<ColorPickerEvent> Value = new(WxKitNative.EventTypeColorPickerCurrentChanged, static native => new ColorPickerEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_COLOURPICKER_DIALOG_CANCELLED.</summary>
+	public static EventType<ColorPickerEvent> ColorPickerDialogCancelled => ColorPickerDialogCancelledType.Value;
+
+	private static class ColorPickerDialogCancelledType {
+		public static readonly EventType<ColorPickerEvent> Value = new(WxKitNative.EventTypeColorPickerDialogCancelled, static native => new ColorPickerEvent((WxkEvent*)native));
+	}
+
 	/// <summary>Wraps wxEVT_COMBOBOX.</summary>
 	public static EventType<CommandEvent> ComboBox => ComboBoxType.Value;
 
@@ -334,6 +355,13 @@ public static unsafe partial class EventType {
 		public static readonly EventType<DataViewEvent> Value = new(WxKitNative.EventTypeDataViewSelectionChanged, static native => new DataViewEvent((WxkEvent*)native));
 	}
 
+	/// <summary>Wraps wxEVT_DIRPICKER_CHANGED.</summary>
+	public static EventType<FileDirPickerEvent> DirPickerChanged => DirPickerChangedType.Value;
+
+	private static class DirPickerChangedType {
+		public static readonly EventType<FileDirPickerEvent> Value = new(WxKitNative.EventTypeDirPickerChanged, static native => new FileDirPickerEvent((WxkEvent*)native));
+	}
+
 	/// <summary>Wraps wxEVT_DPI_CHANGED.</summary>
 	public static EventType<DPIChangedEvent> DpiChanged => DpiChangedType.Value;
 
@@ -369,6 +397,13 @@ public static unsafe partial class EventType {
 		public static readonly EventType<EraseEvent> Value = new(WxKitNative.EventTypeEraseBackground, static native => new EraseEvent((WxkEvent*)native));
 	}
 
+	/// <summary>Wraps wxEVT_FILEPICKER_CHANGED.</summary>
+	public static EventType<FileDirPickerEvent> FilePickerChanged => FilePickerChangedType.Value;
+
+	private static class FilePickerChangedType {
+		public static readonly EventType<FileDirPickerEvent> Value = new(WxKitNative.EventTypeFilePickerChanged, static native => new FileDirPickerEvent((WxkEvent*)native));
+	}
+
 	/// <summary>Wraps wxEVT_FIND.</summary>
 	public static EventType<FindDialogEvent> Find => FindType.Value;
 
@@ -402,6 +437,13 @@ public static unsafe partial class EventType {
 
 	private static class FindReplaceAllType {
 		public static readonly EventType<FindDialogEvent> Value = new(WxKitNative.EventTypeFindReplaceAll, static native => new FindDialogEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_FONTPICKER_CHANGED.</summary>
+	public static EventType<FontPickerEvent> FontPickerChanged => FontPickerChangedType.Value;
+
+	private static class FontPickerChangedType {
+		public static readonly EventType<FontPickerEvent> Value = new(WxKitNative.EventTypeFontPickerChanged, static native => new FontPickerEvent((WxkEvent*)native));
 	}
 
 	/// <summary>Wraps wxEVT_FULLSCREEN.</summary>

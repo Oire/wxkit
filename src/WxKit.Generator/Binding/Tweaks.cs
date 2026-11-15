@@ -91,6 +91,12 @@ internal sealed class ClassTweak(string name) {
 
 	public Dictionary<(string Member, string Parameter), string> ParameterEnums { get; } = [];
 
+	/// <summary>Managed names of parameters the naming rules get wrong, such as a dir that is a directory, not a direction.</summary>
+	public Dictionary<(string Member, string Parameter), string> ParameterNames { get; } = [];
+
+	/// <summary>The prefix the class's styles share, for one the rules do not find, such as FNTP in wxFNTP_USE_TEXTCTRL.</summary>
+	public string? StylePrefix { get; private set; }
+
 	public ClassTweak Only(params string[] members) {
 		OnlyMembers = new HashSet<string>(members, StringComparer.Ordinal);
 		return this;
@@ -221,6 +227,16 @@ internal sealed class ClassTweak(string name) {
 	/// <summary>Gives a number parameter an enum type, such as an orientation. The parameter "return" names the return value.</summary>
 	public ClassTweak ParameterEnum(string member, string parameter, string enumName) {
 		ParameterEnums[(member, parameter)] = enumName;
+		return this;
+	}
+
+	public ClassTweak ParameterName(string member, string parameter, string managedName) {
+		ParameterNames[(member, parameter)] = managedName;
+		return this;
+	}
+
+	public ClassTweak StylesPrefixed(string prefix) {
+		StylePrefix = prefix;
 		return this;
 	}
 }

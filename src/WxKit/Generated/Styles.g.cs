@@ -59,6 +59,21 @@ public enum CollapsiblePaneStyle : long {
 	NoTlwResize = 0x2,
 }
 
+/// <summary>Styles for <see cref="ColorPickerCtrl"/>.</summary>
+[Flags]
+public enum ColorPickerCtrlStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>The default style: 0. Wraps wxCLRP_DEFAULT_STYLE.</summary>
+	Default = 0x0,
+	/// <summary>Creates a text control to the left of the picker button which is completely managed by the wxColourPickerCtrl and which can be used by the user to specify a colour (see SetColour). The text control is automatically synchronized with button's value. Use functions defined in wxPickerBase to modify the text control. Wraps wxCLRP_USE_TEXTCTRL.</summary>
+	UseTextCtrl = 0x2,
+	/// <summary>Shows the colour in HTML form (AABBCC) as colour button label (instead of no label at all). Wraps wxCLRP_SHOW_LABEL.</summary>
+	ShowLabel = 0x8,
+	/// <summary>Allows selecting opacity in the colour-chooser (effective under wxGTK and wxOSX). Wraps wxCLRP_SHOW_ALPHA.</summary>
+	ShowAlpha = 0x10,
+}
+
 /// <summary>Styles for <see cref="ComboBox"/>.</summary>
 [Flags]
 public enum ComboBoxStyle : long {
@@ -139,6 +154,21 @@ public enum DirDialogStyle : long {
 	ShowHidden = 0x1,
 }
 
+/// <summary>Styles for <see cref="DirPickerCtrl"/>.</summary>
+[Flags]
+public enum DirPickerCtrlStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Creates a text control to the left of the picker button which is completely managed by the wxDirPickerCtrl and which can be used by the user to specify a path (see SetPath). The text control is automatically synchronized with button's value. Use functions defined in wxPickerBase to modify the text control. Wraps wxDIRP_USE_TEXTCTRL.</summary>
+	UseTextCtrl = 0x2,
+	/// <summary>Creates a picker which allows selecting only existing directories in the popup wxDirDialog. Notice that, as with wxFLP_FILE_MUST_EXIST, it is still possible to enter a non-existent directory even when this file is specified if wxDIRP_USE_TEXTCTRL style is also used. Also note that if wxDIRP_USE_TEXTCTRL is not used, the native wxGTK implementation always uses this style as it doesn't support selecting non-existent directories. Wraps wxDIRP_DIR_MUST_EXIST.</summary>
+	DirMustExist = 0x8,
+	/// <summary>Change current working directory on each user directory selection change. Wraps wxDIRP_CHANGE_DIR.</summary>
+	ChangeDir = 0x10,
+	/// <summary>Use smaller version of the control with a small "..." button instead of the normal "Browse" one. This flag is new since wxWidgets 2.9.3. Wraps wxDIRP_SMALL.</summary>
+	Small = 0x8000,
+}
+
 /// <summary>Styles for <see cref="FileDialog"/>.</summary>
 [Flags]
 public enum FileDialogStyle : long {
@@ -164,6 +194,42 @@ public enum FileDialogStyle : long {
 	Preview = 0x100,
 	/// <summary>Show hidden files. This flag was added in wxWidgets 3.1.3. Wraps wxFD_SHOW_HIDDEN.</summary>
 	ShowHidden = 0x400,
+}
+
+/// <summary>Styles for <see cref="FilePickerCtrl"/>.</summary>
+[Flags]
+public enum FilePickerCtrlStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Creates a text control to the left of the picker button which is completely managed by the wxFilePickerCtrl and which can be used by the user to specify a path (see SetPath). The text control is automatically synchronized with button's value. Use functions defined in wxPickerBase to modify the text control. Wraps wxFLP_USE_TEXTCTRL.</summary>
+	UseTextCtrl = 0x2,
+	/// <summary>Creates a picker which allows the user to select a file to open. Wraps wxFLP_OPEN.</summary>
+	Open = 0x400,
+	/// <summary>Creates a picker which allows the user to select a file to save. Wraps wxFLP_SAVE.</summary>
+	Save = 0x800,
+	/// <summary>Can be combined with wxFLP_SAVE only: ask confirmation to the user before selecting a file. Wraps wxFLP_OVERWRITE_PROMPT.</summary>
+	OverwritePrompt = 0x1000,
+	/// <summary>Can be combined with wxFLP_OPEN only: the file selected in the popup wxFileDialog must be an existing file. Notice that it still remains possible for the user to enter a non-existent file name in the text control if wxFLP_USE_TEXTCTRL is also used, this flag is a hint for the user rather than a guarantee that the selected file does exist for the program. Wraps wxFLP_FILE_MUST_EXIST.</summary>
+	FileMustExist = 0x2000,
+	/// <summary>Change current working directory on each user file selection change. Wraps wxFLP_CHANGE_DIR.</summary>
+	ChangeDir = 0x4000,
+	/// <summary>Use smaller version of the control with a small "..." button instead of the normal "Browse" one. This flag is new since wxWidgets 2.9.3. Wraps wxFLP_SMALL.</summary>
+	Small = 0x8000,
+}
+
+/// <summary>Styles for <see cref="FontPickerCtrl"/>.</summary>
+[Flags]
+public enum FontPickerCtrlStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>The default style: wxFNTP_FONTDESC_AS_LABEL | wxFNTP_USEFONT_FOR_LABEL. Wraps wxFNTP_DEFAULT_STYLE.</summary>
+	Default = 0x18,
+	/// <summary>Creates a text control to the left of the picker button which is completely managed by the wxFontPickerCtrl and which can be used by the user to specify a font (see SetSelectedFont). The text control is automatically synchronized with button's value. Use functions defined in wxPickerBase to modify the text control. Wraps wxFNTP_USE_TEXTCTRL.</summary>
+	UseTextCtrl = 0x2,
+	/// <summary>Keeps the label of the button updated with the fontface name and the font size. E.g. choosing "Times New Roman bold, italic with size 10" from the fontdialog, will update the label (overwriting any previous label) with the "Times New Roman, 10" text. Wraps wxFNTP_FONTDESC_AS_LABEL.</summary>
+	FontDescAsLabel = 0x8,
+	/// <summary>Uses the currently selected font to draw the label of the button. Wraps wxFNTP_USEFONT_FOR_LABEL.</summary>
+	UseFontForLabel = 0x10,
 }
 
 /// <summary>Styles for <see cref="Frame"/>.</summary>
@@ -372,6 +438,15 @@ public enum NotebookStyle : long {
 	MultiLine = 0x200,
 	/// <summary>(Windows only) Display a solid colour on notebook pages, and not a gradient, which can reduce performance. Wraps wxNB_NOPAGETHEME.</summary>
 	Nopagetheme = 0x400,
+}
+
+/// <summary>Styles for <see cref="PickerBase"/>.</summary>
+[Flags]
+public enum PickerBaseStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Creates a text control to the left of the picker which is completely managed by this wxPickerBase class. Wraps wxPB_USE_TEXTCTRL.</summary>
+	PbUseTextCtrl = 0x2,
 }
 
 /// <summary>Styles for <see cref="RadioBox"/>.</summary>

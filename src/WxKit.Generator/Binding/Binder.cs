@@ -246,6 +246,14 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 					nullable = true;
 					resolved = true;
 				}
+				// A color that defaults to one of wxWidgets's colors, such as a color picker's *wxBLACK,
+				// is null too, which the shim turns into that color.
+				if (!resolved && conversion is ColorConversion && ColorConstantPattern().IsMatch(cppDefault)) {
+					conversion = new ColorDefaultConversion(cppDefault);
+					managedDefault = "null";
+					nullable = true;
+					resolved = true;
+				}
 			}
 			// A trailing parameter with a default that WxKit cannot convert is left out, and the
 			// rest after it, so the C++ default applies. Anything else makes the function unbindable.
@@ -264,7 +272,8 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 				managedDefault = "null";
 				nullable = true;
 			}
-			parameters.Add(new BoundParameter(parameter.Name, Naming.Parameter(parameter.Name), conversion, nullable, managedDefault));
+			string managedName = owner.Tweak.ParameterNames.GetValueOrDefault((member.Name, parameter.Name)) ?? Naming.Parameter(parameter.Name);
+			parameters.Add(new BoundParameter(parameter.Name, managedName, conversion, nullable, managedDefault));
 		}
 		BoundFunction function = new(owner, member, returns, parameters, isConstructor);
 		function.ManagedParameters = ManagedOrder(parameters);
@@ -536,7 +545,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 
 	private BoundStyles? BindStyles(BoundClass bound) {
 		if (bound.Source.Styles.Count == 0) return null;
-		string? prefix = Naming.SharedStylePrefix(bound.Source.Styles.Select(static style => style.Name), api.Constants.ContainsKey);
+		string? prefix = bound.Tweak.StylePrefix ?? Naming.SharedStylePrefix(bound.Source.Styles.Select(static style => style.Name), api.Constants.ContainsKey);
 		List<BoundStyle> members = [];
 		foreach (DoxygenStyle style in bound.Source.Styles) {
 			// Extra styles, such as wxDIALOG_EX_CONTEXTHELP, are set with SetExtraStyle rather than
@@ -627,4 +636,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 
 	[GeneratedRegex(@"^wx[A-Z0-9_]+$")]
 	private static partial Regex ConstantPattern();
+
+	[GeneratedRegex(@"^\*wx[A-Z]+$")]
+	private static partial Regex ColorConstantPattern();
 }

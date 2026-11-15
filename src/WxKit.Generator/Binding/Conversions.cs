@@ -490,6 +490,33 @@ internal sealed class ColorConversion : Conversion {
 	public override bool AcceptsNull => true;
 }
 
+// A color whose default is one of wxWidgets's colors, such as *wxBLACK, which a null color stands for.
+internal sealed class ColorDefaultConversion(string cppDefault) : Conversion {
+	public override string Suffix => ColorConversion.Instance.Suffix;
+
+	public override string CReturnType => ColorConversion.Instance.CReturnType;
+
+	public override string Fallback => ColorConversion.Instance.Fallback;
+
+	public override string InteropReturnType => ColorConversion.Instance.InteropReturnType;
+
+	public override IEnumerable<string> CParameters(string name) => ColorConversion.Instance.CParameters(name);
+
+	public override string ToCpp(string name) => $"({name}.valid != 0 ? {ColorConversion.Instance.ToCpp(name)} : wxColour({cppDefault}))";
+
+	public override string FromCpp(string expression) => ColorConversion.Instance.FromCpp(expression);
+
+	public override IEnumerable<string> InteropParameters(string name) => ColorConversion.Instance.InteropParameters(name);
+
+	public override string ManagedType(bool nullable) => ColorConversion.Instance.ManagedType(nullable);
+
+	public override IEnumerable<string> InteropArguments(string name, bool nullable) => ColorConversion.Instance.InteropArguments(name, nullable);
+
+	public override string ManagedReturn(string expression) => ColorConversion.Instance.ManagedReturn(expression);
+
+	public override bool AcceptsNull => true;
+}
+
 // A wxArrayString goes in as a native copy of any sequence of strings, made for the call, and
 // comes out as a string array.
 internal sealed class StringArrayConversion : Conversion {

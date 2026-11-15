@@ -251,6 +251,17 @@ WXK_FUNCTION(wxk_Object*) wxk_ColorDialog_GetColourData(wxk_Window* self) WXK_NO
 
 WXK_FUNCTION(wxk_Colour) wxk_ColorDialogEvent_GetColour(wxk_Event* self) WXK_NOEXCEPT;
 
+// wxColourPickerCtrl
+
+WXK_FUNCTION(wxk_Window*) wxk_ColorPickerCtrl_new(wxk_Window* parent, int32_t id, wxk_Colour color, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ColorPickerCtrl_SetColour_String(wxk_Window* self, const char16_t* colname, size_t colnameLength) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Colour) wxk_ColorPickerCtrl_GetColour(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ColorPickerCtrl_SetColour_Color(wxk_Window* self, wxk_Colour column) WXK_NOEXCEPT;
+
+// wxColourPickerEvent
+
+WXK_FUNCTION(wxk_Colour) wxk_ColorPickerEvent_GetColour(wxk_Event* self) WXK_NOEXCEPT;
+
 // wxComboBox
 
 WXK_FUNCTION(wxk_Window*) wxk_ComboBox_new_WindowIntStringPointSize(wxk_Window* parent, int32_t id, const char16_t* value, size_t valueLength, wxk_Point position, wxk_Size size) WXK_NOEXCEPT;
@@ -693,6 +704,13 @@ WXK_FUNCTION(void) wxk_DirDialog_SetMessage(wxk_Window* self, const char16_t* me
 WXK_FUNCTION(wxk_String*) wxk_DirDialog_GetPath(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_DirDialog_SetPath(wxk_Window* self, const char16_t* path, size_t pathLength) WXK_NOEXCEPT;
 
+// wxDirPickerCtrl
+
+WXK_FUNCTION(wxk_Window*) wxk_DirPickerCtrl_new(wxk_Window* parent, int32_t id, const char16_t* path, size_t pathLength, const char16_t* message, size_t messageLength, wxk_Point position, wxk_Size size, int64_t style, uint8_t styleGiven) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DirPickerCtrl_SetInitialDirectory(wxk_Window* self, const char16_t* directory, size_t directoryLength) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_String*) wxk_DirPickerCtrl_GetPath(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DirPickerCtrl_SetPath(wxk_Window* self, const char16_t* dirname, size_t dirnameLength) WXK_NOEXCEPT;
+
 // wxEvent
 
 WXK_FUNCTION(void) wxk_Event_ResumePropagation(wxk_Event* self, int32_t propagationLevel) WXK_NOEXCEPT;
@@ -728,6 +746,17 @@ WXK_FUNCTION(wxk_String*) wxk_FileDialog_GetPath(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_FileDialog_SetPath(wxk_Window* self, const char16_t* path, size_t pathLength) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_String*) wxk_FileDialog_GetWildcard(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_FileDialog_SetWildcard(wxk_Window* self, const char16_t* wildCard, size_t wildCardLength) WXK_NOEXCEPT;
+
+// wxFileDirPickerEvent
+
+WXK_FUNCTION(wxk_String*) wxk_FileDirPickerEvent_GetPath(wxk_Event* self) WXK_NOEXCEPT;
+
+// wxFilePickerCtrl
+
+WXK_FUNCTION(wxk_Window*) wxk_FilePickerCtrl_new(wxk_Window* parent, int32_t id, const char16_t* path, size_t pathLength, const char16_t* message, size_t messageLength, const char16_t* wildcard, size_t wildcardLength, wxk_Point position, wxk_Size size, int64_t style, uint8_t styleGiven) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_FilePickerCtrl_SetInitialDirectory(wxk_Window* self, const char16_t* directory, size_t directoryLength) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_String*) wxk_FilePickerCtrl_GetPath(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_FilePickerCtrl_SetPath(wxk_Window* self, const char16_t* filename, size_t filenameLength) WXK_NOEXCEPT;
 
 // wxFindDialogEvent
 
@@ -852,6 +881,22 @@ WXK_FUNCTION(void) wxk_FontData_SetShowHelp(wxk_Object* self, uint8_t showHelp) 
 WXK_FUNCTION(wxk_Window*) wxk_FontDialog_new_Window(wxk_Window* parent) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Window*) wxk_FontDialog_new_WindowFontData(wxk_Window* parent, const wxk_Object* data) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_FontDialog_GetFontData(wxk_Window* self) WXK_NOEXCEPT;
+
+// wxFontPickerCtrl
+
+WXK_FUNCTION(wxk_Window*) wxk_FontPickerCtrl_new(wxk_Window* parent, int32_t id, const wxk_Object* font, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(uint32_t) wxk_FontPickerCtrl_GetMaxPointSize(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_FontPickerCtrl_SetMaxPointSize(wxk_Window* self, uint32_t max) WXK_NOEXCEPT;
+WXK_FUNCTION(uint32_t) wxk_FontPickerCtrl_GetMinPointSize(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_FontPickerCtrl_SetMinPointSize(wxk_Window* self, uint32_t min) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Colour) wxk_FontPickerCtrl_GetSelectedColour(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_FontPickerCtrl_SetSelectedColour(wxk_Window* self, wxk_Colour color) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_FontPickerCtrl_GetSelectedFont(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_FontPickerCtrl_SetSelectedFont(wxk_Window* self, const wxk_Object* font) WXK_NOEXCEPT;
+
+// wxFontPickerEvent
+
+WXK_FUNCTION(wxk_Object*) wxk_FontPickerEvent_GetFont(wxk_Event* self) WXK_NOEXCEPT;
 
 // wxFrame
 
@@ -1474,6 +1519,24 @@ WXK_FUNCTION(void) wxk_Pen_SetWidth(wxk_Object* self, int32_t width) WXK_NOEXCEP
 WXK_FUNCTION(uint8_t) wxk_Pen_IsOk(wxk_Object* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Pen_IsNonTransparent(wxk_Object* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Pen_IsTransparent(wxk_Object* self) WXK_NOEXCEPT;
+
+// wxPickerBase
+
+WXK_FUNCTION(void) wxk_PickerBase_UpdatePickerFromTextCtrl(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PickerBase_UpdateTextCtrlFromPicker(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_PickerBase_GetInternalMargin(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PickerBase_SetInternalMargin(wxk_Window* self, int32_t margin) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_PickerBase_GetPickerCtrlProportion(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PickerBase_SetPickerCtrlProportion(wxk_Window* self, int32_t prop) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Window*) wxk_PickerBase_GetTextCtrl(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Window*) wxk_PickerBase_GetPickerCtrl(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_PickerBase_GetTextCtrlProportion(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PickerBase_SetTextCtrlProportion(wxk_Window* self, int32_t prop) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_PickerBase_HasTextCtrl(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_PickerBase_IsPickerCtrlGrowable(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PickerBase_SetPickerCtrlGrowable(wxk_Window* self, uint8_t grow) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_PickerBase_IsTextCtrlGrowable(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PickerBase_SetTextCtrlGrowable(wxk_Window* self, uint8_t grow) WXK_NOEXCEPT;
 
 // wxProgressDialog
 
@@ -2432,6 +2495,9 @@ WXK_FUNCTION(int32_t) wxk_EventType_Choice(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_CloseWindow(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_CollapsiblepaneChanged(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_ColorChanged(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_ColorPickerChanged(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_ColorPickerCurrentChanged(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_ColorPickerDialogCancelled(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_ComboBox(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_ComboBoxCloseup(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_ComboBoxDropdown(void) WXK_NOEXCEPT;
@@ -2461,16 +2527,19 @@ WXK_FUNCTION(int32_t) wxk_EventType_DataViewItemExpanding(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_DataViewItemStartEditing(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_DataViewItemValueChanged(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_DataViewSelectionChanged(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_DirPickerChanged(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_DpiChanged(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_DropFiles(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_EndSession(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_EnterWindow(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_EraseBackground(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_FilePickerChanged(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_Find(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_FindClose(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_FindNext(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_FindReplace(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_FindReplaceAll(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_FontPickerChanged(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_FullScreen(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_Help(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_Hyperlink(void) WXK_NOEXCEPT;

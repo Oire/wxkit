@@ -13,6 +13,7 @@
 #include <wx/checklst.h>
 #include <wx/choicdlg.h>
 #include <wx/choice.h>
+#include <wx/clrpicker.h>
 #include <wx/collpane.h>
 #include <wx/colordlg.h>
 #include <wx/colourdata.h>
@@ -30,9 +31,11 @@
 #include <wx/event.h>
 #include <wx/fdrepdlg.h>
 #include <wx/filedlg.h>
+#include <wx/filepicker.h>
 #include <wx/font.h>
 #include <wx/fontdata.h>
 #include <wx/fontdlg.h>
+#include <wx/fontpicker.h>
 #include <wx/frame.h>
 #include <wx/gauge.h>
 #include <wx/hyperlink.h>
@@ -45,6 +48,7 @@
 #include <wx/notebook.h>
 #include <wx/panel.h>
 #include <wx/pen.h>
+#include <wx/pickerbase.h>
 #include <wx/progdlg.h>
 #include <wx/radiobox.h>
 #include <wx/radiobut.h>
