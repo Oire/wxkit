@@ -9,6 +9,7 @@
 		<Project Path="tests/WxKit.Tests/WxKit.Tests.csproj" />
 	</Folder>
 	<Folder Name="/samples/">
+		<Project Path="samples/Editor/Editor.csproj" />
 		<Project Path="samples/Hello/Hello.csproj" />
 	</Folder>
 </Solution>

@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net10.0</TargetFramework>
+		<!-- The machine's own system and architecture, unless the publish names another. -->
+		<_EditorSystem Condition="$([MSBuild]::IsOSPlatform('Linux'))">linux</_EditorSystem>
+		<_EditorSystem Condition="$([MSBuild]::IsOSPlatform('OSX'))">osx</_EditorSystem>
+		<_EditorSystem Condition="'$(_EditorSystem)' == ''">win</_EditorSystem>
+		<_EditorArchitecture Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture)' == 'Arm64'">arm64</_EditorArchitecture>
+		<_EditorArchitecture Condition="'$(_EditorArchitecture)' == ''">x64</_EditorArchitecture>
+		<RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">$(_EditorSystem)-$(_EditorArchitecture)</RuntimeIdentifier>
+		<PublishAot>true</PublishAot>
+		<IsPackable>false</IsPackable>
+		<!-- On macOS, the app bundle is named after the title and known by the identifier. -->
+		<ApplicationTitle>Editor</ApplicationTitle>
+		<ApplicationId>io.github.trypsynth.wxkit.editor</ApplicationId>
+		<WxKitNativeDirectory>$(WxKitNativeRoot)/$(RuntimeIdentifier)/static/</WxKitNativeDirectory>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\src\WxKit\WxKit.csproj" />
+	</ItemGroup>
+
+	<!-- A package reference brings these in on its own. A project reference has to ask. -->
+	<Import Project="..\..\src\WxKit\build\WxKit.targets" />
+
+	<ItemGroup>
+		<None Include="$(WxKitNativeRoot)/$(RuntimeIdentifier)/shared/*.dll;$(WxKitNativeRoot)/$(RuntimeIdentifier)/shared/*.so;$(WxKitNativeRoot)/$(RuntimeIdentifier)/shared/*.dylib" Link="%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+	</ItemGroup>
+
+</Project>
