@@ -21,6 +21,23 @@ public struct WxkDataViewColumn;
 /// <summary>A wxToolBarToolBase.</summary>
 public struct WxkToolBarTool;
 
+/// <summary>What an About box shows, as the shim's wxk_AboutInfo lays it out.</summary>
+public unsafe struct WxkAboutInfo {
+	public WxkString* Name;
+	public WxkString* Version;
+	public WxkString* LongVersion;
+	public WxkString* Description;
+	public WxkString* Copyright;
+	public WxkString* License;
+	public WxkString* WebSite;
+	public WxkString* WebSiteDescription;
+	public WxkStringArray* Developers;
+	public WxkStringArray* DocWriters;
+	public WxkStringArray* Artists;
+	public WxkStringArray* Translators;
+	public WxkObject* Icon;
+}
+
 /// <summary>A wxMenu.</summary>
 public struct WxkMenu;
 

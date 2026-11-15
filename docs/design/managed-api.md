@@ -243,6 +243,18 @@ Clipboard.SetContent(new ClipboardContent { Text = "Bold text", Html = "<b>Bold<
 
 Each call opens the clipboard and closes it again, so another application can use it in between, and a setter returns false when another application has it open. A getter returns null when the clipboard does not have its format. On Windows, what an application puts on the clipboard goes when the application exits, unless it calls `Clipboard.Flush`.
 
+## The About box
+
+`AboutBox.Show` shows the platform's About box with what an `AboutDialogInfo` gives: the name, version, description, copyright, license, web site, icon, and the people who made the application. It's written by hand, since `wxAboutDialogInfo` is not a `wxObject` and `wxAboutBox` is a function. On Windows and macOS, a license, or anything else the platform's box can't show, makes wxWidgets show its own instead. On Windows, the box is modal, and `Show` returns once it's closed. On Linux and macOS, `Show` returns at once.
+
+```csharp
+AboutBox.Show(new AboutDialogInfo {
+	Version = "1.0",
+	Description = "A to-do list.",
+	Developers = { "Ada" },
+}, frame);
+```
+
 ## Static members
 
 A static member of a wxWidgets class is a static member of its managed class, such as `Window.FindFocus()`. A class with only static members, such as `wxSystemSettings`, is a static class. Static members check the thread first, as instance members do through their handle.

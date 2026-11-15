@@ -67,6 +67,7 @@ file(GLOB WXK_GENERATED CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/generated/
 
 set(WXK_SOURCES
 	${WXK_GENERATED}
+	src/about.cpp
 	src/accessible.cpp
 	src/app.cpp
 	src/clientdata.cpp

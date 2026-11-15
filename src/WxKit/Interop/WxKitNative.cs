@@ -374,6 +374,10 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte DataViewCtrlAssociateModel(WxkWindow* control, WxkDataViewModel* model);
 
+	[LibraryImport(Library, EntryPoint = "wxk_AboutBox_Show")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void AboutBoxShow(WxkAboutInfo* about, WxkWindow* parent);
+
 	[LibraryImport(Library, EntryPoint = "wxk_ToolBarTool_GetToolBar")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkWindow* ToolBarToolGetToolBar(WxkToolBarTool* tool);

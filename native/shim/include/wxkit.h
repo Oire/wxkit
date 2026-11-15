@@ -332,6 +332,29 @@ WXK_FUNCTION(void) wxk_Accessible_SetCallbacks(const wxk_AccessibleCallbacks* ca
 WXK_FUNCTION(wxk_Accessible*) wxk_ManagedAccessible_new(wxk_Window* window, void* userdata) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Accessible_NotifyEvent(int32_t eventType, wxk_Window* window, int32_t objectType, int32_t objectId) WXK_NOEXCEPT;
 
+// The About box
+
+// What an About box shows. Each string is the shim's to free, and a null one, or a null list,
+// is left out.
+typedef struct wxk_AboutInfo {
+	wxk_String* name;
+	wxk_String* version;
+	wxk_String* longVersion;
+	wxk_String* description;
+	wxk_String* copyright;
+	wxk_String* license;
+	wxk_String* webSite;
+	wxk_String* webSiteDescription;
+	const wxk_StringArray* developers;
+	const wxk_StringArray* docWriters;
+	const wxk_StringArray* artists;
+	const wxk_StringArray* translators;
+	const wxk_Object* icon;
+} wxk_AboutInfo;
+
+// Shows the platform's About box, or wxWidgets's own when the platform's cannot show everything.
+WXK_FUNCTION(void) wxk_AboutBox_Show(const wxk_AboutInfo* about, wxk_Window* parent) WXK_NOEXCEPT;
+
 // Toolbar tools
 
 WXK_FUNCTION(wxk_Window*) wxk_ToolBarTool_GetToolBar(wxk_ToolBarTool* tool) WXK_NOEXCEPT;
