@@ -15,10 +15,16 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/trypsynth/wxkit</PackageProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageReleaseNotes>https://github.com/trypsynth/wxkit/releases</PackageReleaseNotes>
+		<!-- The symbols go to nuget.org's symbol server, and Source Link points them at the commit. -->
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Include="../../README.md;../../LICENSE" Pack="true" PackagePath="/" />
+		<!-- The repository's README is for working on WxKit. The package's is for using it. -->
+		<None Include="PACKAGE.md" Pack="true" PackagePath="README.md" />
+		<None Include="../../LICENSE" Pack="true" PackagePath="/" />
 		<None Include="build/WxKit.targets;build/wxkit.manifest;build/WxKitMergeResources.cs" Pack="true" PackagePath="buildTransitive/" />
 	</ItemGroup>
 

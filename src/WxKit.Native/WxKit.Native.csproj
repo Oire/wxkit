@@ -20,12 +20,15 @@
 		<PackageTags>wxwidgets;gui;desktop;native;native-aot</PackageTags>
 		<PackageLicenseFile>THIRD-PARTY-NOTICES.md</PackageLicenseFile>
 		<PackageProjectUrl>https://github.com/trypsynth/wxkit</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageReleaseNotes>https://github.com/trypsynth/wxkit/releases</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<None Include="$(_WxKitNativeBuild)/shared/*.dll;$(_WxKitNativeBuild)/shared/*.dylib;$(_WxKitNativeBuild)/shared/*.so" Pack="true" PackagePath="runtimes/$(WxKitRuntime)/native/" />
 		<None Include="$(_WxKitNativeBuild)/static/*" Pack="true" PackagePath="native/$(WxKitRuntime)/" />
 		<None Include="build/WxKit.Native.targets" Pack="true" PackagePath="buildTransitive/$(PackageId).targets" />
+		<None Include="PACKAGE.md" Pack="true" PackagePath="README.md" />
 		<None Include="../../THIRD-PARTY-NOTICES.md" Pack="true" PackagePath="/" />
 		<None Include="../../LICENSE" Pack="true" PackagePath="licenses/WxKit/" />
 		<None Include="$(_WxKitSources)/docs/licence.txt;$(_WxKitSources)/docs/lgpl.txt" Pack="true" PackagePath="licenses/wxWidgets/" />

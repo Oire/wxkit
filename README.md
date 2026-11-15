@@ -27,7 +27,7 @@ The tests create real windows, so they need a desktop session. `test-aot.ps1` pu
 
 ## Packages
 
-WxKit is not on nuget.org yet. To use it from an application of your own, build its packages, which go to `artifacts/packages`:
+WxKit is not on nuget.org yet. A tag will publish it there, as [Building and packaging](docs/design/building-and-packaging.md#releasing) describes. Until then, to use it from an application of your own, build its packages, which go to `artifacts/packages`:
 
 ```powershell
 ./scripts/build-native.ps1

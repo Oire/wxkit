@@ -68,6 +68,27 @@ Each native package's targets, in `buildTransitive`, set `WxKitNativeDirectory` 
 
 `scripts/test-package.ps1` uses the packages as an application would. It makes a project that empty `Directory.Build` files shut off from the repository's build, which restores `WxKit` from `artifacts/packages` into a folder of its own, and holds the Hello sample's code. It runs the project as it is, with the shared library, and then publishes it with Native AOT, checks that nothing native ships beside the executable, and runs that.
 
+## Releasing
+
+A tag that names a version, such as `v0.1.0-preview.1`, releases it. CI runs on the tag as it does on a push, packs every package with the tag's version, tests them, and then a publish job pushes them to nuget.org and makes a GitHub release with notes generated from the commits and the packages attached. A version with a suffix, such as `-preview.1`, is a prerelease in both places. `Directory.Build.props` only gives the version of builds that are not releases.
+
+```powershell
+git tag v0.1.0-preview.1
+git push origin v0.1.0-preview.1
+```
+
+The publish job signs in to nuget.org with Trusted Publishing: nuget.org trusts the workflow's GitHub identity, and the `NuGet/login` action trades it for a key that lasts an hour. No key is kept in the repository. The native packages go before `WxKit`, which depends on them, and a version nuget.org has already is skipped, so a run that failed partway can run again.
+
+Setting this up takes three steps, once:
+
+1. On nuget.org, under Trusted Publishing in the account's settings, add a policy for the repository owner `trypsynth`, the repository `wxkit`, the workflow file `ci.yml`, and the environment `nuget`.
+2. In the repository's settings on GitHub, under Environments, add one called `nuget`. Adding yourself as a required reviewer there makes every release wait for your approval before it publishes, and limiting it to tags that start with `v` keeps any other ref from using it.
+3. Under Actions variables, add `NUGET_USER`, set to the nuget.org user name the policy belongs to.
+
+nuget.org lets a version be unlisted, so a search no longer finds it, but not deleted, so a version number is only ever used once.
+
+The packages carry Source Link, and the managed library's symbols go to nuget.org's symbol server, so a debugger can step into WxKit's sources at the release's commit. A CI build is deterministic, which Source Link needs.
+
 ## Target framework
 
 The managed library targets `net10.0`. .NET 8 reaches the end of its support in November 2026, so supporting it would mean shipping for a version that is already out of support. The tests and samples target `net10.0` as well.
@@ -83,8 +104,9 @@ The native packages also contain the third-party libraries that wxWidgets builds
 CI runs on GitHub Actions:
 
 - A job per runtime, on a machine of that runtime's architecture, builds wxWidgets and the shim, caches the build by the runtime, the wxWidgets commit, and a hash of the build script, runs the tests, publishes the Native AOT smoke test, and uploads the native build. `win-x64` runs on `windows-2022`, and `win-arm64` on `windows-11-arm`. The x64 job also tests the generator, checks that the generated bindings are current, and checks formatting.
-- A pack job gathers every runtime's native build and packs the packages, which CI keeps for a week, as an artifact of the run. Publishing to nuget.org is a decision for later.
+- A pack job gathers every runtime's native build and packs the packages, which CI keeps for a week, as an artifact of the run.
 - A job per runtime, on that runtime's architecture again, tests the packages with `test-package.ps1`.
+- On a tag, a publish job pushes the packages to nuget.org, as Releasing describes.
 - A newer run for the same pull request cancels an older one.
 
 wxWidgets takes a long time to build, so the cache matters. A cold build of one runtime takes about 10 to 20 minutes on a desktop machine, and CI runners are slower.
