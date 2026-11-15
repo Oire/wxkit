@@ -627,35 +627,35 @@ public enum FontEncoding {
 	/// <summary>Default application encoding: this is the encoding set by calls to wxFont::SetDefaultEncoding(). Wraps wxFONTENCODING_DEFAULT.</summary>
 	Default = 0,
 	/// <summary>West European (Latin 1). Wraps wxFONTENCODING_ISO8859_1.</summary>
-	Iso8859One = 1,
+	Iso8859_1 = 1,
 	/// <summary>Central and East European (Latin 2). Wraps wxFONTENCODING_ISO8859_2.</summary>
-	Iso8859Two = 2,
+	Iso8859_2 = 2,
 	/// <summary>Esperanto (Latin 3). Wraps wxFONTENCODING_ISO8859_3.</summary>
-	Iso8859Three = 3,
+	Iso8859_3 = 3,
 	/// <summary>Baltic (old) (Latin 4). Wraps wxFONTENCODING_ISO8859_4.</summary>
-	Iso8859Four = 4,
+	Iso8859_4 = 4,
 	/// <summary>Cyrillic. Wraps wxFONTENCODING_ISO8859_5.</summary>
-	Iso8859Five = 5,
+	Iso8859_5 = 5,
 	/// <summary>Arabic. Wraps wxFONTENCODING_ISO8859_6.</summary>
-	Iso8859Six = 6,
+	Iso8859_6 = 6,
 	/// <summary>Greek. Wraps wxFONTENCODING_ISO8859_7.</summary>
-	Iso8859Seven = 7,
+	Iso8859_7 = 7,
 	/// <summary>Hebrew. Wraps wxFONTENCODING_ISO8859_8.</summary>
-	Iso8859Eight = 8,
+	Iso8859_8 = 8,
 	/// <summary>Turkish (Latin 5). Wraps wxFONTENCODING_ISO8859_9.</summary>
-	Iso8859Nine = 9,
+	Iso8859_9 = 9,
 	/// <summary>Variation of Latin 4 (Latin 6). Wraps wxFONTENCODING_ISO8859_10.</summary>
-	Iso8859One0 = 10,
+	Iso8859_10 = 10,
 	/// <summary>Thai. Wraps wxFONTENCODING_ISO8859_11.</summary>
-	Iso8859One1 = 11,
+	Iso8859_11 = 11,
 	/// <summary>Wraps wxFONTENCODING_ISO8859_12.</summary>
-	Iso8859One2 = 12,
+	Iso8859_12 = 12,
 	/// <summary>Baltic (Latin 7). Wraps wxFONTENCODING_ISO8859_13.</summary>
-	Iso8859One3 = 13,
+	Iso8859_13 = 13,
 	/// <summary>Latin 8. Wraps wxFONTENCODING_ISO8859_14.</summary>
-	Iso8859One4 = 14,
+	Iso8859_14 = 14,
 	/// <summary>Latin 9 (a.k.a. Latin 0, includes Euro symbol). Wraps wxFONTENCODING_ISO8859_15.</summary>
-	Iso8859One5 = 15,
+	Iso8859_15 = 15,
 	/// <summary>Wraps wxFONTENCODING_ISO8859_MAX.</summary>
 	Iso8859Max = 16,
 	/// <summary>KOI8 Russian. Wraps wxFONTENCODING_KOI8.</summary>
@@ -911,19 +911,19 @@ public enum HitTest {
 	/// <summary>Wraps wxHT_SCROLLBAR_FIRST.</summary>
 	ScrollBarFirst = 0,
 	/// <summary>left or upper arrow to scroll by line. Wraps wxHT_SCROLLBAR_ARROW_LINE_1.</summary>
-	ScrollBarArrowLineOne = 1,
+	ScrollBarArrowLine1 = 1,
 	/// <summary>right or down. Wraps wxHT_SCROLLBAR_ARROW_LINE_2.</summary>
-	ScrollBarArrowLineTwo = 2,
+	ScrollBarArrowLine2 = 2,
 	/// <summary>left or upper arrow to scroll by page. Wraps wxHT_SCROLLBAR_ARROW_PAGE_1.</summary>
-	ScrollBarArrowPageOne = 3,
+	ScrollBarArrowPage1 = 3,
 	/// <summary>right or down. Wraps wxHT_SCROLLBAR_ARROW_PAGE_2.</summary>
-	ScrollBarArrowPageTwo = 4,
+	ScrollBarArrowPage2 = 4,
 	/// <summary>on the thumb. Wraps wxHT_SCROLLBAR_THUMB.</summary>
 	ScrollBarThumb = 5,
 	/// <summary>bar to the left/above the thumb. Wraps wxHT_SCROLLBAR_BAR_1.</summary>
-	ScrollBarBarOne = 6,
+	ScrollBarBar1 = 6,
 	/// <summary>bar to the right/below the thumb. Wraps wxHT_SCROLLBAR_BAR_2.</summary>
-	ScrollBarBarTwo = 7,
+	ScrollBarBar2 = 7,
 	/// <summary>Wraps wxHT_SCROLLBAR_LAST.</summary>
 	ScrollBarLast = 8,
 	/// <summary>not in this window at all. Wraps wxHT_WINDOW_OUTSIDE.</summary>

@@ -14,6 +14,7 @@ internal static class ManagedEmitter {
 		yield return ("EventType.g.cs", EventTypes(result));
 		yield return ("Styles.g.cs", Styles(result));
 		yield return ("Enums.g.cs", Enums(result));
+		foreach (BoundEnum constants in result.Enums.Where(static bound => bound.IsConstantClass)) yield return ($"{constants.Name}.g.cs", ConstantClass(constants));
 		yield return ("ArtIds.g.cs", ArtIds(result));
 		yield return ("ObjectRegistry.g.cs", Factories(result));
 	}
@@ -268,9 +269,21 @@ internal static class ManagedEmitter {
 		return writer.ToString();
 	}
 
+	// An enum whose values go where any int does, such as wxStandardID's window ids, as int constants.
+	private static string ConstantClass(BoundEnum constants) {
+		CodeWriter writer = new CodeWriter().Line(Banner).Line().Line("namespace WxKit;").Line();
+		writer.Open($"public static partial class {constants.Name}");
+		foreach (BoundStyle member in constants.Members) {
+			Summary(writer, member.Description.Length > 0 ? $"{Sentence(member.Description)}Wraps {member.Constant}." : $"Wraps {member.Constant}.");
+			writer.Line($"public const int {member.Name} = {member.Value};");
+		}
+		writer.Close();
+		return writer.ToString();
+	}
+
 	private static string Enums(BindingResult result) {
 		CodeWriter writer = new CodeWriter().Line(Banner).Line().Line("namespace WxKit;");
-		foreach (BoundEnum bound in result.Enums) {
+		foreach (BoundEnum bound in result.Enums.Where(static bound => !bound.IsConstantClass)) {
 			writer.Line();
 			Summary(writer, $"Wraps {bound.CppName}.");
 			if (bound.IsFlags) writer.Line("[Flags]");

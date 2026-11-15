@@ -34,7 +34,7 @@ public enum CheckBoxStyle : long {
 	/// <summary>Create a 3-state checkbox. Wraps wxCHK_3STATE.</summary>
 	ThreeState = 0x1000,
 	/// <summary>By default a user can't set a 3-state checkbox to the third state. It can only be done from code. Using this flags allows the user to set the checkbox to the third state by clicking. Wraps wxCHK_ALLOW_3RD_STATE_FOR_USER.</summary>
-	AllowThreeRdStateForUser = 0x2000,
+	Allow3rdStateForUser = 0x2000,
 	/// <summary>Makes the text appear on the left of the checkbox. Wraps wxALIGN_RIGHT.</summary>
 	AlignRight = 0x200,
 }

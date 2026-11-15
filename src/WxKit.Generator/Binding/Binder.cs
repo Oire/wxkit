@@ -54,6 +54,11 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 			if (EnumFor(cppName) is null) throw new InvalidOperationException($"A tweak binds the enum {cppName}, which the interface headers do not have.");
 		}
 		foreach (ConstantEnumTweak group in tweaks.ConstantEnums) BindConstantEnum(group);
+		foreach ((string cppName, ConstantClassTweak constants) in tweaks.ConstantClasses) {
+			if (!api.Enums.TryGetValue(cppName, out DoxygenEnum? source)) throw new InvalidOperationException($"A tweak binds the enum {cppName} as constants, which the interface headers do not have.");
+			DoxygenEnum kept = source with { Values = [.. source.Values.Where(value => !constants.Exclude.Contains(value.Name)).DistinctBy(static value => value.Name)] };
+			_enums[$"{cppName} constants"] = new BoundEnum(constants.Name, cppName, EnumMembers(cppName, kept, memberPrefix: null)) { IsConstantClass = true };
+		}
 		return new BindingResult(
 			[.. _classes.Values.OrderBy(static bound => bound.CppName, StringComparer.Ordinal)],
 			[.. _eventTypes.Values.OrderBy(static type => type.Name, StringComparer.Ordinal)],

@@ -8,7 +8,7 @@ public static class ArtId {
 	/// <summary>Wraps wxART_ADD_BOOKMARK.</summary>
 	public const string AddBookmark = "wxART_ADD_BOOKMARK";
 	/// <summary>Wraps wxART_CDROM.</summary>
-	public const string Cdrom = "wxART_CDROM";
+	public const string CdRom = "wxART_CDROM";
 	/// <summary>Wraps wxART_CLOSE.</summary>
 	public const string Close = "wxART_CLOSE";
 	/// <summary>Wraps wxART_COPY.</summary>
@@ -64,7 +64,7 @@ public static class ArtId {
 	/// <summary>Wraps wxART_GO_UP.</summary>
 	public const string GoUp = "wxART_GO_UP";
 	/// <summary>Wraps wxART_HARDDISK.</summary>
-	public const string Harddisk = "wxART_HARDDISK";
+	public const string HardDisk = "wxART_HARDDISK";
 	/// <summary>Wraps wxART_HELP.</summary>
 	public const string Help = "wxART_HELP";
 	/// <summary>Wraps wxART_HELP_BOOK.</summary>

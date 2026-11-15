@@ -49,4 +49,13 @@ public class NamingTests {
 	[InlineData("wxICON_ERROR", null, "wxMessageDialog", "IconError")]
 	[InlineData("wxCENTRE", null, "wxMessageDialog", "Center")]
 	public void NamesStyles(string constant, string? prefix, string className, string name) => Assert.Equal(name, Naming.Style(constant, prefix, className));
+
+	// A leading digit is spelled out, since an identifier cannot start with one, but not one later,
+	// and a number after a number keeps the underscore between them.
+	[Theory]
+	[InlineData("3STATE", "ThreeState")]
+	[InlineData("ZOOM_100", "Zoom100")]
+	[InlineData("ISO8859_10", "Iso8859_10")]
+	[InlineData("SAVEAS", "SaveAs")]
+	public void SpellsWordsAndNumbers(string upper, string managed) => Assert.Equal(managed, Naming.Words(upper));
 }

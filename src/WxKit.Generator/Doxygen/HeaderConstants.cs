@@ -58,7 +58,9 @@ internal static partial class HeaderConstants {
 					string value = parts.Length == 2 ? WhitespacePattern().Replace(parts[1], " ") : $"({previous}) + 1";
 					previous = parts[0];
 					if (depth > 0 || (shifted && parts.Length == 1)) conditional.Add(parts[0]);
-					shifted |= depth > 0;
+					// A value after an #if follows it only until one gives its own value, as
+					// wxID_EDIT = 5030 does, after which the count no longer depends on the platform.
+					shifted = depth > 0 || (shifted && parts.Length == 1);
 					if (values.TryGetValue(parts[0], out string? existing) && existing != value) conditional.Add(parts[0]);
 					values[parts[0]] = value;
 				}

@@ -90,6 +90,9 @@ internal static class Core {
 		tweaks.Class("wxToolBar").DiscardUnboundReturns();
 		// Lists and trees, and what they hold.
 		// Accessibility, for the hand-written Accessible, which describes a custom control to screen readers.
+		// The standard ids, which give a button or menu item the platform's label and shortcut. The
+		// bounds of the ids wxWidgets assigns itself, and those of its own file controls, are its own.
+		tweaks.ConstantClass("wxStandardID", "StandardId", "wxID_AUTO_LOWEST", "wxID_AUTO_HIGHEST", "wxID_LOWEST", "wxID_HIGHEST", "wxID_FILEDLGG", "wxID_FILECTRL");
 		// Only wxMSW declares them, under wxUSE_ACCESSIBILITY.
 		const string accessibility = "wxUSE_ACCESSIBILITY";
 		tweaks.Enum("wxAccRole", "AccessibleRole", memberPrefix: "wxROLE_SYSTEM_", guard: accessibility);

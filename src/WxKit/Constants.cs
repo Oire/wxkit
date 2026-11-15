@@ -2,32 +2,10 @@ namespace WxKit;
 
 /// <summary>
 /// The ids wxWidgets gives standard commands, such as wxID_OK. A button or menu item with one of
-/// these gets the platform's standard label, and a dialog's buttons with them close it.
+/// these gets the platform's standard label and shortcut, and a dialog's buttons with them close
+/// it. <see cref="Any"/> lets wxWidgets pick an id. The ids are generated from wxStandardID.
 /// </summary>
-public static class StandardId {
-	/// <summary>Lets wxWidgets pick an id. Wraps wxID_ANY.</summary>
-	public const int Any = -1;
-	public const int Open = 5000;
-	public const int Close = 5001;
-	public const int New = 5002;
-	public const int Save = 5003;
-	public const int SaveAs = 5004;
-	public const int Revert = 5005;
-	public const int Exit = 5006;
-	public const int Undo = 5007;
-	public const int Redo = 5008;
-	public const int Help = 5009;
-	public const int Print = 5010;
-	public const int PrintSetup = 5011;
-	public const int PageSetup = 5012;
-	public const int Preview = 5013;
-	public const int About = 5014;
-	public const int Ok = 5100;
-	public const int Cancel = 5101;
-	public const int Apply = 5102;
-	public const int Yes = 5103;
-	public const int No = 5104;
-}
+public static partial class StandardId;
 
 /// <summary>Which way a sizer lays its items out, or which way to center a window.</summary>
 [Flags]

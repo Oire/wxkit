@@ -32,11 +32,22 @@ internal sealed class Tweaks {
 	public void Enum(string cppName, string managedName, bool isFlags = false, string? memberPrefix = null, string? guard = null) => Enums[cppName] = new EnumTweak(managedName, isFlags, memberPrefix, guard);
 
 	public void ConstantEnum(string managedName, string prefix, bool isFlags = false, string? guard = null) => ConstantEnums.Add(new ConstantEnumTweak(managedName, prefix, isFlags, guard));
+
+	/// <summary>
+	/// C++ enums bound as a static class of int constants rather than a C# enum, such as wxStandardID
+	/// as StandardId, for values that go where any int does, such as a window's id.
+	/// </summary>
+	public Dictionary<string, ConstantClassTweak> ConstantClasses { get; } = new(StringComparer.Ordinal);
+
+	/// <param name="exclude">Values left out, such as the bounds of the ids wxWidgets assigns itself.</param>
+	public void ConstantClass(string cppName, string managedName, params string[] exclude) => ConstantClasses[cppName] = new ConstantClassTweak(managedName, new HashSet<string>(exclude, StringComparer.Ordinal));
 }
 
 internal sealed record OverloadGuard(string Member, string Parameter, string Type, string Condition) {
 	public bool Matches(DoxygenMember member) => member.Name == Member && member.Parameters.Any(parameter => parameter.Name == Parameter && parameter.Type.Replace(" ", string.Empty, StringComparison.Ordinal) == Type.Replace(" ", string.Empty, StringComparison.Ordinal));
 }
+
+internal sealed record ConstantClassTweak(string Name, IReadOnlySet<string> Exclude);
 
 internal sealed record EnumTweak(string Name, bool IsFlags, string? MemberPrefix, string? Guard);
 

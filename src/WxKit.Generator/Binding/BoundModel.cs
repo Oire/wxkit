@@ -19,6 +19,9 @@ internal sealed record BoundEnum(string Name, string CppName, IReadOnlyList<Boun
 
 	/// <summary>The preprocessor condition under which wxWidgets declares it, which its checks in the shim are under.</summary>
 	public string? Guard { get; init; }
+
+	/// <summary>Whether it is a static class of int constants, such as StandardId, rather than a C# enum.</summary>
+	public bool IsConstantClass { get; init; }
 }
 
 /// <summary>How objects of a class cross the boundary: the handle type and what it points at.</summary>

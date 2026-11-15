@@ -37,6 +37,19 @@ internal static class Naming {
 		["3DSASH"] = "ThreeDSash",
 		["3DBORDER"] = "ThreeDBorder",
 		["DATAVIEW"] = "DataView",
+		// So do the standard ids.
+		["SAVEAS"] = "SaveAs",
+		["SELECTALL"] = "SelectAll",
+		["LARGEICONS"] = "LargeIcons",
+		["SMALLICONS"] = "SmallIcons",
+		["SORTDATE"] = "SortDate",
+		["SORTNAME"] = "SortName",
+		["SORTSIZE"] = "SortSize",
+		["SORTTYPE"] = "SortType",
+		["YESTOALL"] = "YesToAll",
+		["NOTOALL"] = "NoToAll",
+		["CDROM"] = "CdRom",
+		["HARDDISK"] = "HardDisk",
 		// The find dialog's flags and styles run theirs together too.
 		["MATCHCASE"] = "MatchCase",
 		["WHOLEWORD"] = "WholeWord",
@@ -255,13 +268,16 @@ internal static class Naming {
 				continue;
 			}
 			// A word already in mixed case, such as RightToLeft in wxLayout_RightToLeft, keeps its own
-			// casing. A leading digit is spelled out, since an identifier cannot start with one.
+			// casing. A leading digit is spelled out, since an identifier cannot start with one, but
+			// only at the start, so ZOOM_100 is Zoom100.
 			string rest = word.Any(char.IsLower) ? word[1..] : word[1..].ToLower(CultureInfo.InvariantCulture);
-			if (char.IsDigit(word[0])) {
+			if (char.IsDigit(word[0]) && result.Length == 0) {
 				result.Append(Digits[word[0] - '0']);
 				if (rest.Length > 0) result.Append(char.ToUpperInvariant(rest[0])).Append(rest[1..]);
 				continue;
 			}
+			// A number after a number keeps the underscore between them, so ISO8859_10 is Iso8859_10.
+			if (char.IsDigit(word[0]) && char.IsDigit(result[^1])) result.Append('_');
 			result.Append(char.ToUpperInvariant(word[0])).Append(rest);
 		}
 		return Respell(result.ToString());
