@@ -230,6 +230,27 @@ WXK_FUNCTION(uint8_t) wxk_CollapsiblePane_IsExpanded(wxk_Window* self) WXK_NOEXC
 WXK_FUNCTION(uint8_t) wxk_CollapsiblePaneEvent_GetCollapsed(wxk_Event* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_CollapsiblePaneEvent_SetCollapsed(wxk_Event* self, uint8_t collapsed) WXK_NOEXCEPT;
 
+// wxColourData
+
+WXK_FUNCTION(wxk_Object*) wxk_ColorData_new(void) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Colour) wxk_ColorData_GetCustomColour(wxk_Object* self, int32_t i) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ColorData_SetCustomColour(wxk_Object* self, int32_t i, wxk_Colour color) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ColorData_GetChooseFull(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ColorData_SetChooseFull(wxk_Object* self, uint8_t flag) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ColorData_GetChooseAlpha(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ColorData_SetChooseAlpha(wxk_Object* self, uint8_t flag) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Colour) wxk_ColorData_GetColour(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ColorData_SetColour(wxk_Object* self, wxk_Colour color) WXK_NOEXCEPT;
+
+// wxColourDialog
+
+WXK_FUNCTION(wxk_Window*) wxk_ColorDialog_new(wxk_Window* parent, wxk_Object* data) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_ColorDialog_GetColourData(wxk_Window* self) WXK_NOEXCEPT;
+
+// wxColourDialogEvent
+
+WXK_FUNCTION(wxk_Colour) wxk_ColorDialogEvent_GetColour(wxk_Event* self) WXK_NOEXCEPT;
+
 // wxComboBox
 
 WXK_FUNCTION(wxk_Window*) wxk_ComboBox_new_WindowIntStringPointSize(wxk_Window* parent, int32_t id, const char16_t* value, size_t valueLength, wxk_Point position, wxk_Size size) WXK_NOEXCEPT;
@@ -2410,6 +2431,7 @@ WXK_FUNCTION(int32_t) wxk_EventType_ChildFocus(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_Choice(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_CloseWindow(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_CollapsiblepaneChanged(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_ColorChanged(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_ComboBox(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_ComboBoxCloseup(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_ComboBoxDropdown(void) WXK_NOEXCEPT;

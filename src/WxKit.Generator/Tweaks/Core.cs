@@ -73,6 +73,12 @@ internal static class Core {
 		// The font dialog copies the data it is given, and gives a copy back.
 		tweaks.Class("wxFontData", data => data.ValueObject().Property("EnableEffects", "GetEnableEffects", "EnableEffects").Property("RestrictSelection", "GetRestrictSelection", "RestrictSelection"));
 		tweaks.Class("wxFontDialog");
+		// The color dialog, and the event wxMSW sends as the color in it changes. Events are only
+		// received, so the event's color is only read.
+		// ToString and FromString write and read the custom colors, which would hide object.ToString.
+		tweaks.Class("wxColourData", data => data.ValueObject().Ignore("ToString", "FromString"));
+		tweaks.Class("wxColourDialog", dialog => dialog.AddEvent("EVT_COLOUR_CHANGED", "wxEVT_COLOUR_CHANGED", "wxColourDialogEvent", "ColorChanged"));
+		tweaks.Class("wxColourDialogEvent", e => e.Ignore("SetColour"));
 		tweaks.Class("wxPanel");
 		tweaks.Class("wxButton", button => button.Event("EVT_BUTTON", "Click"));
 		tweaks.Class("wxStaticText");
@@ -228,5 +234,7 @@ internal static class Core {
 		// Bound by hand-written classes: menu items' clicks and timers' ticks.
 		tweaks.EventType("wxEVT_MENU", "wxCommandEvent");
 		tweaks.EventType("wxEVT_TIMER", "wxTimerEvent");
+		// The headers give the color dialog's event the color picker's class, which it is not.
+		tweaks.EventType("wxEVT_COLOUR_CHANGED", "wxColourDialogEvent");
 	}
 }

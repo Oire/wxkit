@@ -10,7 +10,10 @@ internal sealed class Tweaks {
 
 	public IReadOnlyDictionary<string, ClassTweak> Classes => _classes;
 
-	/// <summary>Event types to bind even though no bound class lists them, and the event class each sends.</summary>
+	/// <summary>
+	/// Event types to bind even though no bound class lists them, and the event class each sends,
+	/// which wins over the one the headers give, for when they give the wrong one.
+	/// </summary>
 	public Dictionary<string, string> ExtraEventTypes { get; } = new(StringComparer.Ordinal);
 
 	public ClassTweak Class(string name, Action<ClassTweak>? configure = null) {

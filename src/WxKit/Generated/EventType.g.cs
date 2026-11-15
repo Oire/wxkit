@@ -124,6 +124,13 @@ public static unsafe partial class EventType {
 		public static readonly EventType<CollapsiblePaneEvent> Value = new(WxKitNative.EventTypeCollapsiblepaneChanged, static native => new CollapsiblePaneEvent((WxkEvent*)native));
 	}
 
+	/// <summary>Wraps wxEVT_COLOUR_CHANGED.</summary>
+	public static EventType<ColorDialogEvent> ColorChanged => ColorChangedType.Value;
+
+	private static class ColorChangedType {
+		public static readonly EventType<ColorDialogEvent> Value = new(WxKitNative.EventTypeColorChanged, static native => new ColorDialogEvent((WxkEvent*)native));
+	}
+
 	/// <summary>Wraps wxEVT_COMBOBOX.</summary>
 	public static EventType<CommandEvent> ComboBox => ComboBoxType.Value;
 

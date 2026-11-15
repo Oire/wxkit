@@ -14,6 +14,7 @@ internal static unsafe partial class ObjectRegistry {
 		["wxCheckListBox"] = static native => new CheckListBox((WxkWindow*)native),
 		["wxChoice"] = static native => new Choice((WxkWindow*)native),
 		["wxCollapsiblePane"] = static native => new CollapsiblePane((WxkWindow*)native),
+		["wxColourDialog"] = static native => new ColorDialog((WxkWindow*)native),
 		["wxComboBox"] = static native => new ComboBox((WxkWindow*)native),
 		["wxControl"] = static native => new Control((WxkWindow*)native),
 		["wxControlWithItems"] = static native => new ControlWithItems((WxkWindow*)native),

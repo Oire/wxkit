@@ -331,7 +331,9 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 			if (!isReturn && target.Handle == HandleKind.Tool) return null;
 			return isReturn && !target.Handle.IsEvtHandler && !target.Handle.IsKeptByOwner ? null : new ObjectConversion(target);
 		}
-		if (!type.IsValueOrConstReference) return null;
+		// A reference that comes back, even one that could change, such as a color dialog's data,
+		// is copied, as a value or a const reference is.
+		if (!type.IsValueOrConstReference && !(isReturn && type.IsReference && type.Pointers == 0)) return null;
 		if (_classes.TryGetValue(type.Name, out BoundClass? value) && value.Handle == HandleKind.Value) return new ValueConversion(value);
 		// Bundles of bitmaps or icons, which wxWidgets uses for every resolution, convert from one.
 		if (!isReturn && type.Name == "wxBitmapBundle" && _classes.TryGetValue("wxBitmap", out BoundClass? bitmap)) return new ValueConversion(bitmap, "wxBitmapBundle");
@@ -523,6 +525,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 
 	private BoundEventType EventTypeFor(string constant, string eventClass) {
 		if (_eventTypes.TryGetValue(constant, out BoundEventType? existing)) return existing;
+		if (tweaks.ExtraEventTypes.TryGetValue(constant, out string? given)) eventClass = given;
 		// An event class WxKit does not bind is delivered as its nearest bound ancestor.
 		BoundClass wrapper = Ancestors(eventClass).Select(name => _classes.GetValueOrDefault(name)).FirstOrDefault(static candidate => candidate?.Handle == HandleKind.Event)
 			?? throw new InvalidOperationException($"No bound event class can carry {constant}, a {eventClass}.");

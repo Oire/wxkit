@@ -14,6 +14,8 @@
 #include <wx/choicdlg.h>
 #include <wx/choice.h>
 #include <wx/collpane.h>
+#include <wx/colordlg.h>
+#include <wx/colourdata.h>
 #include <wx/combobox.h>
 #include <wx/control.h>
 #include <wx/ctrlsub.h>

@@ -718,6 +718,54 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void CollapsiblePaneEventSetCollapsed(WxkEvent* self, byte collapsed);
 
+	[LibraryImport(Library, EntryPoint = "wxk_ColorData_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* ColorDataNew();
+
+	[LibraryImport(Library, EntryPoint = "wxk_ColorData_GetCustomColour")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkColor ColorDataGetCustomColour(WxkObject* self, int i);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ColorData_SetCustomColour")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ColorDataSetCustomColour(WxkObject* self, int i, WxkColor color);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ColorData_GetChooseFull")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ColorDataGetChooseFull(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ColorData_SetChooseFull")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ColorDataSetChooseFull(WxkObject* self, byte flag);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ColorData_GetChooseAlpha")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ColorDataGetChooseAlpha(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ColorData_SetChooseAlpha")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ColorDataSetChooseAlpha(WxkObject* self, byte flag);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ColorData_GetColour")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkColor ColorDataGetColour(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ColorData_SetColour")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ColorDataSetColour(WxkObject* self, WxkColor color);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ColorDialog_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* ColorDialogNew(WxkWindow* parent, WxkObject* data);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ColorDialog_GetColourData")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* ColorDialogGetColourData(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ColorDialogEvent_GetColour")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkColor ColorDialogEventGetColour(WxkEvent* self);
+
 	[LibraryImport(Library, EntryPoint = "wxk_ComboBox_new_WindowIntStringPointSize")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkWindow* ComboBoxNewWindowIntStringPointSize(WxkWindow* parent, int id, char* value, nuint valueLength, Point position, Size size);
@@ -8265,6 +8313,10 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_CollapsiblepaneChanged")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeCollapsiblepaneChanged();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_ColorChanged")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeColorChanged();
 
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_ComboBox")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
