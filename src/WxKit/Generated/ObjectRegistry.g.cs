@@ -41,6 +41,7 @@ internal static unsafe partial class ObjectRegistry {
 		["wxMessageDialog"] = static native => new MessageDialog((WxkWindow*)native),
 		["wxMultiChoiceDialog"] = static native => new MultiChoiceDialog((WxkWindow*)native),
 		["wxNotebook"] = static native => new Notebook((WxkWindow*)native),
+		["wxNotificationMessage"] = static native => new NotificationMessage((WxkEvtHandler*)native),
 		["wxPanel"] = static native => new Panel((WxkWindow*)native),
 		["wxPasswordEntryDialog"] = static native => new PasswordEntryDialog((WxkWindow*)native),
 		["wxPickerBase"] = static native => new PickerBase((WxkWindow*)native),

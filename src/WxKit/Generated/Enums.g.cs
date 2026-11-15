@@ -1061,6 +1061,18 @@ public enum NavigationDirection {
 	Up = 7,
 }
 
+/// <summary>Wraps wxICON_*.</summary>
+public enum NotificationIcon {
+	/// <summary>Wraps wxICON_WARNING.</summary>
+	Warning = 256,
+	/// <summary>Wraps wxICON_ERROR.</summary>
+	Error = 512,
+	/// <summary>Wraps wxICON_INFORMATION.</summary>
+	Information = 2048,
+	/// <summary>Wraps wxICON_NONE.</summary>
+	None = 262144,
+}
+
 /// <summary>Wraps wxHelpEvent::Origin.</summary>
 public enum Origin {
 	/// <summary>unrecognized event source. Wraps Origin_Unknown.</summary>

@@ -845,6 +845,27 @@ public static unsafe partial class EventType {
 		public static readonly EventType<BookCtrlEvent> Value = new(WxKitNative.EventTypeNotebookPageChanging, static native => new BookCtrlEvent((WxkEvent*)native));
 	}
 
+	/// <summary>Wraps wxEVT_NOTIFICATION_MESSAGE_ACTION.</summary>
+	public static EventType<CommandEvent> NotificationMessageAction => NotificationMessageActionType.Value;
+
+	private static class NotificationMessageActionType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeNotificationMessageAction, static native => new CommandEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_NOTIFICATION_MESSAGE_CLICK.</summary>
+	public static EventType<CommandEvent> NotificationMessageClick => NotificationMessageClickType.Value;
+
+	private static class NotificationMessageClickType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeNotificationMessageClick, static native => new CommandEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_NOTIFICATION_MESSAGE_DISMISSED.</summary>
+	public static EventType<CommandEvent> NotificationMessageDismissed => NotificationMessageDismissedType.Value;
+
+	private static class NotificationMessageDismissedType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeNotificationMessageDismissed, static native => new CommandEvent((WxkEvent*)native));
+	}
+
 	/// <summary>Wraps wxEVT_PAINT.</summary>
 	public static EventType<PaintEvent> Paint => PaintType.Value;
 

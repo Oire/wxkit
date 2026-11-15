@@ -4970,6 +4970,50 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int NotebookGetTabOrientation(WxkWindow* self);
 
+	[LibraryImport(Library, EntryPoint = "wxk_NotificationMessage_new_Default")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkEvtHandler* NotificationMessageNewDefault();
+
+	[LibraryImport(Library, EntryPoint = "wxk_NotificationMessage_new_StringStringWindowNotificationIcon")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkEvtHandler* NotificationMessageNewStringStringWindowNotificationIcon(char* title, nuint titleLength, char* message, nuint messageLength, WxkWindow* parent, int icon);
+
+	[LibraryImport(Library, EntryPoint = "wxk_NotificationMessage_AddAction")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte NotificationMessageAddAction(WxkEvtHandler* self, int actionId, char* label, nuint labelLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_NotificationMessage_Close")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte NotificationMessageClose(WxkEvtHandler* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_NotificationMessage_SetFlags")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void NotificationMessageSetFlags(WxkEvtHandler* self, int flags);
+
+	[LibraryImport(Library, EntryPoint = "wxk_NotificationMessage_SetIcon")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void NotificationMessageSetIcon(WxkEvtHandler* self, WxkObject* icon);
+
+	[LibraryImport(Library, EntryPoint = "wxk_NotificationMessage_SetMessage")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void NotificationMessageSetMessage(WxkEvtHandler* self, char* message, nuint messageLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_NotificationMessage_SetParent")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void NotificationMessageSetParent(WxkEvtHandler* self, WxkWindow* parent);
+
+	[LibraryImport(Library, EntryPoint = "wxk_NotificationMessage_SetTitle")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void NotificationMessageSetTitle(WxkEvtHandler* self, char* title, nuint titleLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_NotificationMessage_Show")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte NotificationMessageShow(WxkEvtHandler* self, int timeout);
+
+	[LibraryImport(Library, EntryPoint = "wxk_NotificationMessage_MSWUseToasts")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte NotificationMessageMSWUseToasts(char* shortcutPath, nuint shortcutPathLength, char* appId, nuint appIdLength);
+
 	[LibraryImport(Library, EntryPoint = "wxk_NotifyEvent_Allow")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void NotifyEventAllow(WxkEvent* self);
@@ -8881,6 +8925,18 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_NotebookPageChanging")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeNotebookPageChanging();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_NotificationMessageAction")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeNotificationMessageAction();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_NotificationMessageClick")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeNotificationMessageClick();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_NotificationMessageDismissed")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeNotificationMessageDismissed();
 
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_Paint")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

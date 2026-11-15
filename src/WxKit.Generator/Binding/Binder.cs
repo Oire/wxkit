@@ -13,6 +13,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 	// Known string constants used as defaults, and their values.
 	private static readonly Dictionary<string, string> StringDefaults = new(StringComparer.Ordinal) {
 		["wxEmptyString"] = string.Empty,
+		["wxString()"] = string.Empty,
 		["wxMessageBoxCaptionStr"] = "Message",
 	};
 

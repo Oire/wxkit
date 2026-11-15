@@ -355,6 +355,11 @@ typedef struct wxk_AboutInfo {
 // Shows the platform's About box, or wxWidgets's own when the platform's cannot show everything.
 WXK_FUNCTION(void) wxk_AboutBox_Show(const wxk_AboutInfo* about, wxk_Window* parent) WXK_NOEXCEPT;
 
+// Notifications
+
+// Deletes a notification, which hides it if it is showing.
+WXK_FUNCTION(void) wxk_NotificationMessage_Free(wxk_EvtHandler* notification) WXK_NOEXCEPT;
+
 // Toolbar tools
 
 WXK_FUNCTION(wxk_Window*) wxk_ToolBarTool_GetToolBar(wxk_ToolBarTool* tool) WXK_NOEXCEPT;

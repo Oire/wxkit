@@ -208,6 +208,18 @@ internal static class Core {
 		tweaks.Class("wxListItem").ValueObject();
 		tweaks.Class("wxListEvent");
 		tweaks.Class("wxTreeEvent");
+		// Notifications, which the application frees with Dispose, as it does timers. Only wxMSW has toasts.
+		// Its icons are three of wxWidgets's message icons.
+		tweaks.ConstantEnum("NotificationIcon", "wxICON_", excludePrefixes: ["wxICON_EXCLAMATION", "wxICON_HAND", "wxICON_STOP", "wxICON_ASTERISK", "wxICON_QUESTION", "wxICON_MASK", "wxICON_AUTH_NEEDED", "wxICON_DEFAULT", "wxICON_SCREEN_"]);
+		tweaks.Class("wxNotificationMessage", notification => notification
+			.Guard("defined(__WXMSW__)", "MSWUseToasts")
+			.ParameterEnum("wxNotificationMessage", "flags", "NotificationIcon")
+			.ParameterEnum("SetFlags", "flags", "NotificationIcon")
+			.ParameterName("wxNotificationMessage", "flags", "icon")
+			.ParameterName("AddAction", "actionid", "actionId")
+			.Event("EVT_NOTIFICATION_MESSAGE_CLICK", "Clicked")
+			.Event("EVT_NOTIFICATION_MESSAGE_DISMISSED", "Dismissed")
+			.Event("EVT_NOTIFICATION_MESSAGE_ACTION", "ActionSelected"));
 		// A progress dialog's styles are constants, not a style table.
 		tweaks.ConstantEnum("ProgressDialogStyle", "wxPD_", isFlags: true);
 		tweaks.Class("wxProgressDialog").ParameterEnum("wxProgressDialog", "style", "ProgressDialogStyle");

@@ -46,6 +46,7 @@
 #include <wx/menu.h>
 #include <wx/msgdlg.h>
 #include <wx/notebook.h>
+#include <wx/notifmsg.h>
 #include <wx/panel.h>
 #include <wx/pen.h>
 #include <wx/pickerbase.h>

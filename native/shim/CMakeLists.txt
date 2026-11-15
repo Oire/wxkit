@@ -75,6 +75,7 @@ set(WXK_SOURCES
 	src/dataview.cpp
 	src/event.cpp
 	src/handlers/all.cpp
+	src/notification.cpp
 	src/handlers/png.cpp
 	src/handlers/jpeg.cpp
 	src/handlers/tiff.cpp
