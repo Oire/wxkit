@@ -19,9 +19,11 @@ $package = Get-ChildItem $packages -Filter "WxKit.*.nupkg" | Where-Object { $_.N
 if (-not $package) { throw "There is no WxKit package in $packages. Run scripts/pack.ps1 first." }
 $version = $package.Name.Substring("WxKit.".Length, $package.Name.Length - "WxKit.".Length - ".nupkg".Length)
 
-$installer = Join-Path ${env:ProgramFiles(x86)} "Microsoft Visual Studio/Installer"
-if ($IsWindows -and (Test-Path $installer) -and -not ($env:PATH -split ";" -contains $installer)) {
-	$env:PATH = "$installer;$env:PATH"
+if ($IsWindows) {
+	$installer = Join-Path ${env:ProgramFiles(x86)} "Microsoft Visual Studio/Installer"
+	if ((Test-Path $installer) -and -not ($env:PATH -split ";" -contains $installer)) {
+		$env:PATH = "$installer;$env:PATH"
+	}
 }
 
 # Empty Directory.Build files shut the project off from the repository's build, so none of its

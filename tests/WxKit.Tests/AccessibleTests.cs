@@ -9,6 +9,7 @@ namespace WxKit.Tests;
 public class AccessibleTests {
 	[Fact]
 	public Task DescribesAControlAndItsParts() => Gui.WithFrame(frame => {
+		Assert.SkipUnless(OperatingSystem.IsWindows(), "Microsoft Active Accessibility is Windows's.");
 		Panel board = new(frame);
 		BoardAccessible accessible = new(board);
 		Assert.Same(accessible, board.AccessibleObject);
@@ -26,6 +27,7 @@ public class AccessibleTests {
 
 	[Fact]
 	public Task DoesAPartsDefaultAction() => Gui.WithFrame(frame => {
+		Assert.SkipUnless(OperatingSystem.IsWindows(), "Microsoft Active Accessibility is Windows's.");
 		Panel board = new(frame);
 		BoardAccessible accessible = new(board);
 		Msaa.Of(board).DoDefaultAction(7);
@@ -34,6 +36,7 @@ public class AccessibleTests {
 
 	[Fact]
 	public Task ReportsTheFocusedPart() => Gui.WithFrame(frame => {
+		Assert.SkipUnless(OperatingSystem.IsWindows(), "Microsoft Active Accessibility is Windows's.");
 		Panel board = new(frame);
 		_ = new BoardAccessible(board);
 		Assert.Equal(5, Msaa.Of(board).GetFocus());
@@ -41,6 +44,7 @@ public class AccessibleTests {
 
 	[Fact]
 	public Task LeavesWhatItDoesNotAnswerToWindows() => Gui.WithFrame(frame => {
+		Assert.SkipUnless(OperatingSystem.IsWindows(), "Microsoft Active Accessibility is Windows's.");
 		Panel panel = new(frame);
 		_ = new NameOnly(panel);
 		IAccessible msaa = Msaa.Of(panel);
@@ -50,6 +54,7 @@ public class AccessibleTests {
 
 	[Fact]
 	public Task TellsTheScreenReaderAPartDoesNotExist() => Gui.WithFrame(frame => {
+		Assert.SkipUnless(OperatingSystem.IsWindows(), "Microsoft Active Accessibility is Windows's.");
 		Panel board = new(frame);
 		_ = new BoardAccessible(board);
 		Assert.ThrowsAny<ArgumentException>(() => Msaa.Of(board).GetName(42));
@@ -58,6 +63,7 @@ public class AccessibleTests {
 
 	[Fact]
 	public Task ReportsAnExceptionAndFails() => Gui.WithFrame(frame => {
+		Assert.SkipUnless(OperatingSystem.IsWindows(), "Microsoft Active Accessibility is Windows's.");
 		Panel panel = new(frame);
 		_ = new Throwing(panel);
 		Assert.ThrowsAny<COMException>(() => Msaa.Of(panel).GetName(0));
@@ -67,6 +73,7 @@ public class AccessibleTests {
 
 	[Fact]
 	public Task ReplacesAWindowsAccessibleObject() => Gui.WithFrame(frame => {
+		Assert.SkipUnless(OperatingSystem.IsWindows(), "Microsoft Active Accessibility is Windows's.");
 		Panel panel = new(frame);
 		_ = new NameOnly(panel);
 		BoardAccessible second = new(panel);
@@ -76,6 +83,7 @@ public class AccessibleTests {
 
 	[Fact]
 	public Task LetsGoWhenTheWindowIsDestroyed() => Gui.WithFrame(frame => {
+		Assert.SkipUnless(OperatingSystem.IsWindows(), "Microsoft Active Accessibility is Windows's.");
 		Panel panel = new(frame);
 		_ = new NameOnly(panel);
 		Assert.NotNull(panel.AccessibleObject);

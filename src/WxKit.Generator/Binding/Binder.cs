@@ -16,7 +16,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		["wxMessageBoxCaptionStr"] = "Message",
 	};
 
-	private readonly Constants _constants = new(api.Constants);
+	private readonly Constants _constants = new(api.Constants, api.HeaderDefines);
 	private readonly Dictionary<string, BoundClass> _classes = new(StringComparer.Ordinal);
 	private readonly Dictionary<string, BoundEventType> _eventTypes = new(StringComparer.Ordinal);
 	private readonly Dictionary<string, BoundEnum?> _enums = new(StringComparer.Ordinal);
@@ -533,7 +533,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		if (!api.Enums.TryGetValue(cppName, out DoxygenEnum? source) || source.Values.Count == 0) return null;
 		EnumTweak? tweak = tweaks.Enums.GetValueOrDefault(cppName);
 		string managed = tweak?.Name ?? Naming.Type(cppName.Contains("::", StringComparison.Ordinal) ? cppName[(cppName.LastIndexOf(':') + 1)..] : cppName);
-		BoundEnum bound = new(managed, cppName, EnumMembers(cppName, source, tweak?.MemberPrefix)) { IsFlags = tweak?.IsFlags ?? false };
+		BoundEnum bound = new(managed, cppName, EnumMembers(cppName, source, tweak?.MemberPrefix)) { IsFlags = tweak?.IsFlags ?? false, Guard = tweak?.Guard };
 		_enums[cppName] = bound;
 		return bound;
 	}
@@ -562,7 +562,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		DoxygenEnum source = new($"{group.Prefix}*", [.. names.Select(static name => new DoxygenEnumValue(name, string.Empty))]);
 		List<BoundStyle> members = [.. EnumMembers(source.Name, source, memberPrefix: null).OrderBy(static member => member.Value)];
 		if (group.IsFlags && members.All(static member => member.Value != 0)) members.Insert(0, new BoundStyle("None", "0", 0, "None of the flags."));
-		_enums[group.Name] = new BoundEnum(group.Name, source.Name, members) { IsFlags = group.IsFlags };
+		_enums[group.Name] = new BoundEnum(group.Name, source.Name, members) { IsFlags = group.IsFlags, Guard = group.Guard };
 	}
 
 	// How many leading words all of an enum's members share, such as SHOW_EFFECT in wxSHOW_EFFECT_NONE.

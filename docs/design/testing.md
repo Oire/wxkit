@@ -43,6 +43,13 @@ Some events only come from the user, such as a button click. On Windows, the tes
 - Windows runners have a desktop, so tests run as they are.
 - macOS runners have a window server, so tests run as they are.
 - Linux runners have no display. Tests run under `xvfb-run`, which provides a virtual X server, with GTK set to use X11.
+- On a Windows machine, WSL runs the Linux tests, and WSLg gives GTK a display.
+
+## Tests for one platform
+
+Some tests only mean something on Windows: those that click a control or choose a menu item by sending it the Windows message the click would, and those that read a control through MSAA, as a Windows screen reader does. Elsewhere they skip, with `Assert.SkipUnless`, so a skipped count is expected on Linux.
+
+The other tests run everywhere, so they avoid what only one platform does. Windows paints a window during `Update`, for example, and GTK on its next frame once the window is shown, so a test of painting waits for the paint while the event loop runs.
 
 ## What tests avoid
 

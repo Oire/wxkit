@@ -30,6 +30,12 @@ jobs:
             runner: windows-2022
           - runtime: win-arm64
             runner: windows-11-arm
+          # Linux builds on the oldest supported Ubuntu, so the packages work with its glibc and
+          # anything newer.
+          - runtime: linux-x64
+            runner: ubuntu-22.04
+          - runtime: linux-arm64
+            runner: ubuntu-22.04-arm
     runs-on: ${{ matrix.runner }}
     # A cold wxWidgets build takes most of this. A hung test would otherwise hold the runner for hours.
     timeout-minutes: 90
@@ -41,6 +47,13 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 10.0.x
+
+      # wxGTK builds against GTK 3, and the tests and the smoke test need a display, which Xvfb gives.
+      - name: Install GTK 3 and Xvfb
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq libgtk-3-dev ninja-build xvfb
 
       # The generator, the generated bindings, and the formatting are the same on every runtime, so
       # one runtime checks them.
@@ -102,11 +115,16 @@ jobs:
         run: dotnet format WxKit.slnx --verify-no-changes
 
       - name: Test
-        run: dotnet test --project tests/WxKit.Tests -c Release
+        shell: pwsh
+        run: |
+          if ($IsLinux) { xvfb-run -a dotnet test --project tests/WxKit.Tests -c Release } else { dotnet test --project tests/WxKit.Tests -c Release }
+          exit $LASTEXITCODE
 
       - name: Test Native AOT
         shell: pwsh
-        run: ./scripts/test-aot.ps1 -Runtime ${{ matrix.runtime }}
+        run: |
+          if ($IsLinux) { xvfb-run -a pwsh ./scripts/test-aot.ps1 -Runtime ${{ matrix.runtime }} } else { ./scripts/test-aot.ps1 -Runtime ${{ matrix.runtime }} }
+          exit $LASTEXITCODE
 
       # The pack job gathers every runtime's build into one set of packages.
       - name: Upload the native build
@@ -143,6 +161,18 @@ jobs:
           name: native-win-arm64
           path: artifacts/native/win-arm64
 
+      - name: Download the linux-x64 build
+        uses: actions/download-artifact@v4
+        with:
+          name: native-linux-x64
+          path: artifacts/native/linux-x64
+
+      - name: Download the linux-arm64 build
+        uses: actions/download-artifact@v4
+        with:
+          name: native-linux-arm64
+          path: artifacts/native/linux-arm64
+
       # A tag names the version, as v0.1.0-preview.1 does. Anything else packs the version in
       # Directory.Build.props.
       - name: Pack
@@ -153,7 +183,7 @@ jobs:
             $version = $env:GITHUB_REF.Substring("refs/tags/v".Length)
             if ($version -notmatch '^\d+\.\d+\.\d+(-[0-9A-Za-z.-]+)?$') { throw "The tag v$version is not a version, such as v0.1.0 or v0.1.0-preview.1." }
           }
-          ./scripts/pack.ps1 -Runtimes win-x64, win-arm64 -Version $version
+          ./scripts/pack.ps1 -Runtimes win-x64, win-arm64, linux-x64, linux-arm64 -Version $version
 
       # The packages are kept for a week, to try before any are published. They are compressed already.
       - name: Upload the packages
@@ -179,6 +209,10 @@ jobs:
             runner: windows-2022
           - runtime: win-arm64
             runner: windows-11-arm
+          - runtime: linux-x64
+            runner: ubuntu-22.04
+          - runtime: linux-arm64
+            runner: ubuntu-22.04-arm
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 20
     steps:
@@ -188,6 +222,14 @@ jobs:
         with:
           dotnet-version: 10.0.x
 
+      # An application needs GTK itself, but not its development files, and Native AOT needs clang
+      # and zlib's, as on any Linux.
+      - name: Install GTK 3, Native AOT's tools, and Xvfb
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq libgtk-3-0 clang zlib1g-dev xvfb
+
       - name: Download the packages
         uses: actions/download-artifact@v4
         with:
@@ -196,7 +238,9 @@ jobs:
 
       - name: Test the packages
         shell: pwsh
-        run: ./scripts/test-package.ps1 -Runtime ${{ matrix.runtime }}
+        run: |
+          if ($IsLinux) { xvfb-run -a pwsh ./scripts/test-package.ps1 -Runtime ${{ matrix.runtime }} } else { ./scripts/test-package.ps1 -Runtime ${{ matrix.runtime }} }
+          exit $LASTEXITCODE
 
   # Only a tag publishes, and only once every runtime's packages passed their tests. The job runs in
   # the nuget environment, where the repository's settings can require an approval first. It signs

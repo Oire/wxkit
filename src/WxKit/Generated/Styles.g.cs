@@ -740,7 +740,7 @@ public enum WindowStyle : long {
 	/// <summary>On Windows, this style used to disable repainting the window completely when its size is changed. Since this behaviour is now the default, the style is now obsolete and no longer has an effect. Wraps wxNO_FULL_REPAINT_ON_RESIZE.</summary>
 	NoFullRepaintOnResize = 0x0,
 	/// <summary>Use this style to enable a vertical scrollbar. Notice that this style cannot be used with native controls which don't support scrollbars nor with top-level windows in most ports. Wraps wxVSCROLL.</summary>
-	VerticalScrollBar = 0x80000000,
+	VerticalScrollBar = -2147483648,
 	/// <summary>Use this style to enable a horizontal scrollbar. The same limitations as for wxVSCROLL apply to this style. Wraps wxHSCROLL.</summary>
 	HorizontalScrollBar = 0x40000000,
 	/// <summary>If a window has scrollbars, disable them instead of hiding them when they are not needed (i.e. when the size of the window is big enough to not require the scrollbars to navigate it). This style is currently implemented for wxMSW, wxGTK and wxUniversal and does nothing on the other platforms. Wraps wxALWAYS_SHOW_SB.</summary>

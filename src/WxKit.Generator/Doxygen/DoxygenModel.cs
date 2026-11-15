@@ -8,6 +8,13 @@ internal sealed record DoxygenApi(IReadOnlyDictionary<string, DoxygenClass> Clas
 	/// <summary>String constants, such as wxART_OTHER, which is "wxART_OTHER_C", by name.</summary>
 	public IReadOnlyDictionary<string, string> StringConstants { get; init; } = new Dictionary<string, string>();
 
+	/// <summary>
+	/// The real headers' #defines, which the shim compiles against, so their values win over the
+	/// interface headers' where they can be worked out: wxVSCROLL is ((int)0x80000000) there, which
+	/// is negative, but 0x80000000 in the interface headers.
+	/// </summary>
+	public IReadOnlyDictionary<string, string> HeaderDefines { get; init; } = new Dictionary<string, string>();
+
 	/// <summary>The constants whose value depends on the platform, such as wxTR_DEFAULT_STYLE, which the real headers show.</summary>
 	public IReadOnlySet<string> PlatformConstants { get; init; } = new HashSet<string>();
 }

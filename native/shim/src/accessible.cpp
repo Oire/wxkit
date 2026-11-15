@@ -1,5 +1,7 @@
 #include "shim.h"
 
+#if wxUSE_ACCESSIBILITY
+
 #include <wx/access.h>
 
 // The statuses .NET returns are wxAccStatus's values.
@@ -149,3 +151,18 @@ WXK_FUNCTION(wxk_Accessible*) wxk_ManagedAccessible_new(wxk_Window* window, void
 WXK_FUNCTION(void) wxk_Accessible_NotifyEvent(int32_t eventType, wxk_Window* window, int32_t objectType, int32_t objectId) noexcept {
 	wxk::Guard([&] { wxAccessible::NotifyEvent(eventType, wxk::Unwrap(window), static_cast<wxAccObject>(objectType), objectId); });
 }
+
+#else
+
+// wxAccessible is Microsoft Active Accessibility's, so elsewhere a window keeps the accessibility its
+// port gives it, and nothing asks .NET.
+
+WXK_FUNCTION(void) wxk_Accessible_SetCallbacks(const wxk_AccessibleCallbacks*) noexcept {}
+
+WXK_FUNCTION(wxk_Accessible*) wxk_ManagedAccessible_new(wxk_Window*, void*) noexcept {
+	return nullptr;
+}
+
+WXK_FUNCTION(void) wxk_Accessible_NotifyEvent(int32_t, wxk_Window*, int32_t, int32_t) noexcept {}
+
+#endif

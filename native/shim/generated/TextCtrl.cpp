@@ -63,7 +63,12 @@ WXK_FUNCTION(void) wxk_TextCtrl_EmptyUndoBuffer(wxk_Window* self) noexcept {
 }
 
 WXK_FUNCTION(uint8_t) wxk_TextCtrl_EnableProofCheck(wxk_Window* self) noexcept {
+	#if wxUSE_SPELLCHECK
 	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxTextCtrl*>(wxk::Unwrap(self))->EnableProofCheck()) ? 1 : 0; });
+	#else
+	(void)self;
+	return 0;
+	#endif
 }
 
 WXK_FUNCTION(int32_t) wxk_TextCtrl_GetLineLength(wxk_Window* self, int64_t lineNo) noexcept {

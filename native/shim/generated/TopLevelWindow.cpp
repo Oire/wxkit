@@ -26,7 +26,12 @@ WXK_FUNCTION(void) wxk_TopLevelWindow_Maximize(wxk_Window* self, uint8_t maximiz
 }
 
 WXK_FUNCTION(wxk_Menu*) wxk_TopLevelWindow_MSWGetSystemMenu(wxk_Window* self) noexcept {
+	#if defined(__WXMSW__)
 	return wxk::Guard<wxk_Menu*>(nullptr, [&]() -> wxk_Menu* { return wxk::Wrap(static_cast<wxMenu*>(static_cast<wxTopLevelWindow*>(wxk::Unwrap(self))->MSWGetSystemMenu())); });
+	#else
+	(void)self;
+	return nullptr;
+	#endif
 }
 
 WXK_FUNCTION(void) wxk_TopLevelWindow_RequestUserAttention(wxk_Window* self, int32_t flags) noexcept {

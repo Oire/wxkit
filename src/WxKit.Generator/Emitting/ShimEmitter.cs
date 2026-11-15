@@ -64,9 +64,15 @@ internal static class ShimEmitter {
 	private static string Checks(BindingResult result) {
 		CodeWriter writer = new();
 		writer.Line(Banner).Line("#include \"includes.h\"").Line();
-		IEnumerable<(BoundStyle Value, string Type)> values = result.Enums.SelectMany(static bound => bound.Members).Select(static value => (value, "int32_t")).Concat(result.Classes.SelectMany(static bound => bound.Styles?.Members ?? []).Select(static value => (value, "long")));
-		foreach ((BoundStyle value, string type) in values.Where(static entry => entry.Value.Constant.StartsWith("wx", StringComparison.Ordinal)).DistinctBy(static entry => entry.Value.Constant).OrderBy(static entry => entry.Value.Constant, StringComparer.Ordinal)) {
-			writer.Line($"static_assert(static_cast<{type}>({value.Constant}) == static_cast<{type}>({value.Value}LL), \"{value.Constant} is not {value.Value}\");");
+		// An enum that wxWidgets only declares under a condition, such as the accessibility ones under
+		// wxUSE_ACCESSIBILITY, is only checked under it.
+		IEnumerable<(BoundStyle Value, string Type, string? Guard)> values = result.Enums.SelectMany(static bound => bound.Members.Select(value => (value, "int32_t", bound.Guard))).Concat(result.Classes.SelectMany(static bound => bound.Styles?.Members ?? []).Select(static value => (value, "long", (string?)null)));
+		foreach (IGrouping<string?, (BoundStyle Value, string Type, string? Guard)> group in values.Where(static entry => entry.Value.Constant.StartsWith("wx", StringComparison.Ordinal)).DistinctBy(static entry => entry.Value.Constant).GroupBy(static entry => entry.Guard).OrderBy(static group => group.Key ?? string.Empty, StringComparer.Ordinal)) {
+			if (group.Key is string guard) writer.Line().Line($"#if {guard}");
+			foreach ((BoundStyle value, string type, _) in group.OrderBy(static entry => entry.Value.Constant, StringComparer.Ordinal)) {
+				writer.Line($"static_assert(static_cast<{type}>({value.Constant}) == static_cast<{type}>({value.Value}LL), \"{value.Constant} is not {value.Value}\");");
+			}
+			if (group.Key is not null) writer.Line("#endif");
 		}
 		return writer.ToString();
 	}
@@ -187,7 +193,9 @@ internal static class ShimEmitter {
 		string returns = function.IsConstructor ? $"{owner.Handle.CType}*" : function.Returns.CReturnType;
 		string fallback = function.IsConstructor ? "nullptr" : function.Returns.Fallback;
 		writer.Open(Signature(function).Replace(" WXK_NOEXCEPT", string.Empty) + " noexcept");
-		string? guard = function.OnlyFor.Count == 0 ? null : string.Join(" || ", function.OnlyFor.Select(static port => Ports.TryGetValue(port, out string? symbol) ? $"defined({symbol})" : "0"));
+		string? ports = function.OnlyFor.Count == 0 ? null : string.Join(" || ", function.OnlyFor.Select(static port => Ports.TryGetValue(port, out string? symbol) ? $"defined({symbol})" : "0"));
+		string? feature = owner.Tweak.MemberGuards.GetValueOrDefault(function.Source.Name);
+		string? guard = ports is not null && feature is not null ? $"({ports}) && ({feature})" : ports ?? feature;
 		if (guard is not null) writer.Line($"#if {guard}");
 		if (function.IsConstructor) {
 			writer.Open($"return wxk::Guard<{returns}>(nullptr, [&]");

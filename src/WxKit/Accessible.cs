@@ -37,15 +37,19 @@ public abstract unsafe class Accessible {
 	protected Accessible(Window window) {
 		ArgumentNullException.ThrowIfNull(window);
 		Application.VerifyAccess();
-		SetCallbacks();
 		Window = window;
+		window.AccessibleObject = this;
+		// Only Windows asks, through Microsoft Active Accessibility. Elsewhere the window keeps the
+		// accessibility its port gives it.
+		if (!OperatingSystem.IsWindows()) return;
+		SetCallbacks();
 		GCHandle handle = GCHandle.Alloc(this);
 		_native = WxKitNative.ManagedAccessibleNew(window.Native, (void*)GCHandle.ToIntPtr(handle));
 		if (_native is null) {
 			handle.Free();
+			window.AccessibleObject = null;
 			throw new InvalidOperationException("The window could not be given an accessible object.");
 		}
-		window.AccessibleObject = this;
 	}
 
 	/// <summary>The window this describes.</summary>

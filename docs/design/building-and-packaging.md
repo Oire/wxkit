@@ -34,10 +34,14 @@ Output goes to `artifacts/native/<runtime>/static` and `artifacts/native/<runtim
 
 ### Linux
 
-- wxGTK is built against GTK 3. wxWidgets is linked statically, but GTK and its dependencies must come from the system, because they are part of the desktop.
-- The system libraries are read from `pkg-config` on the build machine, and named by their sonames, such as `-l:libgtk-3.so.0`, so that an application's build machine needs the libraries but not their development packages.
-- The shared builds are made on the oldest supported Ubuntu, so they work with its glibc and anything newer.
-- Native AOT links with clang, so a Linux publish needs `clang` and the GTK 3 libraries.
+- wxGTK is built against GTK 3, with CMake and Ninja, on a machine of the runtime's own architecture. wxWidgets is linked statically, but GTK and its dependencies come from the system, because they are part of the desktop. Building needs GTK 3's development files, such as Ubuntu's `libgtk-3-dev`, and PowerShell 7 for the script.
+- wxWidgets would use the system's zlib, libpng, libjpeg, and libtiff where it finds their headers, which GTK's development files bring in. The shim's CMake forces wxWidgets's own copies, as on Windows, so an application does not need them, and leaves out the features that need a system library beyond GTK's: web requests, the secret store, sound, notifications, and spell checking.
+- Everything is built position independent, since Native AOT links position-independent executables. The shared library exports the shim's functions and hides wxWidgets's, with `--exclude-libs`, as Windows only exports what is marked for it.
+- The system libraries an application links are the ones the shared library needs, which `readelf` reads from it, named by their sonames, such as `-l:libgtk-3.so.0`. So an application's build machine needs GTK, but not its development files.
+- GNU ld reads each static library once, in order, so the link targets list them with each before the ones it uses: the shim, wxWidgets's core, its base, and then the libraries it builds in.
+- The packages are built on the oldest supported Ubuntu, 22.04, so they work with its glibc and anything newer.
+- Native AOT links with clang, so a Linux publish needs `clang` and zlib's development files, as any Native AOT publish on Linux does, and the GTK 3 libraries.
+- `wxAccessible` is Microsoft Active Accessibility's, so wxGTK does not have it. An `Accessible` does nothing there, and GTK's own accessibility, through ATK, describes its controls.
 
 ## Native AOT and static linking
 
@@ -103,9 +107,9 @@ The native packages also contain the third-party libraries that wxWidgets builds
 
 CI runs on GitHub Actions:
 
-- A job per runtime, on a machine of that runtime's architecture, builds wxWidgets and the shim, caches the build by the runtime, the wxWidgets commit, and a hash of the build script, runs the tests, publishes the Native AOT smoke test, and uploads the native build. `win-x64` runs on `windows-2022`, and `win-arm64` on `windows-11-arm`. The x64 job also tests the generator, checks that the generated bindings are current, and checks formatting.
+- A job per runtime, on a machine of that runtime's system and architecture, builds wxWidgets and the shim, caches the build by the runtime, the wxWidgets commit, and a hash of the build script, runs the tests, publishes the Native AOT smoke test, and uploads the native build. `win-x64` runs on `windows-2022`, `win-arm64` on `windows-11-arm`, `linux-x64` on `ubuntu-22.04`, and `linux-arm64` on `ubuntu-22.04-arm`. Linux runs its tests under `xvfb-run`. The x64 job also tests the generator, checks that the generated bindings are current, and checks formatting.
 - A pack job gathers every runtime's native build and packs the packages, which CI keeps for a week, as an artifact of the run.
-- A job per runtime, on that runtime's architecture again, tests the packages with `test-package.ps1`.
+- A job per runtime, on that runtime's system and architecture again, tests the packages with `test-package.ps1`. On Linux it installs GTK and Native AOT's tools, but not GTK's development files, as an application's build machine would.
 - On a tag, a publish job pushes the packages to nuget.org, as Releasing describes.
 - A newer run for the same pull request cancels an older one.
 

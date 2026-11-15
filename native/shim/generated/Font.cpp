@@ -30,7 +30,13 @@ WXK_FUNCTION(wxk_Object*) wxk_Font_new_String(const char16_t* nativeInfoString, 
 }
 
 WXK_FUNCTION(uint8_t) wxk_Font_AddPrivateFont(const char16_t* filename, size_t filenameLength) noexcept {
+	#if wxUSE_PRIVATE_FONTS
 	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (wxFont::AddPrivateFont(wxk::FromUtf16(filename, filenameLength))) ? 1 : 0; });
+	#else
+	(void)filename;
+	(void)filenameLength;
+	return 0;
+	#endif
 }
 
 WXK_FUNCTION(wxk_Object*) wxk_Font_Bold(wxk_Object* self) noexcept {

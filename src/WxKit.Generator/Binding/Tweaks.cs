@@ -26,14 +26,15 @@ internal sealed class Tweaks {
 	public List<ConstantEnumTweak> ConstantEnums { get; } = [];
 
 	/// <param name="memberPrefix">A prefix most members share that their names leave out, such as wxROLE_SYSTEM_.</param>
-	public void Enum(string cppName, string managedName, bool isFlags = false, string? memberPrefix = null) => Enums[cppName] = new EnumTweak(managedName, isFlags, memberPrefix);
+	/// <param name="guard">The preprocessor condition under which wxWidgets declares the enum, such as wxUSE_ACCESSIBILITY, which only wxMSW has.</param>
+	public void Enum(string cppName, string managedName, bool isFlags = false, string? memberPrefix = null, string? guard = null) => Enums[cppName] = new EnumTweak(managedName, isFlags, memberPrefix, guard);
 
-	public void ConstantEnum(string managedName, string prefix, bool isFlags = false) => ConstantEnums.Add(new ConstantEnumTweak(managedName, prefix, isFlags));
+	public void ConstantEnum(string managedName, string prefix, bool isFlags = false, string? guard = null) => ConstantEnums.Add(new ConstantEnumTweak(managedName, prefix, isFlags, guard));
 }
 
-internal sealed record EnumTweak(string Name, bool IsFlags, string? MemberPrefix);
+internal sealed record EnumTweak(string Name, bool IsFlags, string? MemberPrefix, string? Guard);
 
-internal sealed record ConstantEnumTweak(string Name, string Prefix, bool IsFlags);
+internal sealed record ConstantEnumTweak(string Name, string Prefix, bool IsFlags, string? Guard);
 
 internal sealed class ClassTweak(string name) {
 	public string CppName { get; } = name;
@@ -80,6 +81,18 @@ internal sealed class ClassTweak(string name) {
 
 	/// <summary>The class only has static members, such as wxSystemSettings, and becomes a static class.</summary>
 	public bool IsStaticOnly { get; private set; }
+
+	/// <summary>
+	/// Members wxWidgets only has under a preprocessor condition the interface headers do not mark,
+	/// such as RegisterHotKey under wxUSE_HOTKEY. The shim's function is a stub that does nothing
+	/// where the condition is false, as for a member of another port.
+	/// </summary>
+	public Dictionary<string, string> MemberGuards { get; } = new(StringComparer.Ordinal);
+
+	public ClassTweak Guard(string condition, params string[] members) {
+		foreach (string member in members) MemberGuards[member] = condition;
+		return this;
+	}
 
 	/// <summary>The virtual members C# can override, such as a virtual list's OnGetItemText, which a director in the shim calls.</summary>
 	public List<string> DirectorMembers { get; } = [];

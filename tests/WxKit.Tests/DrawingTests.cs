@@ -22,7 +22,9 @@ public class DrawingTests {
 	});
 
 	[Fact]
-	public Task PaintsAWindow() => Gui.WithFrame(frame => {
+	// Windows paints during Update, and GTK on its next frame once the window is shown, so the test
+	// waits for the paint, running the event loop meanwhile.
+	public Task PaintsAWindow() => Gui.WithFrame(async frame => {
 		Panel panel = new(frame, size: new Size(50, 50));
 		int paints = 0;
 		panel.Paint += (_, _) => {
@@ -33,6 +35,6 @@ public class DrawingTests {
 		frame.Show();
 		panel.Refresh();
 		panel.Update();
-		Assert.True(paints > 0);
+		await Gui.WaitUntil(() => paints > 0);
 	});
 }

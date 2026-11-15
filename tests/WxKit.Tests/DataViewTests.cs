@@ -124,6 +124,7 @@ public class DataViewTests {
 	[Fact]
 	[SupportedOSPlatform("windows")]
 	public Task DescribesItsRowsToScreenReaders() => Gui.WithFrame(frame => {
+		Assert.SkipUnless(OperatingSystem.IsWindows(), "These read the rows through Microsoft Active Accessibility, which is Windows's.");
 		DataViewCtrl view = new(frame);
 		view.AppendTextColumn("Number", 0);
 		view.AppendTextColumn("Square", 1);
@@ -137,6 +138,7 @@ public class DataViewTests {
 	[Fact]
 	[SupportedOSPlatform("windows")]
 	public Task ReportsAnExceptionInAModel() => Gui.WithFrame(frame => {
+		Assert.SkipUnless(OperatingSystem.IsWindows(), "These read the rows through Microsoft Active Accessibility, which is Windows's.");
 		DataViewCtrl view = new(frame);
 		view.AppendTextColumn("Number", 0);
 		view.Model = new Throwing();

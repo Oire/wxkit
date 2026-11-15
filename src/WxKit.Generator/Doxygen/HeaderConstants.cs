@@ -65,7 +65,8 @@ internal static partial class HeaderConstants {
 			}
 		}
 		foreach (string name in conditional) values.Remove(name);
-		return new HeaderValues(values, conditional);
+		foreach (string name in conditional) defines.Remove(name);
+		return new HeaderValues(values, conditional) { Defines = defines };
 	}
 
 	// The art provider's ids are macros that make strings, which the interface headers only declare
@@ -110,4 +111,7 @@ internal static partial class HeaderConstants {
 
 /// <param name="Values">The enum values the real headers give, by name.</param>
 /// <param name="Conditional">The constants whose value depends on the platform or the build.</param>
-internal sealed record HeaderValues(IReadOnlyDictionary<string, string> Values, IReadOnlySet<string> Conditional);
+internal sealed record HeaderValues(IReadOnlyDictionary<string, string> Values, IReadOnlySet<string> Conditional) {
+	/// <summary>The real headers' #defines, by name, other than those written more than one way.</summary>
+	public IReadOnlyDictionary<string, string> Defines { get; init; } = new Dictionary<string, string>();
+}

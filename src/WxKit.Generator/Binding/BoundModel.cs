@@ -16,6 +16,9 @@ internal sealed record BindingResult(
 internal sealed record BoundEnum(string Name, string CppName, IReadOnlyList<BoundStyle> Members) {
 	/// <summary>Whether its members are flags to combine, which gives it [Flags].</summary>
 	public bool IsFlags { get; init; }
+
+	/// <summary>The preprocessor condition under which wxWidgets declares it, which its checks in the shim are under.</summary>
+	public string? Guard { get; init; }
 }
 
 /// <summary>How objects of a class cross the boundary: the handle type and what it points at.</summary>

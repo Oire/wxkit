@@ -17,11 +17,14 @@ internal static class Core {
 			// accessible object through the hand-written Accessible.
 			.Ignore("SetSizer", "SetSizerAndFit", "GetSizer", "GetHandle", "SetValidator", "GetValidator", "GetAccessible", "SetAccessible", "CreateAccessible", "GetOrCreateAccessible")
 			.Property("IsEnabled", "IsEnabled", "Enable")
-			.ParameterEnum("Centre", "direction", "Orientation"));
+			.ParameterEnum("Centre", "direction", "Orientation")
+			// wxGTK has no system-wide hot keys.
+			.Guard("wxUSE_HOTKEY", "RegisterHotKey", "UnregisterHotKey"));
 		tweaks.Class("wxTopLevelWindow", window => window
 			.NoConstructors()
 			// Only wxUniversal has these, though the documentation does not mark them for one port.
 			.Ignore("UseNativeDecorations", "UseNativeDecorationsByDefault", "IsUsingNativeDecorations")
+			.Guard("defined(__WXMSW__)", "MSWGetSystemMenu")
 			.AddEvent("EVT_CLOSE", "wxEVT_CLOSE_WINDOW", "wxCloseEvent", "Closing"));
 		// WxKit keeps the menu bar a frame owns.
 		tweaks.Class("wxFrame", frame => frame.Ignore("SetMenuBar", "GetMenuBar").ParameterEnum("CreateToolBar", "style", "ToolBarStyle"));
@@ -31,7 +34,8 @@ internal static class Core {
 		tweaks.Class("wxPanel");
 		tweaks.Class("wxButton", button => button.Event("EVT_BUTTON", "Click"));
 		tweaks.Class("wxStaticText");
-		tweaks.Class("wxTextCtrl", text => text.Event("EVT_TEXT", "TextChanged"));
+		// Spell checking needs gspell on Linux, which WxKit leaves out for now.
+		tweaks.Class("wxTextCtrl", text => text.Event("EVT_TEXT", "TextChanged").Guard("wxUSE_SPELLCHECK", "EnableProofCheck"));
 		// wxMenuBar's Enable and IsEnabled take an item's id, so they would hide Window.IsEnabled.
 		tweaks.Class("wxMenuBar", menuBar => menuBar.Rename("IsEnabled", "IsItemEnabled").Rename("Enable", "EnableItem"));
 		tweaks.Class("wxBoxSizer", sizer => sizer.ParameterEnum("wxBoxSizer", "orient", "Orientation"));
@@ -61,12 +65,14 @@ internal static class Core {
 		tweaks.Class("wxToolBar").DiscardUnboundReturns();
 		// Lists and trees, and what they hold.
 		// Accessibility, for the hand-written Accessible, which describes a custom control to screen readers.
-		tweaks.Enum("wxAccRole", "AccessibleRole", memberPrefix: "wxROLE_SYSTEM_");
-		tweaks.Enum("wxAccObject", "AccessibleObject");
-		tweaks.Enum("wxNavDir", "NavigationDirection");
-		tweaks.Enum("wxAccSelectionFlags", "AccessibleSelection", isFlags: true);
-		tweaks.ConstantEnum("AccessibleStates", "wxACC_STATE_SYSTEM_", isFlags: true);
-		tweaks.ConstantEnum("AccessibleEvent", "wxACC_EVENT_");
+		// Only wxMSW declares them, under wxUSE_ACCESSIBILITY.
+		const string accessibility = "wxUSE_ACCESSIBILITY";
+		tweaks.Enum("wxAccRole", "AccessibleRole", memberPrefix: "wxROLE_SYSTEM_", guard: accessibility);
+		tweaks.Enum("wxAccObject", "AccessibleObject", guard: accessibility);
+		tweaks.Enum("wxNavDir", "NavigationDirection", guard: accessibility);
+		tweaks.Enum("wxAccSelectionFlags", "AccessibleSelection", isFlags: true, guard: accessibility);
+		tweaks.ConstantEnum("AccessibleStates", "wxACC_STATE_SYSTEM_", isFlags: true, guard: accessibility);
+		tweaks.ConstantEnum("AccessibleEvent", "wxACC_EVENT_", guard: accessibility);
 		// A virtual list asks for each row as it shows it, through members C# overrides.
 		tweaks.Class("wxListCtrl", list => list
 			.ParameterEnum("InsertColumn", "format", "wxListColumnFormat")
@@ -116,7 +122,7 @@ internal static class Core {
 		// wxMSW's wxIcon has no ConvertToDisabled, though the documentation gives it one.
 		tweaks.Class("wxIcon").Ignore("ConvertToDisabled");
 		// Underlined and Strikethrough return changed copies, beside the properties of the same names.
-		tweaks.Class("wxFont").Rename("Underlined", "WithUnderline").Rename("Strikethrough", "WithStrikethrough");
+		tweaks.Class("wxFont").Rename("Underlined", "WithUnderline").Rename("Strikethrough", "WithStrikethrough").Guard("wxUSE_PRIVATE_FONTS", "AddPrivateFont");
 		// Drawing contexts.
 		foreach (string dc in (string[])["wxDC", "wxWindowDC", "wxClientDC", "wxPaintDC", "wxMemoryDC", "wxScreenDC"]) {
 			tweaks.Class(dc);

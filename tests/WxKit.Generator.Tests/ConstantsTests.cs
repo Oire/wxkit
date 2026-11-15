@@ -39,4 +39,20 @@ public class ConstantsTests {
 		Assert.Null(Values.Value("wxLOOP"));
 		Assert.Null(Values.Evaluate("sizeof(int)"));
 	}
+
+	[Fact]
+	public void CastsToInt() {
+		Assert.Equal(int.MinValue, Values.Evaluate("((int)0x80000000)"));
+		Assert.Equal(0x80000000, Values.Evaluate("0x80000000"));
+		Assert.Null(Values.Evaluate("((long)0x80000000)"));
+	}
+
+	[Fact]
+	public void PrefersWhatItCanWorkOut() {
+		Binding.Constants values = new(
+			new Dictionary<string, string> { ["wxVSCROLL"] = "0x80000000", ["wxWEIRD"] = "1" },
+			new Dictionary<string, string> { ["wxVSCROLL"] = "((int)0x80000000)", ["wxWEIRD"] = "wxSOMETHING(2)" });
+		Assert.Equal(int.MinValue, values.Value("wxVSCROLL"));
+		Assert.Equal(1, values.Value("wxWEIRD"));
+	}
 }

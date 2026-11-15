@@ -22,7 +22,7 @@ foreach ((string name, string value) in header.Values) constants[name] = value;
 // left out, and the C++ default applies where it would have been one.
 foreach (string name in header.Conditional) constants.Remove(name);
 Dictionary<string, string> artIds = HeaderConstants.ReadArtIds(Path.Combine(root, "native", "wxWidgets", "include", "wx", "artprov.h"));
-DoxygenApi api = read with { Constants = constants, StringConstants = artIds, PlatformConstants = header.Conditional };
+DoxygenApi api = read with { Constants = constants, StringConstants = artIds, PlatformConstants = header.Conditional, HeaderDefines = header.Defines };
 Tweaks tweaks = new();
 WxKit.Generator.Tweaks.Core.Apply(tweaks);
 BindingResult result = new Binder(api, tweaks).Bind();

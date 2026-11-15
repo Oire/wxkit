@@ -11,9 +11,11 @@ $output = Join-Path $root "artifacts/aot/$Runtime"
 
 # Native AOT finds the linker through vcvarsall.bat, which in the Visual Studio 2026 Build Tools
 # runs vswhere.exe by name, so the installer's folder has to be on PATH.
-$installer = Join-Path ${env:ProgramFiles(x86)} "Microsoft Visual Studio/Installer"
-if ($IsWindows -and (Test-Path $installer) -and -not ($env:PATH -split ";" -contains $installer)) {
-	$env:PATH = "$installer;$env:PATH"
+if ($IsWindows) {
+	$installer = Join-Path ${env:ProgramFiles(x86)} "Microsoft Visual Studio/Installer"
+	if ((Test-Path $installer) -and -not ($env:PATH -split ";" -contains $installer)) {
+		$env:PATH = "$installer;$env:PATH"
+	}
 }
 
 Remove-Item -Recurse -Force $output -ErrorAction SilentlyContinue

@@ -3,8 +3,12 @@
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net10.0</TargetFramework>
-		<RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == '' and '$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture)' == 'Arm64'">win-arm64</RuntimeIdentifier>
-		<RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">win-x64</RuntimeIdentifier>
+		<!-- The machine's own system and architecture, unless the publish names another. -->
+		<_HelloSystem Condition="$([MSBuild]::IsOSPlatform('Linux'))">linux</_HelloSystem>
+		<_HelloSystem Condition="'$(_HelloSystem)' == ''">win</_HelloSystem>
+		<_HelloArchitecture Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture)' == 'Arm64'">arm64</_HelloArchitecture>
+		<_HelloArchitecture Condition="'$(_HelloArchitecture)' == ''">x64</_HelloArchitecture>
+		<RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">$(_HelloSystem)-$(_HelloArchitecture)</RuntimeIdentifier>
 		<PublishAot>true</PublishAot>
 		<IsPackable>false</IsPackable>
 		<WxKitNativeDirectory>$(WxKitNativeRoot)/$(RuntimeIdentifier)/static/</WxKitNativeDirectory>
@@ -18,7 +22,7 @@
 	<Import Project="..\..\src\WxKit\build\WxKit.targets" />
 
 	<ItemGroup>
-		<None Include="$(WxKitNativeRoot)/$(RuntimeIdentifier)/shared/*.dll" Link="%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+		<None Include="$(WxKitNativeRoot)/$(RuntimeIdentifier)/shared/*.dll;$(WxKitNativeRoot)/$(RuntimeIdentifier)/shared/*.so" Link="%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
 	</ItemGroup>
 
 </Project>

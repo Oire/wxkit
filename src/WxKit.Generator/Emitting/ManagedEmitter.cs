@@ -258,7 +258,7 @@ internal static class ManagedEmitter {
 			writer.Open($"public enum {styles.Name} : long");
 			foreach (BoundStyle style in styles.Members) {
 				Summary(writer, style.Description.Length > 0 ? $"{Sentence(style.Description)}Wraps {style.Constant}." : $"Wraps {style.Constant}.");
-				writer.Line($"{style.Name} = 0x{style.Value:X},");
+				writer.Line(style.Value < 0 ? $"{style.Name} = {style.Value}," : $"{style.Name} = 0x{style.Value:X},");
 			}
 			writer.Close();
 		}

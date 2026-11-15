@@ -1,10 +1,12 @@
 # Builds wxWidgets and WxKit's shim for each runtime. One CMake build per runtime makes both kinds
 # of output, sharing one static build of wxWidgets:
-#   static: wxkitnative.lib, every wxWidgets library it needs, and wxkit.res, for Native AOT to link into
-#           the application, with a WxKit.Native.targets naming each of them.
-#   shared: wxkitnative.dll, with wxWidgets linked into it, for everything else.
+#   static: the shim's static library, every wxWidgets library it needs, and on Windows wxkit.res,
+#           for Native AOT to link into the application, with a WxKit.Native.targets naming each of them.
+#   shared: wxkitnative.dll or libwxkitnative.so, with wxWidgets linked into it, for everything else.
+# A Windows runtime builds on Windows, for any architecture, and a Linux runtime on Linux, for the
+# machine's own.
 param(
-	[string[]]$Runtimes = @("win-x64"),
+	[string[]]$Runtimes = @($IsLinux ? "linux-x64" : "win-x64"),
 	[ValidateSet("Release")]
 	[string]$Configuration = "Release"
 )
@@ -13,6 +15,10 @@ $root = Split-Path $PSScriptRoot -Parent
 $source = Join-Path $root "native/shim"
 $wxWidgets = Join-Path $root "native/wxWidgets"
 $windowsArchitectures = @{ "win-x64" = "x64"; "win-arm64" = "ARM64"; "win-x86" = "Win32" }
+$linuxArchitectures = @{ "linux-x64" = "x86_64"; "linux-arm64" = "aarch64" }
+# GNU ld reads each static library once, in order, so each comes before the ones it uses: the
+# shim, wxWidgets's core, its base, and then the libraries they build in.
+$linuxLinkOrder = @("wxkitnative", "core", "base", "tiff", "jpeg", "png", "webpdemux", "webp", "sharpyuv", "regex", "expat", "zlib")
 $windowsLibraries = @("kernel32.lib", "user32.lib", "gdi32.lib", "gdiplus.lib", "msimg32.lib", "comdlg32.lib", "winspool.lib", "winmm.lib", "shell32.lib", "shlwapi.lib", "comctl32.lib", "ole32.lib", "oleaut32.lib", "uuid.lib", "rpcrt4.lib", "advapi32.lib", "version.lib", "ws2_32.lib", "wininet.lib", "oleacc.lib", "uxtheme.lib", "imm32.lib", "dwmapi.lib", "usp10.lib")
 
 function Invoke-Checked([string]$description) {
@@ -43,8 +49,50 @@ if (-not (Test-Path (Join-Path $wxWidgets "src/zlib/zlib.h"))) {
 	Invoke-Checked "Fetching the wxWidgets submodules"
 }
 
+function Get-LinkRank([string]$name) {
+	for ($index = 0; $index -lt $linuxLinkOrder.Count; $index++) {
+		if ($name -like "*$($linuxLinkOrder[$index])*") { return $index }
+	}
+	throw "$name is a library the link order does not place."
+}
+
+function Build-Linux([string]$runtime) {
+	if (-not $IsLinux) { throw "$runtime builds on Linux." }
+	$machine = (uname -m)
+	if ($machine -ne $linuxArchitectures[$runtime]) { throw "$runtime builds on a $($linuxArchitectures[$runtime]) machine, and this one is $machine." }
+	$build = Join-Path $root "artifacts/native-build/$runtime"
+	$output = Join-Path $root "artifacts/native/$runtime"
+	cmake -S $source -B $build -G Ninja "-DCMAKE_BUILD_TYPE=$Configuration"
+	Invoke-Checked "Configuring $runtime"
+	cmake --build $build --target wxkitnative_static wxkitnative
+	Invoke-Checked "Building $runtime"
+	$static = Join-Path $output "static"
+	$shared = Join-Path $output "shared"
+	Remove-Item -Recurse -Force $static, $shared -ErrorAction SilentlyContinue
+	New-Item -ItemType Directory -Force $static, $shared | Out-Null
+	$libraries = @(Get-ChildItem (Join-Path $build "wx/lib") -Filter *.a)
+	if ($libraries.Count -eq 0) { throw "The build did not produce any wxWidgets libraries." }
+	$libraries += Get-Item (Join-Path $build "static/libwxkitnative.a")
+	foreach ($library in $libraries) { Copy-Item $library.FullName $static }
+	$library = Join-Path $build "shared/libwxkitnative.so"
+	Copy-Item $library $shared
+	# The system libraries are the ones the shared library needs, named by their sonames, such as
+	# libgtk-3.so.0, so an application's build machine needs GTK, but not its development packages.
+	# The dynamic loader is one of them, which the linker brings in itself.
+	$needed = @(readelf -d $library | Select-String "\(NEEDED\)\s+Shared library: \[(.+)\]" | ForEach-Object { $_.Matches[0].Groups[1].Value } | Where-Object { $_ -notlike "ld-linux*" })
+	if ($needed.Count -eq 0) { throw "readelf found no libraries the shared library needs." }
+	$items = @($libraries | Sort-Object { Get-LinkRank $_.Name } | ForEach-Object { "<NativeLibrary Include=`"`$(MSBuildThisFileDirectory)$($_.Name)`" />" })
+	$items += $needed | ForEach-Object { "<NativeLibrary Include=`"-l:$_`" />" }
+	Write-Targets $static $items
+	Write-Host "Built $runtime into $output"
+}
+
 $generator = $null
 foreach ($runtime in $Runtimes) {
+	if ($linuxArchitectures.ContainsKey($runtime)) {
+		Build-Linux $runtime
+		continue
+	}
 	if (-not $windowsArchitectures.ContainsKey($runtime)) { throw "$runtime is not a runtime this script can build yet." }
 	$generator ??= Get-WindowsGenerator
 	$build = Join-Path $root "artifacts/native-build/$runtime"

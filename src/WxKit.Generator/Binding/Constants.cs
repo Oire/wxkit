@@ -5,15 +5,18 @@ namespace WxKit.Generator.Binding;
 
 // Works out the value of the defines and enum values that style flags and defaults are made of,
 // such as wxDEFAULT_FRAME_STYLE, which is a | of other defines. Only integer expressions are
-// supported, which is all the flags use.
-internal sealed partial class Constants(IReadOnlyDictionary<string, string> expressions) {
+// supported, which is all the flags use. A preferred expression, such as the real headers' #define,
+// is used where it can be worked out, and the other where it cannot.
+internal sealed partial class Constants(IReadOnlyDictionary<string, string> expressions, IReadOnlyDictionary<string, string>? preferred = null) {
 	private readonly Dictionary<string, long?> _values = new(StringComparer.Ordinal);
 	private readonly HashSet<string> _evaluating = new(StringComparer.Ordinal);
 
 	public long? Value(string name) {
 		if (_values.TryGetValue(name, out long? cached)) return cached;
-		if (!expressions.TryGetValue(name, out string? expression) || !_evaluating.Add(name)) return null;
-		long? value = Evaluate(expression);
+		bool hasPreferred = preferred is not null && preferred.ContainsKey(name);
+		if (!hasPreferred && !expressions.ContainsKey(name) || !_evaluating.Add(name)) return null;
+		long? value = hasPreferred ? Evaluate(preferred![name]) : null;
+		if (value is null && expressions.TryGetValue(name, out string? expression)) value = Evaluate(expression);
 		_evaluating.Remove(name);
 		_values[name] = value;
 		return value;
@@ -62,6 +65,12 @@ internal sealed partial class Constants(IReadOnlyDictionary<string, string> expr
 	private long? ParseUnary(List<string> tokens, ref int position) {
 		if (Accept(tokens, ref position, "~")) return ParseUnary(tokens, ref position) is long value ? ~value : null;
 		if (Accept(tokens, ref position, "-")) return ParseUnary(tokens, ref position) is long negated ? -negated : null;
+		// A cast to int, as in wxVSCROLL's ((int)0x80000000), keeps the low 32 bits, with their sign.
+		// Other casts are left unknown, since what a long is depends on the platform.
+		if (position + 2 < tokens.Count && tokens[position] == "(" && tokens[position + 1] == "int" && tokens[position + 2] == ")") {
+			position += 3;
+			return ParseUnary(tokens, ref position) is long cast ? unchecked((int)cast) : null;
+		}
 		if (Accept(tokens, ref position, "(")) {
 			long? inner = ParseOr(tokens, ref position);
 			return Accept(tokens, ref position, ")") ? inner : null;
