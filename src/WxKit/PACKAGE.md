@@ -47,7 +47,7 @@ This package is the managed library. It brings in a native package for each runt
 
 ## How this was made
 
-WxKit is heavily vibe coded: Claude, an AI model, wrote nearly all of its code and docs, under its author's direction. If AI-written code is a dealbreaker for you, this is not the project for you. The [repository](https://github.com/trypsynth/wxkit) has the design docs, the source, and the issue tracker.
+WxKit is heavily vibe coded: Claude, an AI model, wrote nearly all of its code and docs, under its author's direction. If AI-written code is a dealbreaker for you, this is not the project for you. The [getting started guide](https://github.com/trypsynth/wxkit/blob/master/docs/getting-started.md) walks through a first application, and the [repository](https://github.com/trypsynth/wxkit) has the design docs, the source, and the issue tracker.
 
 ## License
 

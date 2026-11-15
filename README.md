@@ -2,7 +2,7 @@
 
 .NET bindings to [wxWidgets](https://wxwidgets.org), for native desktop applications on Windows, macOS, and Linux. WxKit works with Native AOT, and links wxWidgets into the executable so that an application ships as one file.
 
-WxKit is a preview: it works for trying out and small applications, its API will change before 1.0, and parts of wxWidgets are not bound yet. It runs on Windows, Linux, and macOS, each on x64 and ARM64. The bindings are generated from wxWidgets's own headers, and cover 117 classes: windows and the common controls, list, tree, and data view controls, toolbars, sizers, menus, the standard dialogs, drawing, images, validators, and the clipboard, with events, async support, and accessibility for controls that draw themselves. The [text editor sample](samples/Editor/EditorFrame.cs) shows what an application looks like, with menus, files, find and replace, and fonts. The [Hello sample](samples/Hello/Program.cs) publishes with Native AOT as a single executable of about 5 MB, and an application only links the classes it uses. To see what it will look like and how it will work, start with the [design overview](docs/design/overview.md). Decisions made so far, and the ones still open, are in [Open questions](docs/design/open-questions.md).
+WxKit is a preview: it works for trying out and small applications, its API will change before 1.0, and parts of wxWidgets are not bound yet. It runs on Windows, Linux, and macOS, each on x64 and ARM64. The bindings are generated from wxWidgets's own headers, and cover 119 classes: windows and the common controls, list, tree, and data view controls, toolbars, sizers, menus, the standard dialogs, drawing, images, validators, and the clipboard, with events, async support, and accessibility for controls that draw themselves. To write a first application, follow [Getting started](docs/getting-started.md). The [text editor sample](samples/Editor/EditorFrame.cs) shows what an application looks like, with menus, files, find and replace, and fonts. The [Hello sample](samples/Hello/Program.cs) publishes with Native AOT as a single executable of about 5 MB, and an application only links the classes it uses. To see what it will look like and how it will work, start with the [design overview](docs/design/overview.md). Decisions made so far, and the ones still open, are in [Open questions](docs/design/open-questions.md).
 
 ## Building
 
@@ -31,7 +31,15 @@ The tests create real windows, so they need a desktop session. On Linux without 
 
 ## Packages
 
-WxKit is not on nuget.org yet. A tag will publish it there, as [Building and packaging](docs/design/building-and-packaging.md#releasing) describes. Until then, to use it from an application of your own, build its packages, which go to `artifacts/packages`:
+WxKit is on nuget.org as a preview. To use it in an application, add the package, which brings in the native package for each runtime, such as `WxKit.Native.win-x64`:
+
+```shell
+dotnet add package WxKit --prerelease
+```
+
+[Getting started](docs/getting-started.md) goes from there to a published executable. A tag publishes a new version, as [Building and packaging](docs/design/building-and-packaging.md#releasing) describes.
+
+To try changes of your own from an application, build the packages, which go to `artifacts/packages`:
 
 ```powershell
 ./scripts/build-native.ps1
@@ -41,11 +49,7 @@ WxKit is not on nuget.org yet. A tag will publish it there, as [Building and pac
 
 Give `pack.ps1` `-Runtimes win-x64, win-arm64` to pack both, as CI does. `test-package.ps1` checks the packages the way an application would use them, on the machine's own runtime. Each push to master also builds them in CI, which keeps them for a week as an artifact of the run.
 
-Add `artifacts/packages` as a package source, and reference `WxKit`, which brings in the native package for each runtime, such as `WxKit.Native.win-x64`:
-
-```xml
-<PackageReference Include="WxKit" Version="0.1.0-preview.1" />
-```
+Then add `artifacts/packages` as a package source, and reference the version `pack.ps1` gave them.
 
 An application runs with the shared native library, and a Native AOT publish links wxWidgets into the executable instead. A publish for macOS also makes an app bundle, which [Building and packaging](docs/design/building-and-packaging.md#macos-app-bundles) describes:
 
