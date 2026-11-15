@@ -66,7 +66,8 @@ public class ConversionTests {
 		Button button = new(frame, "&Small");
 		button.WindowVariant = WindowVariant.Small;
 		Assert.Equal(WindowVariant.Small, button.WindowVariant);
+		// wxOSX does not mirror windows, so a frame's layout direction stays the default there.
 		frame.LayoutDirection = LayoutDirection.RightToLeft;
-		Assert.Equal(LayoutDirection.RightToLeft, frame.LayoutDirection);
+		Assert.Equal(OperatingSystem.IsMacOS() ? LayoutDirection.Default : LayoutDirection.RightToLeft, frame.LayoutDirection);
 	});
 }

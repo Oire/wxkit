@@ -11,6 +11,14 @@ public class ApplicationTests {
 		Assert.Equal(ApartmentState.STA, state);
 	}
 
+	// The tests run wxWidgets on the main thread, which on macOS is the only one it can run on.
+	[Fact]
+	public async Task RunsOnlyOnTheMainThreadOnMacOS() {
+		Assert.True(await Gui.Run(() => WxKit.Interop.WxKitNative.AppCanRunOnThisThread() != 0));
+		bool elsewhere = await Task.Run(() => WxKit.Interop.WxKitNative.AppCanRunOnThisThread() != 0);
+		Assert.Equal(!OperatingSystem.IsMacOS(), elsewhere);
+	}
+
 	[Fact]
 	public async Task KnowsWhichThreadIsTheGuiThread() {
 		Assert.False(Application.IsGuiThread);

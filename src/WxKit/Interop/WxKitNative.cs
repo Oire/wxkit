@@ -16,6 +16,10 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int AppRun(delegate* unmanaged[Cdecl]<void*, byte> onInit, void* userdata);
 
+	[LibraryImport(Library, EntryPoint = "wxk_App_CanRunOnThisThread")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte AppCanRunOnThisThread();
+
 	[LibraryImport(Library, EntryPoint = "wxk_App_CallAfter")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte AppCallAfter(delegate* unmanaged[Cdecl]<void*, void> callback, void* userdata);

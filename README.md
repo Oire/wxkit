@@ -2,7 +2,7 @@
 
 .NET bindings to [wxWidgets](https://wxwidgets.org), for native desktop applications on Windows, macOS, and Linux. WxKit works with Native AOT, and links wxWidgets into the executable so that an application ships as one file.
 
-WxKit is a preview: it works for trying out and small applications, its API will change before 1.0, and parts of wxWidgets are not bound yet. It runs on Windows and Linux, each on x64 and ARM64, and macOS is next. The bindings are generated from wxWidgets's own headers, and cover 112 classes: windows and the common controls, list, tree, and data view controls, toolbars, sizers, menus, the standard dialogs, drawing, images, validators, and the clipboard, with events, async support, and accessibility for controls that draw themselves. The [Hello sample](samples/Hello/Program.cs) publishes with Native AOT as a single executable of about 5 MB, and an application only links the classes it uses. To see what it will look like and how it will work, start with the [design overview](docs/design/overview.md). Decisions made so far, and the ones still open, are in [Open questions](docs/design/open-questions.md).
+WxKit is a preview: it works for trying out and small applications, its API will change before 1.0, and parts of wxWidgets are not bound yet. It runs on Windows, Linux, and macOS, each on x64 and ARM64. The bindings are generated from wxWidgets's own headers, and cover 112 classes: windows and the common controls, list, tree, and data view controls, toolbars, sizers, menus, the standard dialogs, drawing, images, validators, and the clipboard, with events, async support, and accessibility for controls that draw themselves. The [Hello sample](samples/Hello/Program.cs) publishes with Native AOT as a single executable of about 5 MB, and an application only links the classes it uses. To see what it will look like and how it will work, start with the [design overview](docs/design/overview.md). Decisions made so far, and the ones still open, are in [Open questions](docs/design/open-questions.md).
 
 ## Building
 
@@ -24,6 +24,8 @@ dotnet test --project tests/WxKit.Tests
 ```
 
 On Linux, you need CMake, Ninja, PowerShell 7, the .NET 10 SDK, GTK 3's development files, such as Ubuntu's `libgtk-3-dev`, and, for Native AOT, `clang` and zlib's development files, such as `zlib1g-dev`. The same commands build and test, and the build script defaults to the machine's own runtime, such as `linux-x64`.
+
+On macOS, you need Xcode, the .NET 10 SDK, PowerShell 7, and CMake and Ninja, such as from Homebrew. A Mac with Apple Silicon builds both `osx-arm64` and `osx-x64`, and runs the latter through Rosetta.
 
 The tests create real windows, so they need a desktop session. On Linux without one, run them under `xvfb-run`. `test-aot.ps1` publishes the Hello sample with Native AOT and checks that it starts and exits cleanly.
 

@@ -22,12 +22,16 @@ public class ValueTests {
 	});
 
 	[Fact]
+	// The default comes back, though not always at the size the frame started with: on macOS, a frame
+	// starts with the 13 point system font, and its default afterwards is wxWidgets's normal font.
 	public Task RestoresTheDefaultFontWhenSetToNull() => Gui.WithFrame(frame => {
 		using Font? original = frame.Font;
 		frame.Font = new Font(30, FontFamily.Default, FontStyle.Normal, FontWeight.Normal);
 		frame.Font = null;
 		using Font? restored = frame.Font;
-		Assert.Equal(original?.PointSize, restored?.PointSize);
+		Assert.NotNull(restored);
+		Assert.NotEqual(30, restored.PointSize);
+		if (!OperatingSystem.IsMacOS()) Assert.Equal(original?.PointSize, restored.PointSize);
 	});
 
 	[Fact]

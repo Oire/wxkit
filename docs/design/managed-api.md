@@ -277,7 +277,7 @@ wxWidgets is single-threaded. Every window must be created and used on the threa
 - `Application.Post(Action)` runs an action on the GUI thread later, using `wxApp::CallAfter`. It is safe to call from any thread.
 - `Application.Run` installs a `SynchronizationContext` for the GUI thread, so `await` in an event handler resumes on the GUI thread, as it does in Windows Forms and WPF.
 
-On macOS, the GUI thread must be the process's main thread, so `Application.Run` runs the event loop on the thread that calls it.
+On macOS, the GUI thread must be the process's main thread, so `Application.Run` runs the event loop on the thread that calls it, and throws `InvalidOperationException` when that is not the main thread. `Main` starts on the main thread, so calling `Run` from it works.
 
 On Windows, the GUI thread must be a single-threaded apartment, because OLE only works in one, and the clipboard, drag and drop, and accessibility use OLE. .NET starts `Main` in the multithreaded apartment unless it is marked `[STAThread]`, which top-level statements cannot be, and a thread's apartment cannot change once it is set. If wxWidgets runs on such a thread, it fails to start OLE without saying so. So when `Application.Run` is called from a thread that is not a single-threaded apartment, it starts one, runs the event loop there, and waits for it to end. A program whose `Main` is marked `[STAThread]` runs the event loop on its own main thread.
 

@@ -137,6 +137,8 @@ typedef void (*wxk_EventCallback)(void* userdata, wxk_Event* event);
 // Runs the application: initializes wxWidgets, calls onInit, and runs the event loop until it
 // ends. Returns the exit code, or -1 when wxWidgets could not start.
 WXK_FUNCTION(int32_t) wxk_App_Run(wxk_AppInitCallback onInit, void* userdata) WXK_NOEXCEPT;
+// Whether the event loop can run on the calling thread, which on macOS has to be the main thread.
+WXK_FUNCTION(uint8_t) wxk_App_CanRunOnThisThread(void) WXK_NOEXCEPT;
 
 // Queues callback to run on the GUI thread. Safe from any thread. Returns 0 when no application is running.
 WXK_FUNCTION(uint8_t) wxk_App_CallAfter(wxk_Callback callback, void* userdata) WXK_NOEXCEPT;

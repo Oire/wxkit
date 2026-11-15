@@ -28,9 +28,12 @@ Output goes to `artifacts/native/<runtime>/static` and `artifacts/native/<runtim
 
 ### macOS
 
-- wxOSX is built for Cocoa with the same deployment target as the .NET version WxKit targets.
-- The link targets list the frameworks wxOSX uses, such as `AppKit`, `Carbon`, `IOKit`, `QuartzCore`, `WebKit`, and `AudioToolbox`.
+- wxOSX is built for Cocoa with CMake and Ninja, which Homebrew has, and Xcode's clang, with macOS 12 as the deployment target, so the libraries never ask for a newer macOS than a .NET application does. Apple Silicon builds both `osx-arm64` and `osx-x64`, and Rosetta runs the latter, so one Mac tests both.
+- The shared library exports only the shim's functions, through `-exported_symbol`.
+- The link targets list the frameworks and libraries the shared library loads, which `otool -L` reads from it, such as `AppKit`, `Carbon`, `IOKit`, `QuartzCore`, and `libc++`, each as one argument for clang, such as `-Wl,-framework,AppKit`. .NET links `libobjc` itself.
+- Cocoa only runs a user interface on the process's main thread, so `Application.Run` throws on any other.
 - A GUI application on macOS behaves best inside an app bundle. Without one, the menu bar and focus can misbehave. Creating a bundle from a published executable is separate tooling, which is a later milestone.
+- Building needs Xcode, CMake, Ninja, PowerShell 7, and the .NET 10 SDK.
 
 ### Linux
 
@@ -107,7 +110,7 @@ The native packages also contain the third-party libraries that wxWidgets builds
 
 CI runs on GitHub Actions:
 
-- A job per runtime, on a machine of that runtime's system and architecture, builds wxWidgets and the shim, caches the build by the runtime, the wxWidgets commit, and a hash of the build script, runs the tests, publishes the Native AOT smoke test, and uploads the native build. `win-x64` runs on `windows-2022`, `win-arm64` on `windows-11-arm`, `linux-x64` on `ubuntu-22.04`, and `linux-arm64` on `ubuntu-22.04-arm`. Linux runs its tests under `xvfb-run`. The x64 job also tests the generator, checks that the generated bindings are current, and checks formatting.
+- A job per runtime, on a machine of that runtime's system and architecture, builds wxWidgets and the shim, caches the build by the runtime, the wxWidgets commit, and a hash of the build script, runs the tests, publishes the Native AOT smoke test, and uploads the native build. `win-x64` runs on `windows-2022`, `win-arm64` on `windows-11-arm`, `linux-x64` on `ubuntu-22.04`, `linux-arm64` on `ubuntu-22.04-arm`, `osx-arm64` on `macos-15`, and `osx-x64` on `macos-15-intel`. Linux runs its tests under `xvfb-run`. The x64 job also tests the generator, checks that the generated bindings are current, and checks formatting.
 - A pack job gathers every runtime's native build and packs the packages, which CI keeps for a week, as an artifact of the run.
 - A job per runtime, on that runtime's system and architecture again, tests the packages with `test-package.ps1`. On Linux it installs GTK and Native AOT's tools, but not GTK's development files, as an application's build machine would.
 - On a tag, a publish job pushes the packages to nuget.org, as Releasing describes.

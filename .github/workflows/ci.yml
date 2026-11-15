@@ -36,6 +36,10 @@ jobs:
             runner: ubuntu-22.04
           - runtime: linux-arm64
             runner: ubuntu-22.04-arm
+          - runtime: osx-arm64
+            runner: macos-15
+          - runtime: osx-x64
+            runner: macos-15-intel
     runs-on: ${{ matrix.runner }}
     # A cold wxWidgets build takes most of this. A hung test would otherwise hold the runner for hours.
     timeout-minutes: 90
@@ -54,6 +58,11 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq libgtk-3-dev ninja-build xvfb
+
+      # Xcode, its clang, and a window server come with the runner.
+      - name: Install CMake and Ninja
+        if: runner.os == 'macOS'
+        run: brew install cmake ninja
 
       # The generator, the generated bindings, and the formatting are the same on every runtime, so
       # one runtime checks them.
@@ -173,6 +182,18 @@ jobs:
           name: native-linux-arm64
           path: artifacts/native/linux-arm64
 
+      - name: Download the osx-arm64 build
+        uses: actions/download-artifact@v4
+        with:
+          name: native-osx-arm64
+          path: artifacts/native/osx-arm64
+
+      - name: Download the osx-x64 build
+        uses: actions/download-artifact@v4
+        with:
+          name: native-osx-x64
+          path: artifacts/native/osx-x64
+
       # A tag names the version, as v0.1.0-preview.1 does. Anything else packs the version in
       # Directory.Build.props.
       - name: Pack
@@ -183,7 +204,7 @@ jobs:
             $version = $env:GITHUB_REF.Substring("refs/tags/v".Length)
             if ($version -notmatch '^\d+\.\d+\.\d+(-[0-9A-Za-z.-]+)?$') { throw "The tag v$version is not a version, such as v0.1.0 or v0.1.0-preview.1." }
           }
-          ./scripts/pack.ps1 -Runtimes win-x64, win-arm64, linux-x64, linux-arm64 -Version $version
+          ./scripts/pack.ps1 -Runtimes win-x64, win-arm64, linux-x64, linux-arm64, osx-arm64, osx-x64 -Version $version
 
       # The packages are kept for a week, to try before any are published. They are compressed already.
       - name: Upload the packages
@@ -213,6 +234,10 @@ jobs:
             runner: ubuntu-22.04
           - runtime: linux-arm64
             runner: ubuntu-22.04-arm
+          - runtime: osx-arm64
+            runner: macos-15
+          - runtime: osx-x64
+            runner: macos-15-intel
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 20
     steps:

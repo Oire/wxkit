@@ -53,6 +53,8 @@ internal static class Core {
 		]) {
 			tweaks.Class(control);
 		}
+		// wxOSX has no static box with a window as its label.
+		tweaks.Class("wxStaticBox").GuardOverload("defined(wxHAS_WINDOW_LABEL_IN_STATIC_BOX)", "wxStaticBox", "label", "wxWindow *");
 		// Validators, which WxKit creates and windows copy. Custom ones are hand-written, in CustomValidator.
 		tweaks.Class("wxValidator", validator => validator.Owned().NoConstructors().Ignore("SetWindow", "Clone"));
 		tweaks.Class("wxTextValidator", validator => validator

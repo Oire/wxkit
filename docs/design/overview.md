@@ -2,7 +2,7 @@
 
 WxKit is a set of .NET bindings to [wxWidgets](https://wxwidgets.org), the C++ library for native desktop user interfaces. This document describes what WxKit is for, how its parts fit together, and the order in which they get built. The other documents in this folder cover each part in detail.
 
-Status: draft. The first two milestones are done on Windows and Linux, and the third, breadth, is under way: the generator binds 112 classes. The first preview, 0.1.0-preview.1, is on nuget.org for Windows. Decisions made so far, and the ones still open, are in [Open questions](open-questions.md).
+Status: draft. The first two milestones are done on Windows, Linux, and macOS, and the third, breadth, is under way: the generator binds 112 classes. The first preview, 0.1.0-preview.1, is on nuget.org for Windows. Decisions made so far, and the ones still open, are in [Open questions](open-questions.md).
 
 ## Goals
 
@@ -27,7 +27,7 @@ WxKit targets the three wxWidgets ports that matter on the desktop:
 - macOS, through wxOSX Cocoa, on `osx-arm64` and `osx-x64`.
 - Linux, through wxGTK 3, on `linux-x64` and `linux-arm64`.
 
-Windows came first, and Linux, on `linux-x64` and `linux-arm64`, followed. macOS is next.
+Windows came first, then Linux, on `linux-x64` and `linux-arm64`, and macOS, on `osx-arm64` and `osx-x64`.
 
 ## Architecture
 

@@ -3,6 +3,9 @@
 #ifdef __WXMSW__
 	#include <wx/msw/private.h>
 #endif
+#ifdef __WXOSX__
+	#include <pthread.h>
+#endif
 
 namespace {
 
@@ -43,6 +46,15 @@ WXK_FUNCTION(int32_t) wxk_App_Run(wxk_AppInitCallback onInit, void* userdata) no
 		char* argv[] = {nullptr};
 		return static_cast<int32_t>(wxEntry(argc, argv));
 	});
+}
+
+WXK_FUNCTION(uint8_t) wxk_App_CanRunOnThisThread(void) noexcept {
+#ifdef __WXOSX__
+	// Cocoa only runs a user interface on the process's main thread.
+	return pthread_main_np() != 0 ? 1 : 0;
+#else
+	return 1;
+#endif
 }
 
 WXK_FUNCTION(uint8_t) wxk_App_CallAfter(wxk_Callback callback, void* userdata) noexcept {

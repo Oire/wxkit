@@ -57,9 +57,12 @@ public unsafe class Application {
 	/// Starts wxWidgets, calls <see cref="OnInit"/>, and runs the event loop. Returns the exit code.
 	/// On Windows, the GUI needs a single-threaded apartment. Mark Main with <see cref="STAThreadAttribute"/>
 	/// to run it on the calling thread; otherwise it runs on a thread of its own, and this call waits for it.
+	/// On macOS, Cocoa only runs a user interface on the process's main thread, so call this from Main.
 	/// </summary>
+	/// <exception cref="InvalidOperationException">On macOS, the calling thread is not the main thread.</exception>
 	public int Run() {
 		if (OperatingSystem.IsWindows() && Thread.CurrentThread.GetApartmentState() != ApartmentState.STA) return RunOnStaThread();
+		if (WxKitNative.AppCanRunOnThisThread() == 0) throw new InvalidOperationException("On macOS, Cocoa only runs a user interface on the process's main thread, so Application.Run has to be called from Main, on the thread it starts on.");
 		return RunHere();
 	}
 

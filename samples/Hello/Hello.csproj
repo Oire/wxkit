@@ -5,6 +5,7 @@
 		<TargetFramework>net10.0</TargetFramework>
 		<!-- The machine's own system and architecture, unless the publish names another. -->
 		<_HelloSystem Condition="$([MSBuild]::IsOSPlatform('Linux'))">linux</_HelloSystem>
+		<_HelloSystem Condition="$([MSBuild]::IsOSPlatform('OSX'))">osx</_HelloSystem>
 		<_HelloSystem Condition="'$(_HelloSystem)' == ''">win</_HelloSystem>
 		<_HelloArchitecture Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture)' == 'Arm64'">arm64</_HelloArchitecture>
 		<_HelloArchitecture Condition="'$(_HelloArchitecture)' == ''">x64</_HelloArchitecture>
@@ -22,7 +23,7 @@
 	<Import Project="..\..\src\WxKit\build\WxKit.targets" />
 
 	<ItemGroup>
-		<None Include="$(WxKitNativeRoot)/$(RuntimeIdentifier)/shared/*.dll;$(WxKitNativeRoot)/$(RuntimeIdentifier)/shared/*.so" Link="%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+		<None Include="$(WxKitNativeRoot)/$(RuntimeIdentifier)/shared/*.dll;$(WxKitNativeRoot)/$(RuntimeIdentifier)/shared/*.so;$(WxKitNativeRoot)/$(RuntimeIdentifier)/shared/*.dylib" Link="%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
 	</ItemGroup>
 
 </Project>

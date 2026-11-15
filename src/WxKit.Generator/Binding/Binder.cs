@@ -103,7 +103,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		ClassTweak tweak = bound.Tweak;
 		List<DoxygenMember> candidates = [.. MembersOf(bound.Source).Where(static member => member.IsPublic && !member.Name.StartsWith('~') && !member.Name.StartsWith("operator", StringComparison.Ordinal))];
 		HashSet<string> known = [.. candidates.Select(static member => member.Name)];
-		foreach (string named in (tweak.OnlyMembers ?? []).Concat(tweak.IgnoredMembers).Concat(tweak.Renames.Keys.Where(name => !tweak.PropertyPairs.ContainsKey(name))).Concat(tweak.PropertyPairs.Values.SelectMany(static pair => pair.Setter is null ? [pair.Getter] : new[] { pair.Getter, pair.Setter }))) {
+		foreach (string named in (tweak.OnlyMembers ?? []).Concat(tweak.IgnoredMembers).Concat(tweak.MemberGuards.Keys).Concat(tweak.OverloadGuards.Select(static guard => guard.Member)).Concat(tweak.Renames.Keys.Where(name => !tweak.PropertyPairs.ContainsKey(name))).Concat(tweak.PropertyPairs.Values.SelectMany(static pair => pair.Setter is null ? [pair.Getter] : new[] { pair.Getter, pair.Setter }))) {
 			if (!known.Contains(named)) throw new InvalidOperationException($"A tweak names {bound.CppName}::{named}, which the interface headers do not have.");
 		}
 		string shortName = bound.CppName;

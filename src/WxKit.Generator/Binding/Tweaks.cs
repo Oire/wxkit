@@ -1,3 +1,5 @@
+using WxKit.Generator.Doxygen;
+
 namespace WxKit.Generator.Binding;
 
 // The decisions the XML cannot make on its own: which classes and members to bind, what to call
@@ -30,6 +32,10 @@ internal sealed class Tweaks {
 	public void Enum(string cppName, string managedName, bool isFlags = false, string? memberPrefix = null, string? guard = null) => Enums[cppName] = new EnumTweak(managedName, isFlags, memberPrefix, guard);
 
 	public void ConstantEnum(string managedName, string prefix, bool isFlags = false, string? guard = null) => ConstantEnums.Add(new ConstantEnumTweak(managedName, prefix, isFlags, guard));
+}
+
+internal sealed record OverloadGuard(string Member, string Parameter, string Type, string Condition) {
+	public bool Matches(DoxygenMember member) => member.Name == Member && member.Parameters.Any(parameter => parameter.Name == Parameter && parameter.Type.Replace(" ", string.Empty, StringComparison.Ordinal) == Type.Replace(" ", string.Empty, StringComparison.Ordinal));
 }
 
 internal sealed record EnumTweak(string Name, bool IsFlags, string? MemberPrefix, string? Guard);
@@ -91,6 +97,14 @@ internal sealed class ClassTweak(string name) {
 
 	public ClassTweak Guard(string condition, params string[] members) {
 		foreach (string member in members) MemberGuards[member] = condition;
+		return this;
+	}
+
+	/// <summary>Overloads guarded the same way, told apart by one of their parameters, such as wxStaticBox's that takes a window as its label.</summary>
+	public List<OverloadGuard> OverloadGuards { get; } = [];
+
+	public ClassTweak GuardOverload(string condition, string member, string parameter, string type) {
+		OverloadGuards.Add(new OverloadGuard(member, parameter, type, condition));
 		return this;
 	}
 

@@ -116,7 +116,9 @@ if(UNIX)
 	# The shared library exports the shim's functions and nothing of wxWidgets, as on Windows, where
 	# only what is marked for export is.
 	set_target_properties(wxkitnative PROPERTIES CXX_VISIBILITY_PRESET hidden VISIBILITY_INLINES_HIDDEN ON)
-	if(NOT APPLE)
+	if(APPLE)
+		target_link_options(wxkitnative PRIVATE "-Wl,-exported_symbol,_wxk_*" -Wl,-dead_strip)
+	else()
 		target_link_options(wxkitnative PRIVATE -Wl,--exclude-libs,ALL -Wl,--no-undefined)
 	endif()
 endif()

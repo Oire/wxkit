@@ -2,7 +2,7 @@
 
 .NET bindings to [wxWidgets](https://wxwidgets.org), for native desktop applications. WxKit works with Native AOT, and links wxWidgets into the executable, so an application ships as one file of a few megabytes, with native controls that screen readers already understand.
 
-WxKit is a preview. It runs on Windows and Linux, each on x64 and ARM64, and its API will change before 1.0. macOS is planned.
+WxKit is a preview. It runs on Windows, Linux, and macOS, each on x64 and ARM64, and its API will change before 1.0.
 
 ## A first application
 
@@ -32,6 +32,8 @@ dotnet publish -r win-x64 -p:PublishAot=true
 ```
 
 On Linux, an application needs GTK 3, which desktop Linux has, and runs with `-r linux-x64` or `-r linux-arm64`. A Native AOT publish there needs `clang` and zlib's development files, as any does on Linux, but not GTK's development files.
+
+On macOS, call `Application.Run` from `Main`, since Cocoa only runs a user interface on the main thread. A Native AOT publish needs Xcode's command line tools, as any does on macOS. An application without an app bundle runs, but its menu bar and focus can misbehave, and making a bundle is not part of WxKit yet.
 
 On Windows, a Native AOT publish needs Visual Studio's C++ tools, as any Native AOT publish on Windows does. With the Visual Studio 2026 Build Tools, if it fails with "'vswhere.exe' is not recognized", add `%ProgramFiles(x86)%\Microsoft Visual Studio\Installer` to `PATH`, which Native AOT needs there to find the linker.
 

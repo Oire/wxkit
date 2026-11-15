@@ -9,10 +9,20 @@ WXK_FUNCTION(wxk_Window*) wxk_StaticBox_new_WindowIntStringPointSizeWindowStyle(
 }
 
 WXK_FUNCTION(wxk_Window*) wxk_StaticBox_new_WindowIntWindowPointSizeWindowStyle(wxk_Window* parent, int32_t id, wxk_Window* label, wxk_Point position, wxk_Size size, int64_t style) noexcept {
+	#if defined(wxHAS_WINDOW_LABEL_IN_STATIC_BOX)
 	return wxk::Guard<wxk_Window*>(nullptr, [&] {
 		wxWindow* created = new wxStaticBox(static_cast<wxWindow*>(wxk::Unwrap(parent)), static_cast<int>(id), static_cast<wxWindow*>(wxk::Unwrap(label)), wxk::FromPoint(position), wxk::FromSize(size), static_cast<long>(style));
 		return wxk::Wrap(created);
 	});
+	#else
+	(void)parent;
+	(void)id;
+	(void)label;
+	(void)position;
+	(void)size;
+	(void)style;
+	return nullptr;
+	#endif
 }
 
 WXK_FUNCTION(uint8_t) wxk_StaticBox_Enable(wxk_Window* self, uint8_t enable) noexcept {

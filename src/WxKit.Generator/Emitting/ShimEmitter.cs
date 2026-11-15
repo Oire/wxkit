@@ -194,7 +194,7 @@ internal static class ShimEmitter {
 		string fallback = function.IsConstructor ? "nullptr" : function.Returns.Fallback;
 		writer.Open(Signature(function).Replace(" WXK_NOEXCEPT", string.Empty) + " noexcept");
 		string? ports = function.OnlyFor.Count == 0 ? null : string.Join(" || ", function.OnlyFor.Select(static port => Ports.TryGetValue(port, out string? symbol) ? $"defined({symbol})" : "0"));
-		string? feature = owner.Tweak.MemberGuards.GetValueOrDefault(function.Source.Name);
+		string? feature = owner.Tweak.MemberGuards.GetValueOrDefault(function.Source.Name) ?? owner.Tweak.OverloadGuards.FirstOrDefault(guard => guard.Matches(function.Source))?.Condition;
 		string? guard = ports is not null && feature is not null ? $"({ports}) && ({feature})" : ports ?? feature;
 		if (guard is not null) writer.Line($"#if {guard}");
 		if (function.IsConstructor) {
