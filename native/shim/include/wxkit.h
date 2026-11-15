@@ -327,6 +327,15 @@ WXK_FUNCTION(void) wxk_Accessible_SetCallbacks(const wxk_AccessibleCallbacks* ca
 WXK_FUNCTION(wxk_Accessible*) wxk_ManagedAccessible_new(wxk_Window* window, void* userdata) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Accessible_NotifyEvent(int32_t eventType, wxk_Window* window, int32_t objectType, int32_t objectId) WXK_NOEXCEPT;
 
+// Item data
+
+// Sets the function that frees the GCHandle of a .NET object a control kept with an item, which
+// is called when the control deletes the item.
+WXK_FUNCTION(void) wxk_ClientData_SetFree(void (*free)(void* handle)) WXK_NOEXCEPT;
+// Gives a tree item the .NET object, or none when the handle is null, deleting the data it had,
+// which wxTreeCtrl::SetItemData does not.
+WXK_FUNCTION(void) wxk_TreeCtrl_SetItemData(wxk_Window* tree, void* item, void* handle) WXK_NOEXCEPT;
+
 // Validators
 
 // A validator whose checks call back into .NET. retain and release are called as windows take

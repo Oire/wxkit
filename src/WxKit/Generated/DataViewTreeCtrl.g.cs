@@ -14,18 +14,18 @@ public unsafe partial class DataViewTreeCtrl : DataViewCtrl {
 	}
 
 	/// <summary>Appends a container to the given parent.</summary>
-	public DataViewItem AppendContainer(DataViewItem parent, string text, int icon = -1, int expanded = -1) {
+	public DataViewItem AppendContainer(DataViewItem parent, string text, int icon = -1, int expanded = -1, object? data = null) {
 		ArgumentNullException.ThrowIfNull(text);
 		fixed (char* textText = text) {
-			return new global::WxKit.DataViewItem(WxKitNative.DataViewTreeCtrlAppendContainer(Native, parent.Value, textText, NativeString.Length(text), icon, expanded));
+			return new global::WxKit.DataViewItem(WxKitNative.DataViewTreeCtrlAppendContainer(Native, parent.Value, textText, NativeString.Length(text), icon, expanded, ItemData.Alloc(data)));
 		}
 	}
 
 	/// <summary>Appends an item to the given parent.</summary>
-	public DataViewItem AppendItem(DataViewItem parent, string text, int icon = -1) {
+	public DataViewItem AppendItem(DataViewItem parent, string text, int icon = -1, object? data = null) {
 		ArgumentNullException.ThrowIfNull(text);
 		fixed (char* textText = text) {
-			return new global::WxKit.DataViewItem(WxKitNative.DataViewTreeCtrlAppendItem(Native, parent.Value, textText, NativeString.Length(text), icon));
+			return new global::WxKit.DataViewItem(WxKitNative.DataViewTreeCtrlAppendItem(Native, parent.Value, textText, NativeString.Length(text), icon, ItemData.Alloc(data)));
 		}
 	}
 
@@ -41,11 +41,8 @@ public unsafe partial class DataViewTreeCtrl : DataViewCtrl {
 	/// <summary>Calls the identical method from wxDataViewTreeStore.</summary>
 	public int GetChildCount(DataViewItem parent) => WxKitNative.DataViewTreeCtrlGetChildCount(Native, parent.Value);
 
-	/// <summary>Returns the image list.</summary>
-	public void GetImageList() => WxKitNative.DataViewTreeCtrlGetImageList(Native);
-
 	/// <summary>Calls the identical method from wxDataViewTreeStore.</summary>
-	public void GetItemData(DataViewItem item) => WxKitNative.DataViewTreeCtrlGetItemData(Native, item.Value);
+	public object? GetItemData(DataViewItem item) => ItemData.Get(WxKitNative.DataViewTreeCtrlGetItemData(Native, item.Value));
 
 	/// <summary>Calls the identical method from wxDataViewTreeStore.</summary>
 	public Icon? GetItemExpandedIcon(DataViewItem item) => global::WxKit.Icon.Take(WxKitNative.DataViewTreeCtrlGetItemExpandedIcon(Native, item.Value));
@@ -63,18 +60,18 @@ public unsafe partial class DataViewTreeCtrl : DataViewCtrl {
 	public DataViewItem GetNthChild(DataViewItem parent, int position) => new global::WxKit.DataViewItem(WxKitNative.DataViewTreeCtrlGetNthChild(Native, parent.Value, checked((uint)position)));
 
 	/// <summary>Calls the same method from wxDataViewTreeStore but uses an index position in the image list instead of a wxIcon.</summary>
-	public DataViewItem InsertContainer(DataViewItem parent, DataViewItem previous, string text, int icon = -1, int expanded = -1) {
+	public DataViewItem InsertContainer(DataViewItem parent, DataViewItem previous, string text, int icon = -1, int expanded = -1, object? data = null) {
 		ArgumentNullException.ThrowIfNull(text);
 		fixed (char* textText = text) {
-			return new global::WxKit.DataViewItem(WxKitNative.DataViewTreeCtrlInsertContainer(Native, parent.Value, previous.Value, textText, NativeString.Length(text), icon, expanded));
+			return new global::WxKit.DataViewItem(WxKitNative.DataViewTreeCtrlInsertContainer(Native, parent.Value, previous.Value, textText, NativeString.Length(text), icon, expanded, ItemData.Alloc(data)));
 		}
 	}
 
 	/// <summary>Calls the same method from wxDataViewTreeStore but uses an index position in the image list instead of a wxIcon.</summary>
-	public DataViewItem InsertItem(DataViewItem parent, DataViewItem previous, string text, int icon = -1) {
+	public DataViewItem InsertItem(DataViewItem parent, DataViewItem previous, string text, int icon = -1, object? data = null) {
 		ArgumentNullException.ThrowIfNull(text);
 		fixed (char* textText = text) {
-			return new global::WxKit.DataViewItem(WxKitNative.DataViewTreeCtrlInsertItem(Native, parent.Value, previous.Value, textText, NativeString.Length(text), icon));
+			return new global::WxKit.DataViewItem(WxKitNative.DataViewTreeCtrlInsertItem(Native, parent.Value, previous.Value, textText, NativeString.Length(text), icon, ItemData.Alloc(data)));
 		}
 	}
 
@@ -82,20 +79,23 @@ public unsafe partial class DataViewTreeCtrl : DataViewCtrl {
 	public bool IsContainer(DataViewItem item) => WxKitNative.DataViewTreeCtrlIsContainer(Native, item.Value) != 0;
 
 	/// <summary>Calls the same method from wxDataViewTreeStore but uses an index position in the image list instead of a wxIcon.</summary>
-	public DataViewItem PrependContainer(DataViewItem parent, string text, int icon = -1, int expanded = -1) {
+	public DataViewItem PrependContainer(DataViewItem parent, string text, int icon = -1, int expanded = -1, object? data = null) {
 		ArgumentNullException.ThrowIfNull(text);
 		fixed (char* textText = text) {
-			return new global::WxKit.DataViewItem(WxKitNative.DataViewTreeCtrlPrependContainer(Native, parent.Value, textText, NativeString.Length(text), icon, expanded));
+			return new global::WxKit.DataViewItem(WxKitNative.DataViewTreeCtrlPrependContainer(Native, parent.Value, textText, NativeString.Length(text), icon, expanded, ItemData.Alloc(data)));
 		}
 	}
 
 	/// <summary>Calls the same method from wxDataViewTreeStore but uses an index position in the image list instead of a wxIcon.</summary>
-	public DataViewItem PrependItem(DataViewItem parent, string text, int icon = -1) {
+	public DataViewItem PrependItem(DataViewItem parent, string text, int icon = -1, object? data = null) {
 		ArgumentNullException.ThrowIfNull(text);
 		fixed (char* textText = text) {
-			return new global::WxKit.DataViewItem(WxKitNative.DataViewTreeCtrlPrependItem(Native, parent.Value, textText, NativeString.Length(text), icon));
+			return new global::WxKit.DataViewItem(WxKitNative.DataViewTreeCtrlPrependItem(Native, parent.Value, textText, NativeString.Length(text), icon, ItemData.Alloc(data)));
 		}
 	}
+
+	/// <summary>Calls the identical method from wxDataViewTreeStore.</summary>
+	public void SetItemData(DataViewItem item, object? data) => WxKitNative.DataViewTreeCtrlSetItemData(Native, item.Value, ItemData.Alloc(data));
 
 	/// <summary>Calls the identical method from wxDataViewTreeStore.</summary>
 	public void SetItemExpandedIcon(DataViewItem item, Bitmap icon) {

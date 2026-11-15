@@ -9,6 +9,9 @@ public unsafe partial class CommandEvent : Event {
 	internal CommandEvent(WxkEvent* native) : base(native) {
 	}
 
+	/// <summary>Returns client object pointer for a listbox or choice selection event (not valid for a deselection).</summary>
+	public object? ClientObject => ItemData.Get(WxKitNative.CommandEventGetClientObject(Handle));
+
 	/// <summary>Returns extra information dependent on the event objects type.</summary>
 	public long ExtraLong {
 		get => WxKitNative.CommandEventGetExtraLong(Handle);

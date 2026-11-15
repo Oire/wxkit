@@ -366,6 +366,14 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte DataViewCtrlAssociateModel(WxkWindow* control, WxkDataViewModel* model);
 
+	[LibraryImport(Library, EntryPoint = "wxk_ClientData_SetFree")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ClientDataSetFree(delegate* unmanaged[Cdecl]<nint, void> free);
+
+	[LibraryImport(Library, EntryPoint = "wxk_TreeCtrl_SetItemData")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void TreeCtrlSetItemData(WxkWindow* tree, nint item, nint handle);
+
 	[LibraryImport(Library, EntryPoint = "wxk_Accessible_SetCallbacks")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void AccessibleSetCallbacks(WxkAccessibleCallbacks* callbacks);

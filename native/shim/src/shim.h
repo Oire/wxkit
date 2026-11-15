@@ -12,6 +12,8 @@
 
 #include "wxkit.h"
 
+class wxTreeItemData;
+
 struct wxk_String {
 	std::u16string text;
 };
@@ -182,6 +184,13 @@ wxk_WindowList* ToWindowList(const List& list) {
 	for (wxWindow* window : list) copy->windows.push_back(window);
 	return reinterpret_cast<wxk_WindowList*>(copy);
 }
+
+// Objects from .NET that a control keeps with its items, such as a list box's or a tree's, as
+// GCHandles. The control deletes the data with its item, which frees the handle. Null is no data.
+wxClientData* ToClientData(void* handle);
+wxTreeItemData* ToTreeItemData(void* handle);
+// The handle of an item's data, or null when it has none or the data is not from .NET.
+void* FromClientData(const wxClientData* data);
 
 // The bundles a list of bitmaps makes, as a control's images, such as a tree's, take them.
 inline wxVector<wxBitmapBundle> ToBitmapBundles(wxk_Object* const* bitmaps, size_t count) {

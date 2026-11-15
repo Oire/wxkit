@@ -757,6 +757,39 @@ internal sealed class VariantConversion : Conversion {
 
 // A wxVector<wxVariant>, such as a data view list row's values, is built from the managed values
 // for the call.
+// A wxClientData* or wxTreeItemData*, the data a control keeps with an item, is any object. It
+// crosses as a GCHandle, which the shim wraps in data that frees it when the control deletes it.
+// Only members whose control takes the data, and deletes what it replaces, may use it.
+internal sealed class ItemDataConversion(string helper) : Conversion {
+	public static ItemDataConversion Client { get; } = new("ToClientData");
+
+	public static ItemDataConversion TreeItem { get; } = new("ToTreeItemData");
+
+	public override string Suffix => "Data";
+
+	public override string CReturnType => "void*";
+
+	public override string Fallback => "nullptr";
+
+	public override string InteropReturnType => "nint";
+
+	public override IEnumerable<string> CParameters(string name) => [$"void* {name}"];
+
+	public override string ToCpp(string name) => $"wxk::{helper}({name})";
+
+	public override string FromCpp(string expression) => $"wxk::FromClientData({expression})";
+
+	public override IEnumerable<string> InteropParameters(string name) => [$"nint {name}"];
+
+	public override string ManagedType(bool nullable) => "object?";
+
+	public override IEnumerable<string> InteropArguments(string name, bool nullable) => [$"ItemData.Alloc({name})"];
+
+	public override string ManagedReturn(string expression) => $"ItemData.Get({expression})";
+
+	public override bool AcceptsNull => true;
+}
+
 // A wxVector<wxBitmapBundle>, such as a tree's images, is a sequence of bitmaps, which cross as an
 // array of their handles that the shim makes bundles of. The bitmaps stay alive for the call.
 internal sealed class BitmapListConversion : Conversion {

@@ -89,6 +89,14 @@ An object going in can be null, which stands for the class's empty object, as nu
 
 A parameter that takes a bitmap or icon bundle, which wxWidgets 3.3 uses for every resolution, takes a `Bitmap` or `Icon`, the way C++ converts one.
 
+The images of a tree, list view, or notebook are any sequence of bitmaps, given to `SetImages` or, on a list view, `SetNormalImages` and `SetSmallImages`. An item names its image by its position in the sequence. The control keeps its own bundles, so the bitmaps can be disposed after the call.
+
+### Item data
+
+A list box, choice, combo box, tree, or data view tree can keep any object with an item, such as what the item stands for, through `Append` and `Insert` with an object, `SetClientObject` and `GetClientObject`, or a tree's `SetItemData` and `GetItemData`. A command event from one of these controls has the item's object in `ClientObject`.
+
+The control holds the object through a GC handle, which is freed when the control deletes the item, replaces its object, or is destroyed. Until then, the object stays alive however little else refers to it. Null is no object. A list view's item data is a number, as in wxWidgets, which can be the key of a dictionary of objects.
+
 ### Drawing contexts
 
 `DC` and its window, client, paint, memory, and screen classes are objects the application creates, uses, and disposes, which a paint handler needs to do before it returns:

@@ -84,6 +84,14 @@ public unsafe partial class ListBox : Control {
 		}
 	}
 
+	/// <summary>Appends item into the control.</summary>
+	public int Append(string item, object? clientData) {
+		ArgumentNullException.ThrowIfNull(item);
+		fixed (char* itemText = item) {
+			return WxKitNative.ListBoxAppendStringData(Native, itemText, NativeString.Length(item), ItemData.Alloc(clientData));
+		}
+	}
+
 	/// <summary>Appends several items at once into the control.</summary>
 	public int Append(IEnumerable<string> items) {
 		ArgumentNullException.ThrowIfNull(items);
@@ -111,6 +119,9 @@ public unsafe partial class ListBox : Control {
 		}
 	}
 
+	/// <summary>Returns a pointer to the client data associated with the given item (if any).</summary>
+	public object? GetClientObject(int index) => ItemData.Get(WxKitNative.ListBoxGetClientObject(Native, checked((uint)index)));
+
 	/// <summary>Returns the label of the item with the given index.</summary>
 	public string GetString(int index) => NativeString.Take(WxKitNative.ListBoxGetString(Native, checked((uint)index)));
 
@@ -119,6 +130,14 @@ public unsafe partial class ListBox : Control {
 		ArgumentNullException.ThrowIfNull(item);
 		fixed (char* itemText = item) {
 			return WxKitNative.ListBoxInsertStringUInt(Native, itemText, NativeString.Length(item), checked((uint)position));
+		}
+	}
+
+	/// <summary>Inserts item into the control.</summary>
+	public int Insert(string item, int position, object? clientData) {
+		ArgumentNullException.ThrowIfNull(item);
+		fixed (char* itemText = item) {
+			return WxKitNative.ListBoxInsertStringUIntData(Native, itemText, NativeString.Length(item), checked((uint)position), ItemData.Alloc(clientData));
 		}
 	}
 
@@ -148,6 +167,9 @@ public unsafe partial class ListBox : Control {
 		using NativeStringArray itemsNative = new(items);
 		WxKitNative.ListBoxSet(Native, itemsNative.Handle);
 	}
+
+	/// <summary>Associates the given typed client data pointer with the given item: the data object will be deleted when the item is deleted (either explicitly by using Delete() or implicitly when the control itself is destroyed).</summary>
+	public void SetClientObject(int index, object? data) => WxKitNative.ListBoxSetClientObject(Native, checked((uint)index), ItemData.Alloc(data));
 
 	/// <summary>Set the specified item to be the first visible item.</summary>
 	public void SetFirstItem(int index) => WxKitNative.ListBoxSetFirstItemInt(Native, index);

@@ -194,18 +194,18 @@ public unsafe partial class TreeCtrl : Control {
 	}
 
 	/// <summary>Adds the root node to the tree, returning the new item.</summary>
-	public TreeItemId AddRoot(string text, int image = -1, int selImage = -1) {
+	public TreeItemId AddRoot(string text, int image = -1, int selImage = -1, object? data = null) {
 		ArgumentNullException.ThrowIfNull(text);
 		fixed (char* textText = text) {
-			return new global::WxKit.TreeItemId(WxKitNative.TreeCtrlAddRoot(Native, textText, NativeString.Length(text), image, selImage));
+			return new global::WxKit.TreeItemId(WxKitNative.TreeCtrlAddRoot(Native, textText, NativeString.Length(text), image, selImage, ItemData.Alloc(data)));
 		}
 	}
 
 	/// <summary>Appends an item to the end of the branch identified by parent, return a new item id.</summary>
-	public TreeItemId AppendItem(TreeItemId parent, string text, int image = -1, int selImage = -1) {
+	public TreeItemId AppendItem(TreeItemId parent, string text, int image = -1, int selImage = -1, object? data = null) {
 		ArgumentNullException.ThrowIfNull(text);
 		fixed (char* textText = text) {
-			return new global::WxKit.TreeItemId(WxKitNative.TreeCtrlAppendItem(Native, parent.Value, textText, NativeString.Length(text), image, selImage));
+			return new global::WxKit.TreeItemId(WxKitNative.TreeCtrlAppendItem(Native, parent.Value, textText, NativeString.Length(text), image, selImage, ItemData.Alloc(data)));
 		}
 	}
 
@@ -260,6 +260,9 @@ public unsafe partial class TreeCtrl : Control {
 	/// <summary>Returns the background colour of the item.</summary>
 	public Color? GetItemBackgroundColor(TreeItemId item) => global::WxKit.Color.FromNative(WxKitNative.TreeCtrlGetItemBackgroundColour(Native, item.Value));
 
+	/// <summary>Returns the tree item data associated with the item.</summary>
+	public object? GetItemData(TreeItemId item) => ItemData.Get(WxKitNative.TreeCtrlGetItemData(Native, item.Value));
+
 	/// <summary>Returns the font of the item label.</summary>
 	public Font? GetItemFont(TreeItemId item) => global::WxKit.Font.Take(WxKitNative.TreeCtrlGetItemFont(Native, item.Value));
 
@@ -294,18 +297,18 @@ public unsafe partial class TreeCtrl : Control {
 	public TreeItemId GetPrevVisible(TreeItemId item) => new global::WxKit.TreeItemId(WxKitNative.TreeCtrlGetPrevVisible(Native, item.Value));
 
 	/// <summary>Inserts an item after a given one (previous).</summary>
-	public TreeItemId InsertItem(TreeItemId parent, TreeItemId previous, string text, int image = -1, int selImage = -1) {
+	public TreeItemId InsertItem(TreeItemId parent, TreeItemId previous, string text, int image = -1, int selImage = -1, object? data = null) {
 		ArgumentNullException.ThrowIfNull(text);
 		fixed (char* textText = text) {
-			return new global::WxKit.TreeItemId(WxKitNative.TreeCtrlInsertItemTreeItemIdTreeItemIdStringIntInt(Native, parent.Value, previous.Value, textText, NativeString.Length(text), image, selImage));
+			return new global::WxKit.TreeItemId(WxKitNative.TreeCtrlInsertItemTreeItemIdTreeItemIdStringIntIntData(Native, parent.Value, previous.Value, textText, NativeString.Length(text), image, selImage, ItemData.Alloc(data)));
 		}
 	}
 
 	/// <summary>Inserts an item before one identified by its position (pos).</summary>
-	public TreeItemId InsertItem(TreeItemId parent, int position, string text, int image = -1, int selImage = -1) {
+	public TreeItemId InsertItem(TreeItemId parent, int position, string text, int image = -1, int selImage = -1, object? data = null) {
 		ArgumentNullException.ThrowIfNull(text);
 		fixed (char* textText = text) {
-			return new global::WxKit.TreeItemId(WxKitNative.TreeCtrlInsertItemTreeItemIdSizeTStringIntInt(Native, parent.Value, checked((nuint)position), textText, NativeString.Length(text), image, selImage));
+			return new global::WxKit.TreeItemId(WxKitNative.TreeCtrlInsertItemTreeItemIdSizeTStringIntIntData(Native, parent.Value, checked((nuint)position), textText, NativeString.Length(text), image, selImage, ItemData.Alloc(data)));
 		}
 	}
 
@@ -328,10 +331,10 @@ public unsafe partial class TreeCtrl : Control {
 	public int OnCompareItems(TreeItemId item1, TreeItemId item2) => WxKitNative.TreeCtrlOnCompareItems(Native, item1.Value, item2.Value);
 
 	/// <summary>Appends an item as the first child of parent, return a new item id.</summary>
-	public TreeItemId PrependItem(TreeItemId parent, string text, int image = -1, int selImage = -1) {
+	public TreeItemId PrependItem(TreeItemId parent, string text, int image = -1, int selImage = -1, object? data = null) {
 		ArgumentNullException.ThrowIfNull(text);
 		fixed (char* textText = text) {
-			return new global::WxKit.TreeItemId(WxKitNative.TreeCtrlPrependItem(Native, parent.Value, textText, NativeString.Length(text), image, selImage));
+			return new global::WxKit.TreeItemId(WxKitNative.TreeCtrlPrependItem(Native, parent.Value, textText, NativeString.Length(text), image, selImage, ItemData.Alloc(data)));
 		}
 	}
 

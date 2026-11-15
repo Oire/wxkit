@@ -76,6 +76,9 @@ internal static class Core {
 		]) {
 			tweaks.Class(control);
 		}
+		// An item's data is an object, which the control deletes with the item. Detaching it would
+		// leave no one to free it.
+		foreach (string container in (string[])["wxControlWithItems", "wxChoice", "wxComboBox", "wxListBox"]) tweaks.Class(container).Ignore("DetachClientObject");
 		// wxOSX has no static box with a window as its label.
 		tweaks.Class("wxStaticBox").GuardOverload("defined(wxHAS_WINDOW_LABEL_IN_STATIC_BOX)", "wxStaticBox", "label", "wxWindow *");
 		// Validators, which WxKit creates and windows copy. Custom ones are hand-written, in CustomValidator.
@@ -106,7 +109,8 @@ internal static class Core {
 			.ParameterEnum("InsertColumn", "format", "wxListColumnFormat")
 			.Director("OnGetItemText", "OnGetItemImage", "OnGetItemColumnImage", "OnGetItemIsChecked"));
 		tweaks.Class("wxListView");
-		tweaks.Class("wxTreeCtrl");
+		// SetItemData is written by hand, since wxTreeCtrl does not delete the data it replaces.
+		tweaks.Class("wxTreeCtrl").Ignore("SetItemData");
 		// Data views show a model, whose classes are hand-written, in DataViewModel. Adding a column
 		// returns the column, which is not bound, so it gives nothing back; its model column names it.
 		tweaks.Enum("wxDataViewColumnFlags", "DataViewColumnFlags", isFlags: true);
@@ -132,7 +136,8 @@ internal static class Core {
 			.ParameterEnum("AppendToggleColumn", "flags", "wxDataViewColumnFlags")
 			.ParameterEnum("AppendProgressColumn", "flags", "wxDataViewColumnFlags")
 			.ParameterEnum("AppendIconTextColumn", "flags", "wxDataViewColumnFlags"));
-		tweaks.Class("wxDataViewTreeCtrl", view => view.DiscardUnboundReturns().Ignore("GetStore"));
+		// Its images are an image list, which is not bound.
+		tweaks.Class("wxDataViewTreeCtrl", view => view.DiscardUnboundReturns().Ignore("GetStore", "GetImageList"));
 		// The interface headers document SetItem, which the real wxDataViewEvent does not have.
 		tweaks.Class("wxDataViewEvent", dataViewEvent => dataViewEvent.Ignore("SetItem"));
 		tweaks.Class("wxDataViewIconText").ValueObject();
@@ -163,7 +168,8 @@ internal static class Core {
 			tweaks.Class(dialog);
 		}
 		tweaks.Class("wxEvent", e => e.NoConstructors().Rename("GetSkipped", "IsSkipped"));
-		tweaks.Class("wxCommandEvent");
+		// An event does not delete the item data it is given, so only the item's data comes out.
+		tweaks.Class("wxCommandEvent").Ignore("SetClientObject");
 		// Veto is written by hand, since it refuses when the close cannot be vetoed.
 		tweaks.Class("wxCloseEvent", e => e.Ignore("Veto").Rename("GetVeto", "IsVetoed"));
 		// Button(button) asks whether the event came from that button. GetButton is the Button

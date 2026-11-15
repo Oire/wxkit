@@ -312,6 +312,9 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		if (isReturn && type.Name is "wxWindowList" && type.Pointers == 0) return WindowListConversion.Instance;
 		if (type.Pointers == 1 && !type.IsReference) {
 			if (type.Name == "wxObject" && isReturn) return AnyObjectConversion.Instance;
+			// Data a control keeps with an item, which it deletes with the item.
+			if (type.Name == "wxClientData") return ItemDataConversion.Client;
+			if (type.Name == "wxTreeItemData") return ItemDataConversion.TreeItem;
 			// Events are only received, and a static class has no objects to pass.
 			if (!_classes.TryGetValue(type.Name, out BoundClass? target) || target.Handle == HandleKind.Event || target.Handle == HandleKind.Static) return null;
 			// Only event handlers are tracked, so only they can be wrapped when wxWidgets hands one back.

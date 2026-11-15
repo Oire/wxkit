@@ -5,12 +5,28 @@ WXK_FUNCTION(int32_t) wxk_ControlWithItems_Append_String(wxk_Window* self, const
 	return wxk::Guard<int32_t>(0, [&]() -> int32_t { return static_cast<int32_t>(static_cast<wxItemContainer*>(static_cast<wxControlWithItems*>(wxk::Unwrap(self)))->Append(wxk::FromUtf16(item, itemLength))); });
 }
 
+WXK_FUNCTION(int32_t) wxk_ControlWithItems_Append_StringData(wxk_Window* self, const char16_t* item, size_t itemLength, void* clientData) noexcept {
+	return wxk::Guard<int32_t>(0, [&]() -> int32_t { return static_cast<int32_t>(static_cast<wxItemContainer*>(static_cast<wxControlWithItems*>(wxk::Unwrap(self)))->Append(wxk::FromUtf16(item, itemLength), wxk::ToClientData(clientData))); });
+}
+
 WXK_FUNCTION(int32_t) wxk_ControlWithItems_Append_Strings(wxk_Window* self, const wxk_StringArray* items) noexcept {
 	return wxk::Guard<int32_t>(0, [&]() -> int32_t { return static_cast<int32_t>(static_cast<wxItemContainer*>(static_cast<wxControlWithItems*>(wxk::Unwrap(self)))->Append(*wxk::Unwrap(items))); });
 }
 
+WXK_FUNCTION(void*) wxk_ControlWithItems_GetClientObject(wxk_Window* self, uint32_t index) noexcept {
+	return wxk::Guard<void*>(nullptr, [&]() -> void* { return wxk::FromClientData(static_cast<wxItemContainer*>(static_cast<wxControlWithItems*>(wxk::Unwrap(self)))->GetClientObject(index)); });
+}
+
+WXK_FUNCTION(void) wxk_ControlWithItems_SetClientObject(wxk_Window* self, uint32_t index, void* data) noexcept {
+	wxk::Guard([&] { static_cast<wxItemContainer*>(static_cast<wxControlWithItems*>(wxk::Unwrap(self)))->SetClientObject(index, wxk::ToClientData(data)); });
+}
+
 WXK_FUNCTION(int32_t) wxk_ControlWithItems_Insert_StringUInt(wxk_Window* self, const char16_t* item, size_t itemLength, uint32_t position) noexcept {
 	return wxk::Guard<int32_t>(0, [&]() -> int32_t { return static_cast<int32_t>(static_cast<wxItemContainer*>(static_cast<wxControlWithItems*>(wxk::Unwrap(self)))->Insert(wxk::FromUtf16(item, itemLength), position)); });
+}
+
+WXK_FUNCTION(int32_t) wxk_ControlWithItems_Insert_StringUIntData(wxk_Window* self, const char16_t* item, size_t itemLength, uint32_t position, void* clientData) noexcept {
+	return wxk::Guard<int32_t>(0, [&]() -> int32_t { return static_cast<int32_t>(static_cast<wxItemContainer*>(static_cast<wxControlWithItems*>(wxk::Unwrap(self)))->Insert(wxk::FromUtf16(item, itemLength), position, wxk::ToClientData(clientData))); });
 }
 
 WXK_FUNCTION(int32_t) wxk_ControlWithItems_Insert_StringsUInt(wxk_Window* self, const wxk_StringArray* items, uint32_t position) noexcept {

@@ -69,6 +69,7 @@ set(WXK_SOURCES
 	${WXK_GENERATED}
 	src/accessible.cpp
 	src/app.cpp
+	src/clientdata.cpp
 	src/clipboard.cpp
 	src/dataview.cpp
 	src/event.cpp
