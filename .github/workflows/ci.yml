@@ -213,6 +213,11 @@ jobs:
       contents: write
       id-token: write
     steps:
+      # Only for the release notes, in docs/releases.
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: docs/releases
+
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 10.0.x
@@ -240,12 +245,16 @@ jobs:
             dotnet nuget push "$package" --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
           done
 
+      # A release's own notes, in docs/releases/<version>.md, come before the notes generated from
+      # its commits.
       - name: Create the GitHub release
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ github.ref_name }}
         run: |
-          prerelease=""
-          if [[ "$TAG" == *-* ]]; then prerelease="--prerelease"; fi
-          gh release create "$TAG" packages/*.nupkg --repo "$GITHUB_REPOSITORY" --title "WxKit ${TAG#v}" --generate-notes $prerelease
+          options=(--repo "$GITHUB_REPOSITORY" --title "WxKit ${TAG#v}" --generate-notes)
+          if [[ "$TAG" == *-* ]]; then options+=(--prerelease); fi
+          notes="docs/releases/${TAG#v}.md"
+          if [[ -f "$notes" ]]; then options+=(--notes-file "$notes"); fi
+          gh release create "$TAG" packages/*.nupkg "${options[@]}"

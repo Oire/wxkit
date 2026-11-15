@@ -31,7 +31,7 @@ Run it as it is, or publish it as one executable:
 dotnet publish -r win-x64 -p:PublishAot=true
 ```
 
-A Native AOT publish needs Visual Studio's C++ tools, as any Native AOT publish on Windows does.
+A Native AOT publish needs Visual Studio's C++ tools, as any Native AOT publish on Windows does. With the Visual Studio 2026 Build Tools, if it fails with "'vswhere.exe' is not recognized", add `%ProgramFiles(x86)%\Microsoft Visual Studio\Installer` to `PATH`, which Native AOT needs there to find the linker.
 
 ## What it covers
 
