@@ -143,8 +143,10 @@
 		bundle. A file that is not code, such as a framework-dependent application's assemblies, gets
 		its signature in its extended attributes. With WxKitCodesignIdentity, such as
 		"Developer ID Application: Jane Doe (TEAMID)", it signs with the hardened runtime and a secure
-		timestamp, which notarization needs, and an application that is not Native AOT gets the
-		entitlement to compile code at run time, which .NET's JIT needs under the hardened runtime.
+		timestamp, which notarization needs. An application that is not Native AOT gets the entitlement
+		to compile code at run time, which .NET's JIT needs under the hardened runtime, and one that is
+		framework dependent the entitlement to load libraries another team signed, since it loads .NET
+		from its shared install, which Microsoft signed.
 		Without one, it signs ad hoc, which runs on the Mac that built it.
 	-->
 	<Target Name="_WxKitSignAppBundle" AfterTargets="_WxKitCreateAppBundle" Condition="'$(WxKitAppBundle)' == 'true' and $([MSBuild]::IsOSPlatform('OSX'))">
@@ -157,7 +159,9 @@
 		</PropertyGroup>
 		<ItemGroup>
 			<_WxKitSignedFile Include="$(_WxKitBundle)/Contents/MacOS/**/*" Exclude="$(_WxKitBundle)/Contents/MacOS/$(_WxKitBundleExecutable)" />
-			<_WxKitEntitlementLine Include="&lt;%3Fxml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;%3F&gt;;&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;;&lt;plist version=&quot;1.0&quot;&gt;;&lt;dict&gt;;%09&lt;key&gt;com.apple.security.cs.allow-jit&lt;/key&gt;;%09&lt;true/&gt;;&lt;/dict&gt;;&lt;/plist&gt;" />
+			<_WxKitEntitlementLine Include="&lt;%3Fxml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;%3F&gt;;&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;;&lt;plist version=&quot;1.0&quot;&gt;;&lt;dict&gt;;%09&lt;key&gt;com.apple.security.cs.allow-jit&lt;/key&gt;;%09&lt;true/&gt;" />
+			<_WxKitEntitlementLine Include="%09&lt;key&gt;com.apple.security.cs.disable-library-validation&lt;/key&gt;;%09&lt;true/&gt;" Condition="'$(SelfContained)' != 'true'" />
+			<_WxKitEntitlementLine Include="&lt;/dict&gt;;&lt;/plist&gt;" />
 		</ItemGroup>
 		<WriteLinesToFile File="$(_WxKitEntitlements)" Lines="@(_WxKitEntitlementLine)" Overwrite="true" Condition="'$(_WxKitEntitlements)' != ''" />
 		<Exec Command="codesign --force $(_WxKitSigningOptions) --sign &quot;$(_WxKitSigningIdentity)&quot; &quot;%(_WxKitSignedFile.FullPath)&quot;" Condition="'@(_WxKitSignedFile)' != ''" />

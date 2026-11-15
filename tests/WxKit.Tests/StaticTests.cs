@@ -11,10 +11,20 @@ public class StaticTests {
 	});
 
 	[Fact]
-	public Task FindsTheFocusedWindow() => Gui.WithFrame(frame => {
+	// macOS only gives the keyboard focus to the active application, which a test run is not when
+	// nothing activates it, as on a CI runner, so the test waits for the focus, and there skips
+	// when it does not come.
+	public Task FindsTheFocusedWindow() => Gui.WithFrame(async frame => {
 		TextCtrl text = new(frame);
 		frame.Show();
 		text.SetFocus();
+		if (OperatingSystem.IsMacOS()) {
+			try {
+				await Gui.WaitUntil(() => Window.FindFocus() is not null);
+			} catch (TimeoutException) {
+				Assert.Skip("macOS gives the keyboard focus only to the active application, which this test run is not.");
+			}
+		}
 		Assert.Same(text, Window.FindFocus());
 	});
 
