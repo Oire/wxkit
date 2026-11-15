@@ -96,6 +96,7 @@ These are the decisions it makes without a tweak.
 - An enum value takes its value from the real headers, which are what the shim compiles against. The interface headers leave some initializers out, as for `wxTextValidatorStyle`'s flags and `wxPenStyle`, which would then count up from zero, and Doxygen cuts others short at a continued line, as for `wxEVT_CATEGORY_ALL`.
 - A constant whose value depends on the platform is left out, since a C# constant has one value. The real headers show which ones those are: an enum value inside an `#if`, a value that follows one without an initializer, as `wxCURSOR_ARROWWAIT` follows wxGTK's `wxCURSOR_DEFAULT`, and a `#define` written more than one way, as `wxTR_DEFAULT_STYLE` is.
 - An enum parameter whose default is such a constant is nullable instead, and null passes the C++ default, as in `new TreeCtrl(parent, style: null)`.
+- A string parameter whose default is one of wxWidgets's string constants, such as a file dialog's `wxFileSelectorPromptStr`, is nullable and null by default, which passes the constant, so the parameters after it are bound too. An empty string stays empty.
 - The generated shim checks every enum value with a `static_assert`, so a value that is wrong for the platform being built fails the native build rather than passing wxWidgets the wrong number. Styles are compared as the `long` the shim passes them as.
 
 ### Names

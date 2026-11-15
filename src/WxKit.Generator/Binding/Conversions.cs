@@ -209,6 +209,39 @@ internal sealed class EnumConversion(string enumName, NumberConversion number, s
 /// An enum parameter whose C++ default depends on the platform, such as wxTreeCtrl's
 /// wxTR_DEFAULT_STYLE. It is nullable in the managed API, and null passes the C++ default.
 /// </summary>
+/// <summary>
+/// A string parameter whose C++ default is one of wxWidgets's string constants, such as
+/// wxFileSelectorPromptStr. It is nullable in the managed API, and null, a null pointer in C, passes
+/// the constant, so an empty string is still an empty string.
+/// </summary>
+internal sealed class StringDefaultConversion(string cppDefault) : Conversion {
+	public override string Suffix => StringConversion.Instance.Suffix;
+
+	public override string CReturnType => StringConversion.Instance.CReturnType;
+
+	public override string Fallback => StringConversion.Instance.Fallback;
+
+	public override string InteropReturnType => StringConversion.Instance.InteropReturnType;
+
+	public override IEnumerable<string> CParameters(string name) => StringConversion.Instance.CParameters(name);
+
+	public override string ToCpp(string name) => $"({name} != nullptr ? {StringConversion.Instance.ToCpp(name)} : wxString({cppDefault}))";
+
+	public override string FromCpp(string expression) => StringConversion.Instance.FromCpp(expression);
+
+	public override IEnumerable<string> InteropParameters(string name) => StringConversion.Instance.InteropParameters(name);
+
+	public override string ManagedType(bool nullable) => "string?";
+
+	public override string? Fixed(string name) => StringConversion.Instance.Fixed(name);
+
+	public override IEnumerable<string> InteropArguments(string name, bool nullable) => [$"{name.TrimStart('@')}Text", $"{name} is null ? 0 : NativeString.Length({name})"];
+
+	public override string ManagedReturn(string expression) => StringConversion.Instance.ManagedReturn(expression);
+
+	public override bool AcceptsNull => true;
+}
+
 internal sealed class PlatformDefaultConversion(EnumConversion inner, string cppDefault) : Conversion {
 	public override string Suffix => inner.Suffix;
 

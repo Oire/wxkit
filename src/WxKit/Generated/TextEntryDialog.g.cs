@@ -7,7 +7,7 @@ namespace WxKit;
 /// <summary>This class represents a dialog that requests a one-line text string from the user. Wraps wxTextEntryDialog.</summary>
 public unsafe partial class TextEntryDialog : Dialog {
 	/// <summary>Constructor.</summary>
-	public TextEntryDialog(Window? parent, string message) : this(CreateNative(parent, message)) {
+	public TextEntryDialog(Window? parent, string message, string? caption = null, string value = "", DialogStyle style = (DialogStyle)0x15, Point? position = null, Size? size = null) : this(CreateNative(parent, message, caption, value, style, position, size)) {
 	}
 
 	internal TextEntryDialog(WxkWindow* native) : base(native) {
@@ -44,11 +44,14 @@ public unsafe partial class TextEntryDialog : Dialog {
 	/// <summary>Associate a validator with the text control used by the dialog.</summary>
 	public void SetTextValidator(TextValidatorStyle style = TextValidatorStyle.None) => WxKitNative.TextEntryDialogSetTextValidatorTextValidatorStyle(Native, (int)style);
 
-	private static WxkWindow* CreateNative(Window? parent, string message) {
+	private static WxkWindow* CreateNative(Window? parent, string message, string? caption, string value, DialogStyle style, Point? position, Size? size) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(message);
-		fixed (char* messageText = message) {
-			return WxKitNative.TextEntryDialogNew(parent is null ? null : (WxkWindow*)parent.Native, messageText, NativeString.Length(message));
+		ArgumentNullException.ThrowIfNull(value);
+		fixed (char* messageText = message)
+		fixed (char* captionText = caption)
+		fixed (char* valueText = value) {
+			return WxKitNative.TextEntryDialogNew(parent is null ? null : (WxkWindow*)parent.Native, messageText, NativeString.Length(message), captionText, caption is null ? 0 : NativeString.Length(caption), valueText, NativeString.Length(value), (long)style, position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default);
 		}
 	}
 }

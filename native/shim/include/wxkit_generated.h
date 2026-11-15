@@ -619,7 +619,7 @@ WXK_FUNCTION(uint8_t) wxk_Dialog_IsLayoutAdaptationEnabled(void) WXK_NOEXCEPT;
 
 // wxDirDialog
 
-WXK_FUNCTION(wxk_Window*) wxk_DirDialog_new(wxk_Window* parent) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Window*) wxk_DirDialog_new(wxk_Window* parent, const char16_t* message, size_t messageLength, const char16_t* defaultPath, size_t defaultPathLength, int64_t style, wxk_Point position, wxk_Size size) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_String*) wxk_DirDialog_GetMessage(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_DirDialog_SetMessage(wxk_Window* self, const char16_t* message, size_t messageLength) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_String*) wxk_DirDialog_GetPath(wxk_Window* self) WXK_NOEXCEPT;
@@ -643,7 +643,7 @@ WXK_FUNCTION(uint8_t) wxk_Event_IsCommandEvent(wxk_Event* self) WXK_NOEXCEPT;
 
 // wxFileDialog
 
-WXK_FUNCTION(wxk_Window*) wxk_FileDialog_new(wxk_Window* parent) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Window*) wxk_FileDialog_new(wxk_Window* parent, const char16_t* message, size_t messageLength, const char16_t* defaultDir, size_t defaultDirLength, const char16_t* defaultFile, size_t defaultFileLength, const char16_t* wildcard, size_t wildcardLength, int64_t style, wxk_Point position, wxk_Size size) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_FileDialog_AddShortcut(wxk_Window* self, const char16_t* directory, size_t directoryLength, int32_t flags) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_String*) wxk_FileDialog_GetCurrentlySelectedFilename(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_FileDialog_GetCurrentlySelectedFilterIndex(wxk_Window* self) WXK_NOEXCEPT;
@@ -788,8 +788,8 @@ WXK_FUNCTION(wxk_Object*) wxk_FontDialog_GetFontData(wxk_Window* self) WXK_NOEXC
 // wxFrame
 
 WXK_FUNCTION(wxk_Window*) wxk_Frame_new(wxk_Window* parent, int32_t id, const char16_t* title, size_t titleLength, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
-WXK_FUNCTION(wxk_Window*) wxk_Frame_CreateStatusBar(wxk_Window* self, int32_t number, int64_t style, int32_t id) WXK_NOEXCEPT;
-WXK_FUNCTION(wxk_Window*) wxk_Frame_CreateToolBar(wxk_Window* self, int64_t style, int32_t id) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Window*) wxk_Frame_CreateStatusBar(wxk_Window* self, int32_t number, int64_t style, int32_t id, const char16_t* name, size_t nameLength) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Window*) wxk_Frame_CreateToolBar(wxk_Window* self, int64_t style, int32_t id, const char16_t* name, size_t nameLength) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Frame_DoGiveHelp(wxk_Window* self, const char16_t* text, size_t textLength, uint8_t show) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Frame_SetWindowModality(wxk_Window* self, int32_t modality) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Window*) wxk_Frame_OnCreateStatusBar(wxk_Window* self, int32_t number, int64_t style, int32_t id, const char16_t* name, size_t nameLength) WXK_NOEXCEPT;
@@ -1379,7 +1379,7 @@ WXK_FUNCTION(void) wxk_Panel_SetFocusIgnoringChildren(wxk_Window* self) WXK_NOEX
 
 // wxPasswordEntryDialog
 
-WXK_FUNCTION(wxk_Window*) wxk_PasswordEntryDialog_new(wxk_Window* parent, const char16_t* message, size_t messageLength) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Window*) wxk_PasswordEntryDialog_new(wxk_Window* parent, const char16_t* message, size_t messageLength, const char16_t* caption, size_t captionLength, const char16_t* defaultValue, size_t defaultValueLength, int64_t style, wxk_Point position) WXK_NOEXCEPT;
 
 // wxPen
 
@@ -1798,7 +1798,7 @@ WXK_FUNCTION(uint8_t) wxk_TextCtrl_SetMargins_Point(wxk_Window* self, wxk_Point 
 
 // wxTextEntryDialog
 
-WXK_FUNCTION(wxk_Window*) wxk_TextEntryDialog_new(wxk_Window* parent, const char16_t* message, size_t messageLength) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Window*) wxk_TextEntryDialog_new(wxk_Window* parent, const char16_t* message, size_t messageLength, const char16_t* caption, size_t captionLength, const char16_t* value, size_t valueLength, int64_t style, wxk_Point position, wxk_Size size) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_TextEntryDialog_SetTextValidator_TextValidator(wxk_Window* self, wxk_Object* validator) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_TextEntryDialog_SetTextValidator_TextValidatorStyle(wxk_Window* self, int32_t style) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_TextEntryDialog_SetHint(wxk_Window* self, const char16_t* hint, size_t hintLength) WXK_NOEXCEPT;

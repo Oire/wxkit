@@ -2100,7 +2100,7 @@ public static unsafe partial class WxKitNative {
 
 	[LibraryImport(Library, EntryPoint = "wxk_DirDialog_new")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial WxkWindow* DirDialogNew(WxkWindow* parent);
+	public static partial WxkWindow* DirDialogNew(WxkWindow* parent, char* message, nuint messageLength, char* defaultPath, nuint defaultPathLength, long style, Point position, Size size);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DirDialog_GetMessage")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2172,7 +2172,7 @@ public static unsafe partial class WxKitNative {
 
 	[LibraryImport(Library, EntryPoint = "wxk_FileDialog_new")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial WxkWindow* FileDialogNew(WxkWindow* parent);
+	public static partial WxkWindow* FileDialogNew(WxkWindow* parent, char* message, nuint messageLength, char* defaultDir, nuint defaultDirLength, char* defaultFile, nuint defaultFileLength, char* wildcard, nuint wildcardLength, long style, Point position, Size size);
 
 	[LibraryImport(Library, EntryPoint = "wxk_FileDialog_AddShortcut")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2644,11 +2644,11 @@ public static unsafe partial class WxKitNative {
 
 	[LibraryImport(Library, EntryPoint = "wxk_Frame_CreateStatusBar")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial WxkWindow* FrameCreateStatusBar(WxkWindow* self, int number, long style, int id);
+	public static partial WxkWindow* FrameCreateStatusBar(WxkWindow* self, int number, long style, int id, char* name, nuint nameLength);
 
 	[LibraryImport(Library, EntryPoint = "wxk_Frame_CreateToolBar")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial WxkWindow* FrameCreateToolBar(WxkWindow* self, long style, int id);
+	public static partial WxkWindow* FrameCreateToolBar(WxkWindow* self, long style, int id, char* name, nuint nameLength);
 
 	[LibraryImport(Library, EntryPoint = "wxk_Frame_DoGiveHelp")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4660,7 +4660,7 @@ public static unsafe partial class WxKitNative {
 
 	[LibraryImport(Library, EntryPoint = "wxk_PasswordEntryDialog_new")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial WxkWindow* PasswordEntryDialogNew(WxkWindow* parent, char* message, nuint messageLength);
+	public static partial WxkWindow* PasswordEntryDialogNew(WxkWindow* parent, char* message, nuint messageLength, char* caption, nuint captionLength, char* defaultValue, nuint defaultValueLength, long style, Point position);
 
 	[LibraryImport(Library, EntryPoint = "wxk_Pen_new_Default")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5988,7 +5988,7 @@ public static unsafe partial class WxKitNative {
 
 	[LibraryImport(Library, EntryPoint = "wxk_TextEntryDialog_new")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial WxkWindow* TextEntryDialogNew(WxkWindow* parent, char* message, nuint messageLength);
+	public static partial WxkWindow* TextEntryDialogNew(WxkWindow* parent, char* message, nuint messageLength, char* caption, nuint captionLength, char* value, nuint valueLength, long style, Point position, Size size);
 
 	[LibraryImport(Library, EntryPoint = "wxk_TextEntryDialog_SetTextValidator_TextValidator")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

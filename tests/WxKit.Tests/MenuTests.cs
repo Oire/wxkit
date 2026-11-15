@@ -72,6 +72,22 @@ public class TimerTests {
 }
 
 public class DialogTests {
+	// A string that defaults to one of wxWidgets's constants is null by default, which passes the
+	// constant, and an empty string stays empty.
+	[Fact]
+	public Task GivesADialogItsStringsOrWxWidgetsDefaults() => Gui.WithFrame(frame => {
+		using FileDialog given = new(frame, "Open a note", wildcard: "Notes (*.txt)|*.txt", style: FileDialogStyle.Open | FileDialogStyle.FileMustExist);
+		Assert.Equal("Open a note", given.Message);
+		Assert.Equal("Notes (*.txt)|*.txt", given.Wildcard);
+		using FileDialog defaults = new(frame);
+		Assert.Equal("Select a file", defaults.Message);
+		using FileDialog empty = new(frame, string.Empty);
+		Assert.Equal(string.Empty, empty.Message);
+		using TextEntryDialog entry = new(frame, "Line number:", "Go To Line", "12");
+		Assert.Equal("Go To Line", entry.Title);
+		Assert.Equal("12", entry.Value);
+	});
+
 	[Fact]
 	public Task CreatesAndDisposesAMessageDialog() => Gui.WithFrame(async frame => {
 		MessageDialog dialog = new(frame, "Never shown", "Caption", MessageDialogStyle.YesNo | MessageDialogStyle.IconQuestion);

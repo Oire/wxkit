@@ -62,10 +62,18 @@ public unsafe partial class Frame : TopLevelWindow {
 	}
 
 	/// <summary>Creates a status bar at the bottom of the frame.</summary>
-	public StatusBar? CreateStatusBar(int number = 1, long style = 65840, int id = StandardId.Any) => ObjectRegistry.Wrap<StatusBar>(WxKitNative.FrameCreateStatusBar(Native, number, style, id));
+	public StatusBar? CreateStatusBar(int number = 1, long style = 65840, string? name = null, int id = StandardId.Any) {
+		fixed (char* nameText = name) {
+			return ObjectRegistry.Wrap<StatusBar>(WxKitNative.FrameCreateStatusBar(Native, number, style, id, nameText, name is null ? 0 : NativeString.Length(name)));
+		}
+	}
 
 	/// <summary>Creates a toolbar at the top or left of the frame.</summary>
-	public ToolBar? CreateToolBar(ToolBarStyle style = ToolBarStyle.Default, int id = StandardId.Any) => ObjectRegistry.Wrap<ToolBar>(WxKitNative.FrameCreateToolBar(Native, (long)style, id));
+	public ToolBar? CreateToolBar(ToolBarStyle style = ToolBarStyle.Default, string? name = null, int id = StandardId.Any) {
+		fixed (char* nameText = name) {
+			return ObjectRegistry.Wrap<ToolBar>(WxKitNative.FrameCreateToolBar(Native, (long)style, id, nameText, name is null ? 0 : NativeString.Length(name)));
+		}
+	}
 
 	/// <summary>Method used to show help string of the selected menu toolbar item.</summary>
 	public void DoGiveHelp(string text, bool show) {

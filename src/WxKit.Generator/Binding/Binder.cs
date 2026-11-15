@@ -229,6 +229,14 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 					nullable = true;
 					resolved = true;
 				}
+				// A string that defaults to one of wxWidgets's string constants, such as a file
+				// dialog's wxFileSelectorPromptStr, is null too, which the shim turns into the constant.
+				if (!resolved && conversion is StringConversion && IdentifierPattern().IsMatch(cppDefault)) {
+					conversion = new StringDefaultConversion(cppDefault);
+					managedDefault = "null";
+					nullable = true;
+					resolved = true;
+				}
 			}
 			// A trailing parameter with a default that WxKit cannot convert is left out, and the
 			// rest after it, so the C++ default applies. Anything else makes the function unbindable.
@@ -589,6 +597,9 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 
 	[GeneratedRegex(@"^wx(HORIZONTAL|VERTICAL|BOTH)$")]
 	private static partial Regex OrientationPattern();
+
+	[GeneratedRegex(@"^wx\w+$")]
+	private static partial Regex IdentifierPattern();
 
 	[GeneratedRegex(@"^EVT_[A-Z0-9_]+$")]
 	private static partial Regex MacroPattern();

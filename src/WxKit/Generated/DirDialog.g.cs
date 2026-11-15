@@ -7,7 +7,7 @@ namespace WxKit;
 /// <summary>This class represents the directory chooser dialog. Wraps wxDirDialog.</summary>
 public unsafe partial class DirDialog : Dialog {
 	/// <summary>Constructor.</summary>
-	public DirDialog(Window? parent) : this(CreateNative(parent)) {
+	public DirDialog(Window? parent, string? message = null, string defaultPath = "", DirDialogStyle style = DirDialogStyle.Default, Point? position = null, Size? size = null) : this(CreateNative(parent, message, defaultPath, style, position, size)) {
 	}
 
 	internal DirDialog(WxkWindow* native) : base(native) {
@@ -35,8 +35,12 @@ public unsafe partial class DirDialog : Dialog {
 		}
 	}
 
-	private static WxkWindow* CreateNative(Window? parent) {
+	private static WxkWindow* CreateNative(Window? parent, string? message, string defaultPath, DirDialogStyle style, Point? position, Size? size) {
 		Application.VerifyAccess();
-		return WxKitNative.DirDialogNew(parent is null ? null : (WxkWindow*)parent.Native);
+		ArgumentNullException.ThrowIfNull(defaultPath);
+		fixed (char* messageText = message)
+		fixed (char* defaultPathText = defaultPath) {
+			return WxKitNative.DirDialogNew(parent is null ? null : (WxkWindow*)parent.Native, messageText, message is null ? 0 : NativeString.Length(message), defaultPathText, NativeString.Length(defaultPath), (long)style, position ?? global::WxKit.Point.Default, size ?? global::WxKit.Size.Default);
+		}
 	}
 }

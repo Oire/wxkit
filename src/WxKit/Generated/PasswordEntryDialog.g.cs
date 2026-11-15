@@ -7,17 +7,20 @@ namespace WxKit;
 /// <summary>This class represents a dialog that requests a one-line password string from the user. Wraps wxPasswordEntryDialog.</summary>
 public unsafe partial class PasswordEntryDialog : TextEntryDialog {
 	/// <summary>Constructor.</summary>
-	public PasswordEntryDialog(Window? parent, string message) : this(CreateNative(parent, message)) {
+	public PasswordEntryDialog(Window? parent, string message, string? caption = null, string defaultValue = "", DialogStyle style = (DialogStyle)0x15, Point? position = null) : this(CreateNative(parent, message, caption, defaultValue, style, position)) {
 	}
 
 	internal PasswordEntryDialog(WxkWindow* native) : base(native) {
 	}
 
-	private static WxkWindow* CreateNative(Window? parent, string message) {
+	private static WxkWindow* CreateNative(Window? parent, string message, string? caption, string defaultValue, DialogStyle style, Point? position) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(message);
-		fixed (char* messageText = message) {
-			return WxKitNative.PasswordEntryDialogNew(parent is null ? null : (WxkWindow*)parent.Native, messageText, NativeString.Length(message));
+		ArgumentNullException.ThrowIfNull(defaultValue);
+		fixed (char* messageText = message)
+		fixed (char* captionText = caption)
+		fixed (char* defaultValueText = defaultValue) {
+			return WxKitNative.PasswordEntryDialogNew(parent is null ? null : (WxkWindow*)parent.Native, messageText, NativeString.Length(message), captionText, caption is null ? 0 : NativeString.Length(caption), defaultValueText, NativeString.Length(defaultValue), (long)style, position ?? global::WxKit.Point.Default);
 		}
 	}
 }
