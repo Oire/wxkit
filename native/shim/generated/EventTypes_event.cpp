@@ -125,7 +125,7 @@ WXK_FUNCTION(int32_t) wxk_EventType_EraseBackground(void) noexcept {
 	return wxEVT_ERASE_BACKGROUND;
 }
 
-WXK_FUNCTION(int32_t) wxk_EventType_Fullscreen(void) noexcept {
+WXK_FUNCTION(int32_t) wxk_EventType_FullScreen(void) noexcept {
 	return wxEVT_FULLSCREEN;
 }
 

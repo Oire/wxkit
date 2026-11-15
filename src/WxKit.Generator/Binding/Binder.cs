@@ -42,6 +42,13 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 			bound.Base = ancestors.Skip(1).Select(name => _classes.GetValueOrDefault(name)).FirstOrDefault(candidate => candidate is not null && candidate.Handle.IsOwned == bound.Handle.IsOwned);
 			bound.IsTopLevel = ancestors.Contains("wxTopLevelWindow");
 		}
+		// Enums made of constants are bound first, so a default can name their members.
+		foreach (ConstantEnumTweak group in tweaks.ConstantEnums) BindConstantEnum(group);
+		foreach ((string cppName, ConstantClassTweak constants) in tweaks.ConstantClasses) {
+			if (!api.Enums.TryGetValue(cppName, out DoxygenEnum? source)) throw new InvalidOperationException($"A tweak binds the enum {cppName} as constants, which the interface headers do not have.");
+			DoxygenEnum kept = source with { Values = [.. source.Values.Where(value => !constants.Exclude.Contains(value.Name)).DistinctBy(static value => value.Name)] };
+			_enums[$"{cppName} constants"] = new BoundEnum(constants.Name, cppName, EnumMembers(cppName, kept, memberPrefix: null)) { IsConstantClass = true };
+		}
 		// Bases are bound before the classes derived from them, so a class can leave out the
 		// members its bases already bind.
 		foreach (BoundClass bound in _classes.Values.Where(static bound => !bound.Tweak.IsHandwritten).OrderBy(bound => Ancestors(bound.CppName).Count).ThenBy(static bound => bound.CppName, StringComparer.Ordinal)) {
@@ -52,12 +59,6 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		foreach ((string constant, string eventClass) in tweaks.ExtraEventTypes) EventTypeFor(constant, eventClass);
 		foreach (string cppName in tweaks.Enums.Keys) {
 			if (EnumFor(cppName) is null) throw new InvalidOperationException($"A tweak binds the enum {cppName}, which the interface headers do not have.");
-		}
-		foreach (ConstantEnumTweak group in tweaks.ConstantEnums) BindConstantEnum(group);
-		foreach ((string cppName, ConstantClassTweak constants) in tweaks.ConstantClasses) {
-			if (!api.Enums.TryGetValue(cppName, out DoxygenEnum? source)) throw new InvalidOperationException($"A tweak binds the enum {cppName} as constants, which the interface headers do not have.");
-			DoxygenEnum kept = source with { Values = [.. source.Values.Where(value => !constants.Exclude.Contains(value.Name)).DistinctBy(static value => value.Name)] };
-			_enums[$"{cppName} constants"] = new BoundEnum(constants.Name, cppName, EnumMembers(cppName, kept, memberPrefix: null)) { IsConstantClass = true };
 		}
 		return new BindingResult(
 			[.. _classes.Values.OrderBy(static bound => bound.CppName, StringComparer.Ordinal)],
@@ -587,7 +588,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 	// Constants wxWidgets defines one by one, such as wxACC_STATE_SYSTEM_FOCUSED, as one enum in
 	// the order of their values. Flags get None, for none of them.
 	private void BindConstantEnum(ConstantEnumTweak group) {
-		List<string> names = [.. api.Constants.Keys.Where(name => name.StartsWith(group.Prefix, StringComparison.Ordinal)).Order(StringComparer.Ordinal)];
+		List<string> names = [.. api.Constants.Keys.Where(name => name.StartsWith(group.Prefix, StringComparison.Ordinal) && !group.ExcludePrefixes.Any(excluded => name.StartsWith(excluded, StringComparison.Ordinal))).Order(StringComparer.Ordinal)];
 		if (names.Count == 0) throw new InvalidOperationException($"A tweak binds the constants named {group.Prefix}*, which the interface headers do not have.");
 		DoxygenEnum source = new($"{group.Prefix}*", [.. names.Select(static name => new DoxygenEnumValue(name, string.Empty))]);
 		List<BoundStyle> members = [.. EnumMembers(source.Name, source, memberPrefix: null).OrderBy(static member => member.Value)];

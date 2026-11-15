@@ -2834,14 +2834,6 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void FrameSetWindowModality(WxkWindow* self, int modality);
 
-	[LibraryImport(Library, EntryPoint = "wxk_Frame_OnCreateStatusBar")]
-	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial WxkWindow* FrameOnCreateStatusBar(WxkWindow* self, int number, long style, int id, char* name, nuint nameLength);
-
-	[LibraryImport(Library, EntryPoint = "wxk_Frame_OnCreateToolBar")]
-	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial WxkWindow* FrameOnCreateToolBar(WxkWindow* self, long style, int id, char* name, nuint nameLength);
-
 	[LibraryImport(Library, EntryPoint = "wxk_Frame_ProcessCommand")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte FrameProcessCommand(WxkWindow* self, int id);
@@ -7386,9 +7378,9 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte WindowSetInitialSize(WxkWindow* self, Size size);
 
-	[LibraryImport(Library, EntryPoint = "wxk_Window_SetSize_IntIntIntIntInt")]
+	[LibraryImport(Library, EntryPoint = "wxk_Window_SetSize_IntIntIntIntSizeFlags")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void WindowSetSizeIntIntIntIntInt(WxkWindow* self, int x, int y, int width, int height, int sizeFlags);
+	public static partial void WindowSetSizeIntIntIntIntSizeFlags(WxkWindow* self, int x, int y, int width, int height, int sizeFlags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_Window_SetSize_Rect")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -7474,13 +7466,13 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void WindowGetScreenPositionOutIntOutInt(WxkWindow* self, int* x, int* y);
 
-	[LibraryImport(Library, EntryPoint = "wxk_Window_Move_IntIntInt")]
+	[LibraryImport(Library, EntryPoint = "wxk_Window_Move_IntIntSizeFlags")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void WindowMoveIntIntInt(WxkWindow* self, int x, int y, int flags);
+	public static partial void WindowMoveIntIntSizeFlags(WxkWindow* self, int x, int y, int flags);
 
-	[LibraryImport(Library, EntryPoint = "wxk_Window_Move_PointInt")]
+	[LibraryImport(Library, EntryPoint = "wxk_Window_Move_PointSizeFlags")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void WindowMovePointInt(WxkWindow* self, Point point, int flags);
+	public static partial void WindowMovePointSizeFlags(WxkWindow* self, Point point, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_Window_ClientToScreen_OutIntOutInt")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -8430,9 +8422,9 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeFindReplaceAll();
 
-	[LibraryImport(Library, EntryPoint = "wxk_EventType_Fullscreen")]
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_FullScreen")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial int EventTypeFullscreen();
+	public static partial int EventTypeFullScreen();
 
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_Help")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

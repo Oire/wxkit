@@ -24,14 +24,6 @@ WXK_FUNCTION(void) wxk_Frame_SetWindowModality(wxk_Window* self, int32_t modalit
 	wxk::Guard([&] { static_cast<wxFrame*>(wxk::Unwrap(self))->SetWindowModality(static_cast<wxWindowMode>(modality)); });
 }
 
-WXK_FUNCTION(wxk_Window*) wxk_Frame_OnCreateStatusBar(wxk_Window* self, int32_t number, int64_t style, int32_t id, const char16_t* name, size_t nameLength) noexcept {
-	return wxk::Guard<wxk_Window*>(nullptr, [&]() -> wxk_Window* { return wxk::Wrap(static_cast<wxWindow*>(static_cast<wxFrame*>(wxk::Unwrap(self))->OnCreateStatusBar(static_cast<int>(number), static_cast<long>(style), static_cast<int>(id), wxk::FromUtf16(name, nameLength)))); });
-}
-
-WXK_FUNCTION(wxk_Window*) wxk_Frame_OnCreateToolBar(wxk_Window* self, int64_t style, int32_t id, const char16_t* name, size_t nameLength) noexcept {
-	return wxk::Guard<wxk_Window*>(nullptr, [&]() -> wxk_Window* { return wxk::Wrap(static_cast<wxWindow*>(static_cast<wxFrame*>(wxk::Unwrap(self))->OnCreateToolBar(static_cast<long>(style), static_cast<int>(id), wxk::FromUtf16(name, nameLength)))); });
-}
-
 WXK_FUNCTION(uint8_t) wxk_Frame_ProcessCommand(wxk_Window* self, int32_t id) noexcept {
 	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxFrame*>(wxk::Unwrap(self))->ProcessCommand(static_cast<int>(id))) ? 1 : 0; });
 }

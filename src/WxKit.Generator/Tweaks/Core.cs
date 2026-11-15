@@ -18,6 +18,11 @@ internal static class Core {
 			.Ignore("SetSizer", "SetSizerAndFit", "GetSizer", "GetHandle", "SetValidator", "GetValidator", "GetAccessible", "SetAccessible", "CreateAccessible", "GetOrCreateAccessible")
 			.Property("IsEnabled", "IsEnabled", "Enable")
 			.ParameterEnum("Centre", "direction", "Orientation")
+			.ParameterEnum("Move", "flags", "SizeFlags")
+			.ParameterEnum("SetSize", "sizeFlags", "SizeFlags")
+			.ParameterEnum("SendSizeEvent", "flags", "SendSizeEventFlags")
+			.ParameterEnum("SendSizeEventToParent", "flags", "SendSizeEventFlags")
+			.ParameterEnum("UpdateWindowUI", "flags", "wxUpdateUI")
 			// wxGTK has no system-wide hot keys.
 			.Guard("wxUSE_HOTKEY", "RegisterHotKey", "UnregisterHotKey"));
 		tweaks.Class("wxTopLevelWindow", window => window
@@ -25,9 +30,23 @@ internal static class Core {
 			// Only wxUniversal has these, though the documentation does not mark them for one port.
 			.Ignore("UseNativeDecorations", "UseNativeDecorationsByDefault", "IsUsingNativeDecorations")
 			.Guard("defined(__WXMSW__)", "MSWGetSystemMenu")
+			.ParameterEnum("ShowFullScreen", "style", "FullScreenStyle")
+			.ParameterEnum("EnableFullScreenView", "style", "FullScreenStyle")
+			.ParameterEnum("RequestUserAttention", "flags", "UserAttention")
 			.AddEvent("EVT_CLOSE", "wxEVT_CLOSE_WINDOW", "wxCloseEvent", "Closing"));
 		// WxKit keeps the menu bar a frame owns.
-		tweaks.Class("wxFrame", frame => frame.Ignore("SetMenuBar", "GetMenuBar").ParameterEnum("CreateToolBar", "style", "ToolBarStyle"));
+		// The flags these take, which wxWidgets declares as constants rather than a named enum.
+		tweaks.ConstantEnum("SizeFlags", "wxSIZE_", isFlags: true, excludePrefixes: ["wxSIZE_CONV_", "wxSIZE_SET_"]);
+		tweaks.ConstantEnum("SendSizeEventFlags", "wxSEND_EVENT_", isFlags: true);
+		tweaks.ConstantEnum("FullScreenStyle", "wxFULLSCREEN_", isFlags: true);
+		tweaks.ConstantEnum("UserAttention", "wxUSER_ATTENTION_");
+		tweaks.Enum("wxUpdateUI", "UpdateUIFlags", isFlags: true);
+		// WxKit keeps the menu bar a frame owns. OnCreateStatusBar and OnCreateToolBar are what
+		// CreateStatusBar and CreateToolBar call, for a derived frame to override, not to call.
+		tweaks.Class("wxFrame", frame => frame
+			.Ignore("SetMenuBar", "GetMenuBar", "OnCreateStatusBar", "OnCreateToolBar")
+			.ParameterEnum("CreateToolBar", "style", "ToolBarStyle")
+			.ParameterEnum("CreateStatusBar", "style", "StatusBarStyle"));
 		// wxMSW's wxDialog has no GetToolBar, though the documentation gives it one.
 		tweaks.Class("wxDialog").Ignore("GetToolBar");
 		tweaks.Class("wxMessageDialog");
@@ -114,6 +133,8 @@ internal static class Core {
 		// A virtual list asks for each row as it shows it, through members C# overrides.
 		tweaks.Class("wxListCtrl", list => list
 			.ParameterEnum("InsertColumn", "format", "wxListColumnFormat")
+			.ParameterEnum("SetSingleStyle", "style", "ListCtrlStyle")
+			.ParameterEnum("SetWindowStyleFlag", "style", "ListCtrlStyle")
 			.Director("OnGetItemText", "OnGetItemImage", "OnGetItemColumnImage", "OnGetItemIsChecked"));
 		tweaks.Class("wxListView");
 		// SetItemData is written by hand, since wxTreeCtrl does not delete the data it replaces.
@@ -159,6 +180,9 @@ internal static class Core {
 		tweaks.Class("wxListItem").ValueObject();
 		tweaks.Class("wxListEvent");
 		tweaks.Class("wxTreeEvent");
+		// A progress dialog's styles are constants, not a style table.
+		tweaks.ConstantEnum("ProgressDialogStyle", "wxPD_", isFlags: true);
+		tweaks.Class("wxProgressDialog").ParameterEnum("wxProgressDialog", "style", "ProgressDialogStyle");
 		// IsEmpty is ambiguous on purpose, between the list and the text. IsListEmpty and IsTextEmpty say which.
 		tweaks.Class("wxComboBox").Ignore("IsEmpty");
 		// Fonts, pens, brushes, bitmaps, icons, cursors, and images, which are copied like values.

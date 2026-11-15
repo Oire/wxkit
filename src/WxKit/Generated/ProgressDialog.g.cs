@@ -6,19 +6,19 @@ namespace WxKit;
 
 /// <summary>If supported by the platform this class will provide the platform's native progress dialog, else it will simply be the wxGenericProgressDialog. Wraps wxProgressDialog.</summary>
 public unsafe partial class ProgressDialog : Dialog {
-	public ProgressDialog(string title, string message, int maximum = 100, Window? parent = null, int style = 6) : this(CreateNative(title, message, maximum, parent, style)) {
+	public ProgressDialog(string title, string message, int maximum = 100, Window? parent = null, ProgressDialogStyle style = ProgressDialogStyle.AppModal | ProgressDialogStyle.AutoHide) : this(CreateNative(title, message, maximum, parent, style)) {
 	}
 
 	internal ProgressDialog(WxkWindow* native) : base(native) {
 	}
 
-	private static WxkWindow* CreateNative(string title, string message, int maximum, Window? parent, int style) {
+	private static WxkWindow* CreateNative(string title, string message, int maximum, Window? parent, ProgressDialogStyle style) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(title);
 		ArgumentNullException.ThrowIfNull(message);
 		fixed (char* titleText = title)
 		fixed (char* messageText = message) {
-			return WxKitNative.ProgressDialogNew(titleText, NativeString.Length(title), messageText, NativeString.Length(message), maximum, parent is null ? null : (WxkWindow*)parent.Native, style);
+			return WxKitNative.ProgressDialogNew(titleText, NativeString.Length(title), messageText, NativeString.Length(message), maximum, parent is null ? null : (WxkWindow*)parent.Native, (int)style);
 		}
 	}
 }

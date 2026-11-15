@@ -839,8 +839,6 @@ WXK_FUNCTION(wxk_Window*) wxk_Frame_CreateStatusBar(wxk_Window* self, int32_t nu
 WXK_FUNCTION(wxk_Window*) wxk_Frame_CreateToolBar(wxk_Window* self, int64_t style, int32_t id, const char16_t* name, size_t nameLength) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Frame_DoGiveHelp(wxk_Window* self, const char16_t* text, size_t textLength, uint8_t show) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Frame_SetWindowModality(wxk_Window* self, int32_t modality) WXK_NOEXCEPT;
-WXK_FUNCTION(wxk_Window*) wxk_Frame_OnCreateStatusBar(wxk_Window* self, int32_t number, int64_t style, int32_t id, const char16_t* name, size_t nameLength) WXK_NOEXCEPT;
-WXK_FUNCTION(wxk_Window*) wxk_Frame_OnCreateToolBar(wxk_Window* self, int64_t style, int32_t id, const char16_t* name, size_t nameLength) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Frame_ProcessCommand(wxk_Window* self, int32_t id) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Frame_SetStatusText(wxk_Window* self, const char16_t* text, size_t textLength, int32_t number) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Frame_PushStatusText(wxk_Window* self, const char16_t* text, size_t textLength, int32_t number) WXK_NOEXCEPT;
@@ -2184,7 +2182,7 @@ WXK_FUNCTION(void) wxk_Window_SetClientSize_IntInt(wxk_Window* self, int32_t wid
 WXK_FUNCTION(void) wxk_Window_SetClientSize_Rect(wxk_Window* self, wxk_Rect rect) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Window_SetContainingSizer(wxk_Window* self, wxk_Sizer* sizer) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Window_SetInitialSize(wxk_Window* self, wxk_Size size) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_Window_SetSize_IntIntIntIntInt(wxk_Window* self, int32_t x, int32_t y, int32_t width, int32_t height, int32_t sizeFlags) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Window_SetSize_IntIntIntIntSizeFlags(wxk_Window* self, int32_t x, int32_t y, int32_t width, int32_t height, int32_t sizeFlags) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Window_SetSize_Rect(wxk_Window* self, wxk_Rect rect) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Window_SetSize_IntInt(wxk_Window* self, int32_t width, int32_t height) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Window_SetSizeHints_SizeSizeSize(wxk_Window* self, wxk_Size minSize, wxk_Size maxSize, wxk_Size incSize) WXK_NOEXCEPT;
@@ -2206,8 +2204,8 @@ WXK_FUNCTION(void) wxk_Window_Center(wxk_Window* self, int32_t direction) WXK_NO
 WXK_FUNCTION(void) wxk_Window_CenterOnParent(wxk_Window* self, int32_t direction) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Window_GetPosition_OutIntOutInt(wxk_Window* self, int32_t* x, int32_t* y) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Window_GetScreenPosition_OutIntOutInt(wxk_Window* self, int32_t* x, int32_t* y) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_Window_Move_IntIntInt(wxk_Window* self, int32_t x, int32_t y, int32_t flags) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_Window_Move_PointInt(wxk_Window* self, wxk_Point point, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Window_Move_IntIntSizeFlags(wxk_Window* self, int32_t x, int32_t y, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Window_Move_PointSizeFlags(wxk_Window* self, wxk_Point point, int32_t flags) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Window_ClientToScreen_OutIntOutInt(wxk_Window* self, int32_t* x, int32_t* y) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Point) wxk_Window_ClientToScreen_Point(wxk_Window* self, wxk_Point point) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Point) wxk_Window_ConvertDialogToPixels_Point(wxk_Window* self, wxk_Point point) WXK_NOEXCEPT;
@@ -2451,7 +2449,7 @@ WXK_FUNCTION(int32_t) wxk_EventType_FindClose(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_FindNext(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_FindReplace(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_FindReplaceAll(void) WXK_NOEXCEPT;
-WXK_FUNCTION(int32_t) wxk_EventType_Fullscreen(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_FullScreen(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_Help(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_Hyperlink(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_Iconize(void) WXK_NOEXCEPT;

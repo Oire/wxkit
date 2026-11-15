@@ -823,10 +823,10 @@ public unsafe partial class Window : EvtHandler {
 	public void Lower() => WxKitNative.WindowLower(Native);
 
 	/// <summary>Moves the window to the given position.</summary>
-	public void Move(int x, int y, int flags = 0) => WxKitNative.WindowMoveIntIntInt(Native, x, y, flags);
+	public void Move(int x, int y, SizeFlags flags = SizeFlags.UseExisting) => WxKitNative.WindowMoveIntIntSizeFlags(Native, x, y, (int)flags);
 
 	/// <summary>Moves the window to the given position.</summary>
-	public void Move(Point point, int flags = 0) => WxKitNative.WindowMovePointInt(Native, point, flags);
+	public void Move(Point point, SizeFlags flags = SizeFlags.UseExisting) => WxKitNative.WindowMovePointSizeFlags(Native, point, (int)flags);
 
 	/// <summary>Moves this window in the tab navigation order after the specified win.</summary>
 	public void MoveAfterInTabOrder(Window window) {
@@ -944,10 +944,10 @@ public unsafe partial class Window : EvtHandler {
 	public void ScrollWindow(int dx, int dy) => WxKitNative.WindowScrollWindow(Native, dx, dy);
 
 	/// <summary>This function sends a dummy size event to the window allowing it to re-layout its children positions.</summary>
-	public void SendSizeEvent(int flags = 0) => WxKitNative.WindowSendSizeEvent(Native, flags);
+	public void SendSizeEvent(SendSizeEventFlags flags = SendSizeEventFlags.None) => WxKitNative.WindowSendSizeEvent(Native, (int)flags);
 
 	/// <summary>Safe wrapper for GetParent()-&gt;SendSizeEvent().</summary>
-	public void SendSizeEventToParent(int flags = 0) => WxKitNative.WindowSendSizeEventToParent(Native, flags);
+	public void SendSizeEventToParent(SendSizeEventFlags flags = SendSizeEventFlags.None) => WxKitNative.WindowSendSizeEventToParent(Native, (int)flags);
 
 	/// <summary>Sets the name used by screen readers for this window.</summary>
 	public void SetAccessibleName(string name) {
@@ -1015,7 +1015,7 @@ public unsafe partial class Window : EvtHandler {
 	public void SetScrollbar(int orientation, int position, int thumbSize, int range, bool refresh = true) => WxKitNative.WindowSetScrollbar(Native, orientation, position, thumbSize, range, refresh ? (byte)1 : (byte)0);
 
 	/// <summary>Sets the size of the window in pixels.</summary>
-	public void SetSize(int x, int y, int width, int height, int sizeFlags = 3) => WxKitNative.WindowSetSizeIntIntIntIntInt(Native, x, y, width, height, sizeFlags);
+	public void SetSize(int x, int y, int width, int height, SizeFlags sizeFlags = SizeFlags.Auto) => WxKitNative.WindowSetSizeIntIntIntIntSizeFlags(Native, x, y, width, height, (int)sizeFlags);
 
 	/// <summary>Sets the size of the window in pixels.</summary>
 	public void SetSize(Rect rect) => WxKitNative.WindowSetSizeRect(Native, rect);
@@ -1146,7 +1146,7 @@ public unsafe partial class Window : EvtHandler {
 	public void UpdateInputMethodCursorRect(Rect rect) => WxKitNative.WindowUpdateInputMethodCursorRect(Native, rect);
 
 	/// <summary>This function sends one or more wxUpdateUIEvent to the window.</summary>
-	public void UpdateWindowUI(long flags = 0) => WxKitNative.WindowUpdateWindowUI(Native, flags);
+	public void UpdateWindowUI(UpdateUIFlags flags = UpdateUIFlags.None) => WxKitNative.WindowUpdateWindowUI(Native, (long)flags);
 
 	/// <summary>Return true if a background colour has been set for this window.</summary>
 	public bool UseBackgroundColor() => WxKitNative.WindowUseBackgroundColour(Native) != 0;

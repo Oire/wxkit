@@ -62,9 +62,9 @@ public unsafe partial class Frame : TopLevelWindow {
 	}
 
 	/// <summary>Creates a status bar at the bottom of the frame.</summary>
-	public StatusBar? CreateStatusBar(int number = 1, long style = 65840, string? name = null, int id = StandardId.Any) {
+	public StatusBar? CreateStatusBar(int number = 1, StatusBarStyle style = StatusBarStyle.Default, string? name = null, int id = StandardId.Any) {
 		fixed (char* nameText = name) {
-			return ObjectRegistry.Wrap<StatusBar>(WxKitNative.FrameCreateStatusBar(Native, number, style, id, nameText, name is null ? 0 : NativeString.Length(name)));
+			return ObjectRegistry.Wrap<StatusBar>(WxKitNative.FrameCreateStatusBar(Native, number, (long)style, id, nameText, name is null ? 0 : NativeString.Length(name)));
 		}
 	}
 
@@ -80,22 +80,6 @@ public unsafe partial class Frame : TopLevelWindow {
 		ArgumentNullException.ThrowIfNull(text);
 		fixed (char* textText = text) {
 			WxKitNative.FrameDoGiveHelp(Native, textText, NativeString.Length(text), show ? (byte)1 : (byte)0);
-		}
-	}
-
-	/// <summary>Virtual function called when a status bar is requested by CreateStatusBar().</summary>
-	public StatusBar? OnCreateStatusBar(int number, long style, string name, int id = StandardId.Any) {
-		ArgumentNullException.ThrowIfNull(name);
-		fixed (char* nameText = name) {
-			return ObjectRegistry.Wrap<StatusBar>(WxKitNative.FrameOnCreateStatusBar(Native, number, style, id, nameText, NativeString.Length(name)));
-		}
-	}
-
-	/// <summary>Virtual function called when a toolbar is requested by CreateToolBar().</summary>
-	public ToolBar? OnCreateToolBar(long style, string name, int id = StandardId.Any) {
-		ArgumentNullException.ThrowIfNull(name);
-		fixed (char* nameText = name) {
-			return ObjectRegistry.Wrap<ToolBar>(WxKitNative.FrameOnCreateToolBar(Native, style, id, nameText, NativeString.Length(name)));
 		}
 	}
 

@@ -539,7 +539,7 @@ public enum SplitterWindowStyle : long {
 	/// <summary>Draws a standard border. Wraps wxSP_BORDER.</summary>
 	Border = 0x200,
 	/// <summary>No border (default). Wraps wxSP_NOBORDER.</summary>
-	Noborder = 0x0,
+	NoBorder = 0x0,
 	/// <summary>Under Windows, switches off the attempt to draw the splitter using Windows theming, so the borders and sash will take on the pre-XP look. Wraps wxSP_NO_XP_THEME.</summary>
 	NoXpTheme = 0x400,
 	/// <summary>Always allow to unsplit, even with the minimum pane size other than zero. Wraps wxSP_PERMIT_UNSPLIT.</summary>

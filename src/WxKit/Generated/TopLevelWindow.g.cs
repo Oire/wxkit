@@ -79,8 +79,8 @@ public unsafe partial class TopLevelWindow : Window {
 
 	/// <summary>Process a wxEVT_FULLSCREEN event. See wxFullScreenEvent.</summary>
 	public event EventHandler<FullScreenEvent>? FullScreenChanged {
-		add => AddHandler(EventType.Fullscreen, StandardId.Any, StandardId.Any, value, this);
-		remove => RemoveHandler(EventType.Fullscreen, StandardId.Any, StandardId.Any, value);
+		add => AddHandler(EventType.FullScreen, StandardId.Any, StandardId.Any, value, this);
+		remove => RemoveHandler(EventType.FullScreen, StandardId.Any, StandardId.Any, value);
 	}
 
 	/// <summary>Process a wxEVT_MAXIMIZE event. See wxMaximizeEvent.</summary>
@@ -120,7 +120,7 @@ public unsafe partial class TopLevelWindow : Window {
 	public bool EnableCloseButton(bool enable = true) => WxKitNative.TopLevelWindowEnableCloseButton(Native, enable ? (byte)1 : (byte)0) != 0;
 
 	/// <summary>Enables the zoom button to toggle full screen mode.</summary>
-	public bool EnableFullScreenView(bool enable = true, long style = 31) => WxKitNative.TopLevelWindowEnableFullScreenView(Native, enable ? (byte)1 : (byte)0, style) != 0;
+	public bool EnableFullScreenView(bool enable = true, FullScreenStyle style = FullScreenStyle.All) => WxKitNative.TopLevelWindowEnableFullScreenView(Native, enable ? (byte)1 : (byte)0, (long)style) != 0;
 
 	/// <summary>Enables or disables the Maximize button (in the right or left upper corner of a frame or dialog).</summary>
 	public bool EnableMaximizeButton(bool enable = true) => WxKitNative.TopLevelWindowEnableMaximizeButton(Native, enable ? (byte)1 : (byte)0) != 0;
@@ -144,7 +144,7 @@ public unsafe partial class TopLevelWindow : Window {
 	public void OSXSetModified(bool modified) => WxKitNative.TopLevelWindowOSXSetModified(Native, modified ? (byte)1 : (byte)0);
 
 	/// <summary>Use a system-dependent way to attract users attention to the window when it is in background.</summary>
-	public void RequestUserAttention(int flags = 1) => WxKitNative.TopLevelWindowRequestUserAttention(Native, flags);
+	public void RequestUserAttention(UserAttention flags = UserAttention.Info) => WxKitNative.TopLevelWindowRequestUserAttention(Native, (int)flags);
 
 	/// <summary>Restore a previously iconized or maximized window to its normal state.</summary>
 	public void Restore() => WxKitNative.TopLevelWindowRestore(Native);
@@ -173,7 +173,7 @@ public unsafe partial class TopLevelWindow : Window {
 	public bool ShouldPreventAppExit() => WxKitNative.TopLevelWindowShouldPreventAppExit(Native) != 0;
 
 	/// <summary>Depending on the value of show parameter the window is either shown full screen or restored to its normal state.</summary>
-	public bool ShowFullScreen(bool show, long style = 31) => WxKitNative.TopLevelWindowShowFullScreen(Native, show ? (byte)1 : (byte)0, style) != 0;
+	public bool ShowFullScreen(bool show, FullScreenStyle style = FullScreenStyle.All) => WxKitNative.TopLevelWindowShowFullScreen(Native, show ? (byte)1 : (byte)0, (long)style) != 0;
 
 	/// <summary>Show the wxTopLevelWindow, but do not give it keyboard focus.</summary>
 	public void ShowWithoutActivating() => WxKitNative.TopLevelWindowShowWithoutActivating(Native);

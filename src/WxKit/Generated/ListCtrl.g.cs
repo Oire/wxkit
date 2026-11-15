@@ -433,7 +433,7 @@ public unsafe partial class ListCtrl : Control {
 	}
 
 	/// <summary>Adds or removes a single window style.</summary>
-	public void SetSingleStyle(long style, bool add = true) => WxKitNative.ListCtrlSetSingleStyle(Native, style, add ? (byte)1 : (byte)0);
+	public void SetSingleStyle(ListCtrlStyle style, bool add = true) => WxKitNative.ListCtrlSetSingleStyle(Native, (long)style, add ? (byte)1 : (byte)0);
 
 	/// <summary>Sets the images to use when showing small icons in this control.</summary>
 	public void SetSmallImages(IEnumerable<Bitmap> images) {
@@ -445,7 +445,7 @@ public unsafe partial class ListCtrl : Control {
 	}
 
 	/// <summary>Sets the whole window style, deleting all items.</summary>
-	public void SetWindowStyleFlag(long style) => WxKitNative.ListCtrlSetWindowStyleFlag(Native, style);
+	public void SetWindowStyleFlag(ListCtrlStyle style) => WxKitNative.ListCtrlSetWindowStyleFlag(Native, (long)style);
 
 	/// <summary>Show the sort indicator of a specific column in a specific direction.</summary>
 	public void ShowSortIndicator(int column, bool ascending = true) => WxKitNative.ListCtrlShowSortIndicator(Native, column, ascending ? (byte)1 : (byte)0);

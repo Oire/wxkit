@@ -398,10 +398,10 @@ public static unsafe partial class EventType {
 	}
 
 	/// <summary>Wraps wxEVT_FULLSCREEN.</summary>
-	public static EventType<FullScreenEvent> Fullscreen => FullscreenType.Value;
+	public static EventType<FullScreenEvent> FullScreen => FullScreenType.Value;
 
-	private static class FullscreenType {
-		public static readonly EventType<FullScreenEvent> Value = new(WxKitNative.EventTypeFullscreen, static native => new FullScreenEvent((WxkEvent*)native));
+	private static class FullScreenType {
+		public static readonly EventType<FullScreenEvent> Value = new(WxKitNative.EventTypeFullScreen, static native => new FullScreenEvent((WxkEvent*)native));
 	}
 
 	/// <summary>Wraps wxEVT_HELP.</summary>

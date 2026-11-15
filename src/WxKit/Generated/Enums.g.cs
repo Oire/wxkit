@@ -904,6 +904,25 @@ public enum FontWeight {
 	Max = 1000,
 }
 
+/// <summary>Wraps wxFULLSCREEN_*.</summary>
+[Flags]
+public enum FullScreenStyle {
+	/// <summary>None of the flags. Wraps 0.</summary>
+	None = 0,
+	/// <summary>Wraps wxFULLSCREEN_NOMENUBAR.</summary>
+	NoMenuBar = 1,
+	/// <summary>Wraps wxFULLSCREEN_NOTOOLBAR.</summary>
+	NoToolBar = 2,
+	/// <summary>Wraps wxFULLSCREEN_NOSTATUSBAR.</summary>
+	NoStatusBar = 4,
+	/// <summary>Wraps wxFULLSCREEN_NOBORDER.</summary>
+	NoBorder = 8,
+	/// <summary>Wraps wxFULLSCREEN_NOCAPTION.</summary>
+	NoCaption = 16,
+	/// <summary>Wraps wxFULLSCREEN_ALL.</summary>
+	All = 31,
+}
+
 /// <summary>Wraps wxHitTest.</summary>
 public enum HitTest {
 	/// <summary>Wraps wxHT_NOWHERE.</summary>
@@ -1124,6 +1143,29 @@ public enum PenStyle {
 	LastHatch = 116,
 }
 
+/// <summary>Wraps wxPD_*.</summary>
+[Flags]
+public enum ProgressDialogStyle {
+	/// <summary>None of the flags. Wraps 0.</summary>
+	None = 0,
+	/// <summary>Wraps wxPD_CAN_ABORT.</summary>
+	CanAbort = 1,
+	/// <summary>Wraps wxPD_APP_MODAL.</summary>
+	AppModal = 2,
+	/// <summary>Wraps wxPD_AUTO_HIDE.</summary>
+	AutoHide = 4,
+	/// <summary>Wraps wxPD_ELAPSED_TIME.</summary>
+	ElapsedTime = 8,
+	/// <summary>Wraps wxPD_ESTIMATED_TIME.</summary>
+	EstimatedTime = 16,
+	/// <summary>Wraps wxPD_SMOOTH.</summary>
+	Smooth = 32,
+	/// <summary>Wraps wxPD_REMAINING_TIME.</summary>
+	RemainingTime = 64,
+	/// <summary>Wraps wxPD_CAN_SKIP.</summary>
+	CanSkip = 128,
+}
+
 /// <summary>Wraps wxRasterOperationMode.</summary>
 public enum RasterOperationMode {
 	/// <summary>0. Wraps wxCLEAR.</summary>
@@ -1168,6 +1210,15 @@ public enum Reason {
 	Unknown = 1,
 }
 
+/// <summary>Wraps wxSEND_EVENT_*.</summary>
+[Flags]
+public enum SendSizeEventFlags {
+	/// <summary>None of the flags. Wraps 0.</summary>
+	None = 0,
+	/// <summary>Wraps wxSEND_EVENT_POST.</summary>
+	Post = 1,
+}
+
 /// <summary>Wraps wxShowEffect.</summary>
 public enum ShowEffect {
 	/// <summary>No effect, equivalent to normal wxWindow::Show() or Hide() call. Wraps wxSHOW_EFFECT_NONE.</summary>
@@ -1194,6 +1245,27 @@ public enum ShowEffect {
 	Expand = 10,
 	/// <summary>Wraps wxSHOW_EFFECT_MAX.</summary>
 	Max = 11,
+}
+
+/// <summary>Wraps wxSIZE_*.</summary>
+[Flags]
+public enum SizeFlags {
+	/// <summary>Wraps wxSIZE_USE_EXISTING.</summary>
+	UseExisting = 0,
+	/// <summary>Wraps wxSIZE_AUTO_WIDTH.</summary>
+	AutoWidth = 1,
+	/// <summary>Wraps wxSIZE_AUTO_HEIGHT.</summary>
+	AutoHeight = 2,
+	/// <summary>Wraps wxSIZE_AUTO.</summary>
+	Auto = 3,
+	/// <summary>Wraps wxSIZE_ALLOW_MINUS_ONE.</summary>
+	AllowMinusOne = 4,
+	/// <summary>Wraps wxSIZE_NO_ADJUSTMENTS.</summary>
+	NoAdjustments = 8,
+	/// <summary>Wraps wxSIZE_FORCE.</summary>
+	Force = 16,
+	/// <summary>Wraps wxSIZE_FORCE_EVENT.</summary>
+	ForceEvent = 32,
 }
 
 /// <summary>Wraps wxSplitMode.</summary>
@@ -1536,12 +1608,31 @@ public enum TreeItemIcon {
 	Max = 4,
 }
 
+/// <summary>Wraps wxUpdateUI.</summary>
+[Flags]
+public enum UpdateUIFlags {
+	/// <summary>Wraps wxUPDATE_UI_NONE.</summary>
+	None = 0,
+	/// <summary>Wraps wxUPDATE_UI_RECURSE.</summary>
+	Recurse = 1,
+	/// <summary>Invoked from On(Internal)Idle. Wraps wxUPDATE_UI_FROMIDLE.</summary>
+	FromIdle = 2,
+}
+
 /// <summary>Wraps wxUpdateUIMode.</summary>
 public enum UpdateUIMode {
 	/// <summary>Send UI update events to all windows. Wraps wxUPDATE_UI_PROCESS_ALL.</summary>
 	All = 0,
 	/// <summary>Send UI update events to windows that have the wxWS_EX_PROCESS_UI_UPDATES flag specified. Wraps wxUPDATE_UI_PROCESS_SPECIFIED.</summary>
 	Specified = 1,
+}
+
+/// <summary>Wraps wxUSER_ATTENTION_*.</summary>
+public enum UserAttention {
+	/// <summary>Wraps wxUSER_ATTENTION_INFO.</summary>
+	Info = 1,
+	/// <summary>Wraps wxUSER_ATTENTION_ERROR.</summary>
+	Error = 2,
 }
 
 /// <summary>Wraps wxWindowMode.</summary>

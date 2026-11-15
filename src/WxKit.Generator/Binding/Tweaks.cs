@@ -31,7 +31,8 @@ internal sealed class Tweaks {
 	/// <param name="guard">The preprocessor condition under which wxWidgets declares the enum, such as wxUSE_ACCESSIBILITY, which only wxMSW has.</param>
 	public void Enum(string cppName, string managedName, bool isFlags = false, string? memberPrefix = null, string? guard = null) => Enums[cppName] = new EnumTweak(managedName, isFlags, memberPrefix, guard);
 
-	public void ConstantEnum(string managedName, string prefix, bool isFlags = false, string? guard = null) => ConstantEnums.Add(new ConstantEnumTweak(managedName, prefix, isFlags, guard));
+	/// <param name="excludePrefixes">Prefixes of constants that share the prefix but belong to something else, such as wxSIZE_CONV_ under wxSIZE_.</param>
+	public void ConstantEnum(string managedName, string prefix, bool isFlags = false, string? guard = null, string[]? excludePrefixes = null) => ConstantEnums.Add(new ConstantEnumTweak(managedName, prefix, isFlags, guard, excludePrefixes ?? []));
 
 	/// <summary>
 	/// C++ enums bound as a static class of int constants rather than a C# enum, such as wxStandardID
@@ -51,7 +52,7 @@ internal sealed record ConstantClassTweak(string Name, IReadOnlySet<string> Excl
 
 internal sealed record EnumTweak(string Name, bool IsFlags, string? MemberPrefix, string? Guard);
 
-internal sealed record ConstantEnumTweak(string Name, string Prefix, bool IsFlags, string? Guard);
+internal sealed record ConstantEnumTweak(string Name, string Prefix, bool IsFlags, string? Guard, IReadOnlyList<string> ExcludePrefixes);
 
 internal sealed class ClassTweak(string name) {
 	public string CppName { get; } = name;
