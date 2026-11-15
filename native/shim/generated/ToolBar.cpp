@@ -8,76 +8,60 @@ WXK_FUNCTION(wxk_Window*) wxk_ToolBar_new(wxk_Window* parent, int32_t id, wxk_Po
 	});
 }
 
-WXK_FUNCTION(void) wxk_ToolBar_AddTool_IntStringBitmapStringMenuItemKind(wxk_Window* self, int32_t toolId, const char16_t* label, size_t labelLength, const wxk_Object* bitmap, const char16_t* shortHelp, size_t shortHelpLength, int32_t kind) noexcept {
-	wxk::Guard([&] { static_cast<wxToolBar*>(wxk::Unwrap(self))->AddTool(static_cast<int>(toolId), wxk::FromUtf16(label, labelLength), wxBitmapBundle(wxk::ValueOf<wxBitmap>(bitmap)), wxk::FromUtf16(shortHelp, shortHelpLength), static_cast<wxItemKind>(kind)); });
+WXK_FUNCTION(wxk_ToolBarTool*) wxk_ToolBar_AddTool_IntStringBitmapStringMenuItemKind(wxk_Window* self, int32_t toolId, const char16_t* label, size_t labelLength, const wxk_Object* bitmap, const char16_t* shortHelp, size_t shortHelpLength, int32_t kind) noexcept {
+	return wxk::Guard<wxk_ToolBarTool*>(nullptr, [&]() -> wxk_ToolBarTool* { return wxk::Wrap(static_cast<wxToolBarToolBase*>(static_cast<wxToolBar*>(wxk::Unwrap(self))->AddTool(static_cast<int>(toolId), wxk::FromUtf16(label, labelLength), wxBitmapBundle(wxk::ValueOf<wxBitmap>(bitmap)), wxk::FromUtf16(shortHelp, shortHelpLength), static_cast<wxItemKind>(kind)))); });
 }
 
-WXK_FUNCTION(void) wxk_ToolBar_AddTool_IntStringBitmapBitmapMenuItemKindStringString(wxk_Window* self, int32_t toolId, const char16_t* label, size_t labelLength, const wxk_Object* bitmap, const wxk_Object* bmpDisabled, int32_t kind, const char16_t* shortHelp, size_t shortHelpLength, const char16_t* longHelp, size_t longHelpLength) noexcept {
-	wxk::Guard([&] { static_cast<wxToolBar*>(wxk::Unwrap(self))->AddTool(static_cast<int>(toolId), wxk::FromUtf16(label, labelLength), wxBitmapBundle(wxk::ValueOf<wxBitmap>(bitmap)), wxBitmapBundle(wxk::ValueOf<wxBitmap>(bmpDisabled)), static_cast<wxItemKind>(kind), wxk::FromUtf16(shortHelp, shortHelpLength), wxk::FromUtf16(longHelp, longHelpLength)); });
+WXK_FUNCTION(wxk_ToolBarTool*) wxk_ToolBar_AddTool_IntStringBitmapBitmapMenuItemKindStringString(wxk_Window* self, int32_t toolId, const char16_t* label, size_t labelLength, const wxk_Object* bitmap, const wxk_Object* bmpDisabled, int32_t kind, const char16_t* shortHelp, size_t shortHelpLength, const char16_t* longHelp, size_t longHelpLength) noexcept {
+	return wxk::Guard<wxk_ToolBarTool*>(nullptr, [&]() -> wxk_ToolBarTool* { return wxk::Wrap(static_cast<wxToolBarToolBase*>(static_cast<wxToolBar*>(wxk::Unwrap(self))->AddTool(static_cast<int>(toolId), wxk::FromUtf16(label, labelLength), wxBitmapBundle(wxk::ValueOf<wxBitmap>(bitmap)), wxBitmapBundle(wxk::ValueOf<wxBitmap>(bmpDisabled)), static_cast<wxItemKind>(kind), wxk::FromUtf16(shortHelp, shortHelpLength), wxk::FromUtf16(longHelp, longHelpLength)))); });
 }
 
-WXK_FUNCTION(void) wxk_ToolBar_InsertTool(wxk_Window* self, size_t position, int32_t toolId, const char16_t* label, size_t labelLength, const wxk_Object* bitmap, const wxk_Object* bmpDisabled, int32_t kind, const char16_t* shortHelp, size_t shortHelpLength, const char16_t* longHelp, size_t longHelpLength) noexcept {
-	wxk::Guard([&] { static_cast<wxToolBar*>(wxk::Unwrap(self))->InsertTool(position, static_cast<int>(toolId), wxk::FromUtf16(label, labelLength), wxBitmapBundle(wxk::ValueOf<wxBitmap>(bitmap)), wxBitmapBundle(wxk::ValueOf<wxBitmap>(bmpDisabled)), static_cast<wxItemKind>(kind), wxk::FromUtf16(shortHelp, shortHelpLength), wxk::FromUtf16(longHelp, longHelpLength)); });
+WXK_FUNCTION(wxk_ToolBarTool*) wxk_ToolBar_InsertTool(wxk_Window* self, size_t position, int32_t toolId, const char16_t* label, size_t labelLength, const wxk_Object* bitmap, const wxk_Object* bmpDisabled, int32_t kind, const char16_t* shortHelp, size_t shortHelpLength, const char16_t* longHelp, size_t longHelpLength) noexcept {
+	return wxk::Guard<wxk_ToolBarTool*>(nullptr, [&]() -> wxk_ToolBarTool* { return wxk::Wrap(static_cast<wxToolBarToolBase*>(static_cast<wxToolBar*>(wxk::Unwrap(self))->InsertTool(position, static_cast<int>(toolId), wxk::FromUtf16(label, labelLength), wxBitmapBundle(wxk::ValueOf<wxBitmap>(bitmap)), wxBitmapBundle(wxk::ValueOf<wxBitmap>(bmpDisabled)), static_cast<wxItemKind>(kind), wxk::FromUtf16(shortHelp, shortHelpLength), wxk::FromUtf16(longHelp, longHelpLength)))); });
 }
 
 WXK_FUNCTION(void) wxk_ToolBar_SetMargins_IntInt(wxk_Window* self, int32_t x, int32_t y) noexcept {
 	wxk::Guard([&] { static_cast<wxToolBar*>(wxk::Unwrap(self))->SetMargins(static_cast<int>(x), static_cast<int>(y)); });
 }
 
-WXK_FUNCTION(void) wxk_ToolBar_AddCheckTool(wxk_Window* self, int32_t toolId, const char16_t* label, size_t labelLength, const wxk_Object* bitmap1, const wxk_Object* bmpDisabled, const char16_t* shortHelp, size_t shortHelpLength, const char16_t* longHelp, size_t longHelpLength) noexcept {
-	wxk::Guard([&] { static_cast<wxToolBar*>(wxk::Unwrap(self))->AddCheckTool(static_cast<int>(toolId), wxk::FromUtf16(label, labelLength), wxBitmapBundle(wxk::ValueOf<wxBitmap>(bitmap1)), wxBitmapBundle(wxk::ValueOf<wxBitmap>(bmpDisabled)), wxk::FromUtf16(shortHelp, shortHelpLength), wxk::FromUtf16(longHelp, longHelpLength)); });
+WXK_FUNCTION(wxk_ToolBarTool*) wxk_ToolBar_AddCheckTool(wxk_Window* self, int32_t toolId, const char16_t* label, size_t labelLength, const wxk_Object* bitmap1, const wxk_Object* bmpDisabled, const char16_t* shortHelp, size_t shortHelpLength, const char16_t* longHelp, size_t longHelpLength) noexcept {
+	return wxk::Guard<wxk_ToolBarTool*>(nullptr, [&]() -> wxk_ToolBarTool* { return wxk::Wrap(static_cast<wxToolBarToolBase*>(static_cast<wxToolBar*>(wxk::Unwrap(self))->AddCheckTool(static_cast<int>(toolId), wxk::FromUtf16(label, labelLength), wxBitmapBundle(wxk::ValueOf<wxBitmap>(bitmap1)), wxBitmapBundle(wxk::ValueOf<wxBitmap>(bmpDisabled)), wxk::FromUtf16(shortHelp, shortHelpLength), wxk::FromUtf16(longHelp, longHelpLength)))); });
 }
 
-WXK_FUNCTION(void) wxk_ToolBar_AddControl(wxk_Window* self, wxk_Window* control, const char16_t* label, size_t labelLength) noexcept {
-	wxk::Guard([&] { static_cast<wxToolBar*>(wxk::Unwrap(self))->AddControl(static_cast<wxControl*>(wxk::Unwrap(control)), wxk::FromUtf16(label, labelLength)); });
+WXK_FUNCTION(wxk_ToolBarTool*) wxk_ToolBar_AddControl(wxk_Window* self, wxk_Window* control, const char16_t* label, size_t labelLength) noexcept {
+	return wxk::Guard<wxk_ToolBarTool*>(nullptr, [&]() -> wxk_ToolBarTool* { return wxk::Wrap(static_cast<wxToolBarToolBase*>(static_cast<wxToolBar*>(wxk::Unwrap(self))->AddControl(static_cast<wxControl*>(wxk::Unwrap(control)), wxk::FromUtf16(label, labelLength)))); });
 }
 
-WXK_FUNCTION(void) wxk_ToolBar_AddRadioTool(wxk_Window* self, int32_t toolId, const char16_t* label, size_t labelLength, const wxk_Object* bitmap1, const wxk_Object* bmpDisabled, const char16_t* shortHelp, size_t shortHelpLength, const char16_t* longHelp, size_t longHelpLength) noexcept {
-	wxk::Guard([&] { static_cast<wxToolBar*>(wxk::Unwrap(self))->AddRadioTool(static_cast<int>(toolId), wxk::FromUtf16(label, labelLength), wxBitmapBundle(wxk::ValueOf<wxBitmap>(bitmap1)), wxBitmapBundle(wxk::ValueOf<wxBitmap>(bmpDisabled)), wxk::FromUtf16(shortHelp, shortHelpLength), wxk::FromUtf16(longHelp, longHelpLength)); });
+WXK_FUNCTION(wxk_ToolBarTool*) wxk_ToolBar_AddRadioTool(wxk_Window* self, int32_t toolId, const char16_t* label, size_t labelLength, const wxk_Object* bitmap1, const wxk_Object* bmpDisabled, const char16_t* shortHelp, size_t shortHelpLength, const char16_t* longHelp, size_t longHelpLength) noexcept {
+	return wxk::Guard<wxk_ToolBarTool*>(nullptr, [&]() -> wxk_ToolBarTool* { return wxk::Wrap(static_cast<wxToolBarToolBase*>(static_cast<wxToolBar*>(wxk::Unwrap(self))->AddRadioTool(static_cast<int>(toolId), wxk::FromUtf16(label, labelLength), wxBitmapBundle(wxk::ValueOf<wxBitmap>(bitmap1)), wxBitmapBundle(wxk::ValueOf<wxBitmap>(bmpDisabled)), wxk::FromUtf16(shortHelp, shortHelpLength), wxk::FromUtf16(longHelp, longHelpLength)))); });
 }
 
-WXK_FUNCTION(void) wxk_ToolBar_AddSeparator(wxk_Window* self) noexcept {
-	wxk::Guard([&] { static_cast<wxToolBar*>(wxk::Unwrap(self))->AddSeparator(); });
+WXK_FUNCTION(wxk_ToolBarTool*) wxk_ToolBar_AddSeparator(wxk_Window* self) noexcept {
+	return wxk::Guard<wxk_ToolBarTool*>(nullptr, [&]() -> wxk_ToolBarTool* { return wxk::Wrap(static_cast<wxToolBarToolBase*>(static_cast<wxToolBar*>(wxk::Unwrap(self))->AddSeparator())); });
 }
 
-WXK_FUNCTION(void) wxk_ToolBar_AddStretchableSpace(wxk_Window* self) noexcept {
-	wxk::Guard([&] { static_cast<wxToolBar*>(wxk::Unwrap(self))->AddStretchableSpace(); });
-}
-
-WXK_FUNCTION(void) wxk_ToolBar_ClearTools(wxk_Window* self) noexcept {
-	wxk::Guard([&] { static_cast<wxToolBar*>(wxk::Unwrap(self))->ClearTools(); });
-}
-
-WXK_FUNCTION(uint8_t) wxk_ToolBar_DeleteTool(wxk_Window* self, int32_t toolId) noexcept {
-	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxToolBar*>(wxk::Unwrap(self))->DeleteTool(static_cast<int>(toolId))) ? 1 : 0; });
-}
-
-WXK_FUNCTION(uint8_t) wxk_ToolBar_DeleteToolByPos(wxk_Window* self, size_t position) noexcept {
-	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxToolBar*>(wxk::Unwrap(self))->DeleteToolByPos(position)) ? 1 : 0; });
+WXK_FUNCTION(wxk_ToolBarTool*) wxk_ToolBar_AddStretchableSpace(wxk_Window* self) noexcept {
+	return wxk::Guard<wxk_ToolBarTool*>(nullptr, [&]() -> wxk_ToolBarTool* { return wxk::Wrap(static_cast<wxToolBarToolBase*>(static_cast<wxToolBar*>(wxk::Unwrap(self))->AddStretchableSpace())); });
 }
 
 WXK_FUNCTION(void) wxk_ToolBar_EnableTool(wxk_Window* self, int32_t toolId, uint8_t enable) noexcept {
 	wxk::Guard([&] { static_cast<wxToolBar*>(wxk::Unwrap(self))->EnableTool(static_cast<int>(toolId), enable != 0); });
 }
 
-WXK_FUNCTION(void) wxk_ToolBar_FindById(wxk_Window* self, int32_t id) noexcept {
-	wxk::Guard([&] { static_cast<wxToolBar*>(wxk::Unwrap(self))->FindById(static_cast<int>(id)); });
+WXK_FUNCTION(wxk_ToolBarTool*) wxk_ToolBar_FindById(wxk_Window* self, int32_t id) noexcept {
+	return wxk::Guard<wxk_ToolBarTool*>(nullptr, [&]() -> wxk_ToolBarTool* { return wxk::Wrap(static_cast<wxToolBarToolBase*>(static_cast<wxToolBar*>(wxk::Unwrap(self))->FindById(static_cast<int>(id)))); });
 }
 
 WXK_FUNCTION(wxk_Window*) wxk_ToolBar_FindControl(wxk_Window* self, int32_t id) noexcept {
 	return wxk::Guard<wxk_Window*>(nullptr, [&]() -> wxk_Window* { return wxk::Wrap(static_cast<wxWindow*>(static_cast<wxToolBar*>(wxk::Unwrap(self))->FindControl(static_cast<int>(id)))); });
 }
 
-WXK_FUNCTION(void) wxk_ToolBar_FindToolForPosition(wxk_Window* self, int32_t x, int32_t y) noexcept {
-	wxk::Guard([&] { static_cast<wxToolBar*>(wxk::Unwrap(self))->FindToolForPosition(static_cast<int>(x), static_cast<int>(y)); });
+WXK_FUNCTION(wxk_ToolBarTool*) wxk_ToolBar_FindToolForPosition(wxk_Window* self, int32_t x, int32_t y) noexcept {
+	return wxk::Guard<wxk_ToolBarTool*>(nullptr, [&]() -> wxk_ToolBarTool* { return wxk::Wrap(static_cast<wxToolBarToolBase*>(static_cast<wxToolBar*>(wxk::Unwrap(self))->FindToolForPosition(static_cast<int>(x), static_cast<int>(y)))); });
 }
 
-WXK_FUNCTION(void) wxk_ToolBar_GetToolByPos(wxk_Window* self, int32_t position) noexcept {
-	wxk::Guard([&] { static_cast<wxToolBar*>(wxk::Unwrap(self))->GetToolByPos(static_cast<int>(position)); });
-}
-
-WXK_FUNCTION(wxk_Object*) wxk_ToolBar_GetToolClientData(wxk_Window* self, int32_t toolId) noexcept {
-	return wxk::Guard<wxk_Object*>(nullptr, [&]() -> wxk_Object* { return wxk::Wrap(static_cast<wxToolBar*>(wxk::Unwrap(self))->GetToolClientData(static_cast<int>(toolId))); });
+WXK_FUNCTION(wxk_ToolBarTool*) wxk_ToolBar_GetToolByPos(wxk_Window* self, int32_t position) noexcept {
+	return wxk::Guard<wxk_ToolBarTool*>(nullptr, [&]() -> wxk_ToolBarTool* { return wxk::Wrap(static_cast<wxToolBarToolBase*>(static_cast<wxToolBar*>(wxk::Unwrap(self))->GetToolByPos(static_cast<int>(position)))); });
 }
 
 WXK_FUNCTION(uint8_t) wxk_ToolBar_GetToolEnabled(wxk_Window* self, int32_t toolId) noexcept {
@@ -100,16 +84,16 @@ WXK_FUNCTION(uint8_t) wxk_ToolBar_GetToolState(wxk_Window* self, int32_t toolId)
 	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxToolBar*>(wxk::Unwrap(self))->GetToolState(static_cast<int>(toolId))) ? 1 : 0; });
 }
 
-WXK_FUNCTION(void) wxk_ToolBar_InsertControl(wxk_Window* self, size_t position, wxk_Window* control, const char16_t* label, size_t labelLength) noexcept {
-	wxk::Guard([&] { static_cast<wxToolBar*>(wxk::Unwrap(self))->InsertControl(position, static_cast<wxControl*>(wxk::Unwrap(control)), wxk::FromUtf16(label, labelLength)); });
+WXK_FUNCTION(wxk_ToolBarTool*) wxk_ToolBar_InsertControl(wxk_Window* self, size_t position, wxk_Window* control, const char16_t* label, size_t labelLength) noexcept {
+	return wxk::Guard<wxk_ToolBarTool*>(nullptr, [&]() -> wxk_ToolBarTool* { return wxk::Wrap(static_cast<wxToolBarToolBase*>(static_cast<wxToolBar*>(wxk::Unwrap(self))->InsertControl(position, static_cast<wxControl*>(wxk::Unwrap(control)), wxk::FromUtf16(label, labelLength)))); });
 }
 
-WXK_FUNCTION(void) wxk_ToolBar_InsertSeparator(wxk_Window* self, size_t position) noexcept {
-	wxk::Guard([&] { static_cast<wxToolBar*>(wxk::Unwrap(self))->InsertSeparator(position); });
+WXK_FUNCTION(wxk_ToolBarTool*) wxk_ToolBar_InsertSeparator(wxk_Window* self, size_t position) noexcept {
+	return wxk::Guard<wxk_ToolBarTool*>(nullptr, [&]() -> wxk_ToolBarTool* { return wxk::Wrap(static_cast<wxToolBarToolBase*>(static_cast<wxToolBar*>(wxk::Unwrap(self))->InsertSeparator(position))); });
 }
 
-WXK_FUNCTION(void) wxk_ToolBar_InsertStretchableSpace(wxk_Window* self, size_t position) noexcept {
-	wxk::Guard([&] { static_cast<wxToolBar*>(wxk::Unwrap(self))->InsertStretchableSpace(position); });
+WXK_FUNCTION(wxk_ToolBarTool*) wxk_ToolBar_InsertStretchableSpace(wxk_Window* self, size_t position) noexcept {
+	return wxk::Guard<wxk_ToolBarTool*>(nullptr, [&]() -> wxk_ToolBarTool* { return wxk::Wrap(static_cast<wxToolBarToolBase*>(static_cast<wxToolBar*>(wxk::Unwrap(self))->InsertStretchableSpace(position))); });
 }
 
 WXK_FUNCTION(uint8_t) wxk_ToolBar_OnLeftClick(wxk_Window* self, int32_t toolId, uint8_t toggleDown) noexcept {
@@ -122,10 +106,6 @@ WXK_FUNCTION(void) wxk_ToolBar_OnMouseEnter(wxk_Window* self, int32_t toolId) no
 
 WXK_FUNCTION(uint8_t) wxk_ToolBar_Realize(wxk_Window* self) noexcept {
 	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxToolBar*>(wxk::Unwrap(self))->Realize()) ? 1 : 0; });
-}
-
-WXK_FUNCTION(void) wxk_ToolBar_RemoveTool(wxk_Window* self, int32_t id) noexcept {
-	wxk::Guard([&] { static_cast<wxToolBar*>(wxk::Unwrap(self))->RemoveTool(static_cast<int>(id)); });
 }
 
 WXK_FUNCTION(uint8_t) wxk_ToolBar_SetDropdownMenu(wxk_Window* self, int32_t id, wxk_Menu* menu) noexcept {
@@ -150,18 +130,6 @@ WXK_FUNCTION(void) wxk_ToolBar_SetToolShortHelp(wxk_Window* self, int32_t toolId
 
 WXK_FUNCTION(void) wxk_ToolBar_ToggleTool(wxk_Window* self, int32_t toolId, uint8_t toggle) noexcept {
 	wxk::Guard([&] { static_cast<wxToolBar*>(wxk::Unwrap(self))->ToggleTool(static_cast<int>(toolId), toggle != 0); });
-}
-
-WXK_FUNCTION(void) wxk_ToolBar_CreateTool_IntStringBitmapBitmapMenuItemKind(wxk_Window* self, int32_t toolId, const char16_t* label, size_t labelLength, const wxk_Object* bmpNormal, const wxk_Object* bmpDisabled, int32_t kind) noexcept {
-	wxk::Guard([&] { static_cast<wxToolBar*>(wxk::Unwrap(self))->CreateTool(static_cast<int>(toolId), wxk::FromUtf16(label, labelLength), wxBitmapBundle(wxk::ValueOf<wxBitmap>(bmpNormal)), wxBitmapBundle(wxk::ValueOf<wxBitmap>(bmpDisabled)), static_cast<wxItemKind>(kind)); });
-}
-
-WXK_FUNCTION(void) wxk_ToolBar_CreateTool_ControlString(wxk_Window* self, wxk_Window* control, const char16_t* label, size_t labelLength) noexcept {
-	wxk::Guard([&] { static_cast<wxToolBar*>(wxk::Unwrap(self))->CreateTool(static_cast<wxControl*>(wxk::Unwrap(control)), wxk::FromUtf16(label, labelLength)); });
-}
-
-WXK_FUNCTION(void) wxk_ToolBar_CreateSeparator(wxk_Window* self) noexcept {
-	wxk::Guard([&] { static_cast<wxToolBar*>(wxk::Unwrap(self))->CreateSeparator(); });
 }
 
 WXK_FUNCTION(wxk_Size) wxk_ToolBar_GetMargins(wxk_Window* self) noexcept {

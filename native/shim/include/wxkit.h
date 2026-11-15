@@ -31,6 +31,7 @@ typedef struct wxk_EvtHandler wxk_EvtHandler;
 typedef struct wxk_Window wxk_Window;
 typedef struct wxk_Sizer wxk_Sizer;
 typedef struct wxk_DataViewColumn wxk_DataViewColumn;
+typedef struct wxk_ToolBarTool wxk_ToolBarTool;
 typedef struct wxk_Menu wxk_Menu;
 typedef struct wxk_MenuItem wxk_MenuItem;
 typedef struct wxk_Timer wxk_Timer;
@@ -330,6 +331,14 @@ WXK_FUNCTION(void) wxk_Accessible_SetCallbacks(const wxk_AccessibleCallbacks* ca
 // Gives the window an accessible object whose answers come from .NET, replacing the one it had.
 WXK_FUNCTION(wxk_Accessible*) wxk_ManagedAccessible_new(wxk_Window* window, void* userdata) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Accessible_NotifyEvent(int32_t eventType, wxk_Window* window, int32_t objectType, int32_t objectId) WXK_NOEXCEPT;
+
+// Toolbar tools
+
+WXK_FUNCTION(wxk_Window*) wxk_ToolBarTool_GetToolBar(wxk_ToolBarTool* tool) WXK_NOEXCEPT;
+// Delete one or all of a toolbar's tools. The managed side marks their objects destroyed.
+WXK_FUNCTION(uint8_t) wxk_ToolBar_DeleteTool(wxk_Window* toolBar, int32_t toolId) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ToolBar_DeleteToolByPos(wxk_Window* toolBar, size_t position) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ToolBar_ClearTools(wxk_Window* toolBar) WXK_NOEXCEPT;
 
 // Item data
 

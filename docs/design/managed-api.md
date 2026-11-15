@@ -91,6 +91,10 @@ A parameter that takes a bitmap or icon bundle, which wxWidgets 3.3 uses for eve
 
 The images of a tree, list view, or notebook are any sequence of bitmaps, given to `SetImages` or, on a list view, `SetNormalImages` and `SetSmallImages`. An item names its image by its position in the sequence. The control keeps its own bundles, so the bitmaps can be disposed after the call.
 
+### Toolbar tools
+
+Adding a tool to a toolbar returns it as a `ToolBarTool`, and so does finding one, such as with `FindById` or `GetToolByPos`. A toolbar gives back the same object for a tool each time. A tool's enabled and toggled state and its help change through the toolbar, which finds the tool by its id, since that is what shows the change. A tool belongs to its toolbar, which deletes it with `DeleteTool`, `DeleteToolByPos`, or `ClearTools`, or when the toolbar is destroyed, and marks its object destroyed then, as a data view does its columns. A tool is only made by adding it, so the members that make a tool or remove one without deleting it are not bound.
+
 ### Item data
 
 A list box, choice, combo box, tree, or data view tree can keep any object with an item, such as what the item stands for, through `Append` and `Insert` with an object, `SetClientObject` and `GetClientObject`, or a tree's `SetItemData` and `GetItemData`. The event a list box, choice, or combo box sends when an item is chosen has its object in `ClientObject`.

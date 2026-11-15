@@ -56,6 +56,12 @@ internal sealed record HandleKind(string CType, string CppBase, string InteropTy
 	/// </summary>
 	public static HandleKind Column { get; } = new("wxk_DataViewColumn", "wxDataViewColumn", "WxkDataViewColumn", "Native", "Column");
 
+	/// <summary>A toolbar's tool, which the toolbar owns, deletes, and keeps the managed object of, as a data view does its columns.</summary>
+	public static HandleKind Tool { get; } = new("wxk_ToolBarTool", "wxToolBarToolBase", "WxkToolBarTool", "Native", "Tool");
+
+	/// <summary>Whether the object belongs to a control, which gives back its one managed object, written by hand in part.</summary>
+	public bool IsKeptByOwner => this == Column || this == Tool;
+
 	/// <summary>Whether the managed side owns the object, and deletes it when it is disposed.</summary>
 	public bool IsOwned => this == Value || this == Owned;
 

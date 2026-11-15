@@ -6304,15 +6304,15 @@ public static unsafe partial class WxKitNative {
 
 	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_AddTool_IntStringBitmapStringMenuItemKind")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void ToolBarAddToolIntStringBitmapStringMenuItemKind(WxkWindow* self, int toolId, char* label, nuint labelLength, WxkObject* bitmap, char* shortHelp, nuint shortHelpLength, int kind);
+	public static partial WxkToolBarTool* ToolBarAddToolIntStringBitmapStringMenuItemKind(WxkWindow* self, int toolId, char* label, nuint labelLength, WxkObject* bitmap, char* shortHelp, nuint shortHelpLength, int kind);
 
 	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_AddTool_IntStringBitmapBitmapMenuItemKindStringString")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void ToolBarAddToolIntStringBitmapBitmapMenuItemKindStringString(WxkWindow* self, int toolId, char* label, nuint labelLength, WxkObject* bitmap, WxkObject* bmpDisabled, int kind, char* shortHelp, nuint shortHelpLength, char* longHelp, nuint longHelpLength);
+	public static partial WxkToolBarTool* ToolBarAddToolIntStringBitmapBitmapMenuItemKindStringString(WxkWindow* self, int toolId, char* label, nuint labelLength, WxkObject* bitmap, WxkObject* bmpDisabled, int kind, char* shortHelp, nuint shortHelpLength, char* longHelp, nuint longHelpLength);
 
 	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_InsertTool")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void ToolBarInsertTool(WxkWindow* self, nuint position, int toolId, char* label, nuint labelLength, WxkObject* bitmap, WxkObject* bmpDisabled, int kind, char* shortHelp, nuint shortHelpLength, char* longHelp, nuint longHelpLength);
+	public static partial WxkToolBarTool* ToolBarInsertTool(WxkWindow* self, nuint position, int toolId, char* label, nuint labelLength, WxkObject* bitmap, WxkObject* bmpDisabled, int kind, char* shortHelp, nuint shortHelpLength, char* longHelp, nuint longHelpLength);
 
 	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_SetMargins_IntInt")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -6320,35 +6320,23 @@ public static unsafe partial class WxKitNative {
 
 	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_AddCheckTool")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void ToolBarAddCheckTool(WxkWindow* self, int toolId, char* label, nuint labelLength, WxkObject* bitmap1, WxkObject* bmpDisabled, char* shortHelp, nuint shortHelpLength, char* longHelp, nuint longHelpLength);
+	public static partial WxkToolBarTool* ToolBarAddCheckTool(WxkWindow* self, int toolId, char* label, nuint labelLength, WxkObject* bitmap1, WxkObject* bmpDisabled, char* shortHelp, nuint shortHelpLength, char* longHelp, nuint longHelpLength);
 
 	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_AddControl")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void ToolBarAddControl(WxkWindow* self, WxkWindow* control, char* label, nuint labelLength);
+	public static partial WxkToolBarTool* ToolBarAddControl(WxkWindow* self, WxkWindow* control, char* label, nuint labelLength);
 
 	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_AddRadioTool")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void ToolBarAddRadioTool(WxkWindow* self, int toolId, char* label, nuint labelLength, WxkObject* bitmap1, WxkObject* bmpDisabled, char* shortHelp, nuint shortHelpLength, char* longHelp, nuint longHelpLength);
+	public static partial WxkToolBarTool* ToolBarAddRadioTool(WxkWindow* self, int toolId, char* label, nuint labelLength, WxkObject* bitmap1, WxkObject* bmpDisabled, char* shortHelp, nuint shortHelpLength, char* longHelp, nuint longHelpLength);
 
 	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_AddSeparator")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void ToolBarAddSeparator(WxkWindow* self);
+	public static partial WxkToolBarTool* ToolBarAddSeparator(WxkWindow* self);
 
 	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_AddStretchableSpace")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void ToolBarAddStretchableSpace(WxkWindow* self);
-
-	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_ClearTools")]
-	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void ToolBarClearTools(WxkWindow* self);
-
-	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_DeleteTool")]
-	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial byte ToolBarDeleteTool(WxkWindow* self, int toolId);
-
-	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_DeleteToolByPos")]
-	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial byte ToolBarDeleteToolByPos(WxkWindow* self, nuint position);
+	public static partial WxkToolBarTool* ToolBarAddStretchableSpace(WxkWindow* self);
 
 	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_EnableTool")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -6356,7 +6344,7 @@ public static unsafe partial class WxKitNative {
 
 	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_FindById")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void ToolBarFindById(WxkWindow* self, int id);
+	public static partial WxkToolBarTool* ToolBarFindById(WxkWindow* self, int id);
 
 	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_FindControl")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -6364,15 +6352,11 @@ public static unsafe partial class WxKitNative {
 
 	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_FindToolForPosition")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void ToolBarFindToolForPosition(WxkWindow* self, int x, int y);
+	public static partial WxkToolBarTool* ToolBarFindToolForPosition(WxkWindow* self, int x, int y);
 
 	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_GetToolByPos")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void ToolBarGetToolByPos(WxkWindow* self, int position);
-
-	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_GetToolClientData")]
-	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial WxkObject* ToolBarGetToolClientData(WxkWindow* self, int toolId);
+	public static partial WxkToolBarTool* ToolBarGetToolByPos(WxkWindow* self, int position);
 
 	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_GetToolEnabled")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -6396,15 +6380,15 @@ public static unsafe partial class WxKitNative {
 
 	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_InsertControl")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void ToolBarInsertControl(WxkWindow* self, nuint position, WxkWindow* control, char* label, nuint labelLength);
+	public static partial WxkToolBarTool* ToolBarInsertControl(WxkWindow* self, nuint position, WxkWindow* control, char* label, nuint labelLength);
 
 	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_InsertSeparator")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void ToolBarInsertSeparator(WxkWindow* self, nuint position);
+	public static partial WxkToolBarTool* ToolBarInsertSeparator(WxkWindow* self, nuint position);
 
 	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_InsertStretchableSpace")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void ToolBarInsertStretchableSpace(WxkWindow* self, nuint position);
+	public static partial WxkToolBarTool* ToolBarInsertStretchableSpace(WxkWindow* self, nuint position);
 
 	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_OnLeftClick")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -6417,10 +6401,6 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_Realize")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte ToolBarRealize(WxkWindow* self);
-
-	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_RemoveTool")]
-	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void ToolBarRemoveTool(WxkWindow* self, int id);
 
 	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_SetDropdownMenu")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -6445,18 +6425,6 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_ToggleTool")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void ToolBarToggleTool(WxkWindow* self, int toolId, byte toggle);
-
-	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_CreateTool_IntStringBitmapBitmapMenuItemKind")]
-	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void ToolBarCreateToolIntStringBitmapBitmapMenuItemKind(WxkWindow* self, int toolId, char* label, nuint labelLength, WxkObject* bmpNormal, WxkObject* bmpDisabled, int kind);
-
-	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_CreateTool_ControlString")]
-	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void ToolBarCreateToolControlString(WxkWindow* self, WxkWindow* control, char* label, nuint labelLength);
-
-	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_CreateSeparator")]
-	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void ToolBarCreateSeparator(WxkWindow* self);
 
 	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_GetMargins")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -6497,6 +6465,50 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_GetToolsCount")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial nuint ToolBarGetToolsCount(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ToolBarToolBase_GetId")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int ToolBarToolBaseGetId(WxkToolBarTool* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ToolBarToolBase_GetControl")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* ToolBarToolBaseGetControl(WxkToolBarTool* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ToolBarToolBase_IsButton")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ToolBarToolBaseIsButton(WxkToolBarTool* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ToolBarToolBase_IsControl")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ToolBarToolBaseIsControl(WxkToolBarTool* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ToolBarToolBase_IsSeparator")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ToolBarToolBaseIsSeparator(WxkToolBarTool* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ToolBarToolBase_IsStretchableSpace")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ToolBarToolBaseIsStretchableSpace(WxkToolBarTool* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ToolBarToolBase_GetKind")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int ToolBarToolBaseGetKind(WxkToolBarTool* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ToolBarToolBase_CanBeToggled")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ToolBarToolBaseCanBeToggled(WxkToolBarTool* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ToolBarToolBase_GetNormalBitmap")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* ToolBarToolBaseGetNormalBitmap(WxkToolBarTool* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ToolBarToolBase_GetDisabledBitmap")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* ToolBarToolBaseGetDisabledBitmap(WxkToolBarTool* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ToolBarToolBase_GetLabel")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkString* ToolBarToolBaseGetLabel(WxkToolBarTool* self);
 
 	[LibraryImport(Library, EntryPoint = "wxk_TopLevelWindow_CenterOnScreen")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

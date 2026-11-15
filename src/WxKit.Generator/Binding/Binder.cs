@@ -82,6 +82,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		if (ancestors.Contains("wxMenu")) return HandleKind.Menu;
 		if (ancestors.Contains("wxEvent")) return HandleKind.Event;
 		if (ancestors.Contains("wxDataViewColumn")) return HandleKind.Column;
+		if (ancestors.Contains("wxToolBarToolBase")) return HandleKind.Tool;
 		// Fonts, pens, brushes, bitmaps, icons, and cursors are wxGDIObjects; images are copied the same way.
 		if (ancestors.Contains("wxGDIObject") || ancestors.Contains("wxImage")) return HandleKind.Value;
 		// Drawing contexts are made, used, and deleted, as a wxPaintDC is in a paint handler.
@@ -325,7 +326,9 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 			// Events are only received, and a static class has no objects to pass.
 			if (!_classes.TryGetValue(type.Name, out BoundClass? target) || target.Handle == HandleKind.Event || target.Handle == HandleKind.Static) return null;
 			// Only event handlers are tracked, so only they can be wrapped when wxWidgets hands one back.
-			return isReturn && !target.Handle.IsEvtHandler && target.Handle != HandleKind.Column ? null : new ObjectConversion(target);
+			// A tool cannot go in, since the only tools are a toolbar's own, which it has already.
+			if (!isReturn && target.Handle == HandleKind.Tool) return null;
+			return isReturn && !target.Handle.IsEvtHandler && !target.Handle.IsKeptByOwner ? null : new ObjectConversion(target);
 		}
 		if (!type.IsValueOrConstReference) return null;
 		if (_classes.TryGetValue(type.Name, out BoundClass? value) && value.Handle == HandleKind.Value) return new ValueConversion(value);

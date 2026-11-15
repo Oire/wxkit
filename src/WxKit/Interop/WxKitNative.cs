@@ -374,6 +374,22 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte DataViewCtrlAssociateModel(WxkWindow* control, WxkDataViewModel* model);
 
+	[LibraryImport(Library, EntryPoint = "wxk_ToolBarTool_GetToolBar")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* ToolBarToolGetToolBar(WxkToolBarTool* tool);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_DeleteTool")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ToolBarDeleteTool(WxkWindow* toolBar, int toolId);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_DeleteToolByPos")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ToolBarDeleteToolByPos(WxkWindow* toolBar, nuint position);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ToolBar_ClearTools")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ToolBarClearTools(WxkWindow* toolBar);
+
 	[LibraryImport(Library, EntryPoint = "wxk_ClientData_SetFree")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void ClientDataSetFree(delegate* unmanaged[Cdecl]<nint, void> free);

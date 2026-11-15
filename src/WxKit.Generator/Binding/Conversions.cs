@@ -369,8 +369,8 @@ internal sealed class ObjectConversion(BoundClass target) : Conversion {
 
 	public override IEnumerable<string> InteropArguments(string name, bool nullable) => [nullable ? $"{name} is null ? null : ({Target.Handle.InteropType}*){name}.{Target.Handle.Accessor}" : $"({Target.Handle.InteropType}*){name}.{Target.Handle.Accessor}"];
 
-	// A column comes back as the one managed object its control keeps for it.
-	public override string ManagedReturn(string expression) => Target.Handle == HandleKind.Column ? $"{Target.Name}.Wrap({expression})" : $"ObjectRegistry.Wrap<{Target.Name}>({expression})";
+	// A column or a tool comes back as the one managed object its control keeps for it.
+	public override string ManagedReturn(string expression) => Target.Handle.IsKeptByOwner ? $"{Target.Name}.Wrap({expression})" : $"ObjectRegistry.Wrap<{Target.Name}>({expression})";
 
 	public override bool AcceptsNull => true;
 }

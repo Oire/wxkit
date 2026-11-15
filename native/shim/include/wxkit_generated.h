@@ -1892,45 +1892,37 @@ WXK_FUNCTION(void) wxk_ToggleButton_SetValue(wxk_Window* self, uint8_t state) WX
 // wxToolBar
 
 WXK_FUNCTION(wxk_Window*) wxk_ToolBar_new(wxk_Window* parent, int32_t id, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_ToolBar_AddTool_IntStringBitmapStringMenuItemKind(wxk_Window* self, int32_t toolId, const char16_t* label, size_t labelLength, const wxk_Object* bitmap, const char16_t* shortHelp, size_t shortHelpLength, int32_t kind) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_ToolBar_AddTool_IntStringBitmapBitmapMenuItemKindStringString(wxk_Window* self, int32_t toolId, const char16_t* label, size_t labelLength, const wxk_Object* bitmap, const wxk_Object* bmpDisabled, int32_t kind, const char16_t* shortHelp, size_t shortHelpLength, const char16_t* longHelp, size_t longHelpLength) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_ToolBar_InsertTool(wxk_Window* self, size_t position, int32_t toolId, const char16_t* label, size_t labelLength, const wxk_Object* bitmap, const wxk_Object* bmpDisabled, int32_t kind, const char16_t* shortHelp, size_t shortHelpLength, const char16_t* longHelp, size_t longHelpLength) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_ToolBarTool*) wxk_ToolBar_AddTool_IntStringBitmapStringMenuItemKind(wxk_Window* self, int32_t toolId, const char16_t* label, size_t labelLength, const wxk_Object* bitmap, const char16_t* shortHelp, size_t shortHelpLength, int32_t kind) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_ToolBarTool*) wxk_ToolBar_AddTool_IntStringBitmapBitmapMenuItemKindStringString(wxk_Window* self, int32_t toolId, const char16_t* label, size_t labelLength, const wxk_Object* bitmap, const wxk_Object* bmpDisabled, int32_t kind, const char16_t* shortHelp, size_t shortHelpLength, const char16_t* longHelp, size_t longHelpLength) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_ToolBarTool*) wxk_ToolBar_InsertTool(wxk_Window* self, size_t position, int32_t toolId, const char16_t* label, size_t labelLength, const wxk_Object* bitmap, const wxk_Object* bmpDisabled, int32_t kind, const char16_t* shortHelp, size_t shortHelpLength, const char16_t* longHelp, size_t longHelpLength) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_ToolBar_SetMargins_IntInt(wxk_Window* self, int32_t x, int32_t y) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_ToolBar_AddCheckTool(wxk_Window* self, int32_t toolId, const char16_t* label, size_t labelLength, const wxk_Object* bitmap1, const wxk_Object* bmpDisabled, const char16_t* shortHelp, size_t shortHelpLength, const char16_t* longHelp, size_t longHelpLength) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_ToolBar_AddControl(wxk_Window* self, wxk_Window* control, const char16_t* label, size_t labelLength) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_ToolBar_AddRadioTool(wxk_Window* self, int32_t toolId, const char16_t* label, size_t labelLength, const wxk_Object* bitmap1, const wxk_Object* bmpDisabled, const char16_t* shortHelp, size_t shortHelpLength, const char16_t* longHelp, size_t longHelpLength) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_ToolBar_AddSeparator(wxk_Window* self) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_ToolBar_AddStretchableSpace(wxk_Window* self) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_ToolBar_ClearTools(wxk_Window* self) WXK_NOEXCEPT;
-WXK_FUNCTION(uint8_t) wxk_ToolBar_DeleteTool(wxk_Window* self, int32_t toolId) WXK_NOEXCEPT;
-WXK_FUNCTION(uint8_t) wxk_ToolBar_DeleteToolByPos(wxk_Window* self, size_t position) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_ToolBarTool*) wxk_ToolBar_AddCheckTool(wxk_Window* self, int32_t toolId, const char16_t* label, size_t labelLength, const wxk_Object* bitmap1, const wxk_Object* bmpDisabled, const char16_t* shortHelp, size_t shortHelpLength, const char16_t* longHelp, size_t longHelpLength) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_ToolBarTool*) wxk_ToolBar_AddControl(wxk_Window* self, wxk_Window* control, const char16_t* label, size_t labelLength) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_ToolBarTool*) wxk_ToolBar_AddRadioTool(wxk_Window* self, int32_t toolId, const char16_t* label, size_t labelLength, const wxk_Object* bitmap1, const wxk_Object* bmpDisabled, const char16_t* shortHelp, size_t shortHelpLength, const char16_t* longHelp, size_t longHelpLength) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_ToolBarTool*) wxk_ToolBar_AddSeparator(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_ToolBarTool*) wxk_ToolBar_AddStretchableSpace(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_ToolBar_EnableTool(wxk_Window* self, int32_t toolId, uint8_t enable) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_ToolBar_FindById(wxk_Window* self, int32_t id) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_ToolBarTool*) wxk_ToolBar_FindById(wxk_Window* self, int32_t id) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Window*) wxk_ToolBar_FindControl(wxk_Window* self, int32_t id) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_ToolBar_FindToolForPosition(wxk_Window* self, int32_t x, int32_t y) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_ToolBar_GetToolByPos(wxk_Window* self, int32_t position) WXK_NOEXCEPT;
-WXK_FUNCTION(wxk_Object*) wxk_ToolBar_GetToolClientData(wxk_Window* self, int32_t toolId) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_ToolBarTool*) wxk_ToolBar_FindToolForPosition(wxk_Window* self, int32_t x, int32_t y) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_ToolBarTool*) wxk_ToolBar_GetToolByPos(wxk_Window* self, int32_t position) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_ToolBar_GetToolEnabled(wxk_Window* self, int32_t toolId) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_String*) wxk_ToolBar_GetToolLongHelp(wxk_Window* self, int32_t toolId) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_ToolBar_GetToolPos(wxk_Window* self, int32_t toolId) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_String*) wxk_ToolBar_GetToolShortHelp(wxk_Window* self, int32_t toolId) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_ToolBar_GetToolState(wxk_Window* self, int32_t toolId) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_ToolBar_InsertControl(wxk_Window* self, size_t position, wxk_Window* control, const char16_t* label, size_t labelLength) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_ToolBar_InsertSeparator(wxk_Window* self, size_t position) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_ToolBar_InsertStretchableSpace(wxk_Window* self, size_t position) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_ToolBarTool*) wxk_ToolBar_InsertControl(wxk_Window* self, size_t position, wxk_Window* control, const char16_t* label, size_t labelLength) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_ToolBarTool*) wxk_ToolBar_InsertSeparator(wxk_Window* self, size_t position) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_ToolBarTool*) wxk_ToolBar_InsertStretchableSpace(wxk_Window* self, size_t position) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_ToolBar_OnLeftClick(wxk_Window* self, int32_t toolId, uint8_t toggleDown) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_ToolBar_OnMouseEnter(wxk_Window* self, int32_t toolId) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_ToolBar_Realize(wxk_Window* self) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_ToolBar_RemoveTool(wxk_Window* self, int32_t id) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_ToolBar_SetDropdownMenu(wxk_Window* self, int32_t id, wxk_Menu* menu) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_ToolBar_SetToolDisabledBitmap(wxk_Window* self, int32_t id, const wxk_Object* bitmap) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_ToolBar_SetToolLongHelp(wxk_Window* self, int32_t toolId, const char16_t* helpString, size_t helpStringLength) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_ToolBar_SetToolNormalBitmap(wxk_Window* self, int32_t id, const wxk_Object* bitmap) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_ToolBar_SetToolShortHelp(wxk_Window* self, int32_t toolId, const char16_t* helpString, size_t helpStringLength) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_ToolBar_ToggleTool(wxk_Window* self, int32_t toolId, uint8_t toggle) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_ToolBar_CreateTool_IntStringBitmapBitmapMenuItemKind(wxk_Window* self, int32_t toolId, const char16_t* label, size_t labelLength, const wxk_Object* bmpNormal, const wxk_Object* bmpDisabled, int32_t kind) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_ToolBar_CreateTool_ControlString(wxk_Window* self, wxk_Window* control, const char16_t* label, size_t labelLength) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_ToolBar_CreateSeparator(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Size) wxk_ToolBar_GetMargins(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_ToolBar_SetMargins_Size(wxk_Window* self, wxk_Size size) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Size) wxk_ToolBar_GetToolBitmapSize(wxk_Window* self) WXK_NOEXCEPT;
@@ -1941,6 +1933,20 @@ WXK_FUNCTION(int32_t) wxk_ToolBar_GetToolSeparation(wxk_Window* self) WXK_NOEXCE
 WXK_FUNCTION(void) wxk_ToolBar_SetToolSeparation(wxk_Window* self, int32_t separation) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Size) wxk_ToolBar_GetToolSize(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(size_t) wxk_ToolBar_GetToolsCount(wxk_Window* self) WXK_NOEXCEPT;
+
+// wxToolBarToolBase
+
+WXK_FUNCTION(int32_t) wxk_ToolBarToolBase_GetId(wxk_ToolBarTool* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Window*) wxk_ToolBarToolBase_GetControl(wxk_ToolBarTool* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ToolBarToolBase_IsButton(wxk_ToolBarTool* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ToolBarToolBase_IsControl(wxk_ToolBarTool* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ToolBarToolBase_IsSeparator(wxk_ToolBarTool* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ToolBarToolBase_IsStretchableSpace(wxk_ToolBarTool* self) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_ToolBarToolBase_GetKind(wxk_ToolBarTool* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ToolBarToolBase_CanBeToggled(wxk_ToolBarTool* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_ToolBarToolBase_GetNormalBitmap(wxk_ToolBarTool* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_ToolBarToolBase_GetDisabledBitmap(wxk_ToolBarTool* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_String*) wxk_ToolBarToolBase_GetLabel(wxk_ToolBarTool* self) WXK_NOEXCEPT;
 
 // wxTopLevelWindow
 

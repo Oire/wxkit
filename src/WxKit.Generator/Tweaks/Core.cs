@@ -89,8 +89,15 @@ internal static class Core {
 			.ParameterEnum("wxTextValidator", "style", "wxTextValidatorStyle")
 			.ParameterEnum("SetStyle", "style", "wxTextValidatorStyle")
 			.ParameterEnum("GetStyle", "return", "wxTextValidatorStyle"));
-		// Toolbars. The tools they return are not bound, so adding one gives nothing back; its id names it.
-		tweaks.Class("wxToolBar").DiscardUnboundReturns();
+		// Toolbars and their tools. A tool is only made by adding it, so the members that make or remove
+		// a tool nobody owns are left out. Deleting tools is written by hand, since the toolbar marks
+		// their objects destroyed. A tool's setters only change what the tool records, not what the
+		// toolbar shows, so its state is written by hand, through the toolbar.
+		tweaks.Class("wxToolBar").Ignore("CreateTool", "CreateSeparator", "RemoveTool", "DeleteTool", "DeleteToolByPos", "ClearTools", "GetToolClientData", "SetToolClientData");
+		tweaks.Class("wxToolBarToolBase", tool => tool
+			.Named("ToolBarTool")
+			.NoConstructors()
+			.Only("GetId", "GetControl", "GetKind", "GetLabel", "GetNormalBitmap", "GetDisabledBitmap", "IsButton", "IsControl", "IsSeparator", "IsStretchableSpace", "CanBeToggled"));
 		// Lists and trees, and what they hold.
 		// Accessibility, for the hand-written Accessible, which describes a custom control to screen readers.
 		// The standard ids, which give a button or menu item the platform's label and shortcut. The

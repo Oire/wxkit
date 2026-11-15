@@ -18,6 +18,9 @@ public struct WxkSizer;
 /// <summary>A wxDataViewColumn.</summary>
 public struct WxkDataViewColumn;
 
+/// <summary>A wxToolBarToolBase.</summary>
+public struct WxkToolBarTool;
+
 /// <summary>A wxMenu.</summary>
 public struct WxkMenu;
 
