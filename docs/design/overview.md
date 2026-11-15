@@ -23,7 +23,7 @@ Status: draft. The first two milestones are done on Windows, and the third, brea
 
 WxKit targets the three wxWidgets ports that matter on the desktop:
 
-- Windows, through wxMSW, on `win-x64`, `win-arm64`, and `win-x86`.
+- Windows, through wxMSW, on `win-x64` and `win-arm64`. `win-x86` is left out for now: Windows 11 has no 32-bit edition, and 32-bit Windows 10 is out of support. The build script can already build it, so it would take a package and a CI job if someone needs it.
 - macOS, through wxOSX Cocoa, on `osx-arm64` and `osx-x64`.
 - Linux, through wxGTK 3, on `linux-x64` and `linux-arm64`.
 

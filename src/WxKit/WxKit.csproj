@@ -22,9 +22,9 @@
 		<None Include="build/WxKit.targets;build/wxkit.manifest;build/WxKitMergeResources.cs" Pack="true" PackagePath="buildTransitive/" />
 	</ItemGroup>
 
-	<!-- The package depends on a native package for each runtime, which scripts/pack.ps1 packs first and passes as WxKitRuntimes. Building WxKit itself does not need them. -->
+	<!-- The package depends on a native package for each runtime, which scripts/pack.ps1 packs first and passes as WxKitRuntimes, joined with plus signs. Building WxKit itself does not need them. -->
 	<ItemGroup Condition="'$(WxKitPacking)' == 'true'">
-		<_WxKitRuntime Include="$(WxKitRuntimes)" />
+		<_WxKitRuntime Include="$([MSBuild]::Unescape($(WxKitRuntimes.Replace('+', ';'))))" />
 		<!-- Nothing is private, so the native package's targets reach the application, which links with them. -->
 		<PackageReference Include="@(_WxKitRuntime->'WxKit.Native.%(Identity)')" Version="$(Version)" PrivateAssets="none" />
 	</ItemGroup>

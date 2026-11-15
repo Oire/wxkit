@@ -20,8 +20,8 @@ foreach ($runtime in $Runtimes) {
 	if ($LASTEXITCODE -ne 0) { throw "Packing WxKit.Native.$runtime failed." }
 }
 
-# MSBuild reads a semicolon in a property as a separator of properties, so the list is escaped.
-$runtimeList = $Runtimes -join "%3B"
+# A semicolon or a comma would separate properties on the command line, so the runtimes are joined with plus signs.
+$runtimeList = $Runtimes -join "+"
 dotnet pack (Join-Path $root "src/WxKit") -c $Configuration -o $output -nologo "-p:WxKitPacking=true" "-p:WxKitRuntimes=$runtimeList" "-p:RestoreAdditionalProjectSources=$output" "-p:RestorePackagesPath=$cache"
 if ($LASTEXITCODE -ne 0) { throw "Packing WxKit failed." }
 

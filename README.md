@@ -2,18 +2,18 @@
 
 .NET bindings to [wxWidgets](https://wxwidgets.org), for native desktop applications on Windows, macOS, and Linux. WxKit works with Native AOT, and links wxWidgets into the executable so that an application ships as one file.
 
-WxKit is in early development, and is not usable for applications yet. So far it runs on Windows only. The bindings are generated from wxWidgets's own headers, and cover 112 classes: windows and the common controls, list, tree, and data view controls, toolbars, sizers, menus, the standard dialogs, drawing, images, validators, and the clipboard, with events, async support, and accessibility for controls that draw themselves. The [Hello sample](samples/Hello/Program.cs) publishes with Native AOT as a single executable of about 5 MB, and an application only links the classes it uses. To see what it will look like and how it will work, start with the [design overview](docs/design/overview.md). Decisions made so far, and the ones still open, are in [Open questions](docs/design/open-questions.md).
+WxKit is in early development, and is not usable for applications yet. So far it runs on Windows only, on x64 and ARM64. The bindings are generated from wxWidgets's own headers, and cover 112 classes: windows and the common controls, list, tree, and data view controls, toolbars, sizers, menus, the standard dialogs, drawing, images, validators, and the clipboard, with events, async support, and accessibility for controls that draw themselves. The [Hello sample](samples/Hello/Program.cs) publishes with Native AOT as a single executable of about 5 MB, and an application only links the classes it uses. To see what it will look like and how it will work, start with the [design overview](docs/design/overview.md). Decisions made so far, and the ones still open, are in [Open questions](docs/design/open-questions.md).
 
 ## Building
 
 You need the following:
 
 - The .NET 10 SDK.
-- Visual Studio 2022 or newer, or its Build Tools, with the C++ tools.
+- Visual Studio 2022 or newer, or its Build Tools, with the C++ tools. Building for ARM64 also needs their ARM64 build tools, which the Visual Studio Installer lists as "MSVC ARM64/ARM64EC build tools".
 - CMake.
 - PowerShell 7.
 
-wxWidgets is a git submodule, built with CMake. The build script builds it, and WxKit's native shim, for the runtimes you give it, and defaults to `win-x64`. The first build takes 10 to 20 minutes.
+wxWidgets is a git submodule, built with CMake. The build script builds it, and WxKit's native shim, for the runtimes you give it, and defaults to `win-x64`. Give it `-Runtimes win-x64, win-arm64` for both. An x64 machine can build for ARM64, but only an ARM64 machine can run what it builds. The first build of each runtime takes 10 to 20 minutes.
 
 ```powershell
 git clone --recurse-submodules https://github.com/trypsynth/wxkit
@@ -35,7 +35,7 @@ WxKit is not on nuget.org yet. To use it from an application of your own, build 
 ./scripts/test-package.ps1
 ```
 
-`test-package.ps1` checks the packages the way an application would use them. Each push to master also builds them in CI, which keeps them for a week as an artifact of the run.
+Give `pack.ps1` `-Runtimes win-x64, win-arm64` to pack both, as CI does. `test-package.ps1` checks the packages the way an application would use them, on the machine's own runtime. Each push to master also builds them in CI, which keeps them for a week as an artifact of the run.
 
 Add `artifacts/packages` as a package source, and reference `WxKit`, which brings in the native package for each runtime, such as `WxKit.Native.win-x64`:
 

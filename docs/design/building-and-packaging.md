@@ -20,6 +20,7 @@ Output goes to `artifacts/native/<runtime>/static` and `artifacts/native/<runtim
 ### Windows
 
 - wxWidgets and the shim are built with the static C runtime, `/MT`, because that is what Native AOT links. The script finds the newest Visual Studio with the C++ tools and names its CMake generator explicitly.
+- `win-arm64` builds on an x64 machine as well as an ARM64 one, with Visual Studio's ARM64 build tools, and Native AOT publishes for it from either. Only an ARM64 machine can run what it makes, so CI tests it on one.
 - The static link lists the Windows libraries that wxMSW uses, such as `comctl32`, `uxtheme`, `oleacc`, `gdiplus`, `shlwapi`, and `version`.
 - wxMSW needs version 6 of the common controls for themed controls, and wants per-monitor DPI awareness. Both come from the application manifest. The package's targets set `ApplicationManifest` to WxKit's own manifest, which declares both, unless the application sets its own. The compiler embeds it in the managed assembly, as it would any manifest, and Native AOT copies it into the executable from there.
 - wxMSW's resources, such as its cursors, its default icons, and the menu that MDI frames use, live in `wx.rc`. With a static link, the application has to contain them. The script compiles them, without a manifest, to `wxkit.res`. The linker only accepts one set of Win32 resources, though, and Native AOT already gives it the application's own, which hold its icon, version, and manifest. So the package's targets turn off Native AOT's copy with `IlcGenerateWin32Resources`, and a small build task reads the application's resources out of its managed assembly and writes them, with WxKit's, into one `.res` file for the linker. The application's resources win wherever both have one with the same type, name, and language.
@@ -81,9 +82,9 @@ The native packages also contain the third-party libraries that wxWidgets builds
 
 CI runs on GitHub Actions:
 
-- A native job per runtime builds wxWidgets and the shim, caches the result by the wxWidgets commit and a hash of the build script, and uploads it.
-- A test job per runtime downloads the native build, runs the tests, and publishes the Native AOT smoke test.
-- After the tests, CI packs the packages, tests them with `test-package.ps1`, and keeps the packages from a push to master for a week, as an artifact of the run. Publishing to nuget.org is a decision for later.
-- A newer run for the same branch cancels an older one.
+- A job per runtime, on a machine of that runtime's architecture, builds wxWidgets and the shim, caches the build by the runtime, the wxWidgets commit, and a hash of the build script, runs the tests, publishes the Native AOT smoke test, and uploads the native build. `win-x64` runs on `windows-2022`, and `win-arm64` on `windows-11-arm`. The x64 job also tests the generator, checks that the generated bindings are current, and checks formatting.
+- A pack job gathers every runtime's native build and packs the packages, which CI keeps for a week, as an artifact of the run. Publishing to nuget.org is a decision for later.
+- A job per runtime, on that runtime's architecture again, tests the packages with `test-package.ps1`.
+- A newer run for the same pull request cancels an older one.
 
 wxWidgets takes a long time to build, so the cache matters. A cold build of one runtime takes about 10 to 20 minutes on a desktop machine, and CI runners are slower.

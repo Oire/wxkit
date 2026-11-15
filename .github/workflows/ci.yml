@@ -13,10 +13,21 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
-  windows:
-    # MSVC links libraries from an older toolset but not a newer one, so wxWidgets is built with the
-    # oldest Visual Studio an application is likely to publish with.
-    runs-on: windows-2022
+  # Each runtime builds and tests on a machine of its own architecture, so its tests and its Native
+  # AOT executable run as they would for a user.
+  build:
+    name: Build and test (${{ matrix.runtime }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # MSVC links libraries from an older toolset but not a newer one, so wxWidgets is built
+          # with the oldest Visual Studio an application is likely to publish with.
+          - runtime: win-x64
+            runner: windows-2022
+          - runtime: win-arm64
+            runner: windows-11-arm
+    runs-on: ${{ matrix.runner }}
     # A cold wxWidgets build takes most of this. A hung test would otherwise hold the runner for hours.
     timeout-minutes: 90
     steps:
@@ -28,12 +39,16 @@ jobs:
         with:
           dotnet-version: 10.0.x
 
+      # The generator, the generated bindings, and the formatting are the same on every runtime, so
+      # one runtime checks them.
       - name: Test the generator
+        if: matrix.runtime == 'win-x64'
         run: dotnet test --project tests/WxKit.Generator.Tests -c Release
 
       # The generated bindings are checked in, so they have to match what the script makes from the
       # pinned wxWidgets. This runs before the native build, so a stale binding fails in a minute.
       - name: Check the generated bindings are current
+        if: matrix.runtime == 'win-x64'
         shell: pwsh
         run: |
           ./scripts/generate.ps1
@@ -50,15 +65,15 @@ jobs:
         run: echo "commit=$(git -C native/wxWidgets rev-parse HEAD)" >> $env:GITHUB_OUTPUT
 
       # The build folder is cached, so a change to the shim rebuilds only the shim. The key starts
-      # with the wxWidgets commit and the build script, so a cache from another wxWidgets or other
-      # build options is never restored.
+      # with the runtime, the wxWidgets commit, and the build script, so a cache from another
+      # runtime, another wxWidgets, or other build options is never restored.
       - name: Restore the native build
         id: native-cache
         uses: actions/cache/restore@v4
         with:
-          path: artifacts/native-build/win-x64
-          key: native-win-x64-${{ steps.wx.outputs.commit }}-${{ hashFiles('scripts/build-native.ps1') }}-${{ hashFiles('native/shim/**') }}
-          restore-keys: native-win-x64-${{ steps.wx.outputs.commit }}-${{ hashFiles('scripts/build-native.ps1') }}-
+          path: artifacts/native-build/${{ matrix.runtime }}
+          key: native-${{ matrix.runtime }}-${{ steps.wx.outputs.commit }}-${{ hashFiles('scripts/build-native.ps1') }}-${{ hashFiles('native/shim/**') }}
+          restore-keys: native-${{ matrix.runtime }}-${{ steps.wx.outputs.commit }}-${{ hashFiles('scripts/build-native.ps1') }}-
 
       # A fresh checkout makes every source newer than the cached objects, so MSBuild would rebuild
       # wxWidgets from scratch. Its sources only change with its commit, which is in the cache key,
@@ -69,17 +84,18 @@ jobs:
 
       - name: Build wxWidgets and the shim
         shell: pwsh
-        run: ./scripts/build-native.ps1 -Runtimes win-x64
+        run: ./scripts/build-native.ps1 -Runtimes ${{ matrix.runtime }}
 
       # Saved as soon as the build is done, so a failing test does not throw the build away.
       - name: Save the native build
         if: steps.native-cache.outputs.cache-hit != 'true'
         uses: actions/cache/save@v4
         with:
-          path: artifacts/native-build/win-x64
+          path: artifacts/native-build/${{ matrix.runtime }}
           key: ${{ steps.native-cache.outputs.cache-primary-key }}
 
       - name: Check formatting
+        if: matrix.runtime == 'win-x64'
         run: dotnet format WxKit.slnx --verify-no-changes
 
       - name: Test
@@ -87,25 +103,84 @@ jobs:
 
       - name: Test Native AOT
         shell: pwsh
-        run: ./scripts/test-aot.ps1 -Runtime win-x64
+        run: ./scripts/test-aot.ps1 -Runtime ${{ matrix.runtime }}
+
+      # The pack job gathers every runtime's build into one set of packages.
+      - name: Upload the native build
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-${{ matrix.runtime }}
+          path: artifacts/native/${{ matrix.runtime }}
+          retention-days: 1
+
+  pack:
+    needs: build
+    runs-on: windows-2022
+    timeout-minutes: 20
+    steps:
+      # The native packages carry the license texts of wxWidgets and its bundled libraries, which
+      # are in its submodules.
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Download the win-x64 build
+        uses: actions/download-artifact@v4
+        with:
+          name: native-win-x64
+          path: artifacts/native/win-x64
+
+      - name: Download the win-arm64 build
+        uses: actions/download-artifact@v4
+        with:
+          name: native-win-arm64
+          path: artifacts/native/win-arm64
 
       - name: Pack
         shell: pwsh
-        run: ./scripts/pack.ps1 -Runtimes win-x64
+        run: ./scripts/pack.ps1 -Runtimes win-x64, win-arm64
 
-      # A new project restores WxKit from the packages, runs, and publishes with Native AOT, as an
-      # application would.
-      - name: Test the packages
-        shell: pwsh
-        run: ./scripts/test-package.ps1 -Runtime win-x64
-
-      # The packages from master are kept for a week, to try before any are published. They are
-      # compressed already.
+      # The packages are kept for a week, to try before any are published. They are compressed already.
       - name: Upload the packages
-        if: github.event_name == 'push'
         uses: actions/upload-artifact@v4
         with:
           name: packages
           path: artifacts/packages/*.nupkg
           retention-days: 7
           compression-level: 0
+
+  # A new project restores WxKit from the packages, runs, and publishes with Native AOT, as an
+  # application would, on each runtime's own architecture.
+  test-packages:
+    name: Test the packages (${{ matrix.runtime }})
+    needs: pack
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runtime: win-x64
+            runner: windows-2022
+          - runtime: win-arm64
+            runner: windows-11-arm
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Download the packages
+        uses: actions/download-artifact@v4
+        with:
+          name: packages
+          path: artifacts/packages
+
+      - name: Test the packages
+        shell: pwsh
+        run: ./scripts/test-package.ps1 -Runtime ${{ matrix.runtime }}
