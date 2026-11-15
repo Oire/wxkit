@@ -1,9 +1,8 @@
 <Project>
 
-	<!-- Native AOT links wxWidgets and the shim into the executable, so nothing ships beside it. Everything else loads wxkitnative.dll from the package's runtimes folder. -->
+	<!-- Native AOT links wxWidgets and the shim into the executable, so nothing ships beside it. Everything else loads wxkitnative.dll from the native package's runtimes folder. The native package for the runtime, such as WxKit.Native.win-x64, sets WxKitNativeDirectory to its static build; a project that builds WxKit itself sets it to its own. -->
 	<PropertyGroup>
 		<WxKitStaticLink Condition="'$(WxKitStaticLink)' == '' and '$(PublishAot)' == 'true'">true</WxKitStaticLink>
-		<WxKitNativeDirectory Condition="'$(WxKitNativeDirectory)' == ''">$(MSBuildThisFileDirectory)../native/$(RuntimeIdentifier)/</WxKitNativeDirectory>
 		<_WxKitLinkTargets>$(WxKitNativeDirectory)WxKit.Native.targets</_WxKitLinkTargets>
 	</PropertyGroup>
 
@@ -21,7 +20,8 @@
 		<Using Include="WxKit.Timer" Alias="Timer" />
 	</ItemGroup>
 
-	<Import Project="$(_WxKitLinkTargets)" Condition="'$(WxKitStaticLink)' == 'true' and Exists('$(_WxKitLinkTargets)')" />
+	<!-- The native package imports the link targets too, when it comes first, since NuGet does not say in which order packages' targets are imported. -->
+	<Import Project="$(_WxKitLinkTargets)" Condition="'$(WxKitStaticLink)' == 'true' and '$(WxKitNativeDirectory)' != '' and '$(_WxKitLinkTargetsImported)' != 'true' and Exists('$(_WxKitLinkTargets)')" />
 
 	<!-- The linker takes one set of Win32 resources, so the application's own and wxWidgets's are merged into one file, which replaces the copy Native AOT would make of the application's. -->
 	<PropertyGroup Condition="'$(WxKitStaticLink)' == 'true' and $(RuntimeIdentifier.StartsWith('win'))">
@@ -54,7 +54,7 @@
 		<WxKitMergeResources Assembly="@(IntermediateAssembly->'%(FullPath)')" Resources="@(WxKitResource)" Output="$(_WxKitMergedResources)" />
 	</Target>
 
-	<Target Name="_WxKitCheckStaticLink" BeforeTargets="PrepareForPublish" Condition="'$(WxKitStaticLink)' == 'true' and !Exists('$(_WxKitLinkTargets)')">
+	<Target Name="_WxKitCheckStaticLink" BeforeTargets="PrepareForPublish" Condition="'$(WxKitStaticLink)' == 'true' and '$(_WxKitLinkTargetsImported)' != 'true'">
 		<Error Text="WxKit has no static build for '$(RuntimeIdentifier)'. Set WxKitStaticLink to false to ship wxkitnative beside the executable instead." />
 	</Target>
 

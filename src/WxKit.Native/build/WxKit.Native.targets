@@ -1,0 +1,15 @@
+<Project>
+
+	<!-- This package's runtime comes from the file's name, such as win-x64 for WxKit.Native.win-x64.targets, so every runtime's package has the same file. -->
+	<PropertyGroup>
+		<_WxKitPackageRuntime>$(MSBuildThisFileName.Substring(13))</_WxKitPackageRuntime>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(RuntimeIdentifier)' == '$(_WxKitPackageRuntime)' and '$(WxKitNativeDirectory)' == ''">
+		<WxKitNativeDirectory>$(MSBuildThisFileDirectory)../native/$(_WxKitPackageRuntime)/</WxKitNativeDirectory>
+	</PropertyGroup>
+
+	<!-- WxKit's own targets import the link targets too, when they come after this file. Whichever comes second finds them imported already. -->
+	<Import Project="$(WxKitNativeDirectory)WxKit.Native.targets" Condition="'$(RuntimeIdentifier)' == '$(_WxKitPackageRuntime)' and '$(_WxKitLinkTargetsImported)' != 'true' and ('$(WxKitStaticLink)' == 'true' or ('$(WxKitStaticLink)' == '' and '$(PublishAot)' == 'true')) and Exists('$(WxKitNativeDirectory)WxKit.Native.targets')" />
+
+</Project>

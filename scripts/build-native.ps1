@@ -32,7 +32,8 @@ function Get-WindowsGenerator {
 }
 
 function Write-Targets([string]$directory, [string[]]$items) {
-	$lines = @("<Project>", "", "`t<ItemGroup>") + ($items | ForEach-Object { "`t`t$_" }) + @("`t</ItemGroup>", "", "</Project>")
+	# The flag tells WxKit's targets and the native package's, which can each import this, that one has.
+	$lines = @("<Project>", "", "`t<PropertyGroup>", "`t`t<_WxKitLinkTargetsImported>true</_WxKitLinkTargetsImported>", "`t</PropertyGroup>", "", "`t<ItemGroup>") + ($items | ForEach-Object { "`t`t$_" }) + @("`t</ItemGroup>", "", "</Project>")
 	Set-Content -Path (Join-Path $directory "WxKit.Native.targets") -Value $lines -Encoding utf8NoBOM
 }
 

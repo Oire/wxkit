@@ -2,6 +2,7 @@
 	<Folder Name="/src/">
 		<Project Path="src/WxKit/WxKit.csproj" />
 		<Project Path="src/WxKit.Generator/WxKit.Generator.csproj" />
+		<Project Path="src/WxKit.Native/WxKit.Native.csproj" />
 	</Folder>
 	<Folder Name="/tests/">
 		<Project Path="tests/WxKit.Generator.Tests/WxKit.Generator.Tests.csproj" />

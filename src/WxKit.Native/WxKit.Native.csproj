@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<!-- One package per runtime, such as WxKit.Native.win-x64, from that runtime's native build: pack it with -p:WxKitRuntime=<runtime>. It has no managed code. -->
+	<PropertyGroup>
+		<WxKitRuntime Condition="'$(WxKitRuntime)' == ''">win-x64</WxKitRuntime>
+		<TargetFramework>net10.0</TargetFramework>
+		<EnableDefaultItems>false</EnableDefaultItems>
+		<IncludeBuildOutput>false</IncludeBuildOutput>
+		<IncludeSymbols>false</IncludeSymbols>
+		<SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+		<!-- The package has no library for any framework, only native files and targets. -->
+		<NoWarn>$(NoWarn);NU5128</NoWarn>
+		<_WxKitNativeBuild>$(WxKitNativeRoot)/$(WxKitRuntime)</_WxKitNativeBuild>
+		<_WxKitSources>$(MSBuildThisFileDirectory)../../native/wxWidgets</_WxKitSources>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageId>WxKit.Native.$(WxKitRuntime)</PackageId>
+		<Description>wxWidgets and the WxKit shim for $(WxKitRuntime): a shared library, and static libraries that Native AOT links into the executable. Referenced by the WxKit package.</Description>
+		<PackageTags>wxwidgets;gui;desktop;native;native-aot</PackageTags>
+		<PackageLicenseFile>THIRD-PARTY-NOTICES.md</PackageLicenseFile>
+		<PackageProjectUrl>https://github.com/trypsynth/wxkit</PackageProjectUrl>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="$(_WxKitNativeBuild)/shared/*.dll;$(_WxKitNativeBuild)/shared/*.dylib;$(_WxKitNativeBuild)/shared/*.so" Pack="true" PackagePath="runtimes/$(WxKitRuntime)/native/" />
+		<None Include="$(_WxKitNativeBuild)/static/*" Pack="true" PackagePath="native/$(WxKitRuntime)/" />
+		<None Include="build/WxKit.Native.targets" Pack="true" PackagePath="buildTransitive/$(PackageId).targets" />
+		<None Include="../../THIRD-PARTY-NOTICES.md" Pack="true" PackagePath="/" />
+		<None Include="../../LICENSE" Pack="true" PackagePath="licenses/WxKit/" />
+		<None Include="$(_WxKitSources)/docs/licence.txt;$(_WxKitSources)/docs/lgpl.txt" Pack="true" PackagePath="licenses/wxWidgets/" />
+		<None Include="$(_WxKitSources)/src/zlib/LICENSE" Pack="true" PackagePath="licenses/zlib/" />
+		<None Include="$(_WxKitSources)/src/png/LICENSE" Pack="true" PackagePath="licenses/libpng/" />
+		<None Include="$(_WxKitSources)/src/jpeg/README" Pack="true" PackagePath="licenses/libjpeg/" />
+		<None Include="$(_WxKitSources)/src/tiff/LICENSE.md" Pack="true" PackagePath="licenses/libtiff/" />
+		<None Include="$(_WxKitSources)/3rdparty/pcre/LICENCE.md" Pack="true" PackagePath="licenses/pcre2/" />
+		<None Include="$(_WxKitSources)/3rdparty/libwebp/COPYING" Pack="true" PackagePath="licenses/libwebp/" />
+		<None Include="$(_WxKitSources)/3rdparty/nanosvg/LICENSE.txt" Pack="true" PackagePath="licenses/nanosvg/" />
+	</ItemGroup>
+
+	<!-- An empty package would restore and then fail to link, so a missing native build fails the pack instead. -->
+	<Target Name="_WxKitCheckNativeBuild" BeforeTargets="GenerateNuspec">
+		<Error Condition="!Exists('$(_WxKitNativeBuild)/static/WxKit.Native.targets')" Text="There is no native build for $(WxKitRuntime) in $(_WxKitNativeBuild). Run scripts/build-native.ps1 -Runtimes $(WxKitRuntime) first." />
+	</Target>
+
+</Project>

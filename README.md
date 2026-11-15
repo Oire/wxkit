@@ -25,6 +25,30 @@ dotnet test --project tests/WxKit.Tests
 
 The tests create real windows, so they need a desktop session. `test-aot.ps1` publishes the Hello sample with Native AOT and checks that it starts and exits cleanly.
 
+## Packages
+
+WxKit is not on nuget.org yet. To use it from an application of your own, build its packages, which go to `artifacts/packages`:
+
+```powershell
+./scripts/build-native.ps1
+./scripts/pack.ps1
+./scripts/test-package.ps1
+```
+
+`test-package.ps1` checks the packages the way an application would use them. Each push to master also builds them in CI, which keeps them for a week as an artifact of the run.
+
+Add `artifacts/packages` as a package source, and reference `WxKit`, which brings in the native package for each runtime, such as `WxKit.Native.win-x64`:
+
+```xml
+<PackageReference Include="WxKit" Version="0.1.0-preview.1" />
+```
+
+An application runs with the shared native library, and a Native AOT publish links wxWidgets into the executable instead:
+
+```powershell
+dotnet publish -r win-x64 -p:PublishAot=true
+```
+
 If you publish with Native AOT yourself and it fails with "'vswhere.exe' is not recognized", add `%ProgramFiles(x86)%\Microsoft Visual Studio\Installer` to `PATH`. The Visual Studio 2026 Build Tools need it there for Native AOT to find the linker. `test-aot.ps1` does this for you.
 
 ## How this was made
@@ -35,4 +59,4 @@ If AI-written code is a dealbreaker for you, this is not the project for you, an
 
 ## License
 
-WxKit is MIT licensed. wxWidgets is under the wxWindows Library Licence.
+WxKit is MIT licensed. wxWidgets is under the wxWindows Library Licence, which allows applications that link it, statically or not, to use their own terms. The native packages also contain the libraries wxWidgets builds in, such as zlib and libpng, which [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md) lists with their licenses.

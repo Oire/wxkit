@@ -53,15 +53,19 @@ CI publishes the C# sample with Native AOT on each platform and runs it in a smo
 
 ## Packages
 
-wxWidgets is large. On `win-x64`, the static libraries for just the base and core libraries come to about 150 megabytes, most of it in the core library, and nuget.org limits a package to 250 megabytes. An application that links them is much smaller: the Hello sample publishes as a single executable of about 4.6 megabytes.
+wxWidgets is large. On `win-x64`, the static libraries for the base and core libraries and the shim come to about 175 megabytes, and nuget.org limits a package to 250 megabytes. They compress to about 37 megabytes. An application that links them is much smaller: the Hello sample publishes as a single executable of about 5.2 megabytes.
 
-One package per operating system will not fit, since one runtime's static libraries already take more than half the limit, before the optional libraries are added. The proposal is:
+Every runtime's static libraries in one package would not fit, so there is a package per runtime:
 
 - `WxKit`, the managed library and its targets, with no native files.
-- One native package per runtime, such as `WxKit.Native.win-x64`, holding that runtime's static and shared builds.
+- A native package per runtime, such as `WxKit.Native.win-x64`, which holds that runtime's shared library in `runtimes/<runtime>/native`, where .NET finds it, and its static libraries, link targets, and resources in `native/<runtime>`. It has no managed code.
 - `WxKit` depends on every native package, so an application only references `WxKit`.
 
-Making the libraries smaller, for example by checking what debug information they carry, may change this.
+Each native package's targets, in `buildTransitive`, set `WxKitNativeDirectory` to its static build when the application's runtime is the package's, and both they and WxKit's targets import that build's `WxKit.Native.targets` when the application links statically. NuGet does not say which package's targets it imports first, so whichever comes second finds the link targets imported already, through a property they set. A project that builds WxKit from source, such as the Hello sample, sets `WxKitNativeDirectory` itself.
+
+`src/WxKit.Native/WxKit.Native.csproj` packs a native package from a runtime's build, given its runtime as `WxKitRuntime`, and fails when there is no build for it. `scripts/pack.ps1` packs one for each runtime given, then `WxKit`, which depends on those runtimes' packages only while it is packed, so building WxKit itself needs none. The native packages carry `THIRD-PARTY-NOTICES.md` as their license file, and each license text in their `licenses` folder.
+
+`scripts/test-package.ps1` uses the packages as an application would. It makes a project that empty `Directory.Build` files shut off from the repository's build, which restores `WxKit` from `artifacts/packages` into a folder of its own, and holds the Hello sample's code. It runs the project as it is, with the shared library, and then publishes it with Native AOT, checks that nothing native ships beside the executable, and runs that.
 
 ## Target framework
 
@@ -71,7 +75,7 @@ The managed library targets `net10.0`. .NET 8 reaches the end of its support in 
 
 WxKit is MIT licensed. wxWidgets uses the wxWindows Library Licence, which is the LGPL with an exception that allows distributing applications linked with it, statically or not, under their own terms. That exception is what makes the single-executable model possible.
 
-The packages also contain the third-party libraries that wxWidgets builds in, such as zlib, libpng, libjpeg, libtiff, expat, PCRE2, libwebp, NanoSVG, and LunaSVG, plus Scintilla and Lexilla if the styled text control is included. `THIRD-PARTY-NOTICES.md` lists each one with its license, and the packages carry their license texts.
+The native packages also contain the third-party libraries that wxWidgets builds into its base and core libraries: zlib, libpng, libjpeg, libtiff, PCRE2, libwebp, and NanoSVG. `THIRD-PARTY-NOTICES.md` lists each one with its version and license, and the packages carry their license texts. Optional libraries bring more, such as expat for XRC, and Scintilla and Lexilla for the styled text control, which the notices will list when WxKit binds them.
 
 ## Continuous integration
 
@@ -79,7 +83,7 @@ CI runs on GitHub Actions:
 
 - A native job per runtime builds wxWidgets and the shim, caches the result by the wxWidgets commit and a hash of the build script, and uploads it.
 - A test job per runtime downloads the native build, runs the tests, and publishes the Native AOT smoke test.
-- A pack job on tags builds the packages from every runtime's native build.
+- After the tests, CI packs the packages, tests them with `test-package.ps1`, and keeps the packages from a push to master for a week, as an artifact of the run. Publishing to nuget.org is a decision for later.
 - A newer run for the same branch cancels an older one.
 
 wxWidgets takes a long time to build, so the cache matters. A cold build of one runtime takes about 10 to 20 minutes on a desktop machine, and CI runners are slower.

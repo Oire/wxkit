@@ -88,3 +88,24 @@ jobs:
       - name: Test Native AOT
         shell: pwsh
         run: ./scripts/test-aot.ps1 -Runtime win-x64
+
+      - name: Pack
+        shell: pwsh
+        run: ./scripts/pack.ps1 -Runtimes win-x64
+
+      # A new project restores WxKit from the packages, runs, and publishes with Native AOT, as an
+      # application would.
+      - name: Test the packages
+        shell: pwsh
+        run: ./scripts/test-package.ps1 -Runtime win-x64
+
+      # The packages from master are kept for a week, to try before any are published. They are
+      # compressed already.
+      - name: Upload the packages
+        if: github.event_name == 'push'
+        uses: actions/upload-artifact@v4
+        with:
+          name: packages
+          path: artifacts/packages/*.nupkg
+          retention-days: 7
+          compression-level: 0
