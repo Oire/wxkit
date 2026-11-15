@@ -88,7 +88,11 @@ internal sealed class EditorFrame : Frame {
 		format.Append(WordWrapId, "&Word Wrap", kind: MenuItemKind.Check).Click += (_, _) => ToggleWordWrap();
 		format.Append(StandardId.SelectFont).Click += (_, _) => ChooseFont();
 		Menu help = new();
-		help.Append(StandardId.About).Click += (_, _) => MessageBox.Show($"{AppName}, a WxKit sample, built with {Application.WxWidgetsVersion}.", $"About {AppName}", MessageDialogStyle.Ok | MessageDialogStyle.IconInformation, this);
+		help.Append(StandardId.About).Click += (_, _) => AboutBox.Show(new AboutDialogInfo {
+			Name = AppName,
+			Description = $"A text editor, as a WxKit sample, built with {Application.WxWidgetsVersion}.",
+			WebSite = "https://github.com/trypsynth/wxkit",
+		}, this);
 		MenuBar bar = new();
 		bar.Append(file, "&File");
 		bar.Append(edit, "&Edit");
