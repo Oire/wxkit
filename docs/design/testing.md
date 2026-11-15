@@ -7,7 +7,7 @@ Testing GUI code is harder than testing most libraries. The code needs a display
 WxKit has three kinds of tests:
 
 - Managed API tests, in `tests/WxKit.Tests`. These create real windows and check lifetime, events, threading, strings, and the rest of the managed API against real wxWidgets.
-- A Native AOT smoke test, in `scripts/test-aot.ps1`. It publishes the Hello sample with Native AOT, checks that nothing ships beside the executable, and runs it in a mode that shows its frame, waits for the event loop to start, and exits. This catches link problems that no other test can.
+- A Native AOT smoke test, in `scripts/test-aot.ps1`. It publishes each sample, the Hello sample and the text editor, with Native AOT, checks that nothing ships beside the executable, and on macOS that the app bundle is valid and signed, and runs it in a mode that shows its window, waits for the event loop to start, and exits. This catches link problems that no other test can.
 - Generator tests, in `tests/WxKit.Generator.Tests`, once the generator exists. These check that the generator turns sample Doxygen XML into the expected output. They are plain unit tests with no GUI, and they run anywhere.
 
 To run the first two:
