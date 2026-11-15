@@ -30,6 +30,7 @@ typedef struct wxk_Object wxk_Object;
 typedef struct wxk_EvtHandler wxk_EvtHandler;
 typedef struct wxk_Window wxk_Window;
 typedef struct wxk_Sizer wxk_Sizer;
+typedef struct wxk_DataViewColumn wxk_DataViewColumn;
 typedef struct wxk_Menu wxk_Menu;
 typedef struct wxk_MenuItem wxk_MenuItem;
 typedef struct wxk_Timer wxk_Timer;
@@ -277,6 +278,9 @@ WXK_FUNCTION(uint32_t) wxk_VirtualListModel_GetCount(wxk_DataViewModel* model) W
 WXK_FUNCTION(void*) wxk_VirtualListModel_GetItem(wxk_DataViewModel* model, uint32_t row) WXK_NOEXCEPT;
 WXK_FUNCTION(uint32_t) wxk_VirtualListModel_GetRow(wxk_DataViewModel* model, void* item) WXK_NOEXCEPT;
 // Shows the model in the control, which takes a reference to it.
+// Delete one or all of a data view's columns. The managed side marks their objects destroyed.
+WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_DeleteColumn(wxk_Window* control, wxk_DataViewColumn* column) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_ClearColumns(wxk_Window* control) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_AssociateModel(wxk_Window* control, wxk_DataViewModel* model) WXK_NOEXCEPT;
 
 // Accessibility

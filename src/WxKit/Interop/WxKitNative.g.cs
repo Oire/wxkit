@@ -1546,121 +1546,233 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial Size DPIChangedEventGetNewDPI(WxkEvent* self);
 
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewColumn_UnsetAsSortKey")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DataViewColumnUnsetAsSortKey(WxkDataViewColumn* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewColumn_SetSortOrder")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DataViewColumnSetSortOrder(WxkDataViewColumn* self, byte ascending);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewColumn_ToggleSortOrder")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DataViewColumnToggleSortOrder(WxkDataViewColumn* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewColumn_GetModelColumn")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial uint DataViewColumnGetModelColumn(WxkDataViewColumn* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewColumn_GetOwner")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* DataViewColumnGetOwner(WxkDataViewColumn* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewColumn_GetTitle")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkString* DataViewColumnGetTitle(WxkDataViewColumn* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewColumn_SetTitle")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DataViewColumnSetTitle(WxkDataViewColumn* self, char* title, nuint titleLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewColumn_GetBitmap")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* DataViewColumnGetBitmap(WxkDataViewColumn* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewColumn_SetBitmap")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DataViewColumnSetBitmap(WxkDataViewColumn* self, WxkObject* bitmap);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewColumn_GetWidth")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int DataViewColumnGetWidth(WxkDataViewColumn* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewColumn_SetWidth")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DataViewColumnSetWidth(WxkDataViewColumn* self, int width);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewColumn_GetMinWidth")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int DataViewColumnGetMinWidth(WxkDataViewColumn* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewColumn_SetMinWidth")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DataViewColumnSetMinWidth(WxkDataViewColumn* self, int minWidth);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewColumn_GetAlignment")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int DataViewColumnGetAlignment(WxkDataViewColumn* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewColumn_SetAlignment")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DataViewColumnSetAlignment(WxkDataViewColumn* self, int align);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewColumn_GetFlags")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int DataViewColumnGetFlags(WxkDataViewColumn* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewColumn_SetFlags")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DataViewColumnSetFlags(WxkDataViewColumn* self, int flags);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewColumn_IsResizeable")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte DataViewColumnIsResizeable(WxkDataViewColumn* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewColumn_SetResizeable")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DataViewColumnSetResizeable(WxkDataViewColumn* self, byte resizable);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewColumn_IsSortable")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte DataViewColumnIsSortable(WxkDataViewColumn* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewColumn_SetSortable")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DataViewColumnSetSortable(WxkDataViewColumn* self, byte sortable);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewColumn_IsReorderable")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte DataViewColumnIsReorderable(WxkDataViewColumn* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewColumn_SetReorderable")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DataViewColumnSetReorderable(WxkDataViewColumn* self, byte reorderable);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewColumn_IsHidden")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte DataViewColumnIsHidden(WxkDataViewColumn* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewColumn_SetHidden")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DataViewColumnSetHidden(WxkDataViewColumn* self, byte hidden);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewColumn_IsShown")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte DataViewColumnIsShown(WxkDataViewColumn* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewColumn_IsSortKey")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte DataViewColumnIsSortKey(WxkDataViewColumn* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewColumn_IsSortOrderAscending")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte DataViewColumnIsSortOrderAscending(WxkDataViewColumn* self);
+
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_new")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkWindow* DataViewCtrlNew(WxkWindow* parent, int id, Point position, Size size, long style);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_AppendBitmapColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewCtrlAppendBitmapColumnStringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, char* label, nuint labelLength, uint modelColumn, int mode, int width, int align, int flags);
+	public static partial WxkDataViewColumn* DataViewCtrlAppendBitmapColumnStringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, char* label, nuint labelLength, uint modelColumn, int mode, int width, int align, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_AppendBitmapColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewCtrlAppendBitmapColumnBitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, WxkObject* label, uint modelColumn, int mode, int width, int align, int flags);
+	public static partial WxkDataViewColumn* DataViewCtrlAppendBitmapColumnBitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, WxkObject* label, uint modelColumn, int mode, int width, int align, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_PrependBitmapColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewCtrlPrependBitmapColumnStringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, char* label, nuint labelLength, uint modelColumn, int mode, int width, int align, int flags);
+	public static partial WxkDataViewColumn* DataViewCtrlPrependBitmapColumnStringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, char* label, nuint labelLength, uint modelColumn, int mode, int width, int align, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_PrependBitmapColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewCtrlPrependBitmapColumnBitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, WxkObject* label, uint modelColumn, int mode, int width, int align, int flags);
+	public static partial WxkDataViewColumn* DataViewCtrlPrependBitmapColumnBitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, WxkObject* label, uint modelColumn, int mode, int width, int align, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_AppendDateColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewCtrlAppendDateColumnStringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, char* label, nuint labelLength, uint modelColumn, int mode, int width, int align, int flags);
+	public static partial WxkDataViewColumn* DataViewCtrlAppendDateColumnStringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, char* label, nuint labelLength, uint modelColumn, int mode, int width, int align, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_AppendDateColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewCtrlAppendDateColumnBitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, WxkObject* label, uint modelColumn, int mode, int width, int align, int flags);
+	public static partial WxkDataViewColumn* DataViewCtrlAppendDateColumnBitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, WxkObject* label, uint modelColumn, int mode, int width, int align, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_PrependDateColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewCtrlPrependDateColumnStringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, char* label, nuint labelLength, uint modelColumn, int mode, int width, int align, int flags);
+	public static partial WxkDataViewColumn* DataViewCtrlPrependDateColumnStringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, char* label, nuint labelLength, uint modelColumn, int mode, int width, int align, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_PrependDateColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewCtrlPrependDateColumnBitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, WxkObject* label, uint modelColumn, int mode, int width, int align, int flags);
+	public static partial WxkDataViewColumn* DataViewCtrlPrependDateColumnBitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, WxkObject* label, uint modelColumn, int mode, int width, int align, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_AppendIconTextColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewCtrlAppendIconTextColumnStringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, char* label, nuint labelLength, uint modelColumn, int mode, int width, int align, int flags);
+	public static partial WxkDataViewColumn* DataViewCtrlAppendIconTextColumnStringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, char* label, nuint labelLength, uint modelColumn, int mode, int width, int align, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_AppendIconTextColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewCtrlAppendIconTextColumnBitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, WxkObject* label, uint modelColumn, int mode, int width, int align, int flags);
+	public static partial WxkDataViewColumn* DataViewCtrlAppendIconTextColumnBitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, WxkObject* label, uint modelColumn, int mode, int width, int align, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_PrependIconTextColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewCtrlPrependIconTextColumnStringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, char* label, nuint labelLength, uint modelColumn, int mode, int width, int align, int flags);
+	public static partial WxkDataViewColumn* DataViewCtrlPrependIconTextColumnStringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, char* label, nuint labelLength, uint modelColumn, int mode, int width, int align, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_PrependIconTextColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewCtrlPrependIconTextColumnBitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, WxkObject* label, uint modelColumn, int mode, int width, int align, int flags);
+	public static partial WxkDataViewColumn* DataViewCtrlPrependIconTextColumnBitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, WxkObject* label, uint modelColumn, int mode, int width, int align, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_AppendProgressColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewCtrlAppendProgressColumnStringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, char* label, nuint labelLength, uint modelColumn, int mode, int width, int align, int flags);
+	public static partial WxkDataViewColumn* DataViewCtrlAppendProgressColumnStringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, char* label, nuint labelLength, uint modelColumn, int mode, int width, int align, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_AppendProgressColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewCtrlAppendProgressColumnBitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, WxkObject* label, uint modelColumn, int mode, int width, int align, int flags);
+	public static partial WxkDataViewColumn* DataViewCtrlAppendProgressColumnBitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, WxkObject* label, uint modelColumn, int mode, int width, int align, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_PrependProgressColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewCtrlPrependProgressColumnStringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, char* label, nuint labelLength, uint modelColumn, int mode, int width, int align, int flags);
+	public static partial WxkDataViewColumn* DataViewCtrlPrependProgressColumnStringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, char* label, nuint labelLength, uint modelColumn, int mode, int width, int align, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_PrependProgressColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewCtrlPrependProgressColumnBitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, WxkObject* label, uint modelColumn, int mode, int width, int align, int flags);
+	public static partial WxkDataViewColumn* DataViewCtrlPrependProgressColumnBitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, WxkObject* label, uint modelColumn, int mode, int width, int align, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_AppendTextColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewCtrlAppendTextColumnStringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, char* label, nuint labelLength, uint modelColumn, int mode, int width, int align, int flags);
+	public static partial WxkDataViewColumn* DataViewCtrlAppendTextColumnStringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, char* label, nuint labelLength, uint modelColumn, int mode, int width, int align, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_AppendTextColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewCtrlAppendTextColumnBitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, WxkObject* label, uint modelColumn, int mode, int width, int align, int flags);
+	public static partial WxkDataViewColumn* DataViewCtrlAppendTextColumnBitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, WxkObject* label, uint modelColumn, int mode, int width, int align, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_PrependTextColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewCtrlPrependTextColumnStringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, char* label, nuint labelLength, uint modelColumn, int mode, int width, int align, int flags);
+	public static partial WxkDataViewColumn* DataViewCtrlPrependTextColumnStringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, char* label, nuint labelLength, uint modelColumn, int mode, int width, int align, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_PrependTextColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewCtrlPrependTextColumnBitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, WxkObject* label, uint modelColumn, int mode, int width, int align, int flags);
+	public static partial WxkDataViewColumn* DataViewCtrlPrependTextColumnBitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, WxkObject* label, uint modelColumn, int mode, int width, int align, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_AppendToggleColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewCtrlAppendToggleColumnStringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, char* label, nuint labelLength, uint modelColumn, int mode, int width, int align, int flags);
+	public static partial WxkDataViewColumn* DataViewCtrlAppendToggleColumnStringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, char* label, nuint labelLength, uint modelColumn, int mode, int width, int align, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_AppendToggleColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewCtrlAppendToggleColumnBitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, WxkObject* label, uint modelColumn, int mode, int width, int align, int flags);
+	public static partial WxkDataViewColumn* DataViewCtrlAppendToggleColumnBitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, WxkObject* label, uint modelColumn, int mode, int width, int align, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_PrependToggleColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewCtrlPrependToggleColumnStringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, char* label, nuint labelLength, uint modelColumn, int mode, int width, int align, int flags);
+	public static partial WxkDataViewColumn* DataViewCtrlPrependToggleColumnStringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, char* label, nuint labelLength, uint modelColumn, int mode, int width, int align, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_PrependToggleColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewCtrlPrependToggleColumnBitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, WxkObject* label, uint modelColumn, int mode, int width, int align, int flags);
+	public static partial WxkDataViewColumn* DataViewCtrlPrependToggleColumnBitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(WxkWindow* self, WxkObject* label, uint modelColumn, int mode, int width, int align, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_AllowMultiColumnSort")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte DataViewCtrlAllowMultiColumnSort(WxkWindow* self, byte allow);
 
-	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_ClearColumns")]
-	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial byte DataViewCtrlClearColumns(WxkWindow* self);
-
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_Collapse")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void DataViewCtrlCollapse(WxkWindow* self, nint item);
 
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_EditItem")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DataViewCtrlEditItem(WxkWindow* self, nint item, WxkDataViewColumn* column);
+
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_EnsureVisible")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewCtrlEnsureVisible(WxkWindow* self, nint item);
+	public static partial void DataViewCtrlEnsureVisible(WxkWindow* self, nint item, WxkDataViewColumn* column);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_Expand")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1676,27 +1788,15 @@ public static unsafe partial class WxKitNative {
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_GetColumn")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewCtrlGetColumn(WxkWindow* self, uint position);
+	public static partial WxkDataViewColumn* DataViewCtrlGetColumn(WxkWindow* self, uint position);
 
-	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_GetExpanderColumn")]
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_GetColumnPosition")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewCtrlGetExpanderColumn(WxkWindow* self);
-
-	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_GetCurrentColumn")]
-	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewCtrlGetCurrentColumn(WxkWindow* self);
+	public static partial int DataViewCtrlGetColumnPosition(WxkWindow* self, WxkDataViewColumn* column);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_GetItemRect")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial Rect DataViewCtrlGetItemRect(WxkWindow* self, nint item);
-
-	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_GetSortingColumn")]
-	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewCtrlGetSortingColumn(WxkWindow* self);
-
-	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_GetSortingColumns")]
-	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewCtrlGetSortingColumns(WxkWindow* self);
+	public static partial Rect DataViewCtrlGetItemRect(WxkWindow* self, nint item, WxkDataViewColumn* column);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_IsExpanded")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1738,6 +1838,14 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial uint DataViewCtrlGetColumnCount(WxkWindow* self);
 
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_GetExpanderColumn")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkDataViewColumn* DataViewCtrlGetExpanderColumn(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_SetExpanderColumn")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DataViewCtrlSetExpanderColumn(WxkWindow* self, WxkDataViewColumn* column);
+
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_GetCurrentItem")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial nint DataViewCtrlGetCurrentItem(WxkWindow* self);
@@ -1745,6 +1853,10 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_SetCurrentItem")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void DataViewCtrlSetCurrentItem(WxkWindow* self, nint item);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_GetCurrentColumn")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkDataViewColumn* DataViewCtrlGetCurrentColumn(WxkWindow* self);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_GetIndent")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1765,6 +1877,10 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_GetSelection")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial nint DataViewCtrlGetSelection(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_GetSortingColumn")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkDataViewColumn* DataViewCtrlGetSortingColumn(WxkWindow* self);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_HasSelection")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1797,6 +1913,10 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewEvent_SetColumn")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void DataViewEventSetColumn(WxkEvent* self, int column);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewEvent_GetDataViewColumn")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkDataViewColumn* DataViewEventGetDataViewColumn(WxkEvent* self);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewEvent_GetPosition")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1896,19 +2016,19 @@ public static unsafe partial class WxKitNative {
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewListCtrl_AppendTextColumn")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewListCtrlAppendTextColumn(WxkWindow* self, char* label, nuint labelLength, int mode, int width, int align, int flags);
+	public static partial WxkDataViewColumn* DataViewListCtrlAppendTextColumn(WxkWindow* self, char* label, nuint labelLength, int mode, int width, int align, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewListCtrl_AppendToggleColumn")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewListCtrlAppendToggleColumn(WxkWindow* self, char* label, nuint labelLength, int mode, int width, int align, int flags);
+	public static partial WxkDataViewColumn* DataViewListCtrlAppendToggleColumn(WxkWindow* self, char* label, nuint labelLength, int mode, int width, int align, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewListCtrl_AppendProgressColumn")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewListCtrlAppendProgressColumn(WxkWindow* self, char* label, nuint labelLength, int mode, int width, int align, int flags);
+	public static partial WxkDataViewColumn* DataViewListCtrlAppendProgressColumn(WxkWindow* self, char* label, nuint labelLength, int mode, int width, int align, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewListCtrl_AppendIconTextColumn")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void DataViewListCtrlAppendIconTextColumn(WxkWindow* self, char* label, nuint labelLength, int mode, int width, int align, int flags);
+	public static partial WxkDataViewColumn* DataViewListCtrlAppendIconTextColumn(WxkWindow* self, char* label, nuint labelLength, int mode, int width, int align, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewListCtrl_AppendItem")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

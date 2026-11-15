@@ -12,6 +12,7 @@
 
 #include "wxkit.h"
 
+class wxDataViewColumn;
 class wxTreeItemData;
 
 struct wxk_String {
@@ -114,6 +115,7 @@ WXK_HANDLE(wxk_VariantList, wxVector<wxVariant>)
 WXK_HANDLE(wxk_EvtHandler, wxEvtHandler)
 WXK_HANDLE(wxk_Window, wxWindow)
 WXK_HANDLE(wxk_Sizer, wxSizer)
+WXK_HANDLE(wxk_DataViewColumn, wxDataViewColumn)
 WXK_HANDLE(wxk_Menu, wxMenu)
 WXK_HANDLE(wxk_MenuItem, wxMenuItem)
 WXK_HANDLE(wxk_Timer, wxTimer)

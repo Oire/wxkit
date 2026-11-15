@@ -27,6 +27,9 @@ public unsafe partial class DataViewEvent : NotifyEvent {
 		set => WxKitNative.DataViewEventSetDataSize(Handle, checked((nuint)value));
 	}
 
+	/// <summary>Returns a pointer to the wxDataViewColumn from which the event was emitted or nullptr.</summary>
+	public DataViewColumn? DataViewColumn => DataViewColumn.Wrap(WxKitNative.DataViewEventGetDataViewColumn(Handle));
+
 	public int DragFlags {
 		get => WxKitNative.DataViewEventGetDragFlags(Handle);
 		set => WxKitNative.DataViewEventSetDragFlags(Handle, value);

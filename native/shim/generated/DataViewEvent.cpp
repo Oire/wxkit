@@ -17,6 +17,10 @@ WXK_FUNCTION(void) wxk_DataViewEvent_SetColumn(wxk_Event* self, int32_t column) 
 	wxk::Guard([&] { static_cast<wxDataViewEvent*>(wxk::Unwrap(self))->SetColumn(static_cast<int>(column)); });
 }
 
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewEvent_GetDataViewColumn(wxk_Event* self) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewEvent*>(wxk::Unwrap(self))->GetDataViewColumn())); });
+}
+
 WXK_FUNCTION(wxk_Point) wxk_DataViewEvent_GetPosition(wxk_Event* self) noexcept {
 	return wxk::Guard<wxk_Point>(wxk_Point{-1, -1}, [&]() -> wxk_Point { return wxk::ToPoint(static_cast<wxDataViewEvent*>(wxk::Unwrap(self))->GetPosition()); });
 }

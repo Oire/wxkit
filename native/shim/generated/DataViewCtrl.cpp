@@ -8,116 +8,116 @@ WXK_FUNCTION(wxk_Window*) wxk_DataViewCtrl_new(wxk_Window* parent, int32_t id, w
 	});
 }
 
-WXK_FUNCTION(void) wxk_DataViewCtrl_AppendBitmapColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendBitmapColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewCtrl_AppendBitmapColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendBitmapColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)))); });
 }
 
-WXK_FUNCTION(void) wxk_DataViewCtrl_AppendBitmapColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendBitmapColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewCtrl_AppendBitmapColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendBitmapColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)))); });
 }
 
-WXK_FUNCTION(void) wxk_DataViewCtrl_PrependBitmapColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependBitmapColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewCtrl_PrependBitmapColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependBitmapColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)))); });
 }
 
-WXK_FUNCTION(void) wxk_DataViewCtrl_PrependBitmapColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependBitmapColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewCtrl_PrependBitmapColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependBitmapColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)))); });
 }
 
-WXK_FUNCTION(void) wxk_DataViewCtrl_AppendDateColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendDateColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewCtrl_AppendDateColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendDateColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)))); });
 }
 
-WXK_FUNCTION(void) wxk_DataViewCtrl_AppendDateColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendDateColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewCtrl_AppendDateColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendDateColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)))); });
 }
 
-WXK_FUNCTION(void) wxk_DataViewCtrl_PrependDateColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependDateColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewCtrl_PrependDateColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependDateColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)))); });
 }
 
-WXK_FUNCTION(void) wxk_DataViewCtrl_PrependDateColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependDateColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewCtrl_PrependDateColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependDateColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)))); });
 }
 
-WXK_FUNCTION(void) wxk_DataViewCtrl_AppendIconTextColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendIconTextColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewCtrl_AppendIconTextColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendIconTextColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)))); });
 }
 
-WXK_FUNCTION(void) wxk_DataViewCtrl_AppendIconTextColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendIconTextColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewCtrl_AppendIconTextColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendIconTextColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)))); });
 }
 
-WXK_FUNCTION(void) wxk_DataViewCtrl_PrependIconTextColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependIconTextColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewCtrl_PrependIconTextColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependIconTextColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)))); });
 }
 
-WXK_FUNCTION(void) wxk_DataViewCtrl_PrependIconTextColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependIconTextColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewCtrl_PrependIconTextColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependIconTextColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)))); });
 }
 
-WXK_FUNCTION(void) wxk_DataViewCtrl_AppendProgressColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendProgressColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewCtrl_AppendProgressColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendProgressColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)))); });
 }
 
-WXK_FUNCTION(void) wxk_DataViewCtrl_AppendProgressColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendProgressColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewCtrl_AppendProgressColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendProgressColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)))); });
 }
 
-WXK_FUNCTION(void) wxk_DataViewCtrl_PrependProgressColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependProgressColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewCtrl_PrependProgressColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependProgressColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)))); });
 }
 
-WXK_FUNCTION(void) wxk_DataViewCtrl_PrependProgressColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependProgressColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewCtrl_PrependProgressColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependProgressColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)))); });
 }
 
-WXK_FUNCTION(void) wxk_DataViewCtrl_AppendTextColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendTextColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewCtrl_AppendTextColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendTextColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)))); });
 }
 
-WXK_FUNCTION(void) wxk_DataViewCtrl_AppendTextColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendTextColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewCtrl_AppendTextColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendTextColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)))); });
 }
 
-WXK_FUNCTION(void) wxk_DataViewCtrl_PrependTextColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependTextColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewCtrl_PrependTextColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependTextColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)))); });
 }
 
-WXK_FUNCTION(void) wxk_DataViewCtrl_PrependTextColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependTextColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewCtrl_PrependTextColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependTextColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)))); });
 }
 
-WXK_FUNCTION(void) wxk_DataViewCtrl_AppendToggleColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendToggleColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewCtrl_AppendToggleColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendToggleColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)))); });
 }
 
-WXK_FUNCTION(void) wxk_DataViewCtrl_AppendToggleColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendToggleColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewCtrl_AppendToggleColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AppendToggleColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)))); });
 }
 
-WXK_FUNCTION(void) wxk_DataViewCtrl_PrependToggleColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependToggleColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewCtrl_PrependToggleColumn_StringUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const char16_t* label, size_t labelLength, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependToggleColumn(wxk::FromUtf16(label, labelLength), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)))); });
 }
 
-WXK_FUNCTION(void) wxk_DataViewCtrl_PrependToggleColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependToggleColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewCtrl_PrependToggleColumn_BitmapUIntDataViewCellModeIntAlignmentDataViewColumnFlags(wxk_Window* self, const wxk_Object* label, uint32_t modelColumn, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->PrependToggleColumn(wxk::ValueOf<wxBitmap>(label), modelColumn, static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)))); });
 }
 
 WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_AllowMultiColumnSort(wxk_Window* self, uint8_t allow) noexcept {
 	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->AllowMultiColumnSort(allow != 0)) ? 1 : 0; });
 }
 
-WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_ClearColumns(wxk_Window* self) noexcept {
-	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->ClearColumns()) ? 1 : 0; });
-}
-
 WXK_FUNCTION(void) wxk_DataViewCtrl_Collapse(wxk_Window* self, void* item) noexcept {
 	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->Collapse(wxDataViewItem(item)); });
 }
 
-WXK_FUNCTION(void) wxk_DataViewCtrl_EnsureVisible(wxk_Window* self, void* item) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->EnsureVisible(wxDataViewItem(item)); });
+WXK_FUNCTION(void) wxk_DataViewCtrl_EditItem(wxk_Window* self, void* item, wxk_DataViewColumn* column) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->EditItem(wxDataViewItem(item), static_cast<wxDataViewColumn*>(wxk::Unwrap(column))); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_EnsureVisible(wxk_Window* self, void* item, wxk_DataViewColumn* column) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->EnsureVisible(wxDataViewItem(item), static_cast<wxDataViewColumn*>(wxk::Unwrap(column))); });
 }
 
 WXK_FUNCTION(void) wxk_DataViewCtrl_Expand(wxk_Window* self, void* item) noexcept {
@@ -132,28 +132,16 @@ WXK_FUNCTION(void) wxk_DataViewCtrl_ExpandChildren(wxk_Window* self, void* item)
 	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->ExpandChildren(wxDataViewItem(item)); });
 }
 
-WXK_FUNCTION(void) wxk_DataViewCtrl_GetColumn(wxk_Window* self, uint32_t position) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->GetColumn(position); });
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewCtrl_GetColumn(wxk_Window* self, uint32_t position) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->GetColumn(position))); });
 }
 
-WXK_FUNCTION(void) wxk_DataViewCtrl_GetExpanderColumn(wxk_Window* self) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->GetExpanderColumn(); });
+WXK_FUNCTION(int32_t) wxk_DataViewCtrl_GetColumnPosition(wxk_Window* self, wxk_DataViewColumn* column) noexcept {
+	return wxk::Guard<int32_t>(0, [&]() -> int32_t { return static_cast<int32_t>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->GetColumnPosition(static_cast<wxDataViewColumn*>(wxk::Unwrap(column)))); });
 }
 
-WXK_FUNCTION(void) wxk_DataViewCtrl_GetCurrentColumn(wxk_Window* self) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->GetCurrentColumn(); });
-}
-
-WXK_FUNCTION(wxk_Rect) wxk_DataViewCtrl_GetItemRect(wxk_Window* self, void* item) noexcept {
-	return wxk::Guard<wxk_Rect>(wxk_Rect{0, 0, 0, 0}, [&]() -> wxk_Rect { return wxk::ToRect(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->GetItemRect(wxDataViewItem(item))); });
-}
-
-WXK_FUNCTION(void) wxk_DataViewCtrl_GetSortingColumn(wxk_Window* self) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->GetSortingColumn(); });
-}
-
-WXK_FUNCTION(void) wxk_DataViewCtrl_GetSortingColumns(wxk_Window* self) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->GetSortingColumns(); });
+WXK_FUNCTION(wxk_Rect) wxk_DataViewCtrl_GetItemRect(wxk_Window* self, void* item, wxk_DataViewColumn* column) noexcept {
+	return wxk::Guard<wxk_Rect>(wxk_Rect{0, 0, 0, 0}, [&]() -> wxk_Rect { return wxk::ToRect(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->GetItemRect(wxDataViewItem(item), static_cast<wxDataViewColumn*>(wxk::Unwrap(column)))); });
 }
 
 WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_IsExpanded(wxk_Window* self, void* item) noexcept {
@@ -196,12 +184,24 @@ WXK_FUNCTION(uint32_t) wxk_DataViewCtrl_GetColumnCount(wxk_Window* self) noexcep
 	return wxk::Guard<uint32_t>(0, [&]() -> uint32_t { return static_cast<uint32_t>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->GetColumnCount()); });
 }
 
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewCtrl_GetExpanderColumn(wxk_Window* self) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->GetExpanderColumn())); });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_SetExpanderColumn(wxk_Window* self, wxk_DataViewColumn* column) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->SetExpanderColumn(static_cast<wxDataViewColumn*>(wxk::Unwrap(column))); });
+}
+
 WXK_FUNCTION(void*) wxk_DataViewCtrl_GetCurrentItem(wxk_Window* self) noexcept {
 	return wxk::Guard<void*>(nullptr, [&]() -> void* { return (static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->GetCurrentItem()).GetID(); });
 }
 
 WXK_FUNCTION(void) wxk_DataViewCtrl_SetCurrentItem(wxk_Window* self, void* item) noexcept {
 	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->SetCurrentItem(wxDataViewItem(item)); });
+}
+
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewCtrl_GetCurrentColumn(wxk_Window* self) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->GetCurrentColumn())); });
 }
 
 WXK_FUNCTION(int32_t) wxk_DataViewCtrl_GetIndent(wxk_Window* self) noexcept {
@@ -222,6 +222,10 @@ WXK_FUNCTION(int32_t) wxk_DataViewCtrl_GetSelectedItemsCount(wxk_Window* self) n
 
 WXK_FUNCTION(void*) wxk_DataViewCtrl_GetSelection(wxk_Window* self) noexcept {
 	return wxk::Guard<void*>(nullptr, [&]() -> void* { return (static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->GetSelection()).GetID(); });
+}
+
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewCtrl_GetSortingColumn(wxk_Window* self) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->GetSortingColumn())); });
 }
 
 WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_HasSelection(wxk_Window* self) noexcept {

@@ -15,6 +15,9 @@ public struct WxkWindow;
 /// <summary>A wxSizer, or any class derived from it.</summary>
 public struct WxkSizer;
 
+/// <summary>A wxDataViewColumn.</summary>
+public struct WxkDataViewColumn;
+
 /// <summary>A wxMenu.</summary>
 public struct WxkMenu;
 

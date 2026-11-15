@@ -66,6 +66,12 @@ internal sealed class ClassTweak(string name) {
 
 	public bool HasConstructors { get; private set; } = true;
 
+	/// <summary>
+	/// Whether the class binds the members of the bases above it that are not bound themselves, as
+	/// wxDataViewColumn binds wxHeaderColumn's, rather than leaving them out.
+	/// </summary>
+	public bool InheritsUnboundBases { get; private set; }
+
 	/// <summary>Whether WxKit can wrap a native object of this class it did not create. Generated event handler classes always can.</summary>
 	public bool IsWrappable { get; private set; }
 
@@ -166,6 +172,11 @@ internal sealed class ClassTweak(string name) {
 
 	public ClassTweak Wrappable() {
 		IsWrappable = true;
+		return this;
+	}
+
+	public ClassTweak InheritUnboundBases() {
+		InheritsUnboundBases = true;
 		return this;
 	}
 

@@ -81,6 +81,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		if (ancestors.Contains("wxSizer")) return HandleKind.Sizer;
 		if (ancestors.Contains("wxMenu")) return HandleKind.Menu;
 		if (ancestors.Contains("wxEvent")) return HandleKind.Event;
+		if (ancestors.Contains("wxDataViewColumn")) return HandleKind.Column;
 		// Fonts, pens, brushes, bitmaps, icons, and cursors are wxGDIObjects; images are copied the same way.
 		if (ancestors.Contains("wxGDIObject") || ancestors.Contains("wxImage")) return HandleKind.Value;
 		// Drawing contexts are made, used, and deleted, as a wxPaintDC is in a paint handler.
@@ -91,8 +92,14 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 
 	// A class's own members, and those of the secondary bases it mixes in, such as wxTextEntry
 	// for wxTextCtrl, which are called through the class itself.
-	private IEnumerable<DoxygenMember> MembersOf(DoxygenClass source) {
+	private IEnumerable<DoxygenMember> MembersOf(DoxygenClass source, bool inheritUnboundBases = false) {
 		IEnumerable<DoxygenMember> members = source.Members;
+		// Bases above the class that are not bound, up to the first that is, called through the class.
+		if (inheritUnboundBases && source.Bases.FirstOrDefault() is string primary) {
+			foreach (string ancestor in Ancestors(primary).TakeWhile(name => !_classes.ContainsKey(name))) {
+				members = members.Concat(MembersOf(api.Classes[ancestor]).Where(member => member.Name != ancestor && member.Name != "~" + ancestor).Select(member => member with { Mixin = member.Mixin ?? ancestor }));
+			}
+		}
 		foreach (string mixin in source.Bases.Skip(1)) {
 			// A mixin brings its own bases with it, as wxItemContainer brings wxItemContainerImmutable.
 			// Their constructors and destructors are not members of the class they are mixed into.
@@ -106,7 +113,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 
 	private void BindMembers(BoundClass bound) {
 		ClassTweak tweak = bound.Tweak;
-		List<DoxygenMember> candidates = [.. MembersOf(bound.Source).Where(static member => member.IsPublic && !member.Name.StartsWith('~') && !member.Name.StartsWith("operator", StringComparison.Ordinal))];
+		List<DoxygenMember> candidates = [.. MembersOf(bound.Source, tweak.InheritsUnboundBases).Where(static member => member.IsPublic && !member.Name.StartsWith('~') && !member.Name.StartsWith("operator", StringComparison.Ordinal))];
 		HashSet<string> known = [.. candidates.Select(static member => member.Name)];
 		foreach (string kept in tweak.KeptAlive) {
 			if (!candidates.Any(member => member.Name == bound.CppName && member.Parameters.Any(parameter => parameter.Name == kept))) throw new InvalidOperationException($"A tweak keeps {bound.CppName}'s constructor parameter {kept} alive, which no constructor has.");
@@ -318,7 +325,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 			// Events are only received, and a static class has no objects to pass.
 			if (!_classes.TryGetValue(type.Name, out BoundClass? target) || target.Handle == HandleKind.Event || target.Handle == HandleKind.Static) return null;
 			// Only event handlers are tracked, so only they can be wrapped when wxWidgets hands one back.
-			return isReturn && !target.Handle.IsEvtHandler ? null : new ObjectConversion(target);
+			return isReturn && !target.Handle.IsEvtHandler && target.Handle != HandleKind.Column ? null : new ObjectConversion(target);
 		}
 		if (!type.IsValueOrConstReference) return null;
 		if (_classes.TryGetValue(type.Name, out BoundClass? value) && value.Handle == HandleKind.Value) return new ValueConversion(value);

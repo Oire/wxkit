@@ -26,6 +26,51 @@ public class DataViewTests {
 	});
 
 	[Fact]
+	public Task GivesBackItsColumns() => Gui.WithFrame(frame => {
+		DataViewListCtrl list = new(frame);
+		DataViewColumn? task = list.AppendTextColumn("Task", width: 120);
+		DataViewColumn? done = list.AppendToggleColumn("Done");
+		Assert.NotNull(task);
+		Assert.NotNull(done);
+		Assert.Same(task, list.GetColumn(0));
+		Assert.Same(list, task.Owner);
+		Assert.Equal("Task", task.Title);
+		Assert.Equal(0, task.ModelColumn);
+		Assert.Equal(1, done.ModelColumn);
+		Assert.Equal(1, list.GetColumnPosition(done));
+		task.Title = "To do";
+		task.Width = 150;
+		task.IsSortable = true;
+		Assert.Equal("To do", task.Title);
+		Assert.Equal(150, task.Width);
+		Assert.True(task.IsSortable);
+		Assert.True(task.Flags.HasFlag(DataViewColumnFlags.Sortable));
+	});
+
+	[Fact]
+	public Task MarksItsColumnsDestroyed() => Gui.WithFrame(frame => {
+		DataViewListCtrl list = new(frame);
+		DataViewColumn task = list.AppendTextColumn("Task")!;
+		DataViewColumn done = list.AppendToggleColumn("Done")!;
+		DataViewColumn notes = list.AppendTextColumn("Notes")!;
+		Assert.True(list.DeleteColumn(done));
+		Assert.True(done.IsDestroyed);
+		Assert.Throws<ObjectDisposedException>(() => done.Title);
+		Assert.Equal(2, list.ColumnCount);
+		Assert.Same(notes, list.GetColumn(1));
+		DataViewListCtrl other = new(frame);
+		DataViewColumn elsewhere = other.AppendTextColumn("Elsewhere")!;
+		Assert.False(list.DeleteColumn(elsewhere));
+		Assert.False(elsewhere.IsDestroyed);
+		Assert.True(list.ClearColumns());
+		Assert.True(task.IsDestroyed);
+		Assert.True(notes.IsDestroyed);
+		Assert.Equal(0, list.ColumnCount);
+		other.Destroy();
+		Assert.True(elsewhere.IsDestroyed);
+	});
+
+	[Fact]
 	public Task RefusesAValueItCannotPass() => Gui.WithFrame(frame => {
 		DataViewListCtrl list = new(frame);
 		list.AppendTextColumn("Task");

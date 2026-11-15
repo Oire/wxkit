@@ -93,7 +93,7 @@ The images of a tree, list view, or notebook are any sequence of bitmaps, given 
 
 ### Item data
 
-A list box, choice, combo box, tree, or data view tree can keep any object with an item, such as what the item stands for, through `Append` and `Insert` with an object, `SetClientObject` and `GetClientObject`, or a tree's `SetItemData` and `GetItemData`. A command event from one of these controls has the item's object in `ClientObject`.
+A list box, choice, combo box, tree, or data view tree can keep any object with an item, such as what the item stands for, through `Append` and `Insert` with an object, `SetClientObject` and `GetClientObject`, or a tree's `SetItemData` and `GetItemData`. The event a list box, choice, or combo box sends when an item is chosen has its object in `ClientObject`.
 
 The control holds the object through a GC handle, which is freed when the control deletes the item, replaces its object, or is destroyed. Until then, the object stays alive however little else refers to it. Null is no object. A list view's item data is a number, as in wxWidgets, which can be the key of a dictionary of objects.
 
@@ -138,6 +138,8 @@ view.Model = new Folders(top);
 A `DataViewVirtualListModel` produces rows as the control shows them, so it can have millions, and `DataViewTreeModel` names its items with ids of its own. A model tells its controls what changed, such as with `ItemAdded` or `RowChanged`, and they ask again. A control keeps its model alive.
 
 A value is an object: a string for a text column, a bool for a toggle column, a number for a progress column, a `DataViewIconText` for an icon and text column, or a `Bitmap`. Numbers come back from wxWidgets as a long or a double, and a value of another type throws `ArgumentException`. An exception in a model goes to `Application.UnhandledException`, and the control gets nothing.
+
+Adding a column returns it as a `DataViewColumn`, whose title, width, alignment, and flags, such as whether it sorts, can change. A control gives back the same object for a column each time, such as from `GetColumn` or `SortingColumn`. A column belongs to its control, which deletes it with `DeleteColumn` or `ClearColumns`, or when the control is destroyed. wxWidgets says nothing when it does, so the control marks the objects of its columns destroyed then, and using one throws `ObjectDisposedException`, as using a destroyed window does.
 
 A data view is drawn by wxWidgets itself on Windows, and describes its rows to screen readers, which hear a row's first column as its name, and the others, with their headings, as its description.
 

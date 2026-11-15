@@ -50,6 +50,12 @@ internal sealed record HandleKind(string CType, string CppBase, string InteropTy
 	/// <summary>An object the managed side creates and deletes, such as a drawing context.</summary>
 	public static HandleKind Owned { get; } = new("wxk_Object", "wxObject", "WxkObject", "Native", "Owned");
 
+	/// <summary>
+	/// A data view's column, which its control owns and deletes. The control keeps the one managed
+	/// object of each column, which is written by hand in part, and marks it destroyed with the column.
+	/// </summary>
+	public static HandleKind Column { get; } = new("wxk_DataViewColumn", "wxDataViewColumn", "WxkDataViewColumn", "Native", "Column");
+
 	/// <summary>Whether the managed side owns the object, and deletes it when it is disposed.</summary>
 	public bool IsOwned => this == Value || this == Owned;
 

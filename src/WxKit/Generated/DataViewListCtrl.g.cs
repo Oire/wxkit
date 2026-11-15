@@ -20,10 +20,10 @@ public unsafe partial class DataViewListCtrl : DataViewCtrl {
 	public int SelectedRow => WxKitNative.DataViewListCtrlGetSelectedRow(Native);
 
 	/// <summary>Appends an icon-and-text column to the control and the store.</summary>
-	public void AppendIconTextColumn(string label, DataViewCellMode mode = DataViewCellMode.Inert, int width = -1, Alignment align = Alignment.Left, DataViewColumnFlags flags = DataViewColumnFlags.Resizable) {
+	public DataViewColumn? AppendIconTextColumn(string label, DataViewCellMode mode = DataViewCellMode.Inert, int width = -1, Alignment align = Alignment.Left, DataViewColumnFlags flags = DataViewColumnFlags.Resizable) {
 		ArgumentNullException.ThrowIfNull(label);
 		fixed (char* labelText = label) {
-			WxKitNative.DataViewListCtrlAppendIconTextColumn(Native, labelText, NativeString.Length(label), (int)mode, width, (int)align, (int)flags);
+			return DataViewColumn.Wrap(WxKitNative.DataViewListCtrlAppendIconTextColumn(Native, labelText, NativeString.Length(label), (int)mode, width, (int)align, (int)flags));
 		}
 	}
 
@@ -35,26 +35,26 @@ public unsafe partial class DataViewListCtrl : DataViewCtrl {
 	}
 
 	/// <summary>Appends a progress column to the control and the store.</summary>
-	public void AppendProgressColumn(string label, DataViewCellMode mode = DataViewCellMode.Inert, int width = -1, Alignment align = Alignment.Left, DataViewColumnFlags flags = DataViewColumnFlags.Resizable) {
+	public DataViewColumn? AppendProgressColumn(string label, DataViewCellMode mode = DataViewCellMode.Inert, int width = -1, Alignment align = Alignment.Left, DataViewColumnFlags flags = DataViewColumnFlags.Resizable) {
 		ArgumentNullException.ThrowIfNull(label);
 		fixed (char* labelText = label) {
-			WxKitNative.DataViewListCtrlAppendProgressColumn(Native, labelText, NativeString.Length(label), (int)mode, width, (int)align, (int)flags);
+			return DataViewColumn.Wrap(WxKitNative.DataViewListCtrlAppendProgressColumn(Native, labelText, NativeString.Length(label), (int)mode, width, (int)align, (int)flags));
 		}
 	}
 
 	/// <summary>Appends a text column to the control and the store.</summary>
-	public void AppendTextColumn(string label, DataViewCellMode mode = DataViewCellMode.Inert, int width = -1, Alignment align = Alignment.Left, DataViewColumnFlags flags = DataViewColumnFlags.Resizable) {
+	public DataViewColumn? AppendTextColumn(string label, DataViewCellMode mode = DataViewCellMode.Inert, int width = -1, Alignment align = Alignment.Left, DataViewColumnFlags flags = DataViewColumnFlags.Resizable) {
 		ArgumentNullException.ThrowIfNull(label);
 		fixed (char* labelText = label) {
-			WxKitNative.DataViewListCtrlAppendTextColumn(Native, labelText, NativeString.Length(label), (int)mode, width, (int)align, (int)flags);
+			return DataViewColumn.Wrap(WxKitNative.DataViewListCtrlAppendTextColumn(Native, labelText, NativeString.Length(label), (int)mode, width, (int)align, (int)flags));
 		}
 	}
 
 	/// <summary>Appends a toggle column to the control and the store.</summary>
-	public void AppendToggleColumn(string label, DataViewCellMode mode = DataViewCellMode.Activatable, int width = -1, Alignment align = Alignment.Left, DataViewColumnFlags flags = DataViewColumnFlags.Resizable) {
+	public DataViewColumn? AppendToggleColumn(string label, DataViewCellMode mode = DataViewCellMode.Activatable, int width = -1, Alignment align = Alignment.Left, DataViewColumnFlags flags = DataViewColumnFlags.Resizable) {
 		ArgumentNullException.ThrowIfNull(label);
 		fixed (char* labelText = label) {
-			WxKitNative.DataViewListCtrlAppendToggleColumn(Native, labelText, NativeString.Length(label), (int)mode, width, (int)align, (int)flags);
+			return DataViewColumn.Wrap(WxKitNative.DataViewListCtrlAppendToggleColumn(Native, labelText, NativeString.Length(label), (int)mode, width, (int)align, (int)flags));
 		}
 	}
 

@@ -111,12 +111,19 @@ internal static class Core {
 		tweaks.Class("wxListView");
 		// SetItemData is written by hand, since wxTreeCtrl does not delete the data it replaces.
 		tweaks.Class("wxTreeCtrl").Ignore("SetItemData");
-		// Data views show a model, whose classes are hand-written, in DataViewModel. Adding a column
-		// returns the column, which is not bound, so it gives nothing back; its model column names it.
+		// Data views show a model, whose classes are hand-written, in DataViewModel. A column is made
+		// by adding one, since renderers are not bound, so the members that add a column object are
+		// left out. Deleting columns is written by hand, since the control marks their objects destroyed.
 		tweaks.Enum("wxDataViewColumnFlags", "DataViewColumnFlags", isFlags: true);
+		tweaks.Class("wxDataViewColumn", column => column
+			.InheritUnboundBases()
+			.NoConstructors()
+			.Ignore("GetRenderer", "SetFlag", "ClearFlag", "ToggleFlag", "ChangeFlag", "HasFlag")
+			.ParameterEnum("SetFlags", "flags", "wxDataViewColumnFlags")
+			.ParameterEnum("GetFlags", "return", "wxDataViewColumnFlags"));
 		tweaks.Class("wxDataViewCtrl", view => view
 			.DiscardUnboundReturns()
-			.Ignore("AssociateModel", "GetModel")
+			.Ignore("AssociateModel", "GetModel", "AppendColumn", "PrependColumn", "InsertColumn", "DeleteColumn", "ClearColumns", "GetSortingColumns")
 			.ParameterEnum("AppendTextColumn", "flags", "wxDataViewColumnFlags")
 			.ParameterEnum("AppendToggleColumn", "flags", "wxDataViewColumnFlags")
 			.ParameterEnum("AppendProgressColumn", "flags", "wxDataViewColumnFlags")
@@ -131,15 +138,16 @@ internal static class Core {
 			.ParameterEnum("PrependDateColumn", "flags", "wxDataViewColumnFlags"));
 		tweaks.Class("wxDataViewListCtrl", view => view
 			.DiscardUnboundReturns()
-			.Ignore("GetStore")
+			.Ignore("GetStore", "AppendColumn", "PrependColumn", "InsertColumn")
 			.ParameterEnum("AppendTextColumn", "flags", "wxDataViewColumnFlags")
 			.ParameterEnum("AppendToggleColumn", "flags", "wxDataViewColumnFlags")
 			.ParameterEnum("AppendProgressColumn", "flags", "wxDataViewColumnFlags")
 			.ParameterEnum("AppendIconTextColumn", "flags", "wxDataViewColumnFlags"));
 		// Its images are an image list, which is not bound.
 		tweaks.Class("wxDataViewTreeCtrl", view => view.DiscardUnboundReturns().Ignore("GetStore", "GetImageList"));
-		// The interface headers document SetItem, which the real wxDataViewEvent does not have.
-		tweaks.Class("wxDataViewEvent", dataViewEvent => dataViewEvent.Ignore("SetItem"));
+		// The interface headers document SetItem, which the real wxDataViewEvent does not have. Events
+		// are only received, so the column is only read.
+		tweaks.Class("wxDataViewEvent", dataViewEvent => dataViewEvent.Ignore("SetItem", "SetDataViewColumn"));
 		tweaks.Class("wxDataViewIconText").ValueObject();
 		tweaks.Class("wxListItem").ValueObject();
 		tweaks.Class("wxListEvent");

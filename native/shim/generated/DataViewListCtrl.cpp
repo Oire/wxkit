@@ -20,20 +20,20 @@ WXK_FUNCTION(uint8_t) wxk_DataViewListCtrl_IsRowSelected(wxk_Window* self, uint3
 	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxDataViewListCtrl*>(wxk::Unwrap(self))->IsRowSelected(row)) ? 1 : 0; });
 }
 
-WXK_FUNCTION(void) wxk_DataViewListCtrl_AppendTextColumn(wxk_Window* self, const char16_t* label, size_t labelLength, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewListCtrl*>(wxk::Unwrap(self))->AppendTextColumn(wxk::FromUtf16(label, labelLength), static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewListCtrl_AppendTextColumn(wxk_Window* self, const char16_t* label, size_t labelLength, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewListCtrl*>(wxk::Unwrap(self))->AppendTextColumn(wxk::FromUtf16(label, labelLength), static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)))); });
 }
 
-WXK_FUNCTION(void) wxk_DataViewListCtrl_AppendToggleColumn(wxk_Window* self, const char16_t* label, size_t labelLength, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewListCtrl*>(wxk::Unwrap(self))->AppendToggleColumn(wxk::FromUtf16(label, labelLength), static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewListCtrl_AppendToggleColumn(wxk_Window* self, const char16_t* label, size_t labelLength, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewListCtrl*>(wxk::Unwrap(self))->AppendToggleColumn(wxk::FromUtf16(label, labelLength), static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)))); });
 }
 
-WXK_FUNCTION(void) wxk_DataViewListCtrl_AppendProgressColumn(wxk_Window* self, const char16_t* label, size_t labelLength, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewListCtrl*>(wxk::Unwrap(self))->AppendProgressColumn(wxk::FromUtf16(label, labelLength), static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewListCtrl_AppendProgressColumn(wxk_Window* self, const char16_t* label, size_t labelLength, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewListCtrl*>(wxk::Unwrap(self))->AppendProgressColumn(wxk::FromUtf16(label, labelLength), static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)))); });
 }
 
-WXK_FUNCTION(void) wxk_DataViewListCtrl_AppendIconTextColumn(wxk_Window* self, const char16_t* label, size_t labelLength, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
-	wxk::Guard([&] { static_cast<wxDataViewListCtrl*>(wxk::Unwrap(self))->AppendIconTextColumn(wxk::FromUtf16(label, labelLength), static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)); });
+WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewListCtrl_AppendIconTextColumn(wxk_Window* self, const char16_t* label, size_t labelLength, int32_t mode, int32_t width, int32_t align, int32_t flags) noexcept {
+	return wxk::Guard<wxk_DataViewColumn*>(nullptr, [&]() -> wxk_DataViewColumn* { return wxk::Wrap(static_cast<wxDataViewColumn*>(static_cast<wxDataViewListCtrl*>(wxk::Unwrap(self))->AppendIconTextColumn(wxk::FromUtf16(label, labelLength), static_cast<wxDataViewCellMode>(mode), static_cast<int>(width), static_cast<wxAlignment>(align), static_cast<int>(flags)))); });
 }
 
 WXK_FUNCTION(void) wxk_DataViewListCtrl_AppendItem(wxk_Window* self, const wxk_VariantList* values) noexcept {

@@ -180,6 +180,14 @@ WXK_FUNCTION(uint32_t) wxk_VirtualListModel_GetRow(wxk_DataViewModel* model, voi
 	return wxk::Guard<uint32_t>(0, [&] { return UnwrapList(model)->GetRow(wxDataViewItem(item)); });
 }
 
+WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_DeleteColumn(wxk_Window* control, wxk_DataViewColumn* column) noexcept {
+	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return static_cast<wxDataViewCtrl*>(wxk::Unwrap(control))->DeleteColumn(wxk::Unwrap(column)) ? 1 : 0; });
+}
+
+WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_ClearColumns(wxk_Window* control) noexcept {
+	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return static_cast<wxDataViewCtrl*>(wxk::Unwrap(control))->ClearColumns() ? 1 : 0; });
+}
+
 WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_AssociateModel(wxk_Window* control, wxk_DataViewModel* model) noexcept {
 	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return static_cast<wxDataViewCtrl*>(wxk::Unwrap(control))->AssociateModel(Unwrap(model)) ? 1 : 0; });
 }

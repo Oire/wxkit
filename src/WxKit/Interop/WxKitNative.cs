@@ -362,6 +362,14 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial uint VirtualListModelGetRow(WxkDataViewModel* model, nint item);
 
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_DeleteColumn")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte DataViewCtrlDeleteColumn(WxkWindow* control, WxkDataViewColumn* column);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_ClearColumns")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte DataViewCtrlClearColumns(WxkWindow* control);
+
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_AssociateModel")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte DataViewCtrlAssociateModel(WxkWindow* control, WxkDataViewModel* model);
