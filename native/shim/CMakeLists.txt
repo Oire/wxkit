@@ -36,12 +36,17 @@ if(UNIX)
 	set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 	# A feature that needs a system library beyond GTK's would make every application need it, so
 	# these are left out until WxKit binds what uses them: web requests need libcurl, the secret
-	# store libsecret, sound SDL, notifications libnotify, and spell checking gspell.
+	# store libsecret, sound SDL, and notifications libnotify.
 	set(wxUSE_WEBREQUEST OFF CACHE BOOL "" FORCE)
 	set(wxUSE_SECRETSTORE OFF CACHE BOOL "" FORCE)
 	set(wxUSE_LIBSDL OFF CACHE BOOL "" FORCE)
 	set(wxUSE_LIBNOTIFY OFF CACHE BOOL "" FORCE)
-	set(wxUSE_SPELLCHECK OFF CACHE BOOL "" FORCE)
+	# Spell checking needs gspell on Linux, and macOS has its own, so it is only left out on Linux.
+	if(NOT APPLE)
+		set(wxUSE_SPELLCHECK OFF CACHE BOOL "" FORCE)
+	else()
+		set(wxUSE_SPELLCHECK ON CACHE BOOL "" FORCE)
+	endif()
 	set(wxUSE_LIBMSPACK OFF CACHE BOOL "" FORCE)
 	set(wxUSE_MEDIACTRL OFF CACHE BOOL "" FORCE)
 	set(wxUSE_GLCANVAS OFF CACHE BOOL "" FORCE)

@@ -34,7 +34,7 @@ internal static class Core {
 		tweaks.Class("wxPanel");
 		tweaks.Class("wxButton", button => button.Event("EVT_BUTTON", "Click"));
 		tweaks.Class("wxStaticText");
-		// Spell checking needs gspell on Linux, which WxKit leaves out for now.
+		// Spell checking needs gspell on Linux, which WxKit leaves out for now, so there it does nothing.
 		tweaks.Class("wxTextCtrl", text => text.Event("EVT_TEXT", "TextChanged").Guard("wxUSE_SPELLCHECK", "EnableProofCheck"));
 		// wxMenuBar's Enable and IsEnabled take an item's id, so they would hide Window.IsEnabled.
 		tweaks.Class("wxMenuBar", menuBar => menuBar.Rename("IsEnabled", "IsItemEnabled").Rename("Enable", "EnableItem"));

@@ -64,4 +64,12 @@ public class ControlTests {
 		Choice empty = new(frame);
 		Assert.Equal(0, empty.Count);
 	});
+
+	// Windows checks spelling in a rich text control, and macOS in a multi-line one. Linux would
+	// need gspell, which WxKit leaves out.
+	[Fact]
+	public Task ChecksSpellingWhereThePlatformCan() => Gui.WithFrame(frame => {
+		TextCtrl text = new(frame, style: TextCtrlStyle.MultiLine | TextCtrlStyle.Rich2);
+		Assert.Equal(!OperatingSystem.IsLinux(), text.EnableProofCheck());
+	});
 }
