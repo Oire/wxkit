@@ -1,6 +1,7 @@
 #include "shim.h"
 
 #include <wx/clipbrd.h>
+#include <wx/imagpng.h>
 
 #include <cstring>
 
@@ -68,6 +69,14 @@ WXK_FUNCTION(void) wxk_ClipboardContent_Free(wxk_ClipboardContent* content) noex
 
 namespace {
 
+// wxGTK hands a bitmap to the clipboard, and takes one back, as a PNG image, which needs the PNG
+// handler, so the clipboard's bitmaps add it, as Image.AddPngHandler would.
+void UsePngForBitmaps() {
+#ifdef __WXGTK__
+	wxk::AddImageHandler<wxPNGHandler>(wxBITMAP_TYPE_PNG);
+#endif
+}
+
 void Add(wxk_ClipboardContent* content, wxDataObjectSimple* data) {
 	// The composite takes ownership of each part.
 	reinterpret_cast<wxDataObjectComposite*>(content)->Add(data);
@@ -84,7 +93,10 @@ WXK_FUNCTION(void) wxk_ClipboardContent_AddHtml(wxk_ClipboardContent* content, c
 }
 
 WXK_FUNCTION(void) wxk_ClipboardContent_AddBitmap(wxk_ClipboardContent* content, wxk_Object* bitmap) noexcept {
-	wxk::Guard([&] { Add(content, new wxBitmapDataObject(*static_cast<wxBitmap*>(wxk::Unwrap(bitmap)))); });
+	wxk::Guard([&] {
+		UsePngForBitmaps();
+		Add(content, new wxBitmapDataObject(*static_cast<wxBitmap*>(wxk::Unwrap(bitmap))));
+	});
 }
 
 WXK_FUNCTION(void) wxk_ClipboardContent_AddFiles(wxk_ClipboardContent* content, const wxk_StringArray* files) noexcept {
@@ -165,6 +177,7 @@ WXK_FUNCTION(wxk_String*) wxk_Clipboard_GetHtml(void) noexcept {
 
 WXK_FUNCTION(wxk_Object*) wxk_Clipboard_GetBitmap(void) noexcept {
 	return wxk::Guard<wxk_Object*>(nullptr, [] {
+		UsePngForBitmaps();
 		wxBitmapDataObject data;
 		return GetFormat(wxDF_BITMAP, data, static_cast<wxk_Object*>(nullptr), [](wxBitmapDataObject& bitmap) { return wxk::CopyValue(bitmap.GetBitmap()); });
 	});
