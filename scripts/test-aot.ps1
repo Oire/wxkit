@@ -22,7 +22,18 @@ Remove-Item -Recurse -Force $output -ErrorAction SilentlyContinue
 dotnet publish (Join-Path $root "samples/Hello") -c Release -r $Runtime -o $output -nologo
 if ($LASTEXITCODE -ne 0) { throw "Publishing the sample failed." }
 
-$executable = Join-Path $output ($IsWindows ? "Hello.exe" : "Hello")
+# On macOS, the publish makes an app bundle too, which is what an application ships, so the test
+# checks its Info.plist and runs the executable inside it.
+if ($IsMacOS) {
+	$bundle = Join-Path $output "Hello.app"
+	plutil -lint (Join-Path $bundle "Contents/Info.plist") | Out-Null
+	if ($LASTEXITCODE -ne 0) { throw "The sample's Info.plist is not valid." }
+	codesign --verify --strict $bundle
+	if ($LASTEXITCODE -ne 0) { throw "The sample's bundle is not validly signed." }
+	$executable = Join-Path $bundle "Contents/MacOS/Hello"
+} else {
+	$executable = Join-Path $output ($IsWindows ? "Hello.exe" : "Hello")
+}
 $extras = Get-ChildItem $output -File | Where-Object { $_.Name -like "*wxkitnative*" }
 if ($extras) { throw "The published sample still ships $($extras.Name -join ', ') beside it." }
 

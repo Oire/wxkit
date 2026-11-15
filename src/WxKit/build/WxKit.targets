@@ -64,4 +64,105 @@
 		</ItemGroup>
 	</Target>
 
+	<!--
+		A GUI application on macOS runs from an app bundle, without which its menu bar and focus can
+		misbehave. Publishing an application for macOS makes one beside the published files, named
+		after it, such as Hello.app. Its Info.plist takes the properties .NET MAUI uses for the same:
+		ApplicationTitle, ApplicationId, ApplicationDisplayVersion, and ApplicationVersion. Set
+		WxKitMacIcon to an .icns file to give it an icon, WxKitInfoPlist to an Info.plist to use instead
+		of WxKit's, and WxKitAppBundle to false to make none.
+	-->
+	<PropertyGroup Condition="'$(WxKitAppBundle)' == '' and $(RuntimeIdentifier.StartsWith('osx')) and ('$(OutputType)' == 'Exe' or '$(OutputType)' == 'WinExe')">
+		<WxKitAppBundle>true</WxKitAppBundle>
+	</PropertyGroup>
+
+	<!-- Documentation files are for IntelliSense, not for an application, and every file in a bundle's Contents/MacOS has to be signed. -->
+	<PropertyGroup Condition="'$(WxKitAppBundle)' == 'true'">
+		<PublishDocumentationFile Condition="'$(PublishDocumentationFile)' == ''">false</PublishDocumentationFile>
+		<PublishReferencesDocumentationFiles Condition="'$(PublishReferencesDocumentationFiles)' == ''">false</PublishReferencesDocumentationFiles>
+	</PropertyGroup>
+
+	<Target Name="_WxKitResolveAppBundle" Condition="'$(WxKitAppBundle)' == 'true'">
+		<PropertyGroup>
+			<ApplicationTitle Condition="'$(ApplicationTitle)' == ''">$(Product)</ApplicationTitle>
+			<ApplicationTitle Condition="'$(ApplicationTitle)' == ''">$(AssemblyName)</ApplicationTitle>
+			<!-- A bundle's versions are numbers separated by periods, so a version's prerelease label is left out. -->
+			<ApplicationDisplayVersion Condition="'$(ApplicationDisplayVersion)' == ''">$([System.Text.RegularExpressions.Regex]::Match('$(Version)', '^[0-9]+(\.[0-9]+)*').Value)</ApplicationDisplayVersion>
+			<ApplicationDisplayVersion Condition="'$(ApplicationDisplayVersion)' == ''">1.0</ApplicationDisplayVersion>
+			<ApplicationVersion Condition="'$(ApplicationVersion)' == ''">$(ApplicationDisplayVersion)</ApplicationVersion>
+			<_WxKitBundle>$([System.IO.Path]::GetFullPath('$(PublishDir)$(ApplicationTitle).app'))</_WxKitBundle>
+			<_WxKitBundleExecutable>$(AssemblyName)</_WxKitBundleExecutable>
+			<_WxKitBundleIcon Condition="'$(WxKitMacIcon)' != ''">$([System.IO.Path]::GetFileName('$(WxKitMacIcon)'))</_WxKitBundleIcon>
+			<_WxKitBundleIdentifier>$(ApplicationId)</_WxKitBundleIdentifier>
+			<_WxKitBundleIdentifier Condition="'$(_WxKitBundleIdentifier)' == ''">$(AssemblyName)</_WxKitBundleIdentifier>
+		</PropertyGroup>
+	</Target>
+
+	<Target Name="_WxKitCreateAppBundle" AfterTargets="Publish" DependsOnTargets="_WxKitResolveAppBundle" Condition="'$(WxKitAppBundle)' == 'true'">
+		<Warning Condition="'$(ApplicationId)' == '' and '$(WxKitInfoPlist)' == ''" Text="Set ApplicationId to the application's bundle identifier, such as com.example.$(AssemblyName). Without one, macOS knows the bundle as $(AssemblyName), which another application can share." />
+		<Error Condition="'$(WxKitMacIcon)' != '' and !Exists('$(WxKitMacIcon)')" Text="WxKitMacIcon names $(WxKitMacIcon), which does not exist." />
+		<Error Condition="'$(WxKitInfoPlist)' != '' and !Exists('$(WxKitInfoPlist)')" Text="WxKitInfoPlist names $(WxKitInfoPlist), which does not exist." />
+		<ItemGroup>
+			<!-- Everything published goes in Contents/MacOS, where the executable finds what it loads, but not symbols, or an earlier bundle. -->
+			<_WxKitBundleFile Include="$(PublishDir)**/*" Exclude="$(PublishDir)*.app/**;$(PublishDir)**/*.pdb;$(PublishDir)**/*.dSYM/**;$(PublishDir)**/*.dbg" />
+			<!-- A question mark in an item is a wildcard, so the declaration's are escaped. -->
+			<_WxKitPlistLine Include="&lt;%3Fxml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;%3F&gt;" />
+			<_WxKitPlistLine Include="&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;" />
+			<_WxKitPlistLine Include="&lt;plist version=&quot;1.0&quot;&gt;" />
+			<_WxKitPlistLine Include="&lt;dict&gt;" />
+			<_WxKitPlistLine Include="%09&lt;key&gt;CFBundleName&lt;/key&gt;%0A%09&lt;string&gt;$([System.String]::Copy('$(ApplicationTitle)').Replace('&amp;', '&amp;amp;').Replace('&lt;', '&amp;lt;'))&lt;/string&gt;" />
+			<_WxKitPlistLine Include="%09&lt;key&gt;CFBundleDisplayName&lt;/key&gt;%0A%09&lt;string&gt;$([System.String]::Copy('$(ApplicationTitle)').Replace('&amp;', '&amp;amp;').Replace('&lt;', '&amp;lt;'))&lt;/string&gt;" />
+			<_WxKitPlistLine Include="%09&lt;key&gt;CFBundleIdentifier&lt;/key&gt;%0A%09&lt;string&gt;$(_WxKitBundleIdentifier)&lt;/string&gt;" />
+			<_WxKitPlistLine Include="%09&lt;key&gt;CFBundleExecutable&lt;/key&gt;%0A%09&lt;string&gt;$(_WxKitBundleExecutable)&lt;/string&gt;" />
+			<_WxKitPlistLine Include="%09&lt;key&gt;CFBundleShortVersionString&lt;/key&gt;%0A%09&lt;string&gt;$(ApplicationDisplayVersion)&lt;/string&gt;" />
+			<_WxKitPlistLine Include="%09&lt;key&gt;CFBundleVersion&lt;/key&gt;%0A%09&lt;string&gt;$(ApplicationVersion)&lt;/string&gt;" />
+			<_WxKitPlistLine Include="%09&lt;key&gt;CFBundlePackageType&lt;/key&gt;%0A%09&lt;string&gt;APPL&lt;/string&gt;" />
+			<_WxKitPlistLine Include="%09&lt;key&gt;CFBundleInfoDictionaryVersion&lt;/key&gt;%0A%09&lt;string&gt;6.0&lt;/string&gt;" />
+			<_WxKitPlistLine Include="%09&lt;key&gt;CFBundleDevelopmentRegion&lt;/key&gt;%0A%09&lt;string&gt;en&lt;/string&gt;" />
+			<_WxKitPlistLine Include="%09&lt;key&gt;CFBundleIconFile&lt;/key&gt;%0A%09&lt;string&gt;$(_WxKitBundleIcon)&lt;/string&gt;" Condition="'$(_WxKitBundleIcon)' != ''" />
+			<_WxKitPlistLine Include="%09&lt;key&gt;NSHumanReadableCopyright&lt;/key&gt;%0A%09&lt;string&gt;$([System.String]::Copy('$(Copyright)').Replace('&amp;', '&amp;amp;').Replace('&lt;', '&amp;lt;'))&lt;/string&gt;" Condition="'$(Copyright)' != ''" />
+			<_WxKitPlistLine Include="%09&lt;key&gt;LSMinimumSystemVersion&lt;/key&gt;%0A%09&lt;string&gt;12.0&lt;/string&gt;" />
+			<!-- wxWidgets's own bundles name its application class, which handles the events Cocoa sends it. -->
+			<_WxKitPlistLine Include="%09&lt;key&gt;NSPrincipalClass&lt;/key&gt;%0A%09&lt;string&gt;wxNSApplication&lt;/string&gt;" />
+			<_WxKitPlistLine Include="%09&lt;key&gt;NSHighResolutionCapable&lt;/key&gt;%0A%09&lt;true/&gt;" />
+			<_WxKitPlistLine Include="&lt;/dict&gt;" />
+			<_WxKitPlistLine Include="&lt;/plist&gt;" />
+		</ItemGroup>
+		<RemoveDir Directories="$(_WxKitBundle)" />
+		<Copy SourceFiles="@(_WxKitBundleFile)" DestinationFiles="@(_WxKitBundleFile->'$(_WxKitBundle)/Contents/MacOS/%(RecursiveDir)%(Filename)%(Extension)')" />
+		<Copy SourceFiles="$(WxKitMacIcon)" DestinationFolder="$(_WxKitBundle)/Contents/Resources" Condition="'$(WxKitMacIcon)' != ''" />
+		<WriteLinesToFile File="$(_WxKitBundle)/Contents/Info.plist" Lines="@(_WxKitPlistLine)" Overwrite="true" Condition="'$(WxKitInfoPlist)' == ''" />
+		<Copy SourceFiles="$(WxKitInfoPlist)" DestinationFiles="$(_WxKitBundle)/Contents/Info.plist" Condition="'$(WxKitInfoPlist)' != ''" />
+		<WriteLinesToFile File="$(_WxKitBundle)/Contents/PkgInfo" Lines="APPL????" Overwrite="true" />
+		<Message Importance="high" Text="$(MSBuildProjectName) -> $(_WxKitBundle)" />
+	</Target>
+
+	<!--
+		Signs the bundle on a Mac, innermost first, as Apple recommends over deep signing: each file in
+		Contents/MacOS other than the executable, such as a library, then the executable, then the
+		bundle. A file that is not code, such as a framework-dependent application's assemblies, gets
+		its signature in its extended attributes. With WxKitCodesignIdentity, such as
+		"Developer ID Application: Jane Doe (TEAMID)", it signs with the hardened runtime and a secure
+		timestamp, which notarization needs, and an application that is not Native AOT gets the
+		entitlement to compile code at run time, which .NET's JIT needs under the hardened runtime.
+		Without one, it signs ad hoc, which runs on the Mac that built it.
+	-->
+	<Target Name="_WxKitSignAppBundle" AfterTargets="_WxKitCreateAppBundle" Condition="'$(WxKitAppBundle)' == 'true' and $([MSBuild]::IsOSPlatform('OSX'))">
+		<PropertyGroup>
+			<_WxKitSigningIdentity>$(WxKitCodesignIdentity)</_WxKitSigningIdentity>
+			<_WxKitSigningIdentity Condition="'$(_WxKitSigningIdentity)' == ''">-</_WxKitSigningIdentity>
+			<_WxKitSigningOptions Condition="'$(WxKitCodesignIdentity)' != ''">--timestamp --options runtime</_WxKitSigningOptions>
+			<_WxKitEntitlements Condition="'$(WxKitCodesignIdentity)' != '' and '$(PublishAot)' != 'true'">$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)wxkit.entitlements'))</_WxKitEntitlements>
+			<_WxKitEntitlementsOption Condition="'$(_WxKitEntitlements)' != ''">--entitlements &quot;$(_WxKitEntitlements)&quot;</_WxKitEntitlementsOption>
+		</PropertyGroup>
+		<ItemGroup>
+			<_WxKitSignedFile Include="$(_WxKitBundle)/Contents/MacOS/**/*" Exclude="$(_WxKitBundle)/Contents/MacOS/$(_WxKitBundleExecutable)" />
+			<_WxKitEntitlementLine Include="&lt;%3Fxml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;%3F&gt;;&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;;&lt;plist version=&quot;1.0&quot;&gt;;&lt;dict&gt;;%09&lt;key&gt;com.apple.security.cs.allow-jit&lt;/key&gt;;%09&lt;true/&gt;;&lt;/dict&gt;;&lt;/plist&gt;" />
+		</ItemGroup>
+		<WriteLinesToFile File="$(_WxKitEntitlements)" Lines="@(_WxKitEntitlementLine)" Overwrite="true" Condition="'$(_WxKitEntitlements)' != ''" />
+		<Exec Command="codesign --force $(_WxKitSigningOptions) --sign &quot;$(_WxKitSigningIdentity)&quot; &quot;%(_WxKitSignedFile.FullPath)&quot;" Condition="'@(_WxKitSignedFile)' != ''" />
+		<Exec Command="codesign --force $(_WxKitSigningOptions) $(_WxKitEntitlementsOption) --sign &quot;$(_WxKitSigningIdentity)&quot; &quot;$(_WxKitBundle)/Contents/MacOS/$(_WxKitBundleExecutable)&quot;" />
+		<Exec Command="codesign --force $(_WxKitSigningOptions) $(_WxKitEntitlementsOption) --sign &quot;$(_WxKitSigningIdentity)&quot; &quot;$(_WxKitBundle)&quot;" />
+	</Target>
+
 </Project>

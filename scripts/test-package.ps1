@@ -53,6 +53,7 @@ Set-Content (Join-Path $project "PackageTest.csproj") @"
 		<TargetFramework>net10.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+		<ApplicationId>io.github.trypsynth.wxkit.packagetest</ApplicationId>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="WxKit" Version="$version" />
@@ -80,6 +81,10 @@ if ($LASTEXITCODE -ne 0) { throw "Publishing the package test with Native AOT fa
 $extras = Get-ChildItem $published -File | Where-Object { $_.Name -like "*wxkitnative*" }
 if ($extras) { throw "The published package test still ships $($extras.Name -join ', ') beside it." }
 $executable = Join-Path $published "PackageTest$($IsWindows ? '.exe' : '')"
+if ($IsMacOS) {
+	$executable = Join-Path $published "PackageTest.app/Contents/MacOS/PackageTest"
+	if (-not (Test-Path $executable)) { throw "The published package test has no app bundle." }
+}
 Test-Executable $executable "The package test, published with Native AOT,"
 $size = [math]::Round((Get-Item $executable).Length / 1MB, 1)
 Write-Host "WxKit $version restored from its packages, ran, and published with Native AOT for $Runtime as $size MB."

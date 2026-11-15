@@ -32,7 +32,7 @@ Output goes to `artifacts/native/<runtime>/static` and `artifacts/native/<runtim
 - The shared library exports only the shim's functions, through `-exported_symbol`.
 - The link targets list the frameworks and libraries the shared library loads, which `otool -L` reads from it, such as `AppKit`, `Carbon`, `IOKit`, `QuartzCore`, and `libc++`, each as one argument for clang, such as `-Wl,-framework,AppKit`. .NET links `libobjc` itself.
 - Cocoa only runs a user interface on the process's main thread, so `Application.Run` throws on any other.
-- A GUI application on macOS behaves best inside an app bundle. Without one, the menu bar and focus can misbehave. Creating a bundle from a published executable is separate tooling, which is a later milestone.
+- A GUI application on macOS behaves best inside an app bundle, as the next section describes.
 - Building needs Xcode, CMake, Ninja, PowerShell 7, and the .NET 10 SDK.
 
 ### Linux
@@ -45,6 +45,38 @@ Output goes to `artifacts/native/<runtime>/static` and `artifacts/native/<runtim
 - The packages are built on the oldest supported Ubuntu, 22.04, so they work with its glibc and anything newer.
 - Native AOT links with clang, so a Linux publish needs `clang` and zlib's development files, as any Native AOT publish on Linux does, and the GTK 3 libraries.
 - `wxAccessible` is Microsoft Active Accessibility's, so wxGTK does not have it. An `Accessible` does nothing there, and GTK's own accessibility, through ATK, describes its controls.
+
+## macOS app bundles
+
+A GUI application on macOS runs from an app bundle, a folder such as `Hello.app` whose `Contents/Info.plist` names it. Without one, its menu bar and focus can misbehave, and Finder cannot open it as an application. Publishing an application for a macOS runtime makes one beside the published files, with Native AOT or without:
+
+```powershell
+dotnet publish -r osx-arm64
+```
+
+WxKit's targets build it with MSBuild, so a publish on Windows or Linux can make one too, for an application that is not Native AOT, which only publishes for macOS on a Mac. Only a Mac can sign it, though, and Apple Silicon only runs signed code, so such a bundle has to be signed on a Mac before it runs there. The bundle's `Contents/MacOS` holds everything published except symbols and documentation files, so the executable finds beside it what it would without the bundle. Its `Info.plist` takes the properties .NET MAUI uses for the same:
+
+- `ApplicationTitle` names the bundle and the application in Finder and the menu bar. It defaults to `Product`, which defaults to the assembly's name.
+- `ApplicationId` is the bundle identifier, in reverse DNS, such as `com.example.hello`. The publish warns when it is not set.
+- `ApplicationDisplayVersion` and `ApplicationVersion` are the version the user sees and the build's version. Both default to `Version` without its prerelease label, since a bundle's versions are only numbers.
+
+`WxKitMacIcon` names an `.icns` file to give it an icon, `WxKitInfoPlist` an `Info.plist` to use instead of WxKit's, and `WxKitAppBundle` set to `false` turns the bundle off. WxKit's `Info.plist` also names wxWidgets's own application class, `wxNSApplication`, as wxWidgets's bundles do, and macOS 12 as the oldest the application runs on.
+
+### Signing and notarizing
+
+On a Mac, the publish signs the bundle, innermost first, as Apple recommends over deep signing: each file in `Contents/MacOS` other than the executable, then the executable, then the bundle. Without `WxKitCodesignIdentity`, it signs ad hoc, which runs on the Mac that built it. With it, such as `-p:WxKitCodesignIdentity="Developer ID Application: Jane Doe (TEAMID)"`, it signs with the hardened runtime and a secure timestamp, which notarization needs. An application that is not Native AOT also gets the entitlement to compile code at run time, which .NET's JIT needs under the hardened runtime.
+
+`codesign` signs with a key in the keychain, which an SSH session cannot unlock without the keychain's password, so it fails there with `errSecInternalComponent`. Sign from the Mac's own session, or, in CI, from a temporary keychain that holds the certificate.
+
+Apple only lets a downloaded application open once it is notarized. After a signed publish, notarize the bundle with Apple's notary service, here with a profile that `xcrun notarytool store-credentials` saved, and staple the ticket to it, so Gatekeeper can check it offline:
+
+```sh
+ditto -c -k --keepParent Hello.app Hello.zip
+xcrun notarytool submit Hello.zip --keychain-profile notary --wait
+xcrun stapler staple Hello.app
+```
+
+For an installer, a disk image, or updates, [Velopack](https://docs.velopack.io/packaging/operating-systems/macos) packs a published application, bundles and signs it, notarizes it, and makes an installer, on macOS as on Windows and Linux. Its `--packDir` takes a folder ending in `.app`, such as WxKit's bundle, as it is.
 
 ## Native AOT and static linking
 

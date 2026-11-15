@@ -33,7 +33,7 @@ dotnet publish -r win-x64 -p:PublishAot=true
 
 On Linux, an application needs GTK 3, which desktop Linux has, and runs with `-r linux-x64` or `-r linux-arm64`. A Native AOT publish there needs `clang` and zlib's development files, as any does on Linux, but not GTK's development files.
 
-On macOS, call `Application.Run` from `Main`, since Cocoa only runs a user interface on the main thread. A Native AOT publish needs Xcode's command line tools, as any does on macOS. An application without an app bundle runs, but its menu bar and focus can misbehave, and making a bundle is not part of WxKit yet.
+On macOS, call `Application.Run` from `Main`, since Cocoa only runs a user interface on the main thread. A Native AOT publish needs Xcode's command line tools, as any does on macOS. Publishing for macOS also makes an app bundle, such as `Hello.app`, named after `ApplicationTitle` and identified by `ApplicationId`, as in .NET MAUI, and signed ad hoc, or with your Developer ID in `WxKitCodesignIdentity`. The repository's [building and packaging](https://github.com/trypsynth/wxkit/blob/master/docs/design/building-and-packaging.md#macos-app-bundles) docs describe it, and notarizing it.
 
 On Windows, a Native AOT publish needs Visual Studio's C++ tools, as any Native AOT publish on Windows does. With the Visual Studio 2026 Build Tools, if it fails with "'vswhere.exe' is not recognized", add `%ProgramFiles(x86)%\Microsoft Visual Studio\Installer` to `PATH`, which Native AOT needs there to find the linker.
 

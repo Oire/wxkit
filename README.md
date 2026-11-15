@@ -47,7 +47,7 @@ Add `artifacts/packages` as a package source, and reference `WxKit`, which bring
 <PackageReference Include="WxKit" Version="0.1.0-preview.1" />
 ```
 
-An application runs with the shared native library, and a Native AOT publish links wxWidgets into the executable instead:
+An application runs with the shared native library, and a Native AOT publish links wxWidgets into the executable instead. A publish for macOS also makes an app bundle, which [Building and packaging](docs/design/building-and-packaging.md#macos-app-bundles) describes:
 
 ```powershell
 dotnet publish -r win-x64 -p:PublishAot=true
