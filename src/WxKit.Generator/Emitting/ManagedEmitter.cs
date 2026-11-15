@@ -34,7 +34,10 @@ internal static class ManagedEmitter {
 			Gap();
 			Summary(writer, constructor.Source.Brief);
 			string arguments = string.Join(", ", constructor.ManagedParameters.Select(static parameter => parameter.Name));
-			writer.Open($"public {bound.Name}({ParameterList(constructor.ManagedParameters, withDefaults: true)}) : this(CreateNative({arguments}))").Close();
+			writer.Open($"public {bound.Name}({ParameterList(constructor.ManagedParameters, withDefaults: true)}) : this(CreateNative({arguments}))");
+			// A parameter the native object goes on using stays alive as long as this object does.
+			foreach (BoundParameter kept in constructor.ManagedParameters.Where(parameter => bound.Tweak.KeptAlive.Contains(parameter.CppName))) writer.Line($"KeepAlive({kept.Name});");
+			writer.Close();
 		}
 		if (bound.Handle == HandleKind.Owned) {
 			Gap();

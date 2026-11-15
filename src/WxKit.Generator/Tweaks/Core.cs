@@ -31,6 +31,29 @@ internal static class Core {
 		// wxMSW's wxDialog has no GetToolBar, though the documentation gives it one.
 		tweaks.Class("wxDialog").Ignore("GetToolBar");
 		tweaks.Class("wxMessageDialog");
+		// The find dialog reads and writes its data for as long as it exists, so the data is
+		// WxKit's, and the dialog keeps it alive. GetData would wrap the same data a second time.
+		// The dialog sends its events to itself, and on to its parent.
+		tweaks.Enum("wxFindReplaceFlags", "FindReplaceFlags", isFlags: true);
+		tweaks.Enum("wxFindReplaceDialogStyles", "FindReplaceDialogStyle", isFlags: true);
+		tweaks.Class("wxFindReplaceData", data => data
+			.Owned()
+			.ParameterEnum("wxFindReplaceData", "flags", "wxFindReplaceFlags")
+			.ParameterEnum("SetFlags", "flags", "wxFindReplaceFlags")
+			.ParameterEnum("GetFlags", "return", "wxFindReplaceFlags"));
+		tweaks.Class("wxFindReplaceDialog", dialog => dialog
+			.KeepAlive("data")
+			.Ignore("GetData")
+			.ParameterEnum("wxFindReplaceDialog", "style", "wxFindReplaceDialogStyles")
+			.AddEvent("EVT_FIND", "wxEVT_FIND", "wxFindDialogEvent", "Find")
+			.AddEvent("EVT_FIND_NEXT", "wxEVT_FIND_NEXT", "wxFindDialogEvent", "FindNext")
+			.AddEvent("EVT_FIND_REPLACE", "wxEVT_FIND_REPLACE", "wxFindDialogEvent", "Replace")
+			.AddEvent("EVT_FIND_REPLACE_ALL", "wxEVT_FIND_REPLACE_ALL", "wxFindDialogEvent", "ReplaceAll")
+			.AddEvent("EVT_FIND_CLOSE", "wxEVT_FIND_CLOSE", "wxFindDialogEvent", "FindClose"));
+		tweaks.Class("wxFindDialogEvent", findEvent => findEvent.ParameterEnum("GetFlags", "return", "wxFindReplaceFlags"));
+		// The font dialog copies the data it is given, and gives a copy back.
+		tweaks.Class("wxFontData", data => data.ValueObject().Property("EnableEffects", "GetEnableEffects", "EnableEffects").Property("RestrictSelection", "GetRestrictSelection", "RestrictSelection"));
+		tweaks.Class("wxFontDialog");
 		tweaks.Class("wxPanel");
 		tweaks.Class("wxButton", button => button.Event("EVT_BUTTON", "Click"));
 		tweaks.Class("wxStaticText");

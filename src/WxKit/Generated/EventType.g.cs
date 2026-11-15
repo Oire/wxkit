@@ -362,6 +362,41 @@ public static unsafe partial class EventType {
 		public static readonly EventType<EraseEvent> Value = new(WxKitNative.EventTypeEraseBackground, static native => new EraseEvent((WxkEvent*)native));
 	}
 
+	/// <summary>Wraps wxEVT_FIND.</summary>
+	public static EventType<FindDialogEvent> Find => FindType.Value;
+
+	private static class FindType {
+		public static readonly EventType<FindDialogEvent> Value = new(WxKitNative.EventTypeFind, static native => new FindDialogEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_FIND_CLOSE.</summary>
+	public static EventType<FindDialogEvent> FindClose => FindCloseType.Value;
+
+	private static class FindCloseType {
+		public static readonly EventType<FindDialogEvent> Value = new(WxKitNative.EventTypeFindClose, static native => new FindDialogEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_FIND_NEXT.</summary>
+	public static EventType<FindDialogEvent> FindNext => FindNextType.Value;
+
+	private static class FindNextType {
+		public static readonly EventType<FindDialogEvent> Value = new(WxKitNative.EventTypeFindNext, static native => new FindDialogEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_FIND_REPLACE.</summary>
+	public static EventType<FindDialogEvent> FindReplace => FindReplaceType.Value;
+
+	private static class FindReplaceType {
+		public static readonly EventType<FindDialogEvent> Value = new(WxKitNative.EventTypeFindReplace, static native => new FindDialogEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_FIND_REPLACE_ALL.</summary>
+	public static EventType<FindDialogEvent> FindReplaceAll => FindReplaceAllType.Value;
+
+	private static class FindReplaceAllType {
+		public static readonly EventType<FindDialogEvent> Value = new(WxKitNative.EventTypeFindReplaceAll, static native => new FindDialogEvent((WxkEvent*)native));
+	}
+
 	/// <summary>Wraps wxEVT_FULLSCREEN.</summary>
 	public static EventType<FullScreenEvent> Fullscreen => FullscreenType.Value;
 

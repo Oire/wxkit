@@ -37,6 +37,13 @@ internal static class Naming {
 		["3DSASH"] = "ThreeDSash",
 		["3DBORDER"] = "ThreeDBorder",
 		["DATAVIEW"] = "DataView",
+		// The find dialog's flags and styles run theirs together too.
+		["MATCHCASE"] = "MatchCase",
+		["WHOLEWORD"] = "WholeWord",
+		["REPLACEDIALOG"] = "ReplaceDialog",
+		["NOUPDOWN"] = "NoUpDown",
+		["NOMATCHCASE"] = "NoMatchCase",
+		["NOWHOLEWORD"] = "NoWholeWord",
 		// The accessibility roles, states, and events run their words together.
 		["BUTTONDROPDOWN"] = "ButtonDropDown",
 		["BUTTONDROPDOWNGRID"] = "ButtonDropDownGrid",

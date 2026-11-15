@@ -26,8 +26,11 @@
 #include <wx/dialog.h>
 #include <wx/dirdlg.h>
 #include <wx/event.h>
+#include <wx/fdrepdlg.h>
 #include <wx/filedlg.h>
 #include <wx/font.h>
+#include <wx/fontdata.h>
+#include <wx/fontdlg.h>
 #include <wx/frame.h>
 #include <wx/gauge.h>
 #include <wx/hyperlink.h>

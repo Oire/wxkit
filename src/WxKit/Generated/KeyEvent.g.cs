@@ -30,6 +30,12 @@ public unsafe partial class KeyEvent : Event {
 	/// <summary>Obtains the position (in client coordinates) at which the key was pressed.</summary>
 	public Point Position => WxKitNative.KeyEventGetPositionDefault(Handle);
 
+	/// <summary>Returns the raw key code for this event.</summary>
+	public int RawKeyCode => checked((int)WxKitNative.KeyEventGetRawKeyCode(Handle));
+
+	/// <summary>Returns the low level key flags for this event.</summary>
+	public int RawKeyFlags => checked((int)WxKitNative.KeyEventGetRawKeyFlags(Handle));
+
 	/// <summary>Returns the X position (in client coordinates) of the event.</summary>
 	public int X => WxKitNative.KeyEventGetX(Handle);
 

@@ -2238,6 +2238,54 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void FileDialogSetWildcard(WxkWindow* self, char* wildCard, nuint wildCardLength);
 
+	[LibraryImport(Library, EntryPoint = "wxk_FindDialogEvent_GetDialog")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* FindDialogEventGetDialog(WxkEvent* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FindDialogEvent_GetFindString")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkString* FindDialogEventGetFindString(WxkEvent* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FindDialogEvent_GetFlags")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int FindDialogEventGetFlags(WxkEvent* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FindDialogEvent_GetReplaceString")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkString* FindDialogEventGetReplaceString(WxkEvent* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FindReplaceData_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* FindReplaceDataNew(int flags);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FindReplaceData_GetFindString")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkString* FindReplaceDataGetFindString(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FindReplaceData_SetFindString")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void FindReplaceDataSetFindString(WxkObject* self, char* text, nuint textLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FindReplaceData_GetFlags")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int FindReplaceDataGetFlags(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FindReplaceData_SetFlags")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void FindReplaceDataSetFlags(WxkObject* self, int flags);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FindReplaceData_GetReplaceString")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkString* FindReplaceDataGetReplaceString(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FindReplaceData_SetReplaceString")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void FindReplaceDataSetReplaceString(WxkObject* self, char* text, nuint textLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FindReplaceDialog_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* FindReplaceDialogNew(WxkWindow* parent, WxkObject* data, char* title, nuint titleLength, int style);
+
 	[LibraryImport(Library, EntryPoint = "wxk_FlexGridSizer_new_IntIntInt")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkSizer* FlexGridSizerNewIntIntInt(int cols, int vgap, int hgap);
@@ -2513,6 +2561,82 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_Font_SetDefaultEncoding")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void FontSetDefaultEncoding(int encoding);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FontData_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* FontDataNew();
+
+	[LibraryImport(Library, EntryPoint = "wxk_FontData_SetRange")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void FontDataSetRange(WxkObject* self, int min, int max);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FontData_GetEnableEffects")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte FontDataGetEnableEffects(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FontData_EnableEffects")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void FontDataEnableEffects(WxkObject* self, byte enable);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FontData_GetRestrictSelection")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int FontDataGetRestrictSelection(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FontData_RestrictSelection")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void FontDataRestrictSelection(WxkObject* self, int flags);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FontData_GetAllowSymbols")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte FontDataGetAllowSymbols(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FontData_SetAllowSymbols")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void FontDataSetAllowSymbols(WxkObject* self, byte allowSymbols);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FontData_GetChosenFont")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* FontDataGetChosenFont(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FontData_SetChosenFont")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void FontDataSetChosenFont(WxkObject* self, WxkObject* font);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FontData_GetColour")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkColor FontDataGetColour(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FontData_SetColour")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void FontDataSetColour(WxkObject* self, WxkColor color);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FontData_GetInitialFont")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* FontDataGetInitialFont(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FontData_SetInitialFont")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void FontDataSetInitialFont(WxkObject* self, WxkObject* font);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FontData_GetShowHelp")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte FontDataGetShowHelp(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FontData_SetShowHelp")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void FontDataSetShowHelp(WxkObject* self, byte showHelp);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FontDialog_new_Window")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* FontDialogNewWindow(WxkWindow* parent);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FontDialog_new_WindowFontData")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* FontDialogNewWindowFontData(WxkWindow* parent, WxkObject* data);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FontDialog_GetFontData")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* FontDialogGetFontData(WxkWindow* self);
 
 	[LibraryImport(Library, EntryPoint = "wxk_Frame_new")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -3213,6 +3337,14 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_KeyEvent_IsAutoRepeat")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte KeyEventIsAutoRepeat(WxkEvent* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_KeyEvent_GetRawKeyCode")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial uint KeyEventGetRawKeyCode(WxkEvent* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_KeyEvent_GetRawKeyFlags")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial uint KeyEventGetRawKeyFlags(WxkEvent* self);
 
 	[LibraryImport(Library, EntryPoint = "wxk_KeyEvent_GetX")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -8053,6 +8185,26 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_EraseBackground")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeEraseBackground();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_Find")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeFind();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_FindClose")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeFindClose();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_FindNext")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeFindNext();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_FindReplace")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeFindReplace();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_FindReplaceAll")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeFindReplaceAll();
 
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_Fullscreen")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

@@ -661,6 +661,27 @@ WXK_FUNCTION(void) wxk_FileDialog_SetPath(wxk_Window* self, const char16_t* path
 WXK_FUNCTION(wxk_String*) wxk_FileDialog_GetWildcard(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_FileDialog_SetWildcard(wxk_Window* self, const char16_t* wildCard, size_t wildCardLength) WXK_NOEXCEPT;
 
+// wxFindDialogEvent
+
+WXK_FUNCTION(wxk_Window*) wxk_FindDialogEvent_GetDialog(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_String*) wxk_FindDialogEvent_GetFindString(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_FindDialogEvent_GetFlags(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_String*) wxk_FindDialogEvent_GetReplaceString(wxk_Event* self) WXK_NOEXCEPT;
+
+// wxFindReplaceData
+
+WXK_FUNCTION(wxk_Object*) wxk_FindReplaceData_new(int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_String*) wxk_FindReplaceData_GetFindString(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_FindReplaceData_SetFindString(wxk_Object* self, const char16_t* text, size_t textLength) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_FindReplaceData_GetFlags(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_FindReplaceData_SetFlags(wxk_Object* self, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_String*) wxk_FindReplaceData_GetReplaceString(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_FindReplaceData_SetReplaceString(wxk_Object* self, const char16_t* text, size_t textLength) WXK_NOEXCEPT;
+
+// wxFindReplaceDialog
+
+WXK_FUNCTION(wxk_Window*) wxk_FindReplaceDialog_new(wxk_Window* parent, wxk_Object* data, const char16_t* title, size_t titleLength, int32_t style) WXK_NOEXCEPT;
+
 // wxFlexGridSizer
 
 WXK_FUNCTION(wxk_Sizer*) wxk_FlexGridSizer_new_IntIntInt(int32_t cols, int32_t vgap, int32_t hgap) WXK_NOEXCEPT;
@@ -738,6 +759,31 @@ WXK_FUNCTION(uint8_t) wxk_Font_IsFixedWidth(wxk_Object* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Font_IsOk(wxk_Object* self) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_Font_GetDefaultEncoding(void) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Font_SetDefaultEncoding(int32_t encoding) WXK_NOEXCEPT;
+
+// wxFontData
+
+WXK_FUNCTION(wxk_Object*) wxk_FontData_new(void) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_FontData_SetRange(wxk_Object* self, int32_t min, int32_t max) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_FontData_GetEnableEffects(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_FontData_EnableEffects(wxk_Object* self, uint8_t enable) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_FontData_GetRestrictSelection(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_FontData_RestrictSelection(wxk_Object* self, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_FontData_GetAllowSymbols(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_FontData_SetAllowSymbols(wxk_Object* self, uint8_t allowSymbols) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_FontData_GetChosenFont(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_FontData_SetChosenFont(wxk_Object* self, const wxk_Object* font) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Colour) wxk_FontData_GetColour(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_FontData_SetColour(wxk_Object* self, wxk_Colour color) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_FontData_GetInitialFont(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_FontData_SetInitialFont(wxk_Object* self, const wxk_Object* font) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_FontData_GetShowHelp(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_FontData_SetShowHelp(wxk_Object* self, uint8_t showHelp) WXK_NOEXCEPT;
+
+// wxFontDialog
+
+WXK_FUNCTION(wxk_Window*) wxk_FontDialog_new_Window(wxk_Window* parent) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Window*) wxk_FontDialog_new_WindowFontData(wxk_Window* parent, const wxk_Object* data) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_FontDialog_GetFontData(wxk_Window* self) WXK_NOEXCEPT;
 
 // wxFrame
 
@@ -949,6 +995,8 @@ WXK_FUNCTION(void) wxk_KeyEvent_SetMetaDown(wxk_Event* self, uint8_t down) WXK_N
 WXK_FUNCTION(wxk_Point) wxk_KeyEvent_GetPosition_Default(wxk_Event* self) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_KeyEvent_GetKeyCode(wxk_Event* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_KeyEvent_IsAutoRepeat(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint32_t) wxk_KeyEvent_GetRawKeyCode(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint32_t) wxk_KeyEvent_GetRawKeyFlags(wxk_Event* self) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_KeyEvent_GetX(wxk_Event* self) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_KeyEvent_GetY(wxk_Event* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_KeyEvent_IsNextEventAllowed(wxk_Event* self) WXK_NOEXCEPT;
@@ -2336,6 +2384,11 @@ WXK_FUNCTION(int32_t) wxk_EventType_DropFiles(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_EndSession(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_EnterWindow(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_EraseBackground(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_Find(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_FindClose(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_FindNext(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_FindReplace(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_FindReplaceAll(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_Fullscreen(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_Help(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_Hyperlink(void) WXK_NOEXCEPT;

@@ -100,6 +100,14 @@ internal sealed class ClassTweak(string name) {
 		return this;
 	}
 
+	/// <summary>Constructor parameters the native object goes on using, such as a find dialog's data, which the managed object keeps alive.</summary>
+	public HashSet<string> KeptAlive { get; } = new(StringComparer.Ordinal);
+
+	public ClassTweak KeepAlive(params string[] parameters) {
+		KeptAlive.UnionWith(parameters);
+		return this;
+	}
+
 	/// <summary>Overloads guarded the same way, told apart by one of their parameters, such as wxStaticBox's that takes a window as its label.</summary>
 	public List<OverloadGuard> OverloadGuards { get; } = [];
 

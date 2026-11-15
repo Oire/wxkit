@@ -578,6 +578,30 @@ public enum EventCategory {
 	All = 127,
 }
 
+/// <summary>Wraps wxFindReplaceDialogStyles.</summary>
+[Flags]
+public enum FindReplaceDialogStyle {
+	/// <summary>replace dialog (otherwise find dialog). Wraps wxFR_REPLACEDIALOG.</summary>
+	ReplaceDialog = 1,
+	/// <summary>don't allow changing the search direction. Wraps wxFR_NOUPDOWN.</summary>
+	NoUpDown = 2,
+	/// <summary>don't allow case sensitive searching. Wraps wxFR_NOMATCHCASE.</summary>
+	NoMatchCase = 4,
+	/// <summary>don't allow whole word searching. Wraps wxFR_NOWHOLEWORD.</summary>
+	NoWholeWord = 8,
+}
+
+/// <summary>Wraps wxFindReplaceFlags.</summary>
+[Flags]
+public enum FindReplaceFlags {
+	/// <summary>downward search/replace selected (otherwise - upwards). Wraps wxFR_DOWN.</summary>
+	Down = 1,
+	/// <summary>whole word search/replace selected. Wraps wxFR_WHOLEWORD.</summary>
+	WholeWord = 2,
+	/// <summary>case sensitive search/replace selected (otherwise - case insensitive). Wraps wxFR_MATCHCASE.</summary>
+	MatchCase = 4,
+}
+
 /// <summary>Wraps wxFlexSizerGrowMode.</summary>
 public enum FlexSizerGrowMode {
 	/// <summary>Don't resize the cells in non-flexible direction at all. Wraps wxFLEX_GROWMODE_NONE.</summary>

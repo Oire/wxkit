@@ -23,6 +23,8 @@ internal static unsafe partial class ObjectRegistry {
 		["wxDialog"] = static native => new Dialog((WxkWindow*)native),
 		["wxDirDialog"] = static native => new DirDialog((WxkWindow*)native),
 		["wxFileDialog"] = static native => new FileDialog((WxkWindow*)native),
+		["wxFindReplaceDialog"] = static native => new FindReplaceDialog((WxkWindow*)native),
+		["wxFontDialog"] = static native => new FontDialog((WxkWindow*)native),
 		["wxFrame"] = static native => new Frame((WxkWindow*)native),
 		["wxGauge"] = static native => new Gauge((WxkWindow*)native),
 		["wxHyperlinkCtrl"] = static native => new HyperlinkCtrl((WxkWindow*)native),

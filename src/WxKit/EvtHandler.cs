@@ -57,6 +57,12 @@ public abstract unsafe class EvtHandler {
 		RemoveHandler(type, id, lastId, handler);
 	}
 
+	// Objects the native one uses for as long as it exists, such as the data a find dialog reads and
+	// writes, which have to stay alive as long as this does.
+	private List<object>? _keptAlive;
+
+	internal void KeepAlive(object value) => (_keptAlive ??= []).Add(value);
+
 	// wxWidgets binds one functor per event type and id range, the first time a handler is added,
 	// and never unbinds it: once the last handler is removed, the functor skips the event, which
 	// leaves wxWidgets to handle it as if nothing were bound. The functor is released, and the

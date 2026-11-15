@@ -74,6 +74,14 @@ WXK_FUNCTION(uint8_t) wxk_KeyEvent_IsAutoRepeat(wxk_Event* self) noexcept {
 	#endif
 }
 
+WXK_FUNCTION(uint32_t) wxk_KeyEvent_GetRawKeyCode(wxk_Event* self) noexcept {
+	return wxk::Guard<uint32_t>(0, [&]() -> uint32_t { return static_cast<uint32_t>(static_cast<wxKeyEvent*>(wxk::Unwrap(self))->GetRawKeyCode()); });
+}
+
+WXK_FUNCTION(uint32_t) wxk_KeyEvent_GetRawKeyFlags(wxk_Event* self) noexcept {
+	return wxk::Guard<uint32_t>(0, [&]() -> uint32_t { return static_cast<uint32_t>(static_cast<wxKeyEvent*>(wxk::Unwrap(self))->GetRawKeyFlags()); });
+}
+
 WXK_FUNCTION(int32_t) wxk_KeyEvent_GetX(wxk_Event* self) noexcept {
 	return wxk::Guard<int32_t>(0, [&]() -> int32_t { return static_cast<int32_t>(static_cast<wxKeyEvent*>(wxk::Unwrap(self))->GetX()); });
 }
