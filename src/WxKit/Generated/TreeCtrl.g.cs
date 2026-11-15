@@ -344,6 +344,15 @@ public unsafe partial class TreeCtrl : Control {
 	/// <summary>Selects the given item.</summary>
 	public void SelectItem(TreeItemId item, bool select = true) => WxKitNative.TreeCtrlSelectItem(Native, item.Value, select ? (byte)1 : (byte)0);
 
+	/// <summary>Set the images to use for the items in the control.</summary>
+	public void SetImages(IEnumerable<Bitmap> images) {
+		ArgumentNullException.ThrowIfNull(images);
+		using NativeBitmapList imagesNative = new(images);
+		fixed (nint* imagesPointer = imagesNative.Handles) {
+			WxKitNative.TreeCtrlSetImages(Native, (WxkObject**)imagesPointer, (nuint)imagesNative.Handles.Length);
+		}
+	}
+
 	/// <summary>Sets the colour of the item's background.</summary>
 	public void SetItemBackgroundColor(TreeItemId item, Color? column) => WxKitNative.TreeCtrlSetItemBackgroundColour(Native, item.Value, global::WxKit.Color.ToNative(column));
 
@@ -378,6 +387,15 @@ public unsafe partial class TreeCtrl : Control {
 
 	/// <summary>Sets the colour of the item's text.</summary>
 	public void SetItemTextColor(TreeItemId item, Color? column) => WxKitNative.TreeCtrlSetItemTextColour(Native, item.Value, global::WxKit.Color.ToNative(column));
+
+	/// <summary>Sets the images to use for the application-defined item states.</summary>
+	public void SetStateImages(IEnumerable<Bitmap> images) {
+		ArgumentNullException.ThrowIfNull(images);
+		using NativeBitmapList imagesNative = new(images);
+		fixed (nint* imagesPointer = imagesNative.Handles) {
+			WxKitNative.TreeCtrlSetStateImages(Native, (WxkObject**)imagesPointer, (nuint)imagesNative.Handles.Length);
+		}
+	}
 
 	/// <summary>Sorts the children of the given item using OnCompareItems().</summary>
 	public void SortChildren(TreeItemId item) => WxKitNative.TreeCtrlSortChildren(Native, item.Value);

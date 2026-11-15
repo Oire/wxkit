@@ -102,6 +102,7 @@ WXK_FUNCTION(uint8_t) wxk_BookCtrlBase_InsertPage(wxk_Window* self, size_t index
 WXK_FUNCTION(uint8_t) wxk_BookCtrlBase_RemovePage(wxk_Window* self, size_t page) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Window*) wxk_BookCtrlBase_GetPage(wxk_Window* self, size_t page) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_BookCtrlBase_SetPageSize(wxk_Window* self, wxk_Size size) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_BookCtrlBase_SetImages(wxk_Window* self, wxk_Object* const* images, size_t imagesCount) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_BookCtrlBase_GetSelection(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Window*) wxk_BookCtrlBase_GetCurrentPage(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(size_t) wxk_BookCtrlBase_GetPageCount(wxk_Window* self) WXK_NOEXCEPT;
@@ -1086,6 +1087,8 @@ WXK_FUNCTION(uint8_t) wxk_ListCtrl_ScrollList(wxk_Window* self, int32_t dx, int3
 WXK_FUNCTION(uint8_t) wxk_ListCtrl_SetBackgroundColour(wxk_Window* self, wxk_Colour column) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_ListCtrl_SetColumn(wxk_Window* self, int32_t column, wxk_Object* item) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_ListCtrl_SetColumnWidth(wxk_Window* self, int32_t column, int32_t width) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListCtrl_SetNormalImages(wxk_Window* self, wxk_Object* const* images, size_t imagesCount) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ListCtrl_SetSmallImages(wxk_Window* self, wxk_Object* const* images, size_t imagesCount) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_ListCtrl_IsVisible(wxk_Window* self, int64_t item) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_ListCtrl_SetItem_ListItem(wxk_Window* self, wxk_Object* info) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_ListCtrl_SetItem_LongIntStringInt(wxk_Window* self, int64_t index, int32_t column, const char16_t* label, size_t labelLength, int32_t imageId) WXK_NOEXCEPT;
@@ -1980,6 +1983,7 @@ WXK_FUNCTION(void) wxk_TreeCtrl_SetItemImage(wxk_Window* self, void* item, int32
 WXK_FUNCTION(void) wxk_TreeCtrl_SetItemState(wxk_Window* self, void* item, int32_t state) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_TreeCtrl_SetItemText(wxk_Window* self, void* item, const char16_t* text, size_t textLength) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_TreeCtrl_SetItemTextColour(wxk_Window* self, void* item, wxk_Colour column) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_SetStateImages(wxk_Window* self, wxk_Object* const* images, size_t imagesCount) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_TreeCtrl_SortChildren(wxk_Window* self, void* item) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_TreeCtrl_Toggle(wxk_Window* self, void* item) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_TreeCtrl_ToggleItemSelection(wxk_Window* self, void* item) WXK_NOEXCEPT;
@@ -1987,6 +1991,7 @@ WXK_FUNCTION(void) wxk_TreeCtrl_Unselect(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_TreeCtrl_UnselectAll(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_TreeCtrl_UnselectItem(wxk_Window* self, void* item) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_TreeCtrl_SelectChildren(wxk_Window* self, void* parent) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TreeCtrl_SetImages(wxk_Window* self, wxk_Object* const* images, size_t imagesCount) WXK_NOEXCEPT;
 WXK_FUNCTION(uint32_t) wxk_TreeCtrl_GetCount(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Window*) wxk_TreeCtrl_GetEditControl(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void*) wxk_TreeCtrl_GetFirstVisibleItem(wxk_Window* self) WXK_NOEXCEPT;

@@ -72,6 +72,15 @@ public unsafe partial class BookCtrlBase : Control {
 	/// <summary>Deletes the specified page, without deleting the associated window The window will be hidden, though, so you may need to call Show() after e.g.</summary>
 	public bool RemovePage(int page) => WxKitNative.BookCtrlBaseRemovePage(Native, checked((nuint)page)) != 0;
 
+	/// <summary>Set the images to use for the items in the control.</summary>
+	public void SetImages(IEnumerable<Bitmap> images) {
+		ArgumentNullException.ThrowIfNull(images);
+		using NativeBitmapList imagesNative = new(images);
+		fixed (nint* imagesPointer = imagesNative.Handles) {
+			WxKitNative.BookCtrlBaseSetImages(Native, (WxkObject**)imagesPointer, (nuint)imagesNative.Handles.Length);
+		}
+	}
+
 	/// <summary>Sets the image index for the given page.</summary>
 	public bool SetPageImage(int page, int image) => WxKitNative.BookCtrlBaseSetPageImage(Native, checked((nuint)page), image) != 0;
 

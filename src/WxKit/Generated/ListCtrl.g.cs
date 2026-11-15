@@ -423,8 +423,26 @@ public unsafe partial class ListCtrl : Control {
 	/// <summary>Sets the colour for this item.</summary>
 	public void SetItemTextColor(long item, Color? column) => WxKitNative.ListCtrlSetItemTextColour(Native, item, global::WxKit.Color.ToNative(column));
 
+	/// <summary>Sets the images to use when showing large, normal icons in this control.</summary>
+	public void SetNormalImages(IEnumerable<Bitmap> images) {
+		ArgumentNullException.ThrowIfNull(images);
+		using NativeBitmapList imagesNative = new(images);
+		fixed (nint* imagesPointer = imagesNative.Handles) {
+			WxKitNative.ListCtrlSetNormalImages(Native, (WxkObject**)imagesPointer, (nuint)imagesNative.Handles.Length);
+		}
+	}
+
 	/// <summary>Adds or removes a single window style.</summary>
 	public void SetSingleStyle(long style, bool add = true) => WxKitNative.ListCtrlSetSingleStyle(Native, style, add ? (byte)1 : (byte)0);
+
+	/// <summary>Sets the images to use when showing small icons in this control.</summary>
+	public void SetSmallImages(IEnumerable<Bitmap> images) {
+		ArgumentNullException.ThrowIfNull(images);
+		using NativeBitmapList imagesNative = new(images);
+		fixed (nint* imagesPointer = imagesNative.Handles) {
+			WxKitNative.ListCtrlSetSmallImages(Native, (WxkObject**)imagesPointer, (nuint)imagesNative.Handles.Length);
+		}
+	}
 
 	/// <summary>Sets the whole window style, deleting all items.</summary>
 	public void SetWindowStyleFlag(long style) => WxKitNative.ListCtrlSetWindowStyleFlag(Native, style);

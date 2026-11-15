@@ -48,6 +48,17 @@ public class ControlTests {
 	});
 
 	[Fact]
+	public Task GivesNotebookPagesImages() => Gui.WithFrame(frame => {
+		Notebook notebook = new(frame);
+		using Bitmap first = new(16, 16);
+		using Bitmap second = new(16, 16);
+		notebook.SetImages([first, second]);
+		Assert.Equal(2, notebook.ImageCount);
+		Assert.True(notebook.AddPage(new Panel(notebook), "&First", imageId: 1));
+		Assert.Equal(1, notebook.GetPageImage(0));
+	});
+
+	[Fact]
 	public Task LaysOutWithAFlexGridSizer() => Gui.WithFrame(frame => {
 		Panel panel = new(frame);
 		FlexGridSizer grid = new(2, 5, 5);

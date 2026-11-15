@@ -757,6 +757,44 @@ internal sealed class VariantConversion : Conversion {
 
 // A wxVector<wxVariant>, such as a data view list row's values, is built from the managed values
 // for the call.
+// A wxVector<wxBitmapBundle>, such as a tree's images, is a sequence of bitmaps, which cross as an
+// array of their handles that the shim makes bundles of. The bitmaps stay alive for the call.
+internal sealed class BitmapListConversion : Conversion {
+	public static BitmapListConversion Instance { get; } = new();
+
+	public override string Suffix => "Bitmaps";
+
+	public override string CReturnType => throw new InvalidOperationException("Lists of bitmaps are only parameters.");
+
+	public override string Fallback => "nullptr";
+
+	public override string InteropReturnType => throw new InvalidOperationException("Lists of bitmaps are only parameters.");
+
+	public override IEnumerable<string> CParameters(string name) => [$"wxk_Object* const* {name}", $"size_t {name}Count"];
+
+	public override string ToCpp(string name) => $"wxk::ToBitmapBundles({name}, {name}Count)";
+
+	public override string FromCpp(string expression) => throw new InvalidOperationException("Lists of bitmaps are only parameters.");
+
+	public override IEnumerable<string> InteropParameters(string name) => [$"WxkObject** {name}", $"nuint {name}Count"];
+
+	public override string ManagedType(bool nullable) => "IEnumerable<Bitmap>";
+
+	public override string? Check(string name, bool nullable) => $"ArgumentNullException.ThrowIfNull({name});";
+
+	public override string? Prepare(string name) => $"using NativeBitmapList {Native(name)} = new({name});";
+
+	public override string? Fixed(string name) => $"fixed (nint* {Pointer(name)} = {Native(name)}.Handles)";
+
+	public override IEnumerable<string> InteropArguments(string name, bool nullable) => [$"(WxkObject**){Pointer(name)}", $"(nuint){Native(name)}.Handles.Length"];
+
+	public override string ManagedReturn(string expression) => throw new InvalidOperationException("Lists of bitmaps are only parameters.");
+
+	private static string Native(string name) => name.TrimStart('@') + "Native";
+
+	private static string Pointer(string name) => name.TrimStart('@') + "Pointer";
+}
+
 internal sealed class VariantListConversion : Conversion {
 	public static VariantListConversion Instance { get; } = new();
 

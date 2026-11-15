@@ -183,6 +183,14 @@ wxk_WindowList* ToWindowList(const List& list) {
 	return reinterpret_cast<wxk_WindowList*>(copy);
 }
 
+// The bundles a list of bitmaps makes, as a control's images, such as a tree's, take them.
+inline wxVector<wxBitmapBundle> ToBitmapBundles(wxk_Object* const* bitmaps, size_t count) {
+	wxVector<wxBitmapBundle> bundles;
+	bundles.reserve(count);
+	for (size_t index = 0; index < count; index++) bundles.push_back(wxBitmapBundle(*static_cast<wxBitmap*>(Unwrap(bitmaps[index]))));
+	return bundles;
+}
+
 // Adds an image file format, unless it is already added, so calling twice does nothing.
 template <typename Handler>
 void AddImageHandler(wxBitmapType type) {

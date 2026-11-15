@@ -354,6 +354,10 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void BookCtrlBaseSetPageSize(WxkWindow* self, Size size);
 
+	[LibraryImport(Library, EntryPoint = "wxk_BookCtrlBase_SetImages")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void BookCtrlBaseSetImages(WxkWindow* self, WxkObject** images, nuint imagesCount);
+
 	[LibraryImport(Library, EntryPoint = "wxk_BookCtrlBase_GetSelection")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int BookCtrlBaseGetSelection(WxkWindow* self);
@@ -3678,6 +3682,14 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte ListCtrlSetColumnWidth(WxkWindow* self, int column, int width);
 
+	[LibraryImport(Library, EntryPoint = "wxk_ListCtrl_SetNormalImages")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ListCtrlSetNormalImages(WxkWindow* self, WxkObject** images, nuint imagesCount);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ListCtrl_SetSmallImages")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ListCtrlSetSmallImages(WxkWindow* self, WxkObject** images, nuint imagesCount);
+
 	[LibraryImport(Library, EntryPoint = "wxk_ListCtrl_IsVisible")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte ListCtrlIsVisible(WxkWindow* self, long item);
@@ -6642,6 +6654,10 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void TreeCtrlSetItemTextColour(WxkWindow* self, nint item, WxkColor column);
 
+	[LibraryImport(Library, EntryPoint = "wxk_TreeCtrl_SetStateImages")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void TreeCtrlSetStateImages(WxkWindow* self, WxkObject** images, nuint imagesCount);
+
 	[LibraryImport(Library, EntryPoint = "wxk_TreeCtrl_SortChildren")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void TreeCtrlSortChildren(WxkWindow* self, nint item);
@@ -6669,6 +6685,10 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_TreeCtrl_SelectChildren")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void TreeCtrlSelectChildren(WxkWindow* self, nint parent);
+
+	[LibraryImport(Library, EntryPoint = "wxk_TreeCtrl_SetImages")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void TreeCtrlSetImages(WxkWindow* self, WxkObject** images, nuint imagesCount);
 
 	[LibraryImport(Library, EntryPoint = "wxk_TreeCtrl_GetCount")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

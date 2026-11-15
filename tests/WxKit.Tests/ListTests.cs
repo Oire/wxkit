@@ -33,4 +33,29 @@ public class ListTests {
 		Assert.Equal("A novel", tree.GetItemText(novel));
 		Assert.False(default(TreeItemId).IsOk);
 	});
+
+	[Fact]
+	public Task GivesATreeItsImages() => Gui.WithFrame(frame => {
+		TreeCtrl tree = new(frame);
+		using Bitmap folder = new(16, 16);
+		using Bitmap file = new(16, 16);
+		tree.SetImages([folder, file]);
+		Assert.Equal(2, tree.ImageCount);
+		TreeItemId root = tree.AddRoot("Library", image: 0);
+		TreeItemId novel = tree.AppendItem(root, "A novel", image: 1);
+		Assert.Equal(0, tree.GetItemImage(root));
+		Assert.Equal(1, tree.GetItemImage(novel));
+		Assert.Throws<ArgumentNullException>(() => tree.SetImages([folder, null!]));
+	});
+
+	[Fact]
+	public Task GivesAListViewItsImages() => Gui.WithFrame(frame => {
+		ListView list = new(frame);
+		using Bitmap icon = new(16, 16);
+		list.SetSmallImages([icon]);
+		list.SetNormalImages([icon]);
+		list.InsertColumn(0, "Name");
+		Assert.Equal(0, list.InsertItem(0, "readme.md", 0));
+		Assert.True(list.SetItemImage(0, 0));
+	});
 }

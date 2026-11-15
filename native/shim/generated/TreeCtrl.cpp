@@ -208,6 +208,10 @@ WXK_FUNCTION(void) wxk_TreeCtrl_SetItemTextColour(wxk_Window* self, void* item, 
 	wxk::Guard([&] { static_cast<wxTreeCtrl*>(wxk::Unwrap(self))->SetItemTextColour(wxTreeItemId(item), wxk::FromColour(column)); });
 }
 
+WXK_FUNCTION(void) wxk_TreeCtrl_SetStateImages(wxk_Window* self, wxk_Object* const* images, size_t imagesCount) noexcept {
+	wxk::Guard([&] { static_cast<wxTreeCtrl*>(wxk::Unwrap(self))->SetStateImages(wxk::ToBitmapBundles(images, imagesCount)); });
+}
+
 WXK_FUNCTION(void) wxk_TreeCtrl_SortChildren(wxk_Window* self, void* item) noexcept {
 	wxk::Guard([&] { static_cast<wxTreeCtrl*>(wxk::Unwrap(self))->SortChildren(wxTreeItemId(item)); });
 }
@@ -234,6 +238,10 @@ WXK_FUNCTION(void) wxk_TreeCtrl_UnselectItem(wxk_Window* self, void* item) noexc
 
 WXK_FUNCTION(void) wxk_TreeCtrl_SelectChildren(wxk_Window* self, void* parent) noexcept {
 	wxk::Guard([&] { static_cast<wxTreeCtrl*>(wxk::Unwrap(self))->SelectChildren(wxTreeItemId(parent)); });
+}
+
+WXK_FUNCTION(void) wxk_TreeCtrl_SetImages(wxk_Window* self, wxk_Object* const* images, size_t imagesCount) noexcept {
+	wxk::Guard([&] { static_cast<wxWithImages*>(static_cast<wxTreeCtrl*>(wxk::Unwrap(self)))->SetImages(wxk::ToBitmapBundles(images, imagesCount)); });
 }
 
 WXK_FUNCTION(uint32_t) wxk_TreeCtrl_GetCount(wxk_Window* self) noexcept {

@@ -228,6 +228,14 @@ WXK_FUNCTION(uint8_t) wxk_ListCtrl_SetColumnWidth(wxk_Window* self, int32_t colu
 	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxListCtrl*>(wxk::Unwrap(self))->SetColumnWidth(static_cast<int>(column), static_cast<int>(width))) ? 1 : 0; });
 }
 
+WXK_FUNCTION(void) wxk_ListCtrl_SetNormalImages(wxk_Window* self, wxk_Object* const* images, size_t imagesCount) noexcept {
+	wxk::Guard([&] { static_cast<wxListCtrl*>(wxk::Unwrap(self))->SetNormalImages(wxk::ToBitmapBundles(images, imagesCount)); });
+}
+
+WXK_FUNCTION(void) wxk_ListCtrl_SetSmallImages(wxk_Window* self, wxk_Object* const* images, size_t imagesCount) noexcept {
+	wxk::Guard([&] { static_cast<wxListCtrl*>(wxk::Unwrap(self))->SetSmallImages(wxk::ToBitmapBundles(images, imagesCount)); });
+}
+
 WXK_FUNCTION(uint8_t) wxk_ListCtrl_IsVisible(wxk_Window* self, int64_t item) noexcept {
 	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxListCtrl*>(wxk::Unwrap(self))->IsVisible(static_cast<long>(item))) ? 1 : 0; });
 }
