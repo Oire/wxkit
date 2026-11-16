@@ -293,27 +293,27 @@ WXK_FUNCTION(int32_t) wxk_EventType_ScrollChanged(void) noexcept {
 	return wxEVT_SCROLL_CHANGED;
 }
 
-WXK_FUNCTION(int32_t) wxk_EventType_ScrollLinedown(void) noexcept {
+WXK_FUNCTION(int32_t) wxk_EventType_ScrollLineDown(void) noexcept {
 	return wxEVT_SCROLL_LINEDOWN;
 }
 
-WXK_FUNCTION(int32_t) wxk_EventType_ScrollLineup(void) noexcept {
+WXK_FUNCTION(int32_t) wxk_EventType_ScrollLineUp(void) noexcept {
 	return wxEVT_SCROLL_LINEUP;
 }
 
-WXK_FUNCTION(int32_t) wxk_EventType_ScrollPagedown(void) noexcept {
+WXK_FUNCTION(int32_t) wxk_EventType_ScrollPageDown(void) noexcept {
 	return wxEVT_SCROLL_PAGEDOWN;
 }
 
-WXK_FUNCTION(int32_t) wxk_EventType_ScrollPageup(void) noexcept {
+WXK_FUNCTION(int32_t) wxk_EventType_ScrollPageUp(void) noexcept {
 	return wxEVT_SCROLL_PAGEUP;
 }
 
-WXK_FUNCTION(int32_t) wxk_EventType_ScrollThumbrelease(void) noexcept {
+WXK_FUNCTION(int32_t) wxk_EventType_ScrollThumbRelease(void) noexcept {
 	return wxEVT_SCROLL_THUMBRELEASE;
 }
 
-WXK_FUNCTION(int32_t) wxk_EventType_ScrollThumbtrack(void) noexcept {
+WXK_FUNCTION(int32_t) wxk_EventType_ScrollThumbTrack(void) noexcept {
 	return wxEVT_SCROLL_THUMBTRACK;
 }
 
@@ -321,35 +321,35 @@ WXK_FUNCTION(int32_t) wxk_EventType_ScrollTop(void) noexcept {
 	return wxEVT_SCROLL_TOP;
 }
 
-WXK_FUNCTION(int32_t) wxk_EventType_ScrollwinBottom(void) noexcept {
+WXK_FUNCTION(int32_t) wxk_EventType_ScrollWinBottom(void) noexcept {
 	return wxEVT_SCROLLWIN_BOTTOM;
 }
 
-WXK_FUNCTION(int32_t) wxk_EventType_ScrollwinLinedown(void) noexcept {
+WXK_FUNCTION(int32_t) wxk_EventType_ScrollWinLineDown(void) noexcept {
 	return wxEVT_SCROLLWIN_LINEDOWN;
 }
 
-WXK_FUNCTION(int32_t) wxk_EventType_ScrollwinLineup(void) noexcept {
+WXK_FUNCTION(int32_t) wxk_EventType_ScrollWinLineUp(void) noexcept {
 	return wxEVT_SCROLLWIN_LINEUP;
 }
 
-WXK_FUNCTION(int32_t) wxk_EventType_ScrollwinPagedown(void) noexcept {
+WXK_FUNCTION(int32_t) wxk_EventType_ScrollWinPageDown(void) noexcept {
 	return wxEVT_SCROLLWIN_PAGEDOWN;
 }
 
-WXK_FUNCTION(int32_t) wxk_EventType_ScrollwinPageup(void) noexcept {
+WXK_FUNCTION(int32_t) wxk_EventType_ScrollWinPageUp(void) noexcept {
 	return wxEVT_SCROLLWIN_PAGEUP;
 }
 
-WXK_FUNCTION(int32_t) wxk_EventType_ScrollwinThumbrelease(void) noexcept {
+WXK_FUNCTION(int32_t) wxk_EventType_ScrollWinThumbRelease(void) noexcept {
 	return wxEVT_SCROLLWIN_THUMBRELEASE;
 }
 
-WXK_FUNCTION(int32_t) wxk_EventType_ScrollwinThumbtrack(void) noexcept {
+WXK_FUNCTION(int32_t) wxk_EventType_ScrollWinThumbTrack(void) noexcept {
 	return wxEVT_SCROLLWIN_THUMBTRACK;
 }
 
-WXK_FUNCTION(int32_t) wxk_EventType_ScrollwinTop(void) noexcept {
+WXK_FUNCTION(int32_t) wxk_EventType_ScrollWinTop(void) noexcept {
 	return wxEVT_SCROLLWIN_TOP;
 }
 

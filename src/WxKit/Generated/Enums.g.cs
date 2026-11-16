@@ -1254,6 +1254,16 @@ public enum ScaleMode {
 	AspectFill = 3,
 }
 
+/// <summary>Wraps wxScrollbarVisibility.</summary>
+public enum ScrollbarVisibility {
+	/// <summary>Never show the scrollbar at all. Wraps wxSHOW_SB_NEVER.</summary>
+	Never = -1,
+	/// <summary>Show scrollbar only if it is needed. Wraps wxSHOW_SB_DEFAULT.</summary>
+	Default = 0,
+	/// <summary>Always show scrollbar, even if not needed. Wraps wxSHOW_SB_ALWAYS.</summary>
+	Always = 1,
+}
+
 /// <summary>Wraps wxSEND_EVENT_*.</summary>
 [Flags]
 public enum SendSizeEventFlags {

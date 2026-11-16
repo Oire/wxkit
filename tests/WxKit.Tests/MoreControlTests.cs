@@ -78,4 +78,18 @@ public class MoreControlTests {
 		MiniFrame tools = new(frame, "Tools");
 		tools.Destroy();
 	});
+
+	[Fact]
+	public Task ScrollsAPanel() => Gui.WithFrame(frame => {
+		ScrolledWindow scrolled = new(frame, size: new Size(200, 100));
+		scrolled.SetScrollRate(0, 10);
+		BoxSizer sizer = new(Orientation.Vertical);
+		for (int index = 0; index < 30; index++) sizer.Add(new CheckBox(scrolled, $"Option {index}"));
+		scrolled.Sizer = sizer;
+		scrolled.FitInside();
+		scrolled.GetScrollPixelsPerUnit(out int xUnit, out int yUnit);
+		Assert.Equal((0, 10), (xUnit, yUnit));
+		// A child's parent comes back as the same object, of the class WxKit made.
+		Assert.Same(scrolled, scrolled.Children[0].Parent);
+	});
 }

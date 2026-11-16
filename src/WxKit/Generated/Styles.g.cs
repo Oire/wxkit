@@ -611,6 +611,19 @@ public enum ScrollBarStyle : long {
 	Vertical = 0x8,
 }
 
+/// <summary>Styles for <see cref="ScrolledWindow"/>.</summary>
+[Flags]
+public enum ScrolledWindowStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>If this style is specified and wxVSCROLL isn't, the window will be scrollable only in horizontal direction (by default, i.e. if neither this style nor wxVSCROLL is specified, it scrolls in both directions). Wraps wxHSCROLL.</summary>
+	HorizontalScrollBar = 0x40000000,
+	/// <summary>If this style is specified and wxHSCROLL isn't, the window will be scrollable only in vertical direction (by default, i.e. if neither this style nor wxHSCROLL is specified, it scrolls in both directions). Wraps wxVSCROLL.</summary>
+	VerticalScrollBar = -2147483648,
+	/// <summary>Since wxWidgets 2.9.5, specifying this style makes the window always show its scrollbars, even if they are not used. See ShowScrollbars(). Wraps wxALWAYS_SHOW_SB.</summary>
+	AlwaysShowSb = 0x800000,
+}
+
 /// <summary>Styles for <see cref="SearchCtrl"/>.</summary>
 [Flags]
 public enum SearchCtrlStyle : long {

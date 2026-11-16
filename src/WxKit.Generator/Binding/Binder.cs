@@ -31,6 +31,19 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 	private readonly List<string> _skipped = [];
 
 	public BindingResult Bind() {
+		// A class made from a template is the template's members over the template's argument.
+		if (tweaks.TemplateInstances.Count > 0) {
+			Dictionary<string, DoxygenClass> classes = new(api.Classes, StringComparer.Ordinal);
+			foreach (TemplateInstanceTweak instance in tweaks.TemplateInstances) {
+				if (!api.Classes.TryGetValue(instance.Template, out DoxygenClass? template)) throw new InvalidOperationException($"A tweak makes {instance.Name} from {instance.Template}, which the interface headers do not have.");
+				classes[instance.Name] = template with {
+					Name = instance.Name,
+					Bases = [instance.BaseClass],
+					Members = [.. template.Members.Select(member => member.Name == instance.Template ? member with { Name = instance.Name } : member.Name == "~" + instance.Template ? member with { Name = "~" + instance.Name } : member)],
+				};
+			}
+			api = api with { Classes = classes };
+		}
 		foreach (ClassTweak tweak in tweaks.Classes.Values) {
 			if (!api.Classes.TryGetValue(tweak.CppName, out DoxygenClass? source)) throw new InvalidOperationException($"A tweak names {tweak.CppName}, which the interface headers do not have.");
 			HandleKind handle = tweak.IsStaticOnly ? HandleKind.Static : tweak.IsValueObject ? HandleKind.Value : tweak.IsOwnedObject ? HandleKind.Owned : HandleFor(source.Name);

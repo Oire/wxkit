@@ -67,6 +67,7 @@
 #include <wx/radiobut.h>
 #include <wx/rearrangectrl.h>
 #include <wx/scrolbar.h>
+#include <wx/scrolwin.h>
 #include <wx/settings.h>
 #include <wx/simplebook.h>
 #include <wx/sizer.h>

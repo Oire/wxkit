@@ -45,6 +45,14 @@ internal sealed class Tweaks {
 
 	/// <param name="exclude">Values left out, such as the bounds of the ids wxWidgets assigns itself.</param>
 	public void ConstantClass(string cppName, string managedName, params string[] exclude) => ConstantClasses[cppName] = new ConstantClassTweak(managedName, new HashSet<string>(exclude, StringComparer.Ordinal));
+
+	/// <summary>Classes wxWidgets makes from a template, such as wxScrolledWindow from wxScrolled&lt;wxPanel&gt;, which the interface headers only give as the template.</summary>
+	public List<TemplateInstanceTweak> TemplateInstances { get; } = [];
+
+	/// <param name="template">The template, such as wxScrolled, whose base is its parameter.</param>
+	/// <param name="name">The class made from it, such as wxScrolledWindow.</param>
+	/// <param name="baseClass">The template's argument, which is the class's base, such as wxPanel.</param>
+	public void TemplateInstance(string template, string name, string baseClass) => TemplateInstances.Add(new TemplateInstanceTweak(template, name, baseClass));
 }
 
 internal sealed record OverloadGuard(string Member, string Parameter, string Type, string Condition) {
@@ -52,6 +60,8 @@ internal sealed record OverloadGuard(string Member, string Parameter, string Typ
 }
 
 internal sealed record ConstantClassTweak(string Name, IReadOnlySet<string> Exclude);
+
+internal sealed record TemplateInstanceTweak(string Template, string Name, string BaseClass);
 
 internal sealed record EnumTweak(string Name, bool IsFlags, string? MemberPrefix, string? Guard);
 

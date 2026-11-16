@@ -64,6 +64,7 @@ internal static unsafe partial class ObjectRegistry {
 		["wxRearrangeDialog"] = static native => new RearrangeDialog((WxkWindow*)native),
 		["wxRearrangeList"] = static native => new RearrangeList((WxkWindow*)native),
 		["wxScrollBar"] = static native => new ScrollBar((WxkWindow*)native),
+		["wxScrolledWindow"] = static native => new ScrolledWindow((WxkWindow*)native),
 		["wxSearchCtrl"] = static native => new SearchCtrl((WxkWindow*)native),
 		["wxSimplebook"] = static native => new Simplebook((WxkWindow*)native),
 		["wxSingleChoiceDialog"] = static native => new SingleChoiceDialog((WxkWindow*)native),

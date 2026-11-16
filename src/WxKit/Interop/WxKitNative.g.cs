@@ -5810,6 +5810,150 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int ScrollWinEventGetPixelOffset(WxkEvent* self);
 
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* ScrolledWindowNew(WxkWindow* parent, int id, Point position, Size size, long style);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_CalcScrolledPosition_IntIntOutIntOutInt")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ScrolledWindowCalcScrolledPositionIntIntOutIntOutInt(WxkWindow* self, int x, int y, int* xx, int* yy);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_CalcScrolledPosition_Point")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Point ScrolledWindowCalcScrolledPositionPoint(WxkWindow* self, Point point);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_CalcUnscrolledPosition_IntIntOutIntOutInt")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ScrolledWindowCalcUnscrolledPositionIntIntOutIntOutInt(WxkWindow* self, int x, int y, int* xx, int* yy);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_CalcUnscrolledPosition_Point")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Point ScrolledWindowCalcUnscrolledPositionPoint(WxkWindow* self, Point point);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_DisableKeyboardScrolling")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ScrolledWindowDisableKeyboardScrolling(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_DoPrepareDC")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ScrolledWindowDoPrepareDC(WxkWindow* self, WxkObject* dc);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_EnableScrolling")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ScrolledWindowEnableScrolling(WxkWindow* self, byte xScrolling, byte yScrolling);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_ShowScrollbars")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ScrolledWindowShowScrollbars(WxkWindow* self, int horz, int vert);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_GetScrollPixelsPerUnit")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ScrolledWindowGetScrollPixelsPerUnit(WxkWindow* self, int* xUnit, int* yUnit);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_GetViewStart_OutIntOutInt")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ScrolledWindowGetViewStartOutIntOutInt(WxkWindow* self, int* x, int* y);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_GetViewStartPixels_OutIntOutInt")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ScrolledWindowGetViewStartPixelsOutIntOutInt(WxkWindow* self, int* x, int* y);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_PrepareDC")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ScrolledWindowPrepareDC(WxkWindow* self, WxkObject* dc);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_Scroll_IntInt")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ScrolledWindowScrollIntInt(WxkWindow* self, int x, int y);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_Scroll_Point")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ScrolledWindowScrollPoint(WxkWindow* self, Point point);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_EnableAutoscrollWithoutCapture")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ScrolledWindowEnableAutoscrollWithoutCapture(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_DisableAutoscrollWithoutCapture")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ScrolledWindowDisableAutoscrollWithoutCapture(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_SetScrollRate")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ScrolledWindowSetScrollRate(WxkWindow* self, int xStep, int yStep);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_SetScrollbars")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ScrolledWindowSetScrollbars(WxkWindow* self, int pixelsPerUnitX, int pixelsPerUnitY, int noUnitsX, int noUnitsY, int xPos, int yPos, byte noRefresh);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_GetScrollPageSize")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int ScrolledWindowGetScrollPageSize(WxkWindow* self, int orientation);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_SetScrollPageSize")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ScrolledWindowSetScrollPageSize(WxkWindow* self, int orientation, int pageSize);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_GetScrollLines")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int ScrolledWindowGetScrollLines(WxkWindow* self, int orientation);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_EnableAutoScrollInside")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ScrolledWindowEnableAutoScrollInside(WxkWindow* self, int insideWidth);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_DisableAutoScrollOutside")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ScrolledWindowDisableAutoScrollOutside(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_SetScale")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ScrolledWindowSetScale(WxkWindow* self, double xs, double ys);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_AdjustScrollbars")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ScrolledWindowAdjustScrollbars(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_StopAutoScrolling")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ScrolledWindowStopAutoScrolling(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_GetViewStart_Default")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Point ScrolledWindowGetViewStartDefault(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_GetViewStartPixels_Default")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Point ScrolledWindowGetViewStartPixelsDefault(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_GetTargetWindow")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* ScrolledWindowGetTargetWindow(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_SetTargetWindow")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ScrolledWindowSetTargetWindow(WxkWindow* self, WxkWindow* window);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_GetTargetRect")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Rect ScrolledWindowGetTargetRect(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_SetTargetRect")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ScrolledWindowSetTargetRect(WxkWindow* self, Rect rect);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_GetScaleX")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial double ScrolledWindowGetScaleX(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_GetScaleY")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial double ScrolledWindowGetScaleY(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ScrolledWindow_IsAutoScrolling")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ScrolledWindowIsAutoScrolling(WxkWindow* self);
+
 	[LibraryImport(Library, EntryPoint = "wxk_SearchCtrl_new")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkWindow* SearchCtrlNew(WxkWindow* parent, int id, char* value, nuint valueLength, Point position, Size size, long style);
@@ -9622,65 +9766,65 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeScrollChanged();
 
-	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollLinedown")]
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollLineDown")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial int EventTypeScrollLinedown();
+	public static partial int EventTypeScrollLineDown();
 
-	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollLineup")]
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollLineUp")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial int EventTypeScrollLineup();
+	public static partial int EventTypeScrollLineUp();
 
-	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollPagedown")]
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollPageDown")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial int EventTypeScrollPagedown();
+	public static partial int EventTypeScrollPageDown();
 
-	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollPageup")]
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollPageUp")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial int EventTypeScrollPageup();
+	public static partial int EventTypeScrollPageUp();
 
-	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollThumbrelease")]
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollThumbRelease")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial int EventTypeScrollThumbrelease();
+	public static partial int EventTypeScrollThumbRelease();
 
-	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollThumbtrack")]
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollThumbTrack")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial int EventTypeScrollThumbtrack();
+	public static partial int EventTypeScrollThumbTrack();
 
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollTop")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeScrollTop();
 
-	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollwinBottom")]
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollWinBottom")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial int EventTypeScrollwinBottom();
+	public static partial int EventTypeScrollWinBottom();
 
-	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollwinLinedown")]
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollWinLineDown")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial int EventTypeScrollwinLinedown();
+	public static partial int EventTypeScrollWinLineDown();
 
-	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollwinLineup")]
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollWinLineUp")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial int EventTypeScrollwinLineup();
+	public static partial int EventTypeScrollWinLineUp();
 
-	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollwinPagedown")]
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollWinPageDown")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial int EventTypeScrollwinPagedown();
+	public static partial int EventTypeScrollWinPageDown();
 
-	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollwinPageup")]
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollWinPageUp")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial int EventTypeScrollwinPageup();
+	public static partial int EventTypeScrollWinPageUp();
 
-	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollwinThumbrelease")]
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollWinThumbRelease")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial int EventTypeScrollwinThumbrelease();
+	public static partial int EventTypeScrollWinThumbRelease();
 
-	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollwinThumbtrack")]
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollWinThumbTrack")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial int EventTypeScrollwinThumbtrack();
+	public static partial int EventTypeScrollWinThumbTrack();
 
-	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollwinTop")]
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_ScrollWinTop")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial int EventTypeScrollwinTop();
+	public static partial int EventTypeScrollWinTop();
 
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_Search")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

@@ -1007,45 +1007,45 @@ public static unsafe partial class EventType {
 	}
 
 	/// <summary>Wraps wxEVT_SCROLL_LINEDOWN.</summary>
-	public static EventType<ScrollEvent> ScrollLinedown => ScrollLinedownType.Value;
+	public static EventType<ScrollEvent> ScrollLineDown => ScrollLineDownType.Value;
 
-	private static class ScrollLinedownType {
-		public static readonly EventType<ScrollEvent> Value = new(WxKitNative.EventTypeScrollLinedown, static native => new ScrollEvent((WxkEvent*)native));
+	private static class ScrollLineDownType {
+		public static readonly EventType<ScrollEvent> Value = new(WxKitNative.EventTypeScrollLineDown, static native => new ScrollEvent((WxkEvent*)native));
 	}
 
 	/// <summary>Wraps wxEVT_SCROLL_LINEUP.</summary>
-	public static EventType<ScrollEvent> ScrollLineup => ScrollLineupType.Value;
+	public static EventType<ScrollEvent> ScrollLineUp => ScrollLineUpType.Value;
 
-	private static class ScrollLineupType {
-		public static readonly EventType<ScrollEvent> Value = new(WxKitNative.EventTypeScrollLineup, static native => new ScrollEvent((WxkEvent*)native));
+	private static class ScrollLineUpType {
+		public static readonly EventType<ScrollEvent> Value = new(WxKitNative.EventTypeScrollLineUp, static native => new ScrollEvent((WxkEvent*)native));
 	}
 
 	/// <summary>Wraps wxEVT_SCROLL_PAGEDOWN.</summary>
-	public static EventType<ScrollEvent> ScrollPagedown => ScrollPagedownType.Value;
+	public static EventType<ScrollEvent> ScrollPageDown => ScrollPageDownType.Value;
 
-	private static class ScrollPagedownType {
-		public static readonly EventType<ScrollEvent> Value = new(WxKitNative.EventTypeScrollPagedown, static native => new ScrollEvent((WxkEvent*)native));
+	private static class ScrollPageDownType {
+		public static readonly EventType<ScrollEvent> Value = new(WxKitNative.EventTypeScrollPageDown, static native => new ScrollEvent((WxkEvent*)native));
 	}
 
 	/// <summary>Wraps wxEVT_SCROLL_PAGEUP.</summary>
-	public static EventType<ScrollEvent> ScrollPageup => ScrollPageupType.Value;
+	public static EventType<ScrollEvent> ScrollPageUp => ScrollPageUpType.Value;
 
-	private static class ScrollPageupType {
-		public static readonly EventType<ScrollEvent> Value = new(WxKitNative.EventTypeScrollPageup, static native => new ScrollEvent((WxkEvent*)native));
+	private static class ScrollPageUpType {
+		public static readonly EventType<ScrollEvent> Value = new(WxKitNative.EventTypeScrollPageUp, static native => new ScrollEvent((WxkEvent*)native));
 	}
 
 	/// <summary>Wraps wxEVT_SCROLL_THUMBRELEASE.</summary>
-	public static EventType<ScrollEvent> ScrollThumbrelease => ScrollThumbreleaseType.Value;
+	public static EventType<ScrollEvent> ScrollThumbRelease => ScrollThumbReleaseType.Value;
 
-	private static class ScrollThumbreleaseType {
-		public static readonly EventType<ScrollEvent> Value = new(WxKitNative.EventTypeScrollThumbrelease, static native => new ScrollEvent((WxkEvent*)native));
+	private static class ScrollThumbReleaseType {
+		public static readonly EventType<ScrollEvent> Value = new(WxKitNative.EventTypeScrollThumbRelease, static native => new ScrollEvent((WxkEvent*)native));
 	}
 
 	/// <summary>Wraps wxEVT_SCROLL_THUMBTRACK.</summary>
-	public static EventType<ScrollEvent> ScrollThumbtrack => ScrollThumbtrackType.Value;
+	public static EventType<ScrollEvent> ScrollThumbTrack => ScrollThumbTrackType.Value;
 
-	private static class ScrollThumbtrackType {
-		public static readonly EventType<ScrollEvent> Value = new(WxKitNative.EventTypeScrollThumbtrack, static native => new ScrollEvent((WxkEvent*)native));
+	private static class ScrollThumbTrackType {
+		public static readonly EventType<ScrollEvent> Value = new(WxKitNative.EventTypeScrollThumbTrack, static native => new ScrollEvent((WxkEvent*)native));
 	}
 
 	/// <summary>Wraps wxEVT_SCROLL_TOP.</summary>
@@ -1056,59 +1056,59 @@ public static unsafe partial class EventType {
 	}
 
 	/// <summary>Wraps wxEVT_SCROLLWIN_BOTTOM.</summary>
-	public static EventType<ScrollWinEvent> ScrollwinBottom => ScrollwinBottomType.Value;
+	public static EventType<ScrollWinEvent> ScrollWinBottom => ScrollWinBottomType.Value;
 
-	private static class ScrollwinBottomType {
-		public static readonly EventType<ScrollWinEvent> Value = new(WxKitNative.EventTypeScrollwinBottom, static native => new ScrollWinEvent((WxkEvent*)native));
+	private static class ScrollWinBottomType {
+		public static readonly EventType<ScrollWinEvent> Value = new(WxKitNative.EventTypeScrollWinBottom, static native => new ScrollWinEvent((WxkEvent*)native));
 	}
 
 	/// <summary>Wraps wxEVT_SCROLLWIN_LINEDOWN.</summary>
-	public static EventType<ScrollWinEvent> ScrollwinLinedown => ScrollwinLinedownType.Value;
+	public static EventType<ScrollWinEvent> ScrollWinLineDown => ScrollWinLineDownType.Value;
 
-	private static class ScrollwinLinedownType {
-		public static readonly EventType<ScrollWinEvent> Value = new(WxKitNative.EventTypeScrollwinLinedown, static native => new ScrollWinEvent((WxkEvent*)native));
+	private static class ScrollWinLineDownType {
+		public static readonly EventType<ScrollWinEvent> Value = new(WxKitNative.EventTypeScrollWinLineDown, static native => new ScrollWinEvent((WxkEvent*)native));
 	}
 
 	/// <summary>Wraps wxEVT_SCROLLWIN_LINEUP.</summary>
-	public static EventType<ScrollWinEvent> ScrollwinLineup => ScrollwinLineupType.Value;
+	public static EventType<ScrollWinEvent> ScrollWinLineUp => ScrollWinLineUpType.Value;
 
-	private static class ScrollwinLineupType {
-		public static readonly EventType<ScrollWinEvent> Value = new(WxKitNative.EventTypeScrollwinLineup, static native => new ScrollWinEvent((WxkEvent*)native));
+	private static class ScrollWinLineUpType {
+		public static readonly EventType<ScrollWinEvent> Value = new(WxKitNative.EventTypeScrollWinLineUp, static native => new ScrollWinEvent((WxkEvent*)native));
 	}
 
 	/// <summary>Wraps wxEVT_SCROLLWIN_PAGEDOWN.</summary>
-	public static EventType<ScrollWinEvent> ScrollwinPagedown => ScrollwinPagedownType.Value;
+	public static EventType<ScrollWinEvent> ScrollWinPageDown => ScrollWinPageDownType.Value;
 
-	private static class ScrollwinPagedownType {
-		public static readonly EventType<ScrollWinEvent> Value = new(WxKitNative.EventTypeScrollwinPagedown, static native => new ScrollWinEvent((WxkEvent*)native));
+	private static class ScrollWinPageDownType {
+		public static readonly EventType<ScrollWinEvent> Value = new(WxKitNative.EventTypeScrollWinPageDown, static native => new ScrollWinEvent((WxkEvent*)native));
 	}
 
 	/// <summary>Wraps wxEVT_SCROLLWIN_PAGEUP.</summary>
-	public static EventType<ScrollWinEvent> ScrollwinPageup => ScrollwinPageupType.Value;
+	public static EventType<ScrollWinEvent> ScrollWinPageUp => ScrollWinPageUpType.Value;
 
-	private static class ScrollwinPageupType {
-		public static readonly EventType<ScrollWinEvent> Value = new(WxKitNative.EventTypeScrollwinPageup, static native => new ScrollWinEvent((WxkEvent*)native));
+	private static class ScrollWinPageUpType {
+		public static readonly EventType<ScrollWinEvent> Value = new(WxKitNative.EventTypeScrollWinPageUp, static native => new ScrollWinEvent((WxkEvent*)native));
 	}
 
 	/// <summary>Wraps wxEVT_SCROLLWIN_THUMBRELEASE.</summary>
-	public static EventType<ScrollWinEvent> ScrollwinThumbrelease => ScrollwinThumbreleaseType.Value;
+	public static EventType<ScrollWinEvent> ScrollWinThumbRelease => ScrollWinThumbReleaseType.Value;
 
-	private static class ScrollwinThumbreleaseType {
-		public static readonly EventType<ScrollWinEvent> Value = new(WxKitNative.EventTypeScrollwinThumbrelease, static native => new ScrollWinEvent((WxkEvent*)native));
+	private static class ScrollWinThumbReleaseType {
+		public static readonly EventType<ScrollWinEvent> Value = new(WxKitNative.EventTypeScrollWinThumbRelease, static native => new ScrollWinEvent((WxkEvent*)native));
 	}
 
 	/// <summary>Wraps wxEVT_SCROLLWIN_THUMBTRACK.</summary>
-	public static EventType<ScrollWinEvent> ScrollwinThumbtrack => ScrollwinThumbtrackType.Value;
+	public static EventType<ScrollWinEvent> ScrollWinThumbTrack => ScrollWinThumbTrackType.Value;
 
-	private static class ScrollwinThumbtrackType {
-		public static readonly EventType<ScrollWinEvent> Value = new(WxKitNative.EventTypeScrollwinThumbtrack, static native => new ScrollWinEvent((WxkEvent*)native));
+	private static class ScrollWinThumbTrackType {
+		public static readonly EventType<ScrollWinEvent> Value = new(WxKitNative.EventTypeScrollWinThumbTrack, static native => new ScrollWinEvent((WxkEvent*)native));
 	}
 
 	/// <summary>Wraps wxEVT_SCROLLWIN_TOP.</summary>
-	public static EventType<ScrollWinEvent> ScrollwinTop => ScrollwinTopType.Value;
+	public static EventType<ScrollWinEvent> ScrollWinTop => ScrollWinTopType.Value;
 
-	private static class ScrollwinTopType {
-		public static readonly EventType<ScrollWinEvent> Value = new(WxKitNative.EventTypeScrollwinTop, static native => new ScrollWinEvent((WxkEvent*)native));
+	private static class ScrollWinTopType {
+		public static readonly EventType<ScrollWinEvent> Value = new(WxKitNative.EventTypeScrollWinTop, static native => new ScrollWinEvent((WxkEvent*)native));
 	}
 
 	/// <summary>Wraps wxEVT_SEARCH.</summary>

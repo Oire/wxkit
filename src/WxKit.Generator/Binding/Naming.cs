@@ -37,6 +37,14 @@ internal static class Naming {
 		["FONTDESC"] = "FontDesc",
 		["USEFONT"] = "UseFont",
 		["STATUSITEM"] = "StatusItem",
+		// The scroll events.
+		["SCROLLWIN"] = "ScrollWin",
+		["LINEUP"] = "LineUp",
+		["LINEDOWN"] = "LineDown",
+		["PAGEUP"] = "PageUp",
+		["PAGEDOWN"] = "PageDown",
+		["THUMBTRACK"] = "ThumbTrack",
+		["THUMBRELEASE"] = "ThumbRelease",
 		// The full screen styles and the update UI flags.
 		["FULLSCREEN"] = "FullScreen",
 		["NOMENUBAR"] = "NoMenuBar",

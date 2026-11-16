@@ -132,6 +132,17 @@ internal static class Core {
 		tweaks.Class("wxColourPickerEvent", e => e.Ignore("SetColour"));
 		tweaks.Class("wxFileDirPickerEvent", e => e.Ignore("SetPath"));
 		tweaks.Class("wxFontPickerEvent", e => e.Ignore("SetFont"));
+		// A panel that scrolls its contents, such as a long page of settings.
+		tweaks.TemplateInstance("wxScrolled", "wxScrolledWindow", "wxPanel");
+		// OnDraw is for a derived class to override, and DoPrepareReadOnlyDC takes the wxReadOnlyDC
+		// wxWidgets 3.3 added, which is not bound.
+		tweaks.Class("wxScrolledWindow", scrolled => scrolled
+			.Ignore("OnDraw", "DoPrepareReadOnlyDC")
+			.ParameterEnum("GetScrollLines", "orient", "Orientation")
+			.ParameterEnum("GetScrollPageSize", "orient", "Orientation")
+			.ParameterEnum("SetScrollPageSize", "orient", "Orientation")
+			.ParameterName("SetScrollRate", "xstep", "xStep")
+			.ParameterName("SetScrollRate", "ystep", "yStep"));
 		// A bitmap button raises its base's Click. CreateCloseButton is the second step of a two-step creation.
 		tweaks.Class("wxBitmapButton", button => button.Event("EVT_BUTTON", "Click").Ignore("CreateCloseButton"));
 		tweaks.Class("wxStaticBitmap", bitmap => bitmap.ParameterName("wxStaticBitmap", "label", "bitmap"));
