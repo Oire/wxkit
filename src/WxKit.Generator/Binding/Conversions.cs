@@ -56,6 +56,9 @@ internal abstract class Conversion {
 	/// <summary>A statement the call needs before it, such as building a native copy of a list.</summary>
 	public virtual string? Prepare(string name) => null;
 
+	/// <summary>A statement after the call, such as reading a list the call filled into an out parameter.</summary>
+	public virtual string? Finish(string name) => null;
+
 	public abstract IEnumerable<string> InteropArguments(string name, bool nullable);
 
 	public abstract string ManagedReturn(string expression);
@@ -488,6 +491,92 @@ internal sealed class ColorConversion : Conversion {
 	public override string ManagedReturn(string expression) => $"global::WxKit.Color.FromNative({expression})";
 
 	public override bool AcceptsNull => true;
+}
+
+// What a list of numbers holds: ints, as in a wxArrayInt, or item ids, as in a wxArrayTreeItemIds.
+// Each crosses as a list of 64-bit numbers, which holds an int or an id alike.
+internal sealed record NumberListKind(string CppType, string ElementType, string Take, string? ToCpp) {
+	public static NumberListKind Int { get; } = new("wxArrayInt", "int", "TakeInts", "wxk::ToIntArray");
+
+	public static NumberListKind TreeItem { get; } = new("wxArrayTreeItemIds", "TreeItemId", "TakeTreeItems", ToCpp: null);
+
+	public static NumberListKind DataViewItem { get; } = new("wxDataViewItemArray", "DataViewItem", "TakeDataViewItems", "wxk::ToDataViewItems");
+
+	public static NumberListKind? For(string cppType) => cppType switch {
+		"wxArrayInt" => Int,
+		"wxArrayTreeItemIds" => TreeItem,
+		"wxDataViewItemArray" => DataViewItem,
+		_ => null,
+	};
+}
+
+// A list of numbers coming back is an array, and one going in is any sequence of them.
+internal sealed class NumberListConversion(NumberListKind kind) : Conversion {
+	public override string Suffix => kind.ElementType + "s";
+
+	public override string CReturnType => "wxk_Numbers*";
+
+	public override string Fallback => "nullptr";
+
+	public override string InteropReturnType => "WxkNumbers*";
+
+	public override IEnumerable<string> CParameters(string name) => [$"const int64_t* {name}", $"size_t {name}Count"];
+
+	public override string ToCpp(string name) => $"{kind.ToCpp ?? throw new InvalidOperationException($"A {kind.CppType} cannot go in.")}({name}, {name}Count)";
+
+	public override string FromCpp(string expression) => $"wxk::ToNumbers({expression})";
+
+	public override IEnumerable<string> InteropParameters(string name) => [$"long* {name}", $"nuint {name}Count"];
+
+	public override string ManagedType(bool nullable) => $"IEnumerable<{kind.ElementType}>";
+
+	public override string ManagedReturnType(bool nullable) => kind.ElementType + "[]";
+
+	public override string? Check(string name, bool nullable) => $"ArgumentNullException.ThrowIfNull({name});";
+
+	public override string? Prepare(string name) => $"long[] {Values(name)} = NativeNumbers.From({name});";
+
+	public override string? Fixed(string name) => $"fixed (long* {Pointer(name)} = {Values(name)})";
+
+	public override IEnumerable<string> InteropArguments(string name, bool nullable) => [Pointer(name), $"(nuint){Values(name)}.Length"];
+
+	public override string ManagedReturn(string expression) => $"NativeNumbers.{kind.Take}({expression})";
+
+	private static string Values(string name) => name.TrimStart('@') + "Values";
+
+	private static string Pointer(string name) => name.TrimStart('@') + "Pointer";
+}
+
+// A list a call fills, passed by a reference that can change, such as a list box's selections,
+// is an out array. The shim fills a list of its own, and hands a copy back as the call returns.
+internal sealed class NumberListOutConversion(NumberListKind kind) : Conversion {
+	public override string Suffix => "Out" + kind.ElementType + "s";
+
+	public override string CReturnType => throw new InvalidOperationException("Output lists are only parameters.");
+
+	public override string Fallback => "nullptr";
+
+	public override string InteropReturnType => throw new InvalidOperationException("Output lists are only parameters.");
+
+	public override IEnumerable<string> CParameters(string name) => [$"wxk_Numbers** {name}"];
+
+	public override string ToCpp(string name) => $"wxk::OutNumbers<{kind.CppType}>{{{name}}}";
+
+	public override string FromCpp(string expression) => throw new InvalidOperationException("Output lists are only parameters.");
+
+	public override IEnumerable<string> InteropParameters(string name) => [$"WxkNumbers** {name}"];
+
+	public override string ManagedType(bool nullable) => $"out {kind.ElementType}[]";
+
+	public override string? Prepare(string name) => $"WxkNumbers* {Native(name)} = null;";
+
+	public override IEnumerable<string> InteropArguments(string name, bool nullable) => [$"&{Native(name)}"];
+
+	public override string? Finish(string name) => $"{name} = NativeNumbers.{kind.Take}({Native(name)});";
+
+	public override string ManagedReturn(string expression) => throw new InvalidOperationException("Output lists are only parameters.");
+
+	private static string Native(string name) => name.TrimStart('@') + "Native";
 }
 
 // A wxDateTime is a DateTime in local time, which crosses as its parts. wxInvalidDateTime is null.

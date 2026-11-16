@@ -60,6 +60,9 @@ public unsafe partial class Dialog : TopLevelWindow {
 		set => WxKitNative.DialogSetLayoutAdaptationMode(Native, (int)value);
 	}
 
+	/// <summary>Returns an array of identifiers to be regarded as the main buttons for the non-scrolling area of a dialog.</summary>
+	public int[] MainButtonIds => NativeNumbers.TakeInts(WxKitNative.DialogGetMainButtonIds(Native));
+
 	/// <summary>Gets the return code for this window.</summary>
 	public int ReturnCode {
 		get => WxKitNative.DialogGetReturnCode(Native);

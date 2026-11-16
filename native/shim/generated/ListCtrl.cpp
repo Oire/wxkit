@@ -328,6 +328,14 @@ WXK_FUNCTION(int32_t) wxk_ListCtrl_GetColumnCount(wxk_Window* self) noexcept {
 	return wxk::Guard<int32_t>(0, [&]() -> int32_t { return static_cast<int32_t>(static_cast<wxListCtrl*>(wxk::Unwrap(self))->GetColumnCount()); });
 }
 
+WXK_FUNCTION(wxk_Numbers*) wxk_ListCtrl_GetColumnsOrder(wxk_Window* self) noexcept {
+	return wxk::Guard<wxk_Numbers*>(nullptr, [&]() -> wxk_Numbers* { return wxk::ToNumbers(static_cast<wxListCtrl*>(wxk::Unwrap(self))->GetColumnsOrder()); });
+}
+
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_SetColumnsOrder(wxk_Window* self, const int64_t* orders, size_t ordersCount) noexcept {
+	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxListCtrl*>(wxk::Unwrap(self))->SetColumnsOrder(wxk::ToIntArray(orders, ordersCount))) ? 1 : 0; });
+}
+
 WXK_FUNCTION(int32_t) wxk_ListCtrl_GetCountPerPage(wxk_Window* self) noexcept {
 	return wxk::Guard<int32_t>(0, [&]() -> int32_t { return static_cast<int32_t>(static_cast<wxListCtrl*>(wxk::Unwrap(self))->GetCountPerPage()); });
 }

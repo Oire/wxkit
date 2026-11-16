@@ -189,6 +189,7 @@ WXK_FUNCTION(wxk_Window*) wxk_CheckListBox_new_WindowIntPointSize(wxk_Window* pa
 WXK_FUNCTION(wxk_Window*) wxk_CheckListBox_new_WindowIntPointSizeStringsListBoxStyle(wxk_Window* parent, int32_t id, wxk_Point position, wxk_Size size, const wxk_StringArray* choices, int64_t style) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_CheckListBox_Check(wxk_Window* self, uint32_t item, uint8_t check) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_CheckListBox_IsChecked(wxk_Window* self, uint32_t item) WXK_NOEXCEPT;
+WXK_FUNCTION(uint32_t) wxk_CheckListBox_GetCheckedItems(wxk_Window* self, wxk_Numbers** checkedItems) WXK_NOEXCEPT;
 
 // wxChildFocusEvent
 
@@ -586,11 +587,13 @@ WXK_FUNCTION(void) wxk_DataViewCtrl_ExpandChildren(wxk_Window* self, void* item)
 WXK_FUNCTION(wxk_DataViewColumn*) wxk_DataViewCtrl_GetColumn(wxk_Window* self, uint32_t position) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_DataViewCtrl_GetColumnPosition(wxk_Window* self, wxk_DataViewColumn* column) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Rect) wxk_DataViewCtrl_GetItemRect(wxk_Window* self, void* item, wxk_DataViewColumn* column) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_DataViewCtrl_GetSelections(wxk_Window* self, wxk_Numbers** selections) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_IsExpanded(wxk_Window* self, void* item) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_IsSelected(wxk_Window* self, void* item) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_DataViewCtrl_Select(wxk_Window* self, void* item) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_DataViewCtrl_SelectAll(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_SetAlternateRowColour(wxk_Window* self, wxk_Colour color) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DataViewCtrl_SetSelections(wxk_Window* self, const int64_t* selections, size_t selectionsCount) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_DataViewCtrl_Unselect(wxk_Window* self, void* item) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_DataViewCtrl_UnselectAll(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_SetRowHeight(wxk_Window* self, int32_t rowHeight) WXK_NOEXCEPT;
@@ -728,6 +731,7 @@ WXK_FUNCTION(int32_t) wxk_Dialog_GetLayoutAdaptationLevel(wxk_Window* self) WXK_
 WXK_FUNCTION(void) wxk_Dialog_SetLayoutAdaptationLevel(wxk_Window* self, int32_t level) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_Dialog_GetLayoutAdaptationMode(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Dialog_SetLayoutAdaptationMode(wxk_Window* self, int32_t mode) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Numbers*) wxk_Dialog_GetMainButtonIds(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_Dialog_GetReturnCode(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Dialog_SetReturnCode(wxk_Window* self, int32_t retCode) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Dialog_IsModal(wxk_Window* self) WXK_NOEXCEPT;
@@ -832,6 +836,8 @@ WXK_FUNCTION(int32_t) wxk_FlexGridSizer_GetFlexibleDirection(wxk_Sizer* self) WX
 WXK_FUNCTION(void) wxk_FlexGridSizer_SetFlexibleDirection(wxk_Sizer* self, int32_t direction) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_FlexGridSizer_GetNonFlexibleGrowMode(wxk_Sizer* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_FlexGridSizer_SetNonFlexibleGrowMode(wxk_Sizer* self, int32_t mode) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Numbers*) wxk_FlexGridSizer_GetRowHeights(wxk_Sizer* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Numbers*) wxk_FlexGridSizer_GetColWidths(wxk_Sizer* self) WXK_NOEXCEPT;
 
 // wxFocusEvent
 
@@ -1158,6 +1164,7 @@ WXK_FUNCTION(wxk_Window*) wxk_ListBox_new_WindowIntPointSize(wxk_Window* parent,
 WXK_FUNCTION(wxk_Window*) wxk_ListBox_new_WindowIntPointSizeStringsListBoxStyle(wxk_Window* parent, int32_t id, wxk_Point position, wxk_Size size, const wxk_StringArray* choices, int64_t style) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_ListBox_Deselect(wxk_Window* self, int32_t index) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_ListBox_SetStringSelection_StringBool(wxk_Window* self, const char16_t* s, size_t sLength, uint8_t select) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_ListBox_GetSelections(wxk_Window* self, wxk_Numbers** selections) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_ListBox_InsertItems(wxk_Window* self, const wxk_StringArray* items, uint32_t position) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_ListBox_IsSelected(wxk_Window* self, int32_t index) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_ListBox_SetFirstItem_Int(wxk_Window* self, int32_t index) WXK_NOEXCEPT;
@@ -1263,6 +1270,8 @@ WXK_FUNCTION(void) wxk_ListCtrl_ShowSortIndicator(wxk_Window* self, int32_t colu
 WXK_FUNCTION(void) wxk_ListCtrl_RemoveSortIndicator(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_ListCtrl_GetUpdatedAscendingSortIndicator(wxk_Window* self, int32_t column) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_ListCtrl_GetColumnCount(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Numbers*) wxk_ListCtrl_GetColumnsOrder(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_SetColumnsOrder(wxk_Window* self, const int64_t* orders, size_t ordersCount) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_ListCtrl_GetCountPerPage(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Window*) wxk_ListCtrl_GetEditControl(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_ListCtrl_GetItemCount(wxk_Window* self) WXK_NOEXCEPT;
@@ -1494,6 +1503,8 @@ WXK_FUNCTION(void) wxk_MoveEvent_SetRect(wxk_Event* self, wxk_Rect rect) WXK_NOE
 // wxMultiChoiceDialog
 
 WXK_FUNCTION(wxk_Window*) wxk_MultiChoiceDialog_new(wxk_Window* parent, const char16_t* message, size_t messageLength, const char16_t* caption, size_t captionLength, const wxk_StringArray* choices, int64_t style, wxk_Point position) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Numbers*) wxk_MultiChoiceDialog_GetSelections(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_MultiChoiceDialog_SetSelections(wxk_Window* self, const int64_t* selections, size_t selectionsCount) WXK_NOEXCEPT;
 
 // wxNavigationKeyEvent
 
@@ -2161,6 +2172,7 @@ WXK_FUNCTION(void*) wxk_TreeCtrl_GetNextSibling(wxk_Window* self, void* item) WX
 WXK_FUNCTION(void*) wxk_TreeCtrl_GetNextVisible(wxk_Window* self, void* item) WXK_NOEXCEPT;
 WXK_FUNCTION(void*) wxk_TreeCtrl_GetPrevSibling(wxk_Window* self, void* item) WXK_NOEXCEPT;
 WXK_FUNCTION(void*) wxk_TreeCtrl_GetPrevVisible(wxk_Window* self, void* item) WXK_NOEXCEPT;
+WXK_FUNCTION(size_t) wxk_TreeCtrl_GetSelections(wxk_Window* self, wxk_Numbers** selections) WXK_NOEXCEPT;
 WXK_FUNCTION(void*) wxk_TreeCtrl_InsertItem_TreeItemIdTreeItemIdStringIntIntData(wxk_Window* self, void* parent, void* previous, const char16_t* text, size_t textLength, int32_t image, int32_t selImage, void* data) WXK_NOEXCEPT;
 WXK_FUNCTION(void*) wxk_TreeCtrl_InsertItem_TreeItemIdSizeTStringIntIntData(wxk_Window* self, void* parent, size_t position, const char16_t* text, size_t textLength, int32_t image, int32_t selImage, void* data) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_TreeCtrl_IsBold(wxk_Window* self, void* item) WXK_NOEXCEPT;

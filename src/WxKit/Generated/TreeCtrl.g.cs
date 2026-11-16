@@ -296,6 +296,14 @@ public unsafe partial class TreeCtrl : Control {
 	/// <summary>Returns the previous visible item or an invalid item if this item is the first visible one.</summary>
 	public TreeItemId GetPrevVisible(TreeItemId item) => new global::WxKit.TreeItemId(WxKitNative.TreeCtrlGetPrevVisible(Native, item.Value));
 
+	/// <summary>Fills the array of tree items passed in with the currently selected items.</summary>
+	public int GetSelections(out TreeItemId[] selections) {
+		WxkNumbers* selectionsNative = null;
+		var returned = WxKitNative.TreeCtrlGetSelections(Native, &selectionsNative);
+		selections = NativeNumbers.TakeTreeItems(selectionsNative);
+		return checked((int)returned);
+	}
+
 	/// <summary>Inserts an item after a given one (previous).</summary>
 	public TreeItemId InsertItem(TreeItemId parent, TreeItemId previous, string text, int image = -1, int selImage = -1, object? data = null) {
 		ArgumentNullException.ThrowIfNull(text);

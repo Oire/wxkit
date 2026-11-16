@@ -94,6 +94,10 @@ WXK_FUNCTION(void) wxk_Dialog_SetLayoutAdaptationMode(wxk_Window* self, int32_t 
 	wxk::Guard([&] { static_cast<wxDialog*>(wxk::Unwrap(self))->SetLayoutAdaptationMode(static_cast<wxDialogLayoutAdaptationMode>(mode)); });
 }
 
+WXK_FUNCTION(wxk_Numbers*) wxk_Dialog_GetMainButtonIds(wxk_Window* self) noexcept {
+	return wxk::Guard<wxk_Numbers*>(nullptr, [&]() -> wxk_Numbers* { return wxk::ToNumbers(static_cast<wxDialog*>(wxk::Unwrap(self))->GetMainButtonIds()); });
+}
+
 WXK_FUNCTION(int32_t) wxk_Dialog_GetReturnCode(wxk_Window* self) noexcept {
 	return wxk::Guard<int32_t>(0, [&]() -> int32_t { return static_cast<int32_t>(static_cast<wxDialog*>(wxk::Unwrap(self))->GetReturnCode()); });
 }

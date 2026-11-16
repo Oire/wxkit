@@ -8,3 +8,11 @@ WXK_FUNCTION(wxk_Window*) wxk_MultiChoiceDialog_new(wxk_Window* parent, const ch
 	});
 }
 
+WXK_FUNCTION(wxk_Numbers*) wxk_MultiChoiceDialog_GetSelections(wxk_Window* self) noexcept {
+	return wxk::Guard<wxk_Numbers*>(nullptr, [&]() -> wxk_Numbers* { return wxk::ToNumbers(static_cast<wxMultiChoiceDialog*>(wxk::Unwrap(self))->GetSelections()); });
+}
+
+WXK_FUNCTION(void) wxk_MultiChoiceDialog_SetSelections(wxk_Window* self, const int64_t* selections, size_t selectionsCount) noexcept {
+	wxk::Guard([&] { static_cast<wxMultiChoiceDialog*>(wxk::Unwrap(self))->SetSelections(wxk::ToIntArray(selections, selectionsCount)); });
+}
+

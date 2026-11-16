@@ -22,6 +22,18 @@ public unsafe partial class ListCtrl : Control {
 	/// <summary>Returns the number of columns.</summary>
 	public int ColumnCount => WxKitNative.ListCtrlGetColumnCount(Native);
 
+	/// <summary>Returns the array containing the orders of all columns.</summary>
+	public int[] ColumnsOrder {
+		get => NativeNumbers.TakeInts(WxKitNative.ListCtrlGetColumnsOrder(Native));
+		set {
+			ArgumentNullException.ThrowIfNull(value);
+			long[] valueValues = NativeNumbers.From(value);
+			fixed (long* valuePointer = valueValues) {
+				WxKitNative.ListCtrlSetColumnsOrder(Native, valuePointer, (nuint)valueValues.Length);
+			}
+		}
+	}
+
 	/// <summary>Gets the number of items that can fit vertically in the visible area of the list control (list or report view) or the total number of items in the list control (icon or small icon view).</summary>
 	public int CountPerPage => WxKitNative.ListCtrlGetCountPerPage(Native);
 

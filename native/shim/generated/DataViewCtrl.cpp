@@ -144,6 +144,10 @@ WXK_FUNCTION(wxk_Rect) wxk_DataViewCtrl_GetItemRect(wxk_Window* self, void* item
 	return wxk::Guard<wxk_Rect>(wxk_Rect{0, 0, 0, 0}, [&]() -> wxk_Rect { return wxk::ToRect(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->GetItemRect(wxDataViewItem(item), static_cast<wxDataViewColumn*>(wxk::Unwrap(column)))); });
 }
 
+WXK_FUNCTION(int32_t) wxk_DataViewCtrl_GetSelections(wxk_Window* self, wxk_Numbers** selections) noexcept {
+	return wxk::Guard<int32_t>(0, [&]() -> int32_t { return static_cast<int32_t>(static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->GetSelections(wxk::OutNumbers<wxDataViewItemArray>{selections})); });
+}
+
 WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_IsExpanded(wxk_Window* self, void* item) noexcept {
 	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->IsExpanded(wxDataViewItem(item))) ? 1 : 0; });
 }
@@ -162,6 +166,10 @@ WXK_FUNCTION(void) wxk_DataViewCtrl_SelectAll(wxk_Window* self) noexcept {
 
 WXK_FUNCTION(uint8_t) wxk_DataViewCtrl_SetAlternateRowColour(wxk_Window* self, wxk_Colour color) noexcept {
 	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->SetAlternateRowColour(wxk::FromColour(color))) ? 1 : 0; });
+}
+
+WXK_FUNCTION(void) wxk_DataViewCtrl_SetSelections(wxk_Window* self, const int64_t* selections, size_t selectionsCount) noexcept {
+	wxk::Guard([&] { static_cast<wxDataViewCtrl*>(wxk::Unwrap(self))->SetSelections(wxk::ToDataViewItems(selections, selectionsCount)); });
 }
 
 WXK_FUNCTION(void) wxk_DataViewCtrl_Unselect(wxk_Window* self, void* item) noexcept {

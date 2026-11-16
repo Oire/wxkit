@@ -374,6 +374,18 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte DataViewCtrlAssociateModel(WxkWindow* control, WxkDataViewModel* model);
 
+	[LibraryImport(Library, EntryPoint = "wxk_Numbers_GetCount")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial nuint NumbersGetCount(WxkNumbers* numbers);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Numbers_CopyTo")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void NumbersCopyTo(WxkNumbers* numbers, long* values);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Numbers_Free")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void NumbersFree(WxkNumbers* numbers);
+
 	[LibraryImport(Library, EntryPoint = "wxk_NotificationMessage_Free")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void NotificationMessageFree(WxkEvtHandler* notification);

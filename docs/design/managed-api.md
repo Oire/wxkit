@@ -57,6 +57,12 @@ Small wxWidgets classes that are values in practice become `readonly record stru
 
 A `wxDateTime`, such as a date picker's value, is a `DateTime?` in local time, and null stands for `wxInvalidDateTime`, no date. A `DateTime` in UTC goes in as the local time it is, and one that comes back is always local. It crosses as its year, month, day, and time of day, so it keeps its milliseconds, but not finer ticks.
 
+A list of positions or items, such as a list box's selections, comes back as an array, such as `int[]` or `TreeItemId[]`, and goes in as any sequence. A member that fills a list, as `wxListBox::GetSelections` does, takes an `out` array and returns the count, as in wxWidgets:
+
+```csharp
+int count = list.GetSelections(out int[] selections);
+```
+
 ## Object lifetime
 
 wxWidgets has three kinds of objects, and each kind gets a different lifetime model in WxKit.

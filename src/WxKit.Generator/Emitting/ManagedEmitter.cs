@@ -196,7 +196,7 @@ internal static class ManagedEmitter {
 
 	// A call needs a block when a parameter has to be checked for null or pinned first, and a
 	// static member always does, since only an instance member's handle checks the thread.
-	private static bool IsSimple(BoundFunction function) => !function.IsStatic && function.Parameters.All(static parameter => parameter.Conversion.Check(parameter.Name, parameter.Nullable) is null && parameter.Conversion.Fixed(parameter.Name) is null && parameter.Conversion.Prepare(parameter.Name) is null);
+	private static bool IsSimple(BoundFunction function) => !function.IsStatic && function.Parameters.All(static parameter => parameter.Conversion.Check(parameter.Name, parameter.Nullable) is null && parameter.Conversion.Fixed(parameter.Name) is null && parameter.Conversion.Prepare(parameter.Name) is null && parameter.Conversion.Finish(parameter.Name) is null);
 
 	private static string Call(BoundClass bound, BoundFunction function, Func<string, string> finish) => finish(InteropCall(function, Self(bound, function)));
 
@@ -215,15 +215,21 @@ internal static class ManagedEmitter {
 			if (parameter.Conversion.Prepare(parameter.Name) is string prepare) writer.Line(prepare);
 		}
 		List<string> pins = [.. function.Parameters.Select(static parameter => parameter.Conversion.Fixed(parameter.Name)).OfType<string>()];
-		string call = statement(InteropCall(function, self));
-		if (pins.Count == 0) {
-			writer.Line(call);
-			return;
-		}
+		List<string> finishes = [.. function.Parameters.Select(static parameter => parameter.Conversion.Finish(parameter.Name)).OfType<string>()];
 		foreach (string pin in pins.SkipLast(1)) writer.Line(pin);
-		writer.Open(pins[^1]);
-		writer.Line(call);
-		writer.Close();
+		if (pins.Count > 0) writer.Open(pins[^1]);
+		if (finishes.Count == 0) {
+			writer.Line(statement(InteropCall(function, self)));
+		} else if (function.Returns is VoidConversion) {
+			// What the call filled is read once it returns.
+			writer.Line($"{InteropCall(function, self)};");
+			foreach (string finish in finishes) writer.Line(finish);
+		} else {
+			writer.Line($"var returned = {InteropCall(function, self)};");
+			foreach (string finish in finishes) writer.Line(finish);
+			writer.Line(statement("returned"));
+		}
+		if (pins.Count > 0) writer.Close();
 	}
 
 	private static string ParameterList(IEnumerable<BoundParameter> parameters, bool withDefaults) => string.Join(", ", parameters.Select(parameter => {

@@ -41,6 +41,9 @@ typedef struct wxk_ClassInfo wxk_ClassInfo;
 // Text that the shim hands out, which the caller frees with wxk_String_Free.
 typedef struct wxk_String wxk_String;
 
+// A list of ints or item ids, as 64-bit numbers, which the caller frees with wxk_Numbers_Free.
+typedef struct wxk_Numbers wxk_Numbers;
+
 // A wxArrayString, which the caller frees with wxk_StringArray_Free.
 typedef struct wxk_StringArray wxk_StringArray;
 
@@ -171,6 +174,11 @@ WXK_FUNCTION(void) wxk_String_Free(wxk_String* text) WXK_NOEXCEPT;
 
 // Text that .NET hands to the shim, such as what a director's callback returns. The shim frees it.
 WXK_FUNCTION(wxk_String*) wxk_String_new(const char16_t* text, size_t textLength) WXK_NOEXCEPT;
+
+WXK_FUNCTION(size_t) wxk_Numbers_GetCount(const wxk_Numbers* numbers) WXK_NOEXCEPT;
+// Copies the numbers into values, which has room for all of them.
+WXK_FUNCTION(void) wxk_Numbers_CopyTo(const wxk_Numbers* numbers, int64_t* values) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Numbers_Free(wxk_Numbers* numbers) WXK_NOEXCEPT;
 
 WXK_FUNCTION(wxk_StringArray*) wxk_StringArray_new(void) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_StringArray_Add(wxk_StringArray* array, const char16_t* text, size_t textLength) WXK_NOEXCEPT;

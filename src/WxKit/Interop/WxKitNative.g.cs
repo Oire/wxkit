@@ -606,6 +606,10 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte CheckListBoxIsChecked(WxkWindow* self, uint item);
 
+	[LibraryImport(Library, EntryPoint = "wxk_CheckListBox_GetCheckedItems")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial uint CheckListBoxGetCheckedItems(WxkWindow* self, WxkNumbers** checkedItems);
+
 	[LibraryImport(Library, EntryPoint = "wxk_ChildFocusEvent_GetWindow")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkWindow* ChildFocusEventGetWindow(WxkEvent* self);
@@ -1942,6 +1946,10 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial Rect DataViewCtrlGetItemRect(WxkWindow* self, nint item, WxkDataViewColumn* column);
 
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_GetSelections")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int DataViewCtrlGetSelections(WxkWindow* self, WxkNumbers** selections);
+
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_IsExpanded")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte DataViewCtrlIsExpanded(WxkWindow* self, nint item);
@@ -1961,6 +1969,10 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_SetAlternateRowColour")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte DataViewCtrlSetAlternateRowColour(WxkWindow* self, WxkColor color);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_SetSelections")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DataViewCtrlSetSelections(WxkWindow* self, long* selections, nuint selectionsCount);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewCtrl_Unselect")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2426,6 +2438,10 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void DialogSetLayoutAdaptationMode(WxkWindow* self, int mode);
 
+	[LibraryImport(Library, EntryPoint = "wxk_Dialog_GetMainButtonIds")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkNumbers* DialogGetMainButtonIds(WxkWindow* self);
+
 	[LibraryImport(Library, EntryPoint = "wxk_Dialog_GetReturnCode")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int DialogGetReturnCode(WxkWindow* self);
@@ -2721,6 +2737,14 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_FlexGridSizer_SetNonFlexibleGrowMode")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void FlexGridSizerSetNonFlexibleGrowMode(WxkSizer* self, int mode);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FlexGridSizer_GetRowHeights")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkNumbers* FlexGridSizerGetRowHeights(WxkSizer* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_FlexGridSizer_GetColWidths")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkNumbers* FlexGridSizerGetColWidths(WxkSizer* self);
 
 	[LibraryImport(Library, EntryPoint = "wxk_FocusEvent_GetWindow")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -3798,6 +3822,10 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte ListBoxSetStringSelectionStringBool(WxkWindow* self, char* s, nuint sLength, byte select);
 
+	[LibraryImport(Library, EntryPoint = "wxk_ListBox_GetSelections")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int ListBoxGetSelections(WxkWindow* self, WxkNumbers** selections);
+
 	[LibraryImport(Library, EntryPoint = "wxk_ListBox_InsertItems")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void ListBoxInsertItems(WxkWindow* self, WxkStringArray* items, uint position);
@@ -4205,6 +4233,14 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_ListCtrl_GetColumnCount")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int ListCtrlGetColumnCount(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ListCtrl_GetColumnsOrder")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkNumbers* ListCtrlGetColumnsOrder(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ListCtrl_SetColumnsOrder")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ListCtrlSetColumnsOrder(WxkWindow* self, long* orders, nuint ordersCount);
 
 	[LibraryImport(Library, EntryPoint = "wxk_ListCtrl_GetCountPerPage")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5009,6 +5045,14 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_MultiChoiceDialog_new")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkWindow* MultiChoiceDialogNew(WxkWindow* parent, char* message, nuint messageLength, char* caption, nuint captionLength, WxkStringArray* choices, long style, Point position);
+
+	[LibraryImport(Library, EntryPoint = "wxk_MultiChoiceDialog_GetSelections")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkNumbers* MultiChoiceDialogGetSelections(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_MultiChoiceDialog_SetSelections")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void MultiChoiceDialogSetSelections(WxkWindow* self, long* selections, nuint selectionsCount);
 
 	[LibraryImport(Library, EntryPoint = "wxk_NavigationKeyEvent_SetFlags")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -7137,6 +7181,10 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_TreeCtrl_GetPrevVisible")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial nint TreeCtrlGetPrevVisible(WxkWindow* self, nint item);
+
+	[LibraryImport(Library, EntryPoint = "wxk_TreeCtrl_GetSelections")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial nuint TreeCtrlGetSelections(WxkWindow* self, WxkNumbers** selections);
 
 	[LibraryImport(Library, EntryPoint = "wxk_TreeCtrl_InsertItem_TreeItemIdTreeItemIdStringIntIntData")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

@@ -25,6 +25,9 @@ public unsafe partial class FlexGridSizer : GridSizer {
 	internal FlexGridSizer(WxkSizer* native) : base(native) {
 	}
 
+	/// <summary>Returns a read-only array containing the widths of the columns in the sizer.</summary>
+	public int[] ColWidths => NativeNumbers.TakeInts(WxKitNative.FlexGridSizerGetColWidths(Native));
+
 	/// <summary>Returns a wxOrientation value that specifies whether the sizer flexibly resizes its columns, rows, or both (default).</summary>
 	public int FlexibleDirection {
 		get => WxKitNative.FlexGridSizerGetFlexibleDirection(Native);
@@ -36,6 +39,9 @@ public unsafe partial class FlexGridSizer : GridSizer {
 		get => (FlexSizerGrowMode)WxKitNative.FlexGridSizerGetNonFlexibleGrowMode(Native);
 		set => WxKitNative.FlexGridSizerSetNonFlexibleGrowMode(Native, (int)value);
 	}
+
+	/// <summary>Returns a read-only array containing the heights of the rows in the sizer.</summary>
+	public int[] RowHeights => NativeNumbers.TakeInts(WxKitNative.FlexGridSizerGetRowHeights(Native));
 
 	/// <summary>Specifies that column idx (starting from zero) should be grown if there is extra space available to the sizer.</summary>
 	public void AddGrowableCol(int index, int proportion = 0) => WxKitNative.FlexGridSizerAddGrowableCol(Native, checked((nuint)index), proportion);

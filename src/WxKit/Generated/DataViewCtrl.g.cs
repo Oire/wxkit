@@ -292,6 +292,14 @@ public unsafe partial class DataViewCtrl : Control {
 	/// <summary>Returns item rectangle.</summary>
 	public Rect GetItemRect(DataViewItem item, DataViewColumn? column = null) => WxKitNative.DataViewCtrlGetItemRect(Native, item.Value, column is null ? null : (WxkDataViewColumn*)column.Native);
 
+	/// <summary>Fills sel with currently selected items and returns their number.</summary>
+	public int GetSelections(out DataViewItem[] selections) {
+		WxkNumbers* selectionsNative = null;
+		var returned = WxKitNative.DataViewCtrlGetSelections(Native, &selectionsNative);
+		selections = NativeNumbers.TakeDataViewItems(selectionsNative);
+		return returned;
+	}
+
 	/// <summary>Return true if the item is expanded.</summary>
 	public bool IsExpanded(DataViewItem item) => WxKitNative.DataViewCtrlIsExpanded(Native, item.Value) != 0;
 
@@ -393,6 +401,15 @@ public unsafe partial class DataViewCtrl : Control {
 
 	/// <summary>Sets the row height.</summary>
 	public bool SetRowHeight(int rowHeight) => WxKitNative.DataViewCtrlSetRowHeight(Native, rowHeight) != 0;
+
+	/// <summary>Sets the selection to the array of wxDataViewItems.</summary>
+	public void SetSelections(IEnumerable<DataViewItem> selections) {
+		ArgumentNullException.ThrowIfNull(selections);
+		long[] selectionsValues = NativeNumbers.From(selections);
+		fixed (long* selectionsPointer = selectionsValues) {
+			WxKitNative.DataViewCtrlSetSelections(Native, selectionsPointer, (nuint)selectionsValues.Length);
+		}
+	}
 
 	/// <summary>Toggle sorting by the given column.</summary>
 	public void ToggleSortByColumn(int column) => WxKitNative.DataViewCtrlToggleSortByColumn(Native, column);

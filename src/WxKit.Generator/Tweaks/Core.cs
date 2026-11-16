@@ -166,7 +166,7 @@ internal static class Core {
 			.Director("OnGetItemText", "OnGetItemImage", "OnGetItemColumnImage", "OnGetItemIsChecked"));
 		tweaks.Class("wxListView");
 		// SetItemData is written by hand, since wxTreeCtrl does not delete the data it replaces.
-		tweaks.Class("wxTreeCtrl").Ignore("SetItemData");
+		tweaks.Class("wxTreeCtrl", tree => tree.Ignore("SetItemData").ParameterName("GetSelections", "selection", "selections"));
 		// Data views show a model, whose classes are hand-written, in DataViewModel. A column is made
 		// by adding one, since renderers are not bound, so the members that add a column object are
 		// left out. Deleting columns is written by hand, since the control marks their objects destroyed.
@@ -178,6 +178,8 @@ internal static class Core {
 			.ParameterEnum("SetFlags", "flags", "wxDataViewColumnFlags")
 			.ParameterEnum("GetFlags", "return", "wxDataViewColumnFlags"));
 		tweaks.Class("wxDataViewCtrl", view => view
+			.ParameterName("GetSelections", "sel", "selections")
+			.ParameterName("SetSelections", "sel", "selections")
 			.DiscardUnboundReturns()
 			.Ignore("AssociateModel", "GetModel", "AppendColumn", "PrependColumn", "InsertColumn", "DeleteColumn", "ClearColumns", "GetSortingColumns")
 			.ParameterEnum("AppendTextColumn", "flags", "wxDataViewColumnFlags")

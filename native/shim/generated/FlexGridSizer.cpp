@@ -69,3 +69,11 @@ WXK_FUNCTION(void) wxk_FlexGridSizer_SetNonFlexibleGrowMode(wxk_Sizer* self, int
 	wxk::Guard([&] { static_cast<wxFlexGridSizer*>(wxk::Unwrap(self))->SetNonFlexibleGrowMode(static_cast<wxFlexSizerGrowMode>(mode)); });
 }
 
+WXK_FUNCTION(wxk_Numbers*) wxk_FlexGridSizer_GetRowHeights(wxk_Sizer* self) noexcept {
+	return wxk::Guard<wxk_Numbers*>(nullptr, [&]() -> wxk_Numbers* { return wxk::ToNumbers(static_cast<wxFlexGridSizer*>(wxk::Unwrap(self))->GetRowHeights()); });
+}
+
+WXK_FUNCTION(wxk_Numbers*) wxk_FlexGridSizer_GetColWidths(wxk_Sizer* self) noexcept {
+	return wxk::Guard<wxk_Numbers*>(nullptr, [&]() -> wxk_Numbers* { return wxk::ToNumbers(static_cast<wxFlexGridSizer*>(wxk::Unwrap(self))->GetColWidths()); });
+}
+

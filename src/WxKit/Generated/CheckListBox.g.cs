@@ -26,6 +26,14 @@ public unsafe partial class CheckListBox : ListBox {
 	/// <summary>Checks the given item.</summary>
 	public void Check(int item, bool check = true) => WxKitNative.CheckListBoxCheck(Native, checked((uint)item), check ? (byte)1 : (byte)0);
 
+	/// <summary>Return the indices of the checked items.</summary>
+	public int GetCheckedItems(out int[] checkedItems) {
+		WxkNumbers* checkedItemsNative = null;
+		var returned = WxKitNative.CheckListBoxGetCheckedItems(Native, &checkedItemsNative);
+		checkedItems = NativeNumbers.TakeInts(checkedItemsNative);
+		return checked((int)returned);
+	}
+
 	/// <summary>Returns true if the given item is checked, false otherwise.</summary>
 	public bool IsChecked(int item) => WxKitNative.CheckListBoxIsChecked(Native, checked((uint)item)) != 0;
 

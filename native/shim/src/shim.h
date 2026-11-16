@@ -3,7 +3,9 @@
 
 #include <wx/wx.h>
 #include <wx/variant.h>
+#include <wx/dataview.h>
 #include <wx/datetime.h>
+#include <wx/treebase.h>
 #include <wx/vector.h>
 
 #include <string>
@@ -16,6 +18,10 @@
 class wxDataViewColumn;
 class wxToolBarToolBase;
 class wxTreeItemData;
+
+struct wxk_Numbers {
+	std::vector<int64_t> values;
+};
 
 struct wxk_String {
 	std::u16string text;
@@ -160,6 +166,50 @@ struct OutLong {
 
 	~OutLong() {
 		if (target != nullptr) *target = value;
+	}
+};
+
+// Lists of ints or item ids, which cross as lists of 64-bit numbers.
+inline wxk_Numbers* ToNumbers(const wxArrayInt& values) {
+	auto* numbers = new wxk_Numbers;
+	for (int value : values) numbers->values.push_back(value);
+	return numbers;
+}
+
+inline wxk_Numbers* ToNumbers(const wxArrayTreeItemIds& items) {
+	auto* numbers = new wxk_Numbers;
+	for (const wxTreeItemId& item : items) numbers->values.push_back(reinterpret_cast<intptr_t>(item.GetID()));
+	return numbers;
+}
+
+inline wxk_Numbers* ToNumbers(const wxDataViewItemArray& items) {
+	auto* numbers = new wxk_Numbers;
+	for (const wxDataViewItem& item : items) numbers->values.push_back(reinterpret_cast<intptr_t>(item.GetID()));
+	return numbers;
+}
+
+inline wxArrayInt ToIntArray(const int64_t* values, size_t count) {
+	wxArrayInt result;
+	for (size_t index = 0; index < count; index++) result.push_back(static_cast<int>(values[index]));
+	return result;
+}
+
+inline wxDataViewItemArray ToDataViewItems(const int64_t* values, size_t count) {
+	wxDataViewItemArray result;
+	for (size_t index = 0; index < count; index++) result.push_back(wxDataViewItem(reinterpret_cast<void*>(static_cast<intptr_t>(values[index]))));
+	return result;
+}
+
+// A list a call fills. The temporary lives until the call returns, and hands back a copy as it goes.
+template <typename T>
+struct OutNumbers {
+	wxk_Numbers** target;
+	T value{};
+
+	operator T&() { return value; }
+
+	~OutNumbers() {
+		if (target != nullptr) *target = ToNumbers(value);
 	}
 };
 

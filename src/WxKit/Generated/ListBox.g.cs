@@ -122,6 +122,14 @@ public unsafe partial class ListBox : Control {
 	/// <summary>Returns a pointer to the client data associated with the given item (if any).</summary>
 	public object? GetClientObject(int index) => ItemData.Get(WxKitNative.ListBoxGetClientObject(Native, checked((uint)index)));
 
+	/// <summary>Fill an array of ints with the positions of the currently selected items.</summary>
+	public int GetSelections(out int[] selections) {
+		WxkNumbers* selectionsNative = null;
+		var returned = WxKitNative.ListBoxGetSelections(Native, &selectionsNative);
+		selections = NativeNumbers.TakeInts(selectionsNative);
+		return returned;
+	}
+
 	/// <summary>Returns the label of the item with the given index.</summary>
 	public string GetString(int index) => NativeString.Take(WxKitNative.ListBoxGetString(Native, checked((uint)index)));
 

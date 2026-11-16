@@ -341,6 +341,13 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 			if (!isReturn && target.Handle == HandleKind.Tool) return null;
 			return isReturn && !target.Handle.IsEvtHandler && !target.Handle.IsKeptByOwner ? null : new ObjectConversion(target);
 		}
+		// A list of ints or item ids, such as a list box's selections, comes back as an array, goes in
+		// as any sequence, and is an out array when the call fills it.
+		if (type.Pointers == 0 && NumberListKind.For(type.Name) is NumberListKind list) {
+			if (isReturn) return new NumberListConversion(list);
+			if (type.IsReference && !type.IsConst) return new NumberListOutConversion(list);
+			return list.ToCpp is null ? null : new NumberListConversion(list);
+		}
 		// A reference that comes back, even one that could change, such as a color dialog's data,
 		// is copied, as a value or a const reference is.
 		if (!type.IsValueOrConstReference && !(isReturn && type.IsReference && type.Pointers == 0)) return null;

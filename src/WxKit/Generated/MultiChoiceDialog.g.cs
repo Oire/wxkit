@@ -13,6 +13,18 @@ public unsafe partial class MultiChoiceDialog : Dialog {
 	internal MultiChoiceDialog(WxkWindow* native) : base(native) {
 	}
 
+	/// <summary>Returns array with indexes of selected items.</summary>
+	public int[] Selections {
+		get => NativeNumbers.TakeInts(WxKitNative.MultiChoiceDialogGetSelections(Native));
+		set {
+			ArgumentNullException.ThrowIfNull(value);
+			long[] valueValues = NativeNumbers.From(value);
+			fixed (long* valuePointer = valueValues) {
+				WxKitNative.MultiChoiceDialogSetSelections(Native, valuePointer, (nuint)valueValues.Length);
+			}
+		}
+	}
+
 	private static WxkWindow* CreateNative(Window? parent, string message, string caption, IEnumerable<string> choices, MultiChoiceDialogStyle style, Point? position) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(message);
