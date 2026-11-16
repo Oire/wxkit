@@ -20,6 +20,9 @@ internal sealed class EditorFrame : Frame {
 	private string _newLine = Environment.NewLine;
 	private bool _wordWrap = true;
 	private string _status = string.Empty;
+	// The printer and page settings, which the page setup dialog and printing keep between uses.
+	private PrintData _printData = new();
+	private PageSetupDialogData _pageSetup = new();
 
 	public EditorFrame() : base(null, AppName, size: new Size(800, 600)) {
 		_text = CreateText(string.Empty);
@@ -73,6 +76,10 @@ internal sealed class EditorFrame : Frame {
 		file.Append(StandardId.Open).Click += async (_, _) => await ChooseAndOpenAsync();
 		file.Append(StandardId.Save).Click += async (_, _) => await SaveAsync(saveAs: false);
 		file.Append(StandardId.SaveAs).Click += async (_, _) => await SaveAsync(saveAs: true);
+		file.AppendSeparator();
+		file.Append(StandardId.PageSetup).Click += (_, _) => SetUpPage();
+		file.Append(StandardId.Preview).Click += (_, _) => PreviewPrint();
+		file.Append(StandardId.Print).Click += (_, _) => Print();
 		file.AppendSeparator();
 		file.Append(StandardId.Exit).Click += (_, _) => Close();
 		Menu edit = new();
@@ -345,6 +352,43 @@ internal sealed class EditorFrame : Frame {
 		old.Destroy();
 		SendSizeEvent();
 		_text.SetFocus();
+	}
+
+	private void SetUpPage() {
+		_pageSetup.PrintData = _printData;
+		using PageSetupDialog dialog = new(this, _pageSetup);
+		if (dialog.ShowModal() != StandardId.Ok) return;
+		_pageSetup = dialog.PageSetupData ?? _pageSetup;
+		_printData = _pageSetup.PrintData ?? _printData;
+	}
+
+	private TextPrintout CreatePrintout() {
+		using Font? font = _text.Font;
+		return new TextPrintout(DocumentName, _text.Value, font);
+	}
+
+	// The preview takes its printouts, one to show and one for its Print button.
+	private void PreviewPrint() {
+		using PrintDialogData data = new() { PrintData = _printData };
+		Frame? preview = PrintPreview.Show(CreatePrintout(), CreatePrintout(), this, $"Print Preview of {DocumentName}", data, new Size(700, 800));
+		if (preview is null) MessageBox.Show("There is no printer to preview for.", AppName, MessageDialogStyle.Ok | MessageDialogStyle.IconWarning, this);
+	}
+
+	// For the smoke test: makes a preview, which counts and draws the first page, and closes it.
+	internal void PreviewAndClose() {
+		using PrintDialogData data = new() { PrintData = _printData };
+		PrintPreview.Show(CreatePrintout(), null, this, "Smoke test", data)?.Close(force: true);
+	}
+
+	private void Print() {
+		using PrintDialogData data = new() { PrintData = _printData };
+		using Printer printer = new(data);
+		using TextPrintout printout = CreatePrintout();
+		if (printer.Print(this, printout)) {
+			_printData = printer.PrintDialogData?.PrintData ?? _printData;
+		} else if (Printer.LastError == PrinterError.Error) {
+			MessageBox.Show($"{AppName} could not print {DocumentName}.", AppName, MessageDialogStyle.Ok | MessageDialogStyle.IconError, this);
+		}
 	}
 
 	private void ChooseFont() {
