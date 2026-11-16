@@ -71,6 +71,9 @@ public unsafe partial class SearchCtrl : Control {
 	/// <summary>Returns the search button visibility value.</summary>
 	public bool IsSearchButtonVisible => WxKitNative.SearchCtrlIsSearchButtonVisible(Native) != 0;
 
+	/// <summary>Returns the zero based index of the last position in the text control, which is equal to the number of characters in the control.</summary>
+	public long LastPosition => WxKitNative.SearchCtrlGetLastPosition(Native);
+
 	/// <summary>Returns the margins used by the control.</summary>
 	public Point Margins {
 		get => WxKitNative.SearchCtrlGetMargins(Native);
@@ -194,6 +197,9 @@ public unsafe partial class SearchCtrl : Control {
 
 	/// <summary>Attempts to set the control margins.</summary>
 	public bool SetMargins(int left, int top = -1) => WxKitNative.SearchCtrlSetMarginsIntInt(Native, left, top) != 0;
+
+	/// <summary>This function sets the maximum number of characters the user can enter into the control.</summary>
+	public void SetMaxLength(int len) => WxKitNative.SearchCtrlSetMaxLength(Native, checked((nuint)len));
 
 	/// <summary>Selects the text starting at the first position up to (but not including) the character at the last position.</summary>
 	public void SetSelection(long from, long to) => WxKitNative.SearchCtrlSetSelection(Native, from, to);

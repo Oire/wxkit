@@ -493,6 +493,112 @@ internal sealed class ColorConversion : Conversion {
 	public override bool AcceptsNull => true;
 }
 
+// A rectangle a call fills by reference, such as a list item's, is an out Rect.
+internal sealed class RectOutConversion : Conversion {
+	public static RectOutConversion Instance { get; } = new();
+
+	public override string Suffix => "OutRect";
+
+	public override string CReturnType => throw new InvalidOperationException("Output rectangles are only parameters.");
+
+	public override string Fallback => "0";
+
+	public override string InteropReturnType => throw new InvalidOperationException("Output rectangles are only parameters.");
+
+	public override IEnumerable<string> CParameters(string name) => [$"wxk_Rect* {name}"];
+
+	public override string ToCpp(string name) => $"wxk::OutValue<wxRect, wxk_Rect, wxk::ToRect>{{{name}}}";
+
+	public override string FromCpp(string expression) => throw new InvalidOperationException("Output rectangles are only parameters.");
+
+	public override IEnumerable<string> InteropParameters(string name) => [$"Rect* {name}"];
+
+	public override string ManagedType(bool nullable) => "out Rect";
+
+	// An out parameter has to be assigned before its address is taken.
+	public override string? Prepare(string name) => $"{name} = default;";
+
+	public override string? Fixed(string name) => $"fixed (Rect* {Pointer(name)} = &{name})";
+
+	public override IEnumerable<string> InteropArguments(string name, bool nullable) => [Pointer(name)];
+
+	public override string ManagedReturn(string expression) => throw new InvalidOperationException("Output rectangles are only parameters.");
+
+	private static string Pointer(string name) => name.TrimStart('@') + "Pointer";
+}
+
+// Strings a call fills by reference, such as a file dialog's paths, are an out array.
+internal sealed class StringArrayOutConversion : Conversion {
+	public static StringArrayOutConversion Instance { get; } = new();
+
+	public override string Suffix => "OutStrings";
+
+	public override string CReturnType => throw new InvalidOperationException("Output lists are only parameters.");
+
+	public override string Fallback => "nullptr";
+
+	public override string InteropReturnType => throw new InvalidOperationException("Output lists are only parameters.");
+
+	public override IEnumerable<string> CParameters(string name) => [$"wxk_StringArray** {name}"];
+
+	public override string ToCpp(string name) => $"wxk::OutValue<wxArrayString, wxk_StringArray*, wxk::CopyStrings>{{{name}}}";
+
+	public override string FromCpp(string expression) => throw new InvalidOperationException("Output lists are only parameters.");
+
+	public override IEnumerable<string> InteropParameters(string name) => [$"WxkStringArray** {name}"];
+
+	public override string ManagedType(bool nullable) => "out string[]";
+
+	public override string? Prepare(string name) => $"WxkStringArray* {Native(name)} = null;";
+
+	public override IEnumerable<string> InteropArguments(string name, bool nullable) => [$"&{Native(name)}"];
+
+	public override string? Finish(string name) => $"{name} = NativeStringArray.Take({Native(name)});";
+
+	public override string ManagedReturn(string expression) => throw new InvalidOperationException("Output lists are only parameters.");
+
+	private static string Native(string name) => name.TrimStart('@') + "Native";
+}
+
+// Ints after their count, as in SetStatusWidths(int n, const int widths[]), are any sequence of
+// them, which passes both, so the count is not a parameter of its own.
+internal sealed class CountedIntsConversion : Conversion {
+	public static CountedIntsConversion Instance { get; } = new();
+
+	public override string Suffix => "Ints";
+
+	public override string CReturnType => throw new InvalidOperationException("Counted ints are only parameters.");
+
+	public override string Fallback => "nullptr";
+
+	public override string InteropReturnType => throw new InvalidOperationException("Counted ints are only parameters.");
+
+	public override IEnumerable<string> CParameters(string name) => [$"const int32_t* {name}", $"size_t {name}Count"];
+
+	// The count goes first, where the parameter it replaces was.
+	public override string ToCpp(string name) => $"static_cast<int>({name}Count), {name}";
+
+	public override string FromCpp(string expression) => throw new InvalidOperationException("Counted ints are only parameters.");
+
+	public override IEnumerable<string> InteropParameters(string name) => [$"int* {name}", $"nuint {name}Count"];
+
+	public override string ManagedType(bool nullable) => "IEnumerable<int>";
+
+	public override string? Check(string name, bool nullable) => $"ArgumentNullException.ThrowIfNull({name});";
+
+	public override string? Prepare(string name) => $"int[] {Values(name)} = [.. {name}];";
+
+	public override string? Fixed(string name) => $"fixed (int* {Pointer(name)} = {Values(name)})";
+
+	public override IEnumerable<string> InteropArguments(string name, bool nullable) => [Pointer(name), $"(nuint){Values(name)}.Length"];
+
+	public override string ManagedReturn(string expression) => throw new InvalidOperationException("Counted ints are only parameters.");
+
+	private static string Values(string name) => name.TrimStart('@') + "Values";
+
+	private static string Pointer(string name) => name.TrimStart('@') + "Pointer";
+}
+
 // What a list of numbers holds: ints, as in a wxArrayInt, or item ids, as in a wxArrayTreeItemIds.
 // Each crosses as a list of 64-bit numbers, which holds an int or an id alike.
 internal sealed record NumberListKind(string CppType, string ElementType, string Take, string? ToCpp) {

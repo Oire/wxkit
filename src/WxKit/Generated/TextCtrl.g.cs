@@ -69,6 +69,9 @@ public unsafe partial class TextCtrl : Control {
 	/// <summary>Returns true if this is a single line edit control and false otherwise.</summary>
 	public bool IsSingleLine => WxKitNative.TextCtrlIsSingleLine(Native) != 0;
 
+	/// <summary>Returns the zero based index of the last position in the text control, which is equal to the number of characters in the control.</summary>
+	public long LastPosition => WxKitNative.TextCtrlGetLastPosition(Native);
+
 	/// <summary>Returns the margins used by the control.</summary>
 	public Point Margins {
 		get => WxKitNative.TextCtrlGetMargins(Native);
@@ -284,6 +287,9 @@ public unsafe partial class TextCtrl : Control {
 
 	/// <summary>Attempts to set the control margins.</summary>
 	public bool SetMargins(int left, int top = -1) => WxKitNative.TextCtrlSetMarginsIntInt(Native, left, top) != 0;
+
+	/// <summary>This function sets the maximum number of characters the user can enter into the control.</summary>
+	public void SetMaxLength(int len) => WxKitNative.TextCtrlSetMaxLength(Native, checked((nuint)len));
 
 	/// <summary>Selects the text starting at the first position up to (but not including) the character at the last position.</summary>
 	public void SetSelection(long from, long to) => WxKitNative.TextCtrlSetSelection(Native, from, to);

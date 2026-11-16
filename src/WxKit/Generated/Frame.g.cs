@@ -103,6 +103,15 @@ public unsafe partial class Frame : TopLevelWindow {
 		}
 	}
 
+	/// <summary>Sets the widths of the fields in the status bar.</summary>
+	public void SetStatusWidths(IEnumerable<int> widths) {
+		ArgumentNullException.ThrowIfNull(widths);
+		int[] widthsValues = [.. widths];
+		fixed (int* widthsPointer = widthsValues) {
+			WxKitNative.FrameSetStatusWidths(Native, widthsPointer, (nuint)widthsValues.Length);
+		}
+	}
+
 	/// <summary>Set the frame modality.</summary>
 	public void SetWindowModality(WindowMode modality) => WxKitNative.FrameSetWindowModality(Native, (int)modality);
 

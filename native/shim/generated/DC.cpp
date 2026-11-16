@@ -165,8 +165,12 @@ WXK_FUNCTION(void) wxk_DC_DestroyClippingRegion(wxk_Object* self) noexcept {
 	wxk::Guard([&] { static_cast<wxDC*>(wxk::Unwrap(self))->DestroyClippingRegion(); });
 }
 
-WXK_FUNCTION(uint8_t) wxk_DC_GetClippingBox(wxk_Object* self, int32_t* x, int32_t* y, int32_t* width, int32_t* height) noexcept {
+WXK_FUNCTION(uint8_t) wxk_DC_GetClippingBox_OutIntOutIntOutIntOutInt(wxk_Object* self, int32_t* x, int32_t* y, int32_t* width, int32_t* height) noexcept {
 	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxDC*>(wxk::Unwrap(self))->GetClippingBox(x, y, width, height)) ? 1 : 0; });
+}
+
+WXK_FUNCTION(uint8_t) wxk_DC_GetClippingBox_OutRect(wxk_Object* self, wxk_Rect* rect) noexcept {
+	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxDC*>(wxk::Unwrap(self))->GetClippingBox(wxk::OutValue<wxRect, wxk_Rect, wxk::ToRect>{rect})) ? 1 : 0; });
 }
 
 WXK_FUNCTION(void) wxk_DC_SetClippingRegion_IntIntIntInt(wxk_Object* self, int32_t x, int32_t y, int32_t width, int32_t height) noexcept {

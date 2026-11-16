@@ -84,6 +84,10 @@ WXK_FUNCTION(void) wxk_SearchCtrl_SetInsertionPointEnd(wxk_Window* self) noexcep
 	wxk::Guard([&] { static_cast<wxTextEntry*>(static_cast<wxSearchCtrl*>(wxk::Unwrap(self)))->SetInsertionPointEnd(); });
 }
 
+WXK_FUNCTION(void) wxk_SearchCtrl_SetMaxLength(wxk_Window* self, size_t len) noexcept {
+	wxk::Guard([&] { static_cast<wxTextEntry*>(static_cast<wxSearchCtrl*>(wxk::Unwrap(self)))->SetMaxLength(len); });
+}
+
 WXK_FUNCTION(void) wxk_SearchCtrl_SetSelection(wxk_Window* self, int64_t from, int64_t to) noexcept {
 	wxk::Guard([&] { static_cast<wxTextEntry*>(static_cast<wxSearchCtrl*>(wxk::Unwrap(self)))->SetSelection(static_cast<long>(from), static_cast<long>(to)); });
 }
@@ -154,6 +158,10 @@ WXK_FUNCTION(int64_t) wxk_SearchCtrl_GetInsertionPoint(wxk_Window* self) noexcep
 
 WXK_FUNCTION(void) wxk_SearchCtrl_SetInsertionPoint(wxk_Window* self, int64_t position) noexcept {
 	wxk::Guard([&] { static_cast<wxTextEntry*>(static_cast<wxSearchCtrl*>(wxk::Unwrap(self)))->SetInsertionPoint(static_cast<long>(position)); });
+}
+
+WXK_FUNCTION(int64_t) wxk_SearchCtrl_GetLastPosition(wxk_Window* self) noexcept {
+	return wxk::Guard<int64_t>(0, [&]() -> int64_t { return static_cast<int64_t>(static_cast<wxTextEntry*>(static_cast<wxSearchCtrl*>(wxk::Unwrap(self)))->GetLastPosition()); });
 }
 
 WXK_FUNCTION(wxk_String*) wxk_SearchCtrl_GetStringSelection(wxk_Window* self) noexcept {

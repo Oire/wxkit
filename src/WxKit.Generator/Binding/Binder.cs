@@ -223,7 +223,15 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 			// A window's name, which few applications set, is left to its default, so every
 			// constructor ends the same way.
 			if (isConstructor && owner.Handle == HandleKind.Window && parameter.Name == "name" && parameter.Default is not null) break;
-			Conversion? conversion = Map(CppType.Parse(parameter.Type), owner, member.Name, parameter.Name, isReturn: false);
+			Conversion? conversion;
+			// Ints after their count, as in SetStatusWidths(int n, const int widths[]), take the count with them.
+			// One with a default, as SetFieldsCount's has, is left to it, and the count stays a parameter.
+			if (parameter.Default is null && parameter.Type.Replace(" ", string.Empty, StringComparison.Ordinal) is "constint*" or "constint[]" && parameters.Count > 0 && parameters[^1].CppName is "n" or "number" or "count" && parameters[^1].Conversion == NumberConversion.Int) {
+				parameters.RemoveAt(parameters.Count - 1);
+				conversion = CountedIntsConversion.Instance;
+			} else {
+				conversion = Map(CppType.Parse(parameter.Type), owner, member.Name, parameter.Name, isReturn: false);
+			}
 			// A number that defaults to wxBOTH, wxHORIZONTAL, or wxVERTICAL is an orientation.
 			if (conversion == NumberConversion.Int && parameter.Default is string orientation && OrientationPattern().IsMatch(orientation)) conversion = new EnumConversion("Orientation", NumberConversion.Int);
 			bool nullable = parameter.Name == "parent" && isConstructor && owner.IsTopLevel;
@@ -341,6 +349,12 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 			if (!isReturn && target.Handle == HandleKind.Tool) return null;
 			return isReturn && !target.Handle.IsEvtHandler && !target.Handle.IsKeptByOwner ? null : new ObjectConversion(target);
 		}
+		// A rectangle or strings a call fills by reference are out parameters. Only a getter's
+		// rectangle is, since wxWindow::IsExposed takes one it reads by a reference that could change.
+		if (!isReturn && type.Pointers == 0 && type.IsReference && !type.IsConst) {
+			if (type.Name == "wxRect" && member.StartsWith("Get", StringComparison.Ordinal)) return RectOutConversion.Instance;
+			if (type.Name == "wxArrayString") return StringArrayOutConversion.Instance;
+		}
 		// A list of ints or item ids, such as a list box's selections, comes back as an array, goes in
 		// as any sequence, and is an out array when the call fills it.
 		if (type.Pointers == 0 && NumberListKind.For(type.Name) is NumberListKind list) {
@@ -362,14 +376,15 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		return type.Name switch {
 			"bool" => BoolConversion.Instance,
 			"int" or "wxWindowID" or "wxCoord" => NumberConversion.Int,
-			"long" => NumberConversion.Long,
+			"long" or "wxTextPos" => NumberConversion.Long,
 			"double" => NumberConversion.Double,
 			"float" => NumberConversion.Float,
 			"unsigned char" or "wxByte" => NumberConversion.Byte,
 			// A wxMessageDialog button label converts from a string, which is how WxKit gives it.
 			// wxArtID and wxArtClient are typedefs of wxString.
 			"wxString" or "ButtonLabel" or "wxArtID" or "wxArtClient" => StringConversion.Instance,
-			"size_t" => CountConversion.Size,
+			// An unsigned long is 32 bits on Windows and 64 elsewhere, so it crosses as a size_t.
+			"size_t" or "unsigned long" => CountConversion.Size,
 			"unsigned" or "unsigned int" or "wxUint32" => CountConversion.Unsigned,
 			"wxRect" => RectConversion.Instance,
 			"wxTreeItemId" => ItemIdConversion.TreeItem,

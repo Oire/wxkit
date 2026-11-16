@@ -296,6 +296,14 @@ public unsafe partial class ListCtrl : Control {
 	/// <summary>Returns the item's font.</summary>
 	public Font? GetItemFont(long item) => global::WxKit.Font.Take(WxKitNative.ListCtrlGetItemFont(Native, item));
 
+	/// <summary>Returns the rectangle representing the item's size and position, in physical coordinates.</summary>
+	public bool GetItemRect(long item, out Rect rect, int code = 0) {
+		rect = default;
+		fixed (Rect* rectPointer = &rect) {
+			return WxKitNative.ListCtrlGetItemRect(Native, item, rectPointer, code) != 0;
+		}
+	}
+
 	/// <summary>Gets the item state.</summary>
 	public int GetItemState(long item, long stateMask) => WxKitNative.ListCtrlGetItemState(Native, item, stateMask);
 
@@ -307,6 +315,14 @@ public unsafe partial class ListCtrl : Control {
 
 	/// <summary>Searches for an item with the given geometry or state, starting from item but excluding the item itself.</summary>
 	public long GetNextItem(long item, int geometry = 1, int state = 0) => WxKitNative.ListCtrlGetNextItem(Native, item, geometry, state);
+
+	/// <summary>Returns the rectangle representing the size and position, in physical coordinates, of the given subitem, i.e.</summary>
+	public bool GetSubItemRect(long item, long subItem, out Rect rect, int code = 0) {
+		rect = default;
+		fixed (Rect* rectPointer = &rect) {
+			return WxKitNative.ListCtrlGetSubItemRect(Native, item, subItem, rectPointer, code) != 0;
+		}
+	}
 
 	/// <summary>Returns the new value to use for sort indicator after clicking a column.</summary>
 	public bool GetUpdatedAscendingSortIndicator(int column) => WxKitNative.ListCtrlGetUpdatedAscendingSortIndicator(Native, column) != 0;

@@ -254,6 +254,14 @@ public unsafe partial class TreeCtrl : Control {
 	/// <summary>Expands the given item and all its children recursively.</summary>
 	public void ExpandAllChildren(TreeItemId item) => WxKitNative.TreeCtrlExpandAllChildren(Native, item.Value);
 
+	/// <summary>Retrieves the rectangle bounding the item.</summary>
+	public bool GetBoundingRect(TreeItemId item, out Rect rect, bool textOnly = false) {
+		rect = default;
+		fixed (Rect* rectPointer = &rect) {
+			return WxKitNative.TreeCtrlGetBoundingRect(Native, item.Value, rectPointer, textOnly ? (byte)1 : (byte)0) != 0;
+		}
+	}
+
 	/// <summary>Returns the number of items in the branch.</summary>
 	public int GetChildrenCount(TreeItemId item, bool recursively = true) => checked((int)WxKitNative.TreeCtrlGetChildrenCount(Native, item.Value, recursively ? (byte)1 : (byte)0));
 

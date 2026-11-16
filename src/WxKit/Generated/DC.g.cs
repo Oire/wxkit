@@ -248,7 +248,15 @@ public unsafe partial class DC : NativeObject {
 		fixed (int* yPointer = &y)
 		fixed (int* widthPointer = &width)
 		fixed (int* heightPointer = &height) {
-			return WxKitNative.DCGetClippingBox(Native, xPointer, yPointer, widthPointer, heightPointer) != 0;
+			return WxKitNative.DCGetClippingBoxOutIntOutIntOutIntOutInt(Native, xPointer, yPointer, widthPointer, heightPointer) != 0;
+		}
+	}
+
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public bool GetClippingBox(out Rect rect) {
+		rect = default;
+		fixed (Rect* rectPointer = &rect) {
+			return WxKitNative.DCGetClippingBoxOutRect(Native, rectPointer) != 0;
 		}
 	}
 

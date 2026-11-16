@@ -44,6 +44,7 @@ internal static class Core {
 		// WxKit keeps the menu bar a frame owns. OnCreateStatusBar and OnCreateToolBar are what
 		// CreateStatusBar and CreateToolBar call, for a derived frame to override, not to call.
 		tweaks.Class("wxFrame", frame => frame
+			.ParameterName("SetStatusWidths", "widths_field", "widths")
 			.Ignore("SetMenuBar", "GetMenuBar", "OnCreateStatusBar", "OnCreateToolBar")
 			.ParameterEnum("CreateToolBar", "style", "ToolBarStyle")
 			.ParameterEnum("CreateStatusBar", "style", "StatusBarStyle"));
@@ -104,6 +105,7 @@ internal static class Core {
 		// An item's data is an object, which the control deletes with the item. Detaching it would
 		// leave no one to free it.
 		foreach (string container in (string[])["wxControlWithItems", "wxChoice", "wxComboBox", "wxListBox"]) tweaks.Class(container).Ignore("DetachClientObject");
+		tweaks.Class("wxStatusBar", bar => bar.ParameterName("SetStatusWidths", "widths_field", "widths"));
 		// Pickers: a button, and optionally a text box, that choose a color, a file, a folder, or a
 		// font. Events are only received, so the events' values are only read.
 		// CreateBase is for a picker's own Create.

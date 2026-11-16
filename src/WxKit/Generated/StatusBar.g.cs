@@ -28,6 +28,14 @@ public unsafe partial class StatusBar : Control {
 		return WxKitNative.StatusBarAddFieldControl(Native, i, (WxkWindow*)window.Native) != 0;
 	}
 
+	/// <summary>Returns the size and position of a field's internal bounding rectangle.</summary>
+	public bool GetFieldRect(int i, out Rect rect) {
+		rect = default;
+		fixed (Rect* rectPointer = &rect) {
+			return WxKitNative.StatusBarGetFieldRect(Native, i, rectPointer) != 0;
+		}
+	}
+
 	/// <summary>Returns the style of the n-th field.</summary>
 	public int GetStatusStyle(int index) => WxKitNative.StatusBarGetStatusStyle(Native, index);
 
@@ -51,11 +59,29 @@ public unsafe partial class StatusBar : Control {
 	/// <summary>Sets the minimal possible height for the status bar.</summary>
 	public void SetMinHeight(int height) => WxKitNative.StatusBarSetMinHeight(Native, height);
 
+	/// <summary>Sets the styles of the fields in the status line which can make fields appear flat or raised instead of the default appearance.</summary>
+	public void SetStatusStyles(IEnumerable<int> styles) {
+		ArgumentNullException.ThrowIfNull(styles);
+		int[] stylesValues = [.. styles];
+		fixed (int* stylesPointer = stylesValues) {
+			WxKitNative.StatusBarSetStatusStyles(Native, stylesPointer, (nuint)stylesValues.Length);
+		}
+	}
+
 	/// <summary>Sets the status text for the i-th field.</summary>
 	public void SetStatusText(string text, int i = 0) {
 		ArgumentNullException.ThrowIfNull(text);
 		fixed (char* textText = text) {
 			WxKitNative.StatusBarSetStatusText(Native, textText, NativeString.Length(text), i);
+		}
+	}
+
+	/// <summary>Sets the widths of the fields in the status line.</summary>
+	public void SetStatusWidths(IEnumerable<int> widths) {
+		ArgumentNullException.ThrowIfNull(widths);
+		int[] widthsValues = [.. widths];
+		fixed (int* widthsPointer = widthsValues) {
+			WxKitNative.StatusBarSetStatusWidths(Native, widthsPointer, (nuint)widthsValues.Length);
 		}
 	}
 

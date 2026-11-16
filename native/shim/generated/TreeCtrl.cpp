@@ -72,6 +72,10 @@ WXK_FUNCTION(void) wxk_TreeCtrl_ExpandAllChildren(wxk_Window* self, void* item) 
 	wxk::Guard([&] { static_cast<wxTreeCtrl*>(wxk::Unwrap(self))->ExpandAllChildren(wxTreeItemId(item)); });
 }
 
+WXK_FUNCTION(uint8_t) wxk_TreeCtrl_GetBoundingRect(wxk_Window* self, void* item, wxk_Rect* rect, uint8_t textOnly) noexcept {
+	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxTreeCtrl*>(wxk::Unwrap(self))->GetBoundingRect(wxTreeItemId(item), wxk::OutValue<wxRect, wxk_Rect, wxk::ToRect>{rect}, textOnly != 0)) ? 1 : 0; });
+}
+
 WXK_FUNCTION(size_t) wxk_TreeCtrl_GetChildrenCount(wxk_Window* self, void* item, uint8_t recursively) noexcept {
 	return wxk::Guard<size_t>(0, [&]() -> size_t { return static_cast<size_t>(static_cast<wxTreeCtrl*>(wxk::Unwrap(self))->GetChildrenCount(wxTreeItemId(item), recursively != 0)); });
 }

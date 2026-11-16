@@ -200,6 +200,24 @@ inline wxDataViewItemArray ToDataViewItems(const int64_t* values, size_t count) 
 	return result;
 }
 
+// A value a call fills by reference, such as an item's rectangle. The temporary lives until the
+// call returns, and writes the value back, converted, as it goes.
+template <typename T, typename Native, Native (*Convert)(const T&)>
+struct OutValue {
+	Native* target;
+	T value{};
+
+	operator T&() { return value; }
+
+	~OutValue() {
+		if (target != nullptr) *target = Convert(value);
+	}
+};
+
+inline wxk_StringArray* CopyStrings(const wxArrayString& strings) {
+	return Wrap(new wxArrayString(strings));
+}
+
 // A list a call fills. The temporary lives until the call returns, and hands back a copy as it goes.
 template <typename T>
 struct OutNumbers {

@@ -8,6 +8,10 @@ WXK_FUNCTION(wxk_Window*) wxk_DirDialog_new(wxk_Window* parent, const char16_t* 
 	});
 }
 
+WXK_FUNCTION(void) wxk_DirDialog_GetPaths(wxk_Window* self, wxk_StringArray** paths) noexcept {
+	wxk::Guard([&] { static_cast<wxDirDialog*>(wxk::Unwrap(self))->GetPaths(wxk::OutValue<wxArrayString, wxk_StringArray*, wxk::CopyStrings>{paths}); });
+}
+
 WXK_FUNCTION(wxk_String*) wxk_DirDialog_GetMessage(wxk_Window* self) noexcept {
 	return wxk::Guard<wxk_String*>(nullptr, [&]() -> wxk_String* { return wxk::ToUtf16(static_cast<wxDirDialog*>(wxk::Unwrap(self))->GetMessage()); });
 }

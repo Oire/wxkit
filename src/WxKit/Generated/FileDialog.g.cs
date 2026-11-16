@@ -91,6 +91,20 @@ public unsafe partial class FileDialog : Dialog {
 		}
 	}
 
+	/// <summary>Fills the array filenames with the names of the files chosen.</summary>
+	public void GetFilenames(out string[] filenames) {
+		WxkStringArray* filenamesNative = null;
+		WxKitNative.FileDialogGetFilenames(Native, &filenamesNative);
+		filenames = NativeStringArray.Take(filenamesNative);
+	}
+
+	/// <summary>Fills the array paths with the full paths of the files chosen.</summary>
+	public void GetPaths(out string[] paths) {
+		WxkStringArray* pathsNative = null;
+		WxKitNative.FileDialogGetPaths(Native, &pathsNative);
+		paths = NativeStringArray.Take(pathsNative);
+	}
+
 	private static WxkWindow* CreateNative(Window? parent, string? message, string defaultDir, string defaultFile, string? wildcard, FileDialogStyle style, Point? position, Size? size) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(defaultDir);

@@ -160,6 +160,10 @@ WXK_FUNCTION(wxk_Object*) wxk_ListCtrl_GetItemFont(wxk_Window* self, int64_t ite
 	return wxk::Guard<wxk_Object*>(nullptr, [&]() -> wxk_Object* { return wxk::CopyValue<wxFont>(static_cast<wxListCtrl*>(wxk::Unwrap(self))->GetItemFont(static_cast<long>(item))); });
 }
 
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_GetItemRect(wxk_Window* self, int64_t item, wxk_Rect* rect, int32_t code) noexcept {
+	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxListCtrl*>(wxk::Unwrap(self))->GetItemRect(static_cast<long>(item), wxk::OutValue<wxRect, wxk_Rect, wxk::ToRect>{rect}, static_cast<int>(code))) ? 1 : 0; });
+}
+
 WXK_FUNCTION(int32_t) wxk_ListCtrl_GetItemState(wxk_Window* self, int64_t item, int64_t stateMask) noexcept {
 	return wxk::Guard<int32_t>(0, [&]() -> int32_t { return static_cast<int32_t>(static_cast<wxListCtrl*>(wxk::Unwrap(self))->GetItemState(static_cast<long>(item), static_cast<long>(stateMask))); });
 }
@@ -174,6 +178,10 @@ WXK_FUNCTION(wxk_Colour) wxk_ListCtrl_GetItemTextColour(wxk_Window* self, int64_
 
 WXK_FUNCTION(int64_t) wxk_ListCtrl_GetNextItem(wxk_Window* self, int64_t item, int32_t geometry, int32_t state) noexcept {
 	return wxk::Guard<int64_t>(0, [&]() -> int64_t { return static_cast<int64_t>(static_cast<wxListCtrl*>(wxk::Unwrap(self))->GetNextItem(static_cast<long>(item), static_cast<int>(geometry), static_cast<int>(state))); });
+}
+
+WXK_FUNCTION(uint8_t) wxk_ListCtrl_GetSubItemRect(wxk_Window* self, int64_t item, int64_t subItem, wxk_Rect* rect, int32_t code) noexcept {
+	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxListCtrl*>(wxk::Unwrap(self))->GetSubItemRect(static_cast<long>(item), static_cast<long>(subItem), wxk::OutValue<wxRect, wxk_Rect, wxk::ToRect>{rect}, static_cast<int>(code))) ? 1 : 0; });
 }
 
 WXK_FUNCTION(uint8_t) wxk_ListCtrl_InReportView(wxk_Window* self) noexcept {

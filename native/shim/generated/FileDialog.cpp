@@ -12,6 +12,14 @@ WXK_FUNCTION(uint8_t) wxk_FileDialog_AddShortcut(wxk_Window* self, const char16_
 	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxFileDialog*>(wxk::Unwrap(self))->AddShortcut(wxk::FromUtf16(directory, directoryLength), static_cast<int>(flags))) ? 1 : 0; });
 }
 
+WXK_FUNCTION(void) wxk_FileDialog_GetFilenames(wxk_Window* self, wxk_StringArray** filenames) noexcept {
+	wxk::Guard([&] { static_cast<wxFileDialog*>(wxk::Unwrap(self))->GetFilenames(wxk::OutValue<wxArrayString, wxk_StringArray*, wxk::CopyStrings>{filenames}); });
+}
+
+WXK_FUNCTION(void) wxk_FileDialog_GetPaths(wxk_Window* self, wxk_StringArray** paths) noexcept {
+	wxk::Guard([&] { static_cast<wxFileDialog*>(wxk::Unwrap(self))->GetPaths(wxk::OutValue<wxArrayString, wxk_StringArray*, wxk::CopyStrings>{paths}); });
+}
+
 WXK_FUNCTION(wxk_String*) wxk_FileDialog_GetCurrentlySelectedFilename(wxk_Window* self) noexcept {
 	return wxk::Guard<wxk_String*>(nullptr, [&]() -> wxk_String* { return wxk::ToUtf16(static_cast<wxFileDialog*>(wxk::Unwrap(self))->GetCurrentlySelectedFilename()); });
 }

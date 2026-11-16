@@ -79,6 +79,9 @@ public unsafe partial class ComboBox : Control {
 	/// <summary>Returns true if the text of the combobox is empty.</summary>
 	public bool IsTextEmpty => WxKitNative.ComboBoxIsTextEmpty(Native) != 0;
 
+	/// <summary>Returns the zero based index of the last position in the text control, which is equal to the number of characters in the control.</summary>
+	public long LastPosition => WxKitNative.ComboBoxGetLastPosition(Native);
+
 	/// <summary>Returns the margins used by the control.</summary>
 	public Point Margins {
 		get => WxKitNative.ComboBoxGetMargins(Native);
@@ -310,6 +313,9 @@ public unsafe partial class ComboBox : Control {
 
 	/// <summary>Attempts to set the control margins.</summary>
 	public bool SetMargins(int left, int top = -1) => WxKitNative.ComboBoxSetMarginsIntInt(Native, left, top) != 0;
+
+	/// <summary>This function sets the maximum number of characters the user can enter into the control.</summary>
+	public void SetMaxLength(int len) => WxKitNative.ComboBoxSetMaxLength(Native, checked((nuint)len));
 
 	/// <summary>Same as wxTextEntry::SetSelection().</summary>
 	public void SetSelection(long from, long to) => WxKitNative.ComboBoxSetSelectionLongLong(Native, from, to);

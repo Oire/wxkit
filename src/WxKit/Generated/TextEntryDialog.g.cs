@@ -35,6 +35,9 @@ public unsafe partial class TextEntryDialog : Dialog {
 		}
 	}
 
+	/// <summary>This function sets the maximum number of characters the user can enter into this dialog.</summary>
+	public void SetMaxLength(int len) => WxKitNative.TextEntryDialogSetMaxLength(Native, checked((nuint)len));
+
 	/// <summary>Associate a validator with the text control used by the dialog.</summary>
 	public void SetTextValidator(TextValidator validator) {
 		ArgumentNullException.ThrowIfNull(validator);

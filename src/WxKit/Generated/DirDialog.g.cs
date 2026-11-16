@@ -35,6 +35,13 @@ public unsafe partial class DirDialog : Dialog {
 		}
 	}
 
+	/// <summary>Fills the array paths with the full paths of the chosen directories.</summary>
+	public void GetPaths(out string[] paths) {
+		WxkStringArray* pathsNative = null;
+		WxKitNative.DirDialogGetPaths(Native, &pathsNative);
+		paths = NativeStringArray.Take(pathsNative);
+	}
+
 	private static WxkWindow* CreateNative(Window? parent, string? message, string defaultPath, DirDialogStyle style, Point? position, Size? size) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(defaultPath);

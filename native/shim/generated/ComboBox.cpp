@@ -151,6 +151,10 @@ WXK_FUNCTION(void) wxk_ComboBox_SetInsertionPointEnd(wxk_Window* self) noexcept 
 	wxk::Guard([&] { static_cast<wxTextEntry*>(static_cast<wxComboBox*>(wxk::Unwrap(self)))->SetInsertionPointEnd(); });
 }
 
+WXK_FUNCTION(void) wxk_ComboBox_SetMaxLength(wxk_Window* self, size_t len) noexcept {
+	wxk::Guard([&] { static_cast<wxTextEntry*>(static_cast<wxComboBox*>(wxk::Unwrap(self)))->SetMaxLength(len); });
+}
+
 WXK_FUNCTION(void) wxk_ComboBox_SelectAll(wxk_Window* self) noexcept {
 	wxk::Guard([&] { static_cast<wxTextEntry*>(static_cast<wxComboBox*>(wxk::Unwrap(self)))->SelectAll(); });
 }
@@ -245,6 +249,10 @@ WXK_FUNCTION(uint8_t) wxk_ComboBox_CanRedo(wxk_Window* self) noexcept {
 
 WXK_FUNCTION(uint8_t) wxk_ComboBox_CanUndo(wxk_Window* self) noexcept {
 	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxTextEntry*>(static_cast<wxComboBox*>(wxk::Unwrap(self)))->CanUndo()) ? 1 : 0; });
+}
+
+WXK_FUNCTION(int64_t) wxk_ComboBox_GetLastPosition(wxk_Window* self) noexcept {
+	return wxk::Guard<int64_t>(0, [&]() -> int64_t { return static_cast<int64_t>(static_cast<wxTextEntry*>(static_cast<wxComboBox*>(wxk::Unwrap(self)))->GetLastPosition()); });
 }
 
 WXK_FUNCTION(wxk_String*) wxk_ComboBox_GetValue(wxk_Window* self) noexcept {

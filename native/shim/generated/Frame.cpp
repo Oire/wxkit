@@ -32,6 +32,10 @@ WXK_FUNCTION(void) wxk_Frame_SetStatusText(wxk_Window* self, const char16_t* tex
 	wxk::Guard([&] { static_cast<wxFrame*>(wxk::Unwrap(self))->SetStatusText(wxk::FromUtf16(text, textLength), static_cast<int>(number)); });
 }
 
+WXK_FUNCTION(void) wxk_Frame_SetStatusWidths(wxk_Window* self, const int32_t* widths, size_t widthsCount) noexcept {
+	wxk::Guard([&] { static_cast<wxFrame*>(wxk::Unwrap(self))->SetStatusWidths(static_cast<int>(widthsCount), widths); });
+}
+
 WXK_FUNCTION(void) wxk_Frame_PushStatusText(wxk_Window* self, const char16_t* text, size_t textLength, int32_t number) noexcept {
 	wxk::Guard([&] { static_cast<wxFrame*>(wxk::Unwrap(self))->PushStatusText(wxk::FromUtf16(text, textLength), static_cast<int>(number)); });
 }
