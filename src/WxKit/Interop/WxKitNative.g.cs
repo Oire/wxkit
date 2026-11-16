@@ -3322,6 +3322,74 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte GaugeIsVertical(WxkWindow* self);
 
+	[LibraryImport(Library, EntryPoint = "wxk_GridBagSizer_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkSizer* GridBagSizerNew(int vgap, int hgap);
+
+	[LibraryImport(Library, EntryPoint = "wxk_GridBagSizer_CheckForIntersection")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte GridBagSizerCheckForIntersection(WxkSizer* self, GridPosition position, GridSpan span);
+
+	[LibraryImport(Library, EntryPoint = "wxk_GridBagSizer_GetItemPosition_Window")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial GridPosition GridBagSizerGetItemPositionWindow(WxkSizer* self, WxkWindow* window);
+
+	[LibraryImport(Library, EntryPoint = "wxk_GridBagSizer_GetItemPosition_Sizer")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial GridPosition GridBagSizerGetItemPositionSizer(WxkSizer* self, WxkSizer* sizer);
+
+	[LibraryImport(Library, EntryPoint = "wxk_GridBagSizer_GetItemPosition_SizeT")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial GridPosition GridBagSizerGetItemPositionSizeT(WxkSizer* self, nuint index);
+
+	[LibraryImport(Library, EntryPoint = "wxk_GridBagSizer_GetItemSpan_Window")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial GridSpan GridBagSizerGetItemSpanWindow(WxkSizer* self, WxkWindow* window);
+
+	[LibraryImport(Library, EntryPoint = "wxk_GridBagSizer_GetItemSpan_Sizer")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial GridSpan GridBagSizerGetItemSpanSizer(WxkSizer* self, WxkSizer* sizer);
+
+	[LibraryImport(Library, EntryPoint = "wxk_GridBagSizer_GetItemSpan_SizeT")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial GridSpan GridBagSizerGetItemSpanSizeT(WxkSizer* self, nuint index);
+
+	[LibraryImport(Library, EntryPoint = "wxk_GridBagSizer_SetItemPosition_WindowGridPosition")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte GridBagSizerSetItemPositionWindowGridPosition(WxkSizer* self, WxkWindow* window, GridPosition position);
+
+	[LibraryImport(Library, EntryPoint = "wxk_GridBagSizer_SetItemPosition_SizerGridPosition")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte GridBagSizerSetItemPositionSizerGridPosition(WxkSizer* self, WxkSizer* sizer, GridPosition position);
+
+	[LibraryImport(Library, EntryPoint = "wxk_GridBagSizer_SetItemPosition_SizeTGridPosition")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte GridBagSizerSetItemPositionSizeTGridPosition(WxkSizer* self, nuint index, GridPosition position);
+
+	[LibraryImport(Library, EntryPoint = "wxk_GridBagSizer_SetItemSpan_WindowGridSpan")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte GridBagSizerSetItemSpanWindowGridSpan(WxkSizer* self, WxkWindow* window, GridSpan span);
+
+	[LibraryImport(Library, EntryPoint = "wxk_GridBagSizer_SetItemSpan_SizerGridSpan")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte GridBagSizerSetItemSpanSizerGridSpan(WxkSizer* self, WxkSizer* sizer, GridSpan span);
+
+	[LibraryImport(Library, EntryPoint = "wxk_GridBagSizer_SetItemSpan_SizeTGridSpan")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte GridBagSizerSetItemSpanSizeTGridSpan(WxkSizer* self, nuint index, GridSpan span);
+
+	[LibraryImport(Library, EntryPoint = "wxk_GridBagSizer_GetCellSize")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Size GridBagSizerGetCellSize(WxkSizer* self, int row, int column);
+
+	[LibraryImport(Library, EntryPoint = "wxk_GridBagSizer_GetEmptyCellSize")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Size GridBagSizerGetEmptyCellSize(WxkSizer* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_GridBagSizer_SetEmptyCellSize")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void GridBagSizerSetEmptyCellSize(WxkSizer* self, Size size);
+
 	[LibraryImport(Library, EntryPoint = "wxk_GridSizer_new_IntIntInt")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkSizer* GridSizerNewIntIntInt(int cols, int vgap, int hgap);
@@ -9193,6 +9261,10 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_WindowDC_new")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkObject* WindowDCNew(WxkWindow* window);
+
+	[LibraryImport(Library, EntryPoint = "wxk_WrapSizer_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkSizer* WrapSizerNew(int orientation, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_Activate")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

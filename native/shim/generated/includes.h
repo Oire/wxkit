@@ -47,6 +47,7 @@
 #include <wx/fontpicker.h>
 #include <wx/frame.h>
 #include <wx/gauge.h>
+#include <wx/gbsizer.h>
 #include <wx/hyperlink.h>
 #include <wx/icon.h>
 #include <wx/image.h>
@@ -95,3 +96,4 @@
 #include <wx/validate.h>
 #include <wx/valtext.h>
 #include <wx/window.h>
+#include <wx/wrapsizer.h>

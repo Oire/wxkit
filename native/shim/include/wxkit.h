@@ -115,6 +115,17 @@ typedef struct wxk_Size {
 	int32_t height;
 } wxk_Size;
 
+// A cell of a grid bag sizer, and how many rows and columns an item there spans.
+typedef struct wxk_GridPosition {
+	int32_t row;
+	int32_t column;
+} wxk_GridPosition;
+
+typedef struct wxk_GridSpan {
+	int32_t rows;
+	int32_t columns;
+} wxk_GridSpan;
+
 typedef struct wxk_Rect {
 	int32_t x;
 	int32_t y;
@@ -447,6 +458,11 @@ WXK_FUNCTION(void) wxk_Frame_SetMenuBar(wxk_Window* frame, wxk_Window* menuBar) 
 // A negative border means the platform's default border.
 WXK_FUNCTION(void) wxk_Sizer_AddWindow(wxk_Sizer* sizer, wxk_Window* window, int32_t proportion, int32_t flags, int32_t border) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Sizer_AddSizer(wxk_Sizer* sizer, wxk_Sizer* child, int32_t proportion, int32_t flags, int32_t border) WXK_NOEXCEPT;
+// Add an item to a grid bag sizer at a cell, and return 0 without adding it when an item is there
+// already. wxWidgets would delete a sizer it could not add, which WxKit still tracks.
+WXK_FUNCTION(uint8_t) wxk_GridBagSizer_AddWindow(wxk_Sizer* sizer, wxk_Window* window, wxk_GridPosition position, wxk_GridSpan span, int32_t flags, int32_t border) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_GridBagSizer_AddSizer(wxk_Sizer* sizer, wxk_Sizer* child, wxk_GridPosition position, wxk_GridSpan span, int32_t flags, int32_t border) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_GridBagSizer_AddSpacer(wxk_Sizer* sizer, wxk_Size size, wxk_GridPosition position, wxk_GridSpan span, int32_t flags, int32_t border) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Sizer_AddSpacer(wxk_Sizer* sizer, int32_t size) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Sizer_AddStretchSpacer(wxk_Sizer* sizer, int32_t proportion) WXK_NOEXCEPT;
 // Deletes a sizer that no window or other sizer owns.

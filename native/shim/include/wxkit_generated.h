@@ -1034,6 +1034,26 @@ WXK_FUNCTION(int32_t) wxk_Gauge_GetValue(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Gauge_SetValue(wxk_Window* self, int32_t position) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Gauge_IsVertical(wxk_Window* self) WXK_NOEXCEPT;
 
+// wxGridBagSizer
+
+WXK_FUNCTION(wxk_Sizer*) wxk_GridBagSizer_new(int32_t vgap, int32_t hgap) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_GridBagSizer_CheckForIntersection(wxk_Sizer* self, wxk_GridPosition position, wxk_GridSpan span) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_GridPosition) wxk_GridBagSizer_GetItemPosition_Window(wxk_Sizer* self, wxk_Window* window) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_GridPosition) wxk_GridBagSizer_GetItemPosition_Sizer(wxk_Sizer* self, wxk_Sizer* sizer) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_GridPosition) wxk_GridBagSizer_GetItemPosition_SizeT(wxk_Sizer* self, size_t index) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_GridSpan) wxk_GridBagSizer_GetItemSpan_Window(wxk_Sizer* self, wxk_Window* window) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_GridSpan) wxk_GridBagSizer_GetItemSpan_Sizer(wxk_Sizer* self, wxk_Sizer* sizer) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_GridSpan) wxk_GridBagSizer_GetItemSpan_SizeT(wxk_Sizer* self, size_t index) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_GridBagSizer_SetItemPosition_WindowGridPosition(wxk_Sizer* self, wxk_Window* window, wxk_GridPosition position) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_GridBagSizer_SetItemPosition_SizerGridPosition(wxk_Sizer* self, wxk_Sizer* sizer, wxk_GridPosition position) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_GridBagSizer_SetItemPosition_SizeTGridPosition(wxk_Sizer* self, size_t index, wxk_GridPosition position) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_GridBagSizer_SetItemSpan_WindowGridSpan(wxk_Sizer* self, wxk_Window* window, wxk_GridSpan span) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_GridBagSizer_SetItemSpan_SizerGridSpan(wxk_Sizer* self, wxk_Sizer* sizer, wxk_GridSpan span) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_GridBagSizer_SetItemSpan_SizeTGridSpan(wxk_Sizer* self, size_t index, wxk_GridSpan span) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Size) wxk_GridBagSizer_GetCellSize(wxk_Sizer* self, int32_t row, int32_t column) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Size) wxk_GridBagSizer_GetEmptyCellSize(wxk_Sizer* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_GridBagSizer_SetEmptyCellSize(wxk_Sizer* self, wxk_Size size) WXK_NOEXCEPT;
+
 // wxGridSizer
 
 WXK_FUNCTION(wxk_Sizer*) wxk_GridSizer_new_IntIntInt(int32_t cols, int32_t vgap, int32_t hgap) WXK_NOEXCEPT;
@@ -2750,6 +2770,10 @@ WXK_FUNCTION(wxk_Window*) wxk_Window_GetCapture(void) WXK_NOEXCEPT;
 // wxWindowDC
 
 WXK_FUNCTION(wxk_Object*) wxk_WindowDC_new(wxk_Window* window) WXK_NOEXCEPT;
+
+// wxWrapSizer
+
+WXK_FUNCTION(wxk_Sizer*) wxk_WrapSizer_new(int32_t orientation, int32_t flags) WXK_NOEXCEPT;
 
 // Event types
 

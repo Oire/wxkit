@@ -40,14 +40,10 @@ public abstract unsafe class Sizer {
 	}
 
 	/// <summary>Adds a sizer inside this one, which then owns it.</summary>
-	public void Add(Sizer sizer, SizerFlags flags = default) {
-		ArgumentNullException.ThrowIfNull(sizer);
-		WxkSizer* native = Native;
-		if (ReferenceEquals(sizer, this)) throw new ArgumentException("A sizer cannot contain itself.", nameof(sizer));
-		sizer.Claim(this);
-		WxKitNative.SizerAddSizer(native, sizer.Native, flags.ProportionValue, flags.FlagsValue, flags.BorderValue);
-		(_children ??= []).Add(sizer);
-	}
+	public void Add(Sizer sizer, SizerFlags flags = default) => Adopt(sizer, child => {
+		WxKitNative.SizerAddSizer(Native, (WxkSizer*)child, flags.ProportionValue, flags.FlagsValue, flags.BorderValue);
+		return true;
+	});
 
 	/// <summary>Adds empty space of a fixed size.</summary>
 	public void AddSpacer(int size) => WxKitNative.SizerAddSpacer(Native, size);
@@ -56,6 +52,21 @@ public abstract unsafe class Sizer {
 	public void AddStretchSpacer(int proportion = 1) => WxKitNative.SizerAddStretchSpacer(Native, proportion);
 
 	internal void Attach(Window window) => Claim(window);
+
+	// Makes a sizer this one's, if add, given the child's handle, adds it. A child it could not add
+	// is left to its own managed object, as before.
+	private protected bool Adopt(Sizer sizer, Func<nint, bool> add) {
+		ArgumentNullException.ThrowIfNull(sizer);
+		_ = Native;
+		if (ReferenceEquals(sizer, this)) throw new ArgumentException("A sizer cannot contain itself.", nameof(sizer));
+		sizer.Claim(this);
+		if (!add((nint)sizer.Native)) {
+			sizer._owner = null;
+			return false;
+		}
+		(_children ??= []).Add(sizer);
+		return true;
+	}
 
 	internal void MarkDestroyed() {
 		_native = null;

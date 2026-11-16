@@ -87,11 +87,20 @@ internal static class Core {
 		tweaks.Class("wxTextCtrl", text => text.Event("EVT_TEXT", "TextChanged").Guard("wxUSE_SPELLCHECK", "EnableProofCheck"));
 		// wxMenuBar's Enable and IsEnabled take an item's id, so they would hide Window.IsEnabled.
 		tweaks.Class("wxMenuBar", menuBar => menuBar.Rename("IsEnabled", "IsItemEnabled").Rename("Enable", "EnableItem"));
-		tweaks.Class("wxBoxSizer", sizer => sizer.ParameterEnum("wxBoxSizer", "orient", "Orientation"));
+		tweaks.Class("wxBoxSizer", sizer => sizer
+			.ParameterEnum("wxBoxSizer", "orient", "Orientation")
+			.ParameterEnum("GetOrientation", "return", "Orientation")
+			.ParameterEnum("SetOrientation", "orient", "Orientation"));
 		tweaks.Class("wxStaticBoxSizer", sizer => sizer.ParameterEnum("wxStaticBoxSizer", "orient", "Orientation"));
 		tweaks.Class("wxGridSizer");
 		tweaks.Class("wxFlexGridSizer");
 		tweaks.Class("wxStdDialogButtonSizer");
+		// A sizer that wraps its items onto more lines, as words wrap, and one that places them in
+		// cells. Adding to a grid bag sizer is written by hand, since it takes SizerFlags, as Add does,
+		// and must not let wxWidgets delete a sizer it cannot add.
+		tweaks.ConstantEnumOf("WrapSizerFlags", isFlags: true, "wxEXTEND_LAST_ON_EACH_LINE", "wxREMOVE_LEADING_SPACES", "wxWRAPSIZER_DEFAULT_FLAGS");
+		tweaks.Class("wxWrapSizer", sizer => sizer.ParameterEnum("wxWrapSizer", "flags", "WrapSizerFlags"));
+		tweaks.Class("wxGridBagSizer", grid => grid.Ignore("Add", "FindItem", "FindItemAtPoint", "FindItemAtPosition", "FindItemWithData"));
 		// The controls most applications use.
 		foreach (string control in (string[])[
 			"wxControl", "wxAnyButton", "wxControlWithItems", "wxCheckBox", "wxRadioButton", "wxRadioBox",

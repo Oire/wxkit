@@ -1740,3 +1740,16 @@ public enum WindowVariant {
 	/// <summary>Wraps wxWINDOW_VARIANT_MAX.</summary>
 	Max = 4,
 }
+
+/// <summary>Wraps *.</summary>
+[Flags]
+public enum WrapSizerFlags {
+	/// <summary>None of the flags. Wraps 0.</summary>
+	None = 0,
+	/// <summary>Wraps wxEXTEND_LAST_ON_EACH_LINE.</summary>
+	ExtendLastOnEachLine = 1,
+	/// <summary>Wraps wxREMOVE_LEADING_SPACES.</summary>
+	RemoveLeadingSpaces = 2,
+	/// <summary>Wraps wxWRAPSIZER_DEFAULT_FLAGS.</summary>
+	WrapSizerDefaultFlags = 3,
+}

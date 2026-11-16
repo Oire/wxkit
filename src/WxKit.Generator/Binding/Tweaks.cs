@@ -37,6 +37,9 @@ internal sealed class Tweaks {
 	/// <param name="excludePrefixes">Prefixes of constants that share the prefix but belong to something else, such as wxSIZE_CONV_ under wxSIZE_.</param>
 	public void ConstantEnum(string managedName, string prefix, bool isFlags = false, string? guard = null, string[]? excludePrefixes = null) => ConstantEnums.Add(new ConstantEnumTweak(managedName, prefix, isFlags, guard, excludePrefixes ?? []));
 
+	/// <summary>Constants that share no prefix, such as a wrap sizer's flags, as an enum.</summary>
+	public void ConstantEnumOf(string managedName, bool isFlags, params string[] constants) => ConstantEnums.Add(new ConstantEnumTweak(managedName, Prefix: string.Empty, isFlags, Guard: null, ExcludePrefixes: [], constants));
+
 	/// <summary>
 	/// C++ enums bound as a static class of int constants rather than a C# enum, such as wxStandardID
 	/// as StandardId, for values that go where any int does, such as a window's id.
@@ -65,7 +68,7 @@ internal sealed record TemplateInstanceTweak(string Template, string Name, strin
 
 internal sealed record EnumTweak(string Name, bool IsFlags, string? MemberPrefix, string? Guard);
 
-internal sealed record ConstantEnumTweak(string Name, string Prefix, bool IsFlags, string? Guard, IReadOnlyList<string> ExcludePrefixes);
+internal sealed record ConstantEnumTweak(string Name, string Prefix, bool IsFlags, string? Guard, IReadOnlyList<string> ExcludePrefixes, IReadOnlyList<string>? Constants = null);
 
 internal sealed class ClassTweak(string name) {
 	public string CppName { get; } = name;

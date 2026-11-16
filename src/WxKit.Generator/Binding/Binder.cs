@@ -416,6 +416,8 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 			"wxColour" => ColorConversion.Instance,
 			"wxPoint" => GeometryConversion.Point,
 			"wxSize" => GeometryConversion.Size,
+			"wxGBPosition" => GeometryConversion.GridPosition,
+			"wxGBSpan" => GeometryConversion.GridSpan,
 			_ => null,
 		};
 	}
@@ -645,7 +647,9 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 	// Constants wxWidgets defines one by one, such as wxACC_STATE_SYSTEM_FOCUSED, as one enum in
 	// the order of their values. Flags get None, for none of them.
 	private void BindConstantEnum(ConstantEnumTweak group) {
-		List<string> names = [.. api.Constants.Keys.Where(name => name.StartsWith(group.Prefix, StringComparison.Ordinal) && !group.ExcludePrefixes.Any(excluded => name.StartsWith(excluded, StringComparison.Ordinal))).Order(StringComparer.Ordinal)];
+		List<string> names = group.Constants is IReadOnlyList<string> named
+			? [.. named.Select(name => api.Constants.ContainsKey(name) ? name : throw new InvalidOperationException($"A tweak binds the constant {name}, which the interface headers do not have."))]
+			: [.. api.Constants.Keys.Where(name => name.StartsWith(group.Prefix, StringComparison.Ordinal) && !group.ExcludePrefixes.Any(excluded => name.StartsWith(excluded, StringComparison.Ordinal))).Order(StringComparer.Ordinal)];
 		if (names.Count == 0) throw new InvalidOperationException($"A tweak binds the constants named {group.Prefix}*, which the interface headers do not have.");
 		DoxygenEnum source = new($"{group.Prefix}*", [.. names.Select(static name => new DoxygenEnumValue(name, string.Empty))]);
 		List<BoundStyle> members = [.. EnumMembers(source.Name, source, memberPrefix: null).OrderBy(static member => member.Value)];

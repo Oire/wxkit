@@ -8,6 +8,15 @@ public readonly record struct Point(int X, int Y) {
 	public static Point Default { get; } = new(-1, -1);
 }
 
+/// <summary>A cell of a <see cref="GridBagSizer"/>, counted from 0. Wraps wxGBPosition.</summary>
+public readonly record struct GridPosition(int Row, int Column);
+
+/// <summary>How many rows and columns an item of a <see cref="GridBagSizer"/> spans. Wraps wxGBSpan.</summary>
+public readonly record struct GridSpan(int Rows, int Columns) {
+	/// <summary>One row and one column. Wraps wxDefaultSpan.</summary>
+	public static GridSpan Default { get; } = new(1, 1);
+}
+
 /// <summary>A rectangle in pixels. Wraps wxRect, and crosses into the shim as it is.</summary>
 public readonly record struct Rect(int X, int Y, int Width, int Height) {
 	public Point Position => new(X, Y);

@@ -512,6 +512,18 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void SizerAddWindow(WxkSizer* sizer, WxkWindow* window, int proportion, int flags, int border);
 
+	[LibraryImport(Library, EntryPoint = "wxk_GridBagSizer_AddWindow")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte GridBagSizerAddWindow(WxkSizer* sizer, WxkWindow* window, GridPosition position, GridSpan span, int flags, int border);
+
+	[LibraryImport(Library, EntryPoint = "wxk_GridBagSizer_AddSizer")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte GridBagSizerAddSizer(WxkSizer* sizer, WxkSizer* child, GridPosition position, GridSpan span, int flags, int border);
+
+	[LibraryImport(Library, EntryPoint = "wxk_GridBagSizer_AddSpacer")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte GridBagSizerAddSpacer(WxkSizer* sizer, Size size, GridPosition position, GridSpan span, int flags, int border);
+
 	[LibraryImport(Library, EntryPoint = "wxk_Sizer_AddSizer")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void SizerAddSizer(WxkSizer* sizer, WxkSizer* child, int proportion, int flags, int border);

@@ -14,9 +14,9 @@ public unsafe partial class BoxSizer : Sizer {
 	}
 
 	/// <summary>Returns the orientation of the box sizer, either wxVERTICAL or wxHORIZONTAL.</summary>
-	public int Orientation {
-		get => WxKitNative.BoxSizerGetOrientation(Native);
-		set => WxKitNative.BoxSizerSetOrientation(Native, value);
+	public Orientation Orientation {
+		get => (Orientation)WxKitNative.BoxSizerGetOrientation(Native);
+		set => WxKitNative.BoxSizerSetOrientation(Native, (int)value);
 	}
 
 	/// <summary>Implements the calculation of a box sizer's minimal.</summary>

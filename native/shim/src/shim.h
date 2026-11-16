@@ -4,6 +4,7 @@
 #include <wx/wx.h>
 #include <wx/variant.h>
 #include <wx/dataview.h>
+#include <wx/gbsizer.h>
 #include <wx/datetime.h>
 #include <wx/treebase.h>
 #include <wx/vector.h>
@@ -88,6 +89,22 @@ inline wxSize FromSize(wxk_Size size) {
 
 inline wxk_Point ToPoint(const wxPoint& point) {
 	return wxk_Point{point.x, point.y};
+}
+
+inline wxGBPosition FromGridPosition(wxk_GridPosition position) {
+	return wxGBPosition(position.row, position.column);
+}
+
+inline wxk_GridPosition ToGridPosition(const wxGBPosition& position) {
+	return wxk_GridPosition{position.GetRow(), position.GetCol()};
+}
+
+inline wxGBSpan FromGridSpan(wxk_GridSpan span) {
+	return wxGBSpan(span.rows, span.columns);
+}
+
+inline wxk_GridSpan ToGridSpan(const wxGBSpan& span) {
+	return wxk_GridSpan{span.GetRowspan(), span.GetColspan()};
 }
 
 inline wxk_Size ToSize(const wxSize& size) {

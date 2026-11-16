@@ -311,10 +311,15 @@ internal sealed class StringConversion : Conversion {
 
 // wxPoint and wxSize cross as structs with the same layout on both sides. wxDefaultPosition and
 // wxDefaultSize, which are (-1, -1), become null in the managed API.
-internal sealed class GeometryConversion(string suffix, string cType, string cppType, string managedType) : Conversion {
-	public static GeometryConversion Point { get; } = new("Point", "wxk_Point", "wxPoint", "Point");
+internal sealed class GeometryConversion(string suffix, string cType, string cppType, string managedType, string? cppDefault) : Conversion {
+	public static GeometryConversion Point { get; } = new("Point", "wxk_Point", "wxPoint", "Point", "wxDefaultPosition");
 
-	public static GeometryConversion Size { get; } = new("Size", "wxk_Size", "wxSize", "Size");
+	public static GeometryConversion Size { get; } = new("Size", "wxk_Size", "wxSize", "Size", "wxDefaultSize");
+
+	// A grid bag sizer's cells, and the rows and columns an item spans, whose default is one of each.
+	public static GeometryConversion GridPosition { get; } = new("GridPosition", "wxk_GridPosition", "wxGBPosition", "GridPosition", cppDefault: null);
+
+	public static GeometryConversion GridSpan { get; } = new("GridSpan", "wxk_GridSpan", "wxGBSpan", "GridSpan", "wxDefaultSpan");
 
 	public override string Suffix => suffix;
 
@@ -340,7 +345,7 @@ internal sealed class GeometryConversion(string suffix, string cType, string cpp
 
 	public override bool AcceptsNull => true;
 
-	public bool IsDefault(string cppDefault) => cppDefault == $"wxDefault{(suffix == "Point" ? "Position" : "Size")}";
+	public bool IsDefault(string value) => value == cppDefault;
 
 	public string CppType => cppType;
 }

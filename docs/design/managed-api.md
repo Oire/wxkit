@@ -85,6 +85,8 @@ When wxWidgets hands WxKit a window it did not create, such as the result of `Fi
 
 A sizer belongs to the window it is set on, or to the sizer it is added to, and is destroyed with it. Setting a window's sizer again destroys the one it had. Sizers are not trackable in wxWidgets, so WxKit tracks them through their owner: when a window is destroyed, its sizer and every sizer inside it are marked as destroyed too. A sizer can only have one owner, and giving it a second throws `InvalidOperationException`.
 
+A `GridBagSizer` places items in cells, at a `GridPosition`, spanning a `GridSpan` of rows and columns. Adding one where an item is already returns false and leaves it out, rather than letting wxWidgets delete a sizer it could not add. A `WrapSizer` wraps its items onto more lines, as text wraps.
+
 A sizer that is never given an owner is freed when its proxy is finalized. The finalizer runs on the finalizer thread, so it posts the free to the GUI thread. Removing or detaching an item from a sizer is not bound yet, and will need the same care.
 
 ### Reference-counted objects

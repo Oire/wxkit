@@ -79,6 +79,7 @@ set(WXK_SOURCES
 	src/dataview.cpp
 	src/dropfiles.cpp
 	src/event.cpp
+	src/gridbag.cpp
 	src/handlers/all.cpp
 	src/notification.cpp
 	src/numbers.cpp
