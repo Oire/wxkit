@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net10.0</TargetFramework>
+		<!-- The machine's own system and architecture, unless the publish names another. -->
+		<_SettingsSystem Condition="$([MSBuild]::IsOSPlatform('Linux'))">linux</_SettingsSystem>
+		<_SettingsSystem Condition="$([MSBuild]::IsOSPlatform('OSX'))">osx</_SettingsSystem>
+		<_SettingsSystem Condition="'$(_SettingsSystem)' == ''">win</_SettingsSystem>
+		<_SettingsArchitecture Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture)' == 'Arm64'">arm64</_SettingsArchitecture>
+		<_SettingsArchitecture Condition="'$(_SettingsArchitecture)' == ''">x64</_SettingsArchitecture>
+		<RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">$(_SettingsSystem)-$(_SettingsArchitecture)</RuntimeIdentifier>
+		<PublishAot>true</PublishAot>
+		<IsPackable>false</IsPackable>
+		<!-- On macOS, the app bundle is named after the title and known by the identifier. -->
+		<ApplicationTitle>Settings</ApplicationTitle>
+		<ApplicationId>io.github.trypsynth.wxkit.settings</ApplicationId>
+		<WxKitNativeDirectory>$(WxKitNativeRoot)/$(RuntimeIdentifier)/static/</WxKitNativeDirectory>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\src\WxKit\WxKit.csproj" />
+	</ItemGroup>
+
+	<!-- A package reference brings these in on its own. A project reference has to ask. -->
+	<Import Project="..\..\src\WxKit\build\WxKit.targets" />
+
+	<ItemGroup>
+		<None Include="$(WxKitNativeRoot)/$(RuntimeIdentifier)/shared/*.dll;$(WxKitNativeRoot)/$(RuntimeIdentifier)/shared/*.so;$(WxKitNativeRoot)/$(RuntimeIdentifier)/shared/*.dylib" Link="%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+	</ItemGroup>
+
+</Project>
