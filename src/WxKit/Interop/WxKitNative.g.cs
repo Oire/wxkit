@@ -2510,6 +2510,14 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void DirPickerCtrlSetPath(WxkWindow* self, char* dirname, nuint dirnameLength);
 
+	[LibraryImport(Library, EntryPoint = "wxk_DropFilesEvent_GetNumberOfFiles")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int DropFilesEventGetNumberOfFiles(WxkEvent* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DropFilesEvent_GetPosition")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Point DropFilesEventGetPosition(WxkEvent* self);
+
 	[LibraryImport(Library, EntryPoint = "wxk_Event_ResumePropagation")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void EventResumePropagation(WxkEvent* self, int propagationLevel);

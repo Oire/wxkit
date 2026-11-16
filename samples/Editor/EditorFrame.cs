@@ -57,6 +57,12 @@ internal sealed class EditorFrame : Frame {
 		TextCtrl text = new(this, value, style: TextCtrlStyle.MultiLine | TextCtrlStyle.Rich2 | TextCtrlStyle.ProcessTab | wrap);
 		// Windows and macOS check spelling as you type. Linux, without gspell, does not.
 		text.EnableProofCheck();
+		// A file dropped on the text opens, as File > Open does, rather than being inserted.
+		text.DragAcceptFiles(true);
+		text.DropFiles += async (_, e) => {
+			string[] files = e.Files;
+			if (files.Length > 0) await DropAndOpenAsync(files[0]);
+		};
 		return text;
 	}
 
@@ -179,6 +185,11 @@ internal sealed class EditorFrame : Frame {
 		using FileDialog dialog = new(this, "Open", wildcard: Wildcard, style: FileDialogStyle.Open | FileDialogStyle.FileMustExist);
 		if (dialog.ShowModal() != StandardId.Ok) return;
 		await OpenAsync(dialog.Path);
+	}
+
+	private async Task DropAndOpenAsync(string path) {
+		if (!await ConfirmDiscardAsync()) return;
+		await OpenAsync(path);
 	}
 
 	// Saves to the file the editor shows, or asks where first. Returns false when the user cancels, or saving fails.

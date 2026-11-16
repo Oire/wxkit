@@ -73,6 +73,7 @@ set(WXK_SOURCES
 	src/clientdata.cpp
 	src/clipboard.cpp
 	src/dataview.cpp
+	src/dropfiles.cpp
 	src/event.cpp
 	src/handlers/all.cpp
 	src/notification.cpp

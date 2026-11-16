@@ -374,6 +374,10 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte DataViewCtrlAssociateModel(WxkWindow* control, WxkDataViewModel* model);
 
+	[LibraryImport(Library, EntryPoint = "wxk_DropFilesEvent_GetFiles")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkStringArray* DropFilesEventGetFiles(WxkEvent* @event);
+
 	[LibraryImport(Library, EntryPoint = "wxk_Numbers_GetCount")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial nuint NumbersGetCount(WxkNumbers* numbers);

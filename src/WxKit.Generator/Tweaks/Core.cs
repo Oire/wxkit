@@ -292,6 +292,8 @@ internal static class Core {
 		]) {
 			tweaks.Class(eventClass);
 		}
+		// Files dropped on a window that accepts them. Files is written by hand, since GetFiles gives a C array.
+		tweaks.Class("wxDropFilesEvent", e => e.Ignore("GetFiles"));
 		// Bound by hand-written classes: menu items' clicks and timers' ticks.
 		tweaks.EventType("wxEVT_MENU", "wxCommandEvent");
 		tweaks.EventType("wxEVT_TIMER", "wxTimerEvent");

@@ -83,4 +83,12 @@ public class ControlTests {
 		TextCtrl text = new(frame, style: TextCtrlStyle.MultiLine | TextCtrlStyle.Rich2);
 		Assert.Equal(!OperatingSystem.IsLinux(), text.EnableProofCheck());
 	});
+
+	[Fact]
+	public Task AcceptsDroppedFiles() => Gui.WithFrame(frame => {
+		TextCtrl text = new(frame);
+		text.DragAcceptFiles(true);
+		text.DropFiles += (_, _) => { };
+		text.DragAcceptFiles(false);
+	});
 }

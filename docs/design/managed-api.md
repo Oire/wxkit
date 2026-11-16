@@ -267,6 +267,10 @@ AboutBox.Show(new AboutDialogInfo {
 
 A `NotificationMessage` shows a notification outside the application's windows, such as a toast on Windows, with an icon from `NotificationIcon`. It raises `Clicked` when it's clicked, `Dismissed` when it goes away, and `ActionSelected` when one of the buttons `AddAction` adds is pressed. wxWidgets doesn't free a notification on its own, so dispose of it once it's done with, as you do a `Timer`. On Windows, call `NotificationMessage.MSWUseToasts()` before the first one, to show it as a toast rather than a balloon from the taskbar. On macOS, notifications only show from an app bundle.
 
+## Dropped files
+
+A window that calls `DragAcceptFiles(true)` raises `DropFiles` when files are dropped on it, with their paths in the event's `Files`. A text control that handles it opens nothing on its own, so a handler decides what a dropped file does, as the Editor sample opens it. Dragging other data, and dragging from the application, are not bound yet.
+
 ## Static members
 
 A static member of a wxWidgets class is a static member of its managed class, such as `Window.FindFocus()`. A class with only static members, such as `wxSystemSettings`, is a static class. Static members check the thread first, as instance members do through their handle.

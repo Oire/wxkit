@@ -412,10 +412,10 @@ public static unsafe partial class EventType {
 	}
 
 	/// <summary>Wraps wxEVT_DROP_FILES.</summary>
-	public static EventType<Event> DropFiles => DropFilesType.Value;
+	public static EventType<DropFilesEvent> DropFiles => DropFilesType.Value;
 
 	private static class DropFilesType {
-		public static readonly EventType<Event> Value = new(WxKitNative.EventTypeDropFiles, static native => new Event((WxkEvent*)native));
+		public static readonly EventType<DropFilesEvent> Value = new(WxKitNative.EventTypeDropFiles, static native => new DropFilesEvent((WxkEvent*)native));
 	}
 
 	/// <summary>Wraps wxEVT_END_SESSION.</summary>

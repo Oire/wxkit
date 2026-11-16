@@ -389,6 +389,11 @@ WXK_FUNCTION(uint8_t) wxk_ToolBar_DeleteTool(wxk_Window* toolBar, int32_t toolId
 WXK_FUNCTION(uint8_t) wxk_ToolBar_DeleteToolByPos(wxk_Window* toolBar, size_t position) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_ToolBar_ClearTools(wxk_Window* toolBar) WXK_NOEXCEPT;
 
+// Dropped files
+
+// The paths of the files dropped on a window, which the caller frees.
+WXK_FUNCTION(wxk_StringArray*) wxk_DropFilesEvent_GetFiles(wxk_Event* event) WXK_NOEXCEPT;
+
 // Item data
 
 // Sets the function that frees the GCHandle of a .NET object a control kept with an item, which

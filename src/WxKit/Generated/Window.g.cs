@@ -354,7 +354,7 @@ public unsafe partial class Window : EvtHandler {
 	}
 
 	/// <summary>Process a wxEVT_DROP_FILES event. See wxDropFilesEvent.</summary>
-	public event EventHandler<Event>? DropFiles {
+	public event EventHandler<DropFilesEvent>? DropFiles {
 		add => AddHandler(EventType.DropFiles, StandardId.Any, StandardId.Any, value, this);
 		remove => RemoveHandler(EventType.DropFiles, StandardId.Any, StandardId.Any, value);
 	}

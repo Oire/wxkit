@@ -756,6 +756,11 @@ WXK_FUNCTION(void) wxk_DirPickerCtrl_SetInitialDirectory(wxk_Window* self, const
 WXK_FUNCTION(wxk_String*) wxk_DirPickerCtrl_GetPath(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_DirPickerCtrl_SetPath(wxk_Window* self, const char16_t* dirname, size_t dirnameLength) WXK_NOEXCEPT;
 
+// wxDropFilesEvent
+
+WXK_FUNCTION(int32_t) wxk_DropFilesEvent_GetNumberOfFiles(wxk_Event* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Point) wxk_DropFilesEvent_GetPosition(wxk_Event* self) WXK_NOEXCEPT;
+
 // wxEvent
 
 WXK_FUNCTION(void) wxk_Event_ResumePropagation(wxk_Event* self, int32_t propagationLevel) WXK_NOEXCEPT;
