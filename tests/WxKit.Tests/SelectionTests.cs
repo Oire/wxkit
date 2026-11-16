@@ -56,6 +56,7 @@ public class SelectionTests {
 
 	[Fact]
 	public Task ReordersListColumns() => Gui.WithFrame(frame => {
+		Assert.SkipUnless(OperatingSystem.IsWindows(), "Only the Windows list control can reorder its columns. wxWidgets's own, which Linux and macOS use, cannot.");
 		ListView list = new(frame);
 		list.InsertColumn(0, "Name");
 		list.InsertColumn(1, "Size");
