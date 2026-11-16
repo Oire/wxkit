@@ -67,7 +67,7 @@ internal static class ShimEmitter {
 		// An enum that wxWidgets only declares under a condition, such as the accessibility ones under
 		// wxUSE_ACCESSIBILITY, is only checked under it.
 		IEnumerable<(BoundStyle Value, string Type, string? Guard)> values = result.Enums.SelectMany(static bound => bound.Members.Select(value => (value, "int32_t", bound.Guard))).Concat(result.Classes.SelectMany(static bound => bound.Styles?.Members ?? []).Select(static value => (value, "long", (string?)null)));
-		foreach (IGrouping<string?, (BoundStyle Value, string Type, string? Guard)> group in values.Where(static entry => entry.Value.Constant.StartsWith("wx", StringComparison.Ordinal)).DistinctBy(static entry => entry.Value.Constant).GroupBy(static entry => entry.Guard).OrderBy(static group => group.Key ?? string.Empty, StringComparer.Ordinal)) {
+		foreach (IGrouping<string?, (BoundStyle Value, string Type, string? Guard)> group in values.Where(static entry => entry.Value.Constant.StartsWith("wx", StringComparison.Ordinal) || entry.Value.Constant.StartsWith("WX", StringComparison.Ordinal)).DistinctBy(static entry => entry.Value.Constant).GroupBy(static entry => entry.Guard).OrderBy(static group => group.Key ?? string.Empty, StringComparer.Ordinal)) {
 			if (group.Key is string guard) writer.Line().Line($"#if {guard}");
 			foreach ((BoundStyle value, string type, _) in group.OrderBy(static entry => entry.Value.Constant, StringComparer.Ordinal)) {
 				writer.Line($"static_assert(static_cast<{type}>({value.Constant}) == static_cast<{type}>({value.Value}LL), \"{value.Constant} is not {value.Value}\");");

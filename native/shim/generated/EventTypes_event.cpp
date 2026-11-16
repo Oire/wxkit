@@ -173,11 +173,11 @@ WXK_FUNCTION(int32_t) wxk_EventType_LeftUp(void) noexcept {
 	return wxEVT_LEFT_UP;
 }
 
-WXK_FUNCTION(int32_t) wxk_EventType_Listbox(void) noexcept {
+WXK_FUNCTION(int32_t) wxk_EventType_ListBox(void) noexcept {
 	return wxEVT_LISTBOX;
 }
 
-WXK_FUNCTION(int32_t) wxk_EventType_ListboxDclick(void) noexcept {
+WXK_FUNCTION(int32_t) wxk_EventType_ListBoxDclick(void) noexcept {
 	return wxEVT_LISTBOX_DCLICK;
 }
 

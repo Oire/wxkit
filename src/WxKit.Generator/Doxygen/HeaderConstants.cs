@@ -104,7 +104,9 @@ internal static partial class HeaderConstants {
 	[GeneratedRegex(@"\\[ \t]*\r?\n")]
 	private static partial Regex ContinuationPattern();
 
-	[GeneratedRegex(@"^wx[A-Z0-9_]+$")]
+	// wxWidgets's constants, such as wxID_OK, the key codes, such as WXK_LEFT, and the few that mix
+	// cases, such as wxLayout_RightToLeft.
+	[GeneratedRegex(@"^(?:wx|WX)\w+$")]
 	private static partial Regex IdentifierPattern();
 
 	[GeneratedRegex(@"\s+")]

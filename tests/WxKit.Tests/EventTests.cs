@@ -105,10 +105,11 @@ public class EventTests {
 	public Task GivesKeyEventsTheirKey() => Gui.WithFrame(frame => {
 		Assert.SkipUnless(OperatingSystem.IsWindows(), "Keys are sent as Windows messages.");
 		TextCtrl text = new(frame);
-		int? keyCode = null;
+		KeyCode? keyCode = null;
 		text.KeyDown += (_, e) => keyCode = e.KeyCode;
 		Win32.PressKey(text, 'A');
-		Assert.Equal('A', keyCode);
+		// A letter's code is its character, which KeyCode has no name for.
+		Assert.Equal((KeyCode)'A', keyCode);
 	});
 
 	[Fact]

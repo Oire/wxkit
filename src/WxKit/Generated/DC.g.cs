@@ -58,9 +58,9 @@ public unsafe partial class DC : NativeObject {
 	public bool AreAutomaticBoundingBoxUpdatesEnabled() => WxKitNative.DCAreAutomaticBoundingBoxUpdatesEnabled(Native) != 0;
 
 	/// <summary>Copy from a source DC to this DC.</summary>
-	public bool Blit(int xdest, int ydest, int width, int height, DC source, int xsrc, int ysrc, RasterOperationMode logicalFunc = RasterOperationMode.Copy, bool useMask = false) {
+	public bool Blit(int xdest, int ydest, int width, int height, DC source, int xsrc, int ysrc, RasterOperationMode logicalFunc = RasterOperationMode.Copy, bool useMask = false, int xsrcMask = -1, int ysrcMask = -1) {
 		ArgumentNullException.ThrowIfNull(source);
-		return WxKitNative.DCBlit(Native, xdest, ydest, width, height, source.Native, xsrc, ysrc, (int)logicalFunc, useMask ? (byte)1 : (byte)0) != 0;
+		return WxKitNative.DCBlit(Native, xdest, ydest, width, height, source.Native, xsrc, ysrc, (int)logicalFunc, useMask ? (byte)1 : (byte)0, xsrcMask, ysrcMask) != 0;
 	}
 
 	/// <summary>Adds the specified point to the bounding box which can be retrieved with MinX(), MaxX() and MinY(), MaxY() functions.</summary>
@@ -305,8 +305,8 @@ public unsafe partial class DC : NativeObject {
 	public void StartPage() => WxKitNative.DCStartPage(Native);
 
 	/// <summary>Copy from a source DC to this DC possibly changing the scale.</summary>
-	public bool StretchBlit(int xdest, int ydest, int dstWidth, int dstHeight, DC source, int xsrc, int ysrc, int srcWidth, int srcHeight, RasterOperationMode logicalFunc = RasterOperationMode.Copy, bool useMask = false) {
+	public bool StretchBlit(int xdest, int ydest, int dstWidth, int dstHeight, DC source, int xsrc, int ysrc, int srcWidth, int srcHeight, RasterOperationMode logicalFunc = RasterOperationMode.Copy, bool useMask = false, int xsrcMask = -1, int ysrcMask = -1) {
 		ArgumentNullException.ThrowIfNull(source);
-		return WxKitNative.DCStretchBlit(Native, xdest, ydest, dstWidth, dstHeight, source.Native, xsrc, ysrc, srcWidth, srcHeight, (int)logicalFunc, useMask ? (byte)1 : (byte)0) != 0;
+		return WxKitNative.DCStretchBlit(Native, xdest, ydest, dstWidth, dstHeight, source.Native, xsrc, ysrc, srcWidth, srcHeight, (int)logicalFunc, useMask ? (byte)1 : (byte)0, xsrcMask, ysrcMask) != 0;
 	}
 }

@@ -1720,11 +1720,11 @@ public static unsafe partial class WxKitNative {
 
 	[LibraryImport(Library, EntryPoint = "wxk_DC_Blit")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial byte DCBlit(WxkObject* self, int xdest, int ydest, int width, int height, WxkObject* source, int xsrc, int ysrc, int logicalFunc, byte useMask);
+	public static partial byte DCBlit(WxkObject* self, int xdest, int ydest, int width, int height, WxkObject* source, int xsrc, int ysrc, int logicalFunc, byte useMask, int xsrcMask, int ysrcMask);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DC_StretchBlit")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial byte DCStretchBlit(WxkObject* self, int xdest, int ydest, int dstWidth, int dstHeight, WxkObject* source, int xsrc, int ysrc, int srcWidth, int srcHeight, int logicalFunc, byte useMask);
+	public static partial byte DCStretchBlit(WxkObject* self, int xdest, int ydest, int dstWidth, int dstHeight, WxkObject* source, int xsrc, int ysrc, int srcWidth, int srcHeight, int logicalFunc, byte useMask, int xsrcMask, int ysrcMask);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DC_CopyAttributes")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -9614,6 +9614,14 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeListBeginRdrag();
 
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_ListBox")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeListBox();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_ListBoxDclick")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeListBoxDclick();
+
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_ListCacheHint")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeListCacheHint();
@@ -9697,14 +9705,6 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_ListbookPageChanging")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeListbookPageChanging();
-
-	[LibraryImport(Library, EntryPoint = "wxk_EventType_Listbox")]
-	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial int EventTypeListbox();
-
-	[LibraryImport(Library, EntryPoint = "wxk_EventType_ListboxDclick")]
-	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial int EventTypeListboxDclick();
 
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_Magnify")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

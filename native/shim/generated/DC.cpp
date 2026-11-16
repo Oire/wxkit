@@ -233,12 +233,12 @@ WXK_FUNCTION(void) wxk_DC_EndPage(wxk_Object* self) noexcept {
 	wxk::Guard([&] { static_cast<wxDC*>(wxk::Unwrap(self))->EndPage(); });
 }
 
-WXK_FUNCTION(uint8_t) wxk_DC_Blit(wxk_Object* self, int32_t xdest, int32_t ydest, int32_t width, int32_t height, wxk_Object* source, int32_t xsrc, int32_t ysrc, int32_t logicalFunc, uint8_t useMask) noexcept {
-	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxDC*>(wxk::Unwrap(self))->Blit(static_cast<int>(xdest), static_cast<int>(ydest), static_cast<int>(width), static_cast<int>(height), static_cast<wxDC*>(wxk::Unwrap(source)), static_cast<int>(xsrc), static_cast<int>(ysrc), static_cast<wxRasterOperationMode>(logicalFunc), useMask != 0)) ? 1 : 0; });
+WXK_FUNCTION(uint8_t) wxk_DC_Blit(wxk_Object* self, int32_t xdest, int32_t ydest, int32_t width, int32_t height, wxk_Object* source, int32_t xsrc, int32_t ysrc, int32_t logicalFunc, uint8_t useMask, int32_t xsrcMask, int32_t ysrcMask) noexcept {
+	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxDC*>(wxk::Unwrap(self))->Blit(static_cast<int>(xdest), static_cast<int>(ydest), static_cast<int>(width), static_cast<int>(height), static_cast<wxDC*>(wxk::Unwrap(source)), static_cast<int>(xsrc), static_cast<int>(ysrc), static_cast<wxRasterOperationMode>(logicalFunc), useMask != 0, static_cast<int>(xsrcMask), static_cast<int>(ysrcMask))) ? 1 : 0; });
 }
 
-WXK_FUNCTION(uint8_t) wxk_DC_StretchBlit(wxk_Object* self, int32_t xdest, int32_t ydest, int32_t dstWidth, int32_t dstHeight, wxk_Object* source, int32_t xsrc, int32_t ysrc, int32_t srcWidth, int32_t srcHeight, int32_t logicalFunc, uint8_t useMask) noexcept {
-	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxDC*>(wxk::Unwrap(self))->StretchBlit(static_cast<int>(xdest), static_cast<int>(ydest), static_cast<int>(dstWidth), static_cast<int>(dstHeight), static_cast<wxDC*>(wxk::Unwrap(source)), static_cast<int>(xsrc), static_cast<int>(ysrc), static_cast<int>(srcWidth), static_cast<int>(srcHeight), static_cast<wxRasterOperationMode>(logicalFunc), useMask != 0)) ? 1 : 0; });
+WXK_FUNCTION(uint8_t) wxk_DC_StretchBlit(wxk_Object* self, int32_t xdest, int32_t ydest, int32_t dstWidth, int32_t dstHeight, wxk_Object* source, int32_t xsrc, int32_t ysrc, int32_t srcWidth, int32_t srcHeight, int32_t logicalFunc, uint8_t useMask, int32_t xsrcMask, int32_t ysrcMask) noexcept {
+	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxDC*>(wxk::Unwrap(self))->StretchBlit(static_cast<int>(xdest), static_cast<int>(ydest), static_cast<int>(dstWidth), static_cast<int>(dstHeight), static_cast<wxDC*>(wxk::Unwrap(source)), static_cast<int>(xsrc), static_cast<int>(ysrc), static_cast<int>(srcWidth), static_cast<int>(srcHeight), static_cast<wxRasterOperationMode>(logicalFunc), useMask != 0, static_cast<int>(xsrcMask), static_cast<int>(ysrcMask))) ? 1 : 0; });
 }
 
 WXK_FUNCTION(void) wxk_DC_CopyAttributes(wxk_Object* self, wxk_Object* dc) noexcept {

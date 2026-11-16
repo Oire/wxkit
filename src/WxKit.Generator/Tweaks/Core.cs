@@ -23,6 +23,20 @@ internal static class Core {
 			.ParameterEnum("SendSizeEvent", "flags", "SendSizeEventFlags")
 			.ParameterEnum("SendSizeEventToParent", "flags", "SendSizeEventFlags")
 			.ParameterEnum("UpdateWindowUI", "flags", "wxUpdateUI")
+			// wxWidgets documents the mouse events on wxMouseEvent, not on the windows that receive
+			// them. They do not travel to the parent, so each window has its own.
+			.AddEvent("EVT_LEFT_DOWN", "wxEVT_LEFT_DOWN", "wxMouseEvent", "LeftDown")
+			.AddEvent("EVT_LEFT_UP", "wxEVT_LEFT_UP", "wxMouseEvent", "LeftUp")
+			.AddEvent("EVT_LEFT_DCLICK", "wxEVT_LEFT_DCLICK", "wxMouseEvent", "LeftDoubleClick")
+			.AddEvent("EVT_RIGHT_DOWN", "wxEVT_RIGHT_DOWN", "wxMouseEvent", "RightDown")
+			.AddEvent("EVT_RIGHT_UP", "wxEVT_RIGHT_UP", "wxMouseEvent", "RightUp")
+			.AddEvent("EVT_RIGHT_DCLICK", "wxEVT_RIGHT_DCLICK", "wxMouseEvent", "RightDoubleClick")
+			.AddEvent("EVT_MIDDLE_DOWN", "wxEVT_MIDDLE_DOWN", "wxMouseEvent", "MiddleDown")
+			.AddEvent("EVT_MIDDLE_UP", "wxEVT_MIDDLE_UP", "wxMouseEvent", "MiddleUp")
+			.AddEvent("EVT_MOTION", "wxEVT_MOTION", "wxMouseEvent", "MouseMoved")
+			.AddEvent("EVT_MOUSEWHEEL", "wxEVT_MOUSEWHEEL", "wxMouseEvent", "MouseWheel")
+			.AddEvent("EVT_ENTER_WINDOW", "wxEVT_ENTER_WINDOW", "wxMouseEvent", "MouseEntered")
+			.AddEvent("EVT_LEAVE_WINDOW", "wxEVT_LEAVE_WINDOW", "wxMouseEvent", "MouseLeft")
 			.ParameterEnum("GetExtraStyle", "return", "WindowExtraStyle")
 			.ParameterEnum("SetExtraStyle", "exStyle", "WindowExtraStyle")
 			.ParameterEnum("HasExtraStyle", "exFlag", "WindowExtraStyle")
@@ -40,6 +54,9 @@ internal static class Core {
 		// WxKit keeps the menu bar a frame owns.
 		// The flags these take, which wxWidgets declares as constants rather than a named enum.
 		tweaks.ConstantEnum("WindowExtraStyle", "wxWS_EX_", isFlags: true);
+		// The keys a key event names, which a letter's or digit's code is the character of, as 'A' is.
+		tweaks.Enum("wxKeyCode", "KeyCode");
+		tweaks.Class("wxKeyEvent", e => e.ParameterEnum("GetKeyCode", "return", "wxKeyCode"));
 		tweaks.ConstantEnum("SizeFlags", "wxSIZE_", isFlags: true, excludePrefixes: ["wxSIZE_CONV_", "wxSIZE_SET_"]);
 		tweaks.ConstantEnum("SendSizeEventFlags", "wxSEND_EVENT_", isFlags: true);
 		tweaks.ConstantEnum("FullScreenStyle", "wxFULLSCREEN_", isFlags: true);

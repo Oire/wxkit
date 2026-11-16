@@ -910,13 +910,13 @@ class WxKit.DC : NativeObject
     Pen? Pen { get; set; }
     RasterOperationMode LogicalFunction { get; set; }
     bool AreAutomaticBoundingBoxUpdatesEnabled()
-    bool Blit(int xdest, int ydest, int width, int height, DC source, int xsrc, int ysrc, RasterOperationMode logicalFunc = RasterOperationMode.Copy, bool useMask = false)
+    bool Blit(int xdest, int ydest, int width, int height, DC source, int xsrc, int ysrc, RasterOperationMode logicalFunc = RasterOperationMode.Copy, bool useMask = false, int xsrcMask = -1, int ysrcMask = -1)
     bool FloodFill(Point point, Color? column, FloodFillStyle style = FloodFillStyle.Surface)
     bool FloodFill(int x, int y, Color? color, FloodFillStyle style = FloodFillStyle.Surface)
     bool GetClippingBox(out Rect rect)
     bool GetClippingBox(out int x, out int y, out int width, out int height)
     bool StartDoc(string message)
-    bool StretchBlit(int xdest, int ydest, int dstWidth, int dstHeight, DC source, int xsrc, int ysrc, int srcWidth, int srcHeight, RasterOperationMode logicalFunc = RasterOperationMode.Copy, bool useMask = false)
+    bool StretchBlit(int xdest, int ydest, int dstWidth, int dstHeight, DC source, int xsrc, int ysrc, int srcWidth, int srcHeight, RasterOperationMode logicalFunc = RasterOperationMode.Copy, bool useMask = false, int xsrcMask = -1, int ysrcMask = -1)
     int BackgroundMode { get; set; }
     int MaxX()
     int MaxY()
@@ -1387,8 +1387,8 @@ static class WxKit.EventType
     static EventType<CommandEvent> CommandRightClick { get; }
     static EventType<CommandEvent> CommandSetFocus { get; }
     static EventType<CommandEvent> ContextMenu { get; }
-    static EventType<CommandEvent> Listbox { get; }
-    static EventType<CommandEvent> ListboxDclick { get; }
+    static EventType<CommandEvent> ListBox { get; }
+    static EventType<CommandEvent> ListBoxDclick { get; }
     static EventType<CommandEvent> Menu { get; }
     static EventType<CommandEvent> NotificationMessageAction { get; }
     static EventType<CommandEvent> NotificationMessageClick { get; }
@@ -2175,7 +2175,192 @@ class WxKit.InfoBar : Control
     void ShowCheckBox(string checkBoxText, bool checked)
     void ShowMessage(string message, MessageIcon icon = MessageIcon.Information)
 class WxKit.InitDialogEvent : Event
+enum WxKit.KeyCode : int
+    Add = 335
+    Alt = 307
+    Back = 8
+    BrowserBack = 417
+    BrowserFavorites = 422
+    BrowserForward = 418
+    BrowserHome = 423
+    BrowserRefresh = 419
+    BrowserSearch = 421
+    BrowserStop = 420
+    Cancel = 303
+    Capital = 311
+    Clear = 305
+    Command = 308
+    Control = 308
+    ControlA = 1
+    ControlB = 2
+    ControlC = 3
+    ControlD = 4
+    ControlE = 5
+    ControlF = 6
+    ControlG = 7
+    ControlH = 8
+    ControlI = 9
+    ControlJ = 10
+    ControlK = 11
+    ControlL = 12
+    ControlM = 13
+    ControlN = 14
+    ControlO = 15
+    ControlP = 16
+    ControlQ = 17
+    ControlR = 18
+    ControlS = 19
+    ControlT = 20
+    ControlU = 21
+    ControlV = 22
+    ControlW = 23
+    ControlX = 24
+    ControlY = 25
+    ControlZ = 26
+    Decimal = 338
+    Delete = 127
+    Divide = 339
+    Down = 317
+    End = 312
+    Escape = 27
+    Execute = 320
+    F1 = 340
+    F10 = 349
+    F11 = 350
+    F12 = 351
+    F13 = 352
+    F14 = 353
+    F15 = 354
+    F16 = 355
+    F17 = 356
+    F18 = 357
+    F19 = 358
+    F2 = 341
+    F20 = 359
+    F21 = 360
+    F22 = 361
+    F23 = 362
+    F24 = 363
+    F3 = 342
+    F4 = 343
+    F5 = 344
+    F6 = 345
+    F7 = 346
+    F8 = 347
+    F9 = 348
+    Help = 323
+    Home = 313
+    Insert = 322
+    Launch0 = 432
+    Launch1 = 433
+    Launch2 = 434
+    Launch3 = 435
+    Launch4 = 436
+    Launch5 = 437
+    Launch6 = 438
+    Launch7 = 439
+    Launch8 = 440
+    Launch9 = 441
+    LaunchA = 442
+    LaunchApp1 = 442
+    LaunchApp2 = 443
+    LaunchB = 443
+    LaunchC = 444
+    LaunchD = 445
+    LaunchE = 446
+    LaunchF = 447
+    LaunchMail = 431
+    Left = 314
+    LeftButton = 301
+    MediaNextTrack = 427
+    MediaPlayPause = 430
+    MediaPrevTrack = 428
+    MediaStop = 429
+    Menu = 309
+    MiddleButton = 304
+    Multiply = 334
+    None = 0
+    NumLock = 364
+    Numpad0 = 324
+    Numpad1 = 325
+    Numpad2 = 326
+    Numpad3 = 327
+    Numpad4 = 328
+    Numpad5 = 329
+    Numpad6 = 330
+    Numpad7 = 331
+    Numpad8 = 332
+    Numpad9 = 333
+    NumpadAdd = 388
+    NumpadBegin = 383
+    NumpadDecimal = 391
+    NumpadDelete = 385
+    NumpadDivide = 392
+    NumpadDown = 379
+    NumpadEnd = 382
+    NumpadEnter = 370
+    NumpadEqual = 386
+    NumpadF1 = 371
+    NumpadF2 = 372
+    NumpadF3 = 373
+    NumpadF4 = 374
+    NumpadHome = 375
+    NumpadInsert = 384
+    NumpadLeft = 376
+    NumpadMultiply = 387
+    NumpadPageDown = 381
+    NumpadPageUp = 380
+    NumpadRight = 378
+    NumpadSeparator = 389
+    NumpadSpace = 368
+    NumpadSubtract = 390
+    NumpadTab = 369
+    NumpadUp = 377
+    PageDown = 367
+    PageUp = 366
+    Pause = 310
+    Print = 319
+    Return = 13
+    Right = 316
+    RightButton = 302
+    Scroll = 365
+    Select = 318
+    Separator = 336
+    Shift = 306
+    Snapshot = 321
+    Space = 32
+    Special1 = 397
+    Special10 = 406
+    Special11 = 407
+    Special12 = 408
+    Special13 = 409
+    Special14 = 410
+    Special15 = 411
+    Special16 = 412
+    Special17 = 413
+    Special18 = 414
+    Special19 = 415
+    Special2 = 398
+    Special20 = 416
+    Special3 = 399
+    Special4 = 400
+    Special5 = 401
+    Special6 = 402
+    Special7 = 403
+    Special8 = 404
+    Special9 = 405
+    Start = 300
+    Subtract = 337
+    Tab = 9
+    Up = 315
+    VolumeDown = 425
+    VolumeMute = 424
+    VolumeUp = 426
+    WindowsLeft = 393
+    WindowsMenu = 395
+    WindowsRight = 394
 class WxKit.KeyEvent : Event
+    KeyCode KeyCode { get; }
     Point Position { get; }
     bool AltDown()
     bool CmdDown()
@@ -2188,7 +2373,6 @@ class WxKit.KeyEvent : Event
     bool MetaDown()
     bool RawControlDown()
     bool ShiftDown()
-    int KeyCode { get; }
     int Modifiers { get; }
     int RawKeyCode { get; }
     int RawKeyFlags { get; }
@@ -3507,48 +3691,48 @@ enum WxKit.StockCursor : int
     Watch = 25
 class WxKit.SysColorChangedEvent : Event
 enum WxKit.SystemColor : int
-    Activeborder = 10
-    Activecaption = 2
-    Appworkspace = 12
+    ActiveBorder = 10
+    ActiveCaption = 2
+    AppWorkspace = 12
     Background = 1
-    Btnface = 15
-    Btnhighlight = 20
-    Btnhilight = 20
-    Btnshadow = 16
-    Btntext = 18
-    Captiontext = 9
+    ButtonFace = 15
+    ButtonHighlight = 20
+    ButtonHilight = 20
+    ButtonShadow = 16
+    ButtonText = 18
+    CaptionText = 9
     Desktop = 1
     Framebk = 15
-    Gradientactivecaption = 27
-    Gradientinactivecaption = 28
-    Graytext = 17
-    Gridlines = 33
+    GradientActiveCaption = 27
+    GradientInactiveCaption = 28
+    GrayText = 17
+    GridLines = 33
     Highlight = 13
-    Highlighttext = 14
-    Hotlight = 26
-    Inactiveborder = 11
-    Inactivecaption = 3
-    Inactivecaptiontext = 19
-    Infobk = 24
-    Infotext = 23
-    Listbox = 25
-    Listboxhighlight = 34
-    Listboxhighlighttext = 32
-    Listboxtext = 31
+    HighlightText = 14
+    HotLight = 26
+    InactiveBorder = 11
+    InactiveCaption = 3
+    InactiveCaptionText = 19
+    InfoBackground = 24
+    InfoText = 23
+    ListBox = 25
+    ListBoxHighlight = 34
+    ListBoxHighlightText = 32
+    ListBoxText = 31
     Menu = 4
     MenuBar = 30
-    Menuhilight = 29
-    Menutext = 7
+    MenuHighlight = 29
+    MenuText = 7
     ScrollBar = 0
-    ThreeDdkshadow = 21
-    ThreeDface = 15
-    ThreeDhighlight = 20
+    ThreeDDarkShadow = 21
+    ThreeDFace = 15
+    ThreeDHighlight = 20
+    ThreeDLight = 22
+    ThreeDShadow = 16
     ThreeDhilight = 20
-    ThreeDlight = 22
-    ThreeDshadow = 16
     Window = 5
-    Windowframe = 6
-    Windowtext = 8
+    WindowFrame = 6
+    WindowText = 8
 enum WxKit.SystemFeature : int
     CanDrawFrameDecorations = 1
     CanIconizeFrame = 2
@@ -4265,6 +4449,18 @@ class WxKit.Window : EvtHandler
     event EventHandler<KeyEvent>? CharHook
     event EventHandler<KeyEvent>? KeyDown
     event EventHandler<KeyEvent>? KeyUp
+    event EventHandler<MouseEvent>? LeftDoubleClick
+    event EventHandler<MouseEvent>? LeftDown
+    event EventHandler<MouseEvent>? LeftUp
+    event EventHandler<MouseEvent>? MiddleDown
+    event EventHandler<MouseEvent>? MiddleUp
+    event EventHandler<MouseEvent>? MouseEntered
+    event EventHandler<MouseEvent>? MouseLeft
+    event EventHandler<MouseEvent>? MouseMoved
+    event EventHandler<MouseEvent>? MouseWheel
+    event EventHandler<MouseEvent>? RightDoubleClick
+    event EventHandler<MouseEvent>? RightDown
+    event EventHandler<MouseEvent>? RightUp
     event EventHandler<PaintEvent>? Paint
     event EventHandler<SizeEvent>? SizeChanged
     event EventHandler<SysColorChangedEvent>? SystemColorsChanged

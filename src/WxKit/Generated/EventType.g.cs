@@ -614,6 +614,20 @@ public static unsafe partial class EventType {
 		public static readonly EventType<ListEvent> Value = new(WxKitNative.EventTypeListBeginRdrag, static native => new ListEvent((WxkEvent*)native));
 	}
 
+	/// <summary>Wraps wxEVT_LISTBOX.</summary>
+	public static EventType<CommandEvent> ListBox => ListBoxType.Value;
+
+	private static class ListBoxType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeListBox, static native => new CommandEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_LISTBOX_DCLICK.</summary>
+	public static EventType<CommandEvent> ListBoxDclick => ListBoxDclickType.Value;
+
+	private static class ListBoxDclickType {
+		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeListBoxDclick, static native => new CommandEvent((WxkEvent*)native));
+	}
+
 	/// <summary>Wraps wxEVT_LIST_CACHE_HINT.</summary>
 	public static EventType<ListEvent> ListCacheHint => ListCacheHintType.Value;
 
@@ -759,20 +773,6 @@ public static unsafe partial class EventType {
 
 	private static class ListbookPageChangingType {
 		public static readonly EventType<BookCtrlEvent> Value = new(WxKitNative.EventTypeListbookPageChanging, static native => new BookCtrlEvent((WxkEvent*)native));
-	}
-
-	/// <summary>Wraps wxEVT_LISTBOX.</summary>
-	public static EventType<CommandEvent> Listbox => ListboxType.Value;
-
-	private static class ListboxType {
-		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeListbox, static native => new CommandEvent((WxkEvent*)native));
-	}
-
-	/// <summary>Wraps wxEVT_LISTBOX_DCLICK.</summary>
-	public static EventType<CommandEvent> ListboxDclick => ListboxDclickType.Value;
-
-	private static class ListboxDclickType {
-		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeListboxDclick, static native => new CommandEvent((WxkEvent*)native));
 	}
 
 	/// <summary>Wraps wxEVT_MAGNIFY.</summary>

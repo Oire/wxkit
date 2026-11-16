@@ -1011,6 +1011,376 @@ public enum ImageResizeQuality {
 	High = 4,
 }
 
+/// <summary>Wraps wxKeyCode.</summary>
+public enum KeyCode {
+	/// <summary>No key. Wraps WXK_NONE.</summary>
+	None = 0,
+	/// <summary>Wraps WXK_CONTROL_A.</summary>
+	ControlA = 1,
+	/// <summary>Wraps WXK_CONTROL_B.</summary>
+	ControlB = 2,
+	/// <summary>Wraps WXK_CONTROL_C.</summary>
+	ControlC = 3,
+	/// <summary>Wraps WXK_CONTROL_D.</summary>
+	ControlD = 4,
+	/// <summary>Wraps WXK_CONTROL_E.</summary>
+	ControlE = 5,
+	/// <summary>Wraps WXK_CONTROL_F.</summary>
+	ControlF = 6,
+	/// <summary>Wraps WXK_CONTROL_G.</summary>
+	ControlG = 7,
+	/// <summary>Wraps WXK_CONTROL_H.</summary>
+	ControlH = 8,
+	/// <summary>Wraps WXK_CONTROL_I.</summary>
+	ControlI = 9,
+	/// <summary>Wraps WXK_CONTROL_J.</summary>
+	ControlJ = 10,
+	/// <summary>Wraps WXK_CONTROL_K.</summary>
+	ControlK = 11,
+	/// <summary>Wraps WXK_CONTROL_L.</summary>
+	ControlL = 12,
+	/// <summary>Wraps WXK_CONTROL_M.</summary>
+	ControlM = 13,
+	/// <summary>Wraps WXK_CONTROL_N.</summary>
+	ControlN = 14,
+	/// <summary>Wraps WXK_CONTROL_O.</summary>
+	ControlO = 15,
+	/// <summary>Wraps WXK_CONTROL_P.</summary>
+	ControlP = 16,
+	/// <summary>Wraps WXK_CONTROL_Q.</summary>
+	ControlQ = 17,
+	/// <summary>Wraps WXK_CONTROL_R.</summary>
+	ControlR = 18,
+	/// <summary>Wraps WXK_CONTROL_S.</summary>
+	ControlS = 19,
+	/// <summary>Wraps WXK_CONTROL_T.</summary>
+	ControlT = 20,
+	/// <summary>Wraps WXK_CONTROL_U.</summary>
+	ControlU = 21,
+	/// <summary>Wraps WXK_CONTROL_V.</summary>
+	ControlV = 22,
+	/// <summary>Wraps WXK_CONTROL_W.</summary>
+	ControlW = 23,
+	/// <summary>Wraps WXK_CONTROL_X.</summary>
+	ControlX = 24,
+	/// <summary>Wraps WXK_CONTROL_Y.</summary>
+	ControlY = 25,
+	/// <summary>Wraps WXK_CONTROL_Z.</summary>
+	ControlZ = 26,
+	/// <summary>Backspace. Wraps WXK_BACK.</summary>
+	Back = 8,
+	/// <summary>Wraps WXK_TAB.</summary>
+	Tab = 9,
+	/// <summary>Wraps WXK_RETURN.</summary>
+	Return = 13,
+	/// <summary>Wraps WXK_ESCAPE.</summary>
+	Escape = 27,
+	/// <summary>Wraps WXK_SPACE.</summary>
+	Space = 32,
+	/// <summary>Wraps WXK_DELETE.</summary>
+	Delete = 127,
+	/// <summary>Special key values. Wraps WXK_START.</summary>
+	Start = 300,
+	/// <summary>Wraps WXK_LBUTTON.</summary>
+	LeftButton = 301,
+	/// <summary>Wraps WXK_RBUTTON.</summary>
+	RightButton = 302,
+	/// <summary>Wraps WXK_CANCEL.</summary>
+	Cancel = 303,
+	/// <summary>Wraps WXK_MBUTTON.</summary>
+	MiddleButton = 304,
+	/// <summary>See WXK_NUMPAD_CENTER. Wraps WXK_CLEAR.</summary>
+	Clear = 305,
+	/// <summary>Wraps WXK_SHIFT.</summary>
+	Shift = 306,
+	/// <summary>Wraps WXK_ALT.</summary>
+	Alt = 307,
+	/// <summary>Note that under macOS, to improve compatibility with other systems, 'WXK_CONTROL' represents the 'Command' key. Wraps WXK_CONTROL.</summary>
+	Control = 308,
+	/// <summary>Wraps WXK_MENU.</summary>
+	Menu = 309,
+	/// <summary>Wraps WXK_PAUSE.</summary>
+	Pause = 310,
+	/// <summary>Wraps WXK_CAPITAL.</summary>
+	Capital = 311,
+	/// <summary>Wraps WXK_END.</summary>
+	End = 312,
+	/// <summary>Wraps WXK_HOME.</summary>
+	Home = 313,
+	/// <summary>Wraps WXK_LEFT.</summary>
+	Left = 314,
+	/// <summary>Wraps WXK_UP.</summary>
+	Up = 315,
+	/// <summary>Wraps WXK_RIGHT.</summary>
+	Right = 316,
+	/// <summary>Wraps WXK_DOWN.</summary>
+	Down = 317,
+	/// <summary>Wraps WXK_SELECT.</summary>
+	Select = 318,
+	/// <summary>Wraps WXK_PRINT.</summary>
+	Print = 319,
+	/// <summary>Wraps WXK_EXECUTE.</summary>
+	Execute = 320,
+	/// <summary>Wraps WXK_SNAPSHOT.</summary>
+	Snapshot = 321,
+	/// <summary>Wraps WXK_INSERT.</summary>
+	Insert = 322,
+	/// <summary>Wraps WXK_HELP.</summary>
+	Help = 323,
+	/// <summary>Wraps WXK_NUMPAD0.</summary>
+	Numpad0 = 324,
+	/// <summary>Wraps WXK_NUMPAD1.</summary>
+	Numpad1 = 325,
+	/// <summary>Wraps WXK_NUMPAD2.</summary>
+	Numpad2 = 326,
+	/// <summary>Wraps WXK_NUMPAD3.</summary>
+	Numpad3 = 327,
+	/// <summary>Wraps WXK_NUMPAD4.</summary>
+	Numpad4 = 328,
+	/// <summary>Wraps WXK_NUMPAD5.</summary>
+	Numpad5 = 329,
+	/// <summary>Wraps WXK_NUMPAD6.</summary>
+	Numpad6 = 330,
+	/// <summary>Wraps WXK_NUMPAD7.</summary>
+	Numpad7 = 331,
+	/// <summary>Wraps WXK_NUMPAD8.</summary>
+	Numpad8 = 332,
+	/// <summary>Wraps WXK_NUMPAD9.</summary>
+	Numpad9 = 333,
+	/// <summary>Wraps WXK_MULTIPLY.</summary>
+	Multiply = 334,
+	/// <summary>Wraps WXK_ADD.</summary>
+	Add = 335,
+	/// <summary>Wraps WXK_SEPARATOR.</summary>
+	Separator = 336,
+	/// <summary>Wraps WXK_SUBTRACT.</summary>
+	Subtract = 337,
+	/// <summary>Wraps WXK_DECIMAL.</summary>
+	Decimal = 338,
+	/// <summary>Wraps WXK_DIVIDE.</summary>
+	Divide = 339,
+	/// <summary>Wraps WXK_F1.</summary>
+	F1 = 340,
+	/// <summary>Wraps WXK_F2.</summary>
+	F2 = 341,
+	/// <summary>Wraps WXK_F3.</summary>
+	F3 = 342,
+	/// <summary>Wraps WXK_F4.</summary>
+	F4 = 343,
+	/// <summary>Wraps WXK_F5.</summary>
+	F5 = 344,
+	/// <summary>Wraps WXK_F6.</summary>
+	F6 = 345,
+	/// <summary>Wraps WXK_F7.</summary>
+	F7 = 346,
+	/// <summary>Wraps WXK_F8.</summary>
+	F8 = 347,
+	/// <summary>Wraps WXK_F9.</summary>
+	F9 = 348,
+	/// <summary>Wraps WXK_F10.</summary>
+	F10 = 349,
+	/// <summary>Wraps WXK_F11.</summary>
+	F11 = 350,
+	/// <summary>Wraps WXK_F12.</summary>
+	F12 = 351,
+	/// <summary>Wraps WXK_F13.</summary>
+	F13 = 352,
+	/// <summary>Wraps WXK_F14.</summary>
+	F14 = 353,
+	/// <summary>Wraps WXK_F15.</summary>
+	F15 = 354,
+	/// <summary>Wraps WXK_F16.</summary>
+	F16 = 355,
+	/// <summary>Wraps WXK_F17.</summary>
+	F17 = 356,
+	/// <summary>Wraps WXK_F18.</summary>
+	F18 = 357,
+	/// <summary>Wraps WXK_F19.</summary>
+	F19 = 358,
+	/// <summary>Wraps WXK_F20.</summary>
+	F20 = 359,
+	/// <summary>Wraps WXK_F21.</summary>
+	F21 = 360,
+	/// <summary>Wraps WXK_F22.</summary>
+	F22 = 361,
+	/// <summary>Wraps WXK_F23.</summary>
+	F23 = 362,
+	/// <summary>Wraps WXK_F24.</summary>
+	F24 = 363,
+	/// <summary>Wraps WXK_NUMLOCK.</summary>
+	NumLock = 364,
+	/// <summary>Wraps WXK_SCROLL.</summary>
+	Scroll = 365,
+	/// <summary>Wraps WXK_PAGEUP.</summary>
+	PageUp = 366,
+	/// <summary>Wraps WXK_PAGEDOWN.</summary>
+	PageDown = 367,
+	/// <summary>Wraps WXK_NUMPAD_SPACE.</summary>
+	NumpadSpace = 368,
+	/// <summary>Wraps WXK_NUMPAD_TAB.</summary>
+	NumpadTab = 369,
+	/// <summary>Wraps WXK_NUMPAD_ENTER.</summary>
+	NumpadEnter = 370,
+	/// <summary>Wraps WXK_NUMPAD_F1.</summary>
+	NumpadF1 = 371,
+	/// <summary>Wraps WXK_NUMPAD_F2.</summary>
+	NumpadF2 = 372,
+	/// <summary>Wraps WXK_NUMPAD_F3.</summary>
+	NumpadF3 = 373,
+	/// <summary>Wraps WXK_NUMPAD_F4.</summary>
+	NumpadF4 = 374,
+	/// <summary>Wraps WXK_NUMPAD_HOME.</summary>
+	NumpadHome = 375,
+	/// <summary>Wraps WXK_NUMPAD_LEFT.</summary>
+	NumpadLeft = 376,
+	/// <summary>Wraps WXK_NUMPAD_UP.</summary>
+	NumpadUp = 377,
+	/// <summary>Wraps WXK_NUMPAD_RIGHT.</summary>
+	NumpadRight = 378,
+	/// <summary>Wraps WXK_NUMPAD_DOWN.</summary>
+	NumpadDown = 379,
+	/// <summary>Wraps WXK_NUMPAD_PAGEUP.</summary>
+	NumpadPageUp = 380,
+	/// <summary>Wraps WXK_NUMPAD_PAGEDOWN.</summary>
+	NumpadPageDown = 381,
+	/// <summary>Wraps WXK_NUMPAD_END.</summary>
+	NumpadEnd = 382,
+	/// <summary>See WXK_NUMPAD_CENTER. Wraps WXK_NUMPAD_BEGIN.</summary>
+	NumpadBegin = 383,
+	/// <summary>Wraps WXK_NUMPAD_INSERT.</summary>
+	NumpadInsert = 384,
+	/// <summary>Wraps WXK_NUMPAD_DELETE.</summary>
+	NumpadDelete = 385,
+	/// <summary>Wraps WXK_NUMPAD_EQUAL.</summary>
+	NumpadEqual = 386,
+	/// <summary>Wraps WXK_NUMPAD_MULTIPLY.</summary>
+	NumpadMultiply = 387,
+	/// <summary>Wraps WXK_NUMPAD_ADD.</summary>
+	NumpadAdd = 388,
+	/// <summary>Wraps WXK_NUMPAD_SEPARATOR.</summary>
+	NumpadSeparator = 389,
+	/// <summary>Wraps WXK_NUMPAD_SUBTRACT.</summary>
+	NumpadSubtract = 390,
+	/// <summary>Wraps WXK_NUMPAD_DECIMAL.</summary>
+	NumpadDecimal = 391,
+	/// <summary>Wraps WXK_NUMPAD_DIVIDE.</summary>
+	NumpadDivide = 392,
+	/// <summary>The following key codes are only generated under Windows currently. Wraps WXK_WINDOWS_LEFT.</summary>
+	WindowsLeft = 393,
+	/// <summary>Wraps WXK_WINDOWS_RIGHT.</summary>
+	WindowsRight = 394,
+	/// <summary>Wraps WXK_WINDOWS_MENU.</summary>
+	WindowsMenu = 395,
+	/// <summary>This special key code was used to represent the key used for keyboard shortcuts. Wraps WXK_COMMAND.</summary>
+	Command = 308,
+	/// <summary>Hardware-specific buttons. Wraps WXK_SPECIAL1.</summary>
+	Special1 = 397,
+	/// <summary>Wraps WXK_SPECIAL2.</summary>
+	Special2 = 398,
+	/// <summary>Wraps WXK_SPECIAL3.</summary>
+	Special3 = 399,
+	/// <summary>Wraps WXK_SPECIAL4.</summary>
+	Special4 = 400,
+	/// <summary>Wraps WXK_SPECIAL5.</summary>
+	Special5 = 401,
+	/// <summary>Wraps WXK_SPECIAL6.</summary>
+	Special6 = 402,
+	/// <summary>Wraps WXK_SPECIAL7.</summary>
+	Special7 = 403,
+	/// <summary>Wraps WXK_SPECIAL8.</summary>
+	Special8 = 404,
+	/// <summary>Wraps WXK_SPECIAL9.</summary>
+	Special9 = 405,
+	/// <summary>Wraps WXK_SPECIAL10.</summary>
+	Special10 = 406,
+	/// <summary>Wraps WXK_SPECIAL11.</summary>
+	Special11 = 407,
+	/// <summary>Wraps WXK_SPECIAL12.</summary>
+	Special12 = 408,
+	/// <summary>Wraps WXK_SPECIAL13.</summary>
+	Special13 = 409,
+	/// <summary>Wraps WXK_SPECIAL14.</summary>
+	Special14 = 410,
+	/// <summary>Wraps WXK_SPECIAL15.</summary>
+	Special15 = 411,
+	/// <summary>Wraps WXK_SPECIAL16.</summary>
+	Special16 = 412,
+	/// <summary>Wraps WXK_SPECIAL17.</summary>
+	Special17 = 413,
+	/// <summary>Wraps WXK_SPECIAL18.</summary>
+	Special18 = 414,
+	/// <summary>Wraps WXK_SPECIAL19.</summary>
+	Special19 = 415,
+	/// <summary>Wraps WXK_SPECIAL20.</summary>
+	Special20 = 416,
+	/// <summary>Since wxWidgets 3.1.0. Wraps WXK_BROWSER_BACK.</summary>
+	BrowserBack = 417,
+	/// <summary>Since wxWidgets 3.1.0. Wraps WXK_BROWSER_FORWARD.</summary>
+	BrowserForward = 418,
+	/// <summary>Since wxWidgets 3.1.0. Wraps WXK_BROWSER_REFRESH.</summary>
+	BrowserRefresh = 419,
+	/// <summary>Since wxWidgets 3.1.0. Wraps WXK_BROWSER_STOP.</summary>
+	BrowserStop = 420,
+	/// <summary>Since wxWidgets 3.1.0. Wraps WXK_BROWSER_SEARCH.</summary>
+	BrowserSearch = 421,
+	/// <summary>Since wxWidgets 3.1.0. Wraps WXK_BROWSER_FAVORITES.</summary>
+	BrowserFavorites = 422,
+	/// <summary>Since wxWidgets 3.1.0. Wraps WXK_BROWSER_HOME.</summary>
+	BrowserHome = 423,
+	/// <summary>Since wxWidgets 3.1.0. Wraps WXK_VOLUME_MUTE.</summary>
+	VolumeMute = 424,
+	/// <summary>Since wxWidgets 3.1.0. Wraps WXK_VOLUME_DOWN.</summary>
+	VolumeDown = 425,
+	/// <summary>Since wxWidgets 3.1.0. Wraps WXK_VOLUME_UP.</summary>
+	VolumeUp = 426,
+	/// <summary>Since wxWidgets 3.1.0. Wraps WXK_MEDIA_NEXT_TRACK.</summary>
+	MediaNextTrack = 427,
+	/// <summary>Since wxWidgets 3.1.0. Wraps WXK_MEDIA_PREV_TRACK.</summary>
+	MediaPrevTrack = 428,
+	/// <summary>Since wxWidgets 3.1.0. Wraps WXK_MEDIA_STOP.</summary>
+	MediaStop = 429,
+	/// <summary>Since wxWidgets 3.1.0. Wraps WXK_MEDIA_PLAY_PAUSE.</summary>
+	MediaPlayPause = 430,
+	/// <summary>Since wxWidgets 3.1.0. Wraps WXK_LAUNCH_MAIL.</summary>
+	LaunchMail = 431,
+	/// <summary>First application launch key. Wraps WXK_LAUNCH_APP1.</summary>
+	LaunchApp1 = 442,
+	/// <summary>Second application launch key. Wraps WXK_LAUNCH_APP2.</summary>
+	LaunchApp2 = 443,
+	/// <summary>Available since wxWidgets 3.1.6 and only generated by wxGTK. Wraps WXK_LAUNCH_0.</summary>
+	Launch0 = 432,
+	/// <summary>Available since wxWidgets 3.1.6 and only generated by wxGTK. Wraps WXK_LAUNCH_1.</summary>
+	Launch1 = 433,
+	/// <summary>Available since wxWidgets 3.1.6 and only generated by wxGTK. Wraps WXK_LAUNCH_2.</summary>
+	Launch2 = 434,
+	/// <summary>Available since wxWidgets 3.1.6 and only generated by wxGTK. Wraps WXK_LAUNCH_3.</summary>
+	Launch3 = 435,
+	/// <summary>Available since wxWidgets 3.1.6 and only generated by wxGTK. Wraps WXK_LAUNCH_4.</summary>
+	Launch4 = 436,
+	/// <summary>Available since wxWidgets 3.1.6 and only generated by wxGTK. Wraps WXK_LAUNCH_5.</summary>
+	Launch5 = 437,
+	/// <summary>Available since wxWidgets 3.1.6 and only generated by wxGTK. Wraps WXK_LAUNCH_6.</summary>
+	Launch6 = 438,
+	/// <summary>Available since wxWidgets 3.1.6 and only generated by wxGTK. Wraps WXK_LAUNCH_7.</summary>
+	Launch7 = 439,
+	/// <summary>Available since wxWidgets 3.1.6 and only generated by wxGTK. Wraps WXK_LAUNCH_8.</summary>
+	Launch8 = 440,
+	/// <summary>Available since wxWidgets 3.1.6 and only generated by wxGTK. Wraps WXK_LAUNCH_9.</summary>
+	Launch9 = 441,
+	/// <summary>Available since wxWidgets 3.1.6, generated by wxGTK and wxMSW. Wraps WXK_LAUNCH_A.</summary>
+	LaunchA = 442,
+	/// <summary>Available since wxWidgets 3.1.6, generated by wxGTK and wxMSW. Wraps WXK_LAUNCH_B.</summary>
+	LaunchB = 443,
+	/// <summary>Available since wxWidgets 3.1.6 and only generated by wxGTK. Wraps WXK_LAUNCH_C.</summary>
+	LaunchC = 444,
+	/// <summary>Available since wxWidgets 3.1.6 and only generated by wxGTK. Wraps WXK_LAUNCH_D.</summary>
+	LaunchD = 445,
+	/// <summary>Available since wxWidgets 3.1.6 and only generated by wxGTK. Wraps WXK_LAUNCH_E.</summary>
+	LaunchE = 446,
+	/// <summary>Available since wxWidgets 3.1.6 and only generated by wxGTK. Wraps WXK_LAUNCH_F.</summary>
+	LaunchF = 447,
+}
+
 /// <summary>Wraps wxLayoutDirection.</summary>
 public enum LayoutDirection {
 	/// <summary>Wraps wxLayout_Default.</summary>
@@ -1395,81 +1765,81 @@ public enum SystemColor {
 	/// <summary>The desktop colour. Wraps wxSYS_COLOUR_DESKTOP.</summary>
 	Desktop = 1,
 	/// <summary>Active window caption colour. Wraps wxSYS_COLOUR_ACTIVECAPTION.</summary>
-	Activecaption = 2,
+	ActiveCaption = 2,
 	/// <summary>Inactive window caption colour. Wraps wxSYS_COLOUR_INACTIVECAPTION.</summary>
-	Inactivecaption = 3,
+	InactiveCaption = 3,
 	/// <summary>Menu background colour. Wraps wxSYS_COLOUR_MENU.</summary>
 	Menu = 4,
 	/// <summary>Window background colour. Wraps wxSYS_COLOUR_WINDOW.</summary>
 	Window = 5,
 	/// <summary>Window frame colour. Wraps wxSYS_COLOUR_WINDOWFRAME.</summary>
-	Windowframe = 6,
+	WindowFrame = 6,
 	/// <summary>Colour of the text used in the menus. Wraps wxSYS_COLOUR_MENUTEXT.</summary>
-	Menutext = 7,
+	MenuText = 7,
 	/// <summary>Colour of the text used in generic windows. Wraps wxSYS_COLOUR_WINDOWTEXT.</summary>
-	Windowtext = 8,
+	WindowText = 8,
 	/// <summary>Colour of the text used in captions, size boxes and scrollbar arrow boxes. Wraps wxSYS_COLOUR_CAPTIONTEXT.</summary>
-	Captiontext = 9,
+	CaptionText = 9,
 	/// <summary>Active window border colour. Wraps wxSYS_COLOUR_ACTIVEBORDER.</summary>
-	Activeborder = 10,
+	ActiveBorder = 10,
 	/// <summary>Inactive window border colour. Wraps wxSYS_COLOUR_INACTIVEBORDER.</summary>
-	Inactiveborder = 11,
+	InactiveBorder = 11,
 	/// <summary>Background colour for MDI applications. Wraps wxSYS_COLOUR_APPWORKSPACE.</summary>
-	Appworkspace = 12,
+	AppWorkspace = 12,
 	/// <summary>Colour of item(s) selected in a control. Wraps wxSYS_COLOUR_HIGHLIGHT.</summary>
 	Highlight = 13,
 	/// <summary>Colour of the text of item(s) selected in a control. Wraps wxSYS_COLOUR_HIGHLIGHTTEXT.</summary>
-	Highlighttext = 14,
+	HighlightText = 14,
 	/// <summary>Face shading colour on push buttons. Wraps wxSYS_COLOUR_BTNFACE.</summary>
-	Btnface = 15,
+	ButtonFace = 15,
 	/// <summary>Edge shading colour on push buttons. Wraps wxSYS_COLOUR_BTNSHADOW.</summary>
-	Btnshadow = 16,
+	ButtonShadow = 16,
 	/// <summary>Colour of greyed (disabled) text. Wraps wxSYS_COLOUR_GRAYTEXT.</summary>
-	Graytext = 17,
+	GrayText = 17,
 	/// <summary>Colour of the text on push buttons. Wraps wxSYS_COLOUR_BTNTEXT.</summary>
-	Btntext = 18,
+	ButtonText = 18,
 	/// <summary>Colour of the text in inactive captions. Wraps wxSYS_COLOUR_INACTIVECAPTIONTEXT.</summary>
-	Inactivecaptiontext = 19,
+	InactiveCaptionText = 19,
 	/// <summary>Highlight colour for buttons. Wraps wxSYS_COLOUR_BTNHIGHLIGHT.</summary>
-	Btnhighlight = 20,
+	ButtonHighlight = 20,
 	/// <summary>Dark shadow colour for three-dimensional display elements. Wraps wxSYS_COLOUR_3DDKSHADOW.</summary>
-	ThreeDdkshadow = 21,
+	ThreeDDarkShadow = 21,
 	/// <summary>Light colour for three-dimensional display elements. Wraps wxSYS_COLOUR_3DLIGHT.</summary>
-	ThreeDlight = 22,
+	ThreeDLight = 22,
 	/// <summary>Text colour for tooltip controls. Wraps wxSYS_COLOUR_INFOTEXT.</summary>
-	Infotext = 23,
+	InfoText = 23,
 	/// <summary>Background colour for tooltip controls. Wraps wxSYS_COLOUR_INFOBK.</summary>
-	Infobk = 24,
+	InfoBackground = 24,
 	/// <summary>Background colour for list-like controls. Wraps wxSYS_COLOUR_LISTBOX.</summary>
-	Listbox = 25,
+	ListBox = 25,
 	/// <summary>Colour for a hyperlink or hot-tracked item. Wraps wxSYS_COLOUR_HOTLIGHT.</summary>
-	Hotlight = 26,
+	HotLight = 26,
 	/// <summary>Right side colour in the colour gradient of an active window's title bar. Wraps wxSYS_COLOUR_GRADIENTACTIVECAPTION.</summary>
-	Gradientactivecaption = 27,
+	GradientActiveCaption = 27,
 	/// <summary>Right side colour in the colour gradient of an inactive window's title bar. Wraps wxSYS_COLOUR_GRADIENTINACTIVECAPTION.</summary>
-	Gradientinactivecaption = 28,
+	GradientInactiveCaption = 28,
 	/// <summary>The colour used to highlight menu items when the menu appears as a flat menu. Wraps wxSYS_COLOUR_MENUHILIGHT.</summary>
-	Menuhilight = 29,
+	MenuHighlight = 29,
 	/// <summary>The background colour for the menu bar when menus appear as flat menus. Wraps wxSYS_COLOUR_MENUBAR.</summary>
 	MenuBar = 30,
 	/// <summary>Text colour for list-like controls. Wraps wxSYS_COLOUR_LISTBOXTEXT.</summary>
-	Listboxtext = 31,
+	ListBoxText = 31,
 	/// <summary>Text colour for the selected items in list-like controls. Wraps wxSYS_COLOUR_LISTBOXHIGHLIGHTTEXT.</summary>
-	Listboxhighlighttext = 32,
+	ListBoxHighlightText = 32,
 	/// <summary>Colour of separator lines in grid-like controls. Wraps wxSYS_COLOUR_GRIDLINES.</summary>
-	Gridlines = 33,
+	GridLines = 33,
 	/// <summary>Background colour of a selected item in a wxListBox or similar control. Wraps wxSYS_COLOUR_LISTBOXHIGHLIGHT.</summary>
-	Listboxhighlight = 34,
+	ListBoxHighlight = 34,
 	/// <summary>Synonym for wxSYS_COLOUR_DESKTOP. Wraps wxSYS_COLOUR_BACKGROUND.</summary>
 	Background = 1,
 	/// <summary>Synonym for wxSYS_COLOUR_BTNFACE. Wraps wxSYS_COLOUR_3DFACE.</summary>
-	ThreeDface = 15,
+	ThreeDFace = 15,
 	/// <summary>Synonym for wxSYS_COLOUR_BTNSHADOW. Wraps wxSYS_COLOUR_3DSHADOW.</summary>
-	ThreeDshadow = 16,
+	ThreeDShadow = 16,
 	/// <summary>Synonym for wxSYS_COLOUR_BTNHIGHLIGHT. Wraps wxSYS_COLOUR_BTNHILIGHT.</summary>
-	Btnhilight = 20,
+	ButtonHilight = 20,
 	/// <summary>Synonym for wxSYS_COLOUR_BTNHIGHLIGHT. Wraps wxSYS_COLOUR_3DHIGHLIGHT.</summary>
-	ThreeDhighlight = 20,
+	ThreeDHighlight = 20,
 	/// <summary>Synonym for wxSYS_COLOUR_BTNHIGHLIGHT. Wraps wxSYS_COLOUR_3DHILIGHT.</summary>
 	ThreeDhilight = 20,
 	/// <summary>Synonym for wxSYS_COLOUR_BTNFACE. Wraps wxSYS_COLOUR_FRAMEBK.</summary>

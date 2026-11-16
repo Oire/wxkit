@@ -22,7 +22,7 @@ public unsafe partial class KeyEvent : Event {
 	public bool IsNextEventAllowed => WxKitNative.KeyEventIsNextEventAllowed(Handle) != 0;
 
 	/// <summary>Returns the key code of the key that generated this event.</summary>
-	public int KeyCode => WxKitNative.KeyEventGetKeyCode(Handle);
+	public KeyCode KeyCode => (KeyCode)WxKitNative.KeyEventGetKeyCode(Handle);
 
 	/// <summary>Return the bit mask of all pressed modifier keys.</summary>
 	public int Modifiers => WxKitNative.KeyEventGetModifiers(Handle);
