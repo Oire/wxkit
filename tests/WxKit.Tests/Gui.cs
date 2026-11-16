@@ -69,8 +69,11 @@ internal static class Gui {
 	});
 
 	/// <summary>Lets the event loop run until <paramref name="condition"/> holds, such as until a window wxWidgets destroys at idle time is gone.</summary>
-	public static async Task WaitUntil(Func<bool> condition) {
-		DateTime deadline = DateTime.UtcNow + Timeout;
+	public static Task WaitUntil(Func<bool> condition) => WaitUntil(condition, Timeout);
+
+	/// <summary>Lets the event loop run until <paramref name="condition"/> holds, for at most <paramref name="timeout"/>, which a test that waits more than once keeps inside its own.</summary>
+	public static async Task WaitUntil(Func<bool> condition, TimeSpan timeout) {
+		DateTime deadline = DateTime.UtcNow + timeout;
 		while (!condition()) {
 			if (DateTime.UtcNow > deadline) throw new TimeoutException("The condition did not hold in time.");
 			await Task.Delay(10);
