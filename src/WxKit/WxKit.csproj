@@ -4,6 +4,9 @@
 		<TargetFramework>net10.0</TargetFramework>
 		<RootNamespace>WxKit</RootNamespace>
 		<IsAotCompatible>true</IsAotCompatible>
+		<!-- The library builds without warnings, so any new one, such as the trim and AOT analyzers'
+		     for a binding that would break Native AOT, fails the build. -->
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<NoWarn>$(NoWarn);CS1591</NoWarn>
 	</PropertyGroup>

@@ -22,8 +22,13 @@ if ($IsWindows) {
 foreach ($sample in $Samples) {
 	$output = Join-Path $root "artifacts/aot/$Runtime/$sample"
 	Remove-Item -Recurse -Force $output -ErrorAction SilentlyContinue
-	dotnet publish (Join-Path $root "samples/$sample") -c Release -r $Runtime -o $output -nologo
+	# Native AOT analyzes the whole application as it compiles it, so a trim or AOT warning, which
+	# says the published application may not work as it does under the JIT, fails the test.
+	$log = dotnet publish (Join-Path $root "samples/$sample") -c Release -r $Runtime -o $output -nologo 2>&1
+	$log | Write-Host
 	if ($LASTEXITCODE -ne 0) { throw "Publishing the $sample sample failed." }
+	$warnings = @($log | Select-String "warning IL\d+" | Select-Object -ExpandProperty Line -Unique)
+	if ($warnings.Count -gt 0) { throw "Publishing the $sample sample gave trim or AOT warnings:`n$($warnings -join "`n")" }
 	# On macOS, the publish makes an app bundle too, which is what an application ships, so the
 	# test checks its Info.plist and signature, and runs the executable inside it.
 	if ($IsMacOS) {
