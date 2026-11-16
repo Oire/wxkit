@@ -312,6 +312,20 @@ internal static class Core {
 			.Event("EVT_TASKBAR_RIGHT_DCLICK", "RightDoubleClick")
 			.Event("EVT_TASKBAR_CLICK", "Click"));
 		tweaks.Class("wxTaskBarIconEvent");
+		// Printing. The data and dialogs are objects the application owns, and so is a printout,
+		// whose virtual members are written by hand, since GetPageInfo answers through pointers, and
+		// whose DC is only lent to it for each page. A preview, which takes its printouts, is too.
+		foreach (string data in (string[])["wxPrintData", "wxPrintDialogData", "wxPageSetupDialogData"]) tweaks.Class(data, value => value.ValueObject());
+		// A print quality is a resolution in dots per inch, or one of these, which are negative.
+		tweaks.ConstantEnum("PrintQuality", "wxPRINT_QUALITY_");
+		tweaks.Class("wxPrintData").ParameterEnum("GetQuality", "return", "PrintQuality").ParameterEnum("SetQuality", "quality", "PrintQuality");
+		// The page setup dialog's Enable setters pair with GetEnable getters, as properties of the same name.
+		foreach (string part in (string[])["Help", "Margins", "Orientation", "Paper", "Printer"]) tweaks.Class("wxPageSetupDialogData").Property("Enable" + part, "GetEnable" + part, "Enable" + part);
+		foreach (string owned in (string[])["wxPrinter", "wxPrintDialog", "wxPageSetupDialog"]) tweaks.Class(owned, value => value.Owned());
+		tweaks.Class("wxPrintout", printout => printout
+			.Owned()
+			.NoConstructors()
+			.Ignore("GetDC", "GetPageInfo", "GetPagesInfo", "HasPage", "OnBeginDocument", "OnEndDocument", "OnBeginPrinting", "OnEndPrinting", "OnPreparePrinting", "OnPrintPage", "GetPreview"));
 		// Notifications, which the application frees with Dispose, as it does timers. Only wxMSW has toasts.
 		// The icons a notification or an info bar shows, which are wxWidgets's message icons, without
 		// the synonyms and the masks.

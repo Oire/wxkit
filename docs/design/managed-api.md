@@ -282,6 +282,33 @@ AboutBox.Show(new AboutDialogInfo {
 
 A `NotificationMessage` shows a notification outside the application's windows, such as a toast on Windows, with an icon from `MessageIcon`. It raises `Clicked` when it's clicked, `Dismissed` when it goes away, and `ActionSelected` when one of the buttons `AddAction` adds is pressed. wxWidgets doesn't free a notification on its own, so dispose of it once it's done with, as you do a `Timer`. On Windows, call `NotificationMessage.MSWUseToasts()` before the first one, to show it as a toast rather than a balloon from the taskbar. On macOS, notifications only show from an app bundle.
 
+## Printing
+
+A document prints a page at a time, from a class derived from `Printout`, which draws each page on the DC it is given and says how many pages there are:
+
+```csharp
+sealed class TextPrintout(string[] lines) : Printout("My document") {
+	private const int LinesPerPage = 50;
+
+	protected override PageRange GetPageInfo() => PageRange.All((lines.Length + LinesPerPage - 1) / LinesPerPage);
+
+	protected override bool OnPrintPage(int page, DC dc) {
+		foreach ((string line, int index) in lines.Skip((page - 1) * LinesPerPage).Take(LinesPerPage).Select((line, index) => (line, index))) dc.DrawText(line, 0, index * dc.CharHeight);
+		return true;
+	}
+}
+
+using TextPrintout printout = new(lines);
+using Printer printer = new();
+printer.Print(frame, printout);
+```
+
+`Printer.Print` shows the print dialog first, unless told not to. `PrintPreview.Show` shows a preview in a frame of its own, from one printout to show and, for its Print button, a second of the same document. `PrintDialog` and `PageSetupDialog` show the dialogs on their own, and `PrintData`, `PrintDialogData`, and `PageSetupDialogData` are what they show, which are copied like values.
+
+A printout's virtual members are written by hand, since `GetPageInfo` answers through pointers, and the shim's subclass of `wxPrintout` calls them. `wxPrintout::OnBeginDocument` and `OnEndDocument` start and end the document on the DC, so they run around a printout's own. The DC a page is drawn on is wxWidgets's, which `OnPrintPage` is only lent until it returns, after which using it throws `ObjectDisposedException`. A printout the application prints is the application's to dispose. One given to a preview is the preview's, which deletes it when the preview closes, after which its `IsDisposed` is true.
+
+An application that does not print links none of it, since Native AOT only links the parts of wxWidgets an application uses.
+
 ## Taskbar icons
 
 A `TaskBarIcon` shows an icon in the Windows notification area, the macOS menu bar, or a Linux tray, once `SetIcon` gives it one. Its `Menu` is shown when it's right-clicked, or on macOS clicked, and it raises `LeftDoubleClick`, `RightUp`, and the other mouse events where the platform sends them. The menu comes from the shim's own subclass, which returns it to wxWidgets, so it needs no callback into .NET. wxWidgets keeps the application running while an icon exists, so dispose of it when the application is done with it.

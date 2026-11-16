@@ -20,6 +20,7 @@
 #include <wx/choice.h>
 #include <wx/choicebk.h>
 #include <wx/clrpicker.h>
+#include <wx/cmndata.h>
 #include <wx/collpane.h>
 #include <wx/colordlg.h>
 #include <wx/colourdata.h>
@@ -63,6 +64,8 @@
 #include <wx/panel.h>
 #include <wx/pen.h>
 #include <wx/pickerbase.h>
+#include <wx/print.h>
+#include <wx/printdlg.h>
 #include <wx/progdlg.h>
 #include <wx/radiobox.h>
 #include <wx/radiobut.h>

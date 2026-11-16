@@ -1716,6 +1716,46 @@ WXK_FUNCTION(void) wxk_NotifyEvent_Allow(wxk_Event* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_NotifyEvent_Veto(wxk_Event* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_NotifyEvent_IsAllowed(wxk_Event* self) WXK_NOEXCEPT;
 
+// wxPageSetupDialog
+
+WXK_FUNCTION(wxk_Object*) wxk_PageSetupDialog_new(wxk_Window* parent, wxk_Object* data) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_PageSetupDialog_ShowModal(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_PageSetupDialog_GetPageSetupData(wxk_Object* self) WXK_NOEXCEPT;
+
+// wxPageSetupDialogData
+
+WXK_FUNCTION(wxk_Object*) wxk_PageSetupDialogData_new_Default(void) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_PageSetupDialogData_new_PrintData(const wxk_Object* printData) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_PageSetupDialogData_GetEnableHelp(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PageSetupDialogData_EnableHelp(wxk_Object* self, uint8_t flag) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_PageSetupDialogData_GetEnableMargins(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PageSetupDialogData_EnableMargins(wxk_Object* self, uint8_t flag) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_PageSetupDialogData_GetEnableOrientation(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PageSetupDialogData_EnableOrientation(wxk_Object* self, uint8_t flag) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_PageSetupDialogData_GetEnablePaper(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PageSetupDialogData_EnablePaper(wxk_Object* self, uint8_t flag) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_PageSetupDialogData_GetEnablePrinter(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PageSetupDialogData_EnablePrinter(wxk_Object* self, uint8_t flag) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_PageSetupDialogData_GetDefaultInfo(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PageSetupDialogData_SetDefaultInfo(wxk_Object* self, uint8_t flag) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_PageSetupDialogData_GetDefaultMinMargins(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PageSetupDialogData_SetDefaultMinMargins(wxk_Object* self, uint8_t flag) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Point) wxk_PageSetupDialogData_GetMarginBottomRight(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PageSetupDialogData_SetMarginBottomRight(wxk_Object* self, wxk_Point point) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Point) wxk_PageSetupDialogData_GetMarginTopLeft(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PageSetupDialogData_SetMarginTopLeft(wxk_Object* self, wxk_Point point) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Point) wxk_PageSetupDialogData_GetMinMarginBottomRight(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PageSetupDialogData_SetMinMarginBottomRight(wxk_Object* self, wxk_Point point) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Point) wxk_PageSetupDialogData_GetMinMarginTopLeft(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PageSetupDialogData_SetMinMarginTopLeft(wxk_Object* self, wxk_Point point) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_PageSetupDialogData_GetPaperId(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PageSetupDialogData_SetPaperId(wxk_Object* self, int32_t id) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Size) wxk_PageSetupDialogData_GetPaperSize(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PageSetupDialogData_SetPaperSize(wxk_Object* self, wxk_Size size) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_PageSetupDialogData_GetPrintData(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PageSetupDialogData_SetPrintData(wxk_Object* self, const wxk_Object* printData) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_PageSetupDialogData_IsOk(wxk_Object* self) WXK_NOEXCEPT;
+
 // wxPaintDC
 
 WXK_FUNCTION(wxk_Object*) wxk_PaintDC_new(wxk_Window* window) WXK_NOEXCEPT;
@@ -1768,6 +1808,109 @@ WXK_FUNCTION(uint8_t) wxk_PickerBase_IsPickerCtrlGrowable(wxk_Window* self) WXK_
 WXK_FUNCTION(void) wxk_PickerBase_SetPickerCtrlGrowable(wxk_Window* self, uint8_t grow) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_PickerBase_IsTextCtrlGrowable(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_PickerBase_SetTextCtrlGrowable(wxk_Window* self, uint8_t grow) WXK_NOEXCEPT;
+
+// wxPrintData
+
+WXK_FUNCTION(wxk_Object*) wxk_PrintData_new(void) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PrintData_SetPaperSize(wxk_Object* self, wxk_Size size) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_PrintData_GetBin(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PrintData_SetBin(wxk_Object* self, int32_t flag) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_PrintData_GetCollate(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PrintData_SetCollate(wxk_Object* self, uint8_t flag) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_PrintData_GetColour(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PrintData_SetColour(wxk_Object* self, uint8_t flag) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_PrintData_GetDuplex(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PrintData_SetDuplex(wxk_Object* self, int32_t mode) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_PrintData_GetNoCopies(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PrintData_SetNoCopies(wxk_Object* self, int32_t index) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_PrintData_GetOrientation(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PrintData_SetOrientation(wxk_Object* self, int32_t orientation) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_PrintData_GetPaperId(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PrintData_SetPaperId(wxk_Object* self, int32_t paperId) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_String*) wxk_PrintData_GetPrinterName(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PrintData_SetPrinterName(wxk_Object* self, const char16_t* printerName, size_t printerNameLength) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_PrintData_GetQuality(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PrintData_SetQuality(wxk_Object* self, int32_t quality) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_PrintData_IsOk(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_String*) wxk_PrintData_GetFilename(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PrintData_SetFilename(wxk_Object* self, const char16_t* filename, size_t filenameLength) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_PrintData_GetPrintMode(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PrintData_SetPrintMode(wxk_Object* self, int32_t printMode) WXK_NOEXCEPT;
+
+// wxPrintDialog
+
+WXK_FUNCTION(wxk_Object*) wxk_PrintDialog_new_WindowPrintDialogData(wxk_Window* parent, wxk_Object* data) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_PrintDialog_new_WindowPrintData(wxk_Window* parent, wxk_Object* data) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_PrintDialog_ShowModal(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_PrintDialog_GetPrintDialogData(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_PrintDialog_GetPrintData(wxk_Object* self) WXK_NOEXCEPT;
+
+// wxPrintDialogData
+
+WXK_FUNCTION(wxk_Object*) wxk_PrintDialogData_new_Default(void) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_PrintDialogData_new_PrintData(const wxk_Object* printData) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PrintDialogData_EnableHelp(wxk_Object* self, uint8_t flag) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PrintDialogData_EnablePageNumbers(wxk_Object* self, uint8_t flag) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PrintDialogData_EnablePrintToFile(wxk_Object* self, uint8_t flag) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PrintDialogData_EnableSelection(wxk_Object* self, uint8_t flag) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PrintDialogData_EnableCurrentPage(wxk_Object* self, uint8_t flag) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_PrintDialogData_GetAllPages(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PrintDialogData_SetAllPages(wxk_Object* self, uint8_t flag) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_PrintDialogData_GetCollate(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PrintDialogData_SetCollate(wxk_Object* self, uint8_t flag) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_PrintDialogData_GetFromPage(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PrintDialogData_SetFromPage(wxk_Object* self, int32_t page) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_PrintDialogData_GetMaxPage(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PrintDialogData_SetMaxPage(wxk_Object* self, int32_t page) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_PrintDialogData_GetMinPage(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PrintDialogData_SetMinPage(wxk_Object* self, int32_t page) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_PrintDialogData_GetNoCopies(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PrintDialogData_SetNoCopies(wxk_Object* self, int32_t index) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_PrintDialogData_GetPrintData(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PrintDialogData_SetPrintData(wxk_Object* self, const wxk_Object* printData) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_PrintDialogData_GetPrintToFile(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PrintDialogData_SetPrintToFile(wxk_Object* self, uint8_t flag) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_PrintDialogData_GetSelection(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PrintDialogData_SetSelection(wxk_Object* self, uint8_t flag) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_PrintDialogData_GetCurrentPage(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PrintDialogData_SetCurrentPage(wxk_Object* self, uint8_t flag) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_PrintDialogData_GetSpecifiedPages(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_PrintDialogData_GetToPage(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PrintDialogData_SetToPage(wxk_Object* self, int32_t page) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_PrintDialogData_IsOk(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_PrintDialogData_GetMaxPageRanges(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_PrintDialogData_SetMaxPageRanges(wxk_Object* self, int32_t maxRanges) WXK_NOEXCEPT;
+
+// wxPrinter
+
+WXK_FUNCTION(wxk_Object*) wxk_Printer_new(wxk_Object* data) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Printer_Print(wxk_Object* self, wxk_Window* parent, wxk_Object* printout, uint8_t prompt) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Printer_ReportError(wxk_Object* self, wxk_Window* parent, wxk_Object* printout, const char16_t* message, size_t messageLength) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Printer_GetAbort(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_Printer_GetPrintDialogData(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_Printer_GetLastError(void) WXK_NOEXCEPT;
+
+// wxPrintout
+
+WXK_FUNCTION(void) wxk_Printout_FitThisSizeToPage(wxk_Object* self, wxk_Size imageSize) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Printout_FitThisSizeToPageMargins(wxk_Object* self, wxk_Size imageSize, const wxk_Object* pageSetupData) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Printout_FitThisSizeToPaper(wxk_Object* self, wxk_Size imageSize) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Rect) wxk_Printout_GetLogicalPageMarginsRect(wxk_Object* self, const wxk_Object* pageSetupData) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Printout_GetPPIPrinter(wxk_Object* self, int32_t* w, int32_t* h) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Printout_GetPPIScreen(wxk_Object* self, int32_t* w, int32_t* h) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Printout_GetPageSizeMM(wxk_Object* self, int32_t* w, int32_t* h) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Printout_GetPageSizePixels(wxk_Object* self, int32_t* w, int32_t* h) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Printout_MapScreenSizeToDevice(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Printout_MapScreenSizeToPage(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Printout_MapScreenSizeToPageMargins(wxk_Object* self, const wxk_Object* pageSetupData) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Printout_MapScreenSizeToPaper(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Printout_OffsetLogicalOrigin(wxk_Object* self, int32_t xoff, int32_t yoff) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Printout_SetLogicalOrigin(wxk_Object* self, int32_t x, int32_t y) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Rect) wxk_Printout_GetLogicalPageRect(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Rect) wxk_Printout_GetLogicalPaperRect(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Rect) wxk_Printout_GetPaperRectPixels(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_String*) wxk_Printout_GetTitle(wxk_Object* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Printout_IsPreview(wxk_Object* self) WXK_NOEXCEPT;
 
 // wxProgressDialog
 

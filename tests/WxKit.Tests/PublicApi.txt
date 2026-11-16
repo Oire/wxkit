@@ -1378,6 +1378,10 @@ class WxKit.DropFilesEvent : Event
     Point Position { get; }
     int NumberOfFiles { get; }
     string[] Files { get; }
+enum WxKit.DuplexMode : int
+    Horizontal = 1
+    Simplex = 0
+    Vertical = 2
 class WxKit.EraseEvent : Event
 class WxKit.Event : EventArgs
     EventCategory EventCategory { get; }
@@ -2962,6 +2966,42 @@ enum WxKit.Origin : int
     HelpButton = 2
     Keyboard = 1
     Unknown = 0
+readonly record struct WxKit.PageRange : IEquatable<PageRange>
+    PageRange(int MinPage, int MaxPage, int FromPage, int ToPage)
+    bool Equals(PageRange other)
+    int FromPage { get; init; }
+    int MaxPage { get; init; }
+    int MinPage { get; init; }
+    int ToPage { get; init; }
+    override bool Equals(object obj)
+    override int GetHashCode()
+    override string ToString()
+    static PageRange All(int count)
+    static bool op_Equality(PageRange left, PageRange right)
+    static bool op_Inequality(PageRange left, PageRange right)
+    void Deconstruct(out int MinPage, out int MaxPage, out int FromPage, out int ToPage)
+class WxKit.PageSetupDialog : NativeObject
+    PageSetupDialog(Window parent, PageSetupDialogData? data = null)
+    PageSetupDialogData? PageSetupData { get; }
+    int ShowModal()
+class WxKit.PageSetupDialogData : NativeObject
+    PageSetupDialogData()
+    PageSetupDialogData(PrintData printData)
+    PaperSize PaperId { get; set; }
+    Point MarginBottomRight { get; set; }
+    Point MarginTopLeft { get; set; }
+    Point MinMarginBottomRight { get; set; }
+    Point MinMarginTopLeft { get; set; }
+    PrintData? PrintData { get; set; }
+    Size PaperSize { get; set; }
+    bool DefaultInfo { get; set; }
+    bool DefaultMinMargins { get; set; }
+    bool EnableHelp { get; set; }
+    bool EnableMargins { get; set; }
+    bool EnableOrientation { get; set; }
+    bool EnablePaper { get; set; }
+    bool EnablePrinter { get; set; }
+    bool IsOk { get; }
 class WxKit.PaintDC : ClientDC
     PaintDC(Window window)
 class WxKit.PaintEvent : Event
@@ -2969,6 +3009,124 @@ class WxKit.Panel : Window
     Panel(Window parent, int id = -1, Point? position = null, Size? size = null, WindowStyle style = WindowStyle.TabTraversal)
     event EventHandler<NavigationKeyEvent>? NavigationKey
     void SetFocusIgnoringChildren()
+enum WxKit.PaperSize : int
+    A2 = 64
+    A3 = 12
+    A3Extra = 61
+    A3ExtraTransverse = 66
+    A3Rotated = 74
+    A3Transverse = 65
+    A4 = 3
+    A4Extra = 51
+    A4Plus = 58
+    A4Rotated = 75
+    A4Transverse = 53
+    A4small = 13
+    A5 = 14
+    A5Extra = 62
+    A5Rotated = 76
+    A5Transverse = 59
+    A6 = 68
+    A6Rotated = 81
+    APlus = 55
+    B4 = 15
+    B4JisRotated = 77
+    B5 = 16
+    B5Extra = 63
+    B5JisRotated = 78
+    B5Transverse = 60
+    B6Jis = 86
+    B6JisRotated = 87
+    BPlus = 56
+    Csheet = 4
+    DblJapanesePostcard = 67
+    DblJapanesePostcardRotated = 80
+    Dsheet = 5
+    Env10 = 23
+    Env11 = 24
+    Env12 = 25
+    Env14 = 26
+    Env9 = 22
+    EnvB4 = 33
+    EnvB5 = 34
+    EnvB6 = 35
+    EnvC3 = 29
+    EnvC4 = 30
+    EnvC5 = 28
+    EnvC6 = 31
+    EnvC65 = 32
+    EnvDl = 27
+    EnvInvite = 47
+    EnvItaly = 36
+    EnvMonarch = 37
+    EnvPersonal = 38
+    Esheet = 6
+    Executive = 11
+    FanfoldLglGerman = 41
+    FanfoldStdGerman = 40
+    FanfoldUs = 39
+    Folio = 17
+    IsoB4 = 42
+    JapanesePostcard = 43
+    JapanesePostcardRotated = 79
+    JenvChou3 = 71
+    JenvChou3Rotated = 84
+    JenvChou4 = 72
+    JenvChou4Rotated = 85
+    JenvKaku2 = 69
+    JenvKaku2Rotated = 82
+    JenvKaku3 = 70
+    JenvKaku3Rotated = 83
+    JenvYou4 = 89
+    JenvYou4Rotated = 90
+    Ledger = 9
+    Legal = 2
+    LegalExtra = 49
+    Letter = 1
+    LetterExtra = 48
+    LetterExtraTransverse = 54
+    LetterPlus = 57
+    LetterRotated = 73
+    LetterTransverse = 52
+    Lettersmall = 7
+    NineX11 = 44
+    None = 0
+    Note = 21
+    One0x11 = 45
+    One0x14 = 19
+    One1x17 = 20
+    One2x11 = 88
+    One5x11 = 46
+    P16k = 91
+    P16kRotated = 104
+    P32k = 92
+    P32kRotated = 105
+    P32kbig = 93
+    P32kbigRotated = 106
+    Penv1 = 94
+    Penv10 = 103
+    Penv10Rotated = 116
+    Penv1Rotated = 107
+    Penv2 = 95
+    Penv2Rotated = 108
+    Penv3 = 96
+    Penv3Rotated = 109
+    Penv4 = 97
+    Penv4Rotated = 110
+    Penv5 = 98
+    Penv5Rotated = 111
+    Penv6 = 99
+    Penv6Rotated = 112
+    Penv7 = 100
+    Penv7Rotated = 113
+    Penv8 = 101
+    Penv8Rotated = 114
+    Penv9 = 102
+    Penv9Rotated = 115
+    Quarto = 18
+    Statement = 10
+    Tabloid = 8
+    TabloidExtra = 50
 class WxKit.PasswordEntryDialog : TextEntryDialog
     PasswordEntryDialog(Window? parent, string message, string? caption = null, string defaultValue = "", DialogStyle style = DialogStyle.21, Point? position = null)
 class WxKit.Pen : NativeObject
@@ -3044,6 +3202,121 @@ readonly record struct WxKit.Point : IEquatable<Point>
     static bool op_Equality(Point left, Point right)
     static bool op_Inequality(Point left, Point right)
     void Deconstruct(out int X, out int Y)
+enum WxKit.PrintBin : int
+    Auto = 7
+    Cassette = 12
+    Default = 0
+    Envelope = 5
+    Envmanual = 6
+    Formsource = 13
+    Largecapacity = 11
+    Largefmt = 10
+    Lower = 2
+    Manual = 4
+    Middle = 3
+    Onlyone = 1
+    Smallfmt = 9
+    Tractor = 8
+    User = 14
+class WxKit.PrintData : NativeObject
+    DuplexMode Duplex { get; set; }
+    PaperSize PaperId { get; set; }
+    PrintBin Bin { get; set; }
+    PrintData()
+    PrintMode PrintMode { get; set; }
+    PrintOrientation Orientation { get; set; }
+    PrintQuality Quality { get; set; }
+    bool Collate { get; set; }
+    bool Color { get; set; }
+    bool IsOk { get; }
+    int NoCopies { get; set; }
+    string Filename { get; set; }
+    string PrinterName { get; set; }
+    void SetPaperSize(Size size)
+class WxKit.PrintDialog : NativeObject
+    PrintData? PrintData { get; }
+    PrintDialog(Window parent, PrintData data)
+    PrintDialog(Window parent, PrintDialogData? data = null)
+    PrintDialogData? PrintDialogData { get; }
+    int ShowModal()
+class WxKit.PrintDialogData : NativeObject
+    PrintData? PrintData { get; set; }
+    PrintDialogData()
+    PrintDialogData(PrintData printData)
+    bool AllPages { get; set; }
+    bool Collate { get; set; }
+    bool CurrentPage { get; set; }
+    bool IsOk { get; }
+    bool PrintToFile { get; set; }
+    bool Selection { get; set; }
+    bool SpecifiedPages { get; }
+    int FromPage { get; set; }
+    int MaxPage { get; set; }
+    int MaxPageRanges { get; set; }
+    int MinPage { get; set; }
+    int NoCopies { get; set; }
+    int ToPage { get; set; }
+    void EnableCurrentPage(bool flag)
+    void EnableHelp(bool flag)
+    void EnablePageNumbers(bool flag)
+    void EnablePrintToFile(bool flag)
+    void EnableSelection(bool flag)
+enum WxKit.PrintMode : int
+    File = 2
+    None = 0
+    Preview = 1
+    Printer = 3
+    Stream = 4
+enum WxKit.PrintOrientation : int
+    Landscape = 2
+    Portrait = 1
+static class WxKit.PrintPreview
+    static Frame? Show(Printout printout, Printout? printoutForPrinting = null, Window? parent = null, string title = "Print Preview", PrintDialogData? data = null, Size? size = null)
+enum WxKit.PrintQuality : int
+    Draft = -4
+    High = -1
+    Low = -3
+    Medium = -2
+class WxKit.Printer : NativeObject
+    PrintDialogData? PrintDialogData { get; }
+    Printer(PrintDialogData? data = null)
+    bool Abort { get; }
+    bool Print(Window parent, Printout printout, bool prompt = true)
+    static PrinterError LastError { get; }
+    void ReportError(Window parent, Printout printout, string message)
+enum WxKit.PrinterError : int
+    Cancelled = 1
+    Error = 2
+    NoError = 0
+abstract class WxKit.Printout : NativeObject
+    Rect GetLogicalPageMarginsRect(PageSetupDialogData pageSetupData)
+    Rect LogicalPageRect { get; }
+    Rect LogicalPaperRect { get; }
+    Rect PaperRectPixels { get; }
+    bool IsPreview { get; }
+    protected Printout(string title = "Printout")
+    protected abstract bool OnPrintPage(int page, DC dc)
+    protected virtual PageRange GetPageInfo()
+    protected virtual bool HasPage(int page)
+    protected virtual bool OnBeginDocument(int startPage, int endPage)
+    protected virtual void OnBeginPrinting()
+    protected virtual void OnEndDocument()
+    protected virtual void OnEndPrinting()
+    protected virtual void OnPreparePrinting()
+    string Title { get; }
+    void FitThisSizeToPage(Size imageSize)
+    void FitThisSizeToPageMargins(Size imageSize, PageSetupDialogData pageSetupData)
+    void FitThisSizeToPaper(Size imageSize)
+    void GetPPIPrinter(out int w, out int h)
+    void GetPPIScreen(out int w, out int h)
+    void GetPageSizeMM(out int w, out int h)
+    void GetPageSizePixels(out int w, out int h)
+    void MapScreenSizeToDevice()
+    void MapScreenSizeToPage()
+    void MapScreenSizeToPageMargins(PageSetupDialogData pageSetupData)
+    void MapScreenSizeToPaper()
+    void OffsetLogicalOrigin(int xoff, int yoff)
+    void SetLogicalOrigin(int x, int y)
 class WxKit.ProgressDialog : Dialog
     ProgressDialog(string title, string message, int maximum = 100, Window? parent = null, ProgressDialogStyle style = ProgressDialogStyle.AppModal | ProgressDialogStyle.AutoHide)
 [Flags] enum WxKit.ProgressDialogStyle : int

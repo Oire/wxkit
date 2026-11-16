@@ -30,6 +30,19 @@ public struct WxkAccessibleRow {
 	public int CellCount;
 }
 
+/// <summary>The callbacks every managed printout calls, as the shim's wxk_PrintoutCallbacks lays them out.</summary>
+public unsafe struct WxkPrintoutCallbacks {
+	public delegate* unmanaged[Cdecl]<void*, int, WxkObject*, byte> PrintPage;
+	public delegate* unmanaged[Cdecl]<void*, int, byte> HasPage;
+	public delegate* unmanaged[Cdecl]<void*, int*, int*, int*, int*, void> GetPageInfo;
+	public delegate* unmanaged[Cdecl]<void*, void> PreparePrinting;
+	public delegate* unmanaged[Cdecl]<void*, void> BeginPrinting;
+	public delegate* unmanaged[Cdecl]<void*, void> EndPrinting;
+	public delegate* unmanaged[Cdecl]<void*, int, int, byte> BeginDocument;
+	public delegate* unmanaged[Cdecl]<void*, void> EndDocument;
+	public delegate* unmanaged[Cdecl]<void*, void> OnFree;
+}
+
 /// <summary>What an About box shows, as the shim's wxk_AboutInfo lays it out.</summary>
 public unsafe struct WxkAboutInfo {
 	public WxkString* Name;

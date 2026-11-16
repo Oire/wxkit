@@ -5702,6 +5702,142 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte NotifyEventIsAllowed(WxkEvent* self);
 
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialog_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* PageSetupDialogNew(WxkWindow* parent, WxkObject* data);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialog_ShowModal")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int PageSetupDialogShowModal(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialog_GetPageSetupData")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* PageSetupDialogGetPageSetupData(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialogData_new_Default")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* PageSetupDialogDataNewDefault();
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialogData_new_PrintData")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* PageSetupDialogDataNewPrintData(WxkObject* printData);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialogData_GetEnableHelp")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte PageSetupDialogDataGetEnableHelp(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialogData_EnableHelp")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PageSetupDialogDataEnableHelp(WxkObject* self, byte flag);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialogData_GetEnableMargins")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte PageSetupDialogDataGetEnableMargins(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialogData_EnableMargins")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PageSetupDialogDataEnableMargins(WxkObject* self, byte flag);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialogData_GetEnableOrientation")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte PageSetupDialogDataGetEnableOrientation(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialogData_EnableOrientation")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PageSetupDialogDataEnableOrientation(WxkObject* self, byte flag);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialogData_GetEnablePaper")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte PageSetupDialogDataGetEnablePaper(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialogData_EnablePaper")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PageSetupDialogDataEnablePaper(WxkObject* self, byte flag);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialogData_GetEnablePrinter")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte PageSetupDialogDataGetEnablePrinter(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialogData_EnablePrinter")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PageSetupDialogDataEnablePrinter(WxkObject* self, byte flag);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialogData_GetDefaultInfo")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte PageSetupDialogDataGetDefaultInfo(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialogData_SetDefaultInfo")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PageSetupDialogDataSetDefaultInfo(WxkObject* self, byte flag);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialogData_GetDefaultMinMargins")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte PageSetupDialogDataGetDefaultMinMargins(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialogData_SetDefaultMinMargins")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PageSetupDialogDataSetDefaultMinMargins(WxkObject* self, byte flag);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialogData_GetMarginBottomRight")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Point PageSetupDialogDataGetMarginBottomRight(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialogData_SetMarginBottomRight")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PageSetupDialogDataSetMarginBottomRight(WxkObject* self, Point point);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialogData_GetMarginTopLeft")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Point PageSetupDialogDataGetMarginTopLeft(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialogData_SetMarginTopLeft")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PageSetupDialogDataSetMarginTopLeft(WxkObject* self, Point point);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialogData_GetMinMarginBottomRight")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Point PageSetupDialogDataGetMinMarginBottomRight(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialogData_SetMinMarginBottomRight")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PageSetupDialogDataSetMinMarginBottomRight(WxkObject* self, Point point);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialogData_GetMinMarginTopLeft")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Point PageSetupDialogDataGetMinMarginTopLeft(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialogData_SetMinMarginTopLeft")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PageSetupDialogDataSetMinMarginTopLeft(WxkObject* self, Point point);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialogData_GetPaperId")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int PageSetupDialogDataGetPaperId(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialogData_SetPaperId")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PageSetupDialogDataSetPaperId(WxkObject* self, int id);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialogData_GetPaperSize")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Size PageSetupDialogDataGetPaperSize(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialogData_SetPaperSize")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PageSetupDialogDataSetPaperSize(WxkObject* self, Size size);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialogData_GetPrintData")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* PageSetupDialogDataGetPrintData(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialogData_SetPrintData")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PageSetupDialogDataSetPrintData(WxkObject* self, WxkObject* printData);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PageSetupDialogData_IsOk")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte PageSetupDialogDataIsOk(WxkObject* self);
+
 	[LibraryImport(Library, EntryPoint = "wxk_PaintDC_new")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkObject* PaintDCNew(WxkWindow* window);
@@ -5853,6 +5989,358 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_PickerBase_SetTextCtrlGrowable")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void PickerBaseSetTextCtrlGrowable(WxkWindow* self, byte grow);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintData_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* PrintDataNew();
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintData_SetPaperSize")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintDataSetPaperSize(WxkObject* self, Size size);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintData_GetBin")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int PrintDataGetBin(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintData_SetBin")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintDataSetBin(WxkObject* self, int flag);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintData_GetCollate")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte PrintDataGetCollate(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintData_SetCollate")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintDataSetCollate(WxkObject* self, byte flag);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintData_GetColour")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte PrintDataGetColour(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintData_SetColour")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintDataSetColour(WxkObject* self, byte flag);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintData_GetDuplex")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int PrintDataGetDuplex(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintData_SetDuplex")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintDataSetDuplex(WxkObject* self, int mode);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintData_GetNoCopies")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int PrintDataGetNoCopies(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintData_SetNoCopies")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintDataSetNoCopies(WxkObject* self, int index);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintData_GetOrientation")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int PrintDataGetOrientation(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintData_SetOrientation")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintDataSetOrientation(WxkObject* self, int orientation);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintData_GetPaperId")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int PrintDataGetPaperId(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintData_SetPaperId")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintDataSetPaperId(WxkObject* self, int paperId);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintData_GetPrinterName")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkString* PrintDataGetPrinterName(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintData_SetPrinterName")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintDataSetPrinterName(WxkObject* self, char* printerName, nuint printerNameLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintData_GetQuality")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int PrintDataGetQuality(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintData_SetQuality")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintDataSetQuality(WxkObject* self, int quality);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintData_IsOk")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte PrintDataIsOk(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintData_GetFilename")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkString* PrintDataGetFilename(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintData_SetFilename")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintDataSetFilename(WxkObject* self, char* filename, nuint filenameLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintData_GetPrintMode")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int PrintDataGetPrintMode(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintData_SetPrintMode")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintDataSetPrintMode(WxkObject* self, int printMode);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialog_new_WindowPrintDialogData")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* PrintDialogNewWindowPrintDialogData(WxkWindow* parent, WxkObject* data);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialog_new_WindowPrintData")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* PrintDialogNewWindowPrintData(WxkWindow* parent, WxkObject* data);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialog_ShowModal")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int PrintDialogShowModal(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialog_GetPrintDialogData")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* PrintDialogGetPrintDialogData(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialog_GetPrintData")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* PrintDialogGetPrintData(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_new_Default")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* PrintDialogDataNewDefault();
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_new_PrintData")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* PrintDialogDataNewPrintData(WxkObject* printData);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_EnableHelp")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintDialogDataEnableHelp(WxkObject* self, byte flag);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_EnablePageNumbers")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintDialogDataEnablePageNumbers(WxkObject* self, byte flag);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_EnablePrintToFile")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintDialogDataEnablePrintToFile(WxkObject* self, byte flag);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_EnableSelection")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintDialogDataEnableSelection(WxkObject* self, byte flag);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_EnableCurrentPage")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintDialogDataEnableCurrentPage(WxkObject* self, byte flag);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_GetAllPages")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte PrintDialogDataGetAllPages(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_SetAllPages")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintDialogDataSetAllPages(WxkObject* self, byte flag);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_GetCollate")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte PrintDialogDataGetCollate(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_SetCollate")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintDialogDataSetCollate(WxkObject* self, byte flag);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_GetFromPage")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int PrintDialogDataGetFromPage(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_SetFromPage")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintDialogDataSetFromPage(WxkObject* self, int page);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_GetMaxPage")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int PrintDialogDataGetMaxPage(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_SetMaxPage")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintDialogDataSetMaxPage(WxkObject* self, int page);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_GetMinPage")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int PrintDialogDataGetMinPage(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_SetMinPage")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintDialogDataSetMinPage(WxkObject* self, int page);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_GetNoCopies")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int PrintDialogDataGetNoCopies(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_SetNoCopies")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintDialogDataSetNoCopies(WxkObject* self, int index);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_GetPrintData")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* PrintDialogDataGetPrintData(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_SetPrintData")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintDialogDataSetPrintData(WxkObject* self, WxkObject* printData);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_GetPrintToFile")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte PrintDialogDataGetPrintToFile(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_SetPrintToFile")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintDialogDataSetPrintToFile(WxkObject* self, byte flag);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_GetSelection")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte PrintDialogDataGetSelection(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_SetSelection")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintDialogDataSetSelection(WxkObject* self, byte flag);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_GetCurrentPage")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte PrintDialogDataGetCurrentPage(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_SetCurrentPage")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintDialogDataSetCurrentPage(WxkObject* self, byte flag);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_GetSpecifiedPages")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte PrintDialogDataGetSpecifiedPages(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_GetToPage")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int PrintDialogDataGetToPage(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_SetToPage")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintDialogDataSetToPage(WxkObject* self, int page);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_IsOk")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte PrintDialogDataIsOk(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_GetMaxPageRanges")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int PrintDialogDataGetMaxPageRanges(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_PrintDialogData_SetMaxPageRanges")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintDialogDataSetMaxPageRanges(WxkObject* self, int maxRanges);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Printer_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* PrinterNew(WxkObject* data);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Printer_Print")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte PrinterPrint(WxkObject* self, WxkWindow* parent, WxkObject* printout, byte prompt);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Printer_ReportError")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrinterReportError(WxkObject* self, WxkWindow* parent, WxkObject* printout, char* message, nuint messageLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Printer_GetAbort")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte PrinterGetAbort(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Printer_GetPrintDialogData")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* PrinterGetPrintDialogData(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Printer_GetLastError")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int PrinterGetLastError();
+
+	[LibraryImport(Library, EntryPoint = "wxk_Printout_FitThisSizeToPage")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintoutFitThisSizeToPage(WxkObject* self, Size imageSize);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Printout_FitThisSizeToPageMargins")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintoutFitThisSizeToPageMargins(WxkObject* self, Size imageSize, WxkObject* pageSetupData);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Printout_FitThisSizeToPaper")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintoutFitThisSizeToPaper(WxkObject* self, Size imageSize);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Printout_GetLogicalPageMarginsRect")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Rect PrintoutGetLogicalPageMarginsRect(WxkObject* self, WxkObject* pageSetupData);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Printout_GetPPIPrinter")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintoutGetPPIPrinter(WxkObject* self, int* w, int* h);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Printout_GetPPIScreen")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintoutGetPPIScreen(WxkObject* self, int* w, int* h);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Printout_GetPageSizeMM")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintoutGetPageSizeMM(WxkObject* self, int* w, int* h);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Printout_GetPageSizePixels")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintoutGetPageSizePixels(WxkObject* self, int* w, int* h);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Printout_MapScreenSizeToDevice")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintoutMapScreenSizeToDevice(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Printout_MapScreenSizeToPage")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintoutMapScreenSizeToPage(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Printout_MapScreenSizeToPageMargins")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintoutMapScreenSizeToPageMargins(WxkObject* self, WxkObject* pageSetupData);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Printout_MapScreenSizeToPaper")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintoutMapScreenSizeToPaper(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Printout_OffsetLogicalOrigin")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintoutOffsetLogicalOrigin(WxkObject* self, int xoff, int yoff);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Printout_SetLogicalOrigin")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void PrintoutSetLogicalOrigin(WxkObject* self, int x, int y);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Printout_GetLogicalPageRect")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Rect PrintoutGetLogicalPageRect(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Printout_GetLogicalPaperRect")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Rect PrintoutGetLogicalPaperRect(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Printout_GetPaperRectPixels")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Rect PrintoutGetPaperRectPixels(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Printout_GetTitle")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkString* PrintoutGetTitle(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Printout_IsPreview")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte PrintoutIsPreview(WxkObject* self);
 
 	[LibraryImport(Library, EntryPoint = "wxk_ProgressDialog_new")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

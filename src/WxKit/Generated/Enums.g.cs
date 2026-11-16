@@ -580,6 +580,16 @@ public enum DragResult {
 	DragCancel = 5,
 }
 
+/// <summary>Wraps wxDuplexMode.</summary>
+public enum DuplexMode {
+	/// <summary>Non-duplex. Wraps wxDUPLEX_SIMPLEX.</summary>
+	Simplex = 0,
+	/// <summary>Wraps wxDUPLEX_HORIZONTAL.</summary>
+	Horizontal = 1,
+	/// <summary>Wraps wxDUPLEX_VERTICAL.</summary>
+	Vertical = 2,
+}
+
 /// <summary>Wraps wxEventCategory.</summary>
 public enum EventCategory {
 	/// <summary>This is the category for those events which are generated to update the appearance of the GUI but which (usually) do not comport data processing, i.e. Wraps wxEVT_CATEGORY_UI.</summary>
@@ -1523,6 +1533,244 @@ public enum Origin {
 	HelpButton = 2,
 }
 
+/// <summary>Wraps wxPaperSize.</summary>
+public enum PaperSize {
+	/// <summary>10 x 11 in. Wraps wxPAPER_10X11.</summary>
+	One0x11 = 45,
+	/// <summary>10-by-14-inch sheet. Wraps wxPAPER_10X14.</summary>
+	One0x14 = 19,
+	/// <summary>11-by-17-inch sheet. Wraps wxPAPER_11X17.</summary>
+	One1x17 = 20,
+	/// <summary>12 x 11 in. Wraps wxPAPER_12X11.</summary>
+	One2x11 = 88,
+	/// <summary>15 x 11 in. Wraps wxPAPER_15X11.</summary>
+	One5x11 = 46,
+	/// <summary>9 x 11 in. Wraps wxPAPER_9X11.</summary>
+	NineX11 = 44,
+	/// <summary>A2 420 x 594 mm. Wraps wxPAPER_A2.</summary>
+	A2 = 64,
+	/// <summary>A3 sheet, 297 by 420 millimeters. Wraps wxPAPER_A3.</summary>
+	A3 = 12,
+	/// <summary>A3 Extra 322 x 445 mm. Wraps wxPAPER_A3_EXTRA.</summary>
+	A3Extra = 61,
+	/// <summary>A3 Extra Transverse 322 x 445 mm. Wraps wxPAPER_A3_EXTRA_TRANSVERSE.</summary>
+	A3ExtraTransverse = 66,
+	/// <summary>A3 Rotated 420 x 297 mm. Wraps wxPAPER_A3_ROTATED.</summary>
+	A3Rotated = 74,
+	/// <summary>A3 Transverse 297 x 420 mm. Wraps wxPAPER_A3_TRANSVERSE.</summary>
+	A3Transverse = 65,
+	/// <summary>A4 Sheet, 210 by 297 millimeters. Wraps wxPAPER_A4.</summary>
+	A4 = 3,
+	/// <summary>A4 small sheet, 210 by 297 millimeters. Wraps wxPAPER_A4SMALL.</summary>
+	A4small = 13,
+	/// <summary>A4 Extra 9.27 x 12.69 in. Wraps wxPAPER_A4_EXTRA.</summary>
+	A4Extra = 51,
+	/// <summary>A4 Plus 210 x 330 mm. Wraps wxPAPER_A4_PLUS.</summary>
+	A4Plus = 58,
+	/// <summary>A4 Rotated 297 x 210 mm. Wraps wxPAPER_A4_ROTATED.</summary>
+	A4Rotated = 75,
+	/// <summary>A4 Transverse 210 x 297 mm. Wraps wxPAPER_A4_TRANSVERSE.</summary>
+	A4Transverse = 53,
+	/// <summary>A5 sheet, 148 by 210 millimeters. Wraps wxPAPER_A5.</summary>
+	A5 = 14,
+	/// <summary>A5 Extra 174 x 235 mm. Wraps wxPAPER_A5_EXTRA.</summary>
+	A5Extra = 62,
+	/// <summary>A5 Rotated 210 x 148 mm. Wraps wxPAPER_A5_ROTATED.</summary>
+	A5Rotated = 76,
+	/// <summary>A5 Transverse 148 x 210 mm. Wraps wxPAPER_A5_TRANSVERSE.</summary>
+	A5Transverse = 59,
+	/// <summary>A6 105 x 148 mm. Wraps wxPAPER_A6.</summary>
+	A6 = 68,
+	/// <summary>A6 Rotated 148 x 105 mm. Wraps wxPAPER_A6_ROTATED.</summary>
+	A6Rotated = 81,
+	/// <summary>SuperA/SuperA/A4 227 x 356 mm. Wraps wxPAPER_A_PLUS.</summary>
+	APlus = 55,
+	/// <summary>B4 sheet, 250 by 354 millimeters. Wraps wxPAPER_B4.</summary>
+	B4 = 15,
+	/// <summary>B4 (JIS) Rotated 364 x 257 mm. Wraps wxPAPER_B4_JIS_ROTATED.</summary>
+	B4JisRotated = 77,
+	/// <summary>B5 sheet, 182-by-257-millimeter paper. Wraps wxPAPER_B5.</summary>
+	B5 = 16,
+	/// <summary>B5 (ISO) Extra 201 x 276 mm. Wraps wxPAPER_B5_EXTRA.</summary>
+	B5Extra = 63,
+	/// <summary>B5 (JIS) Rotated 257 x 182 mm. Wraps wxPAPER_B5_JIS_ROTATED.</summary>
+	B5JisRotated = 78,
+	/// <summary>B5 (JIS) Transverse 182 x 257 mm. Wraps wxPAPER_B5_TRANSVERSE.</summary>
+	B5Transverse = 60,
+	/// <summary>B6 (JIS) 128 x 182 mm. Wraps wxPAPER_B6_JIS.</summary>
+	B6Jis = 86,
+	/// <summary>B6 (JIS) Rotated 182 x 128 mm. Wraps wxPAPER_B6_JIS_ROTATED.</summary>
+	B6JisRotated = 87,
+	/// <summary>SuperB/SuperB/A3 305 x 487 mm. Wraps wxPAPER_B_PLUS.</summary>
+	BPlus = 56,
+	/// <summary>C Sheet, 17 by 22 inches. Wraps wxPAPER_CSHEET.</summary>
+	Csheet = 4,
+	/// <summary>Japanese Double Postcard 200 x 148 mm. Wraps wxPAPER_DBL_JAPANESE_POSTCARD.</summary>
+	DblJapanesePostcard = 67,
+	/// <summary>Double Japanese Postcard Rotated 148 x 200 mm. Wraps wxPAPER_DBL_JAPANESE_POSTCARD_ROTATED.</summary>
+	DblJapanesePostcardRotated = 80,
+	/// <summary>D Sheet, 22 by 34 inches. Wraps wxPAPER_DSHEET.</summary>
+	Dsheet = 5,
+	/// <summary>#10 Envelope, 4 1/8 by 9 1/2 inches. Wraps wxPAPER_ENV_10.</summary>
+	Env10 = 23,
+	/// <summary>#11 Envelope, 4 1/2 by 10 3/8 inches. Wraps wxPAPER_ENV_11.</summary>
+	Env11 = 24,
+	/// <summary>#12 Envelope, 4 3/4 by 11 inches. Wraps wxPAPER_ENV_12.</summary>
+	Env12 = 25,
+	/// <summary>#14 Envelope, 5 by 11 1/2 inches. Wraps wxPAPER_ENV_14.</summary>
+	Env14 = 26,
+	/// <summary>#9 Envelope, 3 7/8 by 8 7/8 inches. Wraps wxPAPER_ENV_9.</summary>
+	Env9 = 22,
+	/// <summary>B4 Envelope, 250 by 353 millimeters. Wraps wxPAPER_ENV_B4.</summary>
+	EnvB4 = 33,
+	/// <summary>B5 Envelope, 176 by 250 millimeters. Wraps wxPAPER_ENV_B5.</summary>
+	EnvB5 = 34,
+	/// <summary>B6 Envelope, 176 by 125 millimeters. Wraps wxPAPER_ENV_B6.</summary>
+	EnvB6 = 35,
+	/// <summary>C3 Envelope, 324 by 458 millimeters. Wraps wxPAPER_ENV_C3.</summary>
+	EnvC3 = 29,
+	/// <summary>C4 Envelope, 229 by 324 millimeters. Wraps wxPAPER_ENV_C4.</summary>
+	EnvC4 = 30,
+	/// <summary>C5 Envelope, 162 by 229 millimeters. Wraps wxPAPER_ENV_C5.</summary>
+	EnvC5 = 28,
+	/// <summary>C6 Envelope, 114 by 162 millimeters. Wraps wxPAPER_ENV_C6.</summary>
+	EnvC6 = 31,
+	/// <summary>C65 Envelope, 114 by 229 millimeters. Wraps wxPAPER_ENV_C65.</summary>
+	EnvC65 = 32,
+	/// <summary>DL Envelope, 110 by 220 millimeters. Wraps wxPAPER_ENV_DL.</summary>
+	EnvDl = 27,
+	/// <summary>Envelope Invite 220 x 220 mm. Wraps wxPAPER_ENV_INVITE.</summary>
+	EnvInvite = 47,
+	/// <summary>Italy Envelope, 110 by 230 millimeters. Wraps wxPAPER_ENV_ITALY.</summary>
+	EnvItaly = 36,
+	/// <summary>Monarch Envelope, 3 7/8 by 7 1/2 inches. Wraps wxPAPER_ENV_MONARCH.</summary>
+	EnvMonarch = 37,
+	/// <summary>6 3/4 Envelope, 3 5/8 by 6 1/2 inches. Wraps wxPAPER_ENV_PERSONAL.</summary>
+	EnvPersonal = 38,
+	/// <summary>E Sheet, 34 by 44 inches. Wraps wxPAPER_ESHEET.</summary>
+	Esheet = 6,
+	/// <summary>Executive, 7 1/4 by 10 1/2 inches. Wraps wxPAPER_EXECUTIVE.</summary>
+	Executive = 11,
+	/// <summary>German Legal Fanfold, 8 1/2 by 13 inches. Wraps wxPAPER_FANFOLD_LGL_GERMAN.</summary>
+	FanfoldLglGerman = 41,
+	/// <summary>German Std Fanfold, 8 1/2 by 12 inches. Wraps wxPAPER_FANFOLD_STD_GERMAN.</summary>
+	FanfoldStdGerman = 40,
+	/// <summary>US Std Fanfold, 14 7/8 by 11 inches. Wraps wxPAPER_FANFOLD_US.</summary>
+	FanfoldUs = 39,
+	/// <summary>Folio, 8-1/2-by-13-inch paper. Wraps wxPAPER_FOLIO.</summary>
+	Folio = 17,
+	/// <summary>B4 (ISO) 250 x 353 mm. Wraps wxPAPER_ISO_B4.</summary>
+	IsoB4 = 42,
+	/// <summary>Japanese Postcard 100 x 148 mm. Wraps wxPAPER_JAPANESE_POSTCARD.</summary>
+	JapanesePostcard = 43,
+	/// <summary>Japanese Postcard Rotated 148 x 100 mm. Wraps wxPAPER_JAPANESE_POSTCARD_ROTATED.</summary>
+	JapanesePostcardRotated = 79,
+	/// <summary>Japanese Envelope Chou #3. Wraps wxPAPER_JENV_CHOU3.</summary>
+	JenvChou3 = 71,
+	/// <summary>Japanese Envelope Chou #3 Rotated. Wraps wxPAPER_JENV_CHOU3_ROTATED.</summary>
+	JenvChou3Rotated = 84,
+	/// <summary>Japanese Envelope Chou #4. Wraps wxPAPER_JENV_CHOU4.</summary>
+	JenvChou4 = 72,
+	/// <summary>Japanese Envelope Chou #4 Rotated. Wraps wxPAPER_JENV_CHOU4_ROTATED.</summary>
+	JenvChou4Rotated = 85,
+	/// <summary>Japanese Envelope Kaku #2. Wraps wxPAPER_JENV_KAKU2.</summary>
+	JenvKaku2 = 69,
+	/// <summary>Japanese Envelope Kaku #2 Rotated. Wraps wxPAPER_JENV_KAKU2_ROTATED.</summary>
+	JenvKaku2Rotated = 82,
+	/// <summary>Japanese Envelope Kaku #3. Wraps wxPAPER_JENV_KAKU3.</summary>
+	JenvKaku3 = 70,
+	/// <summary>Japanese Envelope Kaku #3 Rotated. Wraps wxPAPER_JENV_KAKU3_ROTATED.</summary>
+	JenvKaku3Rotated = 83,
+	/// <summary>Japanese Envelope You #4. Wraps wxPAPER_JENV_YOU4.</summary>
+	JenvYou4 = 89,
+	/// <summary>Japanese Envelope You #4 Rotated. Wraps wxPAPER_JENV_YOU4_ROTATED.</summary>
+	JenvYou4Rotated = 90,
+	/// <summary>Ledger, 17 by 11 inches. Wraps wxPAPER_LEDGER.</summary>
+	Ledger = 9,
+	/// <summary>Legal, 8 1/2 by 14 inches. Wraps wxPAPER_LEGAL.</summary>
+	Legal = 2,
+	/// <summary>Legal Extra 9.5 x 15 in. Wraps wxPAPER_LEGAL_EXTRA.</summary>
+	LegalExtra = 49,
+	/// <summary>Letter, 8 1/2 by 11 inches. Wraps wxPAPER_LETTER.</summary>
+	Letter = 1,
+	/// <summary>Letter Small, 8 1/2 by 11 inches. Wraps wxPAPER_LETTERSMALL.</summary>
+	Lettersmall = 7,
+	/// <summary>Letter Extra 9.5 x 12 in. Wraps wxPAPER_LETTER_EXTRA.</summary>
+	LetterExtra = 48,
+	/// <summary>Letter Extra Transverse 9.5 x 12 in. Wraps wxPAPER_LETTER_EXTRA_TRANSVERSE.</summary>
+	LetterExtraTransverse = 54,
+	/// <summary>Letter Plus 8.5 x 12.69 in. Wraps wxPAPER_LETTER_PLUS.</summary>
+	LetterPlus = 57,
+	/// <summary>Letter Rotated 11 x 8 1/2 in. Wraps wxPAPER_LETTER_ROTATED.</summary>
+	LetterRotated = 73,
+	/// <summary>Letter Transverse 8.5 x 11 in. Wraps wxPAPER_LETTER_TRANSVERSE.</summary>
+	LetterTransverse = 52,
+	/// <summary>Use specific dimensions. Wraps wxPAPER_NONE.</summary>
+	None = 0,
+	/// <summary>Note, 8 1/2 by 11 inches. Wraps wxPAPER_NOTE.</summary>
+	Note = 21,
+	/// <summary>PRC 16K 146 x 215 mm. Wraps wxPAPER_P16K.</summary>
+	P16k = 91,
+	/// <summary>PRC 16K Rotated. Wraps wxPAPER_P16K_ROTATED.</summary>
+	P16kRotated = 104,
+	/// <summary>PRC 32K 97 x 151 mm. Wraps wxPAPER_P32K.</summary>
+	P32k = 92,
+	/// <summary>PRC 32K(Big) 97 x 151 mm. Wraps wxPAPER_P32KBIG.</summary>
+	P32kbig = 93,
+	/// <summary>PRC 32K(Big) Rotated. Wraps wxPAPER_P32KBIG_ROTATED.</summary>
+	P32kbigRotated = 106,
+	/// <summary>PRC 32K Rotated. Wraps wxPAPER_P32K_ROTATED.</summary>
+	P32kRotated = 105,
+	/// <summary>PRC Envelope #1 102 x 165 mm. Wraps wxPAPER_PENV_1.</summary>
+	Penv1 = 94,
+	/// <summary>PRC Envelope #10 324 x 458 mm. Wraps wxPAPER_PENV_10.</summary>
+	Penv10 = 103,
+	/// <summary>PRC Envelope #10 Rotated 458 x 324 m. Wraps wxPAPER_PENV_10_ROTATED.</summary>
+	Penv10Rotated = 116,
+	/// <summary>PRC Envelope #1 Rotated 165 x 102 mm. Wraps wxPAPER_PENV_1_ROTATED.</summary>
+	Penv1Rotated = 107,
+	/// <summary>PRC Envelope #2 102 x 176 mm. Wraps wxPAPER_PENV_2.</summary>
+	Penv2 = 95,
+	/// <summary>PRC Envelope #2 Rotated 176 x 102 mm. Wraps wxPAPER_PENV_2_ROTATED.</summary>
+	Penv2Rotated = 108,
+	/// <summary>PRC Envelope #3 125 x 176 mm. Wraps wxPAPER_PENV_3.</summary>
+	Penv3 = 96,
+	/// <summary>PRC Envelope #3 Rotated 176 x 125 mm. Wraps wxPAPER_PENV_3_ROTATED.</summary>
+	Penv3Rotated = 109,
+	/// <summary>PRC Envelope #4 110 x 208 mm. Wraps wxPAPER_PENV_4.</summary>
+	Penv4 = 97,
+	/// <summary>PRC Envelope #4 Rotated 208 x 110 mm. Wraps wxPAPER_PENV_4_ROTATED.</summary>
+	Penv4Rotated = 110,
+	/// <summary>PRC Envelope #5 110 x 220 mm. Wraps wxPAPER_PENV_5.</summary>
+	Penv5 = 98,
+	/// <summary>PRC Envelope #5 Rotated 220 x 110 mm. Wraps wxPAPER_PENV_5_ROTATED.</summary>
+	Penv5Rotated = 111,
+	/// <summary>PRC Envelope #6 120 x 230 mm. Wraps wxPAPER_PENV_6.</summary>
+	Penv6 = 99,
+	/// <summary>PRC Envelope #6 Rotated 230 x 120 mm. Wraps wxPAPER_PENV_6_ROTATED.</summary>
+	Penv6Rotated = 112,
+	/// <summary>PRC Envelope #7 160 x 230 mm. Wraps wxPAPER_PENV_7.</summary>
+	Penv7 = 100,
+	/// <summary>PRC Envelope #7 Rotated 230 x 160 mm. Wraps wxPAPER_PENV_7_ROTATED.</summary>
+	Penv7Rotated = 113,
+	/// <summary>PRC Envelope #8 120 x 309 mm. Wraps wxPAPER_PENV_8.</summary>
+	Penv8 = 101,
+	/// <summary>PRC Envelope #8 Rotated 309 x 120 mm. Wraps wxPAPER_PENV_8_ROTATED.</summary>
+	Penv8Rotated = 114,
+	/// <summary>PRC Envelope #9 229 x 324 mm. Wraps wxPAPER_PENV_9.</summary>
+	Penv9 = 102,
+	/// <summary>PRC Envelope #9 Rotated 324 x 229 mm. Wraps wxPAPER_PENV_9_ROTATED.</summary>
+	Penv9Rotated = 115,
+	/// <summary>Quarto, 215-by-275-millimeter paper. Wraps wxPAPER_QUARTO.</summary>
+	Quarto = 18,
+	/// <summary>Statement, 5 1/2 by 8 1/2 inches. Wraps wxPAPER_STATEMENT.</summary>
+	Statement = 10,
+	/// <summary>Tabloid, 11 by 17 inches. Wraps wxPAPER_TABLOID.</summary>
+	Tabloid = 8,
+	/// <summary>Tabloid Extra 11.69 x 18 in. Wraps wxPAPER_TABLOID_EXTRA.</summary>
+	TabloidExtra = 50,
+}
+
 /// <summary>Wraps wxPenCap.</summary>
 public enum PenCap {
 	/// <summary>Wraps wxCAP_INVALID.</summary>
@@ -1593,6 +1841,84 @@ public enum PenStyle {
 	FirstHatch = 111,
 	/// <summary>Last of the hatch styles (inclusive). Wraps wxPENSTYLE_LAST_HATCH.</summary>
 	LastHatch = 116,
+}
+
+/// <summary>Wraps wxPrintBin.</summary>
+public enum PrintBin {
+	/// <summary>Wraps wxPRINTBIN_DEFAULT.</summary>
+	Default = 0,
+	/// <summary>Wraps wxPRINTBIN_ONLYONE.</summary>
+	Onlyone = 1,
+	/// <summary>Wraps wxPRINTBIN_LOWER.</summary>
+	Lower = 2,
+	/// <summary>Wraps wxPRINTBIN_MIDDLE.</summary>
+	Middle = 3,
+	/// <summary>Wraps wxPRINTBIN_MANUAL.</summary>
+	Manual = 4,
+	/// <summary>Wraps wxPRINTBIN_ENVELOPE.</summary>
+	Envelope = 5,
+	/// <summary>Wraps wxPRINTBIN_ENVMANUAL.</summary>
+	Envmanual = 6,
+	/// <summary>Wraps wxPRINTBIN_AUTO.</summary>
+	Auto = 7,
+	/// <summary>Wraps wxPRINTBIN_TRACTOR.</summary>
+	Tractor = 8,
+	/// <summary>Wraps wxPRINTBIN_SMALLFMT.</summary>
+	Smallfmt = 9,
+	/// <summary>Wraps wxPRINTBIN_LARGEFMT.</summary>
+	Largefmt = 10,
+	/// <summary>Wraps wxPRINTBIN_LARGECAPACITY.</summary>
+	Largecapacity = 11,
+	/// <summary>Wraps wxPRINTBIN_CASSETTE.</summary>
+	Cassette = 12,
+	/// <summary>Wraps wxPRINTBIN_FORMSOURCE.</summary>
+	Formsource = 13,
+	/// <summary>Wraps wxPRINTBIN_USER.</summary>
+	User = 14,
+}
+
+/// <summary>Wraps wxPrintMode.</summary>
+public enum PrintMode {
+	/// <summary>Wraps wxPRINT_MODE_NONE.</summary>
+	None = 0,
+	/// <summary>Preview in external application. Wraps wxPRINT_MODE_PREVIEW.</summary>
+	Preview = 1,
+	/// <summary>Print to file. Wraps wxPRINT_MODE_FILE.</summary>
+	File = 2,
+	/// <summary>Send to printer. Wraps wxPRINT_MODE_PRINTER.</summary>
+	Printer = 3,
+	/// <summary>Send postscript data into a stream. Wraps wxPRINT_MODE_STREAM.</summary>
+	Stream = 4,
+}
+
+/// <summary>Wraps wxPrintOrientation.</summary>
+public enum PrintOrientation {
+	/// <summary>Wraps wxPORTRAIT.</summary>
+	Portrait = 1,
+	/// <summary>Wraps wxLANDSCAPE.</summary>
+	Landscape = 2,
+}
+
+/// <summary>Wraps wxPRINT_QUALITY_*.</summary>
+public enum PrintQuality {
+	/// <summary>Wraps wxPRINT_QUALITY_DRAFT.</summary>
+	Draft = -4,
+	/// <summary>Wraps wxPRINT_QUALITY_LOW.</summary>
+	Low = -3,
+	/// <summary>Wraps wxPRINT_QUALITY_MEDIUM.</summary>
+	Medium = -2,
+	/// <summary>Wraps wxPRINT_QUALITY_HIGH.</summary>
+	High = -1,
+}
+
+/// <summary>Wraps wxPrinterError.</summary>
+public enum PrinterError {
+	/// <summary>Wraps wxPRINTER_NO_ERROR.</summary>
+	NoError = 0,
+	/// <summary>Wraps wxPRINTER_CANCELLED.</summary>
+	Cancelled = 1,
+	/// <summary>Wraps wxPRINTER_ERROR.</summary>
+	Error = 2,
 }
 
 /// <summary>Wraps wxPD_*.</summary>

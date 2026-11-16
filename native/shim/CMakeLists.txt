@@ -84,6 +84,7 @@ set(WXK_SOURCES
 	src/handlers/all.cpp
 	src/notification.cpp
 	src/numbers.cpp
+	src/printing.cpp
 	src/handlers/png.cpp
 	src/handlers/jpeg.cpp
 	src/handlers/tiff.cpp
