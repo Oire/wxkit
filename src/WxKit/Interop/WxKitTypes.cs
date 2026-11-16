@@ -21,6 +21,15 @@ public struct WxkDataViewColumn;
 /// <summary>A wxToolBarToolBase.</summary>
 public struct WxkToolBarTool;
 
+/// <summary>A row of a window that draws itself, as the shim's wxk_AccessibleRow lays it out.</summary>
+public struct WxkAccessibleRow {
+	public long Index;
+	public Rect Bounds;
+	public byte Selected;
+	public int FirstCell;
+	public int CellCount;
+}
+
 /// <summary>What an About box shows, as the shim's wxk_AboutInfo lays it out.</summary>
 public unsafe struct WxkAboutInfo {
 	public WxkString* Name;

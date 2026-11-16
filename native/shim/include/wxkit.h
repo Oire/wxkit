@@ -364,6 +364,26 @@ WXK_FUNCTION(void) wxk_Accessible_SetCallbacks(const wxk_AccessibleCallbacks* ca
 WXK_FUNCTION(wxk_Accessible*) wxk_ManagedAccessible_new(wxk_Window* window, void* userdata) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Accessible_NotifyEvent(int32_t eventType, wxk_Window* window, int32_t objectType, int32_t objectId) WXK_NOEXCEPT;
 
+// Parts and rows of a window that draws itself, which wxWidgets shows screen readers on macOS and
+// GTK 3, as it does its own list control's and status bar's. They do nothing elsewhere.
+
+// A row, whose cells are cellCount of the cell labels and rectangles, from firstCell on.
+typedef struct wxk_AccessibleRow {
+	int64_t index;
+	wxk_Rect rect;
+	uint8_t selected;
+	int32_t firstCell;
+	int32_t cellCount;
+} wxk_AccessibleRow;
+
+// Gives the window parts that screen readers read as text, a label and a rectangle for each,
+// replacing the ones it had. None removes them.
+WXK_FUNCTION(void) wxk_Window_SetAccessibleParts(wxk_Window* window, const wxk_StringArray* labels, const wxk_Rect* rects) WXK_NOEXCEPT;
+// Shows the window as a list or table of the given rows, which are the ones shown, of total.
+WXK_FUNCTION(void) wxk_Window_SetAccessibleRows(wxk_Window* window, const wxk_AccessibleRow* rows, size_t count, const wxk_StringArray* cellLabels, const wxk_Rect* cellRects, int64_t total) WXK_NOEXCEPT;
+// Tells screen readers which row, by its index, is the current one, or none for -1.
+WXK_FUNCTION(void) wxk_Window_SetAccessibleCurrentRow(wxk_Window* window, int64_t row) WXK_NOEXCEPT;
+
 // The About box
 
 // What an About box shows. Each string is the shim's to free, and a null one, or a null list,

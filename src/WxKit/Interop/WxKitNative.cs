@@ -406,6 +406,18 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void NotificationMessageFree(WxkEvtHandler* notification);
 
+	[LibraryImport(Library, EntryPoint = "wxk_Window_SetAccessibleParts")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void WindowSetAccessibleParts(WxkWindow* window, WxkStringArray* labels, Rect* rects);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Window_SetAccessibleRows")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void WindowSetAccessibleRows(WxkWindow* window, WxkAccessibleRow* rows, nuint count, WxkStringArray* cellLabels, Rect* cellRects, long total);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Window_SetAccessibleCurrentRow")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void WindowSetAccessibleCurrentRow(WxkWindow* window, long row);
+
 	[LibraryImport(Library, EntryPoint = "wxk_AboutBox_Show")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void AboutBoxShow(WxkAboutInfo* about, WxkWindow* parent);

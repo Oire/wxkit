@@ -99,6 +99,17 @@ enum WxKit.AccessibleObject : int
     TitleBar = -2
     VerticalScrollBar = -5
     Window = 0
+readonly record struct WxKit.AccessiblePart : IEquatable<AccessiblePart>
+    AccessiblePart(string Label, Rect Bounds)
+    Rect Bounds { get; init; }
+    bool Equals(AccessiblePart other)
+    override bool Equals(object obj)
+    override int GetHashCode()
+    override string ToString()
+    static bool op_Equality(AccessiblePart left, AccessiblePart right)
+    static bool op_Inequality(AccessiblePart left, AccessiblePart right)
+    string Label { get; init; }
+    void Deconstruct(out string Label, out Rect Bounds)
 enum WxKit.AccessibleRole : int
     Alert = 1
     Animation = 2
@@ -162,6 +173,19 @@ enum WxKit.AccessibleRole : int
     ToolTip = 59
     WhiteSpace = 60
     Window = 61
+sealed record WxKit.AccessibleRow : IEquatable<AccessibleRow>
+    AccessibleRow(int Index, Rect Bounds, IReadOnlyList<AccessiblePart> Cells, bool IsSelected = false)
+    IReadOnlyList<AccessiblePart> Cells { get; init; }
+    Rect Bounds { get; init; }
+    bool Equals(AccessibleRow? other)
+    bool IsSelected { get; init; }
+    int Index { get; init; }
+    override bool Equals(object? obj)
+    override int GetHashCode()
+    override string ToString()
+    static bool op_Equality(AccessibleRow? left, AccessibleRow? right)
+    static bool op_Inequality(AccessibleRow? left, AccessibleRow? right)
+    void Deconstruct(out int Index, out Rect Bounds, out IReadOnlyList<AccessiblePart> Cells, out bool IsSelected)
 [Flags] enum WxKit.AccessibleSelection : int
     AddSelection = 8
     ExtendSelection = 4
@@ -4333,7 +4357,10 @@ class WxKit.Window : EvtHandler
     void ScrollWindow(int dx, int dy)
     void SendSizeEvent(SendSizeEventFlags flags = SendSizeEventFlags.None)
     void SendSizeEventToParent(SendSizeEventFlags flags = SendSizeEventFlags.None)
+    void SetAccessibleCurrentRow(int index)
     void SetAccessibleName(string name)
+    void SetAccessibleParts(IEnumerable<AccessiblePart> parts)
+    void SetAccessibleRows(IEnumerable<AccessibleRow> rows, int rowCount)
     void SetCanFocus(bool canFocus)
     void SetClientSize(Rect rect)
     void SetClientSize(int width, int height)

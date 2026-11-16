@@ -185,6 +185,19 @@ A member that throws `ArgumentOutOfRangeException` tells the screen reader that 
 
 Creating the object gives it to the window, which keeps it until the window is destroyed or given another, and `Window.AccessibleObject` is the one it has. When something in the control changes, such as the focus moving to another cell, `Accessible.NotifyEvent` tells screen readers, which then ask again.
 
+`Accessible` is Microsoft Active Accessibility's, as `wxAccessible` is, so on macOS and Linux it does nothing. A control that draws itself can instead describe itself on every platform, through what wxWidgets 3.3.4 added for its own list control and status bar:
+
+- `SetAccessibleParts` gives the window parts that screen readers read as text, each an `AccessiblePart` with a label and its bounds, such as a status bar's fields.
+- `SetAccessibleRows` shows the window as a list or table, with the rows that are shown, each an `AccessibleRow` with its index among all the rows, its bounds, its cells, and whether it is selected, and the number of rows in all. A screen reader reads a row's cells together as its name.
+- `SetAccessibleCurrentRow` tells screen readers which row is the current one, which they announce as it changes, since they follow the focus but cannot see where it is inside the window.
+
+Each replaces what it set before, so a control calls it whenever its parts or rows change, such as after scrolling. On macOS and Linux, wxWidgets gives them to NSAccessibility and ATK, through helpers it keeps private, which may change with a later wxWidgets. On Windows, where those helpers do nothing, an accessible object WxKit gives the window answers Microsoft Active Accessibility from them and tells screen readers what changed, so the window cannot have an `Accessible` of its own as well. Parts are always static text, and rows list items: a control whose parts act, such as buttons, needs an `Accessible`, and does so only on Windows.
+
+```csharp
+board.SetAccessibleRows(visibleRows.Select(row => new AccessibleRow(row.Index, row.Bounds, [new AccessiblePart(row.Text, row.Bounds)], row.IsSelected)), allRows.Count);
+board.SetAccessibleCurrentRow(currentRow);
+```
+
 `wxAccessible` is written by hand, as `CustomValidator` is, since its members answer through a status and output parameters, which a C# member says better with a nullable result. Its enums, such as `AccessibleRole` and `AccessibleStates`, are generated.
 
 ### Validators

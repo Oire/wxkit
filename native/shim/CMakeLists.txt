@@ -73,6 +73,7 @@ set(WXK_SOURCES
 	${WXK_GENERATED}
 	src/about.cpp
 	src/accessible.cpp
+	src/accessparts.cpp
 	src/app.cpp
 	src/clientdata.cpp
 	src/clipboard.cpp

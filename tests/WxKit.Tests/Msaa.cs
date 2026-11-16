@@ -11,6 +11,9 @@ internal static partial class Msaa {
 	public const int RoleClient = 0x0A;
 	public const int RoleTable = 0x18;
 	public const int RoleCell = 0x1D;
+	public const int RoleList = 0x21;
+	public const int RoleListItem = 0x22;
+	public const int RoleStaticText = 0x29;
 	public const int StateFocused = 0x04;
 	public const int StateSelected = 0x02;
 	private const uint ObjectIdClient = 0xFFFFFFFC;
