@@ -3,14 +3,15 @@ using WxKit;
 namespace Checklist;
 
 // A strip of fields that draws itself, as a status bar does. Screen readers read each field as
-// text, through SetAccessibleParts, as they read a status bar's fields.
-internal sealed class StatusStrip : Panel {
+// text, through SetAccessibleParts, as they read a status bar's fields. It is a plain control,
+// not a panel, since a panel takes the focus from the keyboard when it has no children whatever
+// it is told, and a status strip is read, not typed in, so it is no Tab stop.
+internal sealed class StatusStrip : Control {
 	private string[] _fields = [];
 
 	public StatusStrip(Window parent) : base(parent) {
 		BackgroundStyle = BackgroundStyle.Paint;
-		// A status strip is read, not typed in, so it is no Tab stop, as a status bar is not.
-		SetCanFocus(false);
+		DisableFocusFromKeyboard();
 		MinSize = new Size(-1, CharHeight + 10);
 		Paint += (_, _) => Draw();
 		SizeChanged += (_, e) => {
