@@ -44,6 +44,10 @@ if(UNIX)
 	# Spell checking needs gspell on Linux, and macOS has its own, so it is only left out on Linux.
 	if(NOT APPLE)
 		set(wxUSE_SPELLCHECK OFF CACHE BOOL "" FORCE)
+		# Each function and piece of data gets a section of its own, so the linker's --gc-sections,
+		# which Native AOT passes on Linux, can leave out what an application does not use, as
+		# MSVC's /Gy and Apple's -dead_strip do elsewhere.
+		add_compile_options(-ffunction-sections -fdata-sections)
 	else()
 		set(wxUSE_SPELLCHECK ON CACHE BOOL "" FORCE)
 	endif()
@@ -130,7 +134,7 @@ if(UNIX)
 	if(APPLE)
 		target_link_options(wxkitnative PRIVATE "-Wl,-exported_symbol,_wxk_*" -Wl,-dead_strip)
 	else()
-		target_link_options(wxkitnative PRIVATE -Wl,--exclude-libs,ALL -Wl,--no-undefined)
+		target_link_options(wxkitnative PRIVATE -Wl,--exclude-libs,ALL -Wl,--no-undefined -Wl,--gc-sections)
 	endif()
 endif()
 
