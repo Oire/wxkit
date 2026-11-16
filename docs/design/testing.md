@@ -4,11 +4,17 @@ Testing GUI code is harder than testing most libraries. The code needs a display
 
 ## Kinds of tests
 
-WxKit has three kinds of tests:
+WxKit has four kinds of tests:
 
 - Managed API tests, in `tests/WxKit.Tests`. These create real windows and check lifetime, events, threading, strings, and the rest of the managed API against real wxWidgets.
 - A Native AOT smoke test, in `scripts/test-aot.ps1`. It publishes each sample, the Hello sample and the text editor, with Native AOT, checks that nothing ships beside the executable, and on macOS that the app bundle is valid and signed, and runs it in a mode that shows its window, waits for the event loop to start, and exits. This catches link problems that no other test can.
-- Generator tests, in `tests/WxKit.Generator.Tests`, once the generator exists. These check that the generator turns sample Doxygen XML into the expected output. They are plain unit tests with no GUI, and they run anywhere.
+- A public API snapshot, in `tests/WxKit.Tests/PublicApi.txt`. A test writes out every public type and member of the managed API, with nullability and defaults, and fails when that differs from the file, so a change to the API, such as a generator rule that renames members, shows up in review. The raw interop layer is left out, since it follows the shim. When a change is meant, set `WXKIT_UPDATE_API` to `1` and run the test, which rewrites the file:
+
+  ```powershell
+  $env:WXKIT_UPDATE_API = 1; dotnet test --project tests/WxKit.Tests -- --filter-class *PublicApiTests
+  ```
+
+- Generator tests, in `tests/WxKit.Generator.Tests`. These check that the generator turns sample Doxygen XML into the expected output. They are plain unit tests with no GUI, and they run anywhere.
 
 To run the first two:
 

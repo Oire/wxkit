@@ -1,0 +1,4402 @@
+static class WxKit.AboutBox
+    static void Show(AboutDialogInfo info, Window? parent = null)
+sealed class WxKit.AboutDialogInfo
+    AboutDialogInfo()
+    IList<string> Artists { get; }
+    IList<string> Developers { get; }
+    IList<string> DocWriters { get; }
+    IList<string> Translators { get; }
+    Icon? Icon { get; set; }
+    string? Copyright { get; set; }
+    string? Description { get; set; }
+    string? License { get; set; }
+    string? LongVersion { get; set; }
+    string? Name { get; set; }
+    string? Version { get; set; }
+    string? WebSite { get; set; }
+    string? WebSiteDescription { get; set; }
+abstract class WxKit.Accessible
+    Window Window { get; }
+    protected Accessible(Window window)
+    protected virtual AccessibleElement? GetChild(int childId)
+    protected virtual AccessibleElement? GetFocus()
+    protected virtual AccessibleElement? HitTest(Point point)
+    protected virtual AccessibleElement? Navigate(NavigationDirection direction, int fromId)
+    protected virtual AccessibleRole? GetRole(int childId)
+    protected virtual AccessibleStates? GetState(int childId)
+    protected virtual Rect? GetLocation(int elementId)
+    protected virtual bool? DoDefaultAction(int childId)
+    protected virtual bool? Select(int childId, AccessibleSelection flags)
+    protected virtual int? GetChildCount()
+    protected virtual string? GetDefaultAction(int childId)
+    protected virtual string? GetDescription(int childId)
+    protected virtual string? GetHelpText(int childId)
+    protected virtual string? GetKeyboardShortcut(int childId)
+    protected virtual string? GetName(int childId)
+    protected virtual string? GetValue(int childId)
+    static void NotifyEvent(AccessibleEvent eventType, Window window, AccessibleObject objectType, int objectId)
+readonly struct WxKit.AccessibleElement
+    Accessible? Object { get; }
+    bool IsNone { get; }
+    int ChildId { get; }
+    static AccessibleElement Child(int childId)
+    static AccessibleElement None { get; }
+    static AccessibleElement Of(Accessible accessible)
+    static AccessibleElement Self { get; }
+enum WxKit.AccessibleEvent : int
+    ObjectAcceleratorChange = 32786
+    ObjectCreate = 32768
+    ObjectDefaultActionChange = 32785
+    ObjectDescriptionChange = 32781
+    ObjectDestroy = 32769
+    ObjectFocus = 32773
+    ObjectHelpChange = 32784
+    ObjectHide = 32771
+    ObjectLocationChange = 32779
+    ObjectNameChange = 32780
+    ObjectParentChange = 32783
+    ObjectReorder = 32772
+    ObjectSelection = 32774
+    ObjectSelectionAdd = 32775
+    ObjectSelectionRemove = 32776
+    ObjectSelectionWithin = 32777
+    ObjectShow = 32770
+    ObjectStateChange = 32778
+    ObjectValueChange = 32782
+    SystemAlert = 2
+    SystemCaptureEnd = 9
+    SystemCaptureStart = 8
+    SystemContextHelpEnd = 13
+    SystemContextHelpStart = 12
+    SystemDialogEnd = 17
+    SystemDialogStart = 16
+    SystemDragDropEnd = 15
+    SystemDragDropStart = 14
+    SystemForeground = 3
+    SystemMenuEnd = 5
+    SystemMenuPopupEnd = 7
+    SystemMenuPopupStart = 6
+    SystemMenuStart = 4
+    SystemMinimizeEnd = 23
+    SystemMinimizeStart = 22
+    SystemMoveSizeEnd = 11
+    SystemMoveSizeStart = 10
+    SystemScrollingEnd = 19
+    SystemScrollingStart = 18
+    SystemSound = 1
+    SystemSwitchEnd = 21
+    SystemSwitchStart = 20
+enum WxKit.AccessibleObject : int
+    Alert = -10
+    Caret = -8
+    Client = -4
+    Cursor = -9
+    HorizontalScrollBar = -6
+    Menu = -3
+    SizeGrip = -7
+    Sound = -11
+    SystemMenu = -1
+    TitleBar = -2
+    VerticalScrollBar = -5
+    Window = 0
+enum WxKit.AccessibleRole : int
+    Alert = 1
+    Animation = 2
+    Application = 3
+    Border = 4
+    ButtonDropDown = 5
+    ButtonDropDownGrid = 6
+    ButtonMenu = 7
+    Caret = 8
+    Cell = 9
+    Character = 10
+    Chart = 11
+    CheckButton = 12
+    Client = 13
+    Clock = 14
+    Column = 15
+    ColumnHeader = 16
+    ComboBox = 17
+    Cursor = 18
+    Diagram = 19
+    Dial = 20
+    Dialog = 21
+    Document = 22
+    DropList = 23
+    Equation = 24
+    Graphic = 25
+    Grip = 26
+    Grouping = 27
+    HelpBalloon = 28
+    HotkeyField = 29
+    Indicator = 30
+    Link = 31
+    List = 32
+    ListItem = 33
+    MenuBar = 34
+    MenuItem = 35
+    MenuPopup = 36
+    None = 0
+    Outline = 37
+    OutlineItem = 38
+    PageTab = 39
+    PageTabList = 40
+    Pane = 41
+    ProgressBar = 42
+    PropertyPage = 43
+    PushButton = 44
+    RadioButton = 45
+    Row = 46
+    RowHeader = 47
+    ScrollBar = 48
+    Separator = 49
+    Slider = 50
+    Sound = 51
+    SpinButton = 52
+    StaticText = 53
+    StatusBar = 54
+    Table = 55
+    Text = 56
+    TitleBar = 57
+    ToolBar = 58
+    ToolTip = 59
+    WhiteSpace = 60
+    Window = 61
+[Flags] enum WxKit.AccessibleSelection : int
+    AddSelection = 8
+    ExtendSelection = 4
+    None = 0
+    RemoveSelection = 16
+    TakeFocus = 1
+    TakeSelection = 2
+[Flags] enum WxKit.AccessibleStates : int
+    AlertHigh = 1
+    AlertLow = 4
+    AlertMedium = 2
+    Animated = 8
+    Busy = 16
+    Checked = 32
+    Collapsed = 64
+    Default = 128
+    Expanded = 256
+    ExtSelectable = 512
+    Floating = 1024
+    Focusable = 2048
+    Focused = 4096
+    HotTracked = 8192
+    Invisible = 16384
+    Marqueed = 32768
+    Mixed = 65536
+    MultiSelectable = 131072
+    None = 0
+    Offscreen = 262144
+    Pressed = 524288
+    Protected = 1048576
+    ReadOnly = 2097152
+    Selectable = 4194304
+    Selected = 8388608
+    SelfVoicing = 16777216
+    Unavailable = 33554432
+class WxKit.ActivateEvent : Event
+    Reason ActivationReason { get; }
+    bool Active { get; }
+class WxKit.ActivityIndicator : Control
+    ActivityIndicator(Window parent, int id = -1, Point? position = null, Size? size = null, WindowStyle style = WindowStyle.None)
+    bool IsRunning { get; }
+    void Start()
+    void Stop()
+enum WxKit.Alignment : int
+    Bottom = 1024
+    Center = 2304
+    CenterHorizontal = 256
+    CenterVertical = 2048
+    Invalid = -1
+    Left = 0
+    Mask = 3840
+    Not = 0
+    Right = 512
+    Top = 0
+class WxKit.AnyButton : Control
+    Bitmap? Bitmap { get; }
+    Bitmap? BitmapCurrent { get; set; }
+    Bitmap? BitmapDisabled { get; set; }
+    Bitmap? BitmapFocus { get; set; }
+    Bitmap? BitmapLabel { get; set; }
+    Bitmap? BitmapPressed { get; set; }
+    Size BitmapMargins { get; set; }
+    void SetBitmap(Bitmap bitmap, Direction direction = Direction.Left)
+    void SetBitmapMargins(int x, int y)
+    void SetBitmapPosition(Direction direction)
+class WxKit.Application
+    Application()
+    int Run()
+    protected virtual bool OnInit()
+    static Application? Current { get; }
+    static bool IsGuiThread { get; }
+    static event EventHandler<ApplicationExceptionEventArgs>? UnhandledException
+    static int Run(Action onInit)
+    static string WxWidgetsVersion { get; }
+    static void Exit()
+    static void Post(Action action)
+sealed class WxKit.ApplicationExceptionEventArgs : EventArgs
+    ApplicationExceptionEventArgs(Exception exception)
+    Exception Exception { get; }
+    bool Handled { get; set; }
+static class WxKit.ArtClient
+    const string Button = "wxART_BUTTON_C"
+    const string CmnDialog = "wxART_CMN_DIALOG_C"
+    const string FrameIcon = "wxART_FRAME_ICON_C"
+    const string HelpBrowser = "wxART_HELP_BROWSER_C"
+    const string List = "wxART_LIST_C"
+    const string Menu = "wxART_MENU_C"
+    const string MessageBox = "wxART_MESSAGE_BOX_C"
+    const string Other = "wxART_OTHER_C"
+    const string ToolBar = "wxART_TOOLBAR_C"
+static class WxKit.ArtId
+    const string AddBookmark = "wxART_ADD_BOOKMARK"
+    const string CdRom = "wxART_CDROM"
+    const string Close = "wxART_CLOSE"
+    const string Copy = "wxART_COPY"
+    const string CrossMark = "wxART_CROSS_MARK"
+    const string Cut = "wxART_CUT"
+    const string DelBookmark = "wxART_DEL_BOOKMARK"
+    const string Delete = "wxART_DELETE"
+    const string Edit = "wxART_EDIT"
+    const string Error = "wxART_ERROR"
+    const string ExecutableFile = "wxART_EXECUTABLE_FILE"
+    const string FileOpen = "wxART_FILE_OPEN"
+    const string FileSave = "wxART_FILE_SAVE"
+    const string FileSaveAs = "wxART_FILE_SAVE_AS"
+    const string Find = "wxART_FIND"
+    const string FindAndReplace = "wxART_FIND_AND_REPLACE"
+    const string Floppy = "wxART_FLOPPY"
+    const string Folder = "wxART_FOLDER"
+    const string FolderOpen = "wxART_FOLDER_OPEN"
+    const string FullScreen = "wxART_FULL_SCREEN"
+    const string GoBack = "wxART_GO_BACK"
+    const string GoDirUp = "wxART_GO_DIR_UP"
+    const string GoDown = "wxART_GO_DOWN"
+    const string GoForward = "wxART_GO_FORWARD"
+    const string GoHome = "wxART_GO_HOME"
+    const string GoToParent = "wxART_GO_TO_PARENT"
+    const string GoUp = "wxART_GO_UP"
+    const string GotoFirst = "wxART_GOTO_FIRST"
+    const string GotoLast = "wxART_GOTO_LAST"
+    const string HardDisk = "wxART_HARDDISK"
+    const string Help = "wxART_HELP"
+    const string HelpBook = "wxART_HELP_BOOK"
+    const string HelpFolder = "wxART_HELP_FOLDER"
+    const string HelpPage = "wxART_HELP_PAGE"
+    const string HelpSettings = "wxART_HELP_SETTINGS"
+    const string HelpSidePanel = "wxART_HELP_SIDE_PANEL"
+    const string Information = "wxART_INFORMATION"
+    const string ListView = "wxART_LIST_VIEW"
+    const string Minus = "wxART_MINUS"
+    const string MissingImage = "wxART_MISSING_IMAGE"
+    const string New = "wxART_NEW"
+    const string NewDir = "wxART_NEW_DIR"
+    const string NormalFile = "wxART_NORMAL_FILE"
+    const string Paste = "wxART_PASTE"
+    const string Plus = "wxART_PLUS"
+    const string Print = "wxART_PRINT"
+    const string Question = "wxART_QUESTION"
+    const string Quit = "wxART_QUIT"
+    const string Redo = "wxART_REDO"
+    const string Refresh = "wxART_REFRESH"
+    const string Removable = "wxART_REMOVABLE"
+    const string ReportView = "wxART_REPORT_VIEW"
+    const string Stop = "wxART_STOP"
+    const string TickMark = "wxART_TICK_MARK"
+    const string Tip = "wxART_TIP"
+    const string Undo = "wxART_UNDO"
+    const string Warning = "wxART_WARNING"
+    const string WxLogo = "wxART_WX_LOGO"
+static class WxKit.ArtProvider
+    static Bitmap? GetBitmap(string id, string client = "wxART_OTHER_C", Size? size = null)
+    static Icon? GetIcon(string id, string client = "wxART_OTHER_C", Size? size = null)
+    static Icon? GetMessageBoxIcon(int flags)
+    static Size GetDIPSizeHint(string client)
+    static Size GetNativeDIPSizeHint(string client)
+    static Size GetNativeSizeHint(string client, Window? window = null)
+    static Size GetSizeHint(string client, Window? window = null)
+    static bool HasNativeProvider { get; }
+    static bool Pop()
+    static string GetMessageBoxIconId(int flags)
+enum WxKit.BackgroundStyle : int
+    Color = 4
+    Erase = 0
+    Paint = 2
+    System = 1
+    Transparent = 3
+class WxKit.BannerWindow : Window
+    BannerWindow(Window parent, Direction direction = Direction.Left, int id = -1, Point? position = null, Size? size = null, WindowStyle style = WindowStyle.None)
+    void SetBitmap(Bitmap bitmap)
+    void SetGradient(Color? start, Color? end)
+    void SetText(string title, string message)
+class WxKit.Bitmap : NativeObject
+    Bitmap()
+    Bitmap(Cursor cursor)
+    Bitmap(Image image, DC dc)
+    Bitmap(Image image, int depth = -1)
+    Bitmap(Size size, int depth = -1)
+    Bitmap(int width, int height, DC dc)
+    Bitmap(int width, int height, int depth = -1)
+    Bitmap(string name, BitmapType? type = null)
+    Bitmap? ConvertToDisabled(byte brightness = 255)
+    Bitmap? GetSubBitmap(Rect rect)
+    Image? ConvertToImage()
+    Size DIPSize { get; }
+    Size LogicalSize { get; }
+    Size ScaledSize { get; }
+    Size Size { get; }
+    bool CopyFromIcon(Icon icon)
+    bool Create(Size size, int depth = -1)
+    bool Create(int width, int height, DC dc)
+    bool Create(int width, int height, int depth = -1)
+    bool CreateScaled(int width, int height, int depth, double logicalScale)
+    bool CreateWithDIPSize(Size size, double scale, int depth = -1)
+    bool CreateWithDIPSize(int width, int height, double scale, int depth = -1)
+    bool CreateWithLogicalSize(Size size, double scale, int depth = -1)
+    bool CreateWithLogicalSize(int width, int height, double scale, int depth = -1)
+    bool HasAlpha { get; }
+    bool IsOk { get; }
+    bool LoadFile(string name, BitmapType? type = null)
+    bool SaveFile(string name, BitmapType type)
+    bool UseAlpha(bool use = true)
+    double LogicalHeight { get; }
+    double LogicalWidth { get; }
+    double ScaleFactor { get; set; }
+    double ScaledHeight { get; }
+    double ScaledWidth { get; }
+    int Depth { get; }
+    int Height { get; }
+    int Width { get; }
+    static bool RemoveHandler(string name)
+    static void CleanUpHandlers()
+    static void InitStandardHandlers()
+    static void MakeDisabled(Bitmap bitmap)
+    static void Rescale(Bitmap bitmap, Size sizeNeeded)
+    void ResetAlpha()
+class WxKit.BitmapButton : Button
+    BitmapButton(Window parent, Bitmap bitmap, int id = -1, Point? position = null, Size? size = null, BitmapButtonStyle style = BitmapButtonStyle.None)
+    static BitmapButton? NewCloseButton(Window parent, string name = "", int id = -1)
+[Flags] enum WxKit.BitmapButtonStyle : long
+    Bottom = 512
+    Left = 64
+    None = 0
+    Right = 256
+    Top = 128
+class WxKit.BitmapComboBox : ComboBox
+    Bitmap? GetItemBitmap(int index)
+    BitmapComboBox(Window parent, string value = "", int id = -1, Point? position = null, Size? size = null)
+    BitmapComboBox(Window parent, string value, IEnumerable<string> choices, BitmapComboBoxStyle style, int id = -1, Point? position = null, Size? size = null)
+    Size BitmapSize { get; }
+    int Append(string item, Bitmap bitmap, object? clientData)
+    int Append(string item, Bitmap? bitmap = null)
+    int Insert(string item, Bitmap bitmap, int position)
+    int Insert(string item, Bitmap bitmap, int position, object? clientData)
+    void SetItemBitmap(int index, Bitmap bitmap)
+[Flags] enum WxKit.BitmapComboBoxStyle : long
+    None = 0
+    ReadOnly = 16
+    Sort = 8
+    TeProcessEnter = 1024
+class WxKit.BitmapToggleButton : ToggleButton
+    BitmapToggleButton(Window parent, Bitmap label, int id = -1, Point? position = null, Size? size = null, WindowStyle style = WindowStyle.None)
+enum WxKit.BitmapType : int
+    Ani = 27
+    Any = 50
+    Bmp = 1
+    BmpResource = 2
+    Cur = 5
+    CurResource = 6
+    Gif = 13
+    GifResource = 14
+    Ico = 3
+    IcoResource = 4
+    Icon = 25
+    IconResource = 26
+    Iff = 28
+    Invalid = 0
+    Jpeg = 17
+    JpegResource = 18
+    Maccursor = 30
+    MaccursorResource = 31
+    Pcx = 21
+    PcxResource = 22
+    Pict = 23
+    PictResource = 24
+    Png = 15
+    PngResource = 16
+    Pnm = 19
+    PnmResource = 20
+    Resource = 2
+    Tga = 29
+    Tif = 11
+    TifResource = 12
+    Tiff = 11
+    TiffResource = 12
+    Webp = 32
+    WebpResource = 33
+    Xbm = 7
+    XbmData = 8
+    Xpm = 9
+    XpmData = 10
+class WxKit.BookCtrlBase : Control
+    Window? CurrentPage { get; }
+    Window? GetPage(int page)
+    bool AddPage(Window page, string text, bool select = false, int imageId = -1)
+    bool DeleteAllPages()
+    bool DeletePage(int page)
+    bool HasImages { get; }
+    bool InsertPage(int index, Window page, string text, bool select = false, int imageId = -1)
+    bool RemovePage(int page)
+    bool SetPageImage(int page, int image)
+    bool SetPageText(int page, string text)
+    int ChangeSelection(int page)
+    int FindPage(Window page)
+    int GetPageImage(int nPage)
+    int ImageCount { get; }
+    int PageCount { get; }
+    int Selection { get; }
+    int SetSelection(int page)
+    string GetPageText(int nPage)
+    void AdvanceSelection(bool forward = true)
+    void SetImages(IEnumerable<Bitmap> images)
+    void SetPageSize(Size size)
+class WxKit.BookCtrlEvent : NotifyEvent
+    int OldSelection { get; set; }
+enum WxKit.Border : int
+    Default = 0
+    Double = 268435456
+    Mask = 522190848
+    None = 2097152
+    Raised = 67108864
+    Simple = 33554432
+    Static = 16777216
+    Sunken = 134217728
+    Theme = 268435456
+class WxKit.BoxSizer : Sizer
+    BoxSizer(Orientation orientation)
+    Orientation Orientation { get; set; }
+    Size CalcMin()
+    bool InformFirstDirection(int direction, int size, int availableOtherDir)
+    void RepositionChildren(Size minSize)
+class WxKit.Brush : NativeObject
+    Brush()
+    Brush(Bitmap stippleBitmap)
+    Brush(Color? color, BrushStyle style = BrushStyle.Solid)
+    BrushStyle Style { get; set; }
+    Color? Color { get; set; }
+    bool IsHatch { get; }
+    bool IsNonTransparent { get; }
+    bool IsOk { get; }
+    bool IsTransparent { get; }
+    void SetColor(byte red, byte green, byte blue)
+    void SetStipple(Bitmap bitmap)
+enum WxKit.BrushStyle : int
+    BdiagonalHatch = 111
+    CrossHatch = 114
+    CrossdiagHatch = 112
+    FdiagonalHatch = 113
+    FirstHatch = 111
+    HorizontalHatch = 115
+    Invalid = -1
+    LastHatch = 116
+    Solid = 100
+    Stipple = 110
+    StippleMask = 108
+    StippleMaskOpaque = 107
+    Transparent = 106
+    VerticalHatch = 116
+class WxKit.Button : AnyButton
+    Button(Window parent, string label = "", int id = -1, Point? position = null, Size? size = null, ButtonStyle style = ButtonStyle.None)
+    Window? SetDefault()
+    bool AuthNeeded { get; set; }
+    event EventHandler<CommandEvent>? Click
+    static Size GetDefaultSize(Window? window = null)
+[Flags] enum WxKit.ButtonStyle : long
+    BorderNone = 2097152
+    Bottom = 512
+    ExactFit = 1
+    Left = 64
+    NoText = 2
+    None = 0
+    Right = 256
+    Top = 128
+class WxKit.CalendarCtrl : Control
+    CalendarCtrl(Window parent, DateTime? date = null, int id = -1, Point? position = null, Size? size = null, CalendarCtrlStyle style = CalendarCtrlStyle.ShowHolidays)
+    Color? HeaderColorBg { get; }
+    Color? HeaderColorFg { get; }
+    Color? HighlightColorBg { get; }
+    Color? HighlightColorFg { get; }
+    Color? HolidayColorBg { get; }
+    Color? HolidayColorFg { get; }
+    DateTime? Date { get; set; }
+    bool EnableMonthChange(bool enable = true)
+    bool SetDateRange(DateTime? earliest = null, DateTime? latest = null)
+    event EventHandler<CalendarEvent>? DateActivated
+    event EventHandler<CalendarEvent>? PageChanged
+    event EventHandler<CalendarEvent>? SelectionChanged
+    event EventHandler<CalendarEvent>? WeekClicked
+    event EventHandler<CalendarEvent>? WeekDayClicked
+    void EnableHolidayDisplay(bool display = true)
+    void Mark(int day, bool mark)
+    void ResetAttr(int day)
+    void SetHeaderColors(Color? colFg, Color? colBg)
+    void SetHighlightColors(Color? colFg, Color? colBg)
+    void SetHoliday(int day)
+    void SetHolidayColors(Color? colFg, Color? colBg)
+[Flags] enum WxKit.CalendarCtrlStyle : long
+    MondayFirst = 1
+    NoMonthChange = 12
+    NoYearChange = 4
+    None = 0
+    SequentialMonthSelection = 16
+    ShowHolidays = 2
+    ShowSurroundingWeeks = 32
+    ShowWeekNumbers = 64
+    SundayFirst = 128
+class WxKit.CalendarEvent : DateEvent
+    WeekDay WeekDay { get; }
+enum WxKit.CalendarHitTestResult : int
+    Day = 2
+    Decmonth = 4
+    Header = 1
+    Incmonth = 3
+    Nowhere = 0
+    SurroundingWeek = 5
+    Week = 6
+class WxKit.CheckBox : Control
+    CheckBox(Window parent, string label, int id = -1, Point? position = null, Size? size = null, CheckBoxStyle style = CheckBoxStyle.None)
+    CheckBoxState ThreeStateValue { get; set; }
+    bool Is3State()
+    bool Is3rdStateAllowedForUser()
+    bool IsChecked { get; }
+    bool Value { get; set; }
+    event EventHandler<CommandEvent>? CheckedChanged
+enum WxKit.CheckBoxState : int
+    Checked = 1
+    Unchecked = 0
+    Undetermined = 2
+[Flags] enum WxKit.CheckBoxStyle : long
+    AlignRight = 512
+    Allow3rdStateForUser = 8192
+    None = 0
+    ThreeState = 4096
+    TwoState = 16384
+class WxKit.CheckListBox : ListBox
+    CheckListBox(Window parent, IEnumerable<string> choices, int id = -1, Point? position = null, Size? size = null, ListBoxStyle style = ListBoxStyle.None)
+    CheckListBox(Window parent, int id = -1, Point? position = null, Size? size = null)
+    bool IsChecked(int item)
+    event EventHandler<CommandEvent>? ItemCheckedChanged
+    int GetCheckedItems(out int[] checkedItems)
+    void Check(int item, bool check = true)
+class WxKit.ChildFocusEvent : CommandEvent
+    Window? Window { get; }
+class WxKit.Choice : Control
+    Choice(Window parent, IEnumerable<string> choices, int id = -1, Point? position = null, Size? size = null, ChoiceStyle style = ChoiceStyle.None)
+    Choice(Window parent, int id = -1, Point? position = null, Size? size = null)
+    bool HasClientData { get; }
+    bool HasClientObjectData { get; }
+    bool HasClientUntypedData { get; }
+    bool IsEmpty { get; }
+    bool IsSorted { get; }
+    event EventHandler<CommandEvent>? SelectionChanged
+    int Append(IEnumerable<string> items)
+    int Append(string item)
+    int Append(string item, object? clientData)
+    int Columns { get; set; }
+    int Count { get; }
+    int CurrentSelection { get; }
+    int FindString(string text, bool caseSensitive = false)
+    int Insert(IEnumerable<string> items, int position)
+    int Insert(string item, int position)
+    int Insert(string item, int position, object? clientData)
+    int Selection { get; set; }
+    object? GetClientObject(int index)
+    string GetString(int index)
+    string StringSelection { get; set; }
+    string[] Strings { get; }
+    void Clear()
+    void Delete(int index)
+    void Select(int index)
+    void Set(IEnumerable<string> items)
+    void SetClientObject(int index, object? data)
+    void SetString(int index, string text)
+[Flags] enum WxKit.ChoiceStyle : long
+    CbSort = 8
+    None = 0
+class WxKit.Choicebook : BookCtrlBase
+    Choice? ChoiceCtrl { get; }
+    Choicebook(Window parent, int id = -1, Point? position = null, Size? size = null, ChoicebookStyle style = ChoicebookStyle.None)
+    event EventHandler<BookCtrlEvent>? PageChanged
+    event EventHandler<BookCtrlEvent>? PageChanging
+[Flags] enum WxKit.ChoicebookStyle : long
+    Bottom = 32
+    Default = 0
+    Left = 64
+    None = 0
+    Right = 128
+    Top = 16
+class WxKit.ClientDC : WindowDC
+    ClientDC(Window window)
+    static bool CanBeUsedForDrawing(Window window)
+static class WxKit.Clipboard
+    static Bitmap? GetBitmap()
+    static bool Flush()
+    static bool HasBitmap { get; }
+    static bool HasData(string format)
+    static bool HasFiles { get; }
+    static bool HasHtml { get; }
+    static bool HasText { get; }
+    static bool SetBitmap(Bitmap bitmap)
+    static bool SetContent(ClipboardContent content)
+    static bool SetData(string format, ReadOnlySpan<byte> data)
+    static bool SetFiles(IEnumerable<string> paths)
+    static bool SetHtml(string html)
+    static bool SetText(string text)
+    static byte[]? GetData(string format)
+    static string? GetHtml()
+    static string? GetText()
+    static string[]? GetFiles()
+    static void Clear()
+sealed class WxKit.ClipboardContent
+    Bitmap? Bitmap { get; set; }
+    ClipboardContent()
+    IReadOnlyList<string>? Files { get; set; }
+    string? Html { get; set; }
+    string? Text { get; set; }
+    void Add(string format, ReadOnlySpan<byte> data)
+class WxKit.CloseEvent : Event
+    bool CanVeto { get; }
+    bool IsVetoed { get; }
+    bool LoggingOff { get; set; }
+    void SetCanVeto(bool canVeto)
+    void Veto(bool veto = true)
+class WxKit.CollapsiblePane : Control
+    CollapsiblePane(Window parent, string label, int id = -1, Point? position = null, Size? size = null, CollapsiblePaneStyle style = CollapsiblePaneStyle.Default)
+    Window? Pane { get; }
+    bool IsCollapsed { get; }
+    bool IsExpanded { get; }
+    event EventHandler<CollapsiblePaneEvent>? CollapsedChanged
+    event EventHandler<NavigationKeyEvent>? NavigationKey
+    void Collapse(bool collapse = true)
+    void Expand()
+class WxKit.CollapsiblePaneEvent : CommandEvent
+    bool Collapsed { get; set; }
+[Flags] enum WxKit.CollapsiblePaneStyle : long
+    Default = 2621440
+    NoTlwResize = 2
+    None = 0
+readonly record struct WxKit.Color : IEquatable<Color>
+    Color(byte R, byte G, byte B, byte A = 255)
+    bool Equals(Color other)
+    byte A { get; init; }
+    byte B { get; init; }
+    byte G { get; init; }
+    byte R { get; init; }
+    override bool Equals(object obj)
+    override int GetHashCode()
+    override string ToString()
+    static bool op_Equality(Color left, Color right)
+    static bool op_Inequality(Color left, Color right)
+    void Deconstruct(out byte R, out byte G, out byte B, out byte A)
+class WxKit.ColorData : NativeObject
+    Color? Color { get; set; }
+    Color? GetCustomColor(int i)
+    ColorData()
+    bool ChooseAlpha { get; set; }
+    bool ChooseFull { get; set; }
+    void SetCustomColor(int i, Color? color)
+class WxKit.ColorDialog : Dialog
+    ColorData? ColorData { get; }
+    ColorDialog(Window? parent, ColorData? data = null)
+    event EventHandler<ColorDialogEvent>? ColorChanged
+class WxKit.ColorDialogEvent : CommandEvent
+    Color? Color { get; }
+class WxKit.ColorPickerCtrl : PickerBase
+    Color? Color { get; set; }
+    ColorPickerCtrl(Window parent, Color? color = null, int id = -1, Point? position = null, Size? size = null, ColorPickerCtrlStyle style = ColorPickerCtrlStyle.None)
+    event EventHandler<ColorPickerEvent>? ColorChanged
+    event EventHandler<ColorPickerEvent>? CurrentColorChanged
+    event EventHandler<ColorPickerEvent>? DialogCancelled
+    void SetColor(string colname)
+[Flags] enum WxKit.ColorPickerCtrlStyle : long
+    Default = 0
+    None = 0
+    ShowAlpha = 16
+    ShowLabel = 8
+    UseTextCtrl = 2
+class WxKit.ColorPickerEvent : CommandEvent
+    Color? Color { get; }
+class WxKit.ComboBox : Control
+    ComboBox(Window parent, string value = "", int id = -1, Point? position = null, Size? size = null)
+    ComboBox(Window parent, string value, IEnumerable<string> choices, int id = -1, Point? position = null, Size? size = null, ComboBoxStyle style = ComboBoxStyle.None)
+    Point Margins { get; set; }
+    bool AutoComplete(IEnumerable<string> choices)
+    bool AutoCompleteDirectories()
+    bool AutoCompleteFileNames()
+    bool CanCopy { get; }
+    bool CanCut { get; }
+    bool CanPaste { get; }
+    bool CanRedo { get; }
+    bool CanUndo { get; }
+    bool HasClientData { get; }
+    bool HasClientObjectData { get; }
+    bool HasClientUntypedData { get; }
+    bool IsEditable { get; set; }
+    bool IsListEmpty { get; }
+    bool IsSorted { get; }
+    bool IsTextEmpty { get; }
+    bool SetMargins(int left, int top = -1)
+    event EventHandler<CommandEvent>? DropDownClosed
+    event EventHandler<CommandEvent>? DropDownOpened
+    event EventHandler<CommandEvent>? SelectionChanged
+    event EventHandler<CommandEvent>? Text
+    event EventHandler<CommandEvent>? TextEnter
+    int Append(IEnumerable<string> items)
+    int Append(string item)
+    int Append(string item, object? clientData)
+    int Count { get; }
+    int CurrentSelection { get; }
+    int FindString(string text, bool caseSensitive = false)
+    int Insert(IEnumerable<string> items, int position)
+    int Insert(string item, int position)
+    int Insert(string item, int position, object? clientData)
+    int Selection { get; set; }
+    long InsertionPoint { get; set; }
+    long LastPosition { get; }
+    object? GetClientObject(int index)
+    string GetRange(long from, long to)
+    string GetString(int index)
+    string Hint { get; set; }
+    string StringSelection { get; set; }
+    string Value { get; set; }
+    string[] Strings { get; }
+    void AppendText(string text)
+    void ChangeValue(string value)
+    void Clear()
+    void Copy()
+    void Cut()
+    void Delete(int index)
+    void Dismiss()
+    void ForceUpper()
+    void GetSelection(out long from, out long to)
+    void Paste()
+    void Popup()
+    void Redo()
+    void Remove(long from, long to)
+    void Replace(long from, long to, string value)
+    void Select(int index)
+    void SelectAll()
+    void SelectNone()
+    void Set(IEnumerable<string> items)
+    void SetClientObject(int index, object? data)
+    void SetInsertionPointEnd()
+    void SetMaxLength(int len)
+    void SetSelection(long from, long to)
+    void SetString(int index, string text)
+    void Undo()
+    void WriteText(string text)
+[Flags] enum WxKit.ComboBoxStyle : long
+    Dropdown = 32
+    None = 0
+    ReadOnly = 16
+    Simple = 4
+    Sort = 8
+    TeProcessEnter = 1024
+class WxKit.CommandEvent : Event
+    bool IsChecked { get; }
+    bool IsSelection { get; }
+    int Int { get; set; }
+    int Selection { get; }
+    long ExtraLong { get; set; }
+    object? ClientObject { get; }
+    string String { get; set; }
+class WxKit.CommandLinkButton : Button
+    CommandLinkButton(Window parent, string mainLabel = "", string note = "", int id = -1, Point? position = null, Size? size = null, ButtonStyle style = ButtonStyle.None)
+    string MainLabel { get; set; }
+    string Note { get; set; }
+    void SetMainLabelAndNote(string mainLabel, string note)
+enum WxKit.ContentProtection : int
+    Enabled = 1
+    None = 0
+class WxKit.ContextMenuEvent : CommandEvent
+    Point Position { get; set; }
+class WxKit.Control : Window
+    Control(Window parent, int id = -1, Point? position = null, Size? size = null, WindowStyle style = WindowStyle.None)
+    Size GetSizeFromText(string text)
+    Size GetSizeFromTextSize(Size tsize)
+    Size GetSizeFromTextSize(int xlen, int ylen = -1)
+    bool SetLabelMarkup(string markup)
+    event EventHandler<CommandEvent>? TextCopy
+    event EventHandler<CommandEvent>? TextCut
+    event EventHandler<CommandEvent>? TextPaste
+    static string EscapeMnemonics(string text)
+    static string GetLabelText(string label)
+    static string RemoveMnemonics(string text)
+    string LabelText { get; set; }
+class WxKit.ControlWithItems : Control
+    bool HasClientData { get; }
+    bool HasClientObjectData { get; }
+    bool HasClientUntypedData { get; }
+    bool IsEmpty { get; }
+    bool IsSorted { get; }
+    int Append(IEnumerable<string> items)
+    int Append(string item)
+    int Append(string item, object? clientData)
+    int Count { get; }
+    int FindString(string text, bool caseSensitive = false)
+    int Insert(IEnumerable<string> items, int position)
+    int Insert(string item, int position)
+    int Insert(string item, int position, object? clientData)
+    int Selection { get; set; }
+    object? GetClientObject(int index)
+    string GetString(int index)
+    string StringSelection { get; set; }
+    string[] Strings { get; }
+    void Clear()
+    void Delete(int index)
+    void Select(int index)
+    void Set(IEnumerable<string> items)
+    void SetClientObject(int index, object? data)
+    void SetString(int index, string text)
+class WxKit.Cursor : NativeObject
+    Cursor()
+    Cursor(Bitmap bitmap, Point hotSpot)
+    Cursor(Bitmap bitmap, int hotSpotX = 0, int hotSpotY = 0)
+    Cursor(Image image)
+    Cursor(StockCursor cursorId)
+    Cursor(string cursorName, BitmapType? type = null, int hotSpotX = 0, int hotSpotY = 0)
+    Cursor(string name, BitmapType type, Point hotSpot)
+    Point HotSpot { get; }
+    bool IsOk { get; }
+abstract class WxKit.CustomValidator : Validator
+    protected CustomValidator()
+    protected virtual bool OnTransferFromWindow(Window window)
+    protected virtual bool OnTransferToWindow(Window window)
+    protected virtual bool OnValidate(Window window, Window? parent)
+class WxKit.DC : NativeObject
+    Bitmap? AsBitmap { get; }
+    Brush? Background { get; set; }
+    Brush? Brush { get; set; }
+    Color? TextBackground { get; set; }
+    Color? TextForeground { get; set; }
+    Pen? Pen { get; set; }
+    RasterOperationMode LogicalFunction { get; set; }
+    bool AreAutomaticBoundingBoxUpdatesEnabled()
+    bool Blit(int xdest, int ydest, int width, int height, DC source, int xsrc, int ysrc, RasterOperationMode logicalFunc = RasterOperationMode.Copy, bool useMask = false)
+    bool FloodFill(Point point, Color? column, FloodFillStyle style = FloodFillStyle.Surface)
+    bool FloodFill(int x, int y, Color? color, FloodFillStyle style = FloodFillStyle.Surface)
+    bool GetClippingBox(out Rect rect)
+    bool GetClippingBox(out int x, out int y, out int width, out int height)
+    bool StartDoc(string message)
+    bool StretchBlit(int xdest, int ydest, int dstWidth, int dstHeight, DC source, int xsrc, int ysrc, int srcWidth, int srcHeight, RasterOperationMode logicalFunc = RasterOperationMode.Copy, bool useMask = false)
+    int BackgroundMode { get; set; }
+    int MaxX()
+    int MaxY()
+    int MinX()
+    int MinY()
+    void CalcBoundingBox(int x, int y)
+    void Clear()
+    void CopyAttributes(DC dc)
+    void CrossHair(Point point)
+    void CrossHair(int x, int y)
+    void DestroyClippingRegion()
+    void DisableAutomaticBoundingBoxUpdates()
+    void DrawArc(Point ptStart, Point ptEnd, Point center)
+    void DrawArc(int xStart, int yStart, int xEnd, int yEnd, int xc, int yc)
+    void DrawBitmap(Bitmap bitmap, Point point, bool useMask = false)
+    void DrawBitmap(Bitmap bitmap, int x, int y, bool useMask = false)
+    void DrawCheckMark(Rect rect)
+    void DrawCheckMark(int x, int y, int width, int height)
+    void DrawCircle(Point point, int radius)
+    void DrawCircle(int x, int y, int radius)
+    void DrawEllipse(Point point, Size size)
+    void DrawEllipse(Rect rect)
+    void DrawEllipse(int x, int y, int width, int height)
+    void DrawEllipticArc(Point point, Size size, double sa, double ea)
+    void DrawEllipticArc(int x, int y, int width, int height, double start, double end)
+    void DrawIcon(Icon icon, Point point)
+    void DrawIcon(Icon icon, int x, int y)
+    void DrawLabel(string text, Bitmap bitmap, Rect rect, int alignment = 0, int indexAccel = -1)
+    void DrawLabel(string text, Rect rect, int alignment = 0, int indexAccel = -1)
+    void DrawLine(Point pt1, Point pt2)
+    void DrawLine(int x1, int y1, int x2, int y2)
+    void DrawPoint(Point point)
+    void DrawPoint(int x, int y)
+    void DrawRectangle(Point point, Size size)
+    void DrawRectangle(Rect rect)
+    void DrawRectangle(int x, int y, int width, int height)
+    void DrawRotatedText(string text, Point point, double angle)
+    void DrawRotatedText(string text, int x, int y, double angle)
+    void DrawRoundedRectangle(Point point, Size size, double radius)
+    void DrawRoundedRectangle(Rect rect, double radius)
+    void DrawRoundedRectangle(int x, int y, int width, int height, double radius)
+    void DrawSpline(int x1, int y1, int x2, int y2, int x3, int y3)
+    void DrawText(string text, Point point)
+    void DrawText(string text, int x, int y)
+    void EndDoc()
+    void EndPage()
+    void GradientFillConcentric(Rect rect, Color? initialColor, Color? destColor)
+    void GradientFillConcentric(Rect rect, Color? initialColor, Color? destColor, Point circleCenter)
+    void GradientFillLinear(Rect rect, Color? initialColor, Color? destColor, Direction nDirection = Direction.Right)
+    void ResetBoundingBox()
+    void SetClippingRegion(Point point, Size size)
+    void SetClippingRegion(Rect rect)
+    void SetClippingRegion(int x, int y, int width, int height)
+    void StartPage()
+class WxKit.DPIChangedEvent : Event
+    Point Scale(Point point)
+    Rect Scale(Rect rect)
+    Size NewDPI { get; }
+    Size OldDPI { get; }
+    Size Scale(Size size)
+    int ScaleX(int x)
+    int ScaleY(int y)
+enum WxKit.DataViewCellMode : int
+    Activatable = 1
+    Editable = 2
+    Inert = 0
+sealed class WxKit.DataViewColumn
+    Alignment Alignment { get; set; }
+    Bitmap? Bitmap { get; set; }
+    DataViewColumnFlags Flags { get; set; }
+    DataViewCtrl? Owner { get; }
+    bool IsDestroyed { get; }
+    bool IsHidden { get; set; }
+    bool IsReorderable { get; set; }
+    bool IsResizeable { get; set; }
+    bool IsShown { get; }
+    bool IsSortKey { get; }
+    bool IsSortOrderAscending { get; }
+    bool IsSortable { get; set; }
+    int MinWidth { get; set; }
+    int ModelColumn { get; }
+    int Width { get; set; }
+    string Title { get; set; }
+    void SetSortOrder(bool ascending)
+    void ToggleSortOrder()
+    void UnsetAsSortKey()
+[Flags] enum WxKit.DataViewColumnFlags : int
+    Hidden = 8
+    Reorderable = 4
+    Resizable = 1
+    Sortable = 2
+class WxKit.DataViewCtrl : Control
+    DataViewColumn? AppendBitmapColumn(Bitmap label, int modelColumn, DataViewCellMode mode = DataViewCellMode.Inert, int width = -1, Alignment align = Alignment.Center, DataViewColumnFlags flags = DataViewColumnFlags.Resizable)
+    DataViewColumn? AppendBitmapColumn(string label, int modelColumn, DataViewCellMode mode = DataViewCellMode.Inert, int width = -1, Alignment align = Alignment.Center, DataViewColumnFlags flags = DataViewColumnFlags.Resizable)
+    DataViewColumn? AppendDateColumn(Bitmap label, int modelColumn, DataViewCellMode mode = DataViewCellMode.Activatable, int width = -1, Alignment align = Alignment.Not, DataViewColumnFlags flags = DataViewColumnFlags.Resizable)
+    DataViewColumn? AppendDateColumn(string label, int modelColumn, DataViewCellMode mode = DataViewCellMode.Activatable, int width = -1, Alignment align = Alignment.Not, DataViewColumnFlags flags = DataViewColumnFlags.Resizable)
+    DataViewColumn? AppendIconTextColumn(Bitmap label, int modelColumn, DataViewCellMode mode = DataViewCellMode.Inert, int width = -1, Alignment align = Alignment.Not, DataViewColumnFlags flags = DataViewColumnFlags.Resizable)
+    DataViewColumn? AppendIconTextColumn(string label, int modelColumn, DataViewCellMode mode = DataViewCellMode.Inert, int width = -1, Alignment align = Alignment.Not, DataViewColumnFlags flags = DataViewColumnFlags.Resizable)
+    DataViewColumn? AppendProgressColumn(Bitmap label, int modelColumn, DataViewCellMode mode = DataViewCellMode.Inert, int width = 80, Alignment align = Alignment.Center, DataViewColumnFlags flags = DataViewColumnFlags.Resizable)
+    DataViewColumn? AppendProgressColumn(string label, int modelColumn, DataViewCellMode mode = DataViewCellMode.Inert, int width = 80, Alignment align = Alignment.Center, DataViewColumnFlags flags = DataViewColumnFlags.Resizable)
+    DataViewColumn? AppendTextColumn(Bitmap label, int modelColumn, DataViewCellMode mode = DataViewCellMode.Inert, int width = -1, Alignment align = Alignment.Not, DataViewColumnFlags flags = DataViewColumnFlags.Resizable)
+    DataViewColumn? AppendTextColumn(string label, int modelColumn, DataViewCellMode mode = DataViewCellMode.Inert, int width = -1, Alignment align = Alignment.Not, DataViewColumnFlags flags = DataViewColumnFlags.Resizable)
+    DataViewColumn? AppendToggleColumn(Bitmap label, int modelColumn, DataViewCellMode mode = DataViewCellMode.Inert, int width = 30, Alignment align = Alignment.Center, DataViewColumnFlags flags = DataViewColumnFlags.Resizable)
+    DataViewColumn? AppendToggleColumn(string label, int modelColumn, DataViewCellMode mode = DataViewCellMode.Inert, int width = 30, Alignment align = Alignment.Center, DataViewColumnFlags flags = DataViewColumnFlags.Resizable)
+    DataViewColumn? CurrentColumn { get; }
+    DataViewColumn? ExpanderColumn { get; set; }
+    DataViewColumn? GetColumn(int position)
+    DataViewColumn? PrependBitmapColumn(Bitmap label, int modelColumn, DataViewCellMode mode = DataViewCellMode.Inert, int width = -1, Alignment align = Alignment.Center, DataViewColumnFlags flags = DataViewColumnFlags.Resizable)
+    DataViewColumn? PrependBitmapColumn(string label, int modelColumn, DataViewCellMode mode = DataViewCellMode.Inert, int width = -1, Alignment align = Alignment.Center, DataViewColumnFlags flags = DataViewColumnFlags.Resizable)
+    DataViewColumn? PrependDateColumn(Bitmap label, int modelColumn, DataViewCellMode mode = DataViewCellMode.Activatable, int width = -1, Alignment align = Alignment.Not, DataViewColumnFlags flags = DataViewColumnFlags.Resizable)
+    DataViewColumn? PrependDateColumn(string label, int modelColumn, DataViewCellMode mode = DataViewCellMode.Activatable, int width = -1, Alignment align = Alignment.Not, DataViewColumnFlags flags = DataViewColumnFlags.Resizable)
+    DataViewColumn? PrependIconTextColumn(Bitmap label, int modelColumn, DataViewCellMode mode = DataViewCellMode.Inert, int width = -1, Alignment align = Alignment.Not, DataViewColumnFlags flags = DataViewColumnFlags.Resizable)
+    DataViewColumn? PrependIconTextColumn(string label, int modelColumn, DataViewCellMode mode = DataViewCellMode.Inert, int width = -1, Alignment align = Alignment.Not, DataViewColumnFlags flags = DataViewColumnFlags.Resizable)
+    DataViewColumn? PrependProgressColumn(Bitmap label, int modelColumn, DataViewCellMode mode = DataViewCellMode.Inert, int width = 80, Alignment align = Alignment.Center, DataViewColumnFlags flags = DataViewColumnFlags.Resizable)
+    DataViewColumn? PrependProgressColumn(string label, int modelColumn, DataViewCellMode mode = DataViewCellMode.Inert, int width = 80, Alignment align = Alignment.Center, DataViewColumnFlags flags = DataViewColumnFlags.Resizable)
+    DataViewColumn? PrependTextColumn(Bitmap label, int modelColumn, DataViewCellMode mode = DataViewCellMode.Inert, int width = -1, Alignment align = Alignment.Not, DataViewColumnFlags flags = DataViewColumnFlags.Resizable)
+    DataViewColumn? PrependTextColumn(string label, int modelColumn, DataViewCellMode mode = DataViewCellMode.Inert, int width = -1, Alignment align = Alignment.Not, DataViewColumnFlags flags = DataViewColumnFlags.Resizable)
+    DataViewColumn? PrependToggleColumn(Bitmap label, int modelColumn, DataViewCellMode mode = DataViewCellMode.Inert, int width = 30, Alignment align = Alignment.Center, DataViewColumnFlags flags = DataViewColumnFlags.Resizable)
+    DataViewColumn? PrependToggleColumn(string label, int modelColumn, DataViewCellMode mode = DataViewCellMode.Inert, int width = 30, Alignment align = Alignment.Center, DataViewColumnFlags flags = DataViewColumnFlags.Resizable)
+    DataViewColumn? SortingColumn { get; }
+    DataViewCtrl(Window parent, int id = -1, Point? position = null, Size? size = null, DataViewCtrlStyle style = DataViewCtrlStyle.None)
+    DataViewItem CurrentItem { get; set; }
+    DataViewItem Selection { get; }
+    DataViewItem TopItem { get; }
+    DataViewModel? Model { get; set; }
+    Rect GetItemRect(DataViewItem item, DataViewColumn? column = null)
+    Window? MainWindow { get; }
+    bool AllowMultiColumnSort(bool allow)
+    bool ClearColumns()
+    bool DeleteColumn(DataViewColumn column)
+    bool HasSelection { get; }
+    bool IsExpanded(DataViewItem item)
+    bool IsMultiColumnSortAllowed { get; }
+    bool IsSelected(DataViewItem item)
+    bool SetAlternateRowColor(Color? color)
+    bool SetRowHeight(int rowHeight)
+    event EventHandler<DataViewEvent>? DataViewColumnHeaderClick
+    event EventHandler<DataViewEvent>? DataViewColumnHeaderRightClick
+    event EventHandler<DataViewEvent>? DataViewColumnReordered
+    event EventHandler<DataViewEvent>? DataViewColumnSorted
+    event EventHandler<DataViewEvent>? DataViewItemActivated
+    event EventHandler<DataViewEvent>? DataViewItemBeginDrag
+    event EventHandler<DataViewEvent>? DataViewItemCollapsed
+    event EventHandler<DataViewEvent>? DataViewItemCollapsing
+    event EventHandler<DataViewEvent>? DataViewItemContextMenu
+    event EventHandler<DataViewEvent>? DataViewItemDrop
+    event EventHandler<DataViewEvent>? DataViewItemDropPossible
+    event EventHandler<DataViewEvent>? DataViewItemEditingDone
+    event EventHandler<DataViewEvent>? DataViewItemEditingStarted
+    event EventHandler<DataViewEvent>? DataViewItemExpanded
+    event EventHandler<DataViewEvent>? DataViewItemExpanding
+    event EventHandler<DataViewEvent>? DataViewItemStartEditing
+    event EventHandler<DataViewEvent>? DataViewItemValueChanged
+    event EventHandler<DataViewEvent>? DataViewSelectionChanged
+    int ColumnCount { get; }
+    int CountPerPage { get; }
+    int GetColumnPosition(DataViewColumn column)
+    int GetSelections(out DataViewItem[] selections)
+    int Indent { get; set; }
+    int SelectedItemsCount { get; }
+    void Collapse(DataViewItem item)
+    void EditItem(DataViewItem item, DataViewColumn column)
+    void EnsureVisible(DataViewItem item, DataViewColumn? column = null)
+    void Expand(DataViewItem item)
+    void ExpandAncestors(DataViewItem item)
+    void ExpandChildren(DataViewItem item)
+    void Select(DataViewItem item)
+    void SelectAll()
+    void SetSelections(IEnumerable<DataViewItem> selections)
+    void ToggleSortByColumn(int column)
+    void Unselect(DataViewItem item)
+    void UnselectAll()
+[Flags] enum WxKit.DataViewCtrlStyle : long
+    HorizRules = 4
+    Multiple = 1
+    NoHeader = 2
+    None = 0
+    RowLines = 16
+    Single = 0
+    VariableLineHeight = 32
+    VertRules = 8
+class WxKit.DataViewEvent : NotifyEvent
+    DataViewColumn? DataViewColumn { get; }
+    DataViewItem Item { get; }
+    DragResult DropEffect { get; set; }
+    Point Position { get; }
+    bool IsEditCancelled { get; }
+    int CacheFrom { get; }
+    int CacheTo { get; }
+    int Column { get; set; }
+    int DataSize { get; set; }
+    int DragFlags { get; set; }
+    int ProposedDropIndex { get; }
+    object? Value { get; set; }
+    void SetCache(int from, int to)
+    void SetPosition(int x, int y)
+class WxKit.DataViewIconText : NativeObject
+    DataViewIconText(string text = "", Bitmap? bitmap = null)
+    Icon? Icon { get; set; }
+    string Text { get; set; }
+    void SetBitmapBundle(Bitmap bitmap)
+readonly record struct WxKit.DataViewItem : IEquatable<DataViewItem>
+    DataViewItem(nint Value)
+    bool Equals(DataViewItem other)
+    bool IsOk { get; }
+    nint Value { get; init; }
+    override bool Equals(object obj)
+    override int GetHashCode()
+    override string ToString()
+    static DataViewItem Root { get; }
+    static bool op_Equality(DataViewItem left, DataViewItem right)
+    static bool op_Inequality(DataViewItem left, DataViewItem right)
+    void Deconstruct(out nint Value)
+class WxKit.DataViewListCtrl : DataViewCtrl
+    DataViewColumn? AppendIconTextColumn(string label, DataViewCellMode mode = DataViewCellMode.Inert, int width = -1, Alignment align = Alignment.Not, DataViewColumnFlags flags = DataViewColumnFlags.Resizable)
+    DataViewColumn? AppendProgressColumn(string label, DataViewCellMode mode = DataViewCellMode.Inert, int width = -1, Alignment align = Alignment.Not, DataViewColumnFlags flags = DataViewColumnFlags.Resizable)
+    DataViewColumn? AppendTextColumn(string label, DataViewCellMode mode = DataViewCellMode.Inert, int width = -1, Alignment align = Alignment.Not, DataViewColumnFlags flags = DataViewColumnFlags.Resizable)
+    DataViewColumn? AppendToggleColumn(string label, DataViewCellMode mode = DataViewCellMode.Activatable, int width = -1, Alignment align = Alignment.Not, DataViewColumnFlags flags = DataViewColumnFlags.Resizable)
+    DataViewItem RowToItem(int row)
+    DataViewListCtrl(Window parent, int id = -1, Point? position = null, Size? size = null, DataViewCtrlStyle style = DataViewCtrlStyle.RowLines)
+    bool GetToggleValue(int row, int column)
+    bool IsRowSelected(int row)
+    int ItemCount { get; }
+    int ItemToRow(DataViewItem item)
+    int SelectedRow { get; }
+    string GetTextValue(int row, int column)
+    void AppendItem(IEnumerable<object?> values)
+    void DeleteAllItems()
+    void DeleteItem(int row)
+    void InsertItem(int row, IEnumerable<object?> values)
+    void PrependItem(IEnumerable<object?> values)
+    void SelectRow(int row)
+    void SetTextValue(string value, int row, int column)
+    void SetToggleValue(bool value, int row, int column)
+    void SetValue(object? value, int row, int column)
+    void UnselectRow(int row)
+abstract class WxKit.DataViewModel
+    bool ItemChanged(DataViewItem item)
+    bool ValueChanged(DataViewItem item, int column)
+    virtual bool Cleared()
+    void Resort()
+class WxKit.DataViewTreeCtrl : DataViewCtrl
+    DataViewItem AppendContainer(DataViewItem parent, string text, int icon = -1, int expanded = -1, object? data = null)
+    DataViewItem AppendItem(DataViewItem parent, string text, int icon = -1, object? data = null)
+    DataViewItem GetItemParent(DataViewItem item)
+    DataViewItem GetNthChild(DataViewItem parent, int position)
+    DataViewItem InsertContainer(DataViewItem parent, DataViewItem previous, string text, int icon = -1, int expanded = -1, object? data = null)
+    DataViewItem InsertItem(DataViewItem parent, DataViewItem previous, string text, int icon = -1, object? data = null)
+    DataViewItem PrependContainer(DataViewItem parent, string text, int icon = -1, int expanded = -1, object? data = null)
+    DataViewItem PrependItem(DataViewItem parent, string text, int icon = -1, object? data = null)
+    DataViewTreeCtrl(Window parent, int id = -1, Point? position = null, Size? size = null, DataViewCtrlStyle style = DataViewCtrlStyle.NoHeader | DataViewCtrlStyle.RowLines)
+    Icon? GetItemExpandedIcon(DataViewItem item)
+    Icon? GetItemIcon(DataViewItem item)
+    bool IsContainer(DataViewItem item)
+    int GetChildCount(DataViewItem parent)
+    object? GetItemData(DataViewItem item)
+    string GetItemText(DataViewItem item)
+    void DeleteAllItems()
+    void DeleteChildren(DataViewItem item)
+    void DeleteItem(DataViewItem item)
+    void SetItemData(DataViewItem item, object? data)
+    void SetItemExpandedIcon(DataViewItem item, Bitmap icon)
+    void SetItemIcon(DataViewItem item, Bitmap icon)
+    void SetItemText(DataViewItem item, string text)
+abstract class WxKit.DataViewTreeModel : DataViewModel
+    bool ItemAdded(DataViewItem parent, DataViewItem item)
+    protected DataViewTreeModel()
+    protected abstract DataViewItem GetParent(DataViewItem item)
+    protected abstract IEnumerable<DataViewItem> GetChildren(DataViewItem item)
+    protected abstract bool IsContainer(DataViewItem item)
+    protected abstract object? GetValue(DataViewItem item, int column)
+    protected virtual bool HasContainerColumns(DataViewItem item)
+    protected virtual bool IsEnabled(DataViewItem item, int column)
+    protected virtual bool SetValue(object? value, DataViewItem item, int column)
+    virtual bool ItemDeleted(DataViewItem parent, DataViewItem item)
+abstract class WxKit.DataViewTreeModel`1<T> : DataViewTreeModel
+    DataViewItem ItemOf(T? item)
+    T? ObjectOf(DataViewItem item)
+    bool ItemAdded(T? parent, T item)
+    bool ItemChanged(T item)
+    bool ItemDeleted(T? parent, T item)
+    bool ValueChanged(T item, int column)
+    override bool Cleared()
+    override bool ItemDeleted(DataViewItem parent, DataViewItem item)
+    protected DataViewTreeModel()
+    protected abstract IEnumerable<T> GetChildren(T? item)
+    protected abstract T? GetParent(T item)
+    protected abstract bool IsContainer(T item)
+    protected abstract object? GetValue(T item, int column)
+    protected sealed override DataViewItem GetParent(DataViewItem item)
+    protected sealed override IEnumerable<DataViewItem> GetChildren(DataViewItem item)
+    protected sealed override bool HasContainerColumns(DataViewItem item)
+    protected sealed override bool IsContainer(DataViewItem item)
+    protected sealed override bool IsEnabled(DataViewItem item, int column)
+    protected sealed override bool SetValue(object? value, DataViewItem item, int column)
+    protected sealed override object? GetValue(DataViewItem item, int column)
+    protected virtual bool HasContainerColumns(T item)
+    protected virtual bool IsEnabled(T item, int column)
+    protected virtual bool SetValue(object? value, T item, int column)
+abstract class WxKit.DataViewVirtualListModel : DataViewModel
+    DataViewItem GetItem(int row)
+    int Count { get; }
+    int GetRow(DataViewItem item)
+    protected DataViewVirtualListModel(int count)
+    protected abstract object? GetValue(int row, int column)
+    protected virtual bool IsEnabled(int row, int column)
+    protected virtual bool SetValue(object? value, int row, int column)
+    void Reset(int count)
+    void RowAppended()
+    void RowChanged(int row)
+    void RowDeleted(int row)
+    void RowInserted(int before)
+    void RowPrepended()
+    void RowValueChanged(int row, int column)
+class WxKit.DateEvent : CommandEvent
+    DateTime? Date { get; }
+class WxKit.DatePickerCtrl : Control
+    DatePickerCtrl(Window parent, DateTime? date = null, int id = -1, Point? position = null, Size? size = null, DatePickerCtrlStyle style = DatePickerCtrlStyle.Showcentury)
+    DateTime? Value { get; set; }
+    event EventHandler<DateEvent>? DateChanged
+    void SetNullText(string text)
+    void SetRange(DateTime? earliest, DateTime? latest)
+[Flags] enum WxKit.DatePickerCtrlStyle : long
+    Allownone = 8
+    Default = 0
+    Dropdown = 2
+    None = 0
+    Showcentury = 4
+    Spin = 1
+class WxKit.Dialog : TopLevelWindow, IDisposable
+    Dialog(Window? parent, string title, int id = -1, Point? position = null, Size? size = null, DialogStyle style = DialogStyle.Default)
+    DialogLayoutAdaptationMode LayoutAdaptationMode { get; set; }
+    Window? ContentWindow { get; }
+    bool CanDoLayoutAdaptation { get; }
+    bool DoLayoutAdaptation()
+    bool IsMainButtonId(int id = -1)
+    bool IsModal { get; }
+    bool LayoutAdaptationDone { get; set; }
+    event EventHandler<InitDialogEvent>? InitDialogEvent
+    int AffirmativeId { get; set; }
+    int EscapeId { get; set; }
+    int LayoutAdaptationLevel { get; set; }
+    int ReturnCode { get; set; }
+    int ShowModal()
+    int[] MainButtonIds { get; }
+    static bool IsLayoutAdaptationEnabled { get; }
+    static void EnableLayoutAdaptation(bool enable)
+    void AddMainButtonId(int id = -1)
+    void Dispose()
+    void EndModal(int retCode)
+    void SetIcon(Icon icon)
+    void ShowWindowModal()
+enum WxKit.DialogLayoutAdaptationMode : int
+    Default = 0
+    Disabled = 2
+    Enabled = 1
+[Flags] enum WxKit.DialogStyle : long
+    Caption = 536870912
+    CloseBox = 4096
+    Default = 536877056
+    MaximizeBox = 512
+    MinimizeBox = 1024
+    NoParent = 32
+    None = 0
+    ResizeBorder = 64
+    StayOnTop = 32768
+    SystemMenu = 2048
+class WxKit.DirDialog : Dialog
+    DirDialog(Window? parent, string? message = null, string defaultPath = "", DirDialogStyle style = DirDialogStyle.Default, Point? position = null, Size? size = null)
+    string Message { get; set; }
+    string Path { get; set; }
+    void GetPaths(out string[] paths)
+[Flags] enum WxKit.DirDialogStyle : long
+    ChangeDir = 256
+    Default = 536877120
+    DirMustExist = 512
+    Multiple = 1024
+    None = 0
+    ShowHidden = 1
+class WxKit.DirPickerCtrl : PickerBase
+    DirPickerCtrl(Window parent, string path = "", string? message = null, int id = -1, Point? position = null, Size? size = null, DirPickerCtrlStyle? style = null)
+    event EventHandler<FileDirPickerEvent>? PathChanged
+    string Path { get; set; }
+    void SetInitialDirectory(string directory)
+[Flags] enum WxKit.DirPickerCtrlStyle : long
+    ChangeDir = 16
+    DirMustExist = 8
+    None = 0
+    Small = 32768
+    UseTextCtrl = 2
+[Flags] enum WxKit.Direction : int
+    All = 240
+    Bottom = 128
+    Left = 16
+    Right = 32
+    Top = 64
+enum WxKit.DragResult : int
+    DragCancel = 5
+    DragCopy = 2
+    DragError = 0
+    DragLink = 4
+    DragMove = 3
+    DragNone = 1
+class WxKit.DropFilesEvent : Event
+    Point Position { get; }
+    int NumberOfFiles { get; }
+    string[] Files { get; }
+class WxKit.EraseEvent : Event
+class WxKit.Event : EventArgs
+    EventCategory EventCategory { get; }
+    EvtHandler? EventObject { get; }
+    EvtHandler? EventUserData { get; }
+    bool IsCommandEvent { get; }
+    bool IsSkipped { get; }
+    bool ShouldPropagate()
+    int Id { get; set; }
+    int StopPropagation()
+    long Timestamp { get; set; }
+    void ResumePropagation(int propagationLevel)
+    void Skip(bool skip = true)
+enum WxKit.EventCategory : int
+    All = 127
+    Socket = 4
+    Thread = 16
+    Timer = 8
+    Ui = 1
+    UserInput = 2
+static class WxKit.EventType
+    static EventType<ActivateEvent> Activate { get; }
+    static EventType<ActivateEvent> ActivateApp { get; }
+    static EventType<BookCtrlEvent> ChoicebookPageChanged { get; }
+    static EventType<BookCtrlEvent> ChoicebookPageChanging { get; }
+    static EventType<BookCtrlEvent> ListbookPageChanged { get; }
+    static EventType<BookCtrlEvent> ListbookPageChanging { get; }
+    static EventType<BookCtrlEvent> NotebookPageChanged { get; }
+    static EventType<BookCtrlEvent> NotebookPageChanging { get; }
+    static EventType<BookCtrlEvent> ToolbookPageChanged { get; }
+    static EventType<BookCtrlEvent> ToolbookPageChanging { get; }
+    static EventType<BookCtrlEvent> TreebookNodeCollapsed { get; }
+    static EventType<BookCtrlEvent> TreebookNodeExpanded { get; }
+    static EventType<BookCtrlEvent> TreebookPageChanged { get; }
+    static EventType<BookCtrlEvent> TreebookPageChanging { get; }
+    static EventType<CalendarEvent> CalendarDoubleclicked { get; }
+    static EventType<CalendarEvent> CalendarPageChanged { get; }
+    static EventType<CalendarEvent> CalendarSelChanged { get; }
+    static EventType<CalendarEvent> CalendarWeekClicked { get; }
+    static EventType<CalendarEvent> CalendarWeekdayClicked { get; }
+    static EventType<ChildFocusEvent> ChildFocus { get; }
+    static EventType<CloseEvent> CloseWindow { get; }
+    static EventType<CloseEvent> EndSession { get; }
+    static EventType<CloseEvent> QueryEndSession { get; }
+    static EventType<CollapsiblePaneEvent> CollapsiblepaneChanged { get; }
+    static EventType<ColorDialogEvent> ColorChanged { get; }
+    static EventType<ColorPickerEvent> ColorPickerChanged { get; }
+    static EventType<ColorPickerEvent> ColorPickerCurrentChanged { get; }
+    static EventType<ColorPickerEvent> ColorPickerDialogCancelled { get; }
+    static EventType<CommandEvent> Button { get; }
+    static EventType<CommandEvent> Checkbox { get; }
+    static EventType<CommandEvent> Checklistbox { get; }
+    static EventType<CommandEvent> Choice { get; }
+    static EventType<CommandEvent> ComboBox { get; }
+    static EventType<CommandEvent> ComboBoxCloseup { get; }
+    static EventType<CommandEvent> ComboBoxDropdown { get; }
+    static EventType<CommandEvent> CommandEnter { get; }
+    static EventType<CommandEvent> CommandKillFocus { get; }
+    static EventType<CommandEvent> CommandLeftClick { get; }
+    static EventType<CommandEvent> CommandLeftDclick { get; }
+    static EventType<CommandEvent> CommandRightClick { get; }
+    static EventType<CommandEvent> CommandSetFocus { get; }
+    static EventType<CommandEvent> ContextMenu { get; }
+    static EventType<CommandEvent> Listbox { get; }
+    static EventType<CommandEvent> ListboxDclick { get; }
+    static EventType<CommandEvent> Menu { get; }
+    static EventType<CommandEvent> NotificationMessageAction { get; }
+    static EventType<CommandEvent> NotificationMessageClick { get; }
+    static EventType<CommandEvent> NotificationMessageDismissed { get; }
+    static EventType<CommandEvent> RadioButton { get; }
+    static EventType<CommandEvent> Radiobox { get; }
+    static EventType<CommandEvent> Search { get; }
+    static EventType<CommandEvent> SearchCancel { get; }
+    static EventType<CommandEvent> Slider { get; }
+    static EventType<CommandEvent> Text { get; }
+    static EventType<CommandEvent> TextCopy { get; }
+    static EventType<CommandEvent> TextCut { get; }
+    static EventType<CommandEvent> TextEnter { get; }
+    static EventType<CommandEvent> TextMaxlen { get; }
+    static EventType<CommandEvent> TextPaste { get; }
+    static EventType<CommandEvent> TextUrl { get; }
+    static EventType<CommandEvent> Togglebutton { get; }
+    static EventType<CommandEvent> Tool { get; }
+    static EventType<CommandEvent> ToolDropdown { get; }
+    static EventType<CommandEvent> ToolEnter { get; }
+    static EventType<CommandEvent> ToolRclicked { get; }
+    static EventType<DPIChangedEvent> DpiChanged { get; }
+    static EventType<DataViewEvent> DataViewCacheHint { get; }
+    static EventType<DataViewEvent> DataViewColumnHeaderClick { get; }
+    static EventType<DataViewEvent> DataViewColumnHeaderRightClick { get; }
+    static EventType<DataViewEvent> DataViewColumnReordered { get; }
+    static EventType<DataViewEvent> DataViewColumnSorted { get; }
+    static EventType<DataViewEvent> DataViewItemActivated { get; }
+    static EventType<DataViewEvent> DataViewItemBeginDrag { get; }
+    static EventType<DataViewEvent> DataViewItemCollapsed { get; }
+    static EventType<DataViewEvent> DataViewItemCollapsing { get; }
+    static EventType<DataViewEvent> DataViewItemContextMenu { get; }
+    static EventType<DataViewEvent> DataViewItemDrop { get; }
+    static EventType<DataViewEvent> DataViewItemDropPossible { get; }
+    static EventType<DataViewEvent> DataViewItemEditingDone { get; }
+    static EventType<DataViewEvent> DataViewItemEditingStarted { get; }
+    static EventType<DataViewEvent> DataViewItemExpanded { get; }
+    static EventType<DataViewEvent> DataViewItemExpanding { get; }
+    static EventType<DataViewEvent> DataViewItemStartEditing { get; }
+    static EventType<DataViewEvent> DataViewItemValueChanged { get; }
+    static EventType<DataViewEvent> DataViewSelectionChanged { get; }
+    static EventType<DateEvent> DateChanged { get; }
+    static EventType<DateEvent> TimeChanged { get; }
+    static EventType<DropFilesEvent> DropFiles { get; }
+    static EventType<EraseEvent> EraseBackground { get; }
+    static EventType<Event> MouseCaptureChanged { get; }
+    static EventType<Event> MouseCaptureLost { get; }
+    static EventType<Event> SetCursor { get; }
+    static EventType<FileDirPickerEvent> DirPickerChanged { get; }
+    static EventType<FileDirPickerEvent> FilePickerChanged { get; }
+    static EventType<FindDialogEvent> Find { get; }
+    static EventType<FindDialogEvent> FindClose { get; }
+    static EventType<FindDialogEvent> FindNext { get; }
+    static EventType<FindDialogEvent> FindReplace { get; }
+    static EventType<FindDialogEvent> FindReplaceAll { get; }
+    static EventType<FocusEvent> KillFocus { get; }
+    static EventType<FocusEvent> SetFocus { get; }
+    static EventType<FontPickerEvent> FontPickerChanged { get; }
+    static EventType<FullScreenEvent> FullScreen { get; }
+    static EventType<HelpEvent> Help { get; }
+    static EventType<HyperlinkEvent> Hyperlink { get; }
+    static EventType<IconizeEvent> Iconize { get; }
+    static EventType<IdleEvent> Idle { get; }
+    static EventType<InitDialogEvent> InitDialog { get; }
+    static EventType<KeyEvent> Char { get; }
+    static EventType<KeyEvent> CharHook { get; }
+    static EventType<KeyEvent> KeyDown { get; }
+    static EventType<KeyEvent> KeyUp { get; }
+    static EventType<ListEvent> ListBeginDrag { get; }
+    static EventType<ListEvent> ListBeginLabelEdit { get; }
+    static EventType<ListEvent> ListBeginRdrag { get; }
+    static EventType<ListEvent> ListCacheHint { get; }
+    static EventType<ListEvent> ListColBeginDrag { get; }
+    static EventType<ListEvent> ListColClick { get; }
+    static EventType<ListEvent> ListColDragging { get; }
+    static EventType<ListEvent> ListColEndDrag { get; }
+    static EventType<ListEvent> ListColRightClick { get; }
+    static EventType<ListEvent> ListDeleteAllItems { get; }
+    static EventType<ListEvent> ListDeleteItem { get; }
+    static EventType<ListEvent> ListEndLabelEdit { get; }
+    static EventType<ListEvent> ListInsertItem { get; }
+    static EventType<ListEvent> ListItemActivated { get; }
+    static EventType<ListEvent> ListItemChecked { get; }
+    static EventType<ListEvent> ListItemDeselected { get; }
+    static EventType<ListEvent> ListItemFocused { get; }
+    static EventType<ListEvent> ListItemMiddleClick { get; }
+    static EventType<ListEvent> ListItemRightClick { get; }
+    static EventType<ListEvent> ListItemSelected { get; }
+    static EventType<ListEvent> ListItemUnchecked { get; }
+    static EventType<ListEvent> ListKeyDown { get; }
+    static EventType<MaximizeEvent> Maximize { get; }
+    static EventType<MenuEvent> MenuClose { get; }
+    static EventType<MenuEvent> MenuHighlight { get; }
+    static EventType<MenuEvent> MenuOpen { get; }
+    static EventType<MouseEvent> Aux1Dclick { get; }
+    static EventType<MouseEvent> Aux1Down { get; }
+    static EventType<MouseEvent> Aux1Up { get; }
+    static EventType<MouseEvent> Aux2Dclick { get; }
+    static EventType<MouseEvent> Aux2Down { get; }
+    static EventType<MouseEvent> Aux2Up { get; }
+    static EventType<MouseEvent> EnterWindow { get; }
+    static EventType<MouseEvent> LeaveWindow { get; }
+    static EventType<MouseEvent> LeftDclick { get; }
+    static EventType<MouseEvent> LeftDown { get; }
+    static EventType<MouseEvent> LeftUp { get; }
+    static EventType<MouseEvent> Magnify { get; }
+    static EventType<MouseEvent> MiddleDclick { get; }
+    static EventType<MouseEvent> MiddleDown { get; }
+    static EventType<MouseEvent> MiddleUp { get; }
+    static EventType<MouseEvent> Motion { get; }
+    static EventType<MouseEvent> Mousewheel { get; }
+    static EventType<MouseEvent> RightDclick { get; }
+    static EventType<MouseEvent> RightDown { get; }
+    static EventType<MouseEvent> RightUp { get; }
+    static EventType<MoveEvent> Move { get; }
+    static EventType<MoveEvent> MoveEnd { get; }
+    static EventType<MoveEvent> MoveStart { get; }
+    static EventType<MoveEvent> Moving { get; }
+    static EventType<NavigationKeyEvent> NavigationKey { get; }
+    static EventType<PaintEvent> Paint { get; }
+    static EventType<ScrollEvent> ScrollBar { get; }
+    static EventType<ScrollEvent> ScrollBottom { get; }
+    static EventType<ScrollEvent> ScrollChanged { get; }
+    static EventType<ScrollEvent> ScrollLineDown { get; }
+    static EventType<ScrollEvent> ScrollLineUp { get; }
+    static EventType<ScrollEvent> ScrollPageDown { get; }
+    static EventType<ScrollEvent> ScrollPageUp { get; }
+    static EventType<ScrollEvent> ScrollThumbRelease { get; }
+    static EventType<ScrollEvent> ScrollThumbTrack { get; }
+    static EventType<ScrollEvent> ScrollTop { get; }
+    static EventType<ScrollWinEvent> ScrollWinBottom { get; }
+    static EventType<ScrollWinEvent> ScrollWinLineDown { get; }
+    static EventType<ScrollWinEvent> ScrollWinLineUp { get; }
+    static EventType<ScrollWinEvent> ScrollWinPageDown { get; }
+    static EventType<ScrollWinEvent> ScrollWinPageUp { get; }
+    static EventType<ScrollWinEvent> ScrollWinThumbRelease { get; }
+    static EventType<ScrollWinEvent> ScrollWinThumbTrack { get; }
+    static EventType<ScrollWinEvent> ScrollWinTop { get; }
+    static EventType<ShowEvent> Show { get; }
+    static EventType<SizeEvent> Size { get; }
+    static EventType<SpinDoubleEvent> Spinctrldouble { get; }
+    static EventType<SpinEvent> Spin { get; }
+    static EventType<SpinEvent> SpinDown { get; }
+    static EventType<SpinEvent> SpinUp { get; }
+    static EventType<SpinEvent> Spinctrl { get; }
+    static EventType<SplitterEvent> SplitterDoubleclicked { get; }
+    static EventType<SplitterEvent> SplitterSashPosChanged { get; }
+    static EventType<SplitterEvent> SplitterSashPosChanging { get; }
+    static EventType<SplitterEvent> SplitterSashPosResize { get; }
+    static EventType<SplitterEvent> SplitterUnsplit { get; }
+    static EventType<SysColorChangedEvent> SysColorChanged { get; }
+    static EventType<TaskBarIconEvent> TaskbarClick { get; }
+    static EventType<TaskBarIconEvent> TaskbarLeftDclick { get; }
+    static EventType<TaskBarIconEvent> TaskbarLeftDown { get; }
+    static EventType<TaskBarIconEvent> TaskbarLeftUp { get; }
+    static EventType<TaskBarIconEvent> TaskbarMove { get; }
+    static EventType<TaskBarIconEvent> TaskbarRightDclick { get; }
+    static EventType<TaskBarIconEvent> TaskbarRightDown { get; }
+    static EventType<TaskBarIconEvent> TaskbarRightUp { get; }
+    static EventType<TimerEvent> Timer { get; }
+    static EventType<TreeEvent> TreeBeginDrag { get; }
+    static EventType<TreeEvent> TreeBeginLabelEdit { get; }
+    static EventType<TreeEvent> TreeBeginRdrag { get; }
+    static EventType<TreeEvent> TreeDeleteItem { get; }
+    static EventType<TreeEvent> TreeEndDrag { get; }
+    static EventType<TreeEvent> TreeEndLabelEdit { get; }
+    static EventType<TreeEvent> TreeGetInfo { get; }
+    static EventType<TreeEvent> TreeItemActivated { get; }
+    static EventType<TreeEvent> TreeItemCollapsed { get; }
+    static EventType<TreeEvent> TreeItemCollapsing { get; }
+    static EventType<TreeEvent> TreeItemExpanded { get; }
+    static EventType<TreeEvent> TreeItemExpanding { get; }
+    static EventType<TreeEvent> TreeItemGettooltip { get; }
+    static EventType<TreeEvent> TreeItemMenu { get; }
+    static EventType<TreeEvent> TreeItemMiddleClick { get; }
+    static EventType<TreeEvent> TreeItemRightClick { get; }
+    static EventType<TreeEvent> TreeKeyDown { get; }
+    static EventType<TreeEvent> TreeSelChanged { get; }
+    static EventType<TreeEvent> TreeSelChanging { get; }
+    static EventType<TreeEvent> TreeSetInfo { get; }
+    static EventType<TreeEvent> TreeStateImageClick { get; }
+    static EventType<UpdateUIEvent> UpdateUi { get; }
+sealed class WxKit.EventType`1<TEvent>
+    int Value { get; }
+abstract class WxKit.EvtHandler
+    bool IsDestroyed { get; }
+    void Bind<TEvent>(EventType<TEvent> type, EventHandler<TEvent> handler)
+    void Bind<TEvent>(EventType<TEvent> type, int id, EventHandler<TEvent> handler)
+    void Bind<TEvent>(EventType<TEvent> type, int id, int lastId, EventHandler<TEvent> handler)
+    void Unbind<TEvent>(EventType<TEvent> type, EventHandler<TEvent> handler)
+    void Unbind<TEvent>(EventType<TEvent> type, int id, EventHandler<TEvent> handler)
+    void Unbind<TEvent>(EventType<TEvent> type, int id, int lastId, EventHandler<TEvent> handler)
+class WxKit.FileDialog : Dialog
+    FileDialog(Window? parent, string? message = null, string defaultDir = "", string defaultFile = "", string? wildcard = null, FileDialogStyle style = FileDialogStyle.Open, Point? position = null, Size? size = null)
+    Window? ExtraControl { get; }
+    bool AddShortcut(string directory, int flags = 0)
+    int CurrentlySelectedFilterIndex { get; }
+    int FilterIndex { get; set; }
+    string CurrentlySelectedFilename { get; }
+    string Directory { get; set; }
+    string Filename { get; set; }
+    string Message { get; set; }
+    string Path { get; set; }
+    string Wildcard { get; set; }
+    void GetFilenames(out string[] filenames)
+    void GetPaths(out string[] paths)
+[Flags] enum WxKit.FileDialogStyle : long
+    ChangeDir = 128
+    Default = 1
+    FileMustExist = 16
+    Multiple = 512
+    NoFollow = 8
+    None = 0
+    Open = 1
+    OverwritePrompt = 4
+    Preview = 256
+    Save = 2
+    ShowHidden = 1024
+class WxKit.FileDirPickerEvent : CommandEvent
+    string Path { get; }
+class WxKit.FilePickerCtrl : PickerBase
+    FilePickerCtrl(Window parent, string path = "", string? message = null, string? wildcard = null, int id = -1, Point? position = null, Size? size = null, FilePickerCtrlStyle? style = null)
+    event EventHandler<FileDirPickerEvent>? PathChanged
+    string Path { get; set; }
+    void SetInitialDirectory(string directory)
+[Flags] enum WxKit.FilePickerCtrlStyle : long
+    ChangeDir = 16384
+    FileMustExist = 8192
+    None = 0
+    Open = 1024
+    OverwritePrompt = 4096
+    Save = 2048
+    Small = 32768
+    UseTextCtrl = 2
+class WxKit.FindDialogEvent : CommandEvent
+    FindReplaceDialog? Dialog { get; }
+    FindReplaceFlags Flags { get; }
+    string FindString { get; }
+    string ReplaceString { get; }
+class WxKit.FindReplaceData : NativeObject
+    FindReplaceData(FindReplaceFlags flags = FindReplaceFlags.0)
+    FindReplaceFlags Flags { get; set; }
+    string FindString { get; set; }
+    string ReplaceString { get; set; }
+class WxKit.FindReplaceDialog : Dialog
+    FindReplaceDialog(Window? parent, FindReplaceData data, string title, FindReplaceDialogStyle style = FindReplaceDialogStyle.0)
+    event EventHandler<FindDialogEvent>? Find
+    event EventHandler<FindDialogEvent>? FindClose
+    event EventHandler<FindDialogEvent>? FindNext
+    event EventHandler<FindDialogEvent>? Replace
+    event EventHandler<FindDialogEvent>? ReplaceAll
+[Flags] enum WxKit.FindReplaceDialogStyle : int
+    NoMatchCase = 4
+    NoUpDown = 2
+    NoWholeWord = 8
+    ReplaceDialog = 1
+[Flags] enum WxKit.FindReplaceFlags : int
+    Down = 1
+    MatchCase = 4
+    WholeWord = 2
+class WxKit.FlexGridSizer : GridSizer
+    FlexGridSizer(int cols)
+    FlexGridSizer(int cols, int vgap, int hgap)
+    FlexGridSizer(int rows, int cols, Size gap)
+    FlexGridSizer(int rows, int cols, int vgap, int hgap)
+    FlexSizerGrowMode NonFlexibleGrowMode { get; set; }
+    bool IsColGrowable(int index)
+    bool IsRowGrowable(int index)
+    int FlexibleDirection { get; set; }
+    int[] ColWidths { get; }
+    int[] RowHeights { get; }
+    void AddGrowableCol(int index, int proportion = 0)
+    void AddGrowableRow(int index, int proportion = 0)
+    void RemoveGrowableCol(int index)
+    void RemoveGrowableRow(int index)
+enum WxKit.FlexSizerGrowMode : int
+    All = 2
+    None = 0
+    Specified = 1
+enum WxKit.FloodFillStyle : int
+    Border = 2
+    Surface = 1
+class WxKit.FocusEvent : Event
+    Window? Window { get; set; }
+class WxKit.Font : NativeObject
+    Font MakeBold()
+    Font MakeItalic()
+    Font MakeLarger()
+    Font MakeSmaller()
+    Font MakeStrikethrough()
+    Font MakeUnderlined()
+    Font Scale(float x)
+    Font()
+    Font(Size pixelSize, FontFamily family, FontStyle style, FontWeight weight, bool underline = false, string faceName = "", FontEncoding encoding = FontEncoding.Default)
+    Font(int pointSize, FontFamily family, FontStyle style, FontWeight weight, bool underline = false, string faceName = "", FontEncoding encoding = FontEncoding.Default)
+    Font(string nativeInfoString)
+    Font? BaseFont { get; }
+    Font? Bold()
+    Font? Italic()
+    Font? Larger()
+    Font? Scaled(float x)
+    Font? Smaller()
+    Font? WithStrikethrough()
+    Font? WithUnderline()
+    FontEncoding Encoding { get; set; }
+    FontFamily Family { get; set; }
+    FontStyle Style { get; set; }
+    FontWeight Weight { get; set; }
+    Size PixelSize { get; set; }
+    bool IsFixedWidth { get; }
+    bool IsOk { get; }
+    bool SetNativeFontInfo(string info)
+    bool Strikethrough { get; set; }
+    bool Underlined { get; set; }
+    double FractionalPointSize { get; set; }
+    int NumericWeight { get; set; }
+    int PointSize { get; set; }
+    static FontEncoding DefaultEncoding { get; set; }
+    static bool AddPrivateFont(string filename)
+    static int GetNumericWeightOf(FontWeight weight)
+    string FaceName { get; set; }
+    string NativeFontInfoDesc { get; }
+    string NativeFontInfoUserDesc { get; set; }
+    void SetSymbolicSize(FontSymbolicSize size)
+    void SetSymbolicSizeRelativeTo(FontSymbolicSize size, int base)
+class WxKit.FontData : NativeObject
+    Color? Color { get; set; }
+    Font? ChosenFont { get; set; }
+    Font? InitialFont { get; set; }
+    FontData()
+    bool AllowSymbols { get; set; }
+    bool EnableEffects { get; set; }
+    bool ShowHelp { get; set; }
+    int RestrictSelection { get; set; }
+    void SetRange(int min, int max)
+class WxKit.FontDialog : Dialog
+    FontData? FontData { get; }
+    FontDialog(Window? parent)
+    FontDialog(Window? parent, FontData data)
+enum WxKit.FontEncoding : int
+    Alternative = 19
+    Big5 = 30
+    Bulgarian = 20
+    Cp1250 = 31
+    Cp1251 = 32
+    Cp1252 = 33
+    Cp1253 = 34
+    Cp1254 = 35
+    Cp1255 = 36
+    Cp1256 = 37
+    Cp1257 = 38
+    Cp1258 = 39
+    Cp12Max = 41
+    Cp1361 = 40
+    Cp437 = 21
+    Cp850 = 22
+    Cp852 = 23
+    Cp855 = 24
+    Cp866 = 25
+    Cp874 = 26
+    Cp932 = 27
+    Cp936 = 28
+    Cp949 = 29
+    Cp950 = 30
+    Default = 0
+    EucJp = 44
+    EucKr = 29
+    Gb2312 = 28
+    Iso2022Jp = 89
+    Iso8859Max = 16
+    Iso8859_1 = 1
+    Iso8859_10 = 10
+    Iso8859_11 = 11
+    Iso8859_12 = 12
+    Iso8859_13 = 13
+    Iso8859_14 = 14
+    Iso8859_15 = 15
+    Iso8859_2 = 2
+    Iso8859_3 = 3
+    Iso8859_4 = 4
+    Iso8859_5 = 5
+    Iso8859_6 = 6
+    Iso8859_7 = 7
+    Iso8859_8 = 8
+    Iso8859_9 = 9
+    Johab = 40
+    Koi8 = 17
+    Koi8U = 18
+    Macarabic = 53
+    Macarabicext = 79
+    Macarmenian = 72
+    Macbengali = 61
+    Macburmese = 67
+    Macceltic = 86
+    Maccentraleur = 77
+    Macchinesesimp = 73
+    Macchinesetrad = 51
+    Maccroatian = 83
+    Maccyrillic = 56
+    Macdevanagari = 57
+    Macdingbats = 81
+    Macethiopic = 76
+    Macgaelic = 87
+    Macgeorgian = 71
+    Macgreek = 55
+    Macgujarati = 59
+    Macgurmukhi = 58
+    Machebrew = 54
+    Macicelandic = 84
+    Macjapanese = 50
+    Mackannada = 64
+    Mackeyboard = 88
+    Mackhmer = 68
+    Mackorean = 52
+    Maclaotian = 70
+    Macmalajalam = 65
+    Macmax = 88
+    Macmin = 49
+    Macmongolian = 75
+    Macoriya = 60
+    Macroman = 49
+    Macromanian = 85
+    Macsinhalese = 66
+    Macsymbol = 80
+    Mactamil = 62
+    Mactelugu = 63
+    Macthai = 69
+    Mactibetan = 74
+    Macturkish = 82
+    Macvietnamese = 78
+    Max = 90
+    ShiftJis = 27
+    System = -1
+    Utf16be = 45
+    Utf16le = 46
+    Utf32be = 47
+    Utf32le = 48
+    Utf7 = 42
+    Utf8 = 43
+    Vietnamese = 39
+enum WxKit.FontFamily : int
+    Decorative = 71
+    Default = 70
+    Max = 77
+    Modern = 75
+    Roman = 72
+    Script = 73
+    Swiss = 74
+    Teletype = 76
+    Unknown = 77
+class WxKit.FontPickerCtrl : PickerBase
+    Color? SelectedColor { get; set; }
+    Font? SelectedFont { get; set; }
+    FontPickerCtrl(Window parent, Font? font = null, int id = -1, Point? position = null, Size? size = null, FontPickerCtrlStyle style = FontPickerCtrlStyle.Default)
+    event EventHandler<FontPickerEvent>? FontChanged
+    int MaxPointSize { get; set; }
+    int MinPointSize { get; set; }
+[Flags] enum WxKit.FontPickerCtrlStyle : long
+    Default = 24
+    FontDescAsLabel = 8
+    None = 0
+    UseFontForLabel = 16
+    UseTextCtrl = 2
+class WxKit.FontPickerEvent : CommandEvent
+    Font? Font { get; }
+enum WxKit.FontStyle : int
+    Italic = 93
+    Max = 95
+    Normal = 90
+    Slant = 94
+enum WxKit.FontSymbolicSize : int
+    Large = 1
+    Medium = 0
+    Small = -1
+    XLarge = 2
+    XSmall = -2
+    XxLarge = 3
+    XxSmall = -3
+enum WxKit.FontWeight : int
+    Bold = 700
+    Extrabold = 800
+    Extraheavy = 1000
+    Extralight = 200
+    Heavy = 900
+    Invalid = 0
+    Light = 300
+    Max = 1000
+    Medium = 500
+    Normal = 400
+    Semibold = 600
+    Thin = 100
+class WxKit.Frame : TopLevelWindow
+    Frame(Window? parent, string title, int id = -1, Point? position = null, Size? size = null, FrameStyle style = FrameStyle.Default)
+    MenuBar? MenuBar { get; set; }
+    StatusBar? CreateStatusBar(int number = 1, StatusBarStyle style = StatusBarStyle.Default, string? name = null, int id = -1)
+    StatusBar? StatusBar { get; set; }
+    ToolBar? CreateToolBar(ToolBarStyle style = ToolBarStyle.Default, string? name = null, int id = -1)
+    ToolBar? ToolBar { get; set; }
+    bool ProcessCommand(int id = -1)
+    event EventHandler<IconizeEvent>? Iconized
+    event EventHandler<MenuEvent>? MenuClosed
+    event EventHandler<MenuEvent>? MenuHighlighted
+    event EventHandler<MenuEvent>? MenuOpened
+    int StatusBarPane { get; set; }
+    void DoGiveHelp(string text, bool show)
+    void PopStatusText(int number = 0)
+    void PushStatusText(string text, int number = 0)
+    void SetStatusText(string text, int number = 0)
+    void SetStatusWidths(IEnumerable<int> widths)
+    void SetWindowModality(WindowMode modality)
+[Flags] enum WxKit.FrameStyle : long
+    Caption = 536870912
+    CloseBox = 4096
+    Default = 541072960
+    FloatOnParent = 8
+    Iconize = 16384
+    Maximize = 8192
+    MaximizeBox = 512
+    Minimize = 16384
+    MinimizeBox = 1024
+    NoTaskbar = 2
+    None = 0
+    ResizeBorder = 64
+    Shaped = 16
+    StayOnTop = 32768
+    SystemMenu = 2048
+    ToolWindow = 4
+class WxKit.FullScreenEvent : Event
+    bool IsFullScreen { get; }
+[Flags] enum WxKit.FullScreenStyle : int
+    All = 31
+    NoBorder = 8
+    NoCaption = 16
+    NoMenuBar = 1
+    NoStatusBar = 4
+    NoToolBar = 2
+    None = 0
+class WxKit.Gauge : Control
+    Gauge(Window parent, int range, int id = -1, Point? position = null, Size? size = null, GaugeStyle style = GaugeStyle.Horizontal)
+    bool IsVertical { get; }
+    int Range { get; set; }
+    int Value { get; set; }
+    void Pulse()
+[Flags] enum WxKit.GaugeStyle : long
+    Horizontal = 4
+    None = 0
+    Progress = 16
+    Smooth = 32
+    Text = 64
+    Vertical = 8
+class WxKit.GridBagSizer : FlexGridSizer
+    GridBagSizer(int vgap = 0, int hgap = 0)
+    GridPosition GetItemPosition(Sizer sizer)
+    GridPosition GetItemPosition(Window window)
+    GridPosition GetItemPosition(int index)
+    GridSpan GetItemSpan(Sizer sizer)
+    GridSpan GetItemSpan(Window window)
+    GridSpan GetItemSpan(int index)
+    Size EmptyCellSize { get; set; }
+    Size GetCellSize(int row, int column)
+    bool Add(Sizer sizer, GridPosition position, GridSpan? span = null, SizerFlags flags = null)
+    bool Add(Window window, GridPosition position, GridSpan? span = null, SizerFlags flags = null)
+    bool AddSpacer(Size size, GridPosition position, GridSpan? span = null, SizerFlags flags = null)
+    bool CheckForIntersection(GridPosition position, GridSpan span)
+    bool SetItemPosition(Sizer sizer, GridPosition position)
+    bool SetItemPosition(Window window, GridPosition position)
+    bool SetItemPosition(int index, GridPosition position)
+    bool SetItemSpan(Sizer sizer, GridSpan span)
+    bool SetItemSpan(Window window, GridSpan span)
+    bool SetItemSpan(int index, GridSpan span)
+readonly record struct WxKit.GridPosition : IEquatable<GridPosition>
+    GridPosition(int Row, int Column)
+    bool Equals(GridPosition other)
+    int Column { get; init; }
+    int Row { get; init; }
+    override bool Equals(object obj)
+    override int GetHashCode()
+    override string ToString()
+    static bool op_Equality(GridPosition left, GridPosition right)
+    static bool op_Inequality(GridPosition left, GridPosition right)
+    void Deconstruct(out int Row, out int Column)
+class WxKit.GridSizer : Sizer
+    GridSizer(int cols)
+    GridSizer(int cols, int vgap, int hgap)
+    GridSizer(int rows, int cols, Size gap)
+    GridSizer(int rows, int cols, int vgap, int hgap)
+    Size CalcMin()
+    int Cols { get; set; }
+    int EffectiveColsCount { get; }
+    int EffectiveRowsCount { get; }
+    int HGap { get; set; }
+    int Rows { get; set; }
+    int VGap { get; set; }
+    void RepositionChildren(Size minSize)
+readonly record struct WxKit.GridSpan : IEquatable<GridSpan>
+    GridSpan(int Rows, int Columns)
+    bool Equals(GridSpan other)
+    int Columns { get; init; }
+    int Rows { get; init; }
+    override bool Equals(object obj)
+    override int GetHashCode()
+    override string ToString()
+    static GridSpan Default { get; }
+    static bool op_Equality(GridSpan left, GridSpan right)
+    static bool op_Inequality(GridSpan left, GridSpan right)
+    void Deconstruct(out int Rows, out int Columns)
+class WxKit.HelpEvent : CommandEvent
+    Origin Origin { get; set; }
+    Point Position { get; set; }
+enum WxKit.HitTest : int
+    Max = 14
+    Nowhere = 0
+    ScrollBarArrowLine1 = 1
+    ScrollBarArrowLine2 = 2
+    ScrollBarArrowPage1 = 3
+    ScrollBarArrowPage2 = 4
+    ScrollBarBar1 = 6
+    ScrollBarBar2 = 7
+    ScrollBarFirst = 0
+    ScrollBarLast = 8
+    ScrollBarThumb = 5
+    WindowCorner = 13
+    WindowHorzScrollBar = 12
+    WindowInside = 10
+    WindowOutside = 9
+    WindowVertScrollBar = 11
+class WxKit.HyperlinkCtrl : Control
+    Color? HoverColor { get; set; }
+    Color? NormalColor { get; set; }
+    Color? VisitedColor { get; set; }
+    HyperlinkCtrl(Window parent, string label, string url, int id = -1, Point? position = null, Size? size = null, HyperlinkCtrlStyle style = HyperlinkCtrlStyle.Default)
+    bool Visited { get; set; }
+    event EventHandler<HyperlinkEvent>? Click
+    string URL { get; set; }
+[Flags] enum WxKit.HyperlinkCtrlStyle : long
+    AlignCenter = 8
+    AlignLeft = 2
+    AlignRight = 4
+    Contextmenu = 1
+    Default = 2097161
+    None = 0
+class WxKit.HyperlinkEvent : CommandEvent
+    string URL { get; set; }
+class WxKit.Icon : NativeObject
+    Icon()
+    Icon(string name, BitmapType? type = null, int desiredWidth = -1, int desiredHeight = -1)
+    Size LogicalSize { get; }
+    Size Size { get; }
+    bool IsOk { get; }
+    bool LoadFile(string name, BitmapType? type = null, int desiredWidth = -1, int desiredHeight = -1)
+    double LogicalHeight { get; }
+    double LogicalWidth { get; }
+    double ScaleFactor { get; }
+    int Depth { get; }
+    int Height { get; }
+    int Width { get; }
+    void CopyFromBitmap(Bitmap bitmap)
+class WxKit.IconizeEvent : Event
+    bool IsIconized { get; }
+class WxKit.IdleEvent : Event
+    bool MoreRequested()
+    static IdleMode Mode { get; set; }
+    void RequestMore(bool needMore = true)
+enum WxKit.IdleMode : int
+    All = 0
+    Specified = 1
+class WxKit.Image : NativeObject
+    BitmapType Type { get; set; }
+    Image Rescale(Size size, ImageResizeQuality quality = ImageResizeQuality.Normal)
+    Image Rescale(int width, int height, ImageResizeQuality quality = ImageResizeQuality.Normal)
+    Image Resize(Size size, Point position, int red = -1, int green = -1, int blue = -1)
+    Image()
+    Image(Size size, bool clear = true)
+    Image(int width, int height, bool clear = true)
+    Image(string name, BitmapType type = BitmapType.Any, int index = -1)
+    Image(string name, string mimetype, int index = -1)
+    Image? Blur(int blurRadius)
+    Image? BlurHorizontal(int blurRadius)
+    Image? BlurVertical(int blurRadius)
+    Image? ChangeLightness(int alpha)
+    Image? ConvertToDisabled(byte brightness = 255)
+    Image? ConvertToGreyscale()
+    Image? ConvertToGreyscale(double weightR, double weightG, double weightB)
+    Image? ConvertToMono(byte r, byte g, byte b)
+    Image? Copy()
+    Image? GetSubImage(Rect rect)
+    Image? Mirror(bool horizontally = true)
+    Image? Resized(Size size, Point position, int red = -1, int green = -1, int blue = -1)
+    Image? Rotate(double angle, Point rotationCenter, bool interpolating = true)
+    Image? Rotate180()
+    Image? Rotate90(bool clockwise = true)
+    Image? Scale(Size size, ImageResizeQuality quality = ImageResizeQuality.Normal)
+    Image? Scale(int width, int height, ImageResizeQuality quality = ImageResizeQuality.Normal)
+    Size Size { get; }
+    bool ConvertAlphaToMask()
+    bool ConvertAlphaToMask(byte mr, byte mg, byte mb)
+    bool Create(Size size, bool clear = true)
+    bool Create(int width, int height, bool clear = true)
+    bool HasAlpha { get; }
+    bool HasMask { get; }
+    bool HasOption(string name)
+    bool IsOk { get; }
+    bool IsTransparent(int x, int y)
+    bool LoadFile(string name, BitmapType type = BitmapType.Any, int index = -1)
+    bool LoadFile(string name, string mimetype, int index = -1)
+    bool SaveFile(string name)
+    bool SaveFile(string name, BitmapType type)
+    bool SaveFile(string name, string mimetype)
+    bool SetMaskFromImage(Image mask, byte mr, byte mg, byte mb)
+    byte GetAlpha(int x, int y)
+    byte GetBlue(int x, int y)
+    byte GetGreen(int x, int y)
+    byte GetRed(int x, int y)
+    byte MaskBlue { get; }
+    byte MaskGreen { get; }
+    byte MaskRed { get; }
+    int GetOptionInt(string name)
+    int Height { get; }
+    int LoadFlags { get; set; }
+    int Width { get; }
+    static bool CanRead(string filename)
+    static bool RemoveHandler(string name)
+    static int DefaultLoadFlags { get; set; }
+    static int GetImageCount(string filename, BitmapType type = BitmapType.Any)
+    static string ImageExtWildcard { get; }
+    static void AddAllHandlers()
+    static void AddGifHandler()
+    static void AddIconHandler()
+    static void AddIffHandler()
+    static void AddJpegHandler()
+    static void AddPcxHandler()
+    static void AddPngHandler()
+    static void AddPnmHandler()
+    static void AddTgaHandler()
+    static void AddTiffHandler()
+    static void AddWebpHandler()
+    static void AddXpmHandler()
+    static void CleanUpHandlers()
+    static void InitStandardHandlers()
+    string GetOption(string name)
+    void ChangeBrightness(double factor)
+    void ChangeHSV(double angleH, double factorS, double factorV)
+    void ChangeSaturation(double factor)
+    void Clear(byte value = 0)
+    void ClearAlpha()
+    void Destroy()
+    void InitAlpha()
+    void Paste(Image image, int x, int y, ImageAlphaBlendMode alphaBlend = ImageAlphaBlendMode.Over)
+    void Replace(byte r1, byte g1, byte b1, byte r2, byte g2, byte b2)
+    void RotateHue(double angle)
+    void SetAlpha()
+    void SetAlpha(int x, int y, byte alpha)
+    void SetMask(bool hasMask = true)
+    void SetMaskColor(byte red, byte green, byte blue)
+    void SetOption(string name, int value)
+    void SetOption(string name, string value)
+    void SetRGB(Rect rect, byte red, byte green, byte blue)
+    void SetRGB(int x, int y, byte r, byte g, byte b)
+enum WxKit.ImageAlphaBlendMode : int
+    Compose = 1
+    Over = 0
+enum WxKit.ImageResizeQuality : int
+    Bicubic = 2
+    Bilinear = 1
+    BoxAverage = 3
+    Fast = 6
+    High = 4
+    Nearest = 5
+    Normal = 0
+class WxKit.InfoBar : Control
+    InfoBar(Window parent, WindowStyle style = WindowStyle.None, int id = -1)
+    ShowEffect HideEffect { get; }
+    ShowEffect ShowEffect { get; }
+    bool HasButtonId(int buttonId)
+    bool IsCheckBoxChecked { get; }
+    bool SetFont(Font font)
+    int ButtonCount { get; }
+    int EffectDuration { get; set; }
+    int GetButtonId(int index)
+    void AddButton(int buttonId, string label = "")
+    void Dismiss()
+    void RemoveButton(int buttonId)
+    void SetShowHideEffects(ShowEffect showEffect, ShowEffect hideEffect)
+    void ShowCheckBox(string checkBoxText, bool checked)
+    void ShowMessage(string message, MessageIcon icon = MessageIcon.Information)
+class WxKit.InitDialogEvent : Event
+class WxKit.KeyEvent : Event
+    Point Position { get; }
+    bool AltDown()
+    bool CmdDown()
+    bool ControlDown()
+    bool HasAnyModifiers { get; }
+    bool HasModifiers { get; }
+    bool IsAutoRepeat { get; }
+    bool IsKeyInCategory(int category)
+    bool IsNextEventAllowed { get; }
+    bool MetaDown()
+    bool RawControlDown()
+    bool ShiftDown()
+    int KeyCode { get; }
+    int Modifiers { get; }
+    int RawKeyCode { get; }
+    int RawKeyFlags { get; }
+    int X { get; }
+    int Y { get; }
+    void DoAllowNextEvent()
+    void GetPosition(out int x, out int y)
+    void SetAltDown(bool down)
+    void SetControlDown(bool down)
+    void SetMetaDown(bool down)
+    void SetRawControlDown(bool down)
+    void SetShiftDown(bool down)
+enum WxKit.LayoutDirection : int
+    Default = 0
+    LeftToRight = 1
+    RightToLeft = 2
+class WxKit.ListBox : Control
+    ListBox(Window parent, IEnumerable<string> choices, int id = -1, Point? position = null, Size? size = null, ListBoxStyle style = ListBoxStyle.None)
+    ListBox(Window parent, int id = -1, Point? position = null, Size? size = null)
+    bool HasClientData { get; }
+    bool HasClientObjectData { get; }
+    bool HasClientUntypedData { get; }
+    bool HasMultipleSelection { get; }
+    bool IsEmpty { get; }
+    bool IsSelected(int index)
+    bool IsSorted { get; }
+    bool SetStringSelection(string s, bool select)
+    event EventHandler<CommandEvent>? ItemDoubleClicked
+    event EventHandler<CommandEvent>? SelectionChanged
+    int Append(IEnumerable<string> items)
+    int Append(string item)
+    int Append(string item, object? clientData)
+    int Count { get; }
+    int CountPerPage { get; }
+    int FindString(string text, bool caseSensitive = false)
+    int GetSelections(out int[] selections)
+    int Insert(IEnumerable<string> items, int position)
+    int Insert(string item, int position)
+    int Insert(string item, int position, object? clientData)
+    int Selection { get; set; }
+    int TopItem { get; }
+    object? GetClientObject(int index)
+    string GetString(int index)
+    string StringSelection { get; set; }
+    string[] Strings { get; }
+    void Clear()
+    void Delete(int index)
+    void Deselect(int index)
+    void EnsureVisible(int index)
+    void InsertItems(IEnumerable<string> items, int position)
+    void Select(int index)
+    void Set(IEnumerable<string> items)
+    void SetClientObject(int index, object? data)
+    void SetFirstItem(int index)
+    void SetFirstItem(string text)
+    void SetString(int index, string text)
+[Flags] enum WxKit.ListBoxStyle : long
+    AlwaysSb = 512
+    Extended = 128
+    HorizontalScrollBar = 1073741824
+    Multiple = 64
+    NeededSb = 0
+    NoSb = 1024
+    None = 0
+    Single = 32
+    Sort = 16
+enum WxKit.ListColumnFormat : int
+    Center = 2
+    Left = 0
+    Right = 1
+class WxKit.ListCtrl : Control
+    Color? AlternateRowColor { get; set; }
+    Color? GetItemBackgroundColor(long item)
+    Color? GetItemTextColor(long item)
+    Color? TextColor { get; set; }
+    Font? GetItemFont(long item)
+    ListCtrl(Window parent, int id = -1, Point? position = null, Size? size = null, ListCtrlStyle style = ListCtrlStyle.Icon)
+    Rect ViewRect { get; }
+    Size ItemSpacing { get; }
+    TextCtrl? EditControl { get; }
+    TextCtrl? EditLabel(long item)
+    bool Arrange(int flag = 0)
+    bool DeleteAllColumns()
+    bool DeleteAllItems()
+    bool DeleteColumn(int column)
+    bool DeleteItem(long item)
+    bool EnableCheckBoxes(bool enable = true)
+    bool EndEditLabel(bool cancel)
+    bool EnsureVisible(long item)
+    bool GetColumn(int column, ListItem item)
+    bool GetItem(ListItem info)
+    bool GetItemRect(long item, out Rect rect, int code = 0)
+    bool GetSubItemRect(long item, long subItem, out Rect rect, int code = 0)
+    bool GetUpdatedAscendingSortIndicator(int column)
+    bool HasCheckBoxes { get; }
+    bool InReportView()
+    bool IsAscendingSortIndicator { get; }
+    bool IsEmpty { get; }
+    bool IsItemChecked(long item)
+    bool IsVirtual { get; }
+    bool IsVisible(long item)
+    bool ScrollList(int dx, int dy)
+    bool SetBackgroundColor(Color? column)
+    bool SetColumn(int column, ListItem item)
+    bool SetColumnWidth(int column, int width)
+    bool SetItem(ListItem info)
+    bool SetItem(long index, int column, string label, int imageId = -1)
+    bool SetItemColumnImage(long item, long column, int image)
+    bool SetItemData(long item, long data)
+    bool SetItemImage(long item, int image, int selImage = -1)
+    bool SetItemPosition(long item, Point position)
+    bool SetItemState(long item, long state, long stateMask)
+    event EventHandler<ListEvent>? ListBeginDrag
+    event EventHandler<ListEvent>? ListBeginLabelEdit
+    event EventHandler<ListEvent>? ListBeginRdrag
+    event EventHandler<ListEvent>? ListCacheHint
+    event EventHandler<ListEvent>? ListColBeginDrag
+    event EventHandler<ListEvent>? ListColClick
+    event EventHandler<ListEvent>? ListColDragging
+    event EventHandler<ListEvent>? ListColEndDrag
+    event EventHandler<ListEvent>? ListColRightClick
+    event EventHandler<ListEvent>? ListDeleteAllItems
+    event EventHandler<ListEvent>? ListDeleteItem
+    event EventHandler<ListEvent>? ListEndLabelEdit
+    event EventHandler<ListEvent>? ListInsertItem
+    event EventHandler<ListEvent>? ListItemActivated
+    event EventHandler<ListEvent>? ListItemChecked
+    event EventHandler<ListEvent>? ListItemDeselected
+    event EventHandler<ListEvent>? ListItemFocused
+    event EventHandler<ListEvent>? ListItemMiddleClick
+    event EventHandler<ListEvent>? ListItemRightClick
+    event EventHandler<ListEvent>? ListItemSelected
+    event EventHandler<ListEvent>? ListItemUnchecked
+    event EventHandler<ListEvent>? ListKeyDown
+    int ColumnCount { get; }
+    int CountPerPage { get; }
+    int GetColumnIndexFromOrder(int position)
+    int GetColumnOrder(int column)
+    int GetColumnWidth(int column)
+    int GetItemState(long item, long stateMask)
+    int ItemCount { get; }
+    int SelectedItemCount { get; }
+    int SortIndicator { get; }
+    int[] ColumnsOrder { get; set; }
+    long AppendColumn(string heading, ListColumnFormat format = ListColumnFormat.Left, int width = -1)
+    long FindItem(long start, Point point, int direction)
+    long FindItem(long start, string text, bool partial = false)
+    long GetNextItem(long item, int geometry = 1, int state = 0)
+    long InsertColumn(long column, ListItem info)
+    long InsertColumn(long column, string heading, ListColumnFormat format = ListColumnFormat.Left, int width = -1)
+    long InsertItem(ListItem info)
+    long InsertItem(long index, int imageIndex)
+    long InsertItem(long index, string label)
+    long InsertItem(long index, string label, int imageIndex)
+    long TopItem { get; }
+    protected virtual bool OnGetItemIsChecked(long item)
+    protected virtual int OnGetItemColumnImage(long item, long column)
+    protected virtual int OnGetItemImage(long item)
+    protected virtual string OnGetItemText(long item, long column)
+    string GetItemText(long item, int column = 0)
+    void CheckItem(long item, bool check)
+    void ClearAll()
+    void EnableAlternateRowColors(bool enable = true)
+    void EnableBellOnNoMatch(bool on = true)
+    void ExtendRulesAndAlternateColor(bool extend = true)
+    void RefreshItem(long item)
+    void RefreshItems(long itemFrom, long itemTo)
+    void RemoveSortIndicator()
+    void SetItemBackgroundColor(long item, Color? column)
+    void SetItemCount(long count)
+    void SetItemFont(long item, Font font)
+    void SetItemText(long item, string text)
+    void SetItemTextColor(long item, Color? column)
+    void SetNormalImages(IEnumerable<Bitmap> images)
+    void SetSingleStyle(ListCtrlStyle style, bool add = true)
+    void SetSmallImages(IEnumerable<Bitmap> images)
+    void SetWindowStyleFlag(ListCtrlStyle style)
+    void ShowSortIndicator(int column, bool ascending = true)
+[Flags] enum WxKit.ListCtrlStyle : long
+    AlignLeft = 128
+    AlignTop = 64
+    Autoarrange = 256
+    EditLabels = 1024
+    Hrules = 2
+    Icon = 4
+    List = 16
+    NoHeader = 2048
+    None = 0
+    Report = 32
+    SingleSel = 8192
+    SmallIcon = 8
+    SortAscending = 16384
+    SortDescending = 32768
+    Virtual = 512
+    Vrules = 1
+class WxKit.ListEvent : NotifyEvent
+    ListItem? Item { get; set; }
+    Point Point { get; set; }
+    bool IsEditCancelled { get; }
+    int Column { get; set; }
+    int Image { get; }
+    int KeyCode { get; set; }
+    long CacheFrom { get; set; }
+    long CacheTo { get; set; }
+    long Index { get; set; }
+    long Mask { get; }
+    string Label { get; }
+    string Text { get; }
+class WxKit.ListItem : NativeObject
+    Color? BackgroundColor { get; set; }
+    Color? TextColor { get; set; }
+    Font? Font { get; set; }
+    ListColumnFormat Align { get; set; }
+    ListItem()
+    int Column { get; set; }
+    int Image { get; set; }
+    int Width { get; set; }
+    long Id { get; set; }
+    long Mask { get; set; }
+    long State { get; set; }
+    string Text { get; set; }
+    void Clear()
+    void SetData(long data)
+    void SetStateMask(long stateMask)
+class WxKit.ListView : ListCtrl
+    ListView(Window parent, int id = -1, Point? position = null, Size? size = null, ListCtrlStyle style = ListCtrlStyle.Report)
+    bool IsSelected(long index)
+    long FirstSelected { get; }
+    long FocusedItem { get; }
+    long GetNextSelected(long item)
+    void ClearColumnImage(int column)
+    void Focus(long index)
+    void Select(long index, bool on = true)
+    void SetColumnImage(int column, int image)
+class WxKit.Listbook : BookCtrlBase
+    ListView? ListView { get; }
+    Listbook(Window parent, int id = -1, Point? position = null, Size? size = null, ListbookStyle style = ListbookStyle.None)
+    event EventHandler<BookCtrlEvent>? PageChanged
+    event EventHandler<BookCtrlEvent>? PageChanging
+[Flags] enum WxKit.ListbookStyle : long
+    Bottom = 32
+    Default = 0
+    Left = 64
+    None = 0
+    Right = 128
+    Top = 16
+class WxKit.MaximizeEvent : Event
+class WxKit.MemoryDC : DC
+    Bitmap? SelectedBitmap { get; }
+    MemoryDC()
+    MemoryDC(Bitmap bitmap)
+    MemoryDC(DC dc)
+    void SelectObject(Bitmap bitmap)
+    void SelectObjectAsSource(Bitmap bitmap)
+sealed class WxKit.Menu : EvtHandler
+    Menu()
+    MenuItem Append(int id, string text = "", string help = "", MenuItemKind kind = MenuItemKind.Normal)
+    MenuItem AppendSeparator()
+class WxKit.MenuBar : Window
+    Frame? Frame { get; }
+    Menu? GetMenu(int menuIndex)
+    Menu? OSXGetAppleMenu()
+    Menu? Remove(int position)
+    Menu? Replace(int position, Menu menu, string title)
+    MenuBar(WindowStyle style = WindowStyle.None)
+    bool Append(Menu menu, string title)
+    bool Insert(int position, Menu menu, string title)
+    bool IsAttached { get; }
+    bool IsChecked(int id = -1)
+    bool IsEnabledTop(int position)
+    bool IsItemEnabled(int id = -1)
+    int FindMenu(string title)
+    int FindMenuItem(string menuString, string itemString)
+    int MenuCount { get; }
+    static MenuBar? MacGetCommonMenuBar()
+    static void MacSetCommonMenuBar(MenuBar menubar)
+    string GetHelpString(int id = -1)
+    string GetLabel(int id = -1)
+    string GetMenuLabel(int position)
+    string GetMenuLabelText(int position)
+    void Attach(Frame frame)
+    void Check(bool check, int id = -1)
+    void Detach()
+    void EnableItem(bool enable, int id = -1)
+    void EnableTop(int position, bool enable)
+    void SetHelpString(string helpString, int id = -1)
+    void SetLabel(string label, int id = -1)
+    void SetMenuLabel(int position, string label)
+class WxKit.MenuEvent : Event
+    Menu? Menu { get; }
+    bool IsPopup { get; }
+    int MenuId { get; }
+sealed class WxKit.MenuItem
+    Menu Menu { get; }
+    event EventHandler<CommandEvent>? Click
+    int Id { get; }
+enum WxKit.MenuItemKind : int
+    Check = 1
+    Normal = 0
+    Radio = 2
+static class WxKit.MessageBox
+    static int Show(string message, string caption = "Message", MessageDialogStyle style = MessageDialogStyle.Center | MessageDialogStyle.Ok, Window? parent = null)
+class WxKit.MessageDialog : Dialog
+    MessageDialog(Window? parent, string message, string caption = "Message", MessageDialogStyle style = MessageDialogStyle.Center | MessageDialogStyle.Ok, Point? position = null)
+    MessageDialogStyle MessageDialogStyle { get; }
+    bool HasCustomLabels { get; }
+    bool SetOKCancelLabels(string ok, string cancel)
+    bool SetYesNoCancelLabels(string yes, string no, string cancel)
+    bool SetYesNoLabels(string yes, string no)
+    long EffectiveIcon { get; }
+    string CancelLabel { get; }
+    string Caption { get; }
+    string ExtendedMessage { get; set; }
+    string HelpLabel { get; set; }
+    string Message { get; set; }
+    string NoLabel { get; }
+    string OKLabel { get; set; }
+    string YesLabel { get; }
+[Flags] enum WxKit.MessageDialogStyle : long
+    Cancel = 16
+    CancelDefault = 2147483648
+    Center = 1
+    Help = 4096
+    IconAuthNeeded = 524288
+    IconError = 512
+    IconExclamation = 256
+    IconHand = 512
+    IconInformation = 2048
+    IconNone = 262144
+    IconQuestion = 1024
+    IconWarning = 256
+    NoDefault = 128
+    None = 0
+    Ok = 4
+    OkDefault = 0
+    StayOnTop = 32768
+    YesDefault = 0
+    YesNo = 10
+enum WxKit.MessageIcon : int
+    Error = 512
+    Information = 2048
+    None = 262144
+    Question = 1024
+    Warning = 256
+class WxKit.MiniFrame : Frame
+    MiniFrame(Window? parent, string title, int id = -1, Point? position = null, Size? size = null, MiniFrameStyle style = MiniFrameStyle.ResizeBorder | MiniFrameStyle.Caption)
+[Flags] enum WxKit.MiniFrameStyle : long
+    Caption = 536870912
+    CloseBox = 4096
+    Iconize = 16384
+    Maximize = 8192
+    MaximizeBox = 512
+    Minimize = 16384
+    MinimizeBox = 1024
+    None = 0
+    ResizeBorder = 64
+    StayOnTop = 32768
+    SystemMenu = 2048
+enum WxKit.MouseButton : int
+    Any = -1
+    Aux1 = 4
+    Aux2 = 5
+    Left = 1
+    Max = 6
+    Middle = 2
+    None = 0
+    Right = 3
+class WxKit.MouseEvent : Event
+    MouseWheelAxis WheelAxis { get; }
+    Point GetLogicalPosition(DC dc)
+    Point Position { get; set; }
+    bool AltDown()
+    bool Aux1DClick()
+    bool Aux1Down()
+    bool Aux1IsDown()
+    bool Aux1Up()
+    bool Aux2DClick()
+    bool Aux2Down()
+    bool Aux2IsDown()
+    bool Aux2Up()
+    bool ButtonDClick(MouseButton but = MouseButton.Any)
+    bool ButtonDown(MouseButton but = MouseButton.Any)
+    bool ButtonUp(MouseButton but = MouseButton.Any)
+    bool CmdDown()
+    bool ControlDown()
+    bool Dragging()
+    bool Entering()
+    bool HasAnyModifiers { get; }
+    bool HasModifiers { get; }
+    bool IsButton { get; }
+    bool IsFromButton(MouseButton but)
+    bool IsPageScroll { get; }
+    bool IsSynthesized { get; }
+    bool IsWheelInverted { get; }
+    bool Leaving()
+    bool LeftDClick()
+    bool LeftDown()
+    bool LeftIsDown()
+    bool LeftUp()
+    bool Magnify()
+    bool MetaDown()
+    bool MiddleDClick()
+    bool MiddleDown()
+    bool MiddleIsDown()
+    bool MiddleUp()
+    bool Moving()
+    bool RawControlDown()
+    bool RightDClick()
+    bool RightDown()
+    bool RightIsDown()
+    bool RightUp()
+    bool ShiftDown()
+    float Magnification { get; }
+    int Button { get; }
+    int ClickCount { get; }
+    int ColumnsPerAction { get; }
+    int LinesPerAction { get; }
+    int Modifiers { get; }
+    int WheelDelta { get; }
+    int WheelRotation { get; }
+    int X { get; set; }
+    int Y { get; set; }
+    void GetPosition(out int x, out int y)
+    void SetAltDown(bool down)
+    void SetAux1Down(bool down)
+    void SetAux2Down(bool down)
+    void SetControlDown(bool down)
+    void SetLeftDown(bool down)
+    void SetMetaDown(bool down)
+    void SetMiddleDown(bool down)
+    void SetRawControlDown(bool down)
+    void SetRightDown(bool down)
+    void SetShiftDown(bool down)
+enum WxKit.MouseWheelAxis : int
+    Horizontal = 1
+    Vertical = 0
+class WxKit.MoveEvent : Event
+    Point Position { get; set; }
+    Rect Rect { get; set; }
+class WxKit.MultiChoiceDialog : Dialog
+    MultiChoiceDialog(Window? parent, string message, string caption, IEnumerable<string> choices, MultiChoiceDialogStyle style = MultiChoiceDialogStyle.536877141, Point? position = null)
+    int[] Selections { get; set; }
+[Flags] enum WxKit.MultiChoiceDialogStyle : long
+    Cancel = 16
+    Center = 1
+    None = 0
+    Ok = 4
+abstract class WxKit.NativeObject : IDisposable
+    bool IsDisposed { get; }
+    void Dispose()
+enum WxKit.NavigationDirection : int
+    Down = 0
+    FirstChild = 1
+    LastChild = 2
+    Left = 3
+    Next = 4
+    Previous = 5
+    Right = 6
+    Up = 7
+class WxKit.NavigationKeyEvent : Event
+    Window? CurrentFocus { get; set; }
+    bool Direction { get; set; }
+    bool IsFromTab { get; set; }
+    bool IsWindowChange { get; set; }
+    void SetFlags(long flags)
+class WxKit.Notebook : BookCtrlBase
+    Color? ThemeBackgroundColor { get; }
+    Direction TabOrientation { get; }
+    Notebook(Window parent, int id = -1, Point? position = null, Size? size = null, NotebookStyle style = NotebookStyle.None)
+    Rect GetTabRect(int page)
+    event EventHandler<BookCtrlEvent>? PageChanged
+    event EventHandler<BookCtrlEvent>? PageChanging
+    int RowCount { get; }
+    void SetPadding(Size padding)
+[Flags] enum WxKit.NotebookStyle : long
+    Bottom = 32
+    Fixedwidth = 256
+    Left = 64
+    MultiLine = 512
+    None = 0
+    Nopagetheme = 1024
+    Right = 128
+    Top = 16
+sealed class WxKit.NotificationMessage : EvtHandler, IDisposable
+    NotificationMessage()
+    NotificationMessage(string title, string message = "", Window? parent = null, MessageIcon icon = MessageIcon.Information)
+    bool AddAction(int actionId, string label = "")
+    bool Close()
+    bool Show(int timeout = -1)
+    const int TimeoutAuto = -1
+    const int TimeoutNever = 0
+    event EventHandler<CommandEvent>? ActionSelected
+    event EventHandler<CommandEvent>? Clicked
+    event EventHandler<CommandEvent>? Dismissed
+    static TaskBarIcon? UseTaskBarIcon(TaskBarIcon icon)
+    static bool MSWUseToasts(string shortcutPath = "", string appId = "")
+    void Dispose()
+    void SetFlags(MessageIcon flags)
+    void SetIcon(Icon icon)
+    void SetMessage(string message)
+    void SetParent(Window parent)
+    void SetTitle(string title)
+class WxKit.NotifyEvent : CommandEvent
+    bool IsAllowed { get; }
+    void Allow()
+    void Veto()
+[Flags] enum WxKit.Orientation : int
+    Both = 12
+    Horizontal = 4
+    Vertical = 8
+enum WxKit.Origin : int
+    HelpButton = 2
+    Keyboard = 1
+    Unknown = 0
+class WxKit.PaintDC : ClientDC
+    PaintDC(Window window)
+class WxKit.PaintEvent : Event
+class WxKit.Panel : Window
+    Panel(Window parent, int id = -1, Point? position = null, Size? size = null, WindowStyle style = WindowStyle.TabTraversal)
+    event EventHandler<NavigationKeyEvent>? NavigationKey
+    void SetFocusIgnoringChildren()
+class WxKit.PasswordEntryDialog : TextEntryDialog
+    PasswordEntryDialog(Window? parent, string message, string? caption = null, string defaultValue = "", DialogStyle style = DialogStyle.21, Point? position = null)
+class WxKit.Pen : NativeObject
+    Color? Color { get; }
+    Pen()
+    Pen(Bitmap stipple, int width)
+    Pen(Color? color, int width = 1, PenStyle style = PenStyle.Solid)
+    PenCap Cap { get; set; }
+    PenJoin Join { get; set; }
+    PenQuality Quality { get; set; }
+    PenStyle Style { get; set; }
+    bool IsNonTransparent { get; }
+    bool IsOk { get; }
+    bool IsTransparent { get; }
+    int Width { get; set; }
+    void SetColor(byte red, byte green, byte blue)
+    void SetStipple(Bitmap stipple)
+enum WxKit.PenCap : int
+    Butt = 132
+    Invalid = -1
+    Projecting = 131
+    Round = 130
+enum WxKit.PenJoin : int
+    Bevel = 120
+    Invalid = -1
+    Miter = 121
+    Round = 122
+enum WxKit.PenQuality : int
+    Default = 0
+    High = 2
+    Low = 1
+enum WxKit.PenStyle : int
+    BdiagonalHatch = 111
+    CrossHatch = 114
+    CrossdiagHatch = 112
+    Dot = 101
+    DotDash = 104
+    FdiagonalHatch = 113
+    FirstHatch = 111
+    HorizontalHatch = 115
+    Invalid = -1
+    LastHatch = 116
+    LongDash = 102
+    ShortDash = 103
+    Solid = 100
+    Stipple = 110
+    Transparent = 106
+    UserDash = 105
+    VerticalHatch = 116
+class WxKit.PickerBase : Control
+    Control? PickerCtrl { get; }
+    TextCtrl? TextCtrl { get; }
+    bool HasTextCtrl { get; }
+    bool IsPickerCtrlGrowable { get; set; }
+    bool IsTextCtrlGrowable { get; set; }
+    int InternalMargin { get; set; }
+    int PickerCtrlProportion { get; set; }
+    int TextCtrlProportion { get; set; }
+    void UpdatePickerFromTextCtrl()
+    void UpdateTextCtrlFromPicker()
+[Flags] enum WxKit.PickerBaseStyle : long
+    None = 0
+    PbUseTextCtrl = 2
+readonly record struct WxKit.Point : IEquatable<Point>
+    Point(int X, int Y)
+    bool Equals(Point other)
+    int X { get; init; }
+    int Y { get; init; }
+    override bool Equals(object obj)
+    override int GetHashCode()
+    override string ToString()
+    static Point Default { get; }
+    static bool op_Equality(Point left, Point right)
+    static bool op_Inequality(Point left, Point right)
+    void Deconstruct(out int X, out int Y)
+class WxKit.ProgressDialog : Dialog
+    ProgressDialog(string title, string message, int maximum = 100, Window? parent = null, ProgressDialogStyle style = ProgressDialogStyle.AppModal | ProgressDialogStyle.AutoHide)
+[Flags] enum WxKit.ProgressDialogStyle : int
+    AppModal = 2
+    AutoHide = 4
+    CanAbort = 1
+    CanSkip = 128
+    ElapsedTime = 8
+    EstimatedTime = 16
+    None = 0
+    RemainingTime = 64
+    Smooth = 32
+class WxKit.RadioBox : Control
+    RadioBox(Window parent, string label, IEnumerable<string> choices, int id = -1, Point? position = null, Size? size = null, int majorDimension = 0, RadioBoxStyle style = RadioBoxStyle.SpecifyCols)
+    RadioBox(Window parent, string label, int id = -1, Point? position = null, Size? size = null)
+    bool Enable(int index, bool enable = true)
+    bool IsEmpty { get; }
+    bool IsItemEnabled(int index)
+    bool IsItemShown(int index)
+    bool Show(int item, bool show = true)
+    event EventHandler<CommandEvent>? SelectionChanged
+    int ColumnCount { get; }
+    int Count { get; }
+    int FindString(string text, bool bCase = false)
+    int GetItemFromPoint(Point point)
+    int RowCount { get; }
+    int Selection { get; set; }
+    string GetItemHelpText(int item)
+    string GetString(int index)
+    string StringSelection { get; set; }
+    string[] Strings { get; }
+    void Select(int index)
+    void SetItemHelpText(int item, string helptext)
+    void SetItemToolTip(int item, string text)
+    void SetString(int index, string text)
+[Flags] enum WxKit.RadioBoxStyle : long
+    None = 0
+    SpecifyCols = 4
+    SpecifyRows = 8
+class WxKit.RadioButton : Control
+    RadioButton(Window parent, string label, int id = -1, Point? position = null, Size? size = null, RadioButtonStyle style = RadioButtonStyle.None)
+    RadioButton? FirstInGroup { get; }
+    RadioButton? LastInGroup { get; }
+    RadioButton? NextInGroup { get; }
+    RadioButton? PreviousInGroup { get; }
+    bool Value { get; set; }
+    event EventHandler<CommandEvent>? Selected
+[Flags] enum WxKit.RadioButtonStyle : long
+    Group = 4
+    None = 0
+    Single = 8
+enum WxKit.RasterOperationMode : int
+    And = 6
+    AndInvert = 7
+    AndReverse = 4
+    Clear = 0
+    Copy = 5
+    Equiv = 10
+    Invert = 2
+    Nand = 13
+    NoOp = 8
+    Nor = 9
+    Or = 14
+    OrInvert = 12
+    OrReverse = 3
+    Set = 15
+    SrcInvert = 11
+    Xor = 1
+class WxKit.RearrangeCtrl : Panel
+    RearrangeCtrl(Window parent, IEnumerable<int> order, IEnumerable<string> items, int id = -1, Point? position = null, Size? size = null, WindowStyle style = WindowStyle.None)
+    RearrangeList? List { get; }
+class WxKit.RearrangeDialog : Dialog
+    RearrangeDialog(Window? parent, string message, string title, IEnumerable<int> order, IEnumerable<string> items, Point? position = null)
+    RearrangeList? List { get; }
+    int[] Order { get; }
+    void AddExtraControls(Window window)
+class WxKit.RearrangeList : CheckListBox
+    RearrangeList(Window parent, IEnumerable<int> order, IEnumerable<string> items, int id = -1, Point? position = null, Size? size = null, ListBoxStyle style = ListBoxStyle.None)
+    bool CanMoveCurrentDown { get; }
+    bool CanMoveCurrentUp { get; }
+    bool MoveCurrentDown()
+    bool MoveCurrentUp()
+    int[] CurrentOrder { get; }
+enum WxKit.Reason : int
+    Mouse = 0
+    Unknown = 1
+readonly record struct WxKit.Rect : IEquatable<Rect>
+    Point Position { get; }
+    Rect(int X, int Y, int Width, int Height)
+    Size Size { get; }
+    bool Equals(Rect other)
+    int Height { get; init; }
+    int Width { get; init; }
+    int X { get; init; }
+    int Y { get; init; }
+    override bool Equals(object obj)
+    override int GetHashCode()
+    override string ToString()
+    static bool op_Equality(Rect left, Rect right)
+    static bool op_Inequality(Rect left, Rect right)
+    void Deconstruct(out int X, out int Y, out int Width, out int Height)
+enum WxKit.ScaleMode : int
+    AspectFill = 3
+    AspectFit = 2
+    Fill = 1
+    None = 0
+class WxKit.ScreenDC : DC
+    ScreenDC()
+    static bool EndDrawingOnTop()
+    static bool StartDrawingOnTop()
+    static bool StartDrawingOnTop(Window window)
+class WxKit.ScrollBar : Control
+    ScrollBar(Window parent, int id = -1, Point? position = null, Size? size = null, ScrollBarStyle style = ScrollBarStyle.Horizontal)
+    bool IsVertical { get; }
+    event EventHandler<ScrollEvent>? CommandScrollBottom
+    event EventHandler<ScrollEvent>? CommandScrollChanged
+    event EventHandler<ScrollEvent>? CommandScrollLineDown
+    event EventHandler<ScrollEvent>? CommandScrollLineUp
+    event EventHandler<ScrollEvent>? CommandScrollPageDown
+    event EventHandler<ScrollEvent>? CommandScrollPageUp
+    event EventHandler<ScrollEvent>? CommandScrollThumbRelease
+    event EventHandler<ScrollEvent>? CommandScrollThumbTrack
+    event EventHandler<ScrollEvent>? CommandScrollTop
+    event EventHandler<ScrollEvent>? ScrollBottom
+    event EventHandler<ScrollEvent>? ScrollChanged
+    event EventHandler<ScrollEvent>? ScrollLineDown
+    event EventHandler<ScrollEvent>? ScrollLineUp
+    event EventHandler<ScrollEvent>? ScrollPageDown
+    event EventHandler<ScrollEvent>? ScrollPageUp
+    event EventHandler<ScrollEvent>? ScrollThumbRelease
+    event EventHandler<ScrollEvent>? ScrollThumbTrack
+    event EventHandler<ScrollEvent>? ScrollTop
+    int PageSize { get; }
+    int Range { get; }
+    int ThumbPosition { get; set; }
+    int ThumbSize { get; }
+[Flags] enum WxKit.ScrollBarStyle : long
+    Horizontal = 4
+    None = 0
+    Vertical = 8
+class WxKit.ScrollEvent : CommandEvent
+    int Orientation { get; set; }
+    int Position { get; set; }
+class WxKit.ScrollWinEvent : Event
+    int Orientation { get; set; }
+    int PixelOffset { get; }
+    int Position { get; set; }
+enum WxKit.ScrollbarVisibility : int
+    Always = 1
+    Default = 0
+    Never = -1
+class WxKit.ScrolledWindow : Panel
+    Point CalcScrolledPosition(Point point)
+    Point CalcUnscrolledPosition(Point point)
+    Point ViewStart { get; }
+    Point ViewStartPixels { get; }
+    Rect TargetRect { get; set; }
+    ScrolledWindow(Window parent, int id = -1, Point? position = null, Size? size = null, ScrolledWindowStyle style = ScrolledWindowStyle.HorizontalScrollBar | ScrolledWindowStyle.VerticalScrollBar)
+    Window? TargetWindow { get; set; }
+    bool IsAutoScrolling { get; }
+    double ScaleX { get; }
+    double ScaleY { get; }
+    event EventHandler<ScrollWinEvent>? ScrollWinBottom
+    event EventHandler<ScrollWinEvent>? ScrollWinLineDown
+    event EventHandler<ScrollWinEvent>? ScrollWinLineUp
+    event EventHandler<ScrollWinEvent>? ScrollWinPageDown
+    event EventHandler<ScrollWinEvent>? ScrollWinPageUp
+    event EventHandler<ScrollWinEvent>? ScrollWinThumbRelease
+    event EventHandler<ScrollWinEvent>? ScrollWinThumbTrack
+    event EventHandler<ScrollWinEvent>? ScrollWinTop
+    int GetScrollLines(Orientation orientation)
+    int GetScrollPageSize(Orientation orientation)
+    void AdjustScrollbars()
+    void CalcScrolledPosition(int x, int y, out int xx, out int yy)
+    void CalcUnscrolledPosition(int x, int y, out int xx, out int yy)
+    void DisableAutoScrollOutside()
+    void DisableAutoscrollWithoutCapture()
+    void DisableKeyboardScrolling()
+    void DoPrepareDC(DC dc)
+    void EnableAutoScrollInside(int insideWidth)
+    void EnableAutoscrollWithoutCapture()
+    void EnableScrolling(bool xScrolling, bool yScrolling)
+    void GetScrollPixelsPerUnit(out int xUnit, out int yUnit)
+    void GetViewStart(out int x, out int y)
+    void GetViewStartPixels(out int x, out int y)
+    void PrepareDC(DC dc)
+    void Scroll(Point point)
+    void Scroll(int x, int y)
+    void SetScale(double xs, double ys)
+    void SetScrollPageSize(Orientation orientation, int pageSize)
+    void SetScrollRate(int xStep, int yStep)
+    void SetScrollbars(int pixelsPerUnitX, int pixelsPerUnitY, int noUnitsX, int noUnitsY, int xPos = 0, int yPos = 0, bool noRefresh = false)
+    void ShowScrollbars(ScrollbarVisibility horz, ScrollbarVisibility vert)
+    void StopAutoScrolling()
+[Flags] enum WxKit.ScrolledWindowStyle : long
+    AlwaysShowSb = 8388608
+    HorizontalScrollBar = 1073741824
+    None = 0
+    VerticalScrollBar = -2147483648
+class WxKit.SearchCtrl : Control
+    Menu? Menu { get; set; }
+    Point Margins { get; set; }
+    SearchCtrl(Window parent, string value = "", int id = -1, Point? position = null, Size? size = null, SearchCtrlStyle style = SearchCtrlStyle.None)
+    bool AutoComplete(IEnumerable<string> choices)
+    bool AutoCompleteDirectories()
+    bool AutoCompleteFileNames()
+    bool CanCopy { get; }
+    bool CanCut { get; }
+    bool CanPaste { get; }
+    bool CanRedo { get; }
+    bool CanUndo { get; }
+    bool IsCancelButtonVisible { get; }
+    bool IsEditable { get; set; }
+    bool IsEmpty { get; }
+    bool IsSearchButtonVisible { get; }
+    bool SetMargins(int left, int top = -1)
+    event EventHandler<CommandEvent>? SearchCanceled
+    event EventHandler<CommandEvent>? SearchRequested
+    long InsertionPoint { get; set; }
+    long LastPosition { get; }
+    string DescriptiveText { get; set; }
+    string GetRange(long from, long to)
+    string Hint { get; set; }
+    string StringSelection { get; }
+    string Value { get; set; }
+    void AppendText(string text)
+    void ChangeValue(string value)
+    void Clear()
+    void Copy()
+    void Cut()
+    void ForceUpper()
+    void GetSelection(out long from, out long to)
+    void Paste()
+    void Redo()
+    void Remove(long from, long to)
+    void Replace(long from, long to, string value)
+    void SelectAll()
+    void SelectNone()
+    void SetInsertionPointEnd()
+    void SetMaxLength(int len)
+    void SetSelection(long from, long to)
+    void ShowCancelButton(bool show)
+    void ShowSearchButton(bool show)
+    void Undo()
+    void WriteText(string text)
+[Flags] enum WxKit.SearchCtrlStyle : long
+    Center = 256
+    Left = 0
+    NoHideSelection = 8192
+    None = 0
+    ProcessTab = 64
+    Right = 512
+[Flags] enum WxKit.SendSizeEventFlags : int
+    None = 0
+    Post = 1
+enum WxKit.ShowEffect : int
+    Blend = 9
+    Expand = 10
+    Max = 11
+    None = 0
+    RollToBottom = 4
+    RollToLeft = 1
+    RollToRight = 2
+    RollToTop = 3
+    SlideToBottom = 8
+    SlideToLeft = 5
+    SlideToRight = 6
+    SlideToTop = 7
+class WxKit.ShowEvent : Event
+    bool IsShown { get; }
+    void SetShow(bool show)
+class WxKit.Simplebook : BookCtrlBase
+    Simplebook(Window parent, int id = -1, Point? position = null, Size? size = null, WindowStyle style = WindowStyle.None)
+    bool ShowNewPage(Window page)
+    void SetEffect(ShowEffect effect)
+    void SetEffectTimeout(int timeout)
+    void SetEffects(ShowEffect showEffect, ShowEffect hideEffect)
+    void SetEffectsTimeouts(int showTimeout, int hideTimeout)
+class WxKit.SingleChoiceDialog : Dialog
+    SingleChoiceDialog(Window? parent, string message, string caption, IEnumerable<string> choices)
+    int Selection { get; set; }
+    string StringSelection { get; }
+[Flags] enum WxKit.SingleChoiceDialogStyle : long
+    Cancel = 16
+    Center = 1
+    None = 0
+    Ok = 4
+readonly record struct WxKit.Size : IEquatable<Size>
+    Size(int Width, int Height)
+    bool Equals(Size other)
+    int Height { get; init; }
+    int Width { get; init; }
+    override bool Equals(object obj)
+    override int GetHashCode()
+    override string ToString()
+    static Size Default { get; }
+    static bool op_Equality(Size left, Size right)
+    static bool op_Inequality(Size left, Size right)
+    void Deconstruct(out int Width, out int Height)
+class WxKit.SizeEvent : Event
+    Rect Rect { get; set; }
+    Size Size { get; set; }
+[Flags] enum WxKit.SizeFlags : int
+    AllowMinusOne = 4
+    Auto = 3
+    AutoHeight = 2
+    AutoWidth = 1
+    Force = 16
+    ForceEvent = 32
+    NoAdjustments = 8
+    UseExisting = 0
+abstract class WxKit.Sizer
+    bool IsDestroyed { get; }
+    protected override void Finalize()
+    void Add(Sizer sizer, SizerFlags flags = null)
+    void Add(Window window, SizerFlags flags = null)
+    void AddSpacer(int size)
+    void AddStretchSpacer(int proportion = 1)
+readonly struct WxKit.SizerFlags
+    SizerFlags Border(Direction direction = Direction.All)
+    SizerFlags Border(Direction direction, int pixels)
+    SizerFlags Bottom()
+    SizerFlags Center()
+    SizerFlags CenterHorizontal()
+    SizerFlags CenterVertical()
+    SizerFlags Expand()
+    SizerFlags Left()
+    SizerFlags Proportion(int proportion)
+    SizerFlags Right()
+    SizerFlags Shaped()
+    SizerFlags Top()
+    SizerFlags(int proportion)
+    static SizerFlags Default { get; }
+class WxKit.Slider : Control
+    Slider(Window parent, int value, int minValue, int maxValue, int id = -1, Point? position = null, Size? size = null, SliderStyle style = SliderStyle.Horizontal)
+    event EventHandler<CommandEvent>? ValueChanged
+    event EventHandler<ScrollEvent>? CommandScrollBottom
+    event EventHandler<ScrollEvent>? CommandScrollChanged
+    event EventHandler<ScrollEvent>? CommandScrollLineDown
+    event EventHandler<ScrollEvent>? CommandScrollLineUp
+    event EventHandler<ScrollEvent>? CommandScrollPageDown
+    event EventHandler<ScrollEvent>? CommandScrollPageUp
+    event EventHandler<ScrollEvent>? CommandScrollThumbRelease
+    event EventHandler<ScrollEvent>? CommandScrollThumbTrack
+    event EventHandler<ScrollEvent>? CommandScrollTop
+    event EventHandler<ScrollEvent>? ScrollBottom
+    event EventHandler<ScrollEvent>? ScrollChanged
+    event EventHandler<ScrollEvent>? ScrollLineDown
+    event EventHandler<ScrollEvent>? ScrollLineUp
+    event EventHandler<ScrollEvent>? ScrollPageDown
+    event EventHandler<ScrollEvent>? ScrollPageUp
+    event EventHandler<ScrollEvent>? ScrollThumbRelease
+    event EventHandler<ScrollEvent>? ScrollThumbTrack
+    event EventHandler<ScrollEvent>? ScrollTop
+    int LineSize { get; set; }
+    int Max { get; set; }
+    int Min { get; set; }
+    int PageSize { get; set; }
+    int SelEnd { get; }
+    int SelStart { get; }
+    int ThumbLength { get; set; }
+    int TickFreq { get; set; }
+    int Value { get; set; }
+    void ClearSel()
+    void ClearTicks()
+    void SetRange(int minValue, int maxValue)
+    void SetSelection(int startPos, int endPos)
+    void SetTick(int tickPos)
+[Flags] enum WxKit.SliderStyle : long
+    Autoticks = 16
+    Both = 1024
+    Bottom = 512
+    Horizontal = 4
+    Inverse = 4096
+    Labels = 24576
+    Left = 64
+    MinMaxLabels = 8192
+    None = 0
+    Right = 256
+    Selrange = 2048
+    Top = 128
+    ValueLabel = 16384
+    Vertical = 8
+class WxKit.SpinButton : Control
+    SpinButton(Window parent, int id = -1, Point? position = null, Size? size = null, SpinButtonStyle style = SpinButtonStyle.Vertical)
+    event EventHandler<SpinEvent>? Spin
+    event EventHandler<SpinEvent>? SpinDown
+    event EventHandler<SpinEvent>? SpinUp
+    int Increment { get; set; }
+    int Max { get; }
+    int Min { get; }
+    int Value { get; set; }
+    void SetRange(int min, int max)
+[Flags] enum WxKit.SpinButtonStyle : long
+    ArrowKeys = 16384
+    Horizontal = 4
+    None = 0
+    Vertical = 8
+    Wrap = 32768
+class WxKit.SpinCtrl : Control
+    SpinCtrl(Window parent, string value = "", int id = -1, Point? position = null, Size? size = null, SpinCtrlStyle style = SpinCtrlStyle.ArrowKeys, int min = 0, int max = 100, int initial = 0)
+    event EventHandler<SpinEvent>? ValueChanged
+    int Base { get; set; }
+    int Increment { get; set; }
+    int Max { get; }
+    int Min { get; }
+    int Value { get; set; }
+    string TextValue { get; }
+    void SetRange(int minVal, int maxVal)
+    void SetSelection(long from, long to)
+    void SetValue(string text)
+class WxKit.SpinCtrlDouble : Control
+    SpinCtrlDouble(Window parent, string value = "", int id = -1, Point? position = null, Size? size = null, SpinCtrlDoubleStyle style = SpinCtrlDoubleStyle.ArrowKeys, double min = 0, double max = 100, double initial = 0, double inc = 1)
+    double Increment { get; set; }
+    double Max { get; }
+    double Min { get; }
+    double Value { get; set; }
+    event EventHandler<SpinDoubleEvent>? ValueChanged
+    int Digits { get; set; }
+    string TextValue { get; }
+    void SetRange(double minVal, double maxVal)
+    void SetValue(string text)
+[Flags] enum WxKit.SpinCtrlDoubleStyle : long
+    AlignCenterHorizontal = 256
+    AlignLeft = 0
+    AlignRight = 512
+    ArrowKeys = 16384
+    None = 0
+    TeProcessEnter = 1024
+    Wrap = 32768
+[Flags] enum WxKit.SpinCtrlStyle : long
+    AlignCenterHorizontal = 256
+    AlignLeft = 0
+    AlignRight = 512
+    ArrowKeys = 16384
+    None = 0
+    TeProcessEnter = 1024
+    Wrap = 32768
+class WxKit.SpinDoubleEvent : NotifyEvent
+    double Value { get; set; }
+class WxKit.SpinEvent : NotifyEvent
+    int Position { get; set; }
+enum WxKit.SplitMode : int
+    Horizontal = 1
+    Vertical = 2
+class WxKit.SplitterEvent : NotifyEvent
+    Window? WindowBeingRemoved { get; }
+    int NewSize { get; }
+    int OldSize { get; }
+    int SashPosition { get; set; }
+    int X { get; }
+    int Y { get; }
+    void SetSize(int oldSize, int newSize)
+class WxKit.SplitterWindow : Window
+    Point LastSplitPosition { get; set; }
+    SplitMode SplitMode { get; }
+    SplitterWindow(Window parent, int id = -1, Point? position = null, Size? size = null, SplitterWindowStyle style = SplitterWindowStyle.ThreeD)
+    Window? Window1 { get; }
+    Window? Window2 { get; }
+    bool IsSashInvisible { get; set; }
+    bool IsSplit { get; }
+    bool OnSashPositionChange(int newSashPosition)
+    bool ReplaceWindow(Window winOld, Window winNew)
+    bool SplitHorizontally(Window window1, Window window2, int sashPosition = 0)
+    bool SplitVertically(Window window1, Window window2, int sashPosition = 0)
+    bool Unsplit(Window? toRemove = null)
+    double SashGravity { get; set; }
+    event EventHandler<SplitterEvent>? SashDoubleClicked
+    event EventHandler<SplitterEvent>? SashPositionChanged
+    event EventHandler<SplitterEvent>? SashPositionChanging
+    event EventHandler<SplitterEvent>? SashPositionResizing
+    event EventHandler<SplitterEvent>? UnsplitEvent
+    int DefaultSashSize { get; }
+    int MinimumPaneSize { get; set; }
+    int SashPosition { get; }
+    int SashSize { get; }
+    void Initialize(Window window)
+    void OnDoubleClickSash(int x, int y)
+    void OnUnsplit(Window removed)
+    void SetSashPosition(int position, bool redraw = true)
+    void SetSplitMode(int mode)
+    void UpdateSize()
+[Flags] enum WxKit.SplitterWindowStyle : long
+    Border = 512
+    LiveUpdate = 128
+    NoBorder = 0
+    NoXpTheme = 1024
+    None = 0
+    PermitUnsplit = 64
+    ThinSash = 0
+    ThreeD = 768
+    ThreeDBorder = 512
+    ThreeDSash = 256
+static class WxKit.StandardId
+    const int Abort = 5115
+    const int About = 5014
+    const int Add = 5118
+    const int Any = -1
+    const int Apply = 5102
+    const int Backward = 5107
+    const int Bold = 5126
+    const int Bottom = 5146
+    const int Cancel = 5101
+    const int CdRom = 5141
+    const int Clear = 5034
+    const int Close = 5001
+    const int CloseAll = 5021
+    const int CloseFrame = 5201
+    const int ContextHelp = 5112
+    const int Convert = 5142
+    const int Copy = 5032
+    const int Cut = 5031
+    const int Default = 5108
+    const int Delete = 5038
+    const int Down = 5121
+    const int Duplicate = 5036
+    const int Edit = 5030
+    const int Execute = 5143
+    const int Exit = 5006
+    const int File = 5050
+    const int File1 = 5051
+    const int File2 = 5052
+    const int File3 = 5053
+    const int File4 = 5054
+    const int File5 = 5055
+    const int File6 = 5056
+    const int File7 = 5057
+    const int File8 = 5058
+    const int File9 = 5059
+    const int Find = 5035
+    const int First = 5147
+    const int Floppy = 5144
+    const int Forward = 5106
+    const int HardDisk = 5145
+    const int Help = 5009
+    const int HelpCommands = 5018
+    const int HelpContents = 5015
+    const int HelpContext = 5020
+    const int HelpIndex = 5016
+    const int HelpProcedures = 5019
+    const int HelpSearch = 5017
+    const int Home = 5122
+    const int IconizeFrame = 5205
+    const int Ignore = 5117
+    const int Indent = 5133
+    const int Index = 5125
+    const int Info = 5150
+    const int Italic = 5127
+    const int JumpTo = 5151
+    const int JustifyCenter = 5128
+    const int JustifyFill = 5129
+    const int JustifyLeft = 5131
+    const int JustifyRight = 5130
+    const int Last = 5148
+    const int MaximizeFrame = 5204
+    const int MdiWindowArrangeIcons = 5233
+    const int MdiWindowCascade = 5230
+    const int MdiWindowFirst = 5230
+    const int MdiWindowLast = 5235
+    const int MdiWindowNext = 5235
+    const int MdiWindowPrev = 5234
+    const int MdiWindowTileHorz = 5231
+    const int MdiWindowTileVert = 5232
+    const int More = 5109
+    const int MoveFrame = 5202
+    const int Network = 5152
+    const int New = 5002
+    const int No = 5104
+    const int NoToAll = 5114
+    const int None = -3
+    const int Ok = 5100
+    const int Open = 5000
+    const int PageSetup = 5012
+    const int Paste = 5033
+    const int Preferences = 5022
+    const int Preview = 5013
+    const int Print = 5010
+    const int PrintSetup = 5011
+    const int Properties = 5041
+    const int Redo = 5008
+    const int Refresh = 5123
+    const int Remove = 5119
+    const int Replace = 5039
+    const int ReplaceAll = 5040
+    const int Reset = 5111
+    const int ResizeFrame = 5203
+    const int RestoreFrame = 5206
+    const int Retry = 5116
+    const int Revert = 5005
+    const int RevertToSaved = 5140
+    const int Save = 5003
+    const int SaveAs = 5004
+    const int SelectAll = 5037
+    const int SelectColor = 5153
+    const int SelectFont = 5154
+    const int Separator = -2
+    const int Setup = 5110
+    const int SortAscending = 5155
+    const int SortDescending = 5156
+    const int SpellCheck = 5157
+    const int Static = 5105
+    const int Stop = 5124
+    const int Strikethrough = 5158
+    const int SystemMenu = 5200
+    const int Top = 5149
+    const int Undelete = 5139
+    const int Underline = 5132
+    const int Undo = 5007
+    const int Unindent = 5134
+    const int Up = 5120
+    const int ViewDetails = 5042
+    const int ViewLargeIcons = 5043
+    const int ViewList = 5045
+    const int ViewSmallIcons = 5044
+    const int ViewSortDate = 5046
+    const int ViewSortName = 5047
+    const int ViewSortSize = 5048
+    const int ViewSortType = 5049
+    const int Yes = 5103
+    const int YesToAll = 5113
+    const int Zoom100 = 5135
+    const int ZoomFit = 5136
+    const int ZoomIn = 5137
+    const int ZoomOut = 5138
+class WxKit.StaticBitmap : Control
+    Bitmap? Bitmap { get; set; }
+    Icon? Icon { get; set; }
+    ScaleMode ScaleMode { get; set; }
+    StaticBitmap(Window parent, Bitmap bitmap, int id = -1, Point? position = null, Size? size = null, WindowStyle style = WindowStyle.None)
+class WxKit.StaticBox : Control
+    StaticBox(Window parent, Window label, int id = -1, Point? position = null, Size? size = null, WindowStyle style = WindowStyle.None)
+    StaticBox(Window parent, string label, int id = -1, Point? position = null, Size? size = null, WindowStyle style = WindowStyle.None)
+    bool Enable(bool enable = true)
+class WxKit.StaticBoxSizer : BoxSizer
+    StaticBox? StaticBox { get; }
+    StaticBoxSizer(Orientation orientation, Window parent, string label = "")
+    StaticBoxSizer(StaticBox box, Orientation orientation)
+class WxKit.StaticLine : Control
+    StaticLine(Window parent, int id = -1, Point? position = null, Size? size = null, StaticLineStyle style = StaticLineStyle.Horizontal)
+    bool IsVertical { get; }
+    static int DefaultSize { get; }
+[Flags] enum WxKit.StaticLineStyle : long
+    Horizontal = 4
+    None = 0
+    Vertical = 8
+class WxKit.StaticText : Control
+    StaticText(Window parent, string label, int id = -1, Point? position = null, Size? size = null, StaticTextStyle style = StaticTextStyle.None)
+    bool IsEllipsized { get; }
+    void SetLabel(string label)
+    void Wrap(int width)
+[Flags] enum WxKit.StaticTextStyle : long
+    AlignCenterHorizontal = 256
+    AlignLeft = 0
+    AlignRight = 512
+    EllipsizeEnd = 16
+    EllipsizeMiddle = 8
+    EllipsizeStart = 4
+    NoAutoresize = 1
+    None = 0
+    Wrap = 2
+class WxKit.StatusBar : Control
+    Size Borders { get; }
+    StatusBar(Window parent, StatusBarStyle style = StatusBarStyle.Default, int id = -1)
+    bool AddFieldControl(int i, Window window)
+    bool GetFieldRect(int i, out Rect rect)
+    int FieldsCount { get; set; }
+    int GetStatusStyle(int index)
+    int GetStatusWidth(int index)
+    string GetStatusText(int i = 0)
+    void PopStatusText(int field = 0)
+    void PushStatusText(string text, int field = 0)
+    void SetMinHeight(int height)
+    void SetStatusStyles(IEnumerable<int> styles)
+    void SetStatusText(string text, int i = 0)
+    void SetStatusWidths(IEnumerable<int> widths)
+[Flags] enum WxKit.StatusBarStyle : long
+    Default = 65840
+    EllipsizeEnd = 256
+    EllipsizeMiddle = 128
+    EllipsizeStart = 64
+    None = 0
+    ShowTips = 32
+    SizeGrip = 16
+class WxKit.StdDialogButtonSizer : BoxSizer
+    Button? AffirmativeButton { get; set; }
+    Button? ApplyButton { get; }
+    Button? CancelButton { get; set; }
+    Button? HelpButton { get; }
+    Button? NegativeButton { get; set; }
+    StdDialogButtonSizer()
+    void AddButton(Button button)
+    void Realize()
+enum WxKit.StockCursor : int
+    Arrow = 1
+    Blank = 26
+    Bullseye = 3
+    Char = 4
+    Cross = 5
+    Hand = 6
+    Ibeam = 7
+    LeftButton = 8
+    Magnifier = 9
+    MiddleButton = 10
+    NoEntry = 11
+    None = 0
+    PaintBrush = 12
+    Pencil = 13
+    PointLeft = 14
+    PointRight = 15
+    QuestionArrow = 16
+    RightArrow = 2
+    RightButton = 17
+    Sizenesw = 18
+    Sizens = 19
+    Sizenwse = 20
+    Sizewe = 21
+    Sizing = 22
+    Spraycan = 23
+    Wait = 24
+    Watch = 25
+class WxKit.SysColorChangedEvent : Event
+enum WxKit.SystemColor : int
+    Activeborder = 10
+    Activecaption = 2
+    Appworkspace = 12
+    Background = 1
+    Btnface = 15
+    Btnhighlight = 20
+    Btnhilight = 20
+    Btnshadow = 16
+    Btntext = 18
+    Captiontext = 9
+    Desktop = 1
+    Framebk = 15
+    Gradientactivecaption = 27
+    Gradientinactivecaption = 28
+    Graytext = 17
+    Gridlines = 33
+    Highlight = 13
+    Highlighttext = 14
+    Hotlight = 26
+    Inactiveborder = 11
+    Inactivecaption = 3
+    Inactivecaptiontext = 19
+    Infobk = 24
+    Infotext = 23
+    Listbox = 25
+    Listboxhighlight = 34
+    Listboxhighlighttext = 32
+    Listboxtext = 31
+    Menu = 4
+    MenuBar = 30
+    Menuhilight = 29
+    Menutext = 7
+    ScrollBar = 0
+    ThreeDdkshadow = 21
+    ThreeDface = 15
+    ThreeDhighlight = 20
+    ThreeDhilight = 20
+    ThreeDlight = 22
+    ThreeDshadow = 16
+    Window = 5
+    Windowframe = 6
+    Windowtext = 8
+enum WxKit.SystemFeature : int
+    CanDrawFrameDecorations = 1
+    CanIconizeFrame = 2
+    TabletPresent = 3
+enum WxKit.SystemFont : int
+    AnsiFixedFont = 11
+    AnsiVarFont = 12
+    DefaultGuiFont = 17
+    DeviceDefaultFont = 14
+    OemFixedFont = 10
+    SystemFont = 13
+enum WxKit.SystemMetric : int
+    BorderX = 2
+    BorderY = 3
+    CaptionY = 32
+    CaretOffMsec = 40
+    CaretOnMsec = 39
+    CaretTimeoutMsec = 41
+    CursorSize = 5
+    CursorX = 4
+    CursorY = 5
+    DclickMsec = 38
+    DclickX = 6
+    DclickY = 7
+    DragX = 8
+    DragY = 9
+    EdgeX = 10
+    EdgeY = 11
+    FramesizeX = 23
+    FramesizeY = 24
+    HorizontalScrollBarArrowX = 12
+    HorizontalScrollBarArrowY = 13
+    HorizontalScrollBarY = 27
+    HthumbX = 14
+    IconX = 15
+    IconY = 16
+    IconspacingX = 17
+    IconspacingY = 18
+    MenuY = 33
+    MouseButtons = 1
+    NetworkPresent = 34
+    PenwindowsPresent = 35
+    ScreenX = 21
+    ScreenY = 22
+    ShowSounds = 36
+    SmalliconX = 25
+    SmalliconY = 26
+    SwapButtons = 37
+    VerticalScrollBarArrowX = 29
+    VerticalScrollBarArrowY = 30
+    VerticalScrollBarX = 28
+    VthumbY = 31
+    WindowminX = 19
+    WindowminY = 20
+enum WxKit.SystemScreenType : int
+    Desktop = 4
+    None = 0
+    Pda = 2
+    Small = 3
+    Tiny = 1
+static class WxKit.SystemSettings
+    static Color? GetColor(SystemColor index)
+    static Color? SelectLightDark(Color? colForLight, Color? colForDark)
+    static Font? GetFont(SystemFont index)
+    static SystemScreenType ScreenType { get; }
+    static bool ExceedsDragThreshold(Point origin, Point current, Window? window = null)
+    static bool HasFeature(SystemFeature index)
+    static int GetMetric(SystemMetric index, Window? window = null)
+sealed class WxKit.TaskBarIcon : EvtHandler, IDisposable
+    Menu? Menu { get; set; }
+    TaskBarIcon(TaskBarIconType? type = null)
+    bool IsIconInstalled { get; }
+    bool IsOk { get; }
+    bool PopupMenu(Menu menu)
+    bool RemoveIcon()
+    bool SetIcon(Bitmap icon, string tooltip = "")
+    event EventHandler<TaskBarIconEvent>? Click
+    event EventHandler<TaskBarIconEvent>? LeftDoubleClick
+    event EventHandler<TaskBarIconEvent>? LeftDown
+    event EventHandler<TaskBarIconEvent>? LeftUp
+    event EventHandler<TaskBarIconEvent>? MouseMoved
+    event EventHandler<TaskBarIconEvent>? RightDoubleClick
+    event EventHandler<TaskBarIconEvent>? RightDown
+    event EventHandler<TaskBarIconEvent>? RightUp
+    static bool IsAvailable { get; }
+    void Dispose()
+class WxKit.TaskBarIconEvent : Event
+enum WxKit.TaskBarIconType : int
+    CustomStatusItem = 1
+    Dock = 0
+class WxKit.TextCtrl : Control
+    Point Margins { get; set; }
+    Point PositionToCoords(long position)
+    TextCtrl(Window parent, string value = "", int id = -1, Point? position = null, Size? size = null, TextCtrlStyle style = TextCtrlStyle.None)
+    TextCtrlHitTestResult HitTest(Point point, out long position)
+    bool AutoComplete(IEnumerable<string> choices)
+    bool AutoCompleteDirectories()
+    bool AutoCompleteFileNames()
+    bool CanCopy { get; }
+    bool CanCut { get; }
+    bool CanPaste { get; }
+    bool CanRedo { get; }
+    bool CanUndo { get; }
+    bool EnableProofCheck()
+    bool GTKSetPangoMarkup(string text)
+    bool IsEditable { get; set; }
+    bool IsEmpty { get; }
+    bool IsModified { get; set; }
+    bool IsMultiLine { get; }
+    bool IsRTFSupported { get; }
+    bool IsSingleLine { get; }
+    bool LoadFile(string filename, int fileType = 0)
+    bool PositionToXY(long position, out long x, out long y)
+    bool SaveFile(string filename = "", int fileType = 0)
+    bool SetMargins(int left, int top = -1)
+    event EventHandler<CommandEvent>? MaxLengthReached
+    event EventHandler<CommandEvent>? TextChanged
+    event EventHandler<CommandEvent>? TextEnter
+    event EventHandler<CommandEvent>? UrlClicked
+    int GetLineLength(long lineNo)
+    int NumberOfLines { get; }
+    long InsertionPoint { get; set; }
+    long LastPosition { get; }
+    long XYToPosition(long x, long y)
+    string GetLineText(long lineNo)
+    string GetRange(long from, long to)
+    string Hint { get; set; }
+    string RTFValue { get; set; }
+    string StringSelection { get; }
+    string Value { get; set; }
+    void AppendText(string text)
+    void ChangeValue(string value)
+    void Clear()
+    void Copy()
+    void Cut()
+    void DiscardEdits()
+    void EmptyUndoBuffer()
+    void ForceUpper()
+    void GetSelection(out long from, out long to)
+    void MarkDirty()
+    void OSXDisableAllSmartSubstitutions()
+    void OSXEnableAutomaticDashSubstitution(bool enable)
+    void OSXEnableAutomaticQuoteSubstitution(bool enable)
+    void OSXEnableNewLineReplacement(bool enable)
+    void Paste()
+    void Redo()
+    void Remove(long from, long to)
+    void Replace(long from, long to, string value)
+    void SelectAll()
+    void SelectNone()
+    void SetInsertionPointEnd()
+    void SetMaxLength(int len)
+    void SetSelection(long from, long to)
+    void ShowPosition(long position)
+    void Undo()
+    void WriteText(string text)
+enum WxKit.TextCtrlHitTestResult : int
+    Before = -1
+    Below = 1
+    Beyond = 2
+    OnText = 0
+    Unknown = -2
+[Flags] enum WxKit.TextCtrlStyle : long
+    AutoUrl = 4096
+    BestWrap = 0
+    Center = 256
+    CharWrap = 16384
+    DontWrap = 1073741824
+    HorizontalScrollBar = 1073741824
+    Left = 0
+    MultiLine = 32
+    NoHideSelection = 8192
+    NoVerticalScrollBar = 2
+    None = 0
+    Password = 2048
+    ProcessEnter = 1024
+    ProcessTab = 64
+    ReadOnly = 16
+    Rich = 128
+    Rich2 = 32768
+    Right = 512
+    WordWrap = 1
+class WxKit.TextEntryDialog : Dialog
+    TextEntryDialog(Window? parent, string message, string? caption = null, string value = "", DialogStyle style = DialogStyle.21, Point? position = null, Size? size = null)
+    string Value { get; set; }
+    void ForceUpper()
+    void SetHint(string hint)
+    void SetMaxLength(int len)
+    void SetTextValidator(TextValidator validator)
+    void SetTextValidator(TextValidatorStyle style = TextValidatorStyle.None)
+class WxKit.TextValidator : Validator
+    TextValidator(TextValidatorStyle style = TextValidatorStyle.None)
+    TextValidatorStyle Style { get; set; }
+    bool HasFlag(TextValidatorStyle style)
+    string CharExcludes { get; set; }
+    string CharIncludes { get; set; }
+    string IsValid(string val)
+    string[] Excludes { get; set; }
+    string[] Includes { get; set; }
+    void AddCharExcludes(string chars)
+    void AddCharIncludes(string chars)
+    void AddExclude(string exclude)
+    void AddInclude(string include)
+enum WxKit.TextValidatorStyle : int
+    Alpha = 4
+    Alphanumeric = 8
+    Ascii = 2
+    Digits = 16
+    Empty = 1
+    ExcludeCharList = 512
+    ExcludeList = 256
+    IncludeCharList = 128
+    IncludeList = 64
+    None = 0
+    Numeric = 32
+    Space = 2048
+    Xdigits = 1024
+class WxKit.TimePickerCtrl : Control
+    DateTime? Value { get; set; }
+    TimePickerCtrl(Window parent, DateTime? time = null, int id = -1, Point? position = null, Size? size = null, WindowStyle style = WindowStyle.None)
+    bool GetTime(out int hour, out int minute, out int second)
+    bool SetTime(int hour, int minute, int second)
+    event EventHandler<DateEvent>? TimeChanged
+sealed class WxKit.Timer : EvtHandler, IDisposable
+    Timer()
+    bool IsRunning { get; }
+    bool Start(TimeSpan interval, bool oneShot = false)
+    event EventHandler<TimerEvent>? Tick
+    void Dispose()
+    void Stop()
+class WxKit.TimerEvent : Event
+    int Interval { get; }
+class WxKit.ToggleButton : AnyButton
+    ToggleButton(Window parent, string label, int id = -1, Point? position = null, Size? size = null, WindowStyle style = WindowStyle.None)
+    bool Value { get; set; }
+    event EventHandler<CommandEvent>? Toggled
+class WxKit.ToolBar : Control
+    Control? FindControl(int id = -1)
+    Size Margins { get; set; }
+    Size ToolBitmapSize { get; set; }
+    Size ToolSize { get; }
+    ToolBar(Window parent, int id = -1, Point? position = null, Size? size = null, ToolBarStyle style = ToolBarStyle.Default)
+    ToolBarTool? AddCheckTool(int toolId, string label, Bitmap bitmap1, Bitmap? bmpDisabled = null, string shortHelp = "", string longHelp = "")
+    ToolBarTool? AddControl(Control control, string label = "")
+    ToolBarTool? AddRadioTool(int toolId, string label, Bitmap bitmap1, Bitmap? bmpDisabled = null, string shortHelp = "", string longHelp = "")
+    ToolBarTool? AddSeparator()
+    ToolBarTool? AddStretchableSpace()
+    ToolBarTool? AddTool(int toolId, string label, Bitmap bitmap, Bitmap bmpDisabled, MenuItemKind kind = MenuItemKind.Normal, string shortHelp = "", string longHelp = "")
+    ToolBarTool? AddTool(int toolId, string label, Bitmap bitmap, string shortHelp = "", MenuItemKind kind = MenuItemKind.Normal)
+    ToolBarTool? FindById(int id = -1)
+    ToolBarTool? FindToolForPosition(int x, int y)
+    ToolBarTool? GetToolByPos(int position)
+    ToolBarTool? InsertControl(int position, Control control, string label = "")
+    ToolBarTool? InsertSeparator(int position)
+    ToolBarTool? InsertStretchableSpace(int position)
+    ToolBarTool? InsertTool(int position, int toolId, string label, Bitmap bitmap, Bitmap? bmpDisabled = null, MenuItemKind kind = MenuItemKind.Normal, string shortHelp = "", string longHelp = "")
+    bool DeleteTool(int toolId)
+    bool DeleteToolByPos(int position)
+    bool GetToolEnabled(int toolId)
+    bool GetToolState(int toolId)
+    bool OnLeftClick(int toolId, bool toggleDown)
+    bool Realize()
+    bool SetDropdownMenu(Menu menu, int id = -1)
+    event EventHandler<CommandEvent>? Menu
+    event EventHandler<CommandEvent>? Tool
+    event EventHandler<CommandEvent>? ToolDropdown
+    event EventHandler<CommandEvent>? ToolEnter
+    event EventHandler<CommandEvent>? ToolRange
+    event EventHandler<CommandEvent>? ToolRclicked
+    event EventHandler<CommandEvent>? ToolRclickedRange
+    int GetToolPos(int toolId)
+    int ToolPacking { get; set; }
+    int ToolSeparation { get; set; }
+    int ToolsCount { get; }
+    string GetToolLongHelp(int toolId)
+    string GetToolShortHelp(int toolId)
+    void ClearTools()
+    void EnableTool(int toolId, bool enable)
+    void OnMouseEnter(int toolId)
+    void SetMargins(int x, int y)
+    void SetToolDisabledBitmap(Bitmap bitmap, int id = -1)
+    void SetToolLongHelp(int toolId, string helpString)
+    void SetToolNormalBitmap(Bitmap bitmap, int id = -1)
+    void SetToolShortHelp(int toolId, string helpString)
+    void ToggleTool(int toolId, bool toggle)
+[Flags] enum WxKit.ToolBarStyle : long
+    Bottom = 8192
+    Default = 4
+    Dockable = 64
+    Flat = 32
+    Horizontal = 4
+    HorzLayout = 2048
+    HorzText = 2304
+    NoTooltips = 4096
+    Noalign = 1024
+    Nodivider = 512
+    Noicons = 128
+    None = 0
+    Right = 16384
+    Text = 256
+    Vertical = 8
+sealed class WxKit.ToolBarTool
+    Bitmap? DisabledBitmap { get; }
+    Bitmap? NormalBitmap { get; }
+    Control? Control { get; }
+    MenuItemKind Kind { get; }
+    ToolBar ToolBar { get; }
+    bool CanBeToggled { get; }
+    bool IsButton { get; }
+    bool IsControl { get; }
+    bool IsDestroyed { get; }
+    bool IsEnabled { get; set; }
+    bool IsSeparator { get; }
+    bool IsStretchableSpace { get; }
+    bool IsToggled { get; set; }
+    int Id { get; }
+    string Label { get; }
+    string LongHelp { get; set; }
+    string ShortHelp { get; set; }
+class WxKit.Toolbook : BookCtrlBase
+    Toolbook(Window parent, int id = -1, Point? position = null, Size? size = null, ToolbookStyle style = ToolbookStyle.None)
+    bool EnablePage(Window page, bool enable)
+    bool EnablePage(int page, bool enable)
+    event EventHandler<BookCtrlEvent>? PageChanged
+    event EventHandler<BookCtrlEvent>? PageChanging
+[Flags] enum WxKit.ToolbookStyle : long
+    Buttonbar = 256
+    HorzLayout = 32768
+    None = 0
+class WxKit.TopLevelWindow : Window
+    ContentProtection ContentProtection { get; set; }
+    Icon? Icon { get; set; }
+    Menu? MSWGetSystemMenu()
+    Window? DefaultItem { get; set; }
+    Window? TmpDefaultItem { get; set; }
+    bool EnableCloseButton(bool enable = true)
+    bool EnableFullScreenView(bool enable = true, FullScreenStyle style = FullScreenStyle.All)
+    bool EnableMaximizeButton(bool enable = true)
+    bool EnableMinimizeButton(bool enable = true)
+    bool IsActive { get; }
+    bool IsAlwaysMaximized { get; }
+    bool IsFullScreen { get; }
+    bool IsIconized { get; }
+    bool IsMaximized { get; }
+    bool OSXIsModified()
+    bool ShouldPreventAppExit()
+    bool ShowFullScreen(bool show, FullScreenStyle style = FullScreenStyle.All)
+    event EventHandler<CloseEvent>? Closing
+    event EventHandler<FullScreenEvent>? FullScreenChanged
+    event EventHandler<MaximizeEvent>? Maximized
+    event EventHandler<MoveEvent>? MoveEnded
+    event EventHandler<MoveEvent>? MoveStarted
+    event EventHandler<MoveEvent>? Moved
+    event EventHandler<ShowEvent>? VisibilityChanged
+    static Size DefaultSize { get; }
+    string Title { get; set; }
+    void CenterOnScreen(Orientation direction = Orientation.Both)
+    void Iconize(bool iconize = true)
+    void Maximize(bool maximize = true)
+    void OSXSetModified(bool modified)
+    void RequestUserAttention(UserAttention flags = UserAttention.Info)
+    void Restore()
+    void SetIcons(Icon icons)
+    void SetMaxSize(Size size)
+    void SetMinSize(Size size)
+    void SetRepresentedFilename(string filename)
+    void ShowWithoutActivating()
+class WxKit.TreeCtrl : Control
+    Color? GetItemBackgroundColor(TreeItemId item)
+    Color? GetItemTextColor(TreeItemId item)
+    Font? GetItemFont(TreeItemId item)
+    TextCtrl? EditControl { get; }
+    TextCtrl? EditLabel(TreeItemId item)
+    TreeCtrl(Window parent, int id = -1, Point? position = null, Size? size = null, TreeCtrlStyle? style = null)
+    TreeItemId AddRoot(string text, int image = -1, int selImage = -1, object? data = null)
+    TreeItemId AppendItem(TreeItemId parent, string text, int image = -1, int selImage = -1, object? data = null)
+    TreeItemId FirstVisibleItem { get; }
+    TreeItemId FocusedItem { get; set; }
+    TreeItemId GetItemParent(TreeItemId item)
+    TreeItemId GetLastChild(TreeItemId item)
+    TreeItemId GetNextSibling(TreeItemId item)
+    TreeItemId GetNextVisible(TreeItemId item)
+    TreeItemId GetPrevSibling(TreeItemId item)
+    TreeItemId GetPrevVisible(TreeItemId item)
+    TreeItemId InsertItem(TreeItemId parent, TreeItemId previous, string text, int image = -1, int selImage = -1, object? data = null)
+    TreeItemId InsertItem(TreeItemId parent, int position, string text, int image = -1, int selImage = -1, object? data = null)
+    TreeItemId PrependItem(TreeItemId parent, string text, int image = -1, int selImage = -1, object? data = null)
+    TreeItemId RootItem { get; }
+    TreeItemId Selection { get; }
+    bool GetBoundingRect(TreeItemId item, out Rect rect, bool textOnly = false)
+    bool HasImages { get; }
+    bool HasStateImages { get; }
+    bool IsBold(TreeItemId item)
+    bool IsEmpty { get; }
+    bool IsExpanded(TreeItemId item)
+    bool IsSelected(TreeItemId item)
+    bool IsVisible(TreeItemId item)
+    bool ItemHasChildren(TreeItemId item)
+    bool QuickBestSize { get; set; }
+    event EventHandler<CommandEvent>? TreeItemMenu
+    event EventHandler<TreeEvent>? TreeBeginDrag
+    event EventHandler<TreeEvent>? TreeBeginLabelEdit
+    event EventHandler<TreeEvent>? TreeBeginRdrag
+    event EventHandler<TreeEvent>? TreeDeleteItem
+    event EventHandler<TreeEvent>? TreeEndDrag
+    event EventHandler<TreeEvent>? TreeEndLabelEdit
+    event EventHandler<TreeEvent>? TreeGetInfo
+    event EventHandler<TreeEvent>? TreeItemActivated
+    event EventHandler<TreeEvent>? TreeItemCollapsed
+    event EventHandler<TreeEvent>? TreeItemCollapsing
+    event EventHandler<TreeEvent>? TreeItemExpanded
+    event EventHandler<TreeEvent>? TreeItemExpanding
+    event EventHandler<TreeEvent>? TreeItemGettooltip
+    event EventHandler<TreeEvent>? TreeItemMiddleClick
+    event EventHandler<TreeEvent>? TreeItemRightClick
+    event EventHandler<TreeEvent>? TreeKeyDown
+    event EventHandler<TreeEvent>? TreeSelChanged
+    event EventHandler<TreeEvent>? TreeSelChanging
+    event EventHandler<TreeEvent>? TreeSetInfo
+    event EventHandler<TreeEvent>? TreeStateImageClick
+    int Count { get; }
+    int GetChildrenCount(TreeItemId item, bool recursively = true)
+    int GetItemImage(TreeItemId item, TreeItemIcon which = TreeItemIcon.Normal)
+    int GetItemState(TreeItemId item)
+    int GetSelections(out TreeItemId[] selections)
+    int ImageCount { get; }
+    int Indent { get; set; }
+    int OnCompareItems(TreeItemId item1, TreeItemId item2)
+    int Spacing { get; set; }
+    int StateImageCount { get; }
+    object? GetItemData(TreeItemId item)
+    string GetItemText(TreeItemId item)
+    void ClearFocusedItem()
+    void Collapse(TreeItemId item)
+    void CollapseAll()
+    void CollapseAllChildren(TreeItemId item)
+    void CollapseAndReset(TreeItemId item)
+    void Delete(TreeItemId item)
+    void DeleteAllItems()
+    void DeleteChildren(TreeItemId item)
+    void EnableBellOnNoMatch(bool on = true)
+    void EndEditLabel(TreeItemId item, bool discardChanges = false)
+    void EnsureVisible(TreeItemId item)
+    void Expand(TreeItemId item)
+    void ExpandAll()
+    void ExpandAllChildren(TreeItemId item)
+    void ScrollTo(TreeItemId item)
+    void SelectChildren(TreeItemId parent)
+    void SelectItem(TreeItemId item, bool select = true)
+    void SetImages(IEnumerable<Bitmap> images)
+    void SetItemBackgroundColor(TreeItemId item, Color? column)
+    void SetItemBold(TreeItemId item, bool bold = true)
+    void SetItemData(TreeItemId item, object? data)
+    void SetItemDropHighlight(TreeItemId item, bool highlight = true)
+    void SetItemFont(TreeItemId item, Font font)
+    void SetItemHasChildren(TreeItemId item, bool hasChildren = true)
+    void SetItemImage(TreeItemId item, int image, TreeItemIcon which = TreeItemIcon.Normal)
+    void SetItemState(TreeItemId item, int state)
+    void SetItemText(TreeItemId item, string text)
+    void SetItemTextColor(TreeItemId item, Color? column)
+    void SetStateImages(IEnumerable<Bitmap> images)
+    void SortChildren(TreeItemId item)
+    void Toggle(TreeItemId item)
+    void ToggleItemSelection(TreeItemId item)
+    void Unselect()
+    void UnselectAll()
+    void UnselectItem(TreeItemId item)
+[Flags] enum WxKit.TreeCtrlStyle : long
+    EditLabels = 512
+    FullRowHighlight = 8192
+    HasButtons = 1
+    HasVariableRowHeight = 128
+    HideRoot = 2048
+    LinesAtRoot = 8
+    Multiple = 32
+    NoButtons = 0
+    NoLines = 4
+    None = 0
+    RowLines = 1024
+    Single = 0
+    TwistButtons = 16
+class WxKit.TreeEvent : NotifyEvent
+    Point Point { get; }
+    TreeItemId Item { get; }
+    TreeItemId OldItem { get; }
+    bool IsEditCancelled { get; }
+    int KeyCode { get; }
+    string Label { get; }
+    void SetToolTip(string tooltip)
+enum WxKit.TreeItemIcon : int
+    Expanded = 2
+    Max = 4
+    Normal = 0
+    Selected = 1
+    SelectedExpanded = 3
+readonly record struct WxKit.TreeItemId : IEquatable<TreeItemId>
+    TreeItemId(nint Value)
+    bool Equals(TreeItemId other)
+    bool IsOk { get; }
+    nint Value { get; init; }
+    override bool Equals(object obj)
+    override int GetHashCode()
+    override string ToString()
+    static bool op_Equality(TreeItemId left, TreeItemId right)
+    static bool op_Inequality(TreeItemId left, TreeItemId right)
+    void Deconstruct(out nint Value)
+class WxKit.Treebook : BookCtrlBase
+    Treebook(Window parent, int id = -1, Point? position = null, Size? size = null, WindowStyle style = WindowStyle.None)
+    bool AddSubPage(Window page, string text, bool select = false, int imageId = -1)
+    bool CollapseNode(int pageId)
+    bool ExpandNode(int pageId, bool expand = true)
+    bool InsertSubPage(int pagePos, Window page, string text, bool select = false, int imageId = -1)
+    bool IsNodeExpanded(int pageId)
+    event EventHandler<BookCtrlEvent>? NodeCollapsed
+    event EventHandler<BookCtrlEvent>? NodeExpanded
+    event EventHandler<BookCtrlEvent>? PageChanged
+    event EventHandler<BookCtrlEvent>? PageChanging
+    int GetPageParent(int page)
+class WxKit.UpdateUIEvent : CommandEvent
+    CheckBoxState ThreeStateValue { get; set; }
+    bool Checked { get; }
+    bool Enabled { get; }
+    bool Is3State()
+    bool IsCheckable { get; }
+    bool SetChecked { get; }
+    bool SetEnabled { get; }
+    bool SetShown { get; }
+    bool SetText { get; }
+    bool Shown { get; }
+    static UpdateUIMode Mode { get; set; }
+    static bool CanUpdate(Window window)
+    static long UpdateInterval { get; set; }
+    static void ResetUpdateTime()
+    string Text { get; set; }
+    void Check(bool check)
+    void Enable(bool enable)
+    void Show(bool show)
+[Flags] enum WxKit.UpdateUIFlags : int
+    FromIdle = 2
+    None = 0
+    Recurse = 1
+enum WxKit.UpdateUIMode : int
+    All = 0
+    Specified = 1
+enum WxKit.UserAttention : int
+    Error = 2
+    Info = 1
+class WxKit.Validator : NativeObject
+    Window? Window { get; }
+    bool TransferFromWindow()
+    bool TransferToWindow()
+    bool Validate(Window parent)
+    static bool IsSilent { get; }
+    static void SuppressBellOnError(bool suppress = true)
+enum WxKit.WeekDay : int
+    Fri = 5
+    InvWeekDay = 7
+    Mon = 1
+    Sat = 6
+    Sun = 0
+    Thu = 4
+    Tue = 2
+    Wed = 3
+class WxKit.Window : EvtHandler
+    Accessible? AccessibleObject { get; }
+    BackgroundStyle BackgroundStyle { get; set; }
+    Border Border { get; }
+    Border GetBorder(long flags)
+    Color? BackgroundColor { get; set; }
+    Color? ForegroundColor { get; set; }
+    Cursor? Cursor { get; set; }
+    EvtHandler? EventHandler { get; set; }
+    EvtHandler? PopEventHandler(bool deleteHandler = false)
+    Font? Font { get; set; }
+    HitTest HitTest(Point point)
+    HitTest HitTest(int x, int y)
+    LayoutDirection LayoutDirection { get; set; }
+    Point ClientAreaOrigin { get; }
+    Point ClientToScreen(Point point)
+    Point ConvertDialogToPixels(Point point)
+    Point ConvertPixelsToDialog(Point point)
+    Point FromDIP(Point point)
+    Point FromPhys(Point point)
+    Point Position { get; set; }
+    Point ScreenPosition { get; }
+    Point ScreenToClient(Point point)
+    Point ToDIP(Point point)
+    Point ToPhys(Point point)
+    Rect ClientRect { get; }
+    Rect InputMethodCursorRect { get; }
+    Rect Rect { get; }
+    Rect ScreenRect { get; }
+    Rect UpdateClientRect { get; }
+    Size BestSize { get; }
+    Size BestVirtualSize { get; }
+    Size ClientSize { get; set; }
+    Size ClientToWindowSize(Size size)
+    Size ConvertDialogToPixels(Size size)
+    Size ConvertPixelsToDialog(Size size)
+    Size DPI { get; }
+    Size EffectiveMinSize { get; }
+    Size FromDIP(Size size)
+    Size FromPhys(Size size)
+    Size GetMinSizeFromKnownDirection(int direction, int size, int availableOtherDir)
+    Size GetTextExtent(string text)
+    Size MaxClientSize { get; set; }
+    Size MaxSize { get; set; }
+    Size MinClientSize { get; set; }
+    Size MinSize { get; set; }
+    Size Size { get; set; }
+    Size ToDIP(Size size)
+    Size ToPhys(Size size)
+    Size VirtualSize { get; set; }
+    Size WindowBorderSize { get; }
+    Size WindowToClientSize(Size size)
+    Sizer? Sizer { get; set; }
+    Validator? Validator { get; set; }
+    Window? FindWindow(long id)
+    Window? FindWindow(string name)
+    Window? GrandParent { get; }
+    Window? NextSibling { get; }
+    Window? Parent { get; }
+    Window? PrevSibling { get; }
+    WindowStyle ExtraStyle { get; }
+    WindowStyle WindowStyle { get; }
+    WindowVariant WindowVariant { get; set; }
+    Window[] Children { get; }
+    bool AcceptsFocus()
+    bool AcceptsFocusFromKeyboard()
+    bool AcceptsFocusRecursively()
+    bool AutoLayout { get; set; }
+    bool BeginRepositioningChildren()
+    bool CanAcceptFocus { get; }
+    bool CanAcceptFocusFromKeyboard { get; }
+    bool CanScroll(int orientation)
+    bool CanSetTransparent { get; }
+    bool Close(bool force = false)
+    bool Destroy()
+    bool DestroyChildren()
+    bool Disable()
+    bool EnableTouchEvents(int eventsMask)
+    bool HasCapture { get; }
+    bool HasExtraStyle(int exFlag)
+    bool HasFlag(int flag)
+    bool HasFocus { get; }
+    bool HasMultiplePages { get; }
+    bool HasScrollbar(int orientation)
+    bool HasTransparentBackground { get; }
+    bool Hide()
+    bool HideWithEffect(ShowEffect effect, int timeout = 0)
+    bool InformFirstDirection(int direction, int size, int availableOtherDir)
+    bool InheritsBackgroundColor()
+    bool InheritsForegroundColor()
+    bool IsBeingDeleted { get; }
+    bool IsDescendant(Window window)
+    bool IsDoubleBuffered { get; set; }
+    bool IsEnabled { get; set; }
+    bool IsExposed(int x, int y)
+    bool IsExposed(int x, int y, int w, int h)
+    bool IsFocusable { get; }
+    bool IsFrozen { get; }
+    bool IsInputMethodEnabled { get; }
+    bool IsRetained { get; }
+    bool IsScrollbarAlwaysShown(int orientation)
+    bool IsShown { get; }
+    bool IsShownOnScreen { get; }
+    bool IsThisEnabled { get; }
+    bool IsTopLevel { get; }
+    bool IsTransparentBackgroundSupported { get; }
+    bool Layout()
+    bool LineDown()
+    bool LineUp()
+    bool Navigate()
+    bool NavigateIn()
+    bool PageDown()
+    bool PageUp()
+    bool PopupMenu(Menu menu, Point? position = null)
+    bool PopupMenu(Menu menu, int x, int y)
+    bool RegisterHotKey(int hotkeyId, int modifiers, int virtualKeyCode)
+    bool RemoveEventHandler(EvtHandler handler)
+    bool Reparent(Window newParent)
+    bool ScrollLines(int lines)
+    bool ScrollPages(int pages)
+    bool SetInitialSize(Size? size = null)
+    bool SetTransparent(byte alpha)
+    bool ShouldInheritColors()
+    bool Show(bool show = true)
+    bool ShowWithEffect(ShowEffect effect, int timeout = 0)
+    bool ThemeEnabled { get; set; }
+    bool ToggleWindowStyle(int flag)
+    bool TransferDataFromWindow()
+    bool TransferDataToWindow()
+    bool UnregisterHotKey(int hotkeyId)
+    bool UseBackgroundColor()
+    bool UseBgCol()
+    bool UseForegroundColor()
+    bool Validate()
+    double ContentScaleFactor { get; }
+    double DPIScaleFactor { get; }
+    event EventHandler<ActivateEvent>? Activated
+    event EventHandler<ChildFocusEvent>? ChildFocused
+    event EventHandler<CommandEvent>? ContextMenu
+    event EventHandler<DropFilesEvent>? DropFiles
+    event EventHandler<EraseEvent>? EraseBackground
+    event EventHandler<Event>? MouseCaptureChanged
+    event EventHandler<Event>? MouseCaptureLost
+    event EventHandler<Event>? SetCursor
+    event EventHandler<FocusEvent>? GotFocus
+    event EventHandler<FocusEvent>? LostFocus
+    event EventHandler<HelpEvent>? HelpRange
+    event EventHandler<HelpEvent>? HelpRequested
+    event EventHandler<IdleEvent>? Idle
+    event EventHandler<KeyEvent>? Char
+    event EventHandler<KeyEvent>? CharHook
+    event EventHandler<KeyEvent>? KeyDown
+    event EventHandler<KeyEvent>? KeyUp
+    event EventHandler<PaintEvent>? Paint
+    event EventHandler<SizeEvent>? SizeChanged
+    event EventHandler<SysColorChangedEvent>? SystemColorsChanged
+    int AdjustForLayoutDirection(int x, int width, int widthTotal)
+    int CharHeight { get; }
+    int CharWidth { get; }
+    int FromDIP(int d)
+    int FromPhys(int d)
+    int GetBestHeight(int width)
+    int GetBestWidth(int height)
+    int GetHelpIdAtPoint(Point point)
+    int GetScrollPos(int orientation)
+    int GetScrollRange(int orientation)
+    int GetScrollThumb(int orientation)
+    int GetScrollbarSize(int orientation)
+    int Id { get; set; }
+    int MaxHeight { get; }
+    int MaxWidth { get; }
+    int MinHeight { get; }
+    int MinWidth { get; }
+    int ToDIP(int d)
+    int ToPhys(int d)
+    long WindowStyleFlag { get; set; }
+    nint NativeHandle { get; }
+    static Point FromDIP(Point point, Window w)
+    static Point FromPhys(Point point, Window w)
+    static Point ToDIP(Point point, Window w)
+    static Point ToPhys(Point point, Window w)
+    static Size FromDIP(Size size, Window w)
+    static Size FromPhys(Size size, Window w)
+    static Size ToDIP(Size size, Window w)
+    static Size ToPhys(Size size, Window w)
+    static Window? Capture { get; }
+    static Window? FindFocus()
+    static Window? FindWindowById(long id, Window? parent = null)
+    static Window? FindWindowByLabel(string label, Window? parent = null)
+    static Window? FindWindowByName(string name, Window? parent = null)
+    static int FromDIP(int d, Window w)
+    static int FromPhys(int d, Window w)
+    static int NewControlId(int count = 1)
+    static int ToDIP(int d, Window w)
+    static int ToPhys(int d, Window w)
+    static void UnreserveControlId(int count = 1, int id = -1)
+    string GetHelpTextAtPoint(Point point, Origin origin)
+    string HelpText { get; set; }
+    string Label { get; set; }
+    string Name { get; set; }
+    string ToolTipText { get; }
+    void AddChild(Window child)
+    void AlwaysShowScrollbars(bool hflag = true, bool vflag = true)
+    void CacheBestSize(Size size)
+    void CaptureMouse()
+    void Center(Orientation direction = Orientation.Both)
+    void CenterOnParent(Orientation direction = Orientation.Both)
+    void ClearBackground()
+    void ClientToScreen(out int x, out int y)
+    void DisableFocusFromKeyboard()
+    void DragAcceptFiles(bool accept)
+    void EnableFocusFromKeyboard()
+    void EnableInputMethod(bool enable = true)
+    void EnableVisibleFocus(bool enable)
+    void EndRepositioningChildren()
+    void Fit()
+    void FitInside()
+    void Freeze()
+    void GetClientSize(out int width, out int height)
+    void GetPosition(out int x, out int y)
+    void GetScreenPosition(out int x, out int y)
+    void GetSize(out int width, out int height)
+    void GetTextExtent(string text, out int w, out int h)
+    void GetVirtualSize(out int width, out int height)
+    void InheritAttributes()
+    void InitDialog()
+    void InvalidateBestSize()
+    void Lower()
+    void Move(Point point, SizeFlags flags = SizeFlags.UseExisting)
+    void Move(int x, int y, SizeFlags flags = SizeFlags.UseExisting)
+    void MoveAfterInTabOrder(Window window)
+    void MoveBeforeInTabOrder(Window window)
+    void OnInternalIdle()
+    void PostSizeEvent()
+    void PostSizeEventToParent()
+    void PushEventHandler(EvtHandler handler)
+    void Raise()
+    void Refresh(bool eraseBackground = true)
+    void RefreshRect(Rect rect, bool eraseBackground = true)
+    void ReleaseMouse()
+    void RemoveChild(Window child)
+    void ScreenToClient(out int x, out int y)
+    void ScrollWindow(int dx, int dy)
+    void SendSizeEvent(SendSizeEventFlags flags = SendSizeEventFlags.None)
+    void SendSizeEventToParent(SendSizeEventFlags flags = SendSizeEventFlags.None)
+    void SetAccessibleName(string name)
+    void SetCanFocus(bool canFocus)
+    void SetClientSize(Rect rect)
+    void SetClientSize(int width, int height)
+    void SetContainingSizer(Sizer sizer)
+    void SetExtraStyle(long exStyle)
+    void SetFocus()
+    void SetFocusFromKbd()
+    void SetNextHandler(EvtHandler handler)
+    void SetOwnBackgroundColor(Color? color)
+    void SetOwnFont(Font font)
+    void SetOwnForegroundColor(Color? color)
+    void SetPreviousHandler(EvtHandler handler)
+    void SetScrollPos(int orientation, int position, bool refresh = true)
+    void SetScrollbar(int orientation, int position, int thumbSize, int range, bool refresh = true)
+    void SetSize(Rect rect)
+    void SetSize(int width, int height)
+    void SetSize(int x, int y, int width, int height, SizeFlags sizeFlags = SizeFlags.Auto)
+    void SetSizeHints(Size minSize, Size? maxSize = null, Size? incSize = null)
+    void SetSizeHints(int minW, int minH, int maxW = -1, int maxH = -1, int incW = -1, int incH = -1)
+    void SetToolTip(string tipString)
+    void SetVirtualSize(int width, int height)
+    void SetWindowStyle(long style)
+    void Thaw()
+    void UnsetToolTip()
+    void Update()
+    void UpdateInputMethodCursorRect(Rect rect)
+    void UpdateWindowUI(UpdateUIFlags flags = UpdateUIFlags.None)
+    void WarpPointer(int x, int y)
+class WxKit.WindowDC : DC
+    WindowDC(Window window)
+enum WxKit.WindowMode : int
+    AppModal = 2
+    Normal = 0
+    WindowModal = 1
+[Flags] enum WxKit.WindowStyle : long
+    AlwaysShowSb = 8388608
+    BorderDefault = 0
+    BorderDouble = 268435456
+    BorderNone = 2097152
+    BorderRaised = 67108864
+    BorderSimple = 33554432
+    BorderStatic = 16777216
+    BorderSunken = 134217728
+    BorderTheme = 268435456
+    ClipChildren = 4194304
+    FullRepaintOnResize = 65536
+    HorizontalScrollBar = 1073741824
+    NoFullRepaintOnResize = 0
+    None = 0
+    TabTraversal = 524288
+    TransparentWindow = 0
+    VerticalScrollBar = -2147483648
+    WantsChars = 262144
+enum WxKit.WindowVariant : int
+    Large = 3
+    Max = 4
+    Mini = 2
+    Normal = 0
+    Small = 1
+class WxKit.WrapSizer : BoxSizer
+    WrapSizer(Orientation orientation = Orientation.Horizontal, WrapSizerFlags flags = WrapSizerFlags.WrapSizerDefaultFlags)
+[Flags] enum WxKit.WrapSizerFlags : int
+    ExtendLastOnEachLine = 1
+    None = 0
+    RemoveLeadingSpaces = 2
+    WrapSizerDefaultFlags = 3

@@ -33,6 +33,12 @@
 
 	<ItemGroup>
 		<Content Include="xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
+		<!-- The public API snapshot, which PublicApiTests compares with, and rewrites from the project's own folder. -->
+		<Content Include="PublicApi.txt" CopyToOutputDirectory="PreserveNewest" Condition="Exists('PublicApi.txt')" />
+		<AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+			<_Parameter1>ProjectDirectory</_Parameter1>
+			<_Parameter2>$(MSBuildProjectDirectory)</_Parameter2>
+		</AssemblyAttribute>
 	</ItemGroup>
 
 	<ItemGroup>
