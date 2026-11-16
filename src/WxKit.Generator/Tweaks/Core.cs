@@ -37,6 +37,8 @@ internal static class Core {
 			.AddEvent("EVT_MOUSEWHEEL", "wxEVT_MOUSEWHEEL", "wxMouseEvent", "MouseWheel")
 			.AddEvent("EVT_ENTER_WINDOW", "wxEVT_ENTER_WINDOW", "wxMouseEvent", "MouseEntered")
 			.AddEvent("EVT_LEAVE_WINDOW", "wxEVT_LEAVE_WINDOW", "wxMouseEvent", "MouseLeft")
+			.ParameterEnum("Navigate", "flags", "NavigationFlags")
+			.ParameterEnum("NavigateIn", "flags", "NavigationFlags")
 			.ParameterEnum("GetExtraStyle", "return", "WindowExtraStyle")
 			.ParameterEnum("SetExtraStyle", "exStyle", "WindowExtraStyle")
 			.ParameterEnum("HasExtraStyle", "exFlag", "WindowExtraStyle")
@@ -56,6 +58,8 @@ internal static class Core {
 		tweaks.ConstantEnum("WindowExtraStyle", "wxWS_EX_", isFlags: true);
 		// The keys a key event names, which a letter's or digit's code is the character of, as 'A' is.
 		tweaks.Enum("wxKeyCode", "KeyCode");
+		// Which way, and how, the focus moves, as Tab and Shift+Tab move it.
+		tweaks.Enum("wxNavigationKeyEvent::wxNavigationKeyEventFlags", "NavigationFlags", isFlags: true);
 		tweaks.Class("wxKeyEvent", e => e.ParameterEnum("GetKeyCode", "return", "wxKeyCode"));
 		tweaks.ConstantEnum("SizeFlags", "wxSIZE_", isFlags: true, excludePrefixes: ["wxSIZE_CONV_", "wxSIZE_SET_"]);
 		tweaks.ConstantEnum("SendSizeEventFlags", "wxSEND_EVENT_", isFlags: true);

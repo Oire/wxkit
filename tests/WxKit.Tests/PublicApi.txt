@@ -2832,6 +2832,11 @@ enum WxKit.NavigationDirection : int
     Previous = 5
     Right = 6
     Up = 7
+[Flags] enum WxKit.NavigationFlags : int
+    FromTab = 4
+    IsBackward = 0
+    IsForward = 1
+    WinChange = 2
 class WxKit.NavigationKeyEvent : Event
     Window? CurrentFocus { get; set; }
     bool Direction { get; set; }
@@ -4405,8 +4410,8 @@ class WxKit.Window : EvtHandler
     bool Layout()
     bool LineDown()
     bool LineUp()
-    bool Navigate()
-    bool NavigateIn()
+    bool Navigate(NavigationFlags flags = NavigationFlags.IsForward)
+    bool NavigateIn(NavigationFlags flags = NavigationFlags.IsForward)
     bool PageDown()
     bool PageUp()
     bool PopupMenu(Menu menu, Point? position = null)

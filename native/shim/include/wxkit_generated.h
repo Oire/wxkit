@@ -2623,8 +2623,8 @@ WXK_FUNCTION(void) wxk_Window_SetWindowStyle(wxk_Window* self, int64_t style) WX
 WXK_FUNCTION(uint8_t) wxk_Window_ToggleWindowStyle(wxk_Window* self, int32_t flag) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Window_MoveAfterInTabOrder(wxk_Window* self, wxk_Window* window) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Window_MoveBeforeInTabOrder(wxk_Window* self, wxk_Window* window) WXK_NOEXCEPT;
-WXK_FUNCTION(uint8_t) wxk_Window_Navigate(wxk_Window* self) WXK_NOEXCEPT;
-WXK_FUNCTION(uint8_t) wxk_Window_NavigateIn(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Window_Navigate(wxk_Window* self, int32_t flags) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Window_NavigateIn(wxk_Window* self, int32_t flags) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Window_Lower(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Window_Raise(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Window_Hide(wxk_Window* self) WXK_NOEXCEPT;

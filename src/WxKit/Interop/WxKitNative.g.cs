@@ -8688,11 +8688,11 @@ public static unsafe partial class WxKitNative {
 
 	[LibraryImport(Library, EntryPoint = "wxk_Window_Navigate")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial byte WindowNavigate(WxkWindow* self);
+	public static partial byte WindowNavigate(WxkWindow* self, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_Window_NavigateIn")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial byte WindowNavigateIn(WxkWindow* self);
+	public static partial byte WindowNavigateIn(WxkWindow* self, int flags);
 
 	[LibraryImport(Library, EntryPoint = "wxk_Window_Lower")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

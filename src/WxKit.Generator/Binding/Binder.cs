@@ -56,7 +56,10 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 			bound.Base = ancestors.Skip(1).Select(name => _classes.GetValueOrDefault(name)).FirstOrDefault(candidate => candidate is not null && candidate.Handle.IsOwned == bound.Handle.IsOwned);
 			bound.IsTopLevel = ancestors.Contains("wxTopLevelWindow");
 		}
-		// Enums made of constants are bound first, so a default can name their members.
+		// Enums are bound first, so a default can name their members.
+		foreach (string cppName in tweaks.Enums.Keys) {
+			if (EnumFor(cppName) is null) throw new InvalidOperationException($"A tweak binds the enum {cppName}, which the interface headers do not have.");
+		}
 		foreach (ConstantEnumTweak group in tweaks.ConstantEnums) BindConstantEnum(group);
 		foreach ((string cppName, ConstantClassTweak constants) in tweaks.ConstantClasses) {
 			if (!api.Enums.TryGetValue(cppName, out DoxygenEnum? source)) throw new InvalidOperationException($"A tweak binds the enum {cppName} as constants, which the interface headers do not have.");
@@ -71,9 +74,6 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 			BindEvents(bound);
 		}
 		foreach ((string constant, string eventClass) in tweaks.ExtraEventTypes) EventTypeFor(constant, eventClass);
-		foreach (string cppName in tweaks.Enums.Keys) {
-			if (EnumFor(cppName) is null) throw new InvalidOperationException($"A tweak binds the enum {cppName}, which the interface headers do not have.");
-		}
 		return new BindingResult(
 			[.. _classes.Values.OrderBy(static bound => bound.CppName, StringComparer.Ordinal)],
 			[.. _eventTypes.Values.OrderBy(static type => type.Name, StringComparer.Ordinal)],
@@ -474,7 +474,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		int shared = enumeration.CppType is string cppEnum && api.Enums.TryGetValue(cppEnum, out DoxygenEnum? source) ? SharedWords(source) : 0;
 		foreach (string part in parts) {
 			string? member = styles is not null
-				? styles.Members.FirstOrDefault(style => style.Constant == part)?.Name
+				? styles.Members.FirstOrDefault(style => style.Constant == part || part.EndsWith("::" + style.Constant, StringComparison.Ordinal))?.Name
 				: ConstantPattern().IsMatch(part) ? MemberName(part, shared) : null;
 			if (member is null) {
 				members.Clear();

@@ -525,12 +525,12 @@ WXK_FUNCTION(void) wxk_Window_MoveBeforeInTabOrder(wxk_Window* self, wxk_Window*
 	wxk::Guard([&] { static_cast<wxWindow*>(wxk::Unwrap(self))->MoveBeforeInTabOrder(static_cast<wxWindow*>(wxk::Unwrap(window))); });
 }
 
-WXK_FUNCTION(uint8_t) wxk_Window_Navigate(wxk_Window* self) noexcept {
-	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxWindow*>(wxk::Unwrap(self))->Navigate()) ? 1 : 0; });
+WXK_FUNCTION(uint8_t) wxk_Window_Navigate(wxk_Window* self, int32_t flags) noexcept {
+	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxWindow*>(wxk::Unwrap(self))->Navigate(static_cast<int>(flags))) ? 1 : 0; });
 }
 
-WXK_FUNCTION(uint8_t) wxk_Window_NavigateIn(wxk_Window* self) noexcept {
-	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxWindow*>(wxk::Unwrap(self))->NavigateIn()) ? 1 : 0; });
+WXK_FUNCTION(uint8_t) wxk_Window_NavigateIn(wxk_Window* self, int32_t flags) noexcept {
+	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxWindow*>(wxk::Unwrap(self))->NavigateIn(static_cast<int>(flags))) ? 1 : 0; });
 }
 
 WXK_FUNCTION(void) wxk_Window_Lower(wxk_Window* self) noexcept {

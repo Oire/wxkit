@@ -1463,6 +1463,19 @@ public enum NavigationDirection {
 	Up = 7,
 }
 
+/// <summary>Wraps wxNavigationKeyEvent::wxNavigationKeyEventFlags.</summary>
+[Flags]
+public enum NavigationFlags {
+	/// <summary>Wraps IsBackward.</summary>
+	IsBackward = 0,
+	/// <summary>Wraps IsForward.</summary>
+	IsForward = 1,
+	/// <summary>Wraps WinChange.</summary>
+	WinChange = 2,
+	/// <summary>Wraps FromTab.</summary>
+	FromTab = 4,
+}
+
 /// <summary>Wraps wxHelpEvent::Origin.</summary>
 public enum Origin {
 	/// <summary>unrecognized event source. Wraps Origin_Unknown.</summary>
