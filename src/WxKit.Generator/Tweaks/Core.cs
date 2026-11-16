@@ -250,6 +250,21 @@ internal static class Core {
 			.AddEvent("EVT_CALENDAR", "wxEVT_CALENDAR_DOUBLECLICKED", "wxCalendarEvent", "DateActivated"));
 		tweaks.Class("wxDateEvent", e => e.Ignore("SetDate"));
 		tweaks.Class("wxCalendarEvent", e => e.Ignore("SetWeekDay"));
+		// Taskbar icons, which are made and freed by hand, since the shim's own class shows the menu
+		// .NET gives it, and Destroy must only be called once, which Dispose sees to.
+		tweaks.Enum("wxTaskBarIconType", "TaskBarIconType");
+		tweaks.Class("wxTaskBarIcon", icon => icon
+			.NoConstructors()
+			.Ignore("Destroy")
+			.Event("EVT_TASKBAR_MOVE", "MouseMoved")
+			.Event("EVT_TASKBAR_LEFT_DOWN", "LeftDown")
+			.Event("EVT_TASKBAR_LEFT_UP", "LeftUp")
+			.Event("EVT_TASKBAR_RIGHT_DOWN", "RightDown")
+			.Event("EVT_TASKBAR_RIGHT_UP", "RightUp")
+			.Event("EVT_TASKBAR_LEFT_DCLICK", "LeftDoubleClick")
+			.Event("EVT_TASKBAR_RIGHT_DCLICK", "RightDoubleClick")
+			.Event("EVT_TASKBAR_CLICK", "Click"));
+		tweaks.Class("wxTaskBarIconEvent");
 		// Notifications, which the application frees with Dispose, as it does timers. Only wxMSW has toasts.
 		// The icons a notification or an info bar shows, which are wxWidgets's message icons, without
 		// the synonyms and the masks.

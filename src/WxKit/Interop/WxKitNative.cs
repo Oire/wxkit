@@ -390,6 +390,18 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void NumbersFree(WxkNumbers* numbers);
 
+	[LibraryImport(Library, EntryPoint = "wxk_ManagedTaskBarIcon_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkEvtHandler* ManagedTaskBarIconNew(int type);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ManagedTaskBarIcon_SetMenu")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ManagedTaskBarIconSetMenu(WxkEvtHandler* icon, WxkMenu* menu);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ManagedTaskBarIcon_Destroy")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ManagedTaskBarIconDestroy(WxkEvtHandler* icon);
+
 	[LibraryImport(Library, EntryPoint = "wxk_NotificationMessage_Free")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void NotificationMessageFree(WxkEvtHandler* notification);

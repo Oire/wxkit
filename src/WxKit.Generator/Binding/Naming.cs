@@ -36,6 +36,7 @@ internal static class Naming {
 		["TEXTCTRL"] = "TextCtrl",
 		["FONTDESC"] = "FontDesc",
 		["USEFONT"] = "UseFont",
+		["STATUSITEM"] = "StatusItem",
 		// The full screen styles and the update UI flags.
 		["FULLSCREEN"] = "FullScreen",
 		["NOMENUBAR"] = "NoMenuBar",

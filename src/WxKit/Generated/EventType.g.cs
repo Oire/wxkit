@@ -1237,6 +1237,62 @@ public static unsafe partial class EventType {
 		public static readonly EventType<SysColorChangedEvent> Value = new(WxKitNative.EventTypeSysColorChanged, static native => new SysColorChangedEvent((WxkEvent*)native));
 	}
 
+	/// <summary>Wraps wxEVT_TASKBAR_CLICK.</summary>
+	public static EventType<TaskBarIconEvent> TaskbarClick => TaskbarClickType.Value;
+
+	private static class TaskbarClickType {
+		public static readonly EventType<TaskBarIconEvent> Value = new(WxKitNative.EventTypeTaskbarClick, static native => new TaskBarIconEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_TASKBAR_LEFT_DCLICK.</summary>
+	public static EventType<TaskBarIconEvent> TaskbarLeftDclick => TaskbarLeftDclickType.Value;
+
+	private static class TaskbarLeftDclickType {
+		public static readonly EventType<TaskBarIconEvent> Value = new(WxKitNative.EventTypeTaskbarLeftDclick, static native => new TaskBarIconEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_TASKBAR_LEFT_DOWN.</summary>
+	public static EventType<TaskBarIconEvent> TaskbarLeftDown => TaskbarLeftDownType.Value;
+
+	private static class TaskbarLeftDownType {
+		public static readonly EventType<TaskBarIconEvent> Value = new(WxKitNative.EventTypeTaskbarLeftDown, static native => new TaskBarIconEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_TASKBAR_LEFT_UP.</summary>
+	public static EventType<TaskBarIconEvent> TaskbarLeftUp => TaskbarLeftUpType.Value;
+
+	private static class TaskbarLeftUpType {
+		public static readonly EventType<TaskBarIconEvent> Value = new(WxKitNative.EventTypeTaskbarLeftUp, static native => new TaskBarIconEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_TASKBAR_MOVE.</summary>
+	public static EventType<TaskBarIconEvent> TaskbarMove => TaskbarMoveType.Value;
+
+	private static class TaskbarMoveType {
+		public static readonly EventType<TaskBarIconEvent> Value = new(WxKitNative.EventTypeTaskbarMove, static native => new TaskBarIconEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_TASKBAR_RIGHT_DCLICK.</summary>
+	public static EventType<TaskBarIconEvent> TaskbarRightDclick => TaskbarRightDclickType.Value;
+
+	private static class TaskbarRightDclickType {
+		public static readonly EventType<TaskBarIconEvent> Value = new(WxKitNative.EventTypeTaskbarRightDclick, static native => new TaskBarIconEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_TASKBAR_RIGHT_DOWN.</summary>
+	public static EventType<TaskBarIconEvent> TaskbarRightDown => TaskbarRightDownType.Value;
+
+	private static class TaskbarRightDownType {
+		public static readonly EventType<TaskBarIconEvent> Value = new(WxKitNative.EventTypeTaskbarRightDown, static native => new TaskBarIconEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_TASKBAR_RIGHT_UP.</summary>
+	public static EventType<TaskBarIconEvent> TaskbarRightUp => TaskbarRightUpType.Value;
+
+	private static class TaskbarRightUpType {
+		public static readonly EventType<TaskBarIconEvent> Value = new(WxKitNative.EventTypeTaskbarRightUp, static native => new TaskBarIconEvent((WxkEvent*)native));
+	}
+
 	/// <summary>Wraps wxEVT_TEXT.</summary>
 	public static EventType<CommandEvent> Text => TextType.Value;
 

@@ -381,6 +381,16 @@ WXK_FUNCTION(void) wxk_AboutBox_Show(const wxk_AboutInfo* about, wxk_Window* par
 // Deletes a notification, which hides it if it is showing.
 WXK_FUNCTION(void) wxk_NotificationMessage_Free(wxk_EvtHandler* notification) WXK_NOEXCEPT;
 
+// Taskbar icons
+
+// Makes a taskbar icon whose menu is the one wxk_ManagedTaskBarIcon_SetMenu gives it, which
+// wxWidgets shows when the icon is right-clicked, or on macOS clicked, and does not delete. A
+// negative type is wxTBI_DEFAULT_TYPE.
+WXK_FUNCTION(wxk_EvtHandler*) wxk_ManagedTaskBarIcon_new(int32_t type) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ManagedTaskBarIcon_SetMenu(wxk_EvtHandler* icon, wxk_Menu* menu) WXK_NOEXCEPT;
+// Removes the icon and deletes it once the event loop is idle. Call it only once.
+WXK_FUNCTION(void) wxk_ManagedTaskBarIcon_Destroy(wxk_EvtHandler* icon) WXK_NOEXCEPT;
+
 // Toolbar tools
 
 WXK_FUNCTION(wxk_Window*) wxk_ToolBarTool_GetToolBar(wxk_ToolBarTool* tool) WXK_NOEXCEPT;

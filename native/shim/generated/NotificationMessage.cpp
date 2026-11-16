@@ -47,6 +47,15 @@ WXK_FUNCTION(uint8_t) wxk_NotificationMessage_Show(wxk_EvtHandler* self, int32_t
 	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxNotificationMessage*>(wxk::Unwrap(self))->Show(static_cast<int>(timeout))) ? 1 : 0; });
 }
 
+WXK_FUNCTION(wxk_EvtHandler*) wxk_NotificationMessage_UseTaskBarIcon(wxk_EvtHandler* icon) noexcept {
+	#if defined(__WXMSW__)
+	return wxk::Guard<wxk_EvtHandler*>(nullptr, [&]() -> wxk_EvtHandler* { return wxk::Wrap(static_cast<wxEvtHandler*>(wxNotificationMessage::UseTaskBarIcon(static_cast<wxTaskBarIcon*>(wxk::Unwrap(icon))))); });
+	#else
+	(void)icon;
+	return nullptr;
+	#endif
+}
+
 WXK_FUNCTION(uint8_t) wxk_NotificationMessage_MSWUseToasts(const char16_t* shortcutPath, size_t shortcutPathLength, const char16_t* appId, size_t appIdLength) noexcept {
 	#if (defined(__WXMSW__)) && (defined(__WXMSW__))
 	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (wxNotificationMessage::MSWUseToasts(wxk::FromUtf16(shortcutPath, shortcutPathLength), wxk::FromUtf16(appId, appIdLength))) ? 1 : 0; });

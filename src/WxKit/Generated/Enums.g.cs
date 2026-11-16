@@ -1594,6 +1594,14 @@ public enum SystemScreenType {
 	Desktop = 4,
 }
 
+/// <summary>Wraps wxTaskBarIconType.</summary>
+public enum TaskBarIconType {
+	/// <summary>Wraps wxTBI_DOCK.</summary>
+	Dock = 0,
+	/// <summary>Wraps wxTBI_CUSTOM_STATUSITEM.</summary>
+	CustomStatusItem = 1,
+}
+
 /// <summary>Wraps wxTextCtrlHitTestResult.</summary>
 public enum TextCtrlHitTestResult {
 	/// <summary>Indicates that wxTextCtrl::HitTest() is not implemented on this platform. Wraps wxTE_HT_UNKNOWN.</summary>

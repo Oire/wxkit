@@ -267,6 +267,18 @@ AboutBox.Show(new AboutDialogInfo {
 
 A `NotificationMessage` shows a notification outside the application's windows, such as a toast on Windows, with an icon from `MessageIcon`. It raises `Clicked` when it's clicked, `Dismissed` when it goes away, and `ActionSelected` when one of the buttons `AddAction` adds is pressed. wxWidgets doesn't free a notification on its own, so dispose of it once it's done with, as you do a `Timer`. On Windows, call `NotificationMessage.MSWUseToasts()` before the first one, to show it as a toast rather than a balloon from the taskbar. On macOS, notifications only show from an app bundle.
 
+## Taskbar icons
+
+A `TaskBarIcon` shows an icon in the Windows notification area, the macOS menu bar, or a Linux tray, once `SetIcon` gives it one. Its `Menu` is shown when it's right-clicked, or on macOS clicked, and it raises `LeftDoubleClick`, `RightUp`, and the other mouse events where the platform sends them. The menu comes from the shim's own subclass, which returns it to wxWidgets, so it needs no callback into .NET. wxWidgets keeps the application running while an icon exists, so dispose of it when the application is done with it.
+
+```csharp
+TaskBarIcon tray = new();
+tray.SetIcon(icon, "Backing up");
+Menu menu = new();
+menu.Append(StandardId.Exit).Click += (_, _) => tray.Dispose();
+tray.Menu = menu;
+```
+
 ## Dropped files
 
 A window that calls `DragAcceptFiles(true)` raises `DropFiles` when files are dropped on it, with their paths in the event's `Files`. A text control that handles it opens nothing on its own, so a handler decides what a dropped file does, as the Editor sample opens it. Dragging other data, and dragging from the application, are not bound yet.

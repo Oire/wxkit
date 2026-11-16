@@ -1630,6 +1630,7 @@ WXK_FUNCTION(void) wxk_NotificationMessage_SetMessage(wxk_EvtHandler* self, cons
 WXK_FUNCTION(void) wxk_NotificationMessage_SetParent(wxk_EvtHandler* self, wxk_Window* parent) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_NotificationMessage_SetTitle(wxk_EvtHandler* self, const char16_t* title, size_t titleLength) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_NotificationMessage_Show(wxk_EvtHandler* self, int32_t timeout) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_EvtHandler*) wxk_NotificationMessage_UseTaskBarIcon(wxk_EvtHandler* icon) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_NotificationMessage_MSWUseToasts(const char16_t* shortcutPath, size_t shortcutPathLength, const char16_t* appId, size_t appIdLength) WXK_NOEXCEPT;
 
 // wxNotifyEvent
@@ -2059,6 +2060,15 @@ WXK_FUNCTION(uint8_t) wxk_SystemSettings_HasFeature(int32_t index) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Colour) wxk_SystemSettings_SelectLightDark(wxk_Colour colForLight, wxk_Colour colForDark) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_SystemSettings_ExceedsDragThreshold(wxk_Point origin, wxk_Point current, wxk_Window* window) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_SystemSettings_GetScreenType(void) WXK_NOEXCEPT;
+
+// wxTaskBarIcon
+
+WXK_FUNCTION(uint8_t) wxk_TaskBarIcon_PopupMenu(wxk_EvtHandler* self, wxk_Menu* menu) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_TaskBarIcon_RemoveIcon(wxk_EvtHandler* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_TaskBarIcon_SetIcon(wxk_EvtHandler* self, const wxk_Object* icon, const char16_t* tooltip, size_t tooltipLength) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_TaskBarIcon_IsIconInstalled(wxk_EvtHandler* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_TaskBarIcon_IsOk(wxk_EvtHandler* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_TaskBarIcon_IsAvailable(void) WXK_NOEXCEPT;
 
 // wxTextCtrl
 
@@ -2880,6 +2890,14 @@ WXK_FUNCTION(int32_t) wxk_EventType_SplitterSashPosChanging(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_SplitterSashPosResize(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_SplitterUnsplit(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_SysColorChanged(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TaskbarClick(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TaskbarLeftDclick(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TaskbarLeftDown(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TaskbarLeftUp(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TaskbarMove(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TaskbarRightDclick(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TaskbarRightDown(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TaskbarRightUp(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_Text(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_TextCopy(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_TextCut(void) WXK_NOEXCEPT;

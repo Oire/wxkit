@@ -5386,6 +5386,10 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte NotificationMessageShow(WxkEvtHandler* self, int timeout);
 
+	[LibraryImport(Library, EntryPoint = "wxk_NotificationMessage_UseTaskBarIcon")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkEvtHandler* NotificationMessageUseTaskBarIcon(WxkEvtHandler* icon);
+
 	[LibraryImport(Library, EntryPoint = "wxk_NotificationMessage_MSWUseToasts")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte NotificationMessageMSWUseToasts(char* shortcutPath, nuint shortcutPathLength, char* appId, nuint appIdLength);
@@ -6657,6 +6661,30 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_SystemSettings_GetScreenType")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int SystemSettingsGetScreenType();
+
+	[LibraryImport(Library, EntryPoint = "wxk_TaskBarIcon_PopupMenu")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte TaskBarIconPopupMenu(WxkEvtHandler* self, WxkMenu* menu);
+
+	[LibraryImport(Library, EntryPoint = "wxk_TaskBarIcon_RemoveIcon")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte TaskBarIconRemoveIcon(WxkEvtHandler* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_TaskBarIcon_SetIcon")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte TaskBarIconSetIcon(WxkEvtHandler* self, WxkObject* icon, char* tooltip, nuint tooltipLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_TaskBarIcon_IsIconInstalled")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte TaskBarIconIsIconInstalled(WxkEvtHandler* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_TaskBarIcon_IsOk")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte TaskBarIconIsOk(WxkEvtHandler* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_TaskBarIcon_IsAvailable")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte TaskBarIconIsAvailable();
 
 	[LibraryImport(Library, EntryPoint = "wxk_TextCtrl_new")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -9725,6 +9753,38 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_SysColorChanged")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeSysColorChanged();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_TaskbarClick")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeTaskbarClick();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_TaskbarLeftDclick")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeTaskbarLeftDclick();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_TaskbarLeftDown")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeTaskbarLeftDown();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_TaskbarLeftUp")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeTaskbarLeftUp();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_TaskbarMove")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeTaskbarMove();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_TaskbarRightDclick")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeTaskbarRightDclick();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_TaskbarRightDown")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeTaskbarRightDown();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_TaskbarRightUp")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeTaskbarRightUp();
 
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_Text")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

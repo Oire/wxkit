@@ -91,6 +91,13 @@ public unsafe partial class NotificationMessage : EvtHandler {
 	/// <summary>Show the notification to the user and hides it after timeout seconds are elapsed.</summary>
 	public bool Show(int timeout = -1) => WxKitNative.NotificationMessageShow(NativeHandler, timeout) != 0;
 
+	/// <summary>If the application already uses a wxTaskBarIcon, it should be connected to notifications by using this method.</summary>
+	public static TaskBarIcon? UseTaskBarIcon(TaskBarIcon icon) {
+		Application.VerifyAccess();
+		ArgumentNullException.ThrowIfNull(icon);
+		return ObjectRegistry.Wrap<TaskBarIcon>(WxKitNative.NotificationMessageUseTaskBarIcon((WxkEvtHandler*)icon.NativeHandler));
+	}
+
 	private static WxkEvtHandler* CreateNative() {
 		Application.VerifyAccess();
 		return WxKitNative.NotificationMessageNewDefault();
