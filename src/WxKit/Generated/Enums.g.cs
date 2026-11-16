@@ -1717,6 +1717,25 @@ public enum WeekDay {
 	InvWeekDay = 7,
 }
 
+/// <summary>Wraps wxWS_EX_*.</summary>
+[Flags]
+public enum WindowExtraStyle {
+	/// <summary>None of the flags. Wraps 0.</summary>
+	None = 0,
+	/// <summary>Wraps wxWS_EX_BLOCK_EVENTS.</summary>
+	BlockEvents = 2,
+	/// <summary>Wraps wxWS_EX_TRANSIENT.</summary>
+	Transient = 4,
+	/// <summary>Wraps wxWS_EX_THEMED_BACKGROUND.</summary>
+	ThemedBackground = 8,
+	/// <summary>Wraps wxWS_EX_PROCESS_IDLE.</summary>
+	ProcessIdle = 16,
+	/// <summary>Wraps wxWS_EX_PROCESS_UI_UPDATES.</summary>
+	ProcessUiUpdates = 32,
+	/// <summary>Wraps wxWS_EX_CONTEXTHELP.</summary>
+	ContextHelp = 128,
+}
+
 /// <summary>Wraps wxWindowMode.</summary>
 public enum WindowMode {
 	/// <summary>Show the frame non-modally, and this is the default. Wraps Normal.</summary>

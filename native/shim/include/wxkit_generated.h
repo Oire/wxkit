@@ -2619,7 +2619,6 @@ WXK_FUNCTION(void) wxk_Window_SetNextHandler(wxk_Window* self, wxk_EvtHandler* h
 WXK_FUNCTION(void) wxk_Window_SetPreviousHandler(wxk_Window* self, wxk_EvtHandler* handler) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Window_HasExtraStyle(wxk_Window* self, int32_t exFlag) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Window_HasFlag(wxk_Window* self, int32_t flag) WXK_NOEXCEPT;
-WXK_FUNCTION(void) wxk_Window_SetExtraStyle(wxk_Window* self, int64_t exStyle) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Window_SetWindowStyle(wxk_Window* self, int64_t style) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Window_ToggleWindowStyle(wxk_Window* self, int32_t flag) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Window_MoveAfterInTabOrder(wxk_Window* self, wxk_Window* window) WXK_NOEXCEPT;
@@ -2734,6 +2733,7 @@ WXK_FUNCTION(uint8_t) wxk_Window_CanSetTransparent(wxk_Window* self) WXK_NOEXCEP
 WXK_FUNCTION(wxk_EvtHandler*) wxk_Window_GetEventHandler(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Window_SetEventHandler(wxk_Window* self, wxk_EvtHandler* handler) WXK_NOEXCEPT;
 WXK_FUNCTION(int64_t) wxk_Window_GetExtraStyle(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Window_SetExtraStyle(wxk_Window* self, int64_t exStyle) WXK_NOEXCEPT;
 WXK_FUNCTION(int64_t) wxk_Window_GetWindowStyleFlag(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Window_SetWindowStyleFlag(wxk_Window* self, int64_t style) WXK_NOEXCEPT;
 WXK_FUNCTION(int64_t) wxk_Window_GetWindowStyle(wxk_Window* self) WXK_NOEXCEPT;

@@ -23,6 +23,9 @@ internal static class Core {
 			.ParameterEnum("SendSizeEvent", "flags", "SendSizeEventFlags")
 			.ParameterEnum("SendSizeEventToParent", "flags", "SendSizeEventFlags")
 			.ParameterEnum("UpdateWindowUI", "flags", "wxUpdateUI")
+			.ParameterEnum("GetExtraStyle", "return", "WindowExtraStyle")
+			.ParameterEnum("SetExtraStyle", "exStyle", "WindowExtraStyle")
+			.ParameterEnum("HasExtraStyle", "exFlag", "WindowExtraStyle")
 			// wxGTK has no system-wide hot keys.
 			.Guard("wxUSE_HOTKEY", "RegisterHotKey", "UnregisterHotKey"));
 		tweaks.Class("wxTopLevelWindow", window => window
@@ -36,6 +39,7 @@ internal static class Core {
 			.AddEvent("EVT_CLOSE", "wxEVT_CLOSE_WINDOW", "wxCloseEvent", "Closing"));
 		// WxKit keeps the menu bar a frame owns.
 		// The flags these take, which wxWidgets declares as constants rather than a named enum.
+		tweaks.ConstantEnum("WindowExtraStyle", "wxWS_EX_", isFlags: true);
 		tweaks.ConstantEnum("SizeFlags", "wxSIZE_", isFlags: true, excludePrefixes: ["wxSIZE_CONV_", "wxSIZE_SET_"]);
 		tweaks.ConstantEnum("SendSizeEventFlags", "wxSEND_EVENT_", isFlags: true);
 		tweaks.ConstantEnum("FullScreenStyle", "wxFULLSCREEN_", isFlags: true);

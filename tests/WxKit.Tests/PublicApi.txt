@@ -4148,7 +4148,7 @@ class WxKit.Window : EvtHandler
     Window? NextSibling { get; }
     Window? Parent { get; }
     Window? PrevSibling { get; }
-    WindowStyle ExtraStyle { get; }
+    WindowExtraStyle ExtraStyle { get; set; }
     WindowStyle WindowStyle { get; }
     WindowVariant WindowVariant { get; set; }
     Window[] Children { get; }
@@ -4167,7 +4167,7 @@ class WxKit.Window : EvtHandler
     bool Disable()
     bool EnableTouchEvents(int eventsMask)
     bool HasCapture { get; }
-    bool HasExtraStyle(int exFlag)
+    bool HasExtraStyle(WindowExtraStyle exFlag)
     bool HasFlag(int flag)
     bool HasFocus { get; }
     bool HasMultiplePages { get; }
@@ -4338,7 +4338,6 @@ class WxKit.Window : EvtHandler
     void SetClientSize(Rect rect)
     void SetClientSize(int width, int height)
     void SetContainingSizer(Sizer sizer)
-    void SetExtraStyle(long exStyle)
     void SetFocus()
     void SetFocusFromKbd()
     void SetNextHandler(EvtHandler handler)
@@ -4364,6 +4363,14 @@ class WxKit.Window : EvtHandler
     void WarpPointer(int x, int y)
 class WxKit.WindowDC : DC
     WindowDC(Window window)
+[Flags] enum WxKit.WindowExtraStyle : int
+    BlockEvents = 2
+    ContextHelp = 128
+    None = 0
+    ProcessIdle = 16
+    ProcessUiUpdates = 32
+    ThemedBackground = 8
+    Transient = 4
 enum WxKit.WindowMode : int
     AppModal = 2
     Normal = 0

@@ -102,7 +102,10 @@ public unsafe partial class Window : EvtHandler {
 	}
 
 	/// <summary>Returns the extra style bits for the window.</summary>
-	public WindowStyle ExtraStyle => (WindowStyle)WxKitNative.WindowGetExtraStyle(Native);
+	public WindowExtraStyle ExtraStyle {
+		get => (WindowExtraStyle)WxKitNative.WindowGetExtraStyle(Native);
+		set => WxKitNative.WindowSetExtraStyle(Native, (long)value);
+	}
 
 	/// <summary>Returns the font for this window.</summary>
 	public Font? Font {
@@ -757,7 +760,7 @@ public unsafe partial class Window : EvtHandler {
 	}
 
 	/// <summary>Returns true if the window has the given exFlag bit set in its extra styles.</summary>
-	public bool HasExtraStyle(int exFlag) => WxKitNative.WindowHasExtraStyle(Native, exFlag) != 0;
+	public bool HasExtraStyle(WindowExtraStyle exFlag) => WxKitNative.WindowHasExtraStyle(Native, (int)exFlag) != 0;
 
 	/// <summary>Returns true if the window has the given flag bit set.</summary>
 	public bool HasFlag(int flag) => WxKitNative.WindowHasFlag(Native, flag) != 0;
@@ -971,9 +974,6 @@ public unsafe partial class Window : EvtHandler {
 		ArgumentNullException.ThrowIfNull(sizer);
 		WxKitNative.WindowSetContainingSizer(Native, (WxkSizer*)sizer.Native);
 	}
-
-	/// <summary>Sets the extra style bits for the window.</summary>
-	public void SetExtraStyle(long exStyle) => WxKitNative.WindowSetExtraStyle(Native, exStyle);
 
 	/// <summary>This sets the window to receive keyboard input.</summary>
 	public void SetFocus() => WxKitNative.WindowSetFocus(Native);

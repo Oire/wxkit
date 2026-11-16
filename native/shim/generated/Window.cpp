@@ -509,10 +509,6 @@ WXK_FUNCTION(uint8_t) wxk_Window_HasFlag(wxk_Window* self, int32_t flag) noexcep
 	return wxk::Guard<uint8_t>(0, [&]() -> uint8_t { return (static_cast<wxWindow*>(wxk::Unwrap(self))->HasFlag(static_cast<int>(flag))) ? 1 : 0; });
 }
 
-WXK_FUNCTION(void) wxk_Window_SetExtraStyle(wxk_Window* self, int64_t exStyle) noexcept {
-	wxk::Guard([&] { static_cast<wxWindow*>(wxk::Unwrap(self))->SetExtraStyle(static_cast<long>(exStyle)); });
-}
-
 WXK_FUNCTION(void) wxk_Window_SetWindowStyle(wxk_Window* self, int64_t style) noexcept {
 	wxk::Guard([&] { static_cast<wxWindow*>(wxk::Unwrap(self))->SetWindowStyle(static_cast<long>(style)); });
 }
@@ -981,6 +977,10 @@ WXK_FUNCTION(void) wxk_Window_SetEventHandler(wxk_Window* self, wxk_EvtHandler* 
 
 WXK_FUNCTION(int64_t) wxk_Window_GetExtraStyle(wxk_Window* self) noexcept {
 	return wxk::Guard<int64_t>(0, [&]() -> int64_t { return static_cast<int64_t>(static_cast<wxWindow*>(wxk::Unwrap(self))->GetExtraStyle()); });
+}
+
+WXK_FUNCTION(void) wxk_Window_SetExtraStyle(wxk_Window* self, int64_t exStyle) noexcept {
+	wxk::Guard([&] { static_cast<wxWindow*>(wxk::Unwrap(self))->SetExtraStyle(static_cast<long>(exStyle)); });
 }
 
 WXK_FUNCTION(int64_t) wxk_Window_GetWindowStyleFlag(wxk_Window* self) noexcept {

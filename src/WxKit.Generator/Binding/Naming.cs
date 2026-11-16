@@ -38,6 +38,7 @@ internal static class Naming {
 		["USEFONT"] = "UseFont",
 		["STATUSITEM"] = "StatusItem",
 		["WRAPSIZER"] = "WrapSizer",
+		["CONTEXTHELP"] = "ContextHelp",
 		// The scroll events.
 		["SCROLLWIN"] = "ScrollWin",
 		["LINEUP"] = "LineUp",

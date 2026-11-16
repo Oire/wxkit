@@ -8670,10 +8670,6 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte WindowHasFlag(WxkWindow* self, int flag);
 
-	[LibraryImport(Library, EntryPoint = "wxk_Window_SetExtraStyle")]
-	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial void WindowSetExtraStyle(WxkWindow* self, long exStyle);
-
 	[LibraryImport(Library, EntryPoint = "wxk_Window_SetWindowStyle")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void WindowSetWindowStyle(WxkWindow* self, long style);
@@ -9129,6 +9125,10 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_Window_GetExtraStyle")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial long WindowGetExtraStyle(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Window_SetExtraStyle")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void WindowSetExtraStyle(WxkWindow* self, long exStyle);
 
 	[LibraryImport(Library, EntryPoint = "wxk_Window_GetWindowStyleFlag")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
