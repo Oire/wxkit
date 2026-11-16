@@ -808,6 +808,11 @@ static_assert(static_cast<long>(wxMAXIMIZE) == static_cast<long>(8192LL), "wxMAX
 static_assert(static_cast<long>(wxMAXIMIZE_BOX) == static_cast<long>(512LL), "wxMAXIMIZE_BOX is not 512");
 static_assert(static_cast<long>(wxMINIMIZE) == static_cast<long>(16384LL), "wxMINIMIZE is not 16384");
 static_assert(static_cast<long>(wxMINIMIZE_BOX) == static_cast<long>(1024LL), "wxMINIMIZE_BOX is not 1024");
+static_assert(static_cast<int32_t>(wxMM_LOMETRIC) == static_cast<int32_t>(3LL), "wxMM_LOMETRIC is not 3");
+static_assert(static_cast<int32_t>(wxMM_METRIC) == static_cast<int32_t>(2LL), "wxMM_METRIC is not 2");
+static_assert(static_cast<int32_t>(wxMM_POINTS) == static_cast<int32_t>(5LL), "wxMM_POINTS is not 5");
+static_assert(static_cast<int32_t>(wxMM_TEXT) == static_cast<int32_t>(1LL), "wxMM_TEXT is not 1");
+static_assert(static_cast<int32_t>(wxMM_TWIPS) == static_cast<int32_t>(4LL), "wxMM_TWIPS is not 4");
 static_assert(static_cast<int32_t>(wxMOUSE_BTN_ANY) == static_cast<int32_t>(-1LL), "wxMOUSE_BTN_ANY is not -1");
 static_assert(static_cast<int32_t>(wxMOUSE_BTN_AUX1) == static_cast<int32_t>(4LL), "wxMOUSE_BTN_AUX1 is not 4");
 static_assert(static_cast<int32_t>(wxMOUSE_BTN_AUX2) == static_cast<int32_t>(5LL), "wxMOUSE_BTN_AUX2 is not 5");

@@ -338,10 +338,12 @@ internal static class Core {
 		tweaks.Class("wxIcon").Ignore("ConvertToDisabled");
 		// Underlined and Strikethrough return changed copies, beside the properties of the same names.
 		tweaks.Class("wxFont").Rename("Underlined", "WithUnderline").Rename("Strikethrough", "WithStrikethrough").Guard("wxUSE_PRIVATE_FONTS", "AddPrivateFont");
-		// Drawing contexts.
+		// Drawing contexts. wxWidgets 3.3 moved a DC's font, text measurement, and other parts that
+		// do not draw to wxReadOnlyDC, which wxDC derives from and which is not bound itself.
 		foreach (string dc in (string[])["wxDC", "wxWindowDC", "wxClientDC", "wxPaintDC", "wxMemoryDC", "wxScreenDC"]) {
 			tweaks.Class(dc);
 		}
+		tweaks.Class("wxDC").InheritUnboundBases();
 		// The system's colors, fonts, and metrics, and the standard icons.
 		tweaks.Class("wxSystemSettings").StaticOnly();
 		tweaks.Class("wxArtProvider").StaticOnly();

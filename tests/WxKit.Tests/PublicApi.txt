@@ -907,21 +907,62 @@ class WxKit.DC : NativeObject
     Brush? Brush { get; set; }
     Color? TextBackground { get; set; }
     Color? TextForeground { get; set; }
+    Font? Font { get; set; }
+    LayoutDirection LayoutDirection { get; set; }
+    MappingMode MapMode { get; set; }
     Pen? Pen { get; set; }
+    Point DeviceOrigin { get; }
+    Point DeviceToLogical(Point point)
+    Point DeviceToLogical(int x, int y)
+    Point FromDIP(Point point)
+    Point LogicalOrigin { get; }
+    Point LogicalToDevice(Point point)
+    Point LogicalToDevice(int x, int y)
+    Point ToDIP(Point point)
     RasterOperationMode LogicalFunction { get; set; }
+    Size DeviceToLogicalRel(Size dim)
+    Size DeviceToLogicalRel(int x, int y)
+    Size FromDIP(Size size)
+    Size GetMultiLineTextExtent(string text)
+    Size GetTextExtent(string text)
+    Size LogicalToDeviceRel(Size dim)
+    Size LogicalToDeviceRel(int x, int y)
+    Size PPI { get; }
+    Size Size { get; }
+    Size SizeMM { get; }
+    Size ToDIP(Size size)
     bool AreAutomaticBoundingBoxUpdatesEnabled()
     bool Blit(int xdest, int ydest, int width, int height, DC source, int xsrc, int ysrc, RasterOperationMode logicalFunc = RasterOperationMode.Copy, bool useMask = false, int xsrcMask = -1, int ysrcMask = -1)
+    bool CanDrawBitmap { get; }
+    bool CanGetTextExtent { get; }
+    bool CanUseTransformMatrix { get; }
     bool FloodFill(Point point, Color? column, FloodFillStyle style = FloodFillStyle.Surface)
     bool FloodFill(int x, int y, Color? color, FloodFillStyle style = FloodFillStyle.Surface)
     bool GetClippingBox(out Rect rect)
     bool GetClippingBox(out int x, out int y, out int width, out int height)
+    bool GetPartialTextExtents(string text, out int[] widths)
+    bool IsOk { get; }
     bool StartDoc(string message)
     bool StretchBlit(int xdest, int ydest, int dstWidth, int dstHeight, DC source, int xsrc, int ysrc, int srcWidth, int srcHeight, RasterOperationMode logicalFunc = RasterOperationMode.Copy, bool useMask = false, int xsrcMask = -1, int ysrcMask = -1)
+    double ContentScaleFactor { get; }
     int BackgroundMode { get; set; }
+    int CharHeight { get; }
+    int CharWidth { get; }
+    int Depth { get; }
+    int DeviceToLogicalX(int x)
+    int DeviceToLogicalXRel(int x)
+    int DeviceToLogicalY(int y)
+    int DeviceToLogicalYRel(int y)
+    int FromDIP(int d)
+    int LogicalToDeviceX(int x)
+    int LogicalToDeviceXRel(int x)
+    int LogicalToDeviceY(int y)
+    int LogicalToDeviceYRel(int y)
     int MaxX()
     int MaxY()
     int MinX()
     int MinY()
+    int ToDIP(int d)
     void CalcBoundingBox(int x, int y)
     void Clear()
     void CopyAttributes(DC dc)
@@ -963,13 +1004,26 @@ class WxKit.DC : NativeObject
     void DrawText(string text, int x, int y)
     void EndDoc()
     void EndPage()
+    void GetLogicalOrigin(out int x, out int y)
+    void GetLogicalScale(out double x, out double y)
+    void GetMultiLineTextExtent(string text, out int w, out int h)
+    void GetSize(out int width, out int height)
+    void GetSizeMM(out int width, out int height)
+    void GetTextExtent(string text, out int w, out int h)
+    void GetUserScale(out double x, out double y)
     void GradientFillConcentric(Rect rect, Color? initialColor, Color? destColor)
     void GradientFillConcentric(Rect rect, Color? initialColor, Color? destColor, Point circleCenter)
     void GradientFillLinear(Rect rect, Color? initialColor, Color? destColor, Direction nDirection = Direction.Right)
     void ResetBoundingBox()
+    void ResetTransformMatrix()
+    void SetAxisOrientation(bool xLeftRight, bool yBottomUp)
     void SetClippingRegion(Point point, Size size)
     void SetClippingRegion(Rect rect)
     void SetClippingRegion(int x, int y, int width, int height)
+    void SetDeviceOrigin(int x, int y)
+    void SetLogicalOrigin(int x, int y)
+    void SetLogicalScale(double x, double y)
+    void SetUserScale(double xScale, double yScale)
     void StartPage()
 class WxKit.DPIChangedEvent : Event
     Point Scale(Point point)
@@ -2619,6 +2673,12 @@ class WxKit.Listbook : BookCtrlBase
     None = 0
     Right = 128
     Top = 16
+enum WxKit.MappingMode : int
+    Lometric = 3
+    Metric = 2
+    Points = 5
+    Text = 1
+    Twips = 4
 class WxKit.MaximizeEvent : Event
 class WxKit.MemoryDC : DC
     Bitmap? SelectedBitmap { get; }

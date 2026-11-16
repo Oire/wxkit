@@ -1401,6 +1401,20 @@ public enum ListColumnFormat {
 	Center = 2,
 }
 
+/// <summary>Wraps wxMappingMode.</summary>
+public enum MappingMode {
+	/// <summary>Each logical unit is 1 device pixel. Wraps wxMM_TEXT.</summary>
+	Text = 1,
+	/// <summary>Each logical unit is 1 millimeter. Wraps wxMM_METRIC.</summary>
+	Metric = 2,
+	/// <summary>Each logical unit is 1/10 of a millimeter. Wraps wxMM_LOMETRIC.</summary>
+	Lometric = 3,
+	/// <summary>Each logical unit is 1/20 of a "printer point", or 1/1440 of an inch (also known as "twip"). Wraps wxMM_TWIPS.</summary>
+	Twips = 4,
+	/// <summary>Each logical unit is a "printer point" i.e. 1/72 of an inch. Wraps wxMM_POINTS.</summary>
+	Points = 5,
+}
+
 /// <summary>Wraps wxICON_*.</summary>
 public enum MessageIcon {
 	/// <summary>Wraps wxICON_WARNING.</summary>

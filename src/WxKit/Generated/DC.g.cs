@@ -30,17 +30,74 @@ public unsafe partial class DC : NativeObject {
 		set => WxKitNative.DCSetBrush(Native, value is null ? null : value.Native);
 	}
 
+	/// <summary>Does the DC support drawing bitmaps?</summary>
+	public bool CanDrawBitmap => WxKitNative.DCCanDrawBitmap(Native) != 0;
+
+	/// <summary>Does the DC support calculating the size required to draw text?</summary>
+	public bool CanGetTextExtent => WxKitNative.DCCanGetTextExtent(Native) != 0;
+
+	/// <summary>Check if the use of transformation matrix is supported by the current system.</summary>
+	public bool CanUseTransformMatrix => WxKitNative.DCCanUseTransformMatrix(Native) != 0;
+
+	/// <summary>Gets the character height of the currently set font.</summary>
+	public int CharHeight => WxKitNative.DCGetCharHeight(Native);
+
+	/// <summary>Gets the average character width of the currently set font.</summary>
+	public int CharWidth => WxKitNative.DCGetCharWidth(Native);
+
+	/// <summary>Returns the factor used for converting logical pixels to physical ones.</summary>
+	public double ContentScaleFactor => WxKitNative.DCGetContentScaleFactor(Native);
+
+	/// <summary>Returns the depth (number of bits/pixel) of this DC.</summary>
+	public int Depth => WxKitNative.DCGetDepth(Native);
+
+	/// <summary>Returns the current device origin.</summary>
+	public Point DeviceOrigin => WxKitNative.DCGetDeviceOrigin(Native);
+
+	/// <summary>Gets the current font.</summary>
+	public Font? Font {
+		get => global::WxKit.Font.Take(WxKitNative.DCGetFont(Native));
+		set => WxKitNative.DCSetFont(Native, value is null ? null : value.Native);
+	}
+
+	/// <summary>Returns true if the DC is ok to use.</summary>
+	public bool IsOk => WxKitNative.DCIsOk(Native) != 0;
+
+	/// <summary>Gets the current layout direction of the device context.</summary>
+	public LayoutDirection LayoutDirection {
+		get => (LayoutDirection)WxKitNative.DCGetLayoutDirection(Native);
+		set => WxKitNative.DCSetLayoutDirection(Native, (int)value);
+	}
+
 	/// <summary>Gets the current logical function.</summary>
 	public RasterOperationMode LogicalFunction {
 		get => (RasterOperationMode)WxKitNative.DCGetLogicalFunction(Native);
 		set => WxKitNative.DCSetLogicalFunction(Native, (int)value);
 	}
 
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public Point LogicalOrigin => WxKitNative.DCGetLogicalOriginDefault(Native);
+
+	/// <summary>Gets the current mapping mode for the device context.</summary>
+	public MappingMode MapMode {
+		get => (MappingMode)WxKitNative.DCGetMapMode(Native);
+		set => WxKitNative.DCSetMapMode(Native, (int)value);
+	}
+
+	/// <summary>Returns the resolution of the device in pixels per inch.</summary>
+	public Size PPI => WxKitNative.DCGetPPI(Native);
+
 	/// <summary>Gets the current pen.</summary>
 	public Pen? Pen {
 		get => global::WxKit.Pen.Take(WxKitNative.DCGetPen(Native));
 		set => WxKitNative.DCSetPen(Native, value is null ? null : value.Native);
 	}
+
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public Size Size => WxKitNative.DCGetSizeDefault(Native);
+
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public Size SizeMM => WxKitNative.DCGetSizeMMDefault(Native);
 
 	/// <summary>Gets the current text background colour.</summary>
 	public Color? TextBackground {
@@ -83,6 +140,30 @@ public unsafe partial class DC : NativeObject {
 
 	/// <summary>Destroys the current clipping region so that none of the DC is clipped.</summary>
 	public void DestroyClippingRegion() => WxKitNative.DCDestroyClippingRegion(Native);
+
+	/// <summary>Converts device (x, y) coordinates to logical coordinates taking into account all applied transformations like the current mapping mode, scale factors, device origin, axes orientation, affine transformation.</summary>
+	public Point DeviceToLogical(int x, int y) => WxKitNative.DCDeviceToLogicalIntInt(Native, x, y);
+
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public Point DeviceToLogical(Point point) => WxKitNative.DCDeviceToLogicalPoint(Native, point);
+
+	/// <summary>Converts device x, y coordinates to relative logical coordinates taking into account all applied transformations like the current mapping mode, scale factors, affine transformation.</summary>
+	public Size DeviceToLogicalRel(int x, int y) => WxKitNative.DCDeviceToLogicalRelIntInt(Native, x, y);
+
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public Size DeviceToLogicalRel(Size dim) => WxKitNative.DCDeviceToLogicalRelSize(Native, dim);
+
+	/// <summary>Convert device X coordinate to logical coordinate, using the current mapping mode, user scale factor, device origin and axis orientation.</summary>
+	public int DeviceToLogicalX(int x) => WxKitNative.DCDeviceToLogicalX(Native, x);
+
+	/// <summary>Convert device X coordinate to relative logical coordinate, using the current mapping mode and user scale factor but ignoring the axis orientation.</summary>
+	public int DeviceToLogicalXRel(int x) => WxKitNative.DCDeviceToLogicalXRel(Native, x);
+
+	/// <summary>Converts device Y coordinate to logical coordinate, using the current mapping mode, user scale factor, device origin and axis orientation.</summary>
+	public int DeviceToLogicalY(int y) => WxKitNative.DCDeviceToLogicalY(Native, y);
+
+	/// <summary>Convert device Y coordinate to relative logical coordinate, using the current mapping mode and user scale factor but ignoring the axis orientation.</summary>
+	public int DeviceToLogicalYRel(int y) => WxKitNative.DCDeviceToLogicalYRel(Native, y);
 
 	/// <summary>Disable automatic bounding box updates.</summary>
 	public void DisableAutomaticBoundingBoxUpdates() => WxKitNative.DCDisableAutomaticBoundingBoxUpdates(Native);
@@ -238,6 +319,15 @@ public unsafe partial class DC : NativeObject {
 	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
 	public bool FloodFill(Point point, Color? column, FloodFillStyle style = FloodFillStyle.Surface) => WxKitNative.DCFloodFillPointColorFloodFillStyle(Native, point, global::WxKit.Color.ToNative(column), (int)style) != 0;
 
+	/// <summary>Convert DPI-independent pixel values to the value in pixels appropriate for the DC.</summary>
+	public Size FromDIP(Size size) => WxKitNative.DCFromDIPSize(Native, size);
+
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public Point FromDIP(Point point) => WxKitNative.DCFromDIPPoint(Native, point);
+
+	/// <summary>Convert DPI-independent value in pixels to the value in pixels appropriate for the DC.</summary>
+	public int FromDIP(int d) => WxKitNative.DCFromDIPInt(Native, d);
+
 	/// <summary>Gets the rectangle surrounding the current clipping region.</summary>
 	public bool GetClippingBox(out int x, out int y, out int width, out int height) {
 		x = 0;
@@ -260,6 +350,107 @@ public unsafe partial class DC : NativeObject {
 		}
 	}
 
+	/// <summary>Return the coordinates of the logical point (0, 0).</summary>
+	public void GetLogicalOrigin(out int x, out int y) {
+		x = 0;
+		y = 0;
+		fixed (int* xPointer = &x)
+		fixed (int* yPointer = &y) {
+			WxKitNative.DCGetLogicalOriginOutIntOutInt(Native, xPointer, yPointer);
+		}
+	}
+
+	/// <summary>Return the scale set by the last call to SetLogicalScale().</summary>
+	public void GetLogicalScale(out double x, out double y) {
+		x = 0;
+		y = 0;
+		fixed (double* xPointer = &x)
+		fixed (double* yPointer = &y) {
+			WxKitNative.DCGetLogicalScale(Native, xPointer, yPointer);
+		}
+	}
+
+	/// <summary>Gets the dimensions of the string using the currently selected font.</summary>
+	public void GetMultiLineTextExtent(string text, out int w, out int h) {
+		ArgumentNullException.ThrowIfNull(text);
+		w = 0;
+		h = 0;
+		fixed (char* textText = text)
+		fixed (int* wPointer = &w)
+		fixed (int* hPointer = &h) {
+			WxKitNative.DCGetMultiLineTextExtentStringOutIntOutInt(Native, textText, NativeString.Length(text), wPointer, hPointer);
+		}
+	}
+
+	/// <summary>Gets the dimensions of the string using the currently selected font.</summary>
+	public Size GetMultiLineTextExtent(string text) {
+		ArgumentNullException.ThrowIfNull(text);
+		fixed (char* textText = text) {
+			return WxKitNative.DCGetMultiLineTextExtentString(Native, textText, NativeString.Length(text));
+		}
+	}
+
+	/// <summary>Fills the widths array with the widths from the beginning of text to the corresponding character of text.</summary>
+	public bool GetPartialTextExtents(string text, out int[] widths) {
+		ArgumentNullException.ThrowIfNull(text);
+		WxkNumbers* widthsNative = null;
+		fixed (char* textText = text) {
+			var returned = WxKitNative.DCGetPartialTextExtents(Native, textText, NativeString.Length(text), &widthsNative);
+			widths = NativeNumbers.TakeInts(widthsNative);
+			return returned != 0;
+		}
+	}
+
+	/// <summary>Gets the horizontal and vertical extent of this device context in device units.</summary>
+	public void GetSize(out int width, out int height) {
+		width = 0;
+		height = 0;
+		fixed (int* widthPointer = &width)
+		fixed (int* heightPointer = &height) {
+			WxKitNative.DCGetSizeOutIntOutInt(Native, widthPointer, heightPointer);
+		}
+	}
+
+	/// <summary>Returns the horizontal and vertical resolution in millimetres.</summary>
+	public void GetSizeMM(out int width, out int height) {
+		width = 0;
+		height = 0;
+		fixed (int* widthPointer = &width)
+		fixed (int* heightPointer = &height) {
+			WxKitNative.DCGetSizeMMOutIntOutInt(Native, widthPointer, heightPointer);
+		}
+	}
+
+	/// <summary>Gets the dimensions of the string using the currently selected font.</summary>
+	public void GetTextExtent(string text, out int w, out int h) {
+		ArgumentNullException.ThrowIfNull(text);
+		w = 0;
+		h = 0;
+		fixed (char* textText = text)
+		fixed (int* wPointer = &w)
+		fixed (int* hPointer = &h) {
+			WxKitNative.DCGetTextExtentStringOutIntOutInt(Native, textText, NativeString.Length(text), wPointer, hPointer);
+		}
+	}
+
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public Size GetTextExtent(string text) {
+		ArgumentNullException.ThrowIfNull(text);
+		fixed (char* textText = text) {
+			return WxKitNative.DCGetTextExtentString(Native, textText, NativeString.Length(text));
+		}
+	}
+
+	/// <summary>Gets the current user scale factor.</summary>
+	public void GetUserScale(out double x, out double y) {
+		x = 0;
+		y = 0;
+		fixed (double* xPointer = &x)
+		fixed (double* yPointer = &y) {
+			WxKitNative.DCGetUserScale(Native, xPointer, yPointer);
+		}
+	}
+
 	/// <summary>Fill the area specified by rect with a radial gradient, starting from initialColour at the centre of the circle and fading to destColour on the circle outside.</summary>
 	public void GradientFillConcentric(Rect rect, Color? initialColor, Color? destColor) => WxKitNative.DCGradientFillConcentricRectColorColor(Native, rect, global::WxKit.Color.ToNative(initialColor), global::WxKit.Color.ToNative(destColor));
 
@@ -268,6 +459,30 @@ public unsafe partial class DC : NativeObject {
 
 	/// <summary>Fill the area specified by rect with a linear gradient, starting from initialColour and eventually fading to destColour.</summary>
 	public void GradientFillLinear(Rect rect, Color? initialColor, Color? destColor, Direction nDirection = Direction.Right) => WxKitNative.DCGradientFillLinear(Native, rect, global::WxKit.Color.ToNative(initialColor), global::WxKit.Color.ToNative(destColor), (int)nDirection);
+
+	/// <summary>Converts logical (x, y) coordinates to device coordinates taking into account all applied transformations like the current mapping mode, scale factors, device origin, axes orientation, affine transformation.</summary>
+	public Point LogicalToDevice(int x, int y) => WxKitNative.DCLogicalToDeviceIntInt(Native, x, y);
+
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public Point LogicalToDevice(Point point) => WxKitNative.DCLogicalToDevicePoint(Native, point);
+
+	/// <summary>Converts logical x, y coordinates to relative device coordinates taking into account all applied transformations like the current mapping mode, scale factors, affine transformation.</summary>
+	public Size LogicalToDeviceRel(int x, int y) => WxKitNative.DCLogicalToDeviceRelIntInt(Native, x, y);
+
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public Size LogicalToDeviceRel(Size dim) => WxKitNative.DCLogicalToDeviceRelSize(Native, dim);
+
+	/// <summary>Converts logical X coordinate to device coordinate, using the current mapping mode, user scale factor, device origin and axis orientation.</summary>
+	public int LogicalToDeviceX(int x) => WxKitNative.DCLogicalToDeviceX(Native, x);
+
+	/// <summary>Converts logical X coordinate to relative device coordinate, using the current mapping mode and user scale factor but ignoring the axis orientation.</summary>
+	public int LogicalToDeviceXRel(int x) => WxKitNative.DCLogicalToDeviceXRel(Native, x);
+
+	/// <summary>Converts logical Y coordinate to device coordinate, using the current mapping mode, user scale factor, device origin and axis orientation.</summary>
+	public int LogicalToDeviceY(int y) => WxKitNative.DCLogicalToDeviceY(Native, y);
+
+	/// <summary>Converts logical Y coordinate to relative device coordinate, using the current mapping mode and user scale factor but ignoring the axis orientation.</summary>
+	public int LogicalToDeviceYRel(int y) => WxKitNative.DCLogicalToDeviceYRel(Native, y);
 
 	/// <summary>Gets the maximum horizontal extent used in drawing commands so far.</summary>
 	public int MaxX() => WxKitNative.DCMaxX(Native);
@@ -284,6 +499,12 @@ public unsafe partial class DC : NativeObject {
 	/// <summary>Resets the bounding box: after a call to this function, the bounding box doesn't contain anything.</summary>
 	public void ResetBoundingBox() => WxKitNative.DCResetBoundingBox(Native);
 
+	/// <summary>Revert the transformation matrix to identity matrix.</summary>
+	public void ResetTransformMatrix() => WxKitNative.DCResetTransformMatrix(Native);
+
+	/// <summary>Sets the x and y axis orientation (i.e. the direction from lowest to highest values on the axis).</summary>
+	public void SetAxisOrientation(bool xLeftRight, bool yBottomUp) => WxKitNative.DCSetAxisOrientation(Native, xLeftRight ? (byte)1 : (byte)0, yBottomUp ? (byte)1 : (byte)0);
+
 	/// <summary>Sets the clipping region for this device context to the intersection of the given region described by the parameters of this method and the previously set clipping region.</summary>
 	public void SetClippingRegion(int x, int y, int width, int height) => WxKitNative.DCSetClippingRegionIntIntIntInt(Native, x, y, width, height);
 
@@ -292,6 +513,18 @@ public unsafe partial class DC : NativeObject {
 
 	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
 	public void SetClippingRegion(Rect rect) => WxKitNative.DCSetClippingRegionRect(Native, rect);
+
+	/// <summary>Sets the device origin (i.e. the origin in pixels after scaling has been applied).</summary>
+	public void SetDeviceOrigin(int x, int y) => WxKitNative.DCSetDeviceOrigin(Native, x, y);
+
+	/// <summary>Change the offset used for translating wxDC coordinates.</summary>
+	public void SetLogicalOrigin(int x, int y) => WxKitNative.DCSetLogicalOrigin(Native, x, y);
+
+	/// <summary>Set the scale to use for translating wxDC coordinates to the physical pixels.</summary>
+	public void SetLogicalScale(double x, double y) => WxKitNative.DCSetLogicalScale(Native, x, y);
+
+	/// <summary>Sets the user scaling factor, useful for applications which require 'zooming'.</summary>
+	public void SetUserScale(double xScale, double yScale) => WxKitNative.DCSetUserScale(Native, xScale, yScale);
 
 	/// <summary>Starts a document (only relevant when outputting to a printer).</summary>
 	public bool StartDoc(string message) {
@@ -309,4 +542,13 @@ public unsafe partial class DC : NativeObject {
 		ArgumentNullException.ThrowIfNull(source);
 		return WxKitNative.DCStretchBlit(Native, xdest, ydest, dstWidth, dstHeight, source.Native, xsrc, ysrc, srcWidth, srcHeight, (int)logicalFunc, useMask ? (byte)1 : (byte)0, xsrcMask, ysrcMask) != 0;
 	}
+
+	/// <summary>Convert pixel values of the current DC to DPI-independent pixel values.</summary>
+	public Size ToDIP(Size size) => WxKitNative.DCToDIPSize(Native, size);
+
+	/// <summary>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</summary>
+	public Point ToDIP(Point point) => WxKitNative.DCToDIPPoint(Native, point);
+
+	/// <summary>Convert pixel values of the current DC to DPI-independent pixel values.</summary>
+	public int ToDIP(int d) => WxKitNative.DCToDIPInt(Native, d);
 }

@@ -1730,6 +1730,158 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void DCCopyAttributes(WxkObject* self, WxkObject* dc);
 
+	[LibraryImport(Library, EntryPoint = "wxk_DC_DeviceToLogicalX")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int DCDeviceToLogicalX(WxkObject* self, int x);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_DeviceToLogicalXRel")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int DCDeviceToLogicalXRel(WxkObject* self, int x);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_DeviceToLogicalY")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int DCDeviceToLogicalY(WxkObject* self, int y);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_DeviceToLogicalYRel")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int DCDeviceToLogicalYRel(WxkObject* self, int y);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_LogicalToDeviceX")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int DCLogicalToDeviceX(WxkObject* self, int x);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_LogicalToDeviceXRel")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int DCLogicalToDeviceXRel(WxkObject* self, int x);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_LogicalToDeviceY")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int DCLogicalToDeviceY(WxkObject* self, int y);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_LogicalToDeviceYRel")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int DCLogicalToDeviceYRel(WxkObject* self, int y);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_DeviceToLogical_IntInt")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Point DCDeviceToLogicalIntInt(WxkObject* self, int x, int y);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_DeviceToLogical_Point")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Point DCDeviceToLogicalPoint(WxkObject* self, Point point);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_DeviceToLogicalRel_IntInt")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Size DCDeviceToLogicalRelIntInt(WxkObject* self, int x, int y);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_DeviceToLogicalRel_Size")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Size DCDeviceToLogicalRelSize(WxkObject* self, Size dim);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_LogicalToDevice_IntInt")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Point DCLogicalToDeviceIntInt(WxkObject* self, int x, int y);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_LogicalToDevice_Point")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Point DCLogicalToDevicePoint(WxkObject* self, Point point);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_LogicalToDeviceRel_IntInt")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Size DCLogicalToDeviceRelIntInt(WxkObject* self, int x, int y);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_LogicalToDeviceRel_Size")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Size DCLogicalToDeviceRelSize(WxkObject* self, Size dim);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_SetAxisOrientation")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DCSetAxisOrientation(WxkObject* self, byte xLeftRight, byte yBottomUp);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_SetDeviceOrigin")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DCSetDeviceOrigin(WxkObject* self, int x, int y);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_SetUserScale")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DCSetUserScale(WxkObject* self, double xScale, double yScale);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_SetLogicalScale")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DCSetLogicalScale(WxkObject* self, double x, double y);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_GetLogicalScale")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DCGetLogicalScale(WxkObject* self, double* x, double* y);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_SetLogicalOrigin")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DCSetLogicalOrigin(WxkObject* self, int x, int y);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_GetLogicalOrigin_OutIntOutInt")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DCGetLogicalOriginOutIntOutInt(WxkObject* self, int* x, int* y);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_ResetTransformMatrix")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DCResetTransformMatrix(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_GetMultiLineTextExtent_StringOutIntOutInt")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DCGetMultiLineTextExtentStringOutIntOutInt(WxkObject* self, char* text, nuint textLength, int* w, int* h);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_GetMultiLineTextExtent_String")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Size DCGetMultiLineTextExtentString(WxkObject* self, char* text, nuint textLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_GetPartialTextExtents")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte DCGetPartialTextExtents(WxkObject* self, char* text, nuint textLength, WxkNumbers** widths);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_GetTextExtent_StringOutIntOutInt")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DCGetTextExtentStringOutIntOutInt(WxkObject* self, char* text, nuint textLength, int* w, int* h);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_GetTextExtent_String")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Size DCGetTextExtentString(WxkObject* self, char* text, nuint textLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_FromDIP_Size")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Size DCFromDIPSize(WxkObject* self, Size size);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_FromDIP_Point")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Point DCFromDIPPoint(WxkObject* self, Point point);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_FromDIP_Int")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int DCFromDIPInt(WxkObject* self, int d);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_ToDIP_Size")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Size DCToDIPSize(WxkObject* self, Size size);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_ToDIP_Point")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Point DCToDIPPoint(WxkObject* self, Point point);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_ToDIP_Int")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int DCToDIPInt(WxkObject* self, int d);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_GetSize_OutIntOutInt")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DCGetSizeOutIntOutInt(WxkObject* self, int* width, int* height);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_GetSizeMM_OutIntOutInt")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DCGetSizeMMOutIntOutInt(WxkObject* self, int* width, int* height);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_GetUserScale")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DCGetUserScale(WxkObject* self, double* x, double* y);
+
 	[LibraryImport(Library, EntryPoint = "wxk_DC_GetBackgroundMode")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int DCGetBackgroundMode(WxkObject* self);
@@ -1789,6 +1941,82 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_DC_GetAsBitmap")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkObject* DCGetAsBitmap(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_CanDrawBitmap")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte DCCanDrawBitmap(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_CanGetTextExtent")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte DCCanGetTextExtent(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_GetLogicalOrigin_Default")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Point DCGetLogicalOriginDefault(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_CanUseTransformMatrix")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte DCCanUseTransformMatrix(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_GetCharHeight")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int DCGetCharHeight(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_GetCharWidth")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int DCGetCharWidth(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_IsOk")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte DCIsOk(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_GetContentScaleFactor")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial double DCGetContentScaleFactor(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_GetDepth")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int DCGetDepth(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_GetDeviceOrigin")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Point DCGetDeviceOrigin(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_GetMapMode")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int DCGetMapMode(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_SetMapMode")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DCSetMapMode(WxkObject* self, int mode);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_GetPPI")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Size DCGetPPI(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_GetSize_Default")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Size DCGetSizeDefault(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_GetSizeMM_Default")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Size DCGetSizeMMDefault(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_GetFont")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* DCGetFont(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_SetFont")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DCSetFont(WxkObject* self, WxkObject* font);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_GetLayoutDirection")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int DCGetLayoutDirection(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DC_SetLayoutDirection")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DCSetLayoutDirection(WxkObject* self, int direction);
 
 	[LibraryImport(Library, EntryPoint = "wxk_DPIChangedEvent_Scale_Size")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

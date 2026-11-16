@@ -112,7 +112,8 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		IEnumerable<DoxygenMember> members = source.Members;
 		// Bases above the class that are not bound, up to the first that is, called through the class.
 		if (inheritUnboundBases && source.Bases.FirstOrDefault() is string primary) {
-			foreach (string ancestor in Ancestors(primary).TakeWhile(name => !_classes.ContainsKey(name))) {
+			// wxObject's own members, such as GetClassInfo, are wxWidgets's run-time type information.
+			foreach (string ancestor in Ancestors(primary).TakeWhile(name => !_classes.ContainsKey(name) && name != "wxObject")) {
 				members = members.Concat(MembersOf(api.Classes[ancestor]).Where(member => member.Name != ancestor && member.Name != "~" + ancestor).Select(member => member with { Mixin = member.Mixin ?? ancestor }));
 			}
 		}

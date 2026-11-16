@@ -37,4 +37,20 @@ public class DrawingTests {
 		panel.Update();
 		await Gui.WaitUntil(() => paints > 0);
 	});
+
+	[Fact]
+	public Task MeasuresText() => Gui.Run(() => {
+		using Bitmap bitmap = new(100, 40);
+		using MemoryDC dc = new(bitmap);
+		using Font font = new(12, FontFamily.Default, FontStyle.Normal, FontWeight.Normal);
+		dc.Font = font;
+		using Font? set = dc.Font;
+		Assert.Equal(12, set?.PointSize);
+		Size wide = dc.GetTextExtent("Wide text");
+		Size narrow = dc.GetTextExtent("W");
+		Assert.True(wide.Width > narrow.Width);
+		Assert.True(dc.CharHeight > 0);
+		Assert.True(dc.GetPartialTextExtents("abc", out int[] widths));
+		Assert.Equal(3, widths.Length);
+	});
 }
