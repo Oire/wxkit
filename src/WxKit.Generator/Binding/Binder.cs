@@ -154,7 +154,12 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		NameOverloads(functions);
 		// Two C++ constructors can have the same managed signature, as an int and a long do, and C#
 		// allows only one.
-		bound.Constructors.AddRange(functions.Where(static function => function.IsConstructor).DistinctBy(static function => string.Join(",", function.ManagedParameters.Select(static parameter => parameter.Conversion.ManagedType(parameter.Nullable)))));
+		List<BoundFunction> constructors = [.. functions.Where(static function => function.IsConstructor).DistinctBy(static function => string.Join(",", function.ManagedParameters.Select(static parameter => parameter.Conversion.ManagedType(parameter.Nullable))))];
+		// A constructor whose parameters start another's, which has only defaults after them, is left
+		// out, as wxBannerWindow(parent, dir) is beside the one that adds the id, position, size, and
+		// style, since a call such as new BannerWindow(parent) could mean either.
+		constructors.RemoveAll(shorter => constructors.Any(longer => !ReferenceEquals(longer, shorter) && Extends(longer, shorter)));
+		bound.Constructors.AddRange(constructors);
 		PairProperties(bound, [.. functions.Where(static function => !function.IsConstructor)]);
 		RemoveRedeclarations(bound);
 		BindDirectors(bound);
@@ -372,7 +377,10 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		if (HandwrittenEnums.TryGetValue(type.Name, out string? handwritten)) return new EnumConversion(handwritten, NumberConversion.Int, type.Name);
 		if (!isReturn && type.Name.Replace(" ", string.Empty, StringComparison.Ordinal) == "wxVector<wxVariant>") return VariantListConversion.Instance;
 		if (!isReturn && type.Name.Replace(" ", string.Empty, StringComparison.Ordinal) == "wxVector<wxBitmapBundle>" && _classes.ContainsKey("wxBitmap")) return BitmapListConversion.Instance;
-		if (EnumFor(type.Name) is BoundEnum bound) return new EnumConversion(bound.Name, NumberConversion.Int, type.Name);
+		// An enum a class nests, which its own members name without the class, as wxStaticBitmap's
+		// SetScaleMode takes ScaleMode, is named with it, which the shim's cast needs.
+		string nestedName = type.Name.Contains("::", StringComparison.Ordinal) ? type.Name : Ancestors(owner.CppName).Select(ancestor => $"{ancestor}::{type.Name}").FirstOrDefault(api.Enums.ContainsKey) ?? type.Name;
+		if (EnumFor(nestedName) is BoundEnum bound) return new EnumConversion(bound.Name, NumberConversion.Int, nestedName);
 		return type.Name switch {
 			"bool" => BoolConversion.Instance,
 			"int" or "wxWindowID" or "wxCoord" => NumberConversion.Int,
@@ -638,6 +646,16 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		int shared = 0;
 		while (words.All(found => found.Length > shared + 1 && found[shared] == words[0][shared])) shared++;
 		return shared;
+	}
+
+	private static bool Extends(BoundFunction longer, BoundFunction shorter) {
+		IReadOnlyList<BoundParameter> start = shorter.ManagedParameters;
+		IReadOnlyList<BoundParameter> all = longer.ManagedParameters;
+		if (all.Count <= start.Count) return false;
+		for (int index = 0; index < start.Count; index++) {
+			if (all[index].Conversion.ManagedType(all[index].Nullable) != start[index].Conversion.ManagedType(start[index].Nullable)) return false;
+		}
+		return all.Skip(start.Count).All(static parameter => parameter.Default is not null);
 	}
 
 	private static string MemberName(string constant, int shared) => Naming.Words(string.Join('_', Words(constant)[shared..]));

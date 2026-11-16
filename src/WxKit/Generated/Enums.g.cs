@@ -1031,6 +1031,20 @@ public enum ListColumnFormat {
 	Center = 2,
 }
 
+/// <summary>Wraps wxICON_*.</summary>
+public enum MessageIcon {
+	/// <summary>Wraps wxICON_WARNING.</summary>
+	Warning = 256,
+	/// <summary>Wraps wxICON_ERROR.</summary>
+	Error = 512,
+	/// <summary>Wraps wxICON_QUESTION.</summary>
+	Question = 1024,
+	/// <summary>Wraps wxICON_INFORMATION.</summary>
+	Information = 2048,
+	/// <summary>Wraps wxICON_NONE.</summary>
+	None = 262144,
+}
+
 /// <summary>Wraps wxMouseButton.</summary>
 public enum MouseButton {
 	/// <summary>Any mouse button, means to check for any button being pressed for example. Wraps wxMOUSE_BTN_ANY.</summary>
@@ -1077,18 +1091,6 @@ public enum NavigationDirection {
 	Right = 6,
 	/// <summary>Wraps wxNAVDIR_UP.</summary>
 	Up = 7,
-}
-
-/// <summary>Wraps wxICON_*.</summary>
-public enum NotificationIcon {
-	/// <summary>Wraps wxICON_WARNING.</summary>
-	Warning = 256,
-	/// <summary>Wraps wxICON_ERROR.</summary>
-	Error = 512,
-	/// <summary>Wraps wxICON_INFORMATION.</summary>
-	Information = 2048,
-	/// <summary>Wraps wxICON_NONE.</summary>
-	None = 262144,
 }
 
 /// <summary>Wraps wxHelpEvent::Origin.</summary>
@@ -1232,12 +1234,24 @@ public enum RasterOperationMode {
 	Set = 15,
 }
 
-/// <summary>Wraps Reason.</summary>
+/// <summary>Wraps wxActivateEvent::Reason.</summary>
 public enum Reason {
 	/// <summary>Window activated by mouse click. Wraps Reason_Mouse.</summary>
 	Mouse = 0,
 	/// <summary>Window was activated with some other method than mouse click. Wraps Reason_Unknown.</summary>
 	Unknown = 1,
+}
+
+/// <summary>Wraps wxStaticBitmap::ScaleMode.</summary>
+public enum ScaleMode {
+	/// <summary>The bitmap is displayed in original size. Wraps Scale_None.</summary>
+	None = 0,
+	/// <summary>Scale the bitmap to fit the size of the control by changing the aspect ratio of the bitmap if necessary. Wraps Scale_Fill.</summary>
+	Fill = 1,
+	/// <summary>Scale the bitmap to fit the size of the control by maintaining the aspect ratio. Wraps Scale_AspectFit.</summary>
+	AspectFit = 2,
+	/// <summary>Scale the bitmap to fill the size of the control. Wraps Scale_AspectFill.</summary>
+	AspectFill = 3,
 }
 
 /// <summary>Wraps wxSEND_EVENT_*.</summary>

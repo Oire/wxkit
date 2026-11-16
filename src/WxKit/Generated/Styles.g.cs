@@ -3,6 +3,34 @@
 
 namespace WxKit;
 
+/// <summary>Styles for <see cref="BitmapButton"/>.</summary>
+[Flags]
+public enum BitmapButtonStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Left-justifies the bitmap label. Wraps wxBU_LEFT.</summary>
+	Left = 0x40,
+	/// <summary>Aligns the bitmap label to the top of the button. Wraps wxBU_TOP.</summary>
+	Top = 0x80,
+	/// <summary>Right-justifies the bitmap label. Wraps wxBU_RIGHT.</summary>
+	Right = 0x100,
+	/// <summary>Aligns the bitmap label to the bottom of the button. Wraps wxBU_BOTTOM.</summary>
+	Bottom = 0x200,
+}
+
+/// <summary>Styles for <see cref="BitmapComboBox"/>.</summary>
+[Flags]
+public enum BitmapComboBoxStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Creates a combobox without a text editor. On some platforms the control may appear very different when this style is used. Wraps wxCB_READONLY.</summary>
+	ReadOnly = 0x10,
+	/// <summary>Sorts the entries in the list alphabetically. Wraps wxCB_SORT.</summary>
+	Sort = 0x8,
+	/// <summary>The control will generate the event wxEVT_TEXT_ENTER (otherwise pressing Enter key is either processed internally by the control or used for navigation between dialog controls). Windows only. Wraps wxTE_PROCESS_ENTER.</summary>
+	TeProcessEnter = 0x400,
+}
+
 /// <summary>Styles for <see cref="Button"/>.</summary>
 [Flags]
 public enum ButtonStyle : long {
@@ -69,6 +97,23 @@ public enum ChoiceStyle : long {
 	None = 0x0,
 	/// <summary>Sorts the entries alphabetically. Wraps wxCB_SORT.</summary>
 	CbSort = 0x8,
+}
+
+/// <summary>Styles for <see cref="Choicebook"/>.</summary>
+[Flags]
+public enum ChoicebookStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Choose the default location for the labels depending on the current platform (but currently it's the same everywhere, namely wxCHB_TOP). Wraps wxCHB_DEFAULT.</summary>
+	Default = 0x0,
+	/// <summary>Place labels above the page area. Wraps wxCHB_TOP.</summary>
+	Top = 0x10,
+	/// <summary>Place labels on the left side. Wraps wxCHB_LEFT.</summary>
+	Left = 0x40,
+	/// <summary>Place labels on the right side. Wraps wxCHB_RIGHT.</summary>
+	Right = 0x80,
+	/// <summary>Place labels below the page area. Wraps wxCHB_BOTTOM.</summary>
+	Bottom = 0x20,
 }
 
 /// <summary>Styles for <see cref="CollapsiblePane"/>.</summary>
@@ -403,6 +448,23 @@ public enum ListCtrlStyle : long {
 	Vrules = 0x1,
 }
 
+/// <summary>Styles for <see cref="Listbook"/>.</summary>
+[Flags]
+public enum ListbookStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Choose the default location for the labels depending on the current platform (left everywhere except Mac where it is top). Wraps wxLB_DEFAULT.</summary>
+	Default = 0x0,
+	/// <summary>Place labels above the page area. Wraps wxLB_TOP.</summary>
+	Top = 0x10,
+	/// <summary>Place labels on the left side. Wraps wxLB_LEFT.</summary>
+	Left = 0x40,
+	/// <summary>Place labels on the right side. Wraps wxLB_RIGHT.</summary>
+	Right = 0x80,
+	/// <summary>Place labels below the page area. Wraps wxLB_BOTTOM.</summary>
+	Bottom = 0x20,
+}
+
 /// <summary>Styles for <see cref="MessageDialog"/>.</summary>
 [Flags]
 public enum MessageDialogStyle : long {
@@ -444,6 +506,33 @@ public enum MessageDialogStyle : long {
 	StayOnTop = 0x8000,
 	/// <summary>Centre the message box on its parent or on the screen if parent is not specified. Setting this style under MSW makes no differences as the dialog is always centered on the parent. Wraps wxCENTRE.</summary>
 	Center = 0x1,
+}
+
+/// <summary>Styles for <see cref="MiniFrame"/>.</summary>
+[Flags]
+public enum MiniFrameStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Display the frame iconized (minimized) (Windows only). Wraps wxICONIZE.</summary>
+	Iconize = 0x4000,
+	/// <summary>Puts a caption on the frame. Wraps wxCAPTION.</summary>
+	Caption = 0x20000000,
+	/// <summary>Identical to wxICONIZE. Wraps wxMINIMIZE.</summary>
+	Minimize = 0x4000,
+	/// <summary>Displays a minimize box on the frame (Windows only). Wraps wxMINIMIZE_BOX.</summary>
+	MinimizeBox = 0x400,
+	/// <summary>Displays the frame maximized (Windows only). Wraps wxMAXIMIZE.</summary>
+	Maximize = 0x2000,
+	/// <summary>Displays a maximize box on the frame (Windows only). Wraps wxMAXIMIZE_BOX.</summary>
+	MaximizeBox = 0x200,
+	/// <summary>Displays a close box on the frame. Wraps wxCLOSE_BOX.</summary>
+	CloseBox = 0x1000,
+	/// <summary>Stay on top of other windows (Windows only). Wraps wxSTAY_ON_TOP.</summary>
+	StayOnTop = 0x8000,
+	/// <summary>Displays a system menu (Windows only). Wraps wxSYSTEM_MENU.</summary>
+	SystemMenu = 0x800,
+	/// <summary>Displays a resizable border around the window. Wraps wxRESIZE_BORDER.</summary>
+	ResizeBorder = 0x40,
 }
 
 /// <summary>Styles for <see cref="MultiChoiceDialog"/>.</summary>
@@ -792,6 +881,17 @@ public enum ToolBarStyle : long {
 	Right = 0x4000,
 	/// <summary>The wxTB_HORIZONTAL style. This style is new since wxWidgets 2.9.5. Wraps wxTB_DEFAULT_STYLE.</summary>
 	Default = 0x4,
+}
+
+/// <summary>Styles for <see cref="Toolbook"/>.</summary>
+[Flags]
+public enum ToolbookStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Use wxButtonToolBar-based implementation under macOS (ignored under other platforms). Wraps wxTBK_BUTTONBAR.</summary>
+	Buttonbar = 0x100,
+	/// <summary>Shows the text and the icons alongside, not vertically stacked (only implement under Windows and GTK 2 platforms as it relies on wxTB_HORZ_LAYOUT flag support). Wraps wxTBK_HORZ_LAYOUT.</summary>
+	HorzLayout = 0x8000,
 }
 
 /// <summary>Styles for <see cref="TreeCtrl"/>.</summary>

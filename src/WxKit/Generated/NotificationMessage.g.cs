@@ -11,7 +11,7 @@ public unsafe partial class NotificationMessage : EvtHandler {
 	}
 
 	/// <summary>Create a notification object with the given attributes.</summary>
-	public NotificationMessage(string title, string message = "", Window? parent = null, NotificationIcon icon = NotificationIcon.Information) : this(CreateNative(title, message, parent, icon)) {
+	public NotificationMessage(string title, string message = "", Window? parent = null, MessageIcon icon = MessageIcon.Information) : this(CreateNative(title, message, parent, icon)) {
 	}
 
 	internal NotificationMessage(WxkEvtHandler* native) : base(native) {
@@ -58,7 +58,7 @@ public unsafe partial class NotificationMessage : EvtHandler {
 	}
 
 	/// <summary>This parameter can be currently used to specify the icon to show in the notification.</summary>
-	public void SetFlags(NotificationIcon flags) => WxKitNative.NotificationMessageSetFlags(NativeHandler, (int)flags);
+	public void SetFlags(MessageIcon flags) => WxKitNative.NotificationMessageSetFlags(NativeHandler, (int)flags);
 
 	/// <summary>Specify a custom icon to be displayed in the notification.</summary>
 	public void SetIcon(Icon icon) {
@@ -96,13 +96,13 @@ public unsafe partial class NotificationMessage : EvtHandler {
 		return WxKitNative.NotificationMessageNewDefault();
 	}
 
-	private static WxkEvtHandler* CreateNative(string title, string message, Window? parent, NotificationIcon icon) {
+	private static WxkEvtHandler* CreateNative(string title, string message, Window? parent, MessageIcon icon) {
 		Application.VerifyAccess();
 		ArgumentNullException.ThrowIfNull(title);
 		ArgumentNullException.ThrowIfNull(message);
 		fixed (char* titleText = title)
 		fixed (char* messageText = message) {
-			return WxKitNative.NotificationMessageNewStringStringWindowNotificationIcon(titleText, NativeString.Length(title), messageText, NativeString.Length(message), parent is null ? null : (WxkWindow*)parent.Native, (int)icon);
+			return WxKitNative.NotificationMessageNewStringStringWindowMessageIcon(titleText, NativeString.Length(title), messageText, NativeString.Length(message), parent is null ? null : (WxkWindow*)parent.Native, (int)icon);
 		}
 	}
 }

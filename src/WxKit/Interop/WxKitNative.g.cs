@@ -14,6 +14,22 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int ActivateEventGetActivationReason(WxkEvent* self);
 
+	[LibraryImport(Library, EntryPoint = "wxk_ActivityIndicator_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* ActivityIndicatorNew(WxkWindow* parent, int id, Point position, Size size, long style);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ActivityIndicator_Start")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ActivityIndicatorStart(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ActivityIndicator_Stop")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void ActivityIndicatorStop(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_ActivityIndicator_IsRunning")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ActivityIndicatorIsRunning(WxkWindow* self);
+
 	[LibraryImport(Library, EntryPoint = "wxk_AnyButton_SetBitmapMargins_IntInt")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void AnyButtonSetBitmapMarginsIntInt(WxkWindow* self, int x, int y);
@@ -117,6 +133,22 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_ArtProvider_HasNativeProvider")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte ArtProviderHasNativeProvider();
+
+	[LibraryImport(Library, EntryPoint = "wxk_BannerWindow_new_WindowIntDirectionPointSizeWindowStyle")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* BannerWindowNewWindowIntDirectionPointSizeWindowStyle(WxkWindow* parent, int id, int direction, Point position, Size size, long style);
+
+	[LibraryImport(Library, EntryPoint = "wxk_BannerWindow_SetBitmap")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void BannerWindowSetBitmap(WxkWindow* self, WxkObject* bitmap);
+
+	[LibraryImport(Library, EntryPoint = "wxk_BannerWindow_SetText")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void BannerWindowSetText(WxkWindow* self, char* title, nuint titleLength, char* message, nuint messageLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_BannerWindow_SetGradient")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void BannerWindowSetGradient(WxkWindow* self, WxkColor start, WxkColor end);
 
 	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_new_Default")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -293,6 +325,54 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_Bitmap_IsOk")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte BitmapIsOk(WxkObject* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_BitmapButton_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* BitmapButtonNew(WxkWindow* parent, int id, WxkObject* bitmap, Point position, Size size, long style);
+
+	[LibraryImport(Library, EntryPoint = "wxk_BitmapButton_NewCloseButton")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* BitmapButtonNewCloseButton(WxkWindow* parent, int id, char* name, nuint nameLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_BitmapComboBox_new_WindowIntStringPointSize")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* BitmapComboBoxNewWindowIntStringPointSize(WxkWindow* parent, int id, char* value, nuint valueLength, Point position, Size size);
+
+	[LibraryImport(Library, EntryPoint = "wxk_BitmapComboBox_new_WindowIntStringPointSizeStringsBitmapComboBoxStyle")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* BitmapComboBoxNewWindowIntStringPointSizeStringsBitmapComboBoxStyle(WxkWindow* parent, int id, char* value, nuint valueLength, Point position, Size size, WxkStringArray* choices, long style);
+
+	[LibraryImport(Library, EntryPoint = "wxk_BitmapComboBox_Append_StringBitmap")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int BitmapComboBoxAppendStringBitmap(WxkWindow* self, char* item, nuint itemLength, WxkObject* bitmap);
+
+	[LibraryImport(Library, EntryPoint = "wxk_BitmapComboBox_Append_StringBitmapData")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int BitmapComboBoxAppendStringBitmapData(WxkWindow* self, char* item, nuint itemLength, WxkObject* bitmap, nint clientData);
+
+	[LibraryImport(Library, EntryPoint = "wxk_BitmapComboBox_GetItemBitmap")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* BitmapComboBoxGetItemBitmap(WxkWindow* self, uint index);
+
+	[LibraryImport(Library, EntryPoint = "wxk_BitmapComboBox_Insert_StringBitmapUInt")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int BitmapComboBoxInsertStringBitmapUInt(WxkWindow* self, char* item, nuint itemLength, WxkObject* bitmap, uint position);
+
+	[LibraryImport(Library, EntryPoint = "wxk_BitmapComboBox_Insert_StringBitmapUIntData")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int BitmapComboBoxInsertStringBitmapUIntData(WxkWindow* self, char* item, nuint itemLength, WxkObject* bitmap, uint position, nint clientData);
+
+	[LibraryImport(Library, EntryPoint = "wxk_BitmapComboBox_SetItemBitmap")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void BitmapComboBoxSetItemBitmap(WxkWindow* self, uint index, WxkObject* bitmap);
+
+	[LibraryImport(Library, EntryPoint = "wxk_BitmapComboBox_GetBitmapSize")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial Size BitmapComboBoxGetBitmapSize(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_BitmapToggleButton_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* BitmapToggleButtonNew(WxkWindow* parent, int id, WxkObject* label, Point position, Size size, long style);
 
 	[LibraryImport(Library, EntryPoint = "wxk_BookCtrlBase_GetPageImage")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -737,6 +817,14 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_Choice_SetStringSelection")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte ChoiceSetStringSelection(WxkWindow* self, char* text, nuint textLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Choicebook_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* ChoicebookNew(WxkWindow* parent, int id, Point position, Size size, long style);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Choicebook_GetChoiceCtrl")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* ChoicebookGetChoiceCtrl(WxkWindow* self);
 
 	[LibraryImport(Library, EntryPoint = "wxk_ClientDC_new")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1185,6 +1273,30 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_CommandEvent_IsSelection")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte CommandEventIsSelection(WxkEvent* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_CommandLinkButton_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* CommandLinkButtonNew(WxkWindow* parent, int id, char* mainLabel, nuint mainLabelLength, char* note, nuint noteLength, Point position, Size size, long style);
+
+	[LibraryImport(Library, EntryPoint = "wxk_CommandLinkButton_SetMainLabelAndNote")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void CommandLinkButtonSetMainLabelAndNote(WxkWindow* self, char* mainLabel, nuint mainLabelLength, char* note, nuint noteLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_CommandLinkButton_GetMainLabel")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkString* CommandLinkButtonGetMainLabel(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_CommandLinkButton_SetMainLabel")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void CommandLinkButtonSetMainLabel(WxkWindow* self, char* mainLabel, nuint mainLabelLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_CommandLinkButton_GetNote")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkString* CommandLinkButtonGetNote(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_CommandLinkButton_SetNote")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void CommandLinkButtonSetNote(WxkWindow* self, char* note, nuint noteLength);
 
 	[LibraryImport(Library, EntryPoint = "wxk_ContextMenuEvent_GetPosition")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -3742,6 +3854,70 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkString* ImageGetImageExtWildcard();
 
+	[LibraryImport(Library, EntryPoint = "wxk_InfoBar_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* InfoBarNew(WxkWindow* parent, int id, long style);
+
+	[LibraryImport(Library, EntryPoint = "wxk_InfoBar_SetShowHideEffects")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void InfoBarSetShowHideEffects(WxkWindow* self, int showEffect, int hideEffect);
+
+	[LibraryImport(Library, EntryPoint = "wxk_InfoBar_ShowCheckBox")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void InfoBarShowCheckBox(WxkWindow* self, char* checkBoxText, nuint checkBoxTextLength, byte @checked);
+
+	[LibraryImport(Library, EntryPoint = "wxk_InfoBar_SetFont")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte InfoBarSetFont(WxkWindow* self, WxkObject* font);
+
+	[LibraryImport(Library, EntryPoint = "wxk_InfoBar_AddButton")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void InfoBarAddButton(WxkWindow* self, int buttonId, char* label, nuint labelLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_InfoBar_Dismiss")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void InfoBarDismiss(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_InfoBar_RemoveButton")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void InfoBarRemoveButton(WxkWindow* self, int buttonId);
+
+	[LibraryImport(Library, EntryPoint = "wxk_InfoBar_ShowMessage")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void InfoBarShowMessage(WxkWindow* self, char* message, nuint messageLength, int icon);
+
+	[LibraryImport(Library, EntryPoint = "wxk_InfoBar_GetButtonId")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int InfoBarGetButtonId(WxkWindow* self, nuint index);
+
+	[LibraryImport(Library, EntryPoint = "wxk_InfoBar_HasButtonId")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte InfoBarHasButtonId(WxkWindow* self, int buttonId);
+
+	[LibraryImport(Library, EntryPoint = "wxk_InfoBar_GetShowEffect")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int InfoBarGetShowEffect(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_InfoBar_GetHideEffect")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int InfoBarGetHideEffect(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_InfoBar_GetEffectDuration")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int InfoBarGetEffectDuration(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_InfoBar_SetEffectDuration")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void InfoBarSetEffectDuration(WxkWindow* self, int duration);
+
+	[LibraryImport(Library, EntryPoint = "wxk_InfoBar_IsCheckBoxChecked")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte InfoBarIsCheckBoxChecked(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_InfoBar_GetButtonCount")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial nuint InfoBarGetButtonCount(WxkWindow* self);
+
 	[LibraryImport(Library, EntryPoint = "wxk_KeyEvent_GetPosition_OutIntOutInt")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void KeyEventGetPositionOutIntOutInt(WxkEvent* self, int* x, int* y);
@@ -4570,6 +4746,14 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial long ListViewGetFocusedItem(WxkWindow* self);
 
+	[LibraryImport(Library, EntryPoint = "wxk_Listbook_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* ListbookNew(WxkWindow* parent, int id, Point position, Size size, long style);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Listbook_GetListView")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* ListbookGetListView(WxkWindow* self);
+
 	[LibraryImport(Library, EntryPoint = "wxk_MemoryDC_new_Default")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkObject* MemoryDCNewDefault();
@@ -4797,6 +4981,10 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_MessageDialog_GetEffectiveIcon")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial long MessageDialogGetEffectiveIcon(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_MiniFrame_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* MiniFrameNew(WxkWindow* parent, int id, char* title, nuint titleLength, Point position, Size size, long style);
 
 	[LibraryImport(Library, EntryPoint = "wxk_MouseEvent_Aux1DClick")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5162,9 +5350,9 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkEvtHandler* NotificationMessageNewDefault();
 
-	[LibraryImport(Library, EntryPoint = "wxk_NotificationMessage_new_StringStringWindowNotificationIcon")]
+	[LibraryImport(Library, EntryPoint = "wxk_NotificationMessage_new_StringStringWindowMessageIcon")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-	public static partial WxkEvtHandler* NotificationMessageNewStringStringWindowNotificationIcon(char* title, nuint titleLength, char* message, nuint messageLength, WxkWindow* parent, int icon);
+	public static partial WxkEvtHandler* NotificationMessageNewStringStringWindowMessageIcon(char* title, nuint titleLength, char* message, nuint messageLength, WxkWindow* parent, int icon);
 
 	[LibraryImport(Library, EntryPoint = "wxk_NotificationMessage_AddAction")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5490,6 +5678,54 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkWindow* RadioButtonGetNextInGroup(WxkWindow* self);
 
+	[LibraryImport(Library, EntryPoint = "wxk_RearrangeCtrl_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* RearrangeCtrlNew(WxkWindow* parent, int id, Point position, Size size, long* order, nuint orderCount, WxkStringArray* items, long style);
+
+	[LibraryImport(Library, EntryPoint = "wxk_RearrangeCtrl_GetList")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* RearrangeCtrlGetList(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_RearrangeDialog_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* RearrangeDialogNew(WxkWindow* parent, char* message, nuint messageLength, char* title, nuint titleLength, long* order, nuint orderCount, WxkStringArray* items, Point position);
+
+	[LibraryImport(Library, EntryPoint = "wxk_RearrangeDialog_AddExtraControls")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void RearrangeDialogAddExtraControls(WxkWindow* self, WxkWindow* window);
+
+	[LibraryImport(Library, EntryPoint = "wxk_RearrangeDialog_GetList")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* RearrangeDialogGetList(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_RearrangeDialog_GetOrder")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkNumbers* RearrangeDialogGetOrder(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_RearrangeList_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* RearrangeListNew(WxkWindow* parent, int id, Point position, Size size, long* order, nuint orderCount, WxkStringArray* items, long style);
+
+	[LibraryImport(Library, EntryPoint = "wxk_RearrangeList_MoveCurrentUp")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte RearrangeListMoveCurrentUp(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_RearrangeList_MoveCurrentDown")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte RearrangeListMoveCurrentDown(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_RearrangeList_GetCurrentOrder")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkNumbers* RearrangeListGetCurrentOrder(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_RearrangeList_CanMoveCurrentUp")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte RearrangeListCanMoveCurrentUp(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_RearrangeList_CanMoveCurrentDown")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte RearrangeListCanMoveCurrentDown(WxkWindow* self);
+
 	[LibraryImport(Library, EntryPoint = "wxk_ScreenDC_new")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkObject* ScreenDCNew();
@@ -5777,6 +6013,30 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_ShowEvent_IsShown")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte ShowEventIsShown(WxkEvent* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Simplebook_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* SimplebookNew(WxkWindow* parent, int id, Point position, Size size, long style);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Simplebook_SetEffects")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void SimplebookSetEffects(WxkWindow* self, int showEffect, int hideEffect);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Simplebook_SetEffect")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void SimplebookSetEffect(WxkWindow* self, int effect);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Simplebook_SetEffectsTimeouts")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void SimplebookSetEffectsTimeouts(WxkWindow* self, uint showTimeout, uint hideTimeout);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Simplebook_SetEffectTimeout")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void SimplebookSetEffectTimeout(WxkWindow* self, uint timeout);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Simplebook_ShowNewPage")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte SimplebookShowNewPage(WxkWindow* self, WxkWindow* page);
 
 	[LibraryImport(Library, EntryPoint = "wxk_SingleChoiceDialog_new")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -6185,6 +6445,34 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_SplitterWindow_SetLastSplitPosition")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void SplitterWindowSetLastSplitPosition(WxkWindow* self, Point position);
+
+	[LibraryImport(Library, EntryPoint = "wxk_StaticBitmap_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* StaticBitmapNew(WxkWindow* parent, int id, WxkObject* bitmap, Point position, Size size, long style);
+
+	[LibraryImport(Library, EntryPoint = "wxk_StaticBitmap_GetBitmap")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* StaticBitmapGetBitmap(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_StaticBitmap_SetBitmap")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void StaticBitmapSetBitmap(WxkWindow* self, WxkObject* label);
+
+	[LibraryImport(Library, EntryPoint = "wxk_StaticBitmap_GetIcon")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkObject* StaticBitmapGetIcon(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_StaticBitmap_SetIcon")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void StaticBitmapSetIcon(WxkWindow* self, WxkObject* label);
+
+	[LibraryImport(Library, EntryPoint = "wxk_StaticBitmap_GetScaleMode")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int StaticBitmapGetScaleMode(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_StaticBitmap_SetScaleMode")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void StaticBitmapSetScaleMode(WxkWindow* self, int scaleMode);
 
 	[LibraryImport(Library, EntryPoint = "wxk_StaticBox_new_WindowIntStringPointSizeWindowStyle")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -6990,6 +7278,18 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkString* ToolBarToolBaseGetLabel(WxkToolBarTool* self);
 
+	[LibraryImport(Library, EntryPoint = "wxk_Toolbook_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* ToolbookNew(WxkWindow* parent, int id, Point position, Size size, long style);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Toolbook_EnablePage_SizeTBool")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ToolbookEnablePageSizeTBool(WxkWindow* self, nuint page, byte enable);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Toolbook_EnablePage_WindowBool")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte ToolbookEnablePageWindowBool(WxkWindow* self, WxkWindow* page, byte enable);
+
 	[LibraryImport(Library, EntryPoint = "wxk_TopLevelWindow_CenterOnScreen")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void TopLevelWindowCenterOnScreen(WxkWindow* self, int direction);
@@ -7481,6 +7781,34 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_TreeEvent_IsEditCancelled")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial byte TreeEventIsEditCancelled(WxkEvent* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Treebook_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* TreebookNew(WxkWindow* parent, int id, Point position, Size size, long style);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Treebook_AddSubPage")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte TreebookAddSubPage(WxkWindow* self, WxkWindow* page, char* text, nuint textLength, byte select, int imageId);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Treebook_CollapseNode")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte TreebookCollapseNode(WxkWindow* self, nuint pageId);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Treebook_ExpandNode")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte TreebookExpandNode(WxkWindow* self, nuint pageId, byte expand);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Treebook_GetPageParent")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int TreebookGetPageParent(WxkWindow* self, nuint page);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Treebook_InsertSubPage")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte TreebookInsertSubPage(WxkWindow* self, nuint pagePos, WxkWindow* page, char* text, nuint textLength, byte select, int imageId);
+
+	[LibraryImport(Library, EntryPoint = "wxk_Treebook_IsNodeExpanded")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte TreebookIsNodeExpanded(WxkWindow* self, nuint pageId);
 
 	[LibraryImport(Library, EntryPoint = "wxk_UpdateUIEvent_Check")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -8774,6 +9102,14 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeChoice();
 
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_ChoicebookPageChanged")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeChoicebookPageChanged();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_ChoicebookPageChanging")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeChoicebookPageChanging();
+
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_CloseWindow")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeCloseWindow();
@@ -9110,6 +9446,14 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeListKeyDown();
 
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_ListbookPageChanged")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeListbookPageChanged();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_ListbookPageChanging")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeListbookPageChanging();
+
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_Listbox")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeListbox();
@@ -9438,6 +9782,14 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeToolRclicked();
 
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_ToolbookPageChanged")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeToolbookPageChanged();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_ToolbookPageChanging")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeToolbookPageChanging();
+
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_TreeBeginDrag")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeTreeBeginDrag();
@@ -9521,6 +9873,22 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_TreeStateImageClick")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeTreeStateImageClick();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_TreebookNodeCollapsed")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeTreebookNodeCollapsed();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_TreebookNodeExpanded")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeTreebookNodeExpanded();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_TreebookPageChanged")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeTreebookPageChanged();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_TreebookPageChanging")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeTreebookPageChanging();
 
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_UpdateUi")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

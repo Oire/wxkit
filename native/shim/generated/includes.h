@@ -3,9 +3,13 @@
 
 #include "../src/shim.h"
 
+#include <wx/activityindicator.h>
 #include <wx/anybutton.h>
 #include <wx/artprov.h>
+#include <wx/bannerwindow.h>
 #include <wx/bitmap.h>
+#include <wx/bmpbuttn.h>
+#include <wx/bmpcbox.h>
 #include <wx/bookctrl.h>
 #include <wx/brush.h>
 #include <wx/button.h>
@@ -14,11 +18,13 @@
 #include <wx/checklst.h>
 #include <wx/choicdlg.h>
 #include <wx/choice.h>
+#include <wx/choicebk.h>
 #include <wx/clrpicker.h>
 #include <wx/collpane.h>
 #include <wx/colordlg.h>
 #include <wx/colourdata.h>
 #include <wx/combobox.h>
+#include <wx/commandlinkbutton.h>
 #include <wx/control.h>
 #include <wx/ctrlsub.h>
 #include <wx/cursor.h>
@@ -44,9 +50,12 @@
 #include <wx/hyperlink.h>
 #include <wx/icon.h>
 #include <wx/image.h>
+#include <wx/infobar.h>
+#include <wx/listbook.h>
 #include <wx/listbox.h>
 #include <wx/listctrl.h>
 #include <wx/menu.h>
+#include <wx/minifram.h>
 #include <wx/msgdlg.h>
 #include <wx/notebook.h>
 #include <wx/notifmsg.h>
@@ -56,14 +65,17 @@
 #include <wx/progdlg.h>
 #include <wx/radiobox.h>
 #include <wx/radiobut.h>
+#include <wx/rearrangectrl.h>
 #include <wx/scrolbar.h>
 #include <wx/settings.h>
+#include <wx/simplebook.h>
 #include <wx/sizer.h>
 #include <wx/slider.h>
 #include <wx/spinbutt.h>
 #include <wx/spinctrl.h>
 #include <wx/splitter.h>
 #include <wx/srchctrl.h>
+#include <wx/statbmp.h>
 #include <wx/statbox.h>
 #include <wx/statline.h>
 #include <wx/stattext.h>
@@ -74,7 +86,9 @@
 #include <wx/timectrl.h>
 #include <wx/timer.h>
 #include <wx/toolbar.h>
+#include <wx/toolbook.h>
 #include <wx/toplevel.h>
+#include <wx/treebook.h>
 #include <wx/treectrl.h>
 #include <wx/validate.h>
 #include <wx/valtext.h>

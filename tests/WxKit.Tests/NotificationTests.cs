@@ -5,10 +5,10 @@ namespace WxKit.Tests;
 public class NotificationTests {
 	[Fact]
 	public Task MakesAndFreesANotification() => Gui.WithFrame(frame => {
-		NotificationMessage notification = new("Saved", "Your tasks are saved.", frame, NotificationIcon.Warning);
+		NotificationMessage notification = new("Saved", "Your tasks are saved.", frame, MessageIcon.Warning);
 		notification.SetTitle("Backed up");
 		notification.SetMessage("Your tasks are backed up.");
-		notification.SetFlags(NotificationIcon.Error);
+		notification.SetFlags(MessageIcon.Error);
 		notification.Clicked += (_, _) => { };
 		Assert.False(notification.IsDestroyed);
 		notification.Dispose();

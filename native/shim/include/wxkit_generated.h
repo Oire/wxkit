@@ -6,6 +6,13 @@
 WXK_FUNCTION(uint8_t) wxk_ActivateEvent_GetActive(wxk_Event* self) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_ActivateEvent_GetActivationReason(wxk_Event* self) WXK_NOEXCEPT;
 
+// wxActivityIndicator
+
+WXK_FUNCTION(wxk_Window*) wxk_ActivityIndicator_new(wxk_Window* parent, int32_t id, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ActivityIndicator_Start(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_ActivityIndicator_Stop(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_ActivityIndicator_IsRunning(wxk_Window* self) WXK_NOEXCEPT;
+
 // wxAnyButton
 
 WXK_FUNCTION(void) wxk_AnyButton_SetBitmapMargins_IntInt(wxk_Window* self, int32_t x, int32_t y) WXK_NOEXCEPT;
@@ -37,6 +44,13 @@ WXK_FUNCTION(uint8_t) wxk_ArtProvider_Pop(void) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_String*) wxk_ArtProvider_GetMessageBoxIconId(int32_t flags) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Object*) wxk_ArtProvider_GetMessageBoxIcon(int32_t flags) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_ArtProvider_HasNativeProvider(void) WXK_NOEXCEPT;
+
+// wxBannerWindow
+
+WXK_FUNCTION(wxk_Window*) wxk_BannerWindow_new_WindowIntDirectionPointSizeWindowStyle(wxk_Window* parent, int32_t id, int32_t direction, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_BannerWindow_SetBitmap(wxk_Window* self, const wxk_Object* bitmap) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_BannerWindow_SetText(wxk_Window* self, const char16_t* title, size_t titleLength, const char16_t* message, size_t messageLength) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_BannerWindow_SetGradient(wxk_Window* self, wxk_Colour start, wxk_Colour end) WXK_NOEXCEPT;
 
 // wxBitmap
 
@@ -84,6 +98,27 @@ WXK_FUNCTION(wxk_Size) wxk_Bitmap_GetSize(wxk_Object* self) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_Bitmap_GetWidth(wxk_Object* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Bitmap_HasAlpha(wxk_Object* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Bitmap_IsOk(wxk_Object* self) WXK_NOEXCEPT;
+
+// wxBitmapButton
+
+WXK_FUNCTION(wxk_Window*) wxk_BitmapButton_new(wxk_Window* parent, int32_t id, const wxk_Object* bitmap, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Window*) wxk_BitmapButton_NewCloseButton(wxk_Window* parent, int32_t id, const char16_t* name, size_t nameLength) WXK_NOEXCEPT;
+
+// wxBitmapComboBox
+
+WXK_FUNCTION(wxk_Window*) wxk_BitmapComboBox_new_WindowIntStringPointSize(wxk_Window* parent, int32_t id, const char16_t* value, size_t valueLength, wxk_Point position, wxk_Size size) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Window*) wxk_BitmapComboBox_new_WindowIntStringPointSizeStringsBitmapComboBoxStyle(wxk_Window* parent, int32_t id, const char16_t* value, size_t valueLength, wxk_Point position, wxk_Size size, const wxk_StringArray* choices, int64_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_BitmapComboBox_Append_StringBitmap(wxk_Window* self, const char16_t* item, size_t itemLength, const wxk_Object* bitmap) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_BitmapComboBox_Append_StringBitmapData(wxk_Window* self, const char16_t* item, size_t itemLength, const wxk_Object* bitmap, void* clientData) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_BitmapComboBox_GetItemBitmap(wxk_Window* self, uint32_t index) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_BitmapComboBox_Insert_StringBitmapUInt(wxk_Window* self, const char16_t* item, size_t itemLength, const wxk_Object* bitmap, uint32_t position) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_BitmapComboBox_Insert_StringBitmapUIntData(wxk_Window* self, const char16_t* item, size_t itemLength, const wxk_Object* bitmap, uint32_t position, void* clientData) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_BitmapComboBox_SetItemBitmap(wxk_Window* self, uint32_t index, const wxk_Object* bitmap) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Size) wxk_BitmapComboBox_GetBitmapSize(wxk_Window* self) WXK_NOEXCEPT;
+
+// wxBitmapToggleButton
+
+WXK_FUNCTION(wxk_Window*) wxk_BitmapToggleButton_new(wxk_Window* parent, int32_t id, const wxk_Object* label, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
 
 // wxBookCtrlBase
 
@@ -229,6 +264,11 @@ WXK_FUNCTION(wxk_StringArray*) wxk_Choice_GetStrings(wxk_Window* self) WXK_NOEXC
 WXK_FUNCTION(wxk_String*) wxk_Choice_GetStringSelection(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_Choice_SetStringSelection(wxk_Window* self, const char16_t* text, size_t textLength) WXK_NOEXCEPT;
 
+// wxChoicebook
+
+WXK_FUNCTION(wxk_Window*) wxk_Choicebook_new(wxk_Window* parent, int32_t id, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Window*) wxk_Choicebook_GetChoiceCtrl(wxk_Window* self) WXK_NOEXCEPT;
+
 // wxClientDC
 
 WXK_FUNCTION(wxk_Object*) wxk_ClientDC_new(wxk_Window* window) WXK_NOEXCEPT;
@@ -373,6 +413,15 @@ WXK_FUNCTION(wxk_String*) wxk_CommandEvent_GetString(wxk_Event* self) WXK_NOEXCE
 WXK_FUNCTION(void) wxk_CommandEvent_SetString(wxk_Event* self, const char16_t* text, size_t textLength) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_CommandEvent_IsChecked(wxk_Event* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_CommandEvent_IsSelection(wxk_Event* self) WXK_NOEXCEPT;
+
+// wxCommandLinkButton
+
+WXK_FUNCTION(wxk_Window*) wxk_CommandLinkButton_new(wxk_Window* parent, int32_t id, const char16_t* mainLabel, size_t mainLabelLength, const char16_t* note, size_t noteLength, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_CommandLinkButton_SetMainLabelAndNote(wxk_Window* self, const char16_t* mainLabel, size_t mainLabelLength, const char16_t* note, size_t noteLength) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_String*) wxk_CommandLinkButton_GetMainLabel(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_CommandLinkButton_SetMainLabel(wxk_Window* self, const char16_t* mainLabel, size_t mainLabelLength) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_String*) wxk_CommandLinkButton_GetNote(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_CommandLinkButton_SetNote(wxk_Window* self, const char16_t* note, size_t noteLength) WXK_NOEXCEPT;
 
 // wxContextMenuEvent
 
@@ -1142,6 +1191,25 @@ WXK_FUNCTION(int32_t) wxk_Image_GetDefaultLoadFlags(void) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Image_SetDefaultLoadFlags(int32_t flags) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_String*) wxk_Image_GetImageExtWildcard(void) WXK_NOEXCEPT;
 
+// wxInfoBar
+
+WXK_FUNCTION(wxk_Window*) wxk_InfoBar_new(wxk_Window* parent, int32_t id, int64_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_InfoBar_SetShowHideEffects(wxk_Window* self, int32_t showEffect, int32_t hideEffect) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_InfoBar_ShowCheckBox(wxk_Window* self, const char16_t* checkBoxText, size_t checkBoxTextLength, uint8_t checked) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_InfoBar_SetFont(wxk_Window* self, const wxk_Object* font) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_InfoBar_AddButton(wxk_Window* self, int32_t buttonId, const char16_t* label, size_t labelLength) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_InfoBar_Dismiss(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_InfoBar_RemoveButton(wxk_Window* self, int32_t buttonId) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_InfoBar_ShowMessage(wxk_Window* self, const char16_t* message, size_t messageLength, int32_t icon) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_InfoBar_GetButtonId(wxk_Window* self, size_t index) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_InfoBar_HasButtonId(wxk_Window* self, int32_t buttonId) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_InfoBar_GetShowEffect(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_InfoBar_GetHideEffect(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_InfoBar_GetEffectDuration(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_InfoBar_SetEffectDuration(wxk_Window* self, int32_t duration) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_InfoBar_IsCheckBoxChecked(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(size_t) wxk_InfoBar_GetButtonCount(wxk_Window* self) WXK_NOEXCEPT;
+
 // wxKeyEvent
 
 WXK_FUNCTION(void) wxk_KeyEvent_GetPosition_OutIntOutInt(wxk_Event* self, int32_t* x, int32_t* y) WXK_NOEXCEPT;
@@ -1367,6 +1435,11 @@ WXK_FUNCTION(void) wxk_ListView_SetColumnImage(wxk_Window* self, int32_t column,
 WXK_FUNCTION(int64_t) wxk_ListView_GetFirstSelected(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(int64_t) wxk_ListView_GetFocusedItem(wxk_Window* self) WXK_NOEXCEPT;
 
+// wxListbook
+
+WXK_FUNCTION(wxk_Window*) wxk_Listbook_new(wxk_Window* parent, int32_t id, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Window*) wxk_Listbook_GetListView(wxk_Window* self) WXK_NOEXCEPT;
+
 // wxMemoryDC
 
 WXK_FUNCTION(wxk_Object*) wxk_MemoryDC_new_Default(void) WXK_NOEXCEPT;
@@ -1435,6 +1508,10 @@ WXK_FUNCTION(wxk_String*) wxk_MessageDialog_GetCancelLabel(wxk_Window* self) WXK
 WXK_FUNCTION(wxk_String*) wxk_MessageDialog_GetHelpLabel(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_MessageDialog_SetHelpLabel(wxk_Window* self, const char16_t* help, size_t helpLength) WXK_NOEXCEPT;
 WXK_FUNCTION(int64_t) wxk_MessageDialog_GetEffectiveIcon(wxk_Window* self) WXK_NOEXCEPT;
+
+// wxMiniFrame
+
+WXK_FUNCTION(wxk_Window*) wxk_MiniFrame_new(wxk_Window* parent, int32_t id, const char16_t* title, size_t titleLength, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
 
 // wxMouseEvent
 
@@ -1544,7 +1621,7 @@ WXK_FUNCTION(int32_t) wxk_Notebook_GetTabOrientation(wxk_Window* self) WXK_NOEXC
 // wxNotificationMessage
 
 WXK_FUNCTION(wxk_EvtHandler*) wxk_NotificationMessage_new_Default(void) WXK_NOEXCEPT;
-WXK_FUNCTION(wxk_EvtHandler*) wxk_NotificationMessage_new_StringStringWindowNotificationIcon(const char16_t* title, size_t titleLength, const char16_t* message, size_t messageLength, wxk_Window* parent, int32_t icon) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_EvtHandler*) wxk_NotificationMessage_new_StringStringWindowMessageIcon(const char16_t* title, size_t titleLength, const char16_t* message, size_t messageLength, wxk_Window* parent, int32_t icon) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_NotificationMessage_AddAction(wxk_EvtHandler* self, int32_t actionId, const char16_t* label, size_t labelLength) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_NotificationMessage_Close(wxk_EvtHandler* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_NotificationMessage_SetFlags(wxk_EvtHandler* self, int32_t flags) WXK_NOEXCEPT;
@@ -1654,6 +1731,27 @@ WXK_FUNCTION(wxk_Window*) wxk_RadioButton_GetLastInGroup(wxk_Window* self) WXK_N
 WXK_FUNCTION(wxk_Window*) wxk_RadioButton_GetPreviousInGroup(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Window*) wxk_RadioButton_GetNextInGroup(wxk_Window* self) WXK_NOEXCEPT;
 
+// wxRearrangeCtrl
+
+WXK_FUNCTION(wxk_Window*) wxk_RearrangeCtrl_new(wxk_Window* parent, int32_t id, wxk_Point position, wxk_Size size, const int64_t* order, size_t orderCount, const wxk_StringArray* items, int64_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Window*) wxk_RearrangeCtrl_GetList(wxk_Window* self) WXK_NOEXCEPT;
+
+// wxRearrangeDialog
+
+WXK_FUNCTION(wxk_Window*) wxk_RearrangeDialog_new(wxk_Window* parent, const char16_t* message, size_t messageLength, const char16_t* title, size_t titleLength, const int64_t* order, size_t orderCount, const wxk_StringArray* items, wxk_Point position) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_RearrangeDialog_AddExtraControls(wxk_Window* self, wxk_Window* window) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Window*) wxk_RearrangeDialog_GetList(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Numbers*) wxk_RearrangeDialog_GetOrder(wxk_Window* self) WXK_NOEXCEPT;
+
+// wxRearrangeList
+
+WXK_FUNCTION(wxk_Window*) wxk_RearrangeList_new(wxk_Window* parent, int32_t id, wxk_Point position, wxk_Size size, const int64_t* order, size_t orderCount, const wxk_StringArray* items, int64_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_RearrangeList_MoveCurrentUp(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_RearrangeList_MoveCurrentDown(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Numbers*) wxk_RearrangeList_GetCurrentOrder(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_RearrangeList_CanMoveCurrentUp(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_RearrangeList_CanMoveCurrentDown(wxk_Window* self) WXK_NOEXCEPT;
+
 // wxScreenDC
 
 WXK_FUNCTION(wxk_Object*) wxk_ScreenDC_new(void) WXK_NOEXCEPT;
@@ -1743,6 +1841,15 @@ WXK_FUNCTION(uint8_t) wxk_SearchCtrl_SetMargins_Point(wxk_Window* self, wxk_Poin
 
 WXK_FUNCTION(void) wxk_ShowEvent_SetShow(wxk_Event* self, uint8_t show) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_ShowEvent_IsShown(wxk_Event* self) WXK_NOEXCEPT;
+
+// wxSimplebook
+
+WXK_FUNCTION(wxk_Window*) wxk_Simplebook_new(wxk_Window* parent, int32_t id, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Simplebook_SetEffects(wxk_Window* self, int32_t showEffect, int32_t hideEffect) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Simplebook_SetEffect(wxk_Window* self, int32_t effect) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Simplebook_SetEffectsTimeouts(wxk_Window* self, uint32_t showTimeout, uint32_t hideTimeout) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_Simplebook_SetEffectTimeout(wxk_Window* self, uint32_t timeout) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Simplebook_ShowNewPage(wxk_Window* self, wxk_Window* page) WXK_NOEXCEPT;
 
 // wxSingleChoiceDialog
 
@@ -1875,6 +1982,16 @@ WXK_FUNCTION(void) wxk_SplitterWindow_SetSashInvisible(wxk_Window* self, uint8_t
 WXK_FUNCTION(uint8_t) wxk_SplitterWindow_IsSplit(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Point) wxk_SplitterWindow_GetLastSplitPosition(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_SplitterWindow_SetLastSplitPosition(wxk_Window* self, wxk_Point position) WXK_NOEXCEPT;
+
+// wxStaticBitmap
+
+WXK_FUNCTION(wxk_Window*) wxk_StaticBitmap_new(wxk_Window* parent, int32_t id, const wxk_Object* bitmap, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_StaticBitmap_GetBitmap(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_StaticBitmap_SetBitmap(wxk_Window* self, const wxk_Object* label) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Object*) wxk_StaticBitmap_GetIcon(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_StaticBitmap_SetIcon(wxk_Window* self, const wxk_Object* label) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_StaticBitmap_GetScaleMode(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_StaticBitmap_SetScaleMode(wxk_Window* self, int32_t scaleMode) WXK_NOEXCEPT;
 
 // wxStaticBox
 
@@ -2122,6 +2239,12 @@ WXK_FUNCTION(wxk_Object*) wxk_ToolBarToolBase_GetNormalBitmap(wxk_ToolBarTool* s
 WXK_FUNCTION(wxk_Object*) wxk_ToolBarToolBase_GetDisabledBitmap(wxk_ToolBarTool* self) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_String*) wxk_ToolBarToolBase_GetLabel(wxk_ToolBarTool* self) WXK_NOEXCEPT;
 
+// wxToolbook
+
+WXK_FUNCTION(wxk_Window*) wxk_Toolbook_new(wxk_Window* parent, int32_t id, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Toolbook_EnablePage_SizeTBool(wxk_Window* self, size_t page, uint8_t enable) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Toolbook_EnablePage_WindowBool(wxk_Window* self, wxk_Window* page, uint8_t enable) WXK_NOEXCEPT;
+
 // wxTopLevelWindow
 
 WXK_FUNCTION(void) wxk_TopLevelWindow_CenterOnScreen(wxk_Window* self, int32_t direction) WXK_NOEXCEPT;
@@ -2253,6 +2376,16 @@ WXK_FUNCTION(wxk_String*) wxk_TreeEvent_GetLabel(wxk_Event* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void*) wxk_TreeEvent_GetOldItem(wxk_Event* self) WXK_NOEXCEPT;
 WXK_FUNCTION(wxk_Point) wxk_TreeEvent_GetPoint(wxk_Event* self) WXK_NOEXCEPT;
 WXK_FUNCTION(uint8_t) wxk_TreeEvent_IsEditCancelled(wxk_Event* self) WXK_NOEXCEPT;
+
+// wxTreebook
+
+WXK_FUNCTION(wxk_Window*) wxk_Treebook_new(wxk_Window* parent, int32_t id, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Treebook_AddSubPage(wxk_Window* self, wxk_Window* page, const char16_t* text, size_t textLength, uint8_t select, int32_t imageId) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Treebook_CollapseNode(wxk_Window* self, size_t pageId) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Treebook_ExpandNode(wxk_Window* self, size_t pageId, uint8_t expand) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_Treebook_GetPageParent(wxk_Window* self, size_t page) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Treebook_InsertSubPage(wxk_Window* self, size_t pagePos, wxk_Window* page, const char16_t* text, size_t textLength, uint8_t select, int32_t imageId) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_Treebook_IsNodeExpanded(wxk_Window* self, size_t pageId) WXK_NOEXCEPT;
 
 // wxUpdateUIEvent
 
@@ -2591,6 +2724,8 @@ WXK_FUNCTION(int32_t) wxk_EventType_Checkbox(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_Checklistbox(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_ChildFocus(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_Choice(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_ChoicebookPageChanged(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_ChoicebookPageChanging(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_CloseWindow(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_CollapsiblepaneChanged(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_ColorChanged(void) WXK_NOEXCEPT;
@@ -2675,6 +2810,8 @@ WXK_FUNCTION(int32_t) wxk_EventType_ListItemRightClick(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_ListItemSelected(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_ListItemUnchecked(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_ListKeyDown(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_ListbookPageChanged(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_ListbookPageChanging(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_Listbox(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_ListboxDclick(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_Magnify(void) WXK_NOEXCEPT;
@@ -2757,6 +2894,8 @@ WXK_FUNCTION(int32_t) wxk_EventType_Tool(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_ToolDropdown(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_ToolEnter(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_ToolRclicked(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_ToolbookPageChanged(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_ToolbookPageChanging(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_TreeBeginDrag(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_TreeBeginLabelEdit(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_TreeBeginRdrag(void) WXK_NOEXCEPT;
@@ -2778,4 +2917,8 @@ WXK_FUNCTION(int32_t) wxk_EventType_TreeSelChanged(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_TreeSelChanging(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_TreeSetInfo(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_TreeStateImageClick(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TreebookNodeCollapsed(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TreebookNodeExpanded(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TreebookPageChanged(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TreebookPageChanging(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_UpdateUi(void) WXK_NOEXCEPT;

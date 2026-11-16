@@ -8,7 +8,7 @@ WXK_FUNCTION(wxk_EvtHandler*) wxk_NotificationMessage_new_Default(void) noexcept
 	});
 }
 
-WXK_FUNCTION(wxk_EvtHandler*) wxk_NotificationMessage_new_StringStringWindowNotificationIcon(const char16_t* title, size_t titleLength, const char16_t* message, size_t messageLength, wxk_Window* parent, int32_t icon) noexcept {
+WXK_FUNCTION(wxk_EvtHandler*) wxk_NotificationMessage_new_StringStringWindowMessageIcon(const char16_t* title, size_t titleLength, const char16_t* message, size_t messageLength, wxk_Window* parent, int32_t icon) noexcept {
 	return wxk::Guard<wxk_EvtHandler*>(nullptr, [&] {
 		wxEvtHandler* created = new wxNotificationMessage(wxk::FromUtf16(title, titleLength), wxk::FromUtf16(message, messageLength), static_cast<wxWindow*>(wxk::Unwrap(parent)), static_cast<int>(icon));
 		return wxk::Wrap(created);

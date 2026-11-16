@@ -145,6 +145,20 @@ public static unsafe partial class EventType {
 		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeChoice, static native => new CommandEvent((WxkEvent*)native));
 	}
 
+	/// <summary>Wraps wxEVT_CHOICEBOOK_PAGE_CHANGED.</summary>
+	public static EventType<BookCtrlEvent> ChoicebookPageChanged => ChoicebookPageChangedType.Value;
+
+	private static class ChoicebookPageChangedType {
+		public static readonly EventType<BookCtrlEvent> Value = new(WxKitNative.EventTypeChoicebookPageChanged, static native => new BookCtrlEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_CHOICEBOOK_PAGE_CHANGING.</summary>
+	public static EventType<BookCtrlEvent> ChoicebookPageChanging => ChoicebookPageChangingType.Value;
+
+	private static class ChoicebookPageChangingType {
+		public static readonly EventType<BookCtrlEvent> Value = new(WxKitNative.EventTypeChoicebookPageChanging, static native => new BookCtrlEvent((WxkEvent*)native));
+	}
+
 	/// <summary>Wraps wxEVT_CLOSE_WINDOW.</summary>
 	public static EventType<CloseEvent> CloseWindow => CloseWindowType.Value;
 
@@ -733,6 +747,20 @@ public static unsafe partial class EventType {
 		public static readonly EventType<ListEvent> Value = new(WxKitNative.EventTypeListKeyDown, static native => new ListEvent((WxkEvent*)native));
 	}
 
+	/// <summary>Wraps wxEVT_LISTBOOK_PAGE_CHANGED.</summary>
+	public static EventType<BookCtrlEvent> ListbookPageChanged => ListbookPageChangedType.Value;
+
+	private static class ListbookPageChangedType {
+		public static readonly EventType<BookCtrlEvent> Value = new(WxKitNative.EventTypeListbookPageChanged, static native => new BookCtrlEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_LISTBOOK_PAGE_CHANGING.</summary>
+	public static EventType<BookCtrlEvent> ListbookPageChanging => ListbookPageChangingType.Value;
+
+	private static class ListbookPageChangingType {
+		public static readonly EventType<BookCtrlEvent> Value = new(WxKitNative.EventTypeListbookPageChanging, static native => new BookCtrlEvent((WxkEvent*)native));
+	}
+
 	/// <summary>Wraps wxEVT_LISTBOX.</summary>
 	public static EventType<CommandEvent> Listbox => ListboxType.Value;
 
@@ -1307,6 +1335,20 @@ public static unsafe partial class EventType {
 		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeToolRclicked, static native => new CommandEvent((WxkEvent*)native));
 	}
 
+	/// <summary>Wraps wxEVT_TOOLBOOK_PAGE_CHANGED.</summary>
+	public static EventType<BookCtrlEvent> ToolbookPageChanged => ToolbookPageChangedType.Value;
+
+	private static class ToolbookPageChangedType {
+		public static readonly EventType<BookCtrlEvent> Value = new(WxKitNative.EventTypeToolbookPageChanged, static native => new BookCtrlEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_TOOLBOOK_PAGE_CHANGING.</summary>
+	public static EventType<BookCtrlEvent> ToolbookPageChanging => ToolbookPageChangingType.Value;
+
+	private static class ToolbookPageChangingType {
+		public static readonly EventType<BookCtrlEvent> Value = new(WxKitNative.EventTypeToolbookPageChanging, static native => new BookCtrlEvent((WxkEvent*)native));
+	}
+
 	/// <summary>Wraps wxEVT_TREE_BEGIN_DRAG.</summary>
 	public static EventType<TreeEvent> TreeBeginDrag => TreeBeginDragType.Value;
 
@@ -1452,6 +1494,34 @@ public static unsafe partial class EventType {
 
 	private static class TreeStateImageClickType {
 		public static readonly EventType<TreeEvent> Value = new(WxKitNative.EventTypeTreeStateImageClick, static native => new TreeEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_TREEBOOK_NODE_COLLAPSED.</summary>
+	public static EventType<BookCtrlEvent> TreebookNodeCollapsed => TreebookNodeCollapsedType.Value;
+
+	private static class TreebookNodeCollapsedType {
+		public static readonly EventType<BookCtrlEvent> Value = new(WxKitNative.EventTypeTreebookNodeCollapsed, static native => new BookCtrlEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_TREEBOOK_NODE_EXPANDED.</summary>
+	public static EventType<BookCtrlEvent> TreebookNodeExpanded => TreebookNodeExpandedType.Value;
+
+	private static class TreebookNodeExpandedType {
+		public static readonly EventType<BookCtrlEvent> Value = new(WxKitNative.EventTypeTreebookNodeExpanded, static native => new BookCtrlEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_TREEBOOK_PAGE_CHANGED.</summary>
+	public static EventType<BookCtrlEvent> TreebookPageChanged => TreebookPageChangedType.Value;
+
+	private static class TreebookPageChangedType {
+		public static readonly EventType<BookCtrlEvent> Value = new(WxKitNative.EventTypeTreebookPageChanged, static native => new BookCtrlEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_TREEBOOK_PAGE_CHANGING.</summary>
+	public static EventType<BookCtrlEvent> TreebookPageChanging => TreebookPageChangingType.Value;
+
+	private static class TreebookPageChangingType {
+		public static readonly EventType<BookCtrlEvent> Value = new(WxKitNative.EventTypeTreebookPageChanging, static native => new BookCtrlEvent((WxkEvent*)native));
 	}
 
 	/// <summary>Wraps wxEVT_UPDATE_UI.</summary>

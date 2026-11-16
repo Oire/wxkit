@@ -99,6 +99,10 @@ internal static class Core {
 			"wxSpinButton", "wxSlider", "wxGauge", "wxStaticBox", "wxStaticLine", "wxToggleButton",
 			"wxHyperlinkCtrl", "wxScrollBar", "wxCollapsiblePane", "wxSearchCtrl", "wxStatusBar",
 			"wxBookCtrlBase", "wxNotebook", "wxSplitterWindow",
+			"wxStaticBitmap", "wxBitmapButton", "wxBitmapToggleButton", "wxCommandLinkButton",
+			"wxListbook", "wxChoicebook", "wxTreebook", "wxToolbook", "wxSimplebook",
+			"wxInfoBar", "wxActivityIndicator", "wxBitmapComboBox", "wxRearrangeList", "wxRearrangeCtrl",
+			"wxBannerWindow", "wxMiniFrame", "wxRearrangeDialog",
 		]) {
 			tweaks.Class(control);
 		}
@@ -128,6 +132,17 @@ internal static class Core {
 		tweaks.Class("wxColourPickerEvent", e => e.Ignore("SetColour"));
 		tweaks.Class("wxFileDirPickerEvent", e => e.Ignore("SetPath"));
 		tweaks.Class("wxFontPickerEvent", e => e.Ignore("SetFont"));
+		// A bitmap button raises its base's Click. CreateCloseButton is the second step of a two-step creation.
+		tweaks.Class("wxBitmapButton", button => button.Event("EVT_BUTTON", "Click").Ignore("CreateCloseButton"));
+		tweaks.Class("wxStaticBitmap", bitmap => bitmap.ParameterName("wxStaticBitmap", "label", "bitmap"));
+		tweaks.Class("wxTreebook", book => book.ParameterName("AddSubPage", "bSelect", "select").ParameterName("InsertSubPage", "bSelect", "select"));
+		tweaks.Class("wxInfoBar", bar => bar
+			.ParameterName("AddButton", "btnid", "buttonId")
+			.ParameterName("HasButtonId", "btnid", "buttonId")
+			.ParameterName("RemoveButton", "btnid", "buttonId")
+			.ParameterName("ShowMessage", "msg", "message")
+			.ParameterName("ShowMessage", "flags", "icon")
+			.ParameterEnum("ShowMessage", "flags", "MessageIcon"));
 		// wxOSX has no static box with a window as its label.
 		tweaks.Class("wxStaticBox").GuardOverload("defined(wxHAS_WINDOW_LABEL_IN_STATIC_BOX)", "wxStaticBox", "label", "wxWindow *");
 		// Validators, which WxKit creates and windows copy. Custom ones are hand-written, in CustomValidator.
@@ -236,12 +251,13 @@ internal static class Core {
 		tweaks.Class("wxDateEvent", e => e.Ignore("SetDate"));
 		tweaks.Class("wxCalendarEvent", e => e.Ignore("SetWeekDay"));
 		// Notifications, which the application frees with Dispose, as it does timers. Only wxMSW has toasts.
-		// Its icons are three of wxWidgets's message icons.
-		tweaks.ConstantEnum("NotificationIcon", "wxICON_", excludePrefixes: ["wxICON_EXCLAMATION", "wxICON_HAND", "wxICON_STOP", "wxICON_ASTERISK", "wxICON_QUESTION", "wxICON_MASK", "wxICON_AUTH_NEEDED", "wxICON_DEFAULT", "wxICON_SCREEN_"]);
+		// The icons a notification or an info bar shows, which are wxWidgets's message icons, without
+		// the synonyms and the masks.
+		tweaks.ConstantEnum("MessageIcon", "wxICON_", excludePrefixes: ["wxICON_EXCLAMATION", "wxICON_HAND", "wxICON_STOP", "wxICON_ASTERISK", "wxICON_MASK", "wxICON_AUTH_NEEDED", "wxICON_DEFAULT", "wxICON_SCREEN_"]);
 		tweaks.Class("wxNotificationMessage", notification => notification
 			.Guard("defined(__WXMSW__)", "MSWUseToasts")
-			.ParameterEnum("wxNotificationMessage", "flags", "NotificationIcon")
-			.ParameterEnum("SetFlags", "flags", "NotificationIcon")
+			.ParameterEnum("wxNotificationMessage", "flags", "MessageIcon")
+			.ParameterEnum("SetFlags", "flags", "MessageIcon")
 			.ParameterName("wxNotificationMessage", "flags", "icon")
 			.ParameterName("AddAction", "actionid", "actionId")
 			.Event("EVT_NOTIFICATION_MESSAGE_CLICK", "Clicked")
