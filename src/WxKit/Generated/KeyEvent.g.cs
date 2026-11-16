@@ -25,7 +25,7 @@ public unsafe partial class KeyEvent : Event {
 	public KeyCode KeyCode => (KeyCode)WxKitNative.KeyEventGetKeyCode(Handle);
 
 	/// <summary>Return the bit mask of all pressed modifier keys.</summary>
-	public int Modifiers => WxKitNative.KeyEventGetModifiers(Handle);
+	public KeyModifiers Modifiers => (KeyModifiers)WxKitNative.KeyEventGetModifiers(Handle);
 
 	/// <summary>Obtains the position (in client coordinates) at which the key was pressed.</summary>
 	public Point Position => WxKitNative.KeyEventGetPositionDefault(Handle);

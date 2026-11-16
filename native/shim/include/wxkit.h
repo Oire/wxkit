@@ -384,6 +384,20 @@ WXK_FUNCTION(void) wxk_Window_SetAccessibleRows(wxk_Window* window, const wxk_Ac
 // Tells screen readers which row, by its index, is the current one, or none for -1.
 WXK_FUNCTION(void) wxk_Window_SetAccessibleCurrentRow(wxk_Window* window, int64_t row) WXK_NOEXCEPT;
 
+// Input as if the user had given it, which goes to whatever window the system sends it to.
+// Each returns 0 when the system could not send it.
+
+WXK_FUNCTION(uint8_t) wxk_UIActionSimulator_MouseMove(wxk_Point point) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_UIActionSimulator_MouseDown(int32_t button) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_UIActionSimulator_MouseUp(int32_t button) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_UIActionSimulator_MouseClick(int32_t button) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_UIActionSimulator_MouseDoubleClick(int32_t button) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_UIActionSimulator_KeyDown(int32_t key, int32_t modifiers) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_UIActionSimulator_KeyUp(int32_t key, int32_t modifiers) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_UIActionSimulator_Char(int32_t key, int32_t modifiers) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_UIActionSimulator_Text(const char16_t* text, size_t textLength) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_UIActionSimulator_Select(const char16_t* text, size_t textLength) WXK_NOEXCEPT;
+
 // The About box
 
 // What an About box shows. Each string is the shim's to free, and a null one, or a null list,

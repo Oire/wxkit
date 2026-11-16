@@ -2415,6 +2415,7 @@ enum WxKit.KeyCode : int
     WindowsRight = 394
 class WxKit.KeyEvent : Event
     KeyCode KeyCode { get; }
+    KeyModifiers Modifiers { get; }
     Point Position { get; }
     bool AltDown()
     bool CmdDown()
@@ -2427,7 +2428,6 @@ class WxKit.KeyEvent : Event
     bool MetaDown()
     bool RawControlDown()
     bool ShiftDown()
-    int Modifiers { get; }
     int RawKeyCode { get; }
     int RawKeyFlags { get; }
     int X { get; }
@@ -2439,6 +2439,16 @@ class WxKit.KeyEvent : Event
     void SetMetaDown(bool down)
     void SetRawControlDown(bool down)
     void SetShiftDown(bool down)
+[Flags] enum WxKit.KeyModifiers : int
+    All = 65535
+    Alt = 1
+    AltGr = 3
+    Cmd = 2
+    Control = 2
+    Meta = 8
+    None = 0
+    Shift = 4
+    Win = 8
 enum WxKit.LayoutDirection : int
     Default = 0
     LeftToRight = 1
@@ -2801,6 +2811,7 @@ enum WxKit.MouseButton : int
     None = 0
     Right = 3
 class WxKit.MouseEvent : Event
+    KeyModifiers Modifiers { get; }
     MouseWheelAxis WheelAxis { get; }
     Point GetLogicalPosition(DC dc)
     Point Position { get; set; }
@@ -2850,7 +2861,6 @@ class WxKit.MouseEvent : Event
     int ClickCount { get; }
     int ColumnsPerAction { get; }
     int LinesPerAction { get; }
-    int Modifiers { get; }
     int WheelDelta { get; }
     int WheelRotation { get; }
     int X { get; set; }
@@ -4316,6 +4326,17 @@ class WxKit.Treebook : BookCtrlBase
     event EventHandler<BookCtrlEvent>? PageChanged
     event EventHandler<BookCtrlEvent>? PageChanging
     int GetPageParent(int page)
+static class WxKit.UIActionSimulator
+    static bool Char(KeyCode key, KeyModifiers modifiers = KeyModifiers.None)
+    static bool KeyDown(KeyCode key, KeyModifiers modifiers = KeyModifiers.None)
+    static bool KeyUp(KeyCode key, KeyModifiers modifiers = KeyModifiers.None)
+    static bool MouseClick(MouseButton button = MouseButton.Left)
+    static bool MouseDoubleClick(MouseButton button = MouseButton.Left)
+    static bool MouseDown(MouseButton button = MouseButton.Left)
+    static bool MouseMove(Point point)
+    static bool MouseUp(MouseButton button = MouseButton.Left)
+    static bool Select(string text)
+    static bool Text(string text)
 class WxKit.UpdateUIEvent : CommandEvent
     CheckBoxState ThreeStateValue { get; set; }
     bool Checked { get; }

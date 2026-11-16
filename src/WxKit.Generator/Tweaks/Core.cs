@@ -60,7 +60,9 @@ internal static class Core {
 		tweaks.Enum("wxKeyCode", "KeyCode");
 		// Which way, and how, the focus moves, as Tab and Shift+Tab move it.
 		tweaks.Enum("wxNavigationKeyEvent::wxNavigationKeyEventFlags", "NavigationFlags", isFlags: true);
-		tweaks.Class("wxKeyEvent", e => e.ParameterEnum("GetKeyCode", "return", "wxKeyCode"));
+		tweaks.Enum("wxKeyModifier", "KeyModifiers", isFlags: true);
+		tweaks.Class("wxKeyEvent", e => e.ParameterEnum("GetKeyCode", "return", "wxKeyCode").ParameterEnum("GetModifiers", "return", "wxKeyModifier"));
+		tweaks.Class("wxMouseEvent", e => e.ParameterEnum("GetModifiers", "return", "wxKeyModifier"));
 		tweaks.ConstantEnum("SizeFlags", "wxSIZE_", isFlags: true, excludePrefixes: ["wxSIZE_CONV_", "wxSIZE_SET_"]);
 		tweaks.ConstantEnum("SendSizeEventFlags", "wxSEND_EVENT_", isFlags: true);
 		tweaks.ConstantEnum("FullScreenStyle", "wxFULLSCREEN_", isFlags: true);

@@ -813,6 +813,15 @@ static_assert(static_cast<int32_t>(wxMM_METRIC) == static_cast<int32_t>(2LL), "w
 static_assert(static_cast<int32_t>(wxMM_POINTS) == static_cast<int32_t>(5LL), "wxMM_POINTS is not 5");
 static_assert(static_cast<int32_t>(wxMM_TEXT) == static_cast<int32_t>(1LL), "wxMM_TEXT is not 1");
 static_assert(static_cast<int32_t>(wxMM_TWIPS) == static_cast<int32_t>(4LL), "wxMM_TWIPS is not 4");
+static_assert(static_cast<int32_t>(wxMOD_ALL) == static_cast<int32_t>(65535LL), "wxMOD_ALL is not 65535");
+static_assert(static_cast<int32_t>(wxMOD_ALT) == static_cast<int32_t>(1LL), "wxMOD_ALT is not 1");
+static_assert(static_cast<int32_t>(wxMOD_ALTGR) == static_cast<int32_t>(3LL), "wxMOD_ALTGR is not 3");
+static_assert(static_cast<int32_t>(wxMOD_CMD) == static_cast<int32_t>(2LL), "wxMOD_CMD is not 2");
+static_assert(static_cast<int32_t>(wxMOD_CONTROL) == static_cast<int32_t>(2LL), "wxMOD_CONTROL is not 2");
+static_assert(static_cast<int32_t>(wxMOD_META) == static_cast<int32_t>(8LL), "wxMOD_META is not 8");
+static_assert(static_cast<int32_t>(wxMOD_NONE) == static_cast<int32_t>(0LL), "wxMOD_NONE is not 0");
+static_assert(static_cast<int32_t>(wxMOD_SHIFT) == static_cast<int32_t>(4LL), "wxMOD_SHIFT is not 4");
+static_assert(static_cast<int32_t>(wxMOD_WIN) == static_cast<int32_t>(8LL), "wxMOD_WIN is not 8");
 static_assert(static_cast<int32_t>(wxMOUSE_BTN_ANY) == static_cast<int32_t>(-1LL), "wxMOUSE_BTN_ANY is not -1");
 static_assert(static_cast<int32_t>(wxMOUSE_BTN_AUX1) == static_cast<int32_t>(4LL), "wxMOUSE_BTN_AUX1 is not 4");
 static_assert(static_cast<int32_t>(wxMOUSE_BTN_AUX2) == static_cast<int32_t>(5LL), "wxMOUSE_BTN_AUX2 is not 5");

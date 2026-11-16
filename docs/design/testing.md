@@ -57,6 +57,10 @@ Some tests only mean something on Windows: those that click a control or choose 
 
 The other tests run everywhere, so they avoid what only one platform does. Windows paints a window during `Update`, for example, and GTK on its next frame once the window is shown, so a test of painting waits for the paint while the event loop runs.
 
+## Real input
+
+Most tests call a control's members and check the result, which shows that a binding works but not that events arrive. The tests in `InputTests` send real input instead, through `UIActionSimulator`, which wraps `wxUIActionSimulator`: a mouse click on a button, text typed into a text control, and a menu item's shortcut. The input goes through the system to the active window, as a user's does, so a test first makes its window active and focuses the control. When the system will not make it active, the test is skipped rather than failed, since the input would go elsewhere. Windows sends the input with `SendInput`, and Linux with the XTest extension, which Xvfb has in CI. macOS only lets an application send input with the accessibility permission, which CI does not have, so the tests are skipped there.
+
 ## What tests avoid
 
 - Tests do not depend on the pixel layout of native controls, which differs between platforms, themes, and DPI settings.

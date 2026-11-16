@@ -1381,6 +1381,29 @@ public enum KeyCode {
 	LaunchF = 447,
 }
 
+/// <summary>Wraps wxKeyModifier.</summary>
+[Flags]
+public enum KeyModifiers {
+	/// <summary>Wraps wxMOD_NONE.</summary>
+	None = 0,
+	/// <summary>Wraps wxMOD_ALT.</summary>
+	Alt = 1,
+	/// <summary>Ctlr Key, corresponds to Command key on macOS. Wraps wxMOD_CONTROL.</summary>
+	Control = 2,
+	/// <summary>Wraps wxMOD_ALTGR.</summary>
+	AltGr = 3,
+	/// <summary>Wraps wxMOD_SHIFT.</summary>
+	Shift = 4,
+	/// <summary>Wraps wxMOD_META.</summary>
+	Meta = 8,
+	/// <summary>Wraps wxMOD_WIN.</summary>
+	Win = 8,
+	/// <summary>deprecated, identic to wxMOD_CONTROL on all platforms. Wraps wxMOD_CMD.</summary>
+	Cmd = 2,
+	/// <summary>Wraps wxMOD_ALL.</summary>
+	All = 65535,
+}
+
 /// <summary>Wraps wxLayoutDirection.</summary>
 public enum LayoutDirection {
 	/// <summary>Wraps wxLayout_Default.</summary>

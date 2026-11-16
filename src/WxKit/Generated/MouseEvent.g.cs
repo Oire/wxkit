@@ -43,7 +43,7 @@ public unsafe partial class MouseEvent : Event {
 	public float Magnification => WxKitNative.MouseEventGetMagnification(Handle);
 
 	/// <summary>Return the bit mask of all pressed modifier keys.</summary>
-	public int Modifiers => WxKitNative.MouseEventGetModifiers(Handle);
+	public KeyModifiers Modifiers => (KeyModifiers)WxKitNative.MouseEventGetModifiers(Handle);
 
 	/// <summary>Returns the physical mouse position.</summary>
 	public Point Position {

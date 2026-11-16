@@ -42,6 +42,7 @@ internal static class Naming {
 		["RBUTTON"] = "RightButton",
 		["MBUTTON"] = "MiddleButton",
 		["NUMLOCK"] = "NumLock",
+		["ALTGR"] = "AltGr",
 		// The system colors, which run their words together as Windows's COLOR_ constants do.
 		["ACTIVECAPTION"] = "ActiveCaption",
 		["INACTIVECAPTION"] = "InactiveCaption",

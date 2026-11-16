@@ -298,6 +298,10 @@ tray.Menu = menu;
 
 A window that calls `DragAcceptFiles(true)` raises `DropFiles` when files are dropped on it, with their paths in the event's `Files`. A text control that handles it opens nothing on its own, so a handler decides what a dropped file does, as the Editor sample opens it. Dragging other data, and dragging from the application, are not bound yet.
 
+## Simulated input
+
+`UIActionSimulator` sends mouse and keyboard input as if the user had given it, for an application's own tests of its user interface: `MouseMove`, `MouseClick`, `Char`, such as `Char((KeyCode)'S', KeyModifiers.Control)`, `Text`, and the rest. It wraps `wxUIActionSimulator`, which is not a `wxObject`, so it is written by hand. The input goes where the system sends real input, which must be a window that is shown and active, and arrives as the event loop runs. On macOS, the application needs permission to control the computer.
+
 ## Static members
 
 A static member of a wxWidgets class is a static member of its managed class, such as `Window.FindFocus()`. A class with only static members, such as `wxSystemSettings`, is a static class. Static members check the thread first, as instance members do through their handle.

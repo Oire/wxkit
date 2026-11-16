@@ -418,6 +418,46 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void WindowSetAccessibleCurrentRow(WxkWindow* window, long row);
 
+	[LibraryImport(Library, EntryPoint = "wxk_UIActionSimulator_MouseMove")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte UIActionSimulatorMouseMove(Point point);
+
+	[LibraryImport(Library, EntryPoint = "wxk_UIActionSimulator_MouseDown")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte UIActionSimulatorMouseDown(int button);
+
+	[LibraryImport(Library, EntryPoint = "wxk_UIActionSimulator_MouseUp")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte UIActionSimulatorMouseUp(int button);
+
+	[LibraryImport(Library, EntryPoint = "wxk_UIActionSimulator_MouseClick")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte UIActionSimulatorMouseClick(int button);
+
+	[LibraryImport(Library, EntryPoint = "wxk_UIActionSimulator_MouseDoubleClick")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte UIActionSimulatorMouseDoubleClick(int button);
+
+	[LibraryImport(Library, EntryPoint = "wxk_UIActionSimulator_KeyDown")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte UIActionSimulatorKeyDown(int key, int modifiers);
+
+	[LibraryImport(Library, EntryPoint = "wxk_UIActionSimulator_KeyUp")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte UIActionSimulatorKeyUp(int key, int modifiers);
+
+	[LibraryImport(Library, EntryPoint = "wxk_UIActionSimulator_Char")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte UIActionSimulatorChar(int key, int modifiers);
+
+	[LibraryImport(Library, EntryPoint = "wxk_UIActionSimulator_Text")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte UIActionSimulatorText(char* text, nuint textLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_UIActionSimulator_Select")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte UIActionSimulatorSelect(char* text, nuint textLength);
+
 	[LibraryImport(Library, EntryPoint = "wxk_AboutBox_Show")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void AboutBoxShow(WxkAboutInfo* about, WxkWindow* parent);

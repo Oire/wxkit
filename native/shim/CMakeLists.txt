@@ -101,6 +101,7 @@ set(WXK_SOURCES
 	src/string.cpp
 	src/taskbar.cpp
 	src/timer.cpp
+	src/uiaction.cpp
 	src/toolbar.cpp
 	src/validator.cpp
 	src/variant.cpp
