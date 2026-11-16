@@ -12,6 +12,9 @@ internal sealed class ChecklistControl : Panel {
 
 	public ChecklistControl(Window parent, IEnumerable<string> items) : base(parent, style: WindowStyle.WantsChars) {
 		_items = [.. items.Select(static text => new ChecklistItem(text))];
+		// A window that draws itself has no name of its own, so it takes the label's, which macOS
+		// needs given, and Windows also finds as the label before the control.
+		if (PrevSibling is StaticText label) SetAccessibleName(label.LabelText);
 		// The control paints all of itself, so wxWidgets need not erase it first.
 		BackgroundStyle = BackgroundStyle.Paint;
 		MinSize = new Size(240, RowHeight * Math.Max(_items.Count, 4));

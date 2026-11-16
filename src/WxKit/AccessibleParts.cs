@@ -24,7 +24,9 @@ public unsafe partial class Window {
 	/// <remarks>
 	/// On Windows, the window's accessible object answers from the parts, through Microsoft Active
 	/// Accessibility, so the window cannot have an <see cref="Accessible"/> of its own as well. On
-	/// macOS and Linux, wxWidgets gives them to NSAccessibility and ATK.
+	/// macOS and Linux, wxWidgets gives them to NSAccessibility and ATK. Name the window itself with
+	/// <see cref="SetAccessibleName"/>, such as with the label before it, which Windows also falls
+	/// back to.
 	/// </remarks>
 	public void SetAccessibleParts(IEnumerable<AccessiblePart> parts) {
 		ArgumentNullException.ThrowIfNull(parts);
@@ -146,7 +148,9 @@ internal sealed class PartsAccessible(Window window) : Accessible(window) {
 		return AccessibleElement.Child(childId);
 	}
 
-	protected override string? GetName(int childId) => childId == 0 ? null : _isTable ? Name(Row(childId)) : Part(childId).Label;
+	// The window itself is named by the label just before it, as a standard control is, unless
+	// SetAccessibleName named it, which wxWidgets answers before asking.
+	protected override string? GetName(int childId) => childId == 0 ? (Window.PrevSibling as StaticText)?.LabelText : _isTable ? Name(Row(childId)) : Part(childId).Label;
 
 	protected override AccessibleRole? GetRole(int childId) => childId == 0 ? (_isTable ? AccessibleRole.List : null) : _isTable ? AccessibleRole.ListItem : AccessibleRole.StaticText;
 

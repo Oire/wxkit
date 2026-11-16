@@ -9,6 +9,8 @@ internal sealed class StatusStrip : Panel {
 
 	public StatusStrip(Window parent) : base(parent) {
 		BackgroundStyle = BackgroundStyle.Paint;
+		// A status strip is read, not typed in, so it is no Tab stop, as a status bar is not.
+		SetCanFocus(false);
 		MinSize = new Size(-1, CharHeight + 10);
 		Paint += (_, _) => Draw();
 		SizeChanged += (_, e) => {

@@ -142,7 +142,9 @@ WXK_FUNCTION(wxk_Accessible*) wxk_ManagedAccessible_new(wxk_Window* window, void
 	return wxk::Guard<wxk_Accessible*>(nullptr, [&] {
 		wxWindow* owner = wxk::Unwrap(window);
 		auto* accessible = new ManagedAccessible(owner, userdata);
-		// The window owns its accessible object, and deletes the one it had.
+		// The window owns its accessible object, and deletes the one it had, whose name, from
+		// SetAccessibleName, the new one keeps.
+		if (wxAccessible* previous = owner->GetAccessible()) accessible->SetNameOverride(previous->GetNameOverride());
 		owner->SetAccessible(accessible);
 		return reinterpret_cast<wxk_Accessible*>(accessible);
 	});

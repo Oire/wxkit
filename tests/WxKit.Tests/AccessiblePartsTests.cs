@@ -48,6 +48,24 @@ public class AccessiblePartsTests {
 	});
 
 	[Fact]
+	public Task NamesTheWindowByItsLabel() => Gui.WithFrame(frame => {
+		Assert.SkipUnless(OperatingSystem.IsWindows(), "Microsoft Active Accessibility is Windows's.");
+		Panel panel = new(frame);
+		_ = new StaticText(panel, "&Shopping list:");
+		Panel list = new(panel);
+		list.SetAccessibleRows([], 0);
+		IAccessible msaa = Msaa.Of(list);
+		Assert.Equal("Shopping list:", msaa.GetName(0));
+		list.SetAccessibleName("Groceries");
+		Assert.Equal("Groceries", msaa.GetName(0));
+		// A name given before the parts are survives them.
+		Panel named = new(panel);
+		named.SetAccessibleName("Named first");
+		named.SetAccessibleParts([]);
+		Assert.Equal("Named first", Msaa.Of(named).GetName(0));
+	});
+
+	[Fact]
 	public Task RefusesAWindowWithAnAccessibleOfItsOwn() => Gui.WithFrame(frame => {
 		Panel panel = new(frame);
 		_ = new Named(panel);
