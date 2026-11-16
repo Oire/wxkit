@@ -9,6 +9,7 @@
 #include <wx/bookctrl.h>
 #include <wx/brush.h>
 #include <wx/button.h>
+#include <wx/calctrl.h>
 #include <wx/checkbox.h>
 #include <wx/checklst.h>
 #include <wx/choicdlg.h>
@@ -22,6 +23,8 @@
 #include <wx/ctrlsub.h>
 #include <wx/cursor.h>
 #include <wx/dataview.h>
+#include <wx/datectrl.h>
+#include <wx/dateevt.h>
 #include <wx/dc.h>
 #include <wx/dcclient.h>
 #include <wx/dcmemory.h>
@@ -68,6 +71,7 @@
 #include <wx/textctrl.h>
 #include <wx/textdlg.h>
 #include <wx/tglbtn.h>
+#include <wx/timectrl.h>
 #include <wx/timer.h>
 #include <wx/toolbar.h>
 #include <wx/toplevel.h>

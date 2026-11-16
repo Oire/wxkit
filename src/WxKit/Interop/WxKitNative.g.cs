@@ -482,6 +482,82 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void ButtonSetAuthNeeded(WxkWindow* self, byte needed);
 
+	[LibraryImport(Library, EntryPoint = "wxk_CalendarCtrl_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* CalendarCtrlNew(WxkWindow* parent, int id, WxkDateTime date, Point position, Size size, long style);
+
+	[LibraryImport(Library, EntryPoint = "wxk_CalendarCtrl_SetDateRange")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte CalendarCtrlSetDateRange(WxkWindow* self, WxkDateTime earliest, WxkDateTime latest);
+
+	[LibraryImport(Library, EntryPoint = "wxk_CalendarCtrl_EnableHolidayDisplay")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void CalendarCtrlEnableHolidayDisplay(WxkWindow* self, byte display);
+
+	[LibraryImport(Library, EntryPoint = "wxk_CalendarCtrl_EnableMonthChange")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte CalendarCtrlEnableMonthChange(WxkWindow* self, byte enable);
+
+	[LibraryImport(Library, EntryPoint = "wxk_CalendarCtrl_ResetAttr")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void CalendarCtrlResetAttr(WxkWindow* self, nuint day);
+
+	[LibraryImport(Library, EntryPoint = "wxk_CalendarCtrl_SetHeaderColours")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void CalendarCtrlSetHeaderColours(WxkWindow* self, WxkColor colFg, WxkColor colBg);
+
+	[LibraryImport(Library, EntryPoint = "wxk_CalendarCtrl_SetHighlightColours")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void CalendarCtrlSetHighlightColours(WxkWindow* self, WxkColor colFg, WxkColor colBg);
+
+	[LibraryImport(Library, EntryPoint = "wxk_CalendarCtrl_SetHoliday")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void CalendarCtrlSetHoliday(WxkWindow* self, nuint day);
+
+	[LibraryImport(Library, EntryPoint = "wxk_CalendarCtrl_SetHolidayColours")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void CalendarCtrlSetHolidayColours(WxkWindow* self, WxkColor colFg, WxkColor colBg);
+
+	[LibraryImport(Library, EntryPoint = "wxk_CalendarCtrl_Mark")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void CalendarCtrlMark(WxkWindow* self, nuint day, byte mark);
+
+	[LibraryImport(Library, EntryPoint = "wxk_CalendarCtrl_GetDate")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkDateTime CalendarCtrlGetDate(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_CalendarCtrl_SetDate")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte CalendarCtrlSetDate(WxkWindow* self, WxkDateTime date);
+
+	[LibraryImport(Library, EntryPoint = "wxk_CalendarCtrl_GetHeaderColourBg")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkColor CalendarCtrlGetHeaderColourBg(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_CalendarCtrl_GetHeaderColourFg")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkColor CalendarCtrlGetHeaderColourFg(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_CalendarCtrl_GetHighlightColourBg")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkColor CalendarCtrlGetHighlightColourBg(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_CalendarCtrl_GetHighlightColourFg")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkColor CalendarCtrlGetHighlightColourFg(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_CalendarCtrl_GetHolidayColourBg")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkColor CalendarCtrlGetHolidayColourBg(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_CalendarCtrl_GetHolidayColourFg")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkColor CalendarCtrlGetHolidayColourFg(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_CalendarEvent_GetWeekDay")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int CalendarEventGetWeekDay(WxkEvent* self);
+
 	[LibraryImport(Library, EntryPoint = "wxk_CheckBox_new")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial WxkWindow* CheckBoxNew(WxkWindow* parent, int id, char* label, nuint labelLength, Point position, Size size, long style);
@@ -2241,6 +2317,30 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_DataViewTreeCtrl_SetItemText")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void DataViewTreeCtrlSetItemText(WxkWindow* self, nint item, char* text, nuint textLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DateEvent_GetDate")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkDateTime DateEventGetDate(WxkEvent* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DatePickerCtrl_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* DatePickerCtrlNew(WxkWindow* parent, int id, WxkDateTime date, Point position, Size size, long style);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DatePickerCtrl_SetNullText")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DatePickerCtrlSetNullText(WxkWindow* self, char* text, nuint textLength);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DatePickerCtrl_SetRange")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DatePickerCtrlSetRange(WxkWindow* self, WxkDateTime earliest, WxkDateTime latest);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DatePickerCtrl_GetValue")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkDateTime DatePickerCtrlGetValue(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_DatePickerCtrl_SetValue")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void DatePickerCtrlSetValue(WxkWindow* self, WxkDateTime dt);
 
 	[LibraryImport(Library, EntryPoint = "wxk_Dialog_new")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -6522,6 +6622,26 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial void TextValidatorSetStyle(WxkObject* self, long style);
 
+	[LibraryImport(Library, EntryPoint = "wxk_TimePickerCtrl_new")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkWindow* TimePickerCtrlNew(WxkWindow* parent, int id, WxkDateTime time, Point position, Size size, long style);
+
+	[LibraryImport(Library, EntryPoint = "wxk_TimePickerCtrl_GetTime")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte TimePickerCtrlGetTime(WxkWindow* self, int* hour, int* minute, int* second);
+
+	[LibraryImport(Library, EntryPoint = "wxk_TimePickerCtrl_SetTime")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial byte TimePickerCtrlSetTime(WxkWindow* self, int hour, int minute, int second);
+
+	[LibraryImport(Library, EntryPoint = "wxk_TimePickerCtrl_GetValue")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial WxkDateTime TimePickerCtrlGetValue(WxkWindow* self);
+
+	[LibraryImport(Library, EntryPoint = "wxk_TimePickerCtrl_SetValue")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial void TimePickerCtrlSetValue(WxkWindow* self, WxkDateTime dt);
+
 	[LibraryImport(Library, EntryPoint = "wxk_TimerEvent_GetInterval")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int TimerEventGetInterval(WxkEvent* self);
@@ -8482,6 +8602,26 @@ public static unsafe partial class WxKitNative {
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeButton();
 
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_CalendarDoubleclicked")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeCalendarDoubleclicked();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_CalendarPageChanged")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeCalendarPageChanged();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_CalendarSelChanged")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeCalendarSelChanged();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_CalendarWeekClicked")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeCalendarWeekClicked();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_CalendarWeekdayClicked")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeCalendarWeekdayClicked();
+
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_Char")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeChar();
@@ -8645,6 +8785,10 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_DataViewSelectionChanged")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeDataViewSelectionChanged();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_DateChanged")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeDateChanged();
 
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_DirPickerChanged")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -9137,6 +9281,10 @@ public static unsafe partial class WxKitNative {
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_TextUrl")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
 	public static partial int EventTypeTextUrl();
+
+	[LibraryImport(Library, EntryPoint = "wxk_EventType_TimeChanged")]
+	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+	public static partial int EventTypeTimeChanged();
 
 	[LibraryImport(Library, EntryPoint = "wxk_EventType_Timer")]
 	[UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

@@ -490,6 +490,35 @@ internal sealed class ColorConversion : Conversion {
 	public override bool AcceptsNull => true;
 }
 
+// A wxDateTime is a DateTime in local time, which crosses as its parts. wxInvalidDateTime is null.
+internal sealed class DateTimeConversion : Conversion {
+	public static DateTimeConversion Instance { get; } = new();
+
+	public override string Suffix => "DateTime";
+
+	public override string CReturnType => "wxk_DateTime";
+
+	public override string Fallback => "wxk_DateTime{0, 0, 0, 0, 0, 0, 0, 0}";
+
+	public override string InteropReturnType => "WxkDateTime";
+
+	public override IEnumerable<string> CParameters(string name) => [$"wxk_DateTime {name}"];
+
+	public override string ToCpp(string name) => $"wxk::FromDateTime({name})";
+
+	public override string FromCpp(string expression) => $"wxk::ToDateTime({expression})";
+
+	public override IEnumerable<string> InteropParameters(string name) => [$"WxkDateTime {name}"];
+
+	public override string ManagedType(bool nullable) => "DateTime?";
+
+	public override IEnumerable<string> InteropArguments(string name, bool nullable) => [$"global::WxKit.NativeDateTime.ToNative({name})"];
+
+	public override string ManagedReturn(string expression) => $"global::WxKit.NativeDateTime.FromNative({expression})";
+
+	public override bool AcceptsNull => true;
+}
+
 // A color whose default is one of wxWidgets's colors, such as *wxBLACK, which a null color stands for.
 internal sealed class ColorDefaultConversion(string cppDefault) : Conversion {
 	public override string Suffix => ColorConversion.Instance.Suffix;

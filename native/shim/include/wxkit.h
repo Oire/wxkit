@@ -128,6 +128,19 @@ typedef struct wxk_Colour {
 	uint8_t valid;
 } wxk_Colour;
 
+// A date and time, in local time, as wxDateTime gives its parts. The month is 1 to 12. valid is 0
+// for wxInvalidDateTime, which stands for no date.
+typedef struct wxk_DateTime {
+	int32_t year;
+	int32_t month;
+	int32_t day;
+	int32_t hour;
+	int32_t minute;
+	int32_t second;
+	int32_t millisecond;
+	uint8_t valid;
+} wxk_DateTime;
+
 typedef uint8_t (*wxk_AppInitCallback)(void* userdata);
 typedef uint8_t (*wxk_ValidateCallback)(void* userdata, wxk_Window* window, wxk_Window* parent);
 typedef uint8_t (*wxk_TransferCallback)(void* userdata, wxk_Window* window);

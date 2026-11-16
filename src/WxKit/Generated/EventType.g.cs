@@ -68,6 +68,41 @@ public static unsafe partial class EventType {
 		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeButton, static native => new CommandEvent((WxkEvent*)native));
 	}
 
+	/// <summary>Wraps wxEVT_CALENDAR_DOUBLECLICKED.</summary>
+	public static EventType<CalendarEvent> CalendarDoubleclicked => CalendarDoubleclickedType.Value;
+
+	private static class CalendarDoubleclickedType {
+		public static readonly EventType<CalendarEvent> Value = new(WxKitNative.EventTypeCalendarDoubleclicked, static native => new CalendarEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_CALENDAR_PAGE_CHANGED.</summary>
+	public static EventType<CalendarEvent> CalendarPageChanged => CalendarPageChangedType.Value;
+
+	private static class CalendarPageChangedType {
+		public static readonly EventType<CalendarEvent> Value = new(WxKitNative.EventTypeCalendarPageChanged, static native => new CalendarEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_CALENDAR_SEL_CHANGED.</summary>
+	public static EventType<CalendarEvent> CalendarSelChanged => CalendarSelChangedType.Value;
+
+	private static class CalendarSelChangedType {
+		public static readonly EventType<CalendarEvent> Value = new(WxKitNative.EventTypeCalendarSelChanged, static native => new CalendarEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_CALENDAR_WEEK_CLICKED.</summary>
+	public static EventType<CalendarEvent> CalendarWeekClicked => CalendarWeekClickedType.Value;
+
+	private static class CalendarWeekClickedType {
+		public static readonly EventType<CalendarEvent> Value = new(WxKitNative.EventTypeCalendarWeekClicked, static native => new CalendarEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_CALENDAR_WEEKDAY_CLICKED.</summary>
+	public static EventType<CalendarEvent> CalendarWeekdayClicked => CalendarWeekdayClickedType.Value;
+
+	private static class CalendarWeekdayClickedType {
+		public static readonly EventType<CalendarEvent> Value = new(WxKitNative.EventTypeCalendarWeekdayClicked, static native => new CalendarEvent((WxkEvent*)native));
+	}
+
 	/// <summary>Wraps wxEVT_CHAR.</summary>
 	public static EventType<KeyEvent> Char => CharType.Value;
 
@@ -353,6 +388,13 @@ public static unsafe partial class EventType {
 
 	private static class DataViewSelectionChangedType {
 		public static readonly EventType<DataViewEvent> Value = new(WxKitNative.EventTypeDataViewSelectionChanged, static native => new DataViewEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_DATE_CHANGED.</summary>
+	public static EventType<DateEvent> DateChanged => DateChangedType.Value;
+
+	private static class DateChangedType {
+		public static readonly EventType<DateEvent> Value = new(WxKitNative.EventTypeDateChanged, static native => new DateEvent((WxkEvent*)native));
 	}
 
 	/// <summary>Wraps wxEVT_DIRPICKER_CHANGED.</summary>
@@ -1214,6 +1256,13 @@ public static unsafe partial class EventType {
 
 	private static class TextUrlType {
 		public static readonly EventType<CommandEvent> Value = new(WxKitNative.EventTypeTextUrl, static native => new CommandEvent((WxkEvent*)native));
+	}
+
+	/// <summary>Wraps wxEVT_TIME_CHANGED.</summary>
+	public static EventType<DateEvent> TimeChanged => TimeChangedType.Value;
+
+	private static class TimeChangedType {
+		public static readonly EventType<DateEvent> Value = new(WxKitNative.EventTypeTimeChanged, static native => new DateEvent((WxkEvent*)native));
 	}
 
 	/// <summary>Wraps wxEVT_TIMER.</summary>

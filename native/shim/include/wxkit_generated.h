@@ -147,6 +147,31 @@ WXK_FUNCTION(wxk_Size) wxk_Button_GetDefaultSize(wxk_Window* window) WXK_NOEXCEP
 WXK_FUNCTION(uint8_t) wxk_Button_GetAuthNeeded(wxk_Window* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_Button_SetAuthNeeded(wxk_Window* self, uint8_t needed) WXK_NOEXCEPT;
 
+// wxCalendarCtrl
+
+WXK_FUNCTION(wxk_Window*) wxk_CalendarCtrl_new(wxk_Window* parent, int32_t id, wxk_DateTime date, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_CalendarCtrl_SetDateRange(wxk_Window* self, wxk_DateTime earliest, wxk_DateTime latest) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_CalendarCtrl_EnableHolidayDisplay(wxk_Window* self, uint8_t display) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_CalendarCtrl_EnableMonthChange(wxk_Window* self, uint8_t enable) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_CalendarCtrl_ResetAttr(wxk_Window* self, size_t day) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_CalendarCtrl_SetHeaderColours(wxk_Window* self, wxk_Colour colFg, wxk_Colour colBg) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_CalendarCtrl_SetHighlightColours(wxk_Window* self, wxk_Colour colFg, wxk_Colour colBg) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_CalendarCtrl_SetHoliday(wxk_Window* self, size_t day) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_CalendarCtrl_SetHolidayColours(wxk_Window* self, wxk_Colour colFg, wxk_Colour colBg) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_CalendarCtrl_Mark(wxk_Window* self, size_t day, uint8_t mark) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_DateTime) wxk_CalendarCtrl_GetDate(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_CalendarCtrl_SetDate(wxk_Window* self, wxk_DateTime date) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Colour) wxk_CalendarCtrl_GetHeaderColourBg(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Colour) wxk_CalendarCtrl_GetHeaderColourFg(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Colour) wxk_CalendarCtrl_GetHighlightColourBg(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Colour) wxk_CalendarCtrl_GetHighlightColourFg(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Colour) wxk_CalendarCtrl_GetHolidayColourBg(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_Colour) wxk_CalendarCtrl_GetHolidayColourFg(wxk_Window* self) WXK_NOEXCEPT;
+
+// wxCalendarEvent
+
+WXK_FUNCTION(int32_t) wxk_CalendarEvent_GetWeekDay(wxk_Event* self) WXK_NOEXCEPT;
+
 // wxCheckBox
 
 WXK_FUNCTION(wxk_Window*) wxk_CheckBox_new(wxk_Window* parent, int32_t id, const char16_t* label, size_t labelLength, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
@@ -667,6 +692,18 @@ WXK_FUNCTION(void) wxk_DataViewTreeCtrl_SetItemData(wxk_Window* self, void* item
 WXK_FUNCTION(void) wxk_DataViewTreeCtrl_SetItemExpandedIcon(wxk_Window* self, void* item, const wxk_Object* icon) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_DataViewTreeCtrl_SetItemIcon(wxk_Window* self, void* item, const wxk_Object* icon) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_DataViewTreeCtrl_SetItemText(wxk_Window* self, void* item, const char16_t* text, size_t textLength) WXK_NOEXCEPT;
+
+// wxDateEvent
+
+WXK_FUNCTION(wxk_DateTime) wxk_DateEvent_GetDate(wxk_Event* self) WXK_NOEXCEPT;
+
+// wxDatePickerCtrl
+
+WXK_FUNCTION(wxk_Window*) wxk_DatePickerCtrl_new(wxk_Window* parent, int32_t id, wxk_DateTime date, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DatePickerCtrl_SetNullText(wxk_Window* self, const char16_t* text, size_t textLength) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DatePickerCtrl_SetRange(wxk_Window* self, wxk_DateTime earliest, wxk_DateTime latest) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_DateTime) wxk_DatePickerCtrl_GetValue(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_DatePickerCtrl_SetValue(wxk_Window* self, wxk_DateTime dt) WXK_NOEXCEPT;
 
 // wxDialog
 
@@ -1975,6 +2012,14 @@ WXK_FUNCTION(void) wxk_TextValidator_SetIncludes(wxk_Object* self, const wxk_Str
 WXK_FUNCTION(int64_t) wxk_TextValidator_GetStyle(wxk_Object* self) WXK_NOEXCEPT;
 WXK_FUNCTION(void) wxk_TextValidator_SetStyle(wxk_Object* self, int64_t style) WXK_NOEXCEPT;
 
+// wxTimePickerCtrl
+
+WXK_FUNCTION(wxk_Window*) wxk_TimePickerCtrl_new(wxk_Window* parent, int32_t id, wxk_DateTime time, wxk_Point position, wxk_Size size, int64_t style) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_TimePickerCtrl_GetTime(wxk_Window* self, int32_t* hour, int32_t* minute, int32_t* second) WXK_NOEXCEPT;
+WXK_FUNCTION(uint8_t) wxk_TimePickerCtrl_SetTime(wxk_Window* self, int32_t hour, int32_t minute, int32_t second) WXK_NOEXCEPT;
+WXK_FUNCTION(wxk_DateTime) wxk_TimePickerCtrl_GetValue(wxk_Window* self) WXK_NOEXCEPT;
+WXK_FUNCTION(void) wxk_TimePickerCtrl_SetValue(wxk_Window* self, wxk_DateTime dt) WXK_NOEXCEPT;
+
 // wxTimerEvent
 
 WXK_FUNCTION(int32_t) wxk_TimerEvent_GetInterval(wxk_Event* self) WXK_NOEXCEPT;
@@ -2500,6 +2545,11 @@ WXK_FUNCTION(int32_t) wxk_EventType_Aux2Dclick(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_Aux2Down(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_Aux2Up(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_Button(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_CalendarDoubleclicked(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_CalendarPageChanged(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_CalendarSelChanged(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_CalendarWeekClicked(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_CalendarWeekdayClicked(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_Char(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_CharHook(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_Checkbox(void) WXK_NOEXCEPT;
@@ -2541,6 +2591,7 @@ WXK_FUNCTION(int32_t) wxk_EventType_DataViewItemExpanding(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_DataViewItemStartEditing(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_DataViewItemValueChanged(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_DataViewSelectionChanged(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_DateChanged(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_DirPickerChanged(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_DpiChanged(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_DropFiles(void) WXK_NOEXCEPT;
@@ -2664,6 +2715,7 @@ WXK_FUNCTION(int32_t) wxk_EventType_TextEnter(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_TextMaxlen(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_TextPaste(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_TextUrl(void) WXK_NOEXCEPT;
+WXK_FUNCTION(int32_t) wxk_EventType_TimeChanged(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_Timer(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_Togglebutton(void) WXK_NOEXCEPT;
 WXK_FUNCTION(int32_t) wxk_EventType_Tool(void) WXK_NOEXCEPT;

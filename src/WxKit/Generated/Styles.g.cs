@@ -24,6 +24,29 @@ public enum ButtonStyle : long {
 	BorderNone = 0x200000,
 }
 
+/// <summary>Styles for <see cref="CalendarCtrl"/>.</summary>
+[Flags]
+public enum CalendarCtrlStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Show Sunday as the first day in the week (not in wxGTK). Wraps wxCAL_SUNDAY_FIRST.</summary>
+	SundayFirst = 0x80,
+	/// <summary>Show Monday as the first day in the week (not in wxGTK). Wraps wxCAL_MONDAY_FIRST.</summary>
+	MondayFirst = 0x1,
+	/// <summary>Highlight holidays in the calendar (only generic). Wraps wxCAL_SHOW_HOLIDAYS.</summary>
+	ShowHolidays = 0x2,
+	/// <summary>Disable the year changing (deprecated, only generic). Wraps wxCAL_NO_YEAR_CHANGE.</summary>
+	NoYearChange = 0x4,
+	/// <summary>Disable the month (and, implicitly, the year) changing. Wraps wxCAL_NO_MONTH_CHANGE.</summary>
+	NoMonthChange = 0xC,
+	/// <summary>Show the neighbouring weeks in the previous and next months (only generic, always on for the native controls). Wraps wxCAL_SHOW_SURROUNDING_WEEKS.</summary>
+	ShowSurroundingWeeks = 0x20,
+	/// <summary>Use alternative, more compact, style for the month and year selection controls. (only generic). Wraps wxCAL_SEQUENTIAL_MONTH_SELECTION.</summary>
+	SequentialMonthSelection = 0x10,
+	/// <summary>Show week numbers on the left side of the calendar. (not in generic). Wraps wxCAL_SHOW_WEEK_NUMBERS.</summary>
+	ShowWeekNumbers = 0x40,
+}
+
 /// <summary>Styles for <see cref="CheckBox"/>.</summary>
 [Flags]
 public enum CheckBoxStyle : long {
@@ -110,6 +133,23 @@ public enum DataViewCtrlStyle : long {
 	VariableLineHeight = 0x20,
 	/// <summary>Do not show column headers (which are shown by default). Wraps wxDV_NO_HEADER.</summary>
 	NoHeader = 0x2,
+}
+
+/// <summary>Styles for <see cref="DatePickerCtrl"/>.</summary>
+[Flags]
+public enum DatePickerCtrlStyle : long {
+	/// <summary>No styles. Wraps 0.</summary>
+	None = 0x0,
+	/// <summary>Creates a control without a month calendar drop down but with spin-control-like arrows to change individual date components. This style is not supported by the generic version. Wraps wxDP_SPIN.</summary>
+	Spin = 0x1,
+	/// <summary>Creates a control with a month calendar drop-down part from which the user can select a date. In OSX/Cocoa native version this style is supported on macOS 10.15.4 and later. Wraps wxDP_DROPDOWN.</summary>
+	Dropdown = 0x2,
+	/// <summary>Creates a control with the style that is best supported for the current platform (currently wxDP_SPIN under Windows and OSX/Cocoa and wxDP_DROPDOWN elsewhere). Wraps wxDP_DEFAULT.</summary>
+	Default = 0x0,
+	/// <summary>With this style, the control allows the user to not enter any valid date at all. Without it - the default - the control always has some valid date. This style is not supported in OSX/Cocoa native version. Wraps wxDP_ALLOWNONE.</summary>
+	Allownone = 0x8,
+	/// <summary>Forces display of the century in the default date format. Without this style the century could be displayed, or not, depending on the default date representation in the system. This style is not supported in OSX/Cocoa native version currently. Wraps wxDP_SHOWCENTURY.</summary>
+	Showcentury = 0x4,
 }
 
 /// <summary>Styles for <see cref="Dialog"/>.</summary>

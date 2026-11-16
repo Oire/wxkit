@@ -55,6 +55,8 @@ Small wxWidgets classes that are values in practice become `readonly record stru
 - `Color`, with its alpha channel.
 - `SizerFlags`, which is built on the managed side and only converted to a `wxSizerFlags` when added.
 
+A `wxDateTime`, such as a date picker's value, is a `DateTime?` in local time, and null stands for `wxInvalidDateTime`, no date. A `DateTime` in UTC goes in as the local time it is, and one that comes back is always local. It crosses as its year, month, day, and time of day, so it keeps its milliseconds, but not finer ticks.
+
 ## Object lifetime
 
 wxWidgets has three kinds of objects, and each kind gets a different lifetime model in WxKit.

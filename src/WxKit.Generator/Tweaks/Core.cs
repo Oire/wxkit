@@ -208,6 +208,29 @@ internal static class Core {
 		tweaks.Class("wxListItem").ValueObject();
 		tweaks.Class("wxListEvent");
 		tweaks.Class("wxTreeEvent");
+		// Dates and times, which are DateTimes in local time. Events are only received, so their
+		// dates are only read.
+		tweaks.Class("wxDatePickerCtrl", picker => picker
+			.ParameterName("wxDatePickerCtrl", "dt", "date")
+			.ParameterName("SetRange", "dt1", "earliest")
+			.ParameterName("SetRange", "dt2", "latest"));
+		tweaks.Class("wxTimePickerCtrl", picker => picker
+			.ParameterName("wxTimePickerCtrl", "dt", "time")
+			.ParameterName("GetTime", "min", "minute")
+			.ParameterName("GetTime", "sec", "second")
+			.ParameterName("SetTime", "min", "minute")
+			.ParameterName("SetTime", "sec", "second"));
+		// The headers list the double click as EVT_CALENDAR, which sends wxEVT_CALENDAR_DOUBLECLICKED.
+		tweaks.Class("wxCalendarCtrl", calendar => calendar
+			.ParameterName("SetDateRange", "lowerdate", "earliest")
+			.ParameterName("SetDateRange", "upperdate", "latest")
+			.Event("EVT_CALENDAR_SEL_CHANGED", "SelectionChanged")
+			.Event("EVT_CALENDAR_PAGE_CHANGED", "PageChanged")
+			.Event("EVT_CALENDAR_WEEK_CLICKED", "WeekClicked")
+			.Event("EVT_CALENDAR_WEEKDAY_CLICKED", "WeekDayClicked")
+			.AddEvent("EVT_CALENDAR", "wxEVT_CALENDAR_DOUBLECLICKED", "wxCalendarEvent", "DateActivated"));
+		tweaks.Class("wxDateEvent", e => e.Ignore("SetDate"));
+		tweaks.Class("wxCalendarEvent", e => e.Ignore("SetWeekDay"));
 		// Notifications, which the application frees with Dispose, as it does timers. Only wxMSW has toasts.
 		// Its icons are three of wxWidgets's message icons.
 		tweaks.ConstantEnum("NotificationIcon", "wxICON_", excludePrefixes: ["wxICON_EXCLAMATION", "wxICON_HAND", "wxICON_STOP", "wxICON_ASTERISK", "wxICON_QUESTION", "wxICON_MASK", "wxICON_AUTH_NEEDED", "wxICON_DEFAULT", "wxICON_SCREEN_"]);

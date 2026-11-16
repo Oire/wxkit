@@ -495,6 +495,24 @@ public enum BrushStyle {
 	LastHatch = 116,
 }
 
+/// <summary>Wraps wxCalendarHitTestResult.</summary>
+public enum CalendarHitTestResult {
+	/// <summary>Hit outside of anything. Wraps wxCAL_HITTEST_NOWHERE.</summary>
+	Nowhere = 0,
+	/// <summary>Hit on the header (weekdays). Wraps wxCAL_HITTEST_HEADER.</summary>
+	Header = 1,
+	/// <summary>Hit on a day in the calendar. Wraps wxCAL_HITTEST_DAY.</summary>
+	Day = 2,
+	/// <summary>Hit on next month arrow (in alternate month selector mode). Wraps wxCAL_HITTEST_INCMONTH.</summary>
+	Incmonth = 3,
+	/// <summary>Hit on previous month arrow (in alternate month selector mode). Wraps wxCAL_HITTEST_DECMONTH.</summary>
+	Decmonth = 4,
+	/// <summary>Hit on surrounding week of previous/next month (if shown). Wraps wxCAL_HITTEST_SURROUNDING_WEEK.</summary>
+	SurroundingWeek = 5,
+	/// <summary>Hit on week of the year number (if shown). Wraps wxCAL_HITTEST_WEEK.</summary>
+	Week = 6,
+}
+
 /// <summary>Wraps wxCheckBoxState.</summary>
 public enum CheckBoxState {
 	/// <summary>Wraps wxCHK_UNCHECKED.</summary>
@@ -1645,6 +1663,26 @@ public enum UserAttention {
 	Info = 1,
 	/// <summary>Wraps wxUSER_ATTENTION_ERROR.</summary>
 	Error = 2,
+}
+
+/// <summary>Wraps wxDateTime::WeekDay.</summary>
+public enum WeekDay {
+	/// <summary>Wraps Sun.</summary>
+	Sun = 0,
+	/// <summary>Wraps Mon.</summary>
+	Mon = 1,
+	/// <summary>Wraps Tue.</summary>
+	Tue = 2,
+	/// <summary>Wraps Wed.</summary>
+	Wed = 3,
+	/// <summary>Wraps Thu.</summary>
+	Thu = 4,
+	/// <summary>Wraps Fri.</summary>
+	Fri = 5,
+	/// <summary>Wraps Sat.</summary>
+	Sat = 6,
+	/// <summary>Invalid week day value. Wraps Inv_WeekDay.</summary>
+	InvWeekDay = 7,
 }
 
 /// <summary>Wraps wxWindowMode.</summary>

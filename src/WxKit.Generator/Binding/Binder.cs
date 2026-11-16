@@ -368,6 +368,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 			"wxTreeItemId" => ItemIdConversion.TreeItem,
 			"wxDataViewItem" => ItemIdConversion.DataViewItem,
 			"wxVariant" => VariantConversion.Instance,
+			"wxDateTime" => DateTimeConversion.Instance,
 			"wxArrayString" => StringArrayConversion.Instance,
 			"wxColour" => ColorConversion.Instance,
 			"wxPoint" => GeometryConversion.Point,
@@ -380,7 +381,7 @@ internal sealed partial class Binder(DoxygenApi api, Tweaks tweaks) {
 		managed = null;
 		isNull = false;
 		string value = cppDefault.Trim();
-		if (conversion is GeometryConversion geometry && geometry.IsDefault(value) || value is "nullptr" or "NULL" or "0" && conversion.AcceptsNull || conversion is ColorConversion && value == "wxNullColour" || conversion is ValueConversion && (value.StartsWith("wxNull", StringComparison.Ordinal) || value.EndsWith("()", StringComparison.Ordinal))) {
+		if (conversion is GeometryConversion geometry && geometry.IsDefault(value) || value is "nullptr" or "NULL" or "0" && conversion.AcceptsNull || conversion is ColorConversion && value == "wxNullColour" || conversion is DateTimeConversion && value is "wxDefaultDateTime" or "wxInvalidDateTime" || conversion is ValueConversion && (value.StartsWith("wxNull", StringComparison.Ordinal) || value.EndsWith("()", StringComparison.Ordinal))) {
 			managed = "null";
 			isNull = true;
 			return true;

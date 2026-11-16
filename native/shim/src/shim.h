@@ -3,6 +3,7 @@
 
 #include <wx/wx.h>
 #include <wx/variant.h>
+#include <wx/datetime.h>
 #include <wx/vector.h>
 
 #include <string>
@@ -97,6 +98,17 @@ inline wxk_Rect ToRect(const wxRect& rect) {
 
 inline wxColour FromColour(wxk_Colour colour) {
 	return colour.valid != 0 ? wxColour(colour.red, colour.green, colour.blue, colour.alpha) : wxNullColour;
+}
+
+inline wxDateTime FromDateTime(wxk_DateTime value) {
+	if (value.valid == 0) return wxInvalidDateTime;
+	return wxDateTime(static_cast<wxDateTime::wxDateTime_t>(value.day), static_cast<wxDateTime::Month>(value.month - 1), value.year, static_cast<wxDateTime::wxDateTime_t>(value.hour), static_cast<wxDateTime::wxDateTime_t>(value.minute), static_cast<wxDateTime::wxDateTime_t>(value.second), static_cast<wxDateTime::wxDateTime_t>(value.millisecond));
+}
+
+inline wxk_DateTime ToDateTime(const wxDateTime& value) {
+	if (!value.IsValid()) return wxk_DateTime{0, 0, 0, 0, 0, 0, 0, 0};
+	const wxDateTime::Tm parts = value.GetTm();
+	return wxk_DateTime{parts.year, parts.mon + 1, parts.mday, parts.hour, parts.min, parts.sec, parts.msec, 1};
 }
 
 inline wxk_Colour ToColour(const wxColour& colour) {

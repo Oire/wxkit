@@ -59,6 +59,9 @@ public struct WxkString;
 /// <summary>A wxColour's channels, and whether it is set, as the shim passes them.</summary>
 public readonly record struct WxkColor(byte Red, byte Green, byte Blue, byte Alpha, byte Valid);
 
+/// <summary>A wxDateTime's parts, in local time, and whether it is set, as the shim passes them.</summary>
+public readonly record struct WxkDateTime(int Year, int Month, int Day, int Hour, int Minute, int Second, int Millisecond, byte Valid);
+
 /// <summary>A wxArrayString, freed with <see cref="WxKitNative.StringArrayFree"/>.</summary>
 public struct WxkStringArray;
 
