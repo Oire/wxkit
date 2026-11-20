@@ -6,6 +6,8 @@ WxKit is a preview: it works for trying out and small applications, its API will
 
 ## Building
 
+The samples and tests use the native libraries `./scripts/build-native.ps1` builds, so run it once before building them. Without it, a build fails and says to. To use WxKit without building it, add the [package](#packages) to a project of your own instead.
+
 On Windows, you need the following:
 
 - The .NET 10 SDK.
