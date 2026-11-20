@@ -1,3 +1,5 @@
+using System.Runtime.Versioning;
+
 namespace WxKit.Tests;
 
 // The parts and rows of a window that draws itself, which screen readers see on every platform: on
@@ -48,6 +50,7 @@ public class AccessiblePartsTests {
 	});
 
 	[Fact]
+	[SupportedOSPlatform("windows")]
 	public Task NamesTheWindowByItsLabel() => Gui.WithFrame(frame => {
 		Assert.SkipUnless(OperatingSystem.IsWindows(), "Microsoft Active Accessibility is Windows's.");
 		Panel panel = new(frame);
